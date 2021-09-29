@@ -10,7 +10,6 @@
 		596D720327051D4E00872D6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D720227051D4E00872D6C /* AppDelegate.swift */; };
 		596D720527051D4E00872D6C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D720427051D4E00872D6C /* SceneDelegate.swift */; };
 		596D720727051D4E00872D6C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D720627051D4E00872D6C /* ViewController.swift */; };
-		596D720D27051D4E00872D6C /* PersonalDictionary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 596D720B27051D4E00872D6C /* PersonalDictionary.xcdatamodeld */; };
 		596D720F27051D5200872D6C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 596D720E27051D5200872D6C /* Assets.xcassets */; };
 		596D721227051D5200872D6C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 596D721027051D5200872D6C /* LaunchScreen.storyboard */; };
 		596D721D27051D5300872D6C /* PersonalDictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D721C27051D5300872D6C /* PersonalDictionaryTests.swift */; };
@@ -45,7 +44,6 @@
 		596D720227051D4E00872D6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		596D720427051D4E00872D6C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		596D720627051D4E00872D6C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		596D720C27051D4E00872D6C /* PersonalDictionary.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PersonalDictionary.xcdatamodel; sourceTree = "<group>"; };
 		596D720E27051D5200872D6C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		596D721127051D5200872D6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		596D721327051D5200872D6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -132,7 +130,6 @@
 				596D720E27051D5200872D6C /* Assets.xcassets */,
 				596D721027051D5200872D6C /* LaunchScreen.storyboard */,
 				596D721327051D5200872D6C /* Info.plist */,
-				596D720B27051D4E00872D6C /* PersonalDictionary.xcdatamodeld */,
 			);
 			path = PersonalDictionary;
 			sourceTree = "<group>";
@@ -388,7 +385,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				596D720727051D4E00872D6C /* ViewController.swift in Sources */,
-				596D720D27051D4E00872D6C /* PersonalDictionary.xcdatamodeld in Sources */,
 				596D720327051D4E00872D6C /* AppDelegate.swift in Sources */,
 				596D720527051D4E00872D6C /* SceneDelegate.swift in Sources */,
 			);
@@ -721,19 +717,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		596D720B27051D4E00872D6C /* PersonalDictionary.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				596D720C27051D4E00872D6C /* PersonalDictionary.xcdatamodel */,
-			);
-			currentVersion = 596D720C27051D4E00872D6C /* PersonalDictionary.xcdatamodel */;
-			path = PersonalDictionary.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 596D71F727051D4E00872D6C /* Project object */;
 }
