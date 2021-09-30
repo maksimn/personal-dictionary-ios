@@ -9,8 +9,20 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    let newWordButton = UIButton()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
+
+        initViews()
+    }
+
+    @objc
+    func onNewWordButtonTap() {
+        let newWordViewController = NewWordViewController()
+
+        newWordViewController.modalPresentationStyle = .popover
+
+        present(newWordViewController, animated: true, completion: nil)
     }
 }

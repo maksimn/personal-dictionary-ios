@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5953CAEF270615AE006537B9 /* ViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CAEE270615AE006537B9 /* ViewController+Layout.swift */; };
+		5953CAF4270615D2006537B9 /* Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CAF3270615D2006537B9 /* Values.swift */; };
+		5953CAF927061685006537B9 /* NewWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CAF827061685006537B9 /* NewWordViewController.swift */; };
 		596D720327051D4E00872D6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D720227051D4E00872D6C /* AppDelegate.swift */; };
 		596D720527051D4E00872D6C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D720427051D4E00872D6C /* SceneDelegate.swift */; };
 		596D720727051D4E00872D6C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D720627051D4E00872D6C /* ViewController.swift */; };
@@ -40,6 +43,9 @@
 		03FEF5A08393BF25BB2601BB /* Pods-PersonalDictionary-PersonalDictionaryUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionary-PersonalDictionaryUITests.debug.xcconfig"; path = "Target Support Files/Pods-PersonalDictionary-PersonalDictionaryUITests/Pods-PersonalDictionary-PersonalDictionaryUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		11F2A6FDE4C3A546FFBF62BB /* Pods_PersonalDictionary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PersonalDictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A06193F6648141055C88D89 /* Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig"; path = "Target Support Files/Pods-PersonalDictionary-PersonalDictionaryUITests/Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig"; sourceTree = "<group>"; };
+		5953CAEE270615AE006537B9 /* ViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Layout.swift"; sourceTree = "<group>"; };
+		5953CAF3270615D2006537B9 /* Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Values.swift; sourceTree = "<group>"; };
+		5953CAF827061685006537B9 /* NewWordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordViewController.swift; sourceTree = "<group>"; };
 		596D71FF27051D4E00872D6C /* PersonalDictionary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PersonalDictionary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		596D720227051D4E00872D6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		596D720427051D4E00872D6C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,9 +133,12 @@
 				596D720227051D4E00872D6C /* AppDelegate.swift */,
 				596D720427051D4E00872D6C /* SceneDelegate.swift */,
 				596D720627051D4E00872D6C /* ViewController.swift */,
+				5953CAEE270615AE006537B9 /* ViewController+Layout.swift */,
 				596D720E27051D5200872D6C /* Assets.xcassets */,
 				596D721027051D5200872D6C /* LaunchScreen.storyboard */,
 				596D721327051D5200872D6C /* Info.plist */,
+				5953CAF3270615D2006537B9 /* Values.swift */,
+				5953CAF827061685006537B9 /* NewWordViewController.swift */,
 			);
 			path = PersonalDictionary;
 			sourceTree = "<group>";
@@ -386,7 +395,10 @@
 			files = (
 				596D720727051D4E00872D6C /* ViewController.swift in Sources */,
 				596D720327051D4E00872D6C /* AppDelegate.swift in Sources */,
+				5953CAF4270615D2006537B9 /* Values.swift in Sources */,
+				5953CAEF270615AE006537B9 /* ViewController+Layout.swift in Sources */,
 				596D720527051D4E00872D6C /* SceneDelegate.swift in Sources */,
+				5953CAF927061685006537B9 /* NewWordViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
