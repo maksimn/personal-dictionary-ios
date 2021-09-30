@@ -9,7 +9,18 @@
 /* Begin PBXBuildFile section */
 		5953CAEF270615AE006537B9 /* ViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CAEE270615AE006537B9 /* ViewController+Layout.swift */; };
 		5953CAF4270615D2006537B9 /* Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CAF3270615D2006537B9 /* Values.swift */; };
-		5953CAF927061685006537B9 /* NewWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CAF827061685006537B9 /* NewWordViewController.swift */; };
+		5953CB0927062712006537B9 /* NewWordMVVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB0827062712006537B9 /* NewWordMVVM.swift */; };
+		5953CB0E2706273B006537B9 /* NewWordMVVMImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB0D2706273B006537B9 /* NewWordMVVMImpl.swift */; };
+		5953CB132706279B006537B9 /* NewWordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB122706279B006537B9 /* NewWordModel.swift */; };
+		5953CB18270627AF006537B9 /* NewWordModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB17270627AF006537B9 /* NewWordModelImpl.swift */; };
+		5953CB1D270627BF006537B9 /* NewWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB1C270627BF006537B9 /* NewWordView.swift */; };
+		5953CB2227062830006537B9 /* NewWordViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB2127062830006537B9 /* NewWordViewVC.swift */; };
+		5953CB28270628C2006537B9 /* NewWordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB27270628C2006537B9 /* NewWordViewModel.swift */; };
+		5953CB2D270628D5006537B9 /* NewWordViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB2C270628D5006537B9 /* NewWordViewModelImpl.swift */; };
+		5953CB3927062EF2006537B9 /* LangRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB3827062EF2006537B9 /* LangRepository.swift */; };
+		5953CB3E27062F02006537B9 /* LangRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB3D27062F02006537B9 /* LangRepositoryImpl.swift */; };
+		5953CB4627063A9B006537B9 /* NewWordViewVC+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB4527063A9B006537B9 /* NewWordViewVC+Layout.swift */; };
+		5953CB4C27063D41006537B9 /* PickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB4B27063D41006537B9 /* PickerController.swift */; };
 		596D720327051D4E00872D6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D720227051D4E00872D6C /* AppDelegate.swift */; };
 		596D720527051D4E00872D6C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D720427051D4E00872D6C /* SceneDelegate.swift */; };
 		596D720727051D4E00872D6C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D720627051D4E00872D6C /* ViewController.swift */; };
@@ -45,7 +56,18 @@
 		4A06193F6648141055C88D89 /* Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig"; path = "Target Support Files/Pods-PersonalDictionary-PersonalDictionaryUITests/Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5953CAEE270615AE006537B9 /* ViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Layout.swift"; sourceTree = "<group>"; };
 		5953CAF3270615D2006537B9 /* Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Values.swift; sourceTree = "<group>"; };
-		5953CAF827061685006537B9 /* NewWordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordViewController.swift; sourceTree = "<group>"; };
+		5953CB0827062712006537B9 /* NewWordMVVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordMVVM.swift; sourceTree = "<group>"; };
+		5953CB0D2706273B006537B9 /* NewWordMVVMImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordMVVMImpl.swift; sourceTree = "<group>"; };
+		5953CB122706279B006537B9 /* NewWordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordModel.swift; sourceTree = "<group>"; };
+		5953CB17270627AF006537B9 /* NewWordModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordModelImpl.swift; sourceTree = "<group>"; };
+		5953CB1C270627BF006537B9 /* NewWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordView.swift; sourceTree = "<group>"; };
+		5953CB2127062830006537B9 /* NewWordViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordViewVC.swift; sourceTree = "<group>"; };
+		5953CB27270628C2006537B9 /* NewWordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordViewModel.swift; sourceTree = "<group>"; };
+		5953CB2C270628D5006537B9 /* NewWordViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordViewModelImpl.swift; sourceTree = "<group>"; };
+		5953CB3827062EF2006537B9 /* LangRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangRepository.swift; sourceTree = "<group>"; };
+		5953CB3D27062F02006537B9 /* LangRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangRepositoryImpl.swift; sourceTree = "<group>"; };
+		5953CB4527063A9B006537B9 /* NewWordViewVC+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewWordViewVC+Layout.swift"; sourceTree = "<group>"; };
+		5953CB4B27063D41006537B9 /* PickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerController.swift; sourceTree = "<group>"; };
 		596D71FF27051D4E00872D6C /* PersonalDictionary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PersonalDictionary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		596D720227051D4E00872D6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		596D720427051D4E00872D6C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +127,71 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5953CB03270626AD006537B9 /* NewWord */ = {
+			isa = PBXGroup;
+			children = (
+				5953CB04270626B5006537B9 /* Graph */,
+				5953CB07270626CF006537B9 /* Model */,
+				5953CB05270626BC006537B9 /* View */,
+				5953CB06270626C5006537B9 /* ViewModel */,
+			);
+			path = NewWord;
+			sourceTree = "<group>";
+		};
+		5953CB04270626B5006537B9 /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				5953CB0827062712006537B9 /* NewWordMVVM.swift */,
+				5953CB0D2706273B006537B9 /* NewWordMVVMImpl.swift */,
+			);
+			path = Graph;
+			sourceTree = "<group>";
+		};
+		5953CB05270626BC006537B9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5953CB1C270627BF006537B9 /* NewWordView.swift */,
+				5953CB2127062830006537B9 /* NewWordViewVC.swift */,
+				5953CB4527063A9B006537B9 /* NewWordViewVC+Layout.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5953CB06270626C5006537B9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5953CB27270628C2006537B9 /* NewWordViewModel.swift */,
+				5953CB2C270628D5006537B9 /* NewWordViewModelImpl.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5953CB07270626CF006537B9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5953CB122706279B006537B9 /* NewWordModel.swift */,
+				5953CB17270627AF006537B9 /* NewWordModelImpl.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5953CB3727062EAB006537B9 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				5953CB3827062EF2006537B9 /* LangRepository.swift */,
+				5953CB3D27062F02006537B9 /* LangRepositoryImpl.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		5953CB4A27063D31006537B9 /* Picker */ = {
+			isa = PBXGroup;
+			children = (
+				5953CB4B27063D41006537B9 /* PickerController.swift */,
+			);
+			path = Picker;
+			sourceTree = "<group>";
+		};
 		596D71F627051D4E00872D6C = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +217,9 @@
 		596D720127051D4E00872D6C /* PersonalDictionary */ = {
 			isa = PBXGroup;
 			children = (
+				5953CB4A27063D31006537B9 /* Picker */,
+				5953CB3727062EAB006537B9 /* Repository */,
+				5953CB03270626AD006537B9 /* NewWord */,
 				596D720227051D4E00872D6C /* AppDelegate.swift */,
 				596D720427051D4E00872D6C /* SceneDelegate.swift */,
 				596D720627051D4E00872D6C /* ViewController.swift */,
@@ -138,7 +228,6 @@
 				596D721027051D5200872D6C /* LaunchScreen.storyboard */,
 				596D721327051D5200872D6C /* Info.plist */,
 				5953CAF3270615D2006537B9 /* Values.swift */,
-				5953CAF827061685006537B9 /* NewWordViewController.swift */,
 			);
 			path = PersonalDictionary;
 			sourceTree = "<group>";
@@ -393,12 +482,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5953CB28270628C2006537B9 /* NewWordViewModel.swift in Sources */,
+				5953CB4C27063D41006537B9 /* PickerController.swift in Sources */,
 				596D720727051D4E00872D6C /* ViewController.swift in Sources */,
 				596D720327051D4E00872D6C /* AppDelegate.swift in Sources */,
 				5953CAF4270615D2006537B9 /* Values.swift in Sources */,
 				5953CAEF270615AE006537B9 /* ViewController+Layout.swift in Sources */,
+				5953CB3927062EF2006537B9 /* LangRepository.swift in Sources */,
+				5953CB18270627AF006537B9 /* NewWordModelImpl.swift in Sources */,
+				5953CB2227062830006537B9 /* NewWordViewVC.swift in Sources */,
+				5953CB4627063A9B006537B9 /* NewWordViewVC+Layout.swift in Sources */,
+				5953CB132706279B006537B9 /* NewWordModel.swift in Sources */,
+				5953CB0927062712006537B9 /* NewWordMVVM.swift in Sources */,
+				5953CB2D270628D5006537B9 /* NewWordViewModelImpl.swift in Sources */,
 				596D720527051D4E00872D6C /* SceneDelegate.swift in Sources */,
-				5953CAF927061685006537B9 /* NewWordViewController.swift in Sources */,
+				5953CB3E27062F02006537B9 /* LangRepositoryImpl.swift in Sources */,
+				5953CB0E2706273B006537B9 /* NewWordMVVMImpl.swift in Sources */,
+				5953CB1D270627BF006537B9 /* NewWordView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

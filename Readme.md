@@ -30,7 +30,7 @@
 
 UI: UIKit, вёрстка из кода.
 
-Архитектура на выбор: MVVM + RxSwift, Redux, RIBs.
+Архитектура на выбор: MVVM, Redux, RIBs.
 
 Юнит-тесты.
 
