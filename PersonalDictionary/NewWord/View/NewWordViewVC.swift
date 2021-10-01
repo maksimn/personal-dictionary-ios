@@ -62,7 +62,5 @@ extension NewWordViewVC {
         } else {
             viewModel?.targetLang = selectedLang
         }
-
-        viewModel?.saveSourceAndTargetLangs()
     }
 }

@@ -18,3 +18,7 @@ enum Images {
 enum Langs {
     static let empty = Lang(name: "")
 }
+
+enum Keys {
+    static let userDefaultsUniquePrefix = "io.github.maksimn.pd"
+}

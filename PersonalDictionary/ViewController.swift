@@ -18,7 +18,7 @@ class ViewController: UIViewController {
 
     @objc
     func onNewWordButtonTap() {
-        let newWordMVVM = NewWordMVVMImpl(langRepository: LangRepositoryImpl())
+        let newWordMVVM = NewWordMVVMImpl(langRepository: LangRepositoryImpl(userDefaults: UserDefaults.standard))
         guard let newWordViewController = newWordMVVM.viewController else { return }
 
         newWordViewController.modalPresentationStyle = .popover

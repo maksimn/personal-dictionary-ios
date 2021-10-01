@@ -11,5 +11,7 @@ protocol NewWordModel {
 
     func bindData()
 
-    func save(_ sourceLang: Lang, _ targetLang: Lang)
+    func save(sourceLang: Lang)
+
+    func save(targetLang: Lang)
 }

@@ -7,9 +7,9 @@
 
 class NewWordModelImpl: NewWordModel {
 
-    var viewModel: NewWordViewModel?
+    weak var viewModel: NewWordViewModel?
 
-    private let langRepository: LangRepository
+    private var langRepository: LangRepository
 
     init(_ langRepository: LangRepository) {
         self.langRepository = langRepository
@@ -21,7 +21,11 @@ class NewWordModelImpl: NewWordModel {
         viewModel?.targetLang = langRepository.targetLang
     }
 
-    func save(_ sourceLang: Lang, _ targetLang: Lang) {
-        
+    func save(sourceLang: Lang) {
+        langRepository.sourceLang = sourceLang
+    }
+
+    func save(targetLang: Lang) {
+        langRepository.targetLang = targetLang
     }
 }

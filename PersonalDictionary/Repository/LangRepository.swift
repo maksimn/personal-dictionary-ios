@@ -9,7 +9,7 @@ protocol LangRepository {
 
     var allLangs: [Lang] { get }
 
-    var sourceLang: Lang { get }
+    var sourceLang: Lang { get set }
 
-    var targetLang: Lang { get }
+    var targetLang: Lang { get set }
 }

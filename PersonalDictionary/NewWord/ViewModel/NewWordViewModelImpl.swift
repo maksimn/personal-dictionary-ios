@@ -24,20 +24,18 @@ class NewWordViewModelImpl: NewWordViewModel {
     var sourceLang: Lang = Langs.empty {
         didSet {
             view.set(sourceLang: sourceLang)
+            model.save(sourceLang: sourceLang)
         }
     }
 
     var targetLang: Lang = Langs.empty {
         didSet {
             view.set(targetLang: targetLang)
+            model.save(targetLang: targetLang)
         }
     }
 
     func bindDataFromModel() {
         model.bindData()
-    }
-
-    func saveSourceAndTargetLangs() {
-        model.save(sourceLang, targetLang)
     }
 }

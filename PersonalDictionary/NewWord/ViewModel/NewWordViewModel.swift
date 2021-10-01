@@ -5,7 +5,7 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
-protocol NewWordViewModel {
+protocol NewWordViewModel: AnyObject {
 
     var allLangs: [Lang] { get set }
 
@@ -14,6 +14,4 @@ protocol NewWordViewModel {
     var targetLang: Lang { get set }
 
     func bindDataFromModel()
-
-    func saveSourceAndTargetLangs()
 }
