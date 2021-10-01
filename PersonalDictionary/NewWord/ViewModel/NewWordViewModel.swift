@@ -9,9 +9,9 @@ protocol NewWordViewModel {
 
     func bindDataFromModel()
 
-    var allLangs: [String] { get set }
+    var allLangs: [Lang] { get set }
 
-    var sourceLang: String { get set }
+    var sourceLang: Lang { get set }
 
-    var targetLang: String { get set }
+    var targetLang: Lang { get set }
 }

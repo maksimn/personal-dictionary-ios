@@ -16,20 +16,19 @@ class NewWordViewVC: UIViewController, NewWordView {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         initViews()
         viewModel?.bindDataFromModel()
     }
 
-    func set(allLangs: [String]) {
+    func set(allLangs: [Lang]) {
 
     }
 
-    func set(sourceLang: String) {
-        sourceLangLabel.text = sourceLang
+    func set(sourceLang: Lang) {
+        sourceLangLabel.text = sourceLang.name
     }
 
-    func set(targetLang: String) {
-        targetLangLabel.text = targetLang
+    func set(targetLang: Lang) {
+        targetLangLabel.text = targetLang.name
     }
 }

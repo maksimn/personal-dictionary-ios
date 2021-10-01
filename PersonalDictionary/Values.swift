@@ -14,3 +14,7 @@ enum Colors {
 enum Images {
     static let plusIcon = UIImage(named: "icon-plus")!
 }
+
+enum Langs {
+    static let empty = Lang(name: "")
+}

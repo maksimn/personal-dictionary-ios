@@ -15,25 +15,25 @@ class NewWordViewModelImpl: NewWordViewModel {
         self.view = view
     }
 
-    func bindDataFromModel() {
-        model.bindData()
-    }
-
-    var allLangs: [String] = [] {
+    var allLangs: [Lang] = [] {
         didSet {
             view.set(allLangs: allLangs)
         }
     }
 
-    var sourceLang: String = "" {
+    var sourceLang: Lang = Langs.empty {
         didSet {
             view.set(sourceLang: sourceLang)
         }
     }
 
-    var targetLang: String = "" {
+    var targetLang: Lang = Langs.empty {
         didSet {
             view.set(targetLang: targetLang)
         }
+    }
+
+    func bindDataFromModel() {
+        model.bindData()
     }
 }

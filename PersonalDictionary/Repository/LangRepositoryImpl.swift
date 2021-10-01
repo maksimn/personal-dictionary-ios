@@ -7,21 +7,24 @@
 
 final class LangRepositoryImpl: LangRepository {
 
-    let allLangs = ["Английский", "Русский", "Французский", "Итальянский"]
+    let allLangs = [Lang(name: "Английский"),
+                    Lang(name: "Русский"),
+                    Lang(name: "Французский"),
+                    Lang(name: "Итальянский")]
 
-    var sourceLang: String {
+    var sourceLang: Lang {
         sourceLangDefault
     }
 
-    var targetLang: String {
+    var targetLang: Lang {
         targetLangDefault
     }
 
-    private var sourceLangDefault: String {
-        "Английский"
+    private var sourceLangDefault: Lang {
+        allLangs[0]
     }
 
-    private var targetLangDefault: String {
-        "Русский"
+    private var targetLangDefault: Lang {
+        allLangs[1]
     }
 }
