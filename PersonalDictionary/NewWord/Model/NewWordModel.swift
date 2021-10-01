@@ -10,4 +10,6 @@ protocol NewWordModel {
     var viewModel: NewWordViewModel? { get }
 
     func bindData()
+
+    func save(_ sourceLang: Lang, _ targetLang: Lang)
 }

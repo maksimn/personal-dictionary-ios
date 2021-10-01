@@ -20,4 +20,8 @@ class NewWordModelImpl: NewWordModel {
         viewModel?.sourceLang = langRepository.sourceLang
         viewModel?.targetLang = langRepository.targetLang
     }
+
+    func save(_ sourceLang: Lang, _ targetLang: Lang) {
+        
+    }
 }

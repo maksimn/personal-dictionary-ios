@@ -36,4 +36,8 @@ class NewWordViewModelImpl: NewWordViewModel {
     func bindDataFromModel() {
         model.bindData()
     }
+
+    func saveSourceAndTargetLangs() {
+        model.save(sourceLang, targetLang)
+    }
 }

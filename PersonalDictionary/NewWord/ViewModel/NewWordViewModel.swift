@@ -7,11 +7,13 @@
 
 protocol NewWordViewModel {
 
-    func bindDataFromModel()
-
     var allLangs: [Lang] { get set }
 
     var sourceLang: Lang { get set }
 
     var targetLang: Lang { get set }
+
+    func bindDataFromModel()
+
+    func saveSourceAndTargetLangs()
 }
