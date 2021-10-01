@@ -20,7 +20,7 @@
 		5953CB3927062EF2006537B9 /* LangRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB3827062EF2006537B9 /* LangRepository.swift */; };
 		5953CB3E27062F02006537B9 /* LangRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB3D27062F02006537B9 /* LangRepositoryImpl.swift */; };
 		5953CB4627063A9B006537B9 /* NewWordViewVC+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB4527063A9B006537B9 /* NewWordViewVC+Layout.swift */; };
-		5953CB4C27063D41006537B9 /* PickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB4B27063D41006537B9 /* PickerController.swift */; };
+		5953CB4C27063D41006537B9 /* LangPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB4B27063D41006537B9 /* LangPickerController.swift */; };
 		596B95CC2706AC35004CE7E6 /* Lang.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596B95CB2706AC35004CE7E6 /* Lang.swift */; };
 		596D720327051D4E00872D6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D720227051D4E00872D6C /* AppDelegate.swift */; };
 		596D720527051D4E00872D6C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D720427051D4E00872D6C /* SceneDelegate.swift */; };
@@ -68,7 +68,7 @@
 		5953CB3827062EF2006537B9 /* LangRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangRepository.swift; sourceTree = "<group>"; };
 		5953CB3D27062F02006537B9 /* LangRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangRepositoryImpl.swift; sourceTree = "<group>"; };
 		5953CB4527063A9B006537B9 /* NewWordViewVC+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewWordViewVC+Layout.swift"; sourceTree = "<group>"; };
-		5953CB4B27063D41006537B9 /* PickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerController.swift; sourceTree = "<group>"; };
+		5953CB4B27063D41006537B9 /* LangPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerController.swift; sourceTree = "<group>"; };
 		596B95CB2706AC35004CE7E6 /* Lang.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lang.swift; sourceTree = "<group>"; };
 		596D71FF27051D4E00872D6C /* PersonalDictionary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PersonalDictionary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		596D720227051D4E00872D6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -189,7 +189,7 @@
 		5953CB4A27063D31006537B9 /* Picker */ = {
 			isa = PBXGroup;
 			children = (
-				5953CB4B27063D41006537B9 /* PickerController.swift */,
+				5953CB4B27063D41006537B9 /* LangPickerController.swift */,
 			);
 			path = Picker;
 			sourceTree = "<group>";
@@ -502,7 +502,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5953CB28270628C2006537B9 /* NewWordViewModel.swift in Sources */,
-				5953CB4C27063D41006537B9 /* PickerController.swift in Sources */,
+				5953CB4C27063D41006537B9 /* LangPickerController.swift in Sources */,
 				596D720727051D4E00872D6C /* ViewController.swift in Sources */,
 				596D720327051D4E00872D6C /* AppDelegate.swift in Sources */,
 				5953CAF4270615D2006537B9 /* Values.swift in Sources */,

@@ -14,6 +14,11 @@ class NewWordViewVC: UIViewController, NewWordView {
     let sourceLangLabel = UILabel()
     let targetLangLabel = UILabel()
 
+    let langPickerView = UIPickerView()
+    let langPickerController = LangPickerController()
+
+    private var isPickerSelectingSourceLang: Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
@@ -21,7 +26,7 @@ class NewWordViewVC: UIViewController, NewWordView {
     }
 
     func set(allLangs: [Lang]) {
-
+        langPickerController.langs = allLangs
     }
 
     func set(sourceLang: Lang) {
@@ -30,5 +35,32 @@ class NewWordViewVC: UIViewController, NewWordView {
 
     func set(targetLang: Lang) {
         targetLangLabel.text = targetLang.name
+    }
+}
+
+extension NewWordViewVC {
+
+    @objc
+    func onSourceLangLabelTap() {
+        langPickerView.isHidden = false
+        isPickerSelectingSourceLang = true
+    }
+
+    @objc
+    func onTargetLangLabelTap() {
+        langPickerView.isHidden = false
+        isPickerSelectingSourceLang = false
+    }
+
+    func onSelectPicker(row: Int) {
+        langPickerView.isHidden = true
+
+        let selectedLang = langPickerController.langs[row]
+
+        if isPickerSelectingSourceLang {
+            viewModel?.sourceLang = selectedLang
+        } else {
+            viewModel?.targetLang = selectedLang
+        }
     }
 }

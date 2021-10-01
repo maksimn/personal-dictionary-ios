@@ -7,19 +7,25 @@
 
 import UIKit
 
-final class PickerController: NSObject, UIPickerViewDataSource, UIPickerViewDelegate {
+final class LangPickerController: NSObject, UIPickerViewDataSource, UIPickerViewDelegate {
 
-    var values: [String] = []
+    var onSelectRow: ((Int) -> Void)?
+
+    var langs: [Lang] = []
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        values.count
+        langs.count
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        values[row]
+        langs[row].name
+    }
+
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        onSelectRow?(row)
     }
 }
