@@ -11,17 +11,16 @@ class NewWordViewVC: UIViewController, NewWordView {
 
     var viewModel: NewWordViewModel?
 
+    let contentView = UIView()
+
     let sourceLangLabel = UILabel()
     let targetLangLabel = UILabel()
     let arrowLabel = UILabel()
-
-    let langPickerView = UIPickerView()
-    let langPickerController = LangPickerController()
+    let okButton = UIButton()
 
     private var isPickerSelectingSourceLang: Bool = false
 
-    let textField = UITextField(frame: CGRect(x: 0, y: 0,
-                                              width: UIScreen.main.bounds.width - 70, height: 40))
+    let textField = UITextField()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +29,7 @@ class NewWordViewVC: UIViewController, NewWordView {
     }
 
     func set(allLangs: [Lang]) {
-        langPickerController.langs = allLangs
+
     }
 
     func set(sourceLang: Lang) {
@@ -46,25 +45,15 @@ extension NewWordViewVC {
 
     @objc
     func onSourceLangLabelTap() {
-        langPickerView.isHidden = false
         isPickerSelectingSourceLang = true
     }
 
     @objc
     func onTargetLangLabelTap() {
-        langPickerView.isHidden = false
         isPickerSelectingSourceLang = false
     }
 
-    func onSelectPicker(row: Int) {
-        langPickerView.isHidden = true
-
-        let selectedLang = langPickerController.langs[row]
-
-        if isPickerSelectingSourceLang {
-            viewModel?.sourceLang = selectedLang
-        } else {
-            viewModel?.targetLang = selectedLang
-        }
+    @objc func onOkButtonTap() {
+        dismiss(animated: true, completion: nil)
     }
 }

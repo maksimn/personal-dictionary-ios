@@ -10,21 +10,35 @@ import UIKit
 extension NewWordViewVC {
 
     func initViews() {
-        view.backgroundColor = Colors.backgroundLightColor
+        view.backgroundColor = UIColor(white: 0, alpha: 0.7)
         addSubviews()
+        initContentView()
         initSourceLangLabel()
         initTargetLangLabel()
-        initLangPickerView()
         initArrowLabel()
         initTextField()
+        initOkButton()
     }
 
     private func addSubviews() {
+        view.addSubview(contentView)
         view.addSubview(sourceLangLabel)
         view.addSubview(targetLangLabel)
-        view.addSubview(langPickerView)
         view.addSubview(arrowLabel)
         view.addSubview(textField)
+        view.addSubview(okButton)
+    }
+
+    private func initContentView() {
+        contentView.layer.cornerRadius = 16
+        contentView.backgroundColor = Colors.backgroundLightColor
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -20),
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            contentView.heightAnchor.constraint(equalToConstant: 176)
+        ])
     }
 
     private func initSourceLangLabel() {
@@ -35,9 +49,9 @@ extension NewWordViewVC {
         sourceLangLabel.textAlignment = .right
         sourceLangLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            sourceLangLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
-            sourceLangLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            sourceLangLabel.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -22),
+            sourceLangLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            sourceLangLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            sourceLangLabel.trailingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: -20),
             sourceLangLabel.heightAnchor.constraint(equalToConstant: 24)
         ])
 
@@ -55,9 +69,9 @@ extension NewWordViewVC {
         targetLangLabel.numberOfLines = 1
         targetLangLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            targetLangLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
-            targetLangLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 22),
-            targetLangLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            targetLangLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            targetLangLabel.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 20),
+            targetLangLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             targetLangLabel.heightAnchor.constraint(equalToConstant: 24)
         ])
 
@@ -66,21 +80,6 @@ extension NewWordViewVC {
 
         tapGestureRecognizer.numberOfTapsRequired = 1
         targetLangLabel.addGestureRecognizer(tapGestureRecognizer)
-    }
-
-    private func initLangPickerView() {
-        langPickerView.isHidden = true
-        langPickerView.dataSource = langPickerController
-        langPickerView.delegate = langPickerController
-        langPickerView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            langPickerView.topAnchor.constraint(equalTo: sourceLangLabel.bottomAnchor, constant: 6),
-            langPickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            langPickerView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -40),
-            langPickerView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
-        ])
-
-        langPickerController.onSelectRow = onSelectPicker(row:)
     }
 
     private func initArrowLabel() {
@@ -93,7 +92,7 @@ extension NewWordViewVC {
         arrowLabel.text = "⇋"
         NSLayoutConstraint.activate([
             arrowLabel.centerYAnchor.constraint(equalTo: sourceLangLabel.centerYAnchor),
-            arrowLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            arrowLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
         ])
     }
 
@@ -102,10 +101,28 @@ extension NewWordViewVC {
         textField.borderStyle = UITextField.BorderStyle.roundedRect
         textField.backgroundColor = UIColor.white
         textField.textColor = .black
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            textField.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 62),
+            textField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+            textField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            textField.heightAnchor.constraint(equalToConstant: 40)
+        ])
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        textField.center = view.center
+    private func initOkButton() {
+        okButton.setTitle("OK", for: .normal)
+        okButton.setTitleColor(.white, for: .normal)
+        okButton.backgroundColor = .green
+        okButton.layer.cornerRadius = 8
+        okButton.translatesAutoresizingMaskIntoConstraints = false
+        okButton.titleLabel?.font = UIFont(name: "Arial-BoldMT", size: 20)
+        okButton.addTarget(self, action: #selector(onOkButtonTap), for: .touchUpInside)
+        NSLayoutConstraint.activate([
+            okButton.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 26),
+            okButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 0),
+            okButton.widthAnchor.constraint(equalToConstant: 52),
+            okButton.heightAnchor.constraint(equalToConstant: 30)
+        ])
     }
 }

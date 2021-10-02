@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         let newWordMVVM = NewWordMVVMImpl(langRepository: LangRepositoryImpl(userDefaults: UserDefaults.standard))
         guard let newWordViewController = newWordMVVM.viewController else { return }
 
-        newWordViewController.modalPresentationStyle = .popover
+        newWordViewController.modalPresentationStyle = .overFullScreen
 
         present(newWordViewController, animated: true, completion: nil)
     }
