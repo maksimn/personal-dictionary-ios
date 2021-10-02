@@ -15,12 +15,16 @@ extension NewWordViewVC {
         initSourceLangLabel()
         initTargetLangLabel()
         initLangPickerView()
+        initArrowLabel()
+        initTextField()
     }
 
     private func addSubviews() {
         view.addSubview(sourceLangLabel)
         view.addSubview(targetLangLabel)
         view.addSubview(langPickerView)
+        view.addSubview(arrowLabel)
+        view.addSubview(textField)
     }
 
     private func initSourceLangLabel() {
@@ -69,14 +73,39 @@ extension NewWordViewVC {
         langPickerView.dataSource = langPickerController
         langPickerView.delegate = langPickerController
         langPickerView.translatesAutoresizingMaskIntoConstraints = false
-        let linearSize = UIScreen.main.bounds.width
         NSLayoutConstraint.activate([
-            langPickerView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            langPickerView.topAnchor.constraint(equalTo: sourceLangLabel.bottomAnchor, constant: 6),
             langPickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            langPickerView.heightAnchor.constraint(equalToConstant: linearSize),
-            langPickerView.widthAnchor.constraint(equalToConstant: linearSize)
+            langPickerView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -40),
+            langPickerView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
         ])
 
         langPickerController.onSelectRow = onSelectPicker(row:)
+    }
+
+    private func initArrowLabel() {
+        arrowLabel.isUserInteractionEnabled = false
+        arrowLabel.textColor = .black
+        arrowLabel.font = UIFont.systemFont(ofSize: 17)
+        arrowLabel.numberOfLines = 1
+        arrowLabel.textAlignment = .center
+        arrowLabel.translatesAutoresizingMaskIntoConstraints = false
+        arrowLabel.text = "⇋"
+        NSLayoutConstraint.activate([
+            arrowLabel.centerYAnchor.constraint(equalTo: sourceLangLabel.centerYAnchor),
+            arrowLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+    }
+
+    private func initTextField() {
+        textField.placeholder = "Впишите новое слово"
+        textField.borderStyle = UITextField.BorderStyle.roundedRect
+        textField.backgroundColor = UIColor.white
+        textField.textColor = .black
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        textField.center = view.center
     }
 }

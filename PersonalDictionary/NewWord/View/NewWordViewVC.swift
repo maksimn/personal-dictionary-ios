@@ -13,11 +13,15 @@ class NewWordViewVC: UIViewController, NewWordView {
 
     let sourceLangLabel = UILabel()
     let targetLangLabel = UILabel()
+    let arrowLabel = UILabel()
 
     let langPickerView = UIPickerView()
     let langPickerController = LangPickerController()
 
     private var isPickerSelectingSourceLang: Bool = false
+
+    let textField = UITextField(frame: CGRect(x: 0, y: 0,
+                                              width: UIScreen.main.bounds.width - 70, height: 40))
 
     override func viewDidLoad() {
         super.viewDidLoad()
