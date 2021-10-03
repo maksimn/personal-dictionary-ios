@@ -18,6 +18,7 @@ extension NewWordViewVC {
         initArrowLabel()
         initTextField()
         initOkButton()
+        initLangPickerPopup()
     }
 
     private func addSubviews() {
@@ -27,6 +28,7 @@ extension NewWordViewVC {
         view.addSubview(arrowLabel)
         view.addSubview(textField)
         view.addSubview(okButton)
+        view.addSubview(langPickerPopup)
     }
 
     private func initContentView() {
@@ -35,8 +37,8 @@ extension NewWordViewVC {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -20),
-            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
-            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            contentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 12),
+            contentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -12),
             contentView.heightAnchor.constraint(equalToConstant: 176)
         ])
     }
@@ -123,6 +125,20 @@ extension NewWordViewVC {
             okButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 0),
             okButton.widthAnchor.constraint(equalToConstant: 52),
             okButton.heightAnchor.constraint(equalToConstant: 30)
+        ])
+    }
+
+    private func initLangPickerPopup() {
+        langPickerPopup.onSelectLang = onSelectLang
+        langPickerPopup.backgroundColor = Colors.backgroundLightColor
+        langPickerPopup.layer.cornerRadius = 16
+        langPickerPopup.isHidden = true
+        langPickerPopup.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            langPickerPopup.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -20),
+            langPickerPopup.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 12),
+            langPickerPopup.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -12),
+            langPickerPopup.heightAnchor.constraint(equalToConstant: 176)
         ])
     }
 }

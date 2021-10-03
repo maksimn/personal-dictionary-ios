@@ -9,8 +9,6 @@ import UIKit
 
 final class LangPickerController: NSObject, UIPickerViewDataSource, UIPickerViewDelegate {
 
-    var onSelectRow: ((Int) -> Void)?
-
     var langs: [Lang] = []
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -23,9 +21,5 @@ final class LangPickerController: NSObject, UIPickerViewDataSource, UIPickerView
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         langs[row].name
-    }
-
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        onSelectRow?(row)
     }
 }

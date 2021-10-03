@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		590F78F32709317800BCBD2C /* LangPickerPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F78F22709317800BCBD2C /* LangPickerPopup.swift */; };
+		590F78FB2709D1A000BCBD2C /* LangPickerPopup+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F78FA2709D1A000BCBD2C /* LangPickerPopup+Layout.swift */; };
 		5953CAEF270615AE006537B9 /* ViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CAEE270615AE006537B9 /* ViewController+Layout.swift */; };
 		5953CAF4270615D2006537B9 /* Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CAF3270615D2006537B9 /* Values.swift */; };
 		5953CB0927062712006537B9 /* NewWordMVVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB0827062712006537B9 /* NewWordMVVM.swift */; };
@@ -55,6 +57,8 @@
 		03FEF5A08393BF25BB2601BB /* Pods-PersonalDictionary-PersonalDictionaryUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionary-PersonalDictionaryUITests.debug.xcconfig"; path = "Target Support Files/Pods-PersonalDictionary-PersonalDictionaryUITests/Pods-PersonalDictionary-PersonalDictionaryUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		11F2A6FDE4C3A546FFBF62BB /* Pods_PersonalDictionary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PersonalDictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A06193F6648141055C88D89 /* Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig"; path = "Target Support Files/Pods-PersonalDictionary-PersonalDictionaryUITests/Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig"; sourceTree = "<group>"; };
+		590F78F22709317800BCBD2C /* LangPickerPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerPopup.swift; sourceTree = "<group>"; };
+		590F78FA2709D1A000BCBD2C /* LangPickerPopup+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LangPickerPopup+Layout.swift"; sourceTree = "<group>"; };
 		5953CAEE270615AE006537B9 /* ViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Layout.swift"; sourceTree = "<group>"; };
 		5953CAF3270615D2006537B9 /* Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Values.swift; sourceTree = "<group>"; };
 		5953CB0827062712006537B9 /* NewWordMVVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordMVVM.swift; sourceTree = "<group>"; };
@@ -186,19 +190,21 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
-		5953CB4A27063D31006537B9 /* Picker */ = {
+		5953CB4A27063D31006537B9 /* LangPicker */ = {
 			isa = PBXGroup;
 			children = (
 				5953CB4B27063D41006537B9 /* LangPickerController.swift */,
+				590F78F22709317800BCBD2C /* LangPickerPopup.swift */,
+				590F78FA2709D1A000BCBD2C /* LangPickerPopup+Layout.swift */,
 			);
-			path = Picker;
+			path = LangPicker;
 			sourceTree = "<group>";
 		};
 		596B95C92706AC1D004CE7E6 /* Core */ = {
 			isa = PBXGroup;
 			children = (
 				596B95CA2706AC27004CE7E6 /* DataClass */,
-				5953CB4A27063D31006537B9 /* Picker */,
+				5953CB4A27063D31006537B9 /* LangPicker */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -507,6 +513,7 @@
 				596D720327051D4E00872D6C /* AppDelegate.swift in Sources */,
 				5953CAF4270615D2006537B9 /* Values.swift in Sources */,
 				596B95CC2706AC35004CE7E6 /* Lang.swift in Sources */,
+				590F78F32709317800BCBD2C /* LangPickerPopup.swift in Sources */,
 				5953CAEF270615AE006537B9 /* ViewController+Layout.swift in Sources */,
 				5953CB3927062EF2006537B9 /* LangRepository.swift in Sources */,
 				5953CB18270627AF006537B9 /* NewWordModelImpl.swift in Sources */,
@@ -516,6 +523,7 @@
 				5953CB0927062712006537B9 /* NewWordMVVM.swift in Sources */,
 				5953CB2D270628D5006537B9 /* NewWordViewModelImpl.swift in Sources */,
 				596D720527051D4E00872D6C /* SceneDelegate.swift in Sources */,
+				590F78FB2709D1A000BCBD2C /* LangPickerPopup+Layout.swift in Sources */,
 				5953CB3E27062F02006537B9 /* LangRepositoryImpl.swift in Sources */,
 				5953CB0E2706273B006537B9 /* NewWordMVVMImpl.swift in Sources */,
 				5953CB1D270627BF006537B9 /* NewWordView.swift in Sources */,
