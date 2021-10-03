@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 03.10.2021.
 //
 
+import SnapKit
 import UIKit
 
 extension LangPickerPopup {
@@ -19,13 +20,9 @@ extension LangPickerPopup {
     private func initLangPickerView() {
         pickerView.dataSource = langPickerController
         pickerView.delegate = langPickerController
-        pickerView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            pickerView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
-            pickerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            pickerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            pickerView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -44)
-        ])
+        pickerView.snp.makeConstraints { (make) -> Void in
+            make.edges.equalTo(self).inset(UIEdgeInsets(top: 12, left: 16, bottom: 44, right: 16))
+        }
     }
 
     private func initSelectButton() {
@@ -33,13 +30,12 @@ extension LangPickerPopup {
         selectButton.setTitleColor(.white, for: .normal)
         selectButton.backgroundColor = .darkGray
         selectButton.layer.cornerRadius = 8
-        selectButton.translatesAutoresizingMaskIntoConstraints = false
+        selectButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
         selectButton.addTarget(self, action: #selector(onSelectButtonTap), for: .touchUpInside)
-        NSLayoutConstraint.activate([
-            selectButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
-            selectButton.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0),
-            selectButton.widthAnchor.constraint(equalToConstant: 86),
-            selectButton.heightAnchor.constraint(equalToConstant: 30)
-        ])
+        selectButton.snp.makeConstraints { (make) -> Void in
+            make.bottom.equalTo(self).offset(-16)
+            make.centerX.equalTo(self)
+            make.height.equalTo(30)
+        }
     }
 }

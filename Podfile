@@ -1,6 +1,7 @@
 target 'PersonalDictionary' do
   use_frameworks!
 
+  pod 'SnapKit', '~> 4.0'
   pod 'SwiftLint'
 
   target 'PersonalDictionaryTests' do

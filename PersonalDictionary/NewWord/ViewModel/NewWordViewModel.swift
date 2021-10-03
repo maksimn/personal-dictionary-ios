@@ -13,5 +13,5 @@ protocol NewWordViewModel: AnyObject {
 
     var targetLang: Lang { get set }
 
-    func bindDataFromModel()
+    func fetchDataFromModel()
 }

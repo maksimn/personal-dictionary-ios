@@ -15,7 +15,7 @@ class NewWordModelImpl: NewWordModel {
         self.langRepository = langRepository
     }
 
-    func bindData() {
+    func fetchData() {
         viewModel?.allLangs = langRepository.allLangs
         viewModel?.sourceLang = langRepository.sourceLang
         viewModel?.targetLang = langRepository.targetLang

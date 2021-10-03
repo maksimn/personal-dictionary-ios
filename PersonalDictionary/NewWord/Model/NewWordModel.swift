@@ -9,7 +9,7 @@ protocol NewWordModel {
 
     var viewModel: NewWordViewModel? { get }
 
-    func bindData()
+    func fetchData()
 
     func save(sourceLang: Lang)
 

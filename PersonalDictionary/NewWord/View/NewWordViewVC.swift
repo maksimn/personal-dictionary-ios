@@ -30,7 +30,7 @@ class NewWordViewVC: UIViewController, NewWordView {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
-        viewModel?.bindDataFromModel()
+        viewModel?.fetchDataFromModel()
     }
 
     func set(allLangs: [Lang]) {

@@ -35,7 +35,7 @@ class NewWordViewModelImpl: NewWordViewModel {
         }
     }
 
-    func bindDataFromModel() {
-        model.bindData()
+    func fetchDataFromModel() {
+        model.fetchData()
     }
 }
