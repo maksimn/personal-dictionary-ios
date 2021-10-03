@@ -10,6 +10,8 @@ class NewWordViewModelImpl: NewWordViewModel {
     private unowned let view: NewWordView
     private let model: NewWordModel
 
+    private static let empty = Lang(name: "")
+
     init(model: NewWordModel, view: NewWordView) {
         self.model = model
         self.view = view
@@ -21,14 +23,14 @@ class NewWordViewModelImpl: NewWordViewModel {
         }
     }
 
-    var sourceLang: Lang = Langs.empty {
+    var sourceLang: Lang = empty {
         didSet {
             view.set(sourceLang: sourceLang)
             model.save(sourceLang: sourceLang)
         }
     }
 
-    var targetLang: Lang = Langs.empty {
+    var targetLang: Lang = empty {
         didSet {
             view.set(targetLang: targetLang)
             model.save(targetLang: targetLang)

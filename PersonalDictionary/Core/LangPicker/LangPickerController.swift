@@ -9,7 +9,11 @@ import UIKit
 
 final class LangPickerController: NSObject, UIPickerViewDataSource, UIPickerViewDelegate {
 
-    var langs: [Lang] = []
+    let langs: [Lang]
+
+    init(langs: [Lang]) {
+        self.langs = langs
+    }
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1

@@ -7,9 +7,19 @@
 
 import UIKit
 
-class NewWordViewVC: UIViewController, NewWordView {
+struct NewWordViewResource {
+    let selectButtonTitle: String
+    let arrowText: String
+    let okText: String
+    let textFieldPlaceholder: String
+    let backgroundColor: UIColor
+}
+
+class NewWordViewController: UIViewController, NewWordView {
 
     var viewModel: NewWordViewModel?
+
+    let viewResource: NewWordViewResource
 
     let contentView = UIView()
     let sourceLangLabel = UILabel()
@@ -17,14 +27,23 @@ class NewWordViewVC: UIViewController, NewWordView {
     let arrowLabel = UILabel()
     let okButton = UIButton()
     let textField = UITextField()
-    let langPickerPopup = LangPickerPopup()
+    var langPickerPopup: LangPickerPopup?
 
     private var isSelectingSourceLang: Bool = false {
         didSet {
             if let lang = isSelectingSourceLang ? viewModel?.sourceLang : viewModel?.targetLang {
-                langPickerPopup.select(lang: lang)
+                langPickerPopup?.select(lang: lang)
             }
         }
+    }
+
+    init(viewResource: NewWordViewResource) {
+        self.viewResource = viewResource
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
@@ -34,7 +53,15 @@ class NewWordViewVC: UIViewController, NewWordView {
     }
 
     func set(allLangs: [Lang]) {
-        langPickerPopup.langPickerController.langs = allLangs
+        releaseLangPickerPopup()
+
+        langPickerPopup = LangPickerPopup(langPickerController: LangPickerController(langs: allLangs),
+                                          onSelectLang: self.onSelectLang,
+                                          selectButtonTitle: viewResource.selectButtonTitle,
+                                          backgroundColor: viewResource.backgroundColor,
+                                          isHidden: true)
+
+        layoutLangPickerPopup()
     }
 
     func set(sourceLang: Lang) {
@@ -47,18 +74,18 @@ class NewWordViewVC: UIViewController, NewWordView {
 }
 
 // User Action handlers
-extension NewWordViewVC {
+extension NewWordViewController {
 
     @objc
     func onSourceLangLabelTap() {
         isSelectingSourceLang = true
-        langPickerPopup.isHidden = false
+        langPickerPopup?.isHidden = false
     }
 
     @objc
     func onTargetLangLabelTap() {
         isSelectingSourceLang = false
-        langPickerPopup.isHidden = false
+        langPickerPopup?.isHidden = false
     }
 
     @objc
@@ -67,7 +94,7 @@ extension NewWordViewVC {
     }
 
     func onSelectLang(_ lang: Lang) {
-        langPickerPopup.isHidden = true
+        langPickerPopup?.isHidden = true
 
         if isSelectingSourceLang {
             viewModel?.sourceLang = lang

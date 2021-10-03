@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension NewWordViewVC {
+extension NewWordViewController {
 
     func initViews() {
         view.backgroundColor = UIColor(white: 0, alpha: 0.7)
@@ -18,17 +18,28 @@ extension NewWordViewVC {
         initArrowLabel()
         initTextField()
         initOkButton()
-        initLangPickerPopup()
+    }
+
+    func layoutLangPickerPopup() {
+        view.addSubview(langPickerPopup ?? UIView())
+        langPickerPopup?.snp.makeConstraints { (make) -> Void in
+            make.edges.equalTo(contentView)
+        }
+    }
+
+    func releaseLangPickerPopup() {
+        langPickerPopup?.removeFromSuperview()
+        langPickerPopup = nil
     }
 
     private func addSubviews() {
-        [contentView, sourceLangLabel, targetLangLabel, arrowLabel, textField, okButton, langPickerPopup]
+        [contentView, sourceLangLabel, targetLangLabel, arrowLabel, textField, okButton]
             .forEach { view.addSubview($0) }
     }
 
     private func initContentView() {
         contentView.layer.cornerRadius = 16
-        contentView.backgroundColor = Colors.backgroundLightColor
+        contentView.backgroundColor = viewResource.backgroundColor
         contentView.snp.makeConstraints { (make) -> Void in
             make.centerY.equalTo(view)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-12)
@@ -80,7 +91,7 @@ extension NewWordViewVC {
         arrowLabel.font = UIFont.systemFont(ofSize: 17)
         arrowLabel.numberOfLines = 1
         arrowLabel.textAlignment = .center
-        arrowLabel.text = "⇋"
+        arrowLabel.text = viewResource.arrowText
         arrowLabel.snp.makeConstraints { make -> Void in
             make.centerY.equalTo(sourceLangLabel)
             make.centerX.equalTo(contentView)
@@ -88,7 +99,7 @@ extension NewWordViewVC {
     }
 
     private func initTextField() {
-        textField.placeholder = "Впишите новое слово"
+        textField.placeholder = viewResource.textFieldPlaceholder
         textField.borderStyle = UITextField.BorderStyle.roundedRect
         textField.backgroundColor = UIColor.white
         textField.textColor = .black
@@ -98,26 +109,17 @@ extension NewWordViewVC {
     }
 
     private func initOkButton() {
-        okButton.setTitle("OK", for: .normal)
+        okButton.setTitle(viewResource.okText, for: .normal)
         okButton.setTitleColor(.white, for: .normal)
         okButton.backgroundColor = .green
         okButton.layer.cornerRadius = 8
         okButton.titleLabel?.font = UIFont(name: "Arial-BoldMT", size: 20)
+        okButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
         okButton.addTarget(self, action: #selector(onOkButtonTap), for: .touchUpInside)
         okButton.snp.makeConstraints { make -> Void in
-            make.size.equalTo(CGSize(width: 52, height: 30))
             make.top.equalTo(textField.snp.bottom).offset(26)
             make.centerX.equalTo(contentView)
-        }
-    }
-
-    private func initLangPickerPopup() {
-        langPickerPopup.onSelectLang = onSelectLang
-        langPickerPopup.backgroundColor = Colors.backgroundLightColor
-        langPickerPopup.layer.cornerRadius = 16
-        langPickerPopup.isHidden = true
-        langPickerPopup.snp.makeConstraints { (make) -> Void in
-            make.edges.equalTo(contentView)
+            make.height.equalTo(30)
         }
     }
 }

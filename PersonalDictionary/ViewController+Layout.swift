@@ -10,12 +10,12 @@ import UIKit
 extension ViewController {
 
     func initViews() {
-        view.backgroundColor = Colors.backgroundLightColor
+        view.backgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.95, alpha: 1.0)
         initNewWordButton()
     }
 
     private func initNewWordButton() {
-        newWordButton.setImage(Images.plusIcon, for: .normal)
+        newWordButton.setImage(UIImage(named: "icon-plus")!, for: .normal)
         newWordButton.imageView?.contentMode = .scaleAspectFit
         newWordButton.addTarget(self, action: #selector(onNewWordButtonTap), for: .touchUpInside)
         view.addSubview(newWordButton)

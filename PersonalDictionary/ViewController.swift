@@ -18,7 +18,9 @@ class ViewController: UIViewController {
 
     @objc
     func onNewWordButtonTap() {
-        let newWordMVVM = NewWordMVVMImpl(langRepository: LangRepositoryImpl(userDefaults: UserDefaults.standard))
+        let newWordMVVM = NewWordMVVMImpl(langRepository: LangRepositoryImpl(userDefaults: UserDefaults.standard,
+                                                                             data: langResourceData),
+                                          viewResource: newWordViewResource)
         guard let newWordViewController = newWordMVVM.viewController else { return }
 
         newWordViewController.modalPresentationStyle = .overFullScreen

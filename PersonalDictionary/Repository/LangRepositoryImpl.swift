@@ -7,51 +7,50 @@
 
 import Foundation
 
+struct LangResourceData {
+    let allLangs: [Lang]
+    let sourceLangKey: String
+    let targetLangKey: String
+    let defaultSourceLang: Lang
+    let defaultTargetLang: Lang
+}
+
 final class LangRepositoryImpl: LangRepository {
 
-    let allLangs = [Lang(name: "Английский"),
-                    Lang(name: "Русский"),
-                    Lang(name: "Французский"),
-                    Lang(name: "Итальянский")]
+    let userDefaults: UserDefaults
+    let data: LangResourceData
 
-    private let userDefaults: UserDefaults
-
-    private let sourceLangKey = Keys.userDefaultsUniquePrefix + ".sourceLang"
-    private let targetLangKey = Keys.userDefaultsUniquePrefix + ".targetLang"
-
-    init(userDefaults: UserDefaults) {
+    init(userDefaults: UserDefaults,
+         data: LangResourceData) {
         self.userDefaults = userDefaults
+        self.data = data
+    }
+
+    var allLangs: [Lang] {
+        data.allLangs
     }
 
     var sourceLang: Lang {
         get {
-            findLang(with: sourceLangKey) ?? sourceLangDefault
+            findLang(with: data.sourceLangKey) ?? data.defaultSourceLang
         }
         set {
-            userDefaults.set(newValue.name, forKey: sourceLangKey)
+            userDefaults.set(newValue.name, forKey: data.sourceLangKey)
         }
     }
 
     var targetLang: Lang {
         get {
-            findLang(with: targetLangKey) ?? targetLangDefault
+            findLang(with: data.targetLangKey) ?? data.defaultTargetLang
         }
         set {
-            userDefaults.set(newValue.name, forKey: targetLangKey)
+            userDefaults.set(newValue.name, forKey: data.targetLangKey)
         }
-    }
-
-    private var sourceLangDefault: Lang {
-        allLangs[0]
-    }
-
-    private var targetLangDefault: Lang {
-        allLangs[1]
     }
 
     private func findLang(with key: String) -> Lang? {
         let langName = userDefaults.string(forKey: key)
 
-        return allLangs.first(where: { $0.name == langName })
+        return data.allLangs.first(where: { $0.name == langName })
     }
 }

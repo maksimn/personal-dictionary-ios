@@ -10,14 +10,27 @@ import UIKit
 final class LangPickerPopup: UIView {
 
     let pickerView = UIPickerView()
-    let langPickerController = LangPickerController()
 
     let selectButton = UIButton()
 
-    var onSelectLang: ((Lang) -> Void)?
+    let selectButtonTitle: String
 
-    init() {
+    let langPickerController: LangPickerController
+
+    let onSelectLang: ((Lang) -> Void)?
+
+    init(langPickerController: LangPickerController,
+         onSelectLang: ((Lang) -> Void)?,
+         selectButtonTitle: String,
+         backgroundColor: UIColor,
+         isHidden: Bool) {
+        self.selectButtonTitle = selectButtonTitle
+        self.langPickerController = langPickerController
+        self.onSelectLang = onSelectLang
         super.init(frame: .zero)
+        self.backgroundColor = backgroundColor
+        layer.cornerRadius = 16
+        self.isHidden = isHidden
         initViews()
     }
 

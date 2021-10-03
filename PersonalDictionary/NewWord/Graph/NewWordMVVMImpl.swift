@@ -9,9 +9,10 @@ import UIKit
 
 final class NewWordMVVMImpl: NewWordMVVM {
 
-    private let view = NewWordViewVC()
+    private let view: NewWordViewController
 
-    init(langRepository: LangRepository) {
+    init(langRepository: LangRepository, viewResource: NewWordViewResource) {
+        view = NewWordViewController(viewResource: viewResource)
         let model = NewWordModelImpl(langRepository)
         let viewModel = NewWordViewModelImpl(model: model, view: view)
 
