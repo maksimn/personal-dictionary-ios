@@ -10,6 +10,8 @@
 		590F78F32709317800BCBD2C /* LangPickerPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F78F22709317800BCBD2C /* LangPickerPopup.swift */; };
 		590F78FB2709D1A000BCBD2C /* LangPickerPopup+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F78FA2709D1A000BCBD2C /* LangPickerPopup+Layout.swift */; };
 		5926504B270BA17600029BAA /* PersonalDictionaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5926504A270BA17600029BAA /* PersonalDictionaryUITests.swift */; };
+		594ACC19270BA96100D9AB8F /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594ACC18270BA96100D9AB8F /* GeneratedMocks.swift */; };
+		594ACC23270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594ACC22270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift */; };
 		5953CAEF270615AE006537B9 /* ViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CAEE270615AE006537B9 /* ViewController+Layout.swift */; };
 		5953CAF4270615D2006537B9 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CAF3270615D2006537B9 /* Resources.swift */; };
 		5953CB0927062712006537B9 /* NewWordMVVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB0827062712006537B9 /* NewWordMVVM.swift */; };
@@ -60,6 +62,8 @@
 		590F78F22709317800BCBD2C /* LangPickerPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerPopup.swift; sourceTree = "<group>"; };
 		590F78FA2709D1A000BCBD2C /* LangPickerPopup+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LangPickerPopup+Layout.swift"; sourceTree = "<group>"; };
 		5926504A270BA17600029BAA /* PersonalDictionaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDictionaryUITests.swift; sourceTree = "<group>"; };
+		594ACC18270BA96100D9AB8F /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
+		594ACC22270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordMVVMImplTests.swift; sourceTree = "<group>"; };
 		5953CAEE270615AE006537B9 /* ViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Layout.swift"; sourceTree = "<group>"; };
 		5953CAF3270615D2006537B9 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		5953CB0827062712006537B9 /* NewWordMVVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordMVVM.swift; sourceTree = "<group>"; };
@@ -131,6 +135,22 @@
 				92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		594ACC20270BAA6100D9AB8F /* NewWord */ = {
+			isa = PBXGroup;
+			children = (
+				594ACC21270BAA6B00D9AB8F /* Graph */,
+			);
+			path = NewWord;
+			sourceTree = "<group>";
+		};
+		594ACC21270BAA6B00D9AB8F /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				594ACC22270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift */,
+			);
+			path = Graph;
 			sourceTree = "<group>";
 		};
 		5953CB03270626AD006537B9 /* NewWord */ = {
@@ -260,8 +280,10 @@
 		596D721B27051D5300872D6C /* PersonalDictionaryTests */ = {
 			isa = PBXGroup;
 			children = (
+				594ACC18270BA96100D9AB8F /* GeneratedMocks.swift */,
 				598ED935270B961300747AEE /* Repository */,
 				596D721E27051D5300872D6C /* Info.plist */,
+				594ACC20270BAA6100D9AB8F /* NewWord */,
 			);
 			path = PersonalDictionaryTests;
 			sourceTree = "<group>";
@@ -304,12 +326,12 @@
 			buildConfigurationList = 596D722C27051D5300872D6C /* Build configuration list for PBXNativeTarget "PersonalDictionary" */;
 			buildPhases = (
 				831A74C7F21836B9E72EC050 /* [CP] Check Pods Manifest.lock */,
+				598ED92E270B92A500747AEE /* ShellScript */,
 				596D71FB27051D4E00872D6C /* Sources */,
 				596D71FC27051D4E00872D6C /* Frameworks */,
 				596D71FD27051D4E00872D6C /* Resources */,
 				59D43E0D27051EC300E068B1 /* ShellScript */,
 				0F713A36F87120C15E3A4279 /* [CP] Embed Pods Frameworks */,
-				598ED92E270B92A500747AEE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -328,6 +350,7 @@
 				596D721427051D5300872D6C /* Sources */,
 				596D721527051D5300872D6C /* Frameworks */,
 				596D721627051D5300872D6C /* Resources */,
+				685C2E29550BBC57E0FC0BA2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -462,7 +485,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
+			shellScript = "# Define output file. Change \"${PROJECT_DIR}/${PROJECT_NAME}Tests\" to your test's root source folder, if it's not the default name.\nOUTPUT_FILE=\"${PROJECT_DIR}/${PROJECT_NAME}Tests/GeneratedMocks.swift\"\necho \"Generated Mocks File = ${OUTPUT_FILE}\"\n\n# Define input directory. Change \"${PROJECT_DIR}/${PROJECT_NAME}\" to your project's root source folder, if it's not the default name.\nINPUT_DIR=\"${PROJECT_DIR}/${PROJECT_NAME}\"\necho \"Mocks Input Directory = ${INPUT_DIR}\"\n\n# Generate mock files, include as many input files as you'd like to create mocks for.\n\"${PODS_ROOT}/Cuckoo/run\" generate --testable \"${PROJECT_NAME}\" \\\n--output \"${OUTPUT_FILE}\" \\\n\"${INPUT_DIR}/Repository/LangRepository.swift\"\n# ... and so forth, the last line should never end with a backslash\n\n# After running once, locate `GeneratedMocks.swift` and drag it into your Xcode test target group.\n";
 		};
 		59D43E0D27051EC300E068B1 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -480,6 +503,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		685C2E29550BBC57E0FC0BA2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		831A74C7F21836B9E72EC050 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -598,7 +638,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				594ACC23270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift in Sources */,
 				598ED937270B965900747AEE /* LangRepositoryImplTests.swift in Sources */,
+				594ACC19270BA96100D9AB8F /* GeneratedMocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

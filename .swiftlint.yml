@@ -4,3 +4,4 @@ identifier_name:
 
 excluded:
   - Pods
+  - PersonalDictionaryTests/GeneratedMocks.swift
