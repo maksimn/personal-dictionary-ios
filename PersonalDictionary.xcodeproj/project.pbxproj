@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		590F78F32709317800BCBD2C /* LangPickerPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F78F22709317800BCBD2C /* LangPickerPopup.swift */; };
 		590F78FB2709D1A000BCBD2C /* LangPickerPopup+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F78FA2709D1A000BCBD2C /* LangPickerPopup+Layout.swift */; };
+		5926504B270BA17600029BAA /* PersonalDictionaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5926504A270BA17600029BAA /* PersonalDictionaryUITests.swift */; };
+		594ACC19270BA96100D9AB8F /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594ACC18270BA96100D9AB8F /* GeneratedMocks.swift */; };
+		594ACC23270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594ACC22270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift */; };
+		594ACC32270BB44500D9AB8F /* NewWordModelImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594ACC31270BB44500D9AB8F /* NewWordModelImplTests.swift */; };
 		5953CAEF270615AE006537B9 /* ViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CAEE270615AE006537B9 /* ViewController+Layout.swift */; };
 		5953CAF4270615D2006537B9 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CAF3270615D2006537B9 /* Resources.swift */; };
 		5953CB0927062712006537B9 /* NewWordMVVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB0827062712006537B9 /* NewWordMVVM.swift */; };
@@ -29,8 +33,7 @@
 		596D720727051D4E00872D6C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D720627051D4E00872D6C /* ViewController.swift */; };
 		596D720F27051D5200872D6C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 596D720E27051D5200872D6C /* Assets.xcassets */; };
 		596D721227051D5200872D6C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 596D721027051D5200872D6C /* LaunchScreen.storyboard */; };
-		596D721D27051D5300872D6C /* PersonalDictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D721C27051D5300872D6C /* PersonalDictionaryTests.swift */; };
-		596D722827051D5300872D6C /* PersonalDictionaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D722727051D5300872D6C /* PersonalDictionaryUITests.swift */; };
+		598ED937270B965900747AEE /* LangRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598ED936270B965900747AEE /* LangRepositoryImplTests.swift */; };
 		B6D3C3649E5902C8C6F61BC1 /* Pods_PersonalDictionaryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */; };
 		C1D164D517B600803F101FE8 /* Pods_PersonalDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11F2A6FDE4C3A546FFBF62BB /* Pods_PersonalDictionary.framework */; };
 		C3612940DC2F372BEFF1D4BD /* Pods_PersonalDictionary_PersonalDictionaryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D838989D0C1B6F504FEFDD9F /* Pods_PersonalDictionary_PersonalDictionaryUITests.framework */; };
@@ -59,6 +62,10 @@
 		4A06193F6648141055C88D89 /* Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig"; path = "Target Support Files/Pods-PersonalDictionary-PersonalDictionaryUITests/Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig"; sourceTree = "<group>"; };
 		590F78F22709317800BCBD2C /* LangPickerPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerPopup.swift; sourceTree = "<group>"; };
 		590F78FA2709D1A000BCBD2C /* LangPickerPopup+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LangPickerPopup+Layout.swift"; sourceTree = "<group>"; };
+		5926504A270BA17600029BAA /* PersonalDictionaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDictionaryUITests.swift; sourceTree = "<group>"; };
+		594ACC18270BA96100D9AB8F /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
+		594ACC22270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordMVVMImplTests.swift; sourceTree = "<group>"; };
+		594ACC31270BB44500D9AB8F /* NewWordModelImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordModelImplTests.swift; sourceTree = "<group>"; };
 		5953CAEE270615AE006537B9 /* ViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Layout.swift"; sourceTree = "<group>"; };
 		5953CAF3270615D2006537B9 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		5953CB0827062712006537B9 /* NewWordMVVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordMVVM.swift; sourceTree = "<group>"; };
@@ -82,11 +89,10 @@
 		596D721127051D5200872D6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		596D721327051D5200872D6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		596D721827051D5300872D6C /* PersonalDictionaryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PersonalDictionaryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		596D721C27051D5300872D6C /* PersonalDictionaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDictionaryTests.swift; sourceTree = "<group>"; };
 		596D721E27051D5300872D6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		596D722327051D5300872D6C /* PersonalDictionaryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PersonalDictionaryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		596D722727051D5300872D6C /* PersonalDictionaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDictionaryUITests.swift; sourceTree = "<group>"; };
 		596D722927051D5300872D6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		598ED936270B965900747AEE /* LangRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangRepositoryImplTests.swift; sourceTree = "<group>"; };
 		92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PersonalDictionaryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAB8B82192D6040F2CE7B2AA /* Pods-PersonalDictionaryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionaryTests.debug.xcconfig"; path = "Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D6483A53AA12677B2458433D /* Pods-PersonalDictionaryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionaryTests.release.xcconfig"; path = "Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -131,6 +137,31 @@
 				92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		594ACC20270BAA6100D9AB8F /* NewWord */ = {
+			isa = PBXGroup;
+			children = (
+				594ACC21270BAA6B00D9AB8F /* Graph */,
+				594ACC30270BB42800D9AB8F /* Model */,
+			);
+			path = NewWord;
+			sourceTree = "<group>";
+		};
+		594ACC21270BAA6B00D9AB8F /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				594ACC22270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift */,
+			);
+			path = Graph;
+			sourceTree = "<group>";
+		};
+		594ACC30270BB42800D9AB8F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				594ACC31270BB44500D9AB8F /* NewWordModelImplTests.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		5953CB03270626AD006537B9 /* NewWord */ = {
@@ -260,7 +291,9 @@
 		596D721B27051D5300872D6C /* PersonalDictionaryTests */ = {
 			isa = PBXGroup;
 			children = (
-				596D721C27051D5300872D6C /* PersonalDictionaryTests.swift */,
+				594ACC18270BA96100D9AB8F /* GeneratedMocks.swift */,
+				598ED935270B961300747AEE /* Repository */,
+				594ACC20270BAA6100D9AB8F /* NewWord */,
 				596D721E27051D5300872D6C /* Info.plist */,
 			);
 			path = PersonalDictionaryTests;
@@ -269,10 +302,18 @@
 		596D722627051D5300872D6C /* PersonalDictionaryUITests */ = {
 			isa = PBXGroup;
 			children = (
-				596D722727051D5300872D6C /* PersonalDictionaryUITests.swift */,
 				596D722927051D5300872D6C /* Info.plist */,
+				5926504A270BA17600029BAA /* PersonalDictionaryUITests.swift */,
 			);
 			path = PersonalDictionaryUITests;
+			sourceTree = "<group>";
+		};
+		598ED935270B961300747AEE /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				598ED936270B965900747AEE /* LangRepositoryImplTests.swift */,
+			);
+			path = Repository;
 			sourceTree = "<group>";
 		};
 		DBCCBB3C105FA69952338471 /* Pods */ = {
@@ -296,6 +337,7 @@
 			buildConfigurationList = 596D722C27051D5300872D6C /* Build configuration list for PBXNativeTarget "PersonalDictionary" */;
 			buildPhases = (
 				831A74C7F21836B9E72EC050 /* [CP] Check Pods Manifest.lock */,
+				598ED92E270B92A500747AEE /* ShellScript */,
 				596D71FB27051D4E00872D6C /* Sources */,
 				596D71FC27051D4E00872D6C /* Frameworks */,
 				596D71FD27051D4E00872D6C /* Resources */,
@@ -319,6 +361,7 @@
 				596D721427051D5300872D6C /* Sources */,
 				596D721527051D5300872D6C /* Frameworks */,
 				596D721627051D5300872D6C /* Resources */,
+				685C2E29550BBC57E0FC0BA2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -364,10 +407,12 @@
 					};
 					596D721727051D5300872D6C = {
 						CreatedOnToolsVersion = 12.1;
+						LastSwiftMigration = 1210;
 						TestTargetID = 596D71FE27051D4E00872D6C;
 					};
 					596D722227051D5300872D6C = {
 						CreatedOnToolsVersion = 12.1;
+						LastSwiftMigration = 1210;
 						TestTargetID = 596D71FE27051D4E00872D6C;
 					};
 				};
@@ -436,6 +481,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PersonalDictionary/Pods-PersonalDictionary-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		598ED92E270B92A500747AEE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Define output file. Change \"${PROJECT_DIR}/${PROJECT_NAME}Tests\" to your test's root source folder, if it's not the default name.\nOUTPUT_FILE=\"${PROJECT_DIR}/${PROJECT_NAME}Tests/GeneratedMocks.swift\"\necho \"Generated Mocks File = ${OUTPUT_FILE}\"\n\n# Define input directory. Change \"${PROJECT_DIR}/${PROJECT_NAME}\" to your project's root source folder, if it's not the default name.\nINPUT_DIR=\"${PROJECT_DIR}/${PROJECT_NAME}\"\necho \"Mocks Input Directory = ${INPUT_DIR}\"\n\n# Generate mock files, include as many input files as you'd like to create mocks for.\n\"${PODS_ROOT}/Cuckoo/run\" generate --testable \"${PROJECT_NAME}\" \\\n--output \"${OUTPUT_FILE}\" \\\n\"${INPUT_DIR}/Repository/LangRepository.swift\" \\\n\"${INPUT_DIR}/NewWord/ViewModel/NewWordViewModel.swift\"\n# ... and so forth, the last line should never end with a backslash\n\n# After running once, locate `GeneratedMocks.swift` and drag it into your Xcode test target group.\n";
+		};
 		59D43E0D27051EC300E068B1 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -452,6 +514,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		685C2E29550BBC57E0FC0BA2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		831A74C7F21836B9E72EC050 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -570,7 +649,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				596D721D27051D5300872D6C /* PersonalDictionaryTests.swift in Sources */,
+				594ACC23270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift in Sources */,
+				598ED937270B965900747AEE /* LangRepositoryImplTests.swift in Sources */,
+				594ACC32270BB44500D9AB8F /* NewWordModelImplTests.swift in Sources */,
+				594ACC19270BA96100D9AB8F /* GeneratedMocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,7 +660,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				596D722827051D5300872D6C /* PersonalDictionaryUITests.swift in Sources */,
+				5926504B270BA17600029BAA /* PersonalDictionaryUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -771,6 +853,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T96KB8H453;
 				INFOPLIST_FILE = PersonalDictionaryTests/Info.plist;
@@ -782,6 +865,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.maksimn.PersonalDictionaryTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PersonalDictionary.app/PersonalDictionary";
@@ -794,6 +878,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T96KB8H453;
 				INFOPLIST_FILE = PersonalDictionaryTests/Info.plist;
@@ -816,6 +901,7 @@
 			baseConfigurationReference = 03FEF5A08393BF25BB2601BB /* Pods-PersonalDictionary-PersonalDictionaryUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T96KB8H453;
 				INFOPLIST_FILE = PersonalDictionaryUITests/Info.plist;
@@ -826,6 +912,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.maksimn.PersonalDictionaryUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = PersonalDictionary;
@@ -837,6 +924,7 @@
 			baseConfigurationReference = 4A06193F6648141055C88D89 /* Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T96KB8H453;
 				INFOPLIST_FILE = PersonalDictionaryUITests/Info.plist;

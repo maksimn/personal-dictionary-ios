@@ -6,7 +6,9 @@ target 'PersonalDictionary' do
 
   target 'PersonalDictionaryTests' do
     inherit! :search_paths
-
+    
+    pod 'Cuckoo'
+  
   end
 
   target 'PersonalDictionaryUITests' do
