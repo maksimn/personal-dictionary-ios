@@ -9,10 +9,11 @@ import UIKit
 
 extension WordItemCell {
 
+    static let height: CGFloat = 64
+
     func initViews() {
-        self.clipsToBounds = true
-        self.layer.cornerRadius = 16
-        self.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        clipsToBounds = true
+        layer.cornerRadius = 16
         selectionStyle = .none
         backgroundColor = .white
         initWordLabel()
@@ -20,15 +21,14 @@ extension WordItemCell {
 
     private func initWordLabel() {
         wordlabel.textColor = .black
-        wordlabel.font = UIFont.boldSystemFont(ofSize: 17)
+        wordlabel.font = UIFont.boldSystemFont(ofSize: 20)
         wordlabel.numberOfLines = 1
-        wordlabel.preferredMaxLayoutWidth = UIScreen.main.bounds.width - 68
         contentView.addSubview(wordlabel)
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
         wordlabel.frame = CGRect(origin: CGPoint(x: 40, y: 17),
-                                 size: CGSize(width: UIScreen.main.bounds.width - 68, height: 24))
+                                 size: CGSize(width: contentView.bounds.width - 32, height: 24))
     }
 }

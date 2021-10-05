@@ -14,4 +14,14 @@ final class WordListViewModelImpl: WordListViewModel {
         self.model = model
         self.view = view
     }
+
+    func add(_ wordItem: WordItem) {
+        wordList.append(wordItem)
+    }
+
+    var wordList: [WordItem] = [] {
+        didSet {
+            view.set(wordList: self.wordList)
+        }
+    }
 }

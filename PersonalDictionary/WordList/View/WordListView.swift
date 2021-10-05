@@ -8,4 +8,6 @@
 protocol WordListView: AnyObject {
 
     var viewModel: WordListViewModel? { get set }
+
+    func set(wordList: [WordItem])
 }

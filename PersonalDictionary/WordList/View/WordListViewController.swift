@@ -33,4 +33,9 @@ class WordListViewController: UIViewController, WordListView {
 
         present(newWordViewController, animated: true, completion: nil)
     }
+
+    func set(wordList: [WordItem]) {
+        tableController.wordList = wordList
+        tableView.reloadData()
+    }
 }

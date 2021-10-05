@@ -34,7 +34,8 @@ class NewWordModelImpl: NewWordModel {
     }
 
     func sendNewWordEvent(_ newWordText: String) {
-        guard let sourceLang = viewModel?.sourceLang,
+        guard !newWordText.isEmpty,
+              let sourceLang = viewModel?.sourceLang,
               let targetLang = viewModel?.targetLang else {
             return
         }

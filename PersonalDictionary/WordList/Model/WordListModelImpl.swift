@@ -22,7 +22,7 @@ final class WordListModelImpl: WordListModel {
     @objc
     func onAddNewWordItem(_ notification: Notification) {
         if let wordItem = notification.userInfo?[Notification.Name.addNewWord] as? WordItem {
-            print(wordItem.text)
+            viewModel?.add(wordItem)
         }
     }
 }
