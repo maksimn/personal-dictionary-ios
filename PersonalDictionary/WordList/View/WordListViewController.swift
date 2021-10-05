@@ -7,7 +7,9 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class WordListViewController: UIViewController, WordListView {
+
+    var viewModel: WordListViewModel?
 
     let newWordButton = UIButton()
 

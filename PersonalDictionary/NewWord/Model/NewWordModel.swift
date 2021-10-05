@@ -7,7 +7,7 @@
 
 protocol NewWordModel {
 
-    var viewModel: NewWordViewModel? { get }
+    var viewModel: NewWordViewModel? { get set }
 
     func fetchData()
 

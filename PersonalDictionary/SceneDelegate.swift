@@ -15,7 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        let viewController = ViewController()
+        let wordListMVVM = WordListMVVMImpl()
+        guard let viewController = wordListMVVM.viewController else { return }
 
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = viewController
