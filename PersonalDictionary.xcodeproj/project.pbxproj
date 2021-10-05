@@ -12,6 +12,7 @@
 		5926504B270BA17600029BAA /* PersonalDictionaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5926504A270BA17600029BAA /* PersonalDictionaryUITests.swift */; };
 		594ACC19270BA96100D9AB8F /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594ACC18270BA96100D9AB8F /* GeneratedMocks.swift */; };
 		594ACC23270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594ACC22270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift */; };
+		594ACC32270BB44500D9AB8F /* NewWordModelImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594ACC31270BB44500D9AB8F /* NewWordModelImplTests.swift */; };
 		5953CAEF270615AE006537B9 /* ViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CAEE270615AE006537B9 /* ViewController+Layout.swift */; };
 		5953CAF4270615D2006537B9 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CAF3270615D2006537B9 /* Resources.swift */; };
 		5953CB0927062712006537B9 /* NewWordMVVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB0827062712006537B9 /* NewWordMVVM.swift */; };
@@ -64,6 +65,7 @@
 		5926504A270BA17600029BAA /* PersonalDictionaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDictionaryUITests.swift; sourceTree = "<group>"; };
 		594ACC18270BA96100D9AB8F /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
 		594ACC22270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordMVVMImplTests.swift; sourceTree = "<group>"; };
+		594ACC31270BB44500D9AB8F /* NewWordModelImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordModelImplTests.swift; sourceTree = "<group>"; };
 		5953CAEE270615AE006537B9 /* ViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Layout.swift"; sourceTree = "<group>"; };
 		5953CAF3270615D2006537B9 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		5953CB0827062712006537B9 /* NewWordMVVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordMVVM.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				594ACC21270BAA6B00D9AB8F /* Graph */,
+				594ACC30270BB42800D9AB8F /* Model */,
 			);
 			path = NewWord;
 			sourceTree = "<group>";
@@ -151,6 +154,14 @@
 				594ACC22270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift */,
 			);
 			path = Graph;
+			sourceTree = "<group>";
+		};
+		594ACC30270BB42800D9AB8F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				594ACC31270BB44500D9AB8F /* NewWordModelImplTests.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		5953CB03270626AD006537B9 /* NewWord */ = {
@@ -282,8 +293,8 @@
 			children = (
 				594ACC18270BA96100D9AB8F /* GeneratedMocks.swift */,
 				598ED935270B961300747AEE /* Repository */,
-				596D721E27051D5300872D6C /* Info.plist */,
 				594ACC20270BAA6100D9AB8F /* NewWord */,
+				596D721E27051D5300872D6C /* Info.plist */,
 			);
 			path = PersonalDictionaryTests;
 			sourceTree = "<group>";
@@ -485,7 +496,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Define output file. Change \"${PROJECT_DIR}/${PROJECT_NAME}Tests\" to your test's root source folder, if it's not the default name.\nOUTPUT_FILE=\"${PROJECT_DIR}/${PROJECT_NAME}Tests/GeneratedMocks.swift\"\necho \"Generated Mocks File = ${OUTPUT_FILE}\"\n\n# Define input directory. Change \"${PROJECT_DIR}/${PROJECT_NAME}\" to your project's root source folder, if it's not the default name.\nINPUT_DIR=\"${PROJECT_DIR}/${PROJECT_NAME}\"\necho \"Mocks Input Directory = ${INPUT_DIR}\"\n\n# Generate mock files, include as many input files as you'd like to create mocks for.\n\"${PODS_ROOT}/Cuckoo/run\" generate --testable \"${PROJECT_NAME}\" \\\n--output \"${OUTPUT_FILE}\" \\\n\"${INPUT_DIR}/Repository/LangRepository.swift\"\n# ... and so forth, the last line should never end with a backslash\n\n# After running once, locate `GeneratedMocks.swift` and drag it into your Xcode test target group.\n";
+			shellScript = "# Define output file. Change \"${PROJECT_DIR}/${PROJECT_NAME}Tests\" to your test's root source folder, if it's not the default name.\nOUTPUT_FILE=\"${PROJECT_DIR}/${PROJECT_NAME}Tests/GeneratedMocks.swift\"\necho \"Generated Mocks File = ${OUTPUT_FILE}\"\n\n# Define input directory. Change \"${PROJECT_DIR}/${PROJECT_NAME}\" to your project's root source folder, if it's not the default name.\nINPUT_DIR=\"${PROJECT_DIR}/${PROJECT_NAME}\"\necho \"Mocks Input Directory = ${INPUT_DIR}\"\n\n# Generate mock files, include as many input files as you'd like to create mocks for.\n\"${PODS_ROOT}/Cuckoo/run\" generate --testable \"${PROJECT_NAME}\" \\\n--output \"${OUTPUT_FILE}\" \\\n\"${INPUT_DIR}/Repository/LangRepository.swift\" \\\n\"${INPUT_DIR}/NewWord/ViewModel/NewWordViewModel.swift\"\n# ... and so forth, the last line should never end with a backslash\n\n# After running once, locate `GeneratedMocks.swift` and drag it into your Xcode test target group.\n";
 		};
 		59D43E0D27051EC300E068B1 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -640,6 +651,7 @@
 			files = (
 				594ACC23270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift in Sources */,
 				598ED937270B965900747AEE /* LangRepositoryImplTests.swift in Sources */,
+				594ACC32270BB44500D9AB8F /* NewWordModelImplTests.swift in Sources */,
 				594ACC19270BA96100D9AB8F /* GeneratedMocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
