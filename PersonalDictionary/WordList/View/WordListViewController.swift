@@ -22,6 +22,7 @@ class WordListViewController: UIViewController, WordListView {
     func onNewWordButtonTap() {
         let newWordMVVM = NewWordMVVMImpl(langRepository: LangRepositoryImpl(userDefaults: UserDefaults.standard,
                                                                              data: langResourceData),
+                                          notificationCenter: NotificationCenter.default,
                                           viewResource: newWordViewResource)
         guard let newWordViewController = newWordMVVM.viewController else { return }
 

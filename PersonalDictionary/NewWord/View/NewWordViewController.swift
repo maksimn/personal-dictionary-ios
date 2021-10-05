@@ -90,6 +90,10 @@ extension NewWordViewController {
 
     @objc
     func onOkButtonTap() {
+        if let text = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
+            viewModel?.sendNewWordEvent(text)
+        }
+
         dismiss(animated: true, completion: nil)
     }
 

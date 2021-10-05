@@ -11,9 +11,11 @@ final class NewWordMVVMImpl: NewWordMVVM {
 
     private let view: NewWordViewController
 
-    init(langRepository: LangRepository, viewResource: NewWordViewResource) {
+    init(langRepository: LangRepository,
+         notificationCenter: NotificationCenter,
+         viewResource: NewWordViewResource) {
         view = NewWordViewController(viewResource: viewResource)
-        let model = NewWordModelImpl(langRepository)
+        let model = NewWordModelImpl(langRepository, notificationCenter)
         let viewModel = NewWordViewModelImpl(model: model, view: view)
 
         view.viewModel = viewModel

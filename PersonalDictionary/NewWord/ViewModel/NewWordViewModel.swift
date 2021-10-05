@@ -14,4 +14,6 @@ protocol NewWordViewModel: AnyObject {
     var targetLang: Lang { get set }
 
     func fetchDataFromModel()
+
+    func sendNewWordEvent(_ newWordText: String)
 }

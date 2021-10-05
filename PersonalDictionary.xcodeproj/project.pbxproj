@@ -42,6 +42,9 @@
 		59A942DC270C504E0076F08B /* WordListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942DB270C504E0076F08B /* WordListViewModel.swift */; };
 		59A942E1270C506B0076F08B /* WordListViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942E0270C506B0076F08B /* WordListViewModelImpl.swift */; };
 		59A942E6270C52BF0076F08B /* WordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942E5270C52BF0076F08B /* WordListView.swift */; };
+		59A942F1270CE6430076F08B /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942F0270CE6430076F08B /* Notifications.swift */; };
+		59A942F9270CE6C80076F08B /* WordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942F8270CE6C80076F08B /* WordItem.swift */; };
+		59A942FE270CE83A0076F08B /* Tagged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942FD270CE83A0076F08B /* Tagged.swift */; };
 		B6D3C3649E5902C8C6F61BC1 /* Pods_PersonalDictionaryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */; };
 		C1D164D517B600803F101FE8 /* Pods_PersonalDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11F2A6FDE4C3A546FFBF62BB /* Pods_PersonalDictionary.framework */; };
 		C3612940DC2F372BEFF1D4BD /* Pods_PersonalDictionary_PersonalDictionaryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D838989D0C1B6F504FEFDD9F /* Pods_PersonalDictionary_PersonalDictionaryUITests.framework */; };
@@ -109,6 +112,9 @@
 		59A942DB270C504E0076F08B /* WordListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListViewModel.swift; sourceTree = "<group>"; };
 		59A942E0270C506B0076F08B /* WordListViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListViewModelImpl.swift; sourceTree = "<group>"; };
 		59A942E5270C52BF0076F08B /* WordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListView.swift; sourceTree = "<group>"; };
+		59A942F0270CE6430076F08B /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		59A942F8270CE6C80076F08B /* WordItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItem.swift; sourceTree = "<group>"; };
+		59A942FD270CE83A0076F08B /* Tagged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tagged.swift; sourceTree = "<group>"; };
 		92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PersonalDictionaryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAB8B82192D6040F2CE7B2AA /* Pods-PersonalDictionaryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionaryTests.debug.xcconfig"; path = "Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D6483A53AA12677B2458433D /* Pods-PersonalDictionaryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionaryTests.release.xcconfig"; path = "Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -252,6 +258,7 @@
 			children = (
 				596B95CA2706AC27004CE7E6 /* DataClass */,
 				5953CB4A27063D31006537B9 /* LangPicker */,
+				59A942FD270CE83A0076F08B /* Tagged.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -260,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				596B95CB2706AC35004CE7E6 /* Lang.swift */,
+				59A942F8270CE6C80076F08B /* WordItem.swift */,
 			);
 			path = DataClass;
 			sourceTree = "<group>";
@@ -294,6 +302,7 @@
 				5953CB03270626AD006537B9 /* NewWord */,
 				598B79EF270C4E68007ED9FD /* WordList */,
 				596D720227051D4E00872D6C /* AppDelegate.swift */,
+				59A942F0270CE6430076F08B /* Notifications.swift */,
 				5953CAF3270615D2006537B9 /* Resources.swift */,
 				596D720427051D4E00872D6C /* SceneDelegate.swift */,
 				596D720E27051D5200872D6C /* Assets.xcassets */,
@@ -693,10 +702,13 @@
 				5953CB4C27063D41006537B9 /* LangPickerController.swift in Sources */,
 				596D720727051D4E00872D6C /* WordListViewController.swift in Sources */,
 				596D720327051D4E00872D6C /* AppDelegate.swift in Sources */,
+				59A942FE270CE83A0076F08B /* Tagged.swift in Sources */,
 				5953CAF4270615D2006537B9 /* Resources.swift in Sources */,
 				59A942C8270C4F970076F08B /* WordListMVVM.swift in Sources */,
 				596B95CC2706AC35004CE7E6 /* Lang.swift in Sources */,
+				59A942F1270CE6430076F08B /* Notifications.swift in Sources */,
 				590F78F32709317800BCBD2C /* LangPickerPopup.swift in Sources */,
+				59A942F9270CE6C80076F08B /* WordItem.swift in Sources */,
 				5953CAEF270615AE006537B9 /* WordListViewController+Layout.swift in Sources */,
 				59A942E6270C52BF0076F08B /* WordListView.swift in Sources */,
 				5953CB3927062EF2006537B9 /* LangRepository.swift in Sources */,

@@ -11,9 +11,9 @@ final class WordListMVVMImpl: WordListMVVM {
 
     private let view: WordListViewController
 
-    init() {
+    init(notificationCenter: NotificationCenter) {
         view = WordListViewController()
-        let model = WordListModelImpl()
+        let model = WordListModelImpl(notificationCenter: notificationCenter)
         let viewModel = WordListViewModelImpl(model: model, view: view)
 
         view.viewModel = viewModel

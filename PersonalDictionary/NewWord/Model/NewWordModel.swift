@@ -14,4 +14,6 @@ protocol NewWordModel {
     func save(sourceLang: Lang)
 
     func save(targetLang: Lang)
+
+    func sendNewWordEvent(_ newWordText: String)
 }

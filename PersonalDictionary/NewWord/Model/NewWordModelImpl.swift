@@ -5,14 +5,18 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
+import Foundation
+
 class NewWordModelImpl: NewWordModel {
 
     weak var viewModel: NewWordViewModel?
 
     private var langRepository: LangRepository
+    private let notificationCenter: NotificationCenter
 
-    init(_ langRepository: LangRepository) {
+    init(_ langRepository: LangRepository, _ notificationCenter: NotificationCenter) {
         self.langRepository = langRepository
+        self.notificationCenter = notificationCenter
     }
 
     func fetchData() {
@@ -27,5 +31,15 @@ class NewWordModelImpl: NewWordModel {
 
     func save(targetLang: Lang) {
         langRepository.targetLang = targetLang
+    }
+
+    func sendNewWordEvent(_ newWordText: String) {
+        guard let sourceLang = viewModel?.sourceLang,
+              let targetLang = viewModel?.targetLang else {
+            return
+        }
+        let newWordItem = WordItem(text: newWordText, sourceLang: sourceLang, targetLang: targetLang)
+
+        notificationCenter.post(name: .addNewWord, object: nil, userInfo: [Notification.Name.addNewWord: newWordItem])
     }
 }
