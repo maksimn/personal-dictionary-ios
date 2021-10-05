@@ -28,7 +28,8 @@ class LangRepositoryImplTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-
+        UserDefaults.standard.removeObject(forKey: testLangResourceData.sourceLangKey)
+        UserDefaults.standard.removeObject(forKey: testLangResourceData.targetLangKey)
     }
 
     func test_allLangs__returnsTheSameArrayAsInitArgument() throws {

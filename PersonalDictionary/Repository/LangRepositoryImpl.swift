@@ -24,8 +24,6 @@ final class LangRepositoryImpl: LangRepository {
          data: LangResourceData) {
         self.userDefaults = userDefaults
         self.data = data
-        userDefaults.set(data.defaultSourceLang.name, forKey: data.sourceLangKey)
-        userDefaults.set(data.defaultTargetLang.name, forKey: data.targetLangKey)
     }
 
     var allLangs: [Lang] {
