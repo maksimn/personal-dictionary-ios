@@ -45,6 +45,9 @@
 		59A942F1270CE6430076F08B /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942F0270CE6430076F08B /* Notifications.swift */; };
 		59A942F9270CE6C80076F08B /* WordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942F8270CE6C80076F08B /* WordItem.swift */; };
 		59A942FE270CE83A0076F08B /* Tagged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942FD270CE83A0076F08B /* Tagged.swift */; };
+		59A94304270CF2DD0076F08B /* WordTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A94303270CF2DD0076F08B /* WordTableController.swift */; };
+		59A94309270CF35B0076F08B /* WordItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A94308270CF35B0076F08B /* WordItemCell.swift */; };
+		59A9430E270CF36B0076F08B /* WordItemCell+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9430D270CF36B0076F08B /* WordItemCell+Layout.swift */; };
 		B6D3C3649E5902C8C6F61BC1 /* Pods_PersonalDictionaryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */; };
 		C1D164D517B600803F101FE8 /* Pods_PersonalDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11F2A6FDE4C3A546FFBF62BB /* Pods_PersonalDictionary.framework */; };
 		C3612940DC2F372BEFF1D4BD /* Pods_PersonalDictionary_PersonalDictionaryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D838989D0C1B6F504FEFDD9F /* Pods_PersonalDictionary_PersonalDictionaryUITests.framework */; };
@@ -115,6 +118,9 @@
 		59A942F0270CE6430076F08B /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		59A942F8270CE6C80076F08B /* WordItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItem.swift; sourceTree = "<group>"; };
 		59A942FD270CE83A0076F08B /* Tagged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tagged.swift; sourceTree = "<group>"; };
+		59A94303270CF2DD0076F08B /* WordTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTableController.swift; sourceTree = "<group>"; };
+		59A94308270CF35B0076F08B /* WordItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItemCell.swift; sourceTree = "<group>"; };
+		59A9430D270CF36B0076F08B /* WordItemCell+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordItemCell+Layout.swift"; sourceTree = "<group>"; };
 		92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PersonalDictionaryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAB8B82192D6040F2CE7B2AA /* Pods-PersonalDictionaryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionaryTests.debug.xcconfig"; path = "Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D6483A53AA12677B2458433D /* Pods-PersonalDictionaryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionaryTests.release.xcconfig"; path = "Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -256,6 +262,7 @@
 		596B95C92706AC1D004CE7E6 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				59A94302270CF2C00076F08B /* WordTableView */,
 				596B95CA2706AC27004CE7E6 /* DataClass */,
 				5953CB4A27063D31006537B9 /* LangPicker */,
 				59A942FD270CE83A0076F08B /* Tagged.swift */,
@@ -387,6 +394,16 @@
 				598ED936270B965900747AEE /* LangRepositoryImplTests.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		59A94302270CF2C00076F08B /* WordTableView */ = {
+			isa = PBXGroup;
+			children = (
+				59A94303270CF2DD0076F08B /* WordTableController.swift */,
+				59A94308270CF35B0076F08B /* WordItemCell.swift */,
+				59A9430D270CF36B0076F08B /* WordItemCell+Layout.swift */,
+			);
+			path = WordTableView;
 			sourceTree = "<group>";
 		};
 		DBCCBB3C105FA69952338471 /* Pods */ = {
@@ -717,9 +734,12 @@
 				59A942D7270C50290076F08B /* WordListModelImpl.swift in Sources */,
 				59A942E1270C506B0076F08B /* WordListViewModelImpl.swift in Sources */,
 				5953CB4627063A9B006537B9 /* NewWordViewController+Layout.swift in Sources */,
+				59A94304270CF2DD0076F08B /* WordTableController.swift in Sources */,
+				59A9430E270CF36B0076F08B /* WordItemCell+Layout.swift in Sources */,
 				59A942D2270C500F0076F08B /* WordListModel.swift in Sources */,
 				5953CB132706279B006537B9 /* NewWordModel.swift in Sources */,
 				5953CB0927062712006537B9 /* NewWordMVVM.swift in Sources */,
+				59A94309270CF35B0076F08B /* WordItemCell.swift in Sources */,
 				5953CB2D270628D5006537B9 /* NewWordViewModelImpl.swift in Sources */,
 				596D720527051D4E00872D6C /* SceneDelegate.swift in Sources */,
 				590F78FB2709D1A000BCBD2C /* LangPickerPopup+Layout.swift in Sources */,

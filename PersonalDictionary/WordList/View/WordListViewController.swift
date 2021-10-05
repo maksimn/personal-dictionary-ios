@@ -11,6 +11,9 @@ class WordListViewController: UIViewController, WordListView {
 
     var viewModel: WordListViewModel?
 
+    let tableView = UITableView()
+    let tableController = WordTableController()
+
     let newWordButton = UIButton()
 
     override func viewDidLoad() {
