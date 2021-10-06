@@ -30,4 +30,8 @@ final class WordListModelImpl: WordListModel {
         viewModel?.add(wordItem)
         wordListRepository.add(wordItem, completion: { _ in })
     }
+
+    func removeFromRepository(_ wordItem: WordItem) {
+        wordListRepository.remove(with: wordItem.id, completion: { _ in })
+    }
 }

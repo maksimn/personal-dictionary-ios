@@ -12,4 +12,6 @@ protocol WordListViewModel: AnyObject {
     func fetchDataFromModel()
 
     func add(_ wordItem: WordItem)
+
+    func remove(_ wordItem: WordItem, _ position: Int)
 }

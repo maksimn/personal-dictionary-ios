@@ -23,6 +23,11 @@ final class WordListViewModelImpl: WordListViewModel {
         wordList.append(wordItem)
     }
 
+    func remove(_ wordItem: WordItem, _ position: Int) {
+        wordList.remove(at: position)
+        model.removeFromRepository(wordItem)
+    }
+
     var wordList: [WordItem] = [] {
         didSet {
             view.set(wordList: self.wordList)

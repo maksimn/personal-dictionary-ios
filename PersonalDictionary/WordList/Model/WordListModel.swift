@@ -10,4 +10,6 @@ protocol WordListModel {
     var viewModel: WordListViewModel? { get set }
 
     func fetchWordList()
+
+    func removeFromRepository(_ wordItem: WordItem)
 }

@@ -39,4 +39,10 @@ class WordListViewController: UIViewController, WordListView {
         tableController.wordList = wordList
         tableView.reloadData()
     }
+
+    func onDeleteWordTap(_ position: Int) {
+        let item = tableController.wordList[position]
+
+        viewModel?.remove(item, position)
+    }
 }

@@ -11,6 +11,8 @@ final class WordTableController: NSObject, UITableViewDataSource, UITableViewDel
 
     var wordList: [WordItem] = []
 
+    var onDeleteTap: ((Int) -> Void)?
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         wordList.count
     }
@@ -25,5 +27,20 @@ final class WordTableController: NSObject, UITableViewDataSource, UITableViewDel
         cell.set(wordItem: wordItem)
 
         return cell
+    }
+
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .normal, title: "",
+                                              handler: { (_, _, success: (Bool) -> Void) in
+                                                self.onDeleteTap?(indexPath.row)
+                                                success(true)
+                                              })
+
+        deleteAction.image = UIImage(systemName: "trash",
+                                     withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!
+        deleteAction.backgroundColor = UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
+
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }

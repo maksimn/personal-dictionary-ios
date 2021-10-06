@@ -46,5 +46,7 @@ extension WordListViewController {
         tableView.snp.makeConstraints { make -> Void in
             make.edges.equalTo(view.safeAreaLayoutGuide).inset(UIEdgeInsets(top: 10, left: 12, bottom: 0, right: 12))
         }
+
+        tableController.onDeleteTap = self.onDeleteWordTap
     }
 }
