@@ -7,7 +7,7 @@
 
 import CoreData
 
-@objc(TodoItemMO)
+@objc(WordItemMO)
 public class WordItemMO: NSManagedObject {
 
     @NSManaged public var createdAt: Date?

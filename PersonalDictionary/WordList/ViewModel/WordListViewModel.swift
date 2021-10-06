@@ -7,7 +7,9 @@
 
 protocol WordListViewModel: AnyObject {
 
-    func add(_ wordItem: WordItem)
+    var wordList: [WordItem] { get set }
 
-    var wordList: [WordItem] { get }
+    func fetchDataFromModel()
+
+    func add(_ wordItem: WordItem)
 }

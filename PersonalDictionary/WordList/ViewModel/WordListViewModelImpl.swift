@@ -15,6 +15,10 @@ final class WordListViewModelImpl: WordListViewModel {
         self.view = view
     }
 
+    func fetchDataFromModel() {
+        model.fetchWordList()
+    }
+
     func add(_ wordItem: WordItem) {
         wordList.append(wordItem)
     }

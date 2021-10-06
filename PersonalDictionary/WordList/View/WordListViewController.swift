@@ -19,6 +19,7 @@ class WordListViewController: UIViewController, WordListView {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
+        viewModel?.fetchDataFromModel()
     }
 
     @objc

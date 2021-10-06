@@ -82,9 +82,9 @@ final class CoreWordListRepository: WordListRepository {
                 let array = try backgroundContext.fetch(fetchRequest)
 
                 if array.count > 0 {
-                    let todoItemMO = array[0]
+                    let itemMO = array[0]
 
-                    backgroundContext.delete(todoItemMO)
+                    backgroundContext.delete(itemMO)
                 }
                 try backgroundContext.save()
                 DispatchQueue.main.async {

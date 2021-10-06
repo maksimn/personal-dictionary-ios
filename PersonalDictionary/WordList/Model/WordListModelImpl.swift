@@ -11,18 +11,23 @@ final class WordListModelImpl: WordListModel {
 
     weak var viewModel: WordListViewModel?
 
+    let wordListRepository: WordListRepository
     let notificationCenter: NotificationCenter
 
-    init(notificationCenter: NotificationCenter) {
+    init(wordListRepository: WordListRepository,
+         notificationCenter: NotificationCenter) {
+        self.wordListRepository = wordListRepository
         self.notificationCenter = notificationCenter
 
-        notificationCenter.addObserver(self, selector: #selector(onAddNewWordItem), name: .addNewWord, object: nil)
+        addObservers()
     }
 
-    @objc
-    func onAddNewWordItem(_ notification: Notification) {
-        if let wordItem = notification.userInfo?[Notification.Name.addNewWord] as? WordItem {
-            viewModel?.add(wordItem)
-        }
+    func fetchWordList() {
+        viewModel?.wordList = wordListRepository.wordList
+    }
+
+    func add(_ wordItem: WordItem) {
+        viewModel?.add(wordItem)
+        wordListRepository.add(wordItem, completion: { _ in })
     }
 }

@@ -8,4 +8,6 @@
 protocol WordListModel {
 
     var viewModel: WordListViewModel? { get set }
+
+    func fetchWordList()
 }

@@ -15,7 +15,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        let wordListMVVM = WordListMVVMImpl(notificationCenter: NotificationCenter.default)
+        let langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard,
+                                                data: langResourceData)
+        let wordListMVVM = WordListMVVMImpl(wordListRepository: CoreWordListRepository(langRepository: langRepository),
+                                            notificationCenter: NotificationCenter.default)
         guard let viewController = wordListMVVM.viewController else { return }
 
         window = UIWindow(windowScene: windowScene)
