@@ -48,7 +48,7 @@ final class CoreWordListRepository: WordListRepository {
         }
     }
 
-    func add(_ wordItem: WordItem, completion: @escaping (Error?) -> Void) {
+    func add(_ wordItem: WordItem, completion: ((Error?) -> Void)?) {
         let backgroundContext = persistentContainer.newBackgroundContext()
 
         backgroundContext.perform { /* [weak self] */
@@ -59,18 +59,18 @@ final class CoreWordListRepository: WordListRepository {
             do {
                 try backgroundContext.save()
                 DispatchQueue.main.async {
-                    completion(nil)
+                    completion?(nil)
                 }
             } catch {
                 // self?.logger?.log(error: error)
                 DispatchQueue.main.async {
-                    completion(error)
+                    completion?(error)
                 }
             }
         }
     }
 
-    func remove(with wordItemId: WordItem.Identifier, completion: @escaping (Error?) -> Void) {
+    func remove(with wordItemId: WordItem.Identifier, completion: ((Error?) -> Void)?) {
         let backgroundContext = persistentContainer.newBackgroundContext()
         let predicate = NSPredicate.init(format: "id = '\(wordItemId.rawValue)'")
         let fetchRequest: NSFetchRequest<WordItemMO> = WordItemMO.fetchRequest()
@@ -88,12 +88,12 @@ final class CoreWordListRepository: WordListRepository {
                 }
                 try backgroundContext.save()
                 DispatchQueue.main.async {
-                    completion(nil)
+                    completion?(nil)
                 }
             } catch {
                 // self?.logger?.log(error: error)
                 DispatchQueue.main.async {
-                    completion(error)
+                    completion?(error)
                 }
             }
         }

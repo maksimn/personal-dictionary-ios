@@ -9,7 +9,7 @@ protocol WordListRepository {
 
     var wordList: [WordItem] { get }
 
-    func add(_ wordItem: WordItem, completion: @escaping (Error?) -> Void)
+    func add(_ wordItem: WordItem, completion: ((Error?) -> Void)?)
 
-    func remove(with wordItemId: WordItem.Identifier, completion: @escaping (Error?) -> Void)
+    func remove(with wordItemId: WordItem.Identifier, completion: ((Error?) -> Void)?)
 }
