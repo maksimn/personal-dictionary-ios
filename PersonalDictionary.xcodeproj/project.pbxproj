@@ -48,6 +48,7 @@
 		59A94304270CF2DD0076F08B /* WordTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A94303270CF2DD0076F08B /* WordTableController.swift */; };
 		59A94309270CF35B0076F08B /* WordItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A94308270CF35B0076F08B /* WordItemCell.swift */; };
 		59A9430E270CF36B0076F08B /* WordItemCell+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9430D270CF36B0076F08B /* WordItemCell+Layout.swift */; };
+		59A94319270DED370076F08B /* WordListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A94318270DED370076F08B /* WordListRepository.swift */; };
 		B6D3C3649E5902C8C6F61BC1 /* Pods_PersonalDictionaryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */; };
 		C1D164D517B600803F101FE8 /* Pods_PersonalDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11F2A6FDE4C3A546FFBF62BB /* Pods_PersonalDictionary.framework */; };
 		C3612940DC2F372BEFF1D4BD /* Pods_PersonalDictionary_PersonalDictionaryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D838989D0C1B6F504FEFDD9F /* Pods_PersonalDictionary_PersonalDictionaryUITests.framework */; };
@@ -121,6 +122,7 @@
 		59A94303270CF2DD0076F08B /* WordTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTableController.swift; sourceTree = "<group>"; };
 		59A94308270CF35B0076F08B /* WordItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItemCell.swift; sourceTree = "<group>"; };
 		59A9430D270CF36B0076F08B /* WordItemCell+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordItemCell+Layout.swift"; sourceTree = "<group>"; };
+		59A94318270DED370076F08B /* WordListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListRepository.swift; sourceTree = "<group>"; };
 		92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PersonalDictionaryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAB8B82192D6040F2CE7B2AA /* Pods-PersonalDictionaryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionaryTests.debug.xcconfig"; path = "Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D6483A53AA12677B2458433D /* Pods-PersonalDictionaryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionaryTests.release.xcconfig"; path = "Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -243,8 +245,8 @@
 		5953CB3727062EAB006537B9 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				5953CB3827062EF2006537B9 /* LangRepository.swift */,
-				5953CB3D27062F02006537B9 /* LangRepositoryImpl.swift */,
+				59A94312270DECE20076F08B /* Lang */,
+				59A94317270DED1A0076F08B /* WordList */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -391,7 +393,7 @@
 		598ED935270B961300747AEE /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				598ED936270B965900747AEE /* LangRepositoryImplTests.swift */,
+				59A94313270DECF60076F08B /* Lang */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -404,6 +406,31 @@
 				59A9430D270CF36B0076F08B /* WordItemCell+Layout.swift */,
 			);
 			path = WordTableView;
+			sourceTree = "<group>";
+		};
+		59A94312270DECE20076F08B /* Lang */ = {
+			isa = PBXGroup;
+			children = (
+				5953CB3827062EF2006537B9 /* LangRepository.swift */,
+				5953CB3D27062F02006537B9 /* LangRepositoryImpl.swift */,
+			);
+			path = Lang;
+			sourceTree = "<group>";
+		};
+		59A94313270DECF60076F08B /* Lang */ = {
+			isa = PBXGroup;
+			children = (
+				598ED936270B965900747AEE /* LangRepositoryImplTests.swift */,
+			);
+			path = Lang;
+			sourceTree = "<group>";
+		};
+		59A94317270DED1A0076F08B /* WordList */ = {
+			isa = PBXGroup;
+			children = (
+				59A94318270DED370076F08B /* WordListRepository.swift */,
+			);
+			path = WordList;
 			sourceTree = "<group>";
 		};
 		DBCCBB3C105FA69952338471 /* Pods */ = {
@@ -727,6 +754,7 @@
 				590F78F32709317800BCBD2C /* LangPickerPopup.swift in Sources */,
 				59A942F9270CE6C80076F08B /* WordItem.swift in Sources */,
 				5953CAEF270615AE006537B9 /* WordListViewController+Layout.swift in Sources */,
+				59A94319270DED370076F08B /* WordListRepository.swift in Sources */,
 				59A942E6270C52BF0076F08B /* WordListView.swift in Sources */,
 				5953CB3927062EF2006537B9 /* LangRepository.swift in Sources */,
 				5953CB18270627AF006537B9 /* NewWordModelImpl.swift in Sources */,
