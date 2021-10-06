@@ -10,7 +10,7 @@ class NewWordViewModelImpl: NewWordViewModel {
     private unowned let view: NewWordView
     private let model: NewWordModel
 
-    private static let empty = Lang(name: "")
+    private static let empty = Lang(id: -1, name: "")
 
     init(model: NewWordModel, view: NewWordView) {
         self.model = model

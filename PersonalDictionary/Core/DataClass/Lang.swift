@@ -7,9 +7,6 @@
 
 struct Lang: Equatable {
 
+    let id: Int
     let name: String
-
-    static func == (lhs: Lang, rhs: Lang) -> Bool {
-        return lhs.name == rhs.name
-    }
 }

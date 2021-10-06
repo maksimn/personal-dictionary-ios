@@ -7,14 +7,16 @@
 
 import UIKit
 
-let langResourceData = LangResourceData(allLangs: [Lang(name: NSLocalizedString("English", comment: "")),
-                                                   Lang(name: NSLocalizedString("Russian", comment: "")),
-                                                   Lang(name: NSLocalizedString("French", comment: "")),
-                                                   Lang(name: NSLocalizedString("Italian", comment: ""))],
+private let lang1 = Lang(id: 1, name: NSLocalizedString("English", comment: ""))
+private let lang2 = Lang(id: 2, name: NSLocalizedString("Russian", comment: ""))
+private let lang3 = Lang(id: 3, name: NSLocalizedString("French", comment: ""))
+private let lang4 = Lang(id: 4, name: NSLocalizedString("Italian", comment: ""))
+
+let langResourceData = LangResourceData(allLangs: [lang1, lang2, lang3, lang4],
                                         sourceLangKey: "io.github.maksimn.pd.sourceLang",
                                         targetLangKey: "io.github.maksimn.pd.targetLang",
-                                        defaultSourceLang: Lang(name: NSLocalizedString("English", comment: "")),
-                                        defaultTargetLang: Lang(name: NSLocalizedString("Russian", comment: "")))
+                                        defaultSourceLang: lang1,
+                                        defaultTargetLang: lang2)
 
 let newWordViewResource = NewWordViewResource(selectButtonTitle: NSLocalizedString("Select", comment: ""),
                                               arrowText: NSLocalizedString("⇋", comment: ""),

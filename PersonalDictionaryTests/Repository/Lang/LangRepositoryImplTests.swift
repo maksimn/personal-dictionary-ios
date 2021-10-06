@@ -12,10 +12,10 @@ class LangRepositoryImplTests: XCTestCase {
 
     var langRepository: LangRepositoryImpl!
 
-    let lang1 = Lang(name: "Английский")
-    let lang2 = Lang(name: "Русский")
-    let lang3 = Lang(name: "Французский")
-    let lang4 = Lang(name: "Итальянский")
+    let lang1 = Lang(id: 1, name: NSLocalizedString("English", comment: ""))
+    let lang2 = Lang(id: 2, name: NSLocalizedString("Russian", comment: ""))
+    let lang3 = Lang(id: 3, name: NSLocalizedString("French", comment: ""))
+    let lang4 = Lang(id: 4, name: NSLocalizedString("Italian", comment: ""))
 
     lazy var testLangResourceData = LangResourceData(allLangs: [lang1, lang2, lang3, lang4],
                                                      sourceLangKey: "testing.io.github.maksimn.pd.sourceLang",

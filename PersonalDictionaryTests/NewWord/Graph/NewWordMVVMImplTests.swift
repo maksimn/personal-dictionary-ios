@@ -16,6 +16,7 @@ class NewWordMVVMImplTests: XCTestCase {
     func test_mvvmGraphOutputNotNil() throws {
         let mockLangRepository = MockLangRepository()
         let newWordMVVM = NewWordMVVMImpl(langRepository: mockLangRepository,
+                                          notificationCenter: NotificationCenter.default,
                                           viewResource: newWordViewResource)
 
         XCTAssertNotNil(newWordMVVM.viewController)

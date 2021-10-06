@@ -13,8 +13,8 @@ extension Lang: Matchable {}
 
 class NewWordModelImplTests: XCTestCase {
 
-    let langOne = Lang(name: "a")
-    let langTwo = Lang(name: "b")
+    let langOne = Lang(id: 1, name: "a")
+    let langTwo = Lang(id: 2, name: "b")
 
     func test_fetchData() throws {
         // Arrange:
@@ -24,7 +24,7 @@ class NewWordModelImplTests: XCTestCase {
         let langs = [langOne, langTwo]
         let mockLangRepository = MockLangRepository()
         let mockViewModel = MockNewWordViewModel()
-        let model = NewWordModelImpl(mockLangRepository)
+        let model = NewWordModelImpl(mockLangRepository, NotificationCenter.default)
 
         model.viewModel = mockViewModel
 
@@ -52,7 +52,7 @@ class NewWordModelImplTests: XCTestCase {
         // Arrange:
         var called = false
         let mockLangRepository = MockLangRepository()
-        let model = NewWordModelImpl(mockLangRepository)
+        let model = NewWordModelImpl(mockLangRepository, NotificationCenter.default)
 
         stub(mockLangRepository) { mock in
             when(mock.sourceLang.set(langOne)).then { _ in called = true }
@@ -69,7 +69,7 @@ class NewWordModelImplTests: XCTestCase {
         // Arrange:
         var called = false
         let mockLangRepository = MockLangRepository()
-        let model = NewWordModelImpl(mockLangRepository)
+        let model = NewWordModelImpl(mockLangRepository, NotificationCenter.default)
 
         stub(mockLangRepository) { mock in
             when(mock.targetLang.set(langOne)).then { _ in called = true }
