@@ -72,9 +72,9 @@ final class CoreWordListRepository: WordListRepository {
         }
     }
 
-    func remove(with wordItemId: WordItem.Identifier, completion: ((Error?) -> Void)?) {
+    func remove(with wordItemId: WordItem.Id, completion: ((Error?) -> Void)?) {
         let backgroundContext = persistentContainer.newBackgroundContext()
-        let predicate = NSPredicate.init(format: "id = '\(wordItemId.rawValue)'")
+        let predicate = NSPredicate.init(format: "id = '\(wordItemId.raw)'")
         let fetchRequest: NSFetchRequest<WordItemMO> = WordItemMO.fetchRequest()
 
         fetchRequest.predicate = predicate

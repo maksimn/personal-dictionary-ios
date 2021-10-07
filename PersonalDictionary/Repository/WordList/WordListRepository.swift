@@ -11,5 +11,5 @@ protocol WordListRepository {
 
     func add(_ wordItem: WordItem, completion: ((Error?) -> Void)?)
 
-    func remove(with wordItemId: WordItem.Identifier, completion: ((Error?) -> Void)?)
+    func remove(with wordItemId: WordItem.Id, completion: ((Error?) -> Void)?)
 }

@@ -7,5 +7,5 @@
 
 struct Tagged<Tag, RawValue> {
 
-    let rawValue: RawValue
+    let raw: RawValue
 }

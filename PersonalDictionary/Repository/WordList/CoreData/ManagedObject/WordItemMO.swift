@@ -21,7 +21,7 @@ public class WordItemMO: NSManagedObject {
     }
 
     func setData(from wordItem: WordItem) {
-        id = wordItem.id.rawValue
+        id = wordItem.id.raw
         text = wordItem.text
         createdAt = Date(timeIntervalSince1970: TimeInterval(wordItem.createdAt))
         sourceLangId = wordItem.sourceLang.id
@@ -38,7 +38,7 @@ public class WordItemMO: NSManagedObject {
             return nil
         }
 
-        return WordItem(id: WordItem.Identifier(rawValue: id),
+        return WordItem(id: WordItem.Id(raw: id),
                         text: text,
                         sourceLang: sourceLang,
                         targetLang: targetLang,

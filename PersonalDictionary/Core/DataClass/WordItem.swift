@@ -9,15 +9,15 @@ import Foundation
 
 struct WordItem {
 
-    typealias Identifier = Tagged<WordItem, String>
+    typealias Id = Tagged<WordItem, String>
 
-    let id: Identifier
+    let id: Id
     let text: String
     let sourceLang: Lang
     let targetLang: Lang
     let createdAt: Int
 
-    init(id: Identifier = Identifier(rawValue: UUID().uuidString),
+    init(id: Id = Id(raw: UUID().uuidString),
          text: String,
          sourceLang: Lang,
          targetLang: Lang,
