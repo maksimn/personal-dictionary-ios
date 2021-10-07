@@ -11,7 +11,7 @@ final class WordTableController: NSObject, UITableViewDataSource, UITableViewDel
 
     var wordList: [WordItem] = []
 
-    var onDeleteTap: ((Int) -> Void)?
+    var swipeToDeleteActionFactory: SwipeToDeleteActionFactory?
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         wordList.count
@@ -31,15 +31,7 @@ final class WordTableController: NSObject, UITableViewDataSource, UITableViewDel
 
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .normal, title: "",
-                                              handler: { (_, _, success: (Bool) -> Void) in
-                                                self.onDeleteTap?(indexPath.row)
-                                                success(true)
-                                              })
-
-        deleteAction.image = UIImage(systemName: "trash",
-                                     withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!
-        deleteAction.backgroundColor = UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
+        guard let deleteAction = swipeToDeleteActionFactory?.create(for: indexPath.row) else { return nil }
 
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }

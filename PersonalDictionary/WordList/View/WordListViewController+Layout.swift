@@ -47,6 +47,12 @@ extension WordListViewController {
             make.edges.equalTo(view.safeAreaLayoutGuide).inset(UIEdgeInsets(top: 10, left: 12, bottom: 0, right: 12))
         }
 
-        tableController.onDeleteTap = self.onDeleteWordTap
+        let deleteActionViewResource = DeleteActionViewResource(
+            image: UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!,
+            backgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
+        )
+
+        tableController.swipeToDeleteActionFactory = SwipeToDeleteActionFactory(viewResource: deleteActionViewResource,
+                                                                            onDeleteTap: onDeleteWordTap)
     }
 }
