@@ -284,6 +284,15 @@
 			path = LangPicker;
 			sourceTree = "<group>";
 		};
+		5967E785270FADDD00DCD8E4 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				5953CB03270626AD006537B9 /* NewWord */,
+				598B79EF270C4E68007ED9FD /* WordList */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		596B95C92706AC1D004CE7E6 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -332,8 +341,7 @@
 			children = (
 				596B95C92706AC1D004CE7E6 /* Core */,
 				5953CB3727062EAB006537B9 /* Repository */,
-				5953CB03270626AD006537B9 /* NewWord */,
-				598B79EF270C4E68007ED9FD /* WordList */,
+				5967E785270FADDD00DCD8E4 /* UI */,
 				596D720227051D4E00872D6C /* AppDelegate.swift */,
 				59A942F0270CE6430076F08B /* Notifications.swift */,
 				5953CAF3270615D2006537B9 /* Resources.swift */,
@@ -676,7 +684,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Define output file. Change \"${PROJECT_DIR}/${PROJECT_NAME}Tests\" to your test's root source folder, if it's not the default name.\nOUTPUT_FILE=\"${PROJECT_DIR}/${PROJECT_NAME}Tests/GeneratedMocks.swift\"\necho \"Generated Mocks File = ${OUTPUT_FILE}\"\n\n# Define input directory. Change \"${PROJECT_DIR}/${PROJECT_NAME}\" to your project's root source folder, if it's not the default name.\nINPUT_DIR=\"${PROJECT_DIR}/${PROJECT_NAME}\"\necho \"Mocks Input Directory = ${INPUT_DIR}\"\n\n# Generate mock files, include as many input files as you'd like to create mocks for.\n\"${PODS_ROOT}/Cuckoo/run\" generate --testable \"${PROJECT_NAME}\" \\\n--output \"${OUTPUT_FILE}\" \\\n\"${INPUT_DIR}/Repository/Lang/LangRepository.swift\" \\\n\"${INPUT_DIR}/NewWord/ViewModel/NewWordViewModel.swift\"\n# ... and so forth, the last line should never end with a backslash\n\n# After running once, locate `GeneratedMocks.swift` and drag it into your Xcode test target group.\n";
+			shellScript = "# Define output file. Change \"${PROJECT_DIR}/${PROJECT_NAME}Tests\" to your test's root source folder, if it's not the default name.\nOUTPUT_FILE=\"${PROJECT_DIR}/${PROJECT_NAME}Tests/GeneratedMocks.swift\"\necho \"Generated Mocks File = ${OUTPUT_FILE}\"\n\n# Define input directory. Change \"${PROJECT_DIR}/${PROJECT_NAME}\" to your project's root source folder, if it's not the default name.\nINPUT_DIR=\"${PROJECT_DIR}/${PROJECT_NAME}\"\necho \"Mocks Input Directory = ${INPUT_DIR}\"\n\n# Generate mock files, include as many input files as you'd like to create mocks for.\n\"${PODS_ROOT}/Cuckoo/run\" generate --testable \"${PROJECT_NAME}\" \\\n--output \"${OUTPUT_FILE}\" \\\n\"${INPUT_DIR}/Repository/Lang/LangRepository.swift\" \\\n\"${INPUT_DIR}/UI/NewWord/ViewModel/NewWordViewModel.swift\"\n# ... and so forth, the last line should never end with a backslash\n\n# After running once, locate `GeneratedMocks.swift` and drag it into your Xcode test target group.\n";
 		};
 		59D43E0D27051EC300E068B1 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
