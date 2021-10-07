@@ -17,7 +17,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard,
                                                 data: langResourceData)
-        let wordListMVVM = WordListMVVMImpl(wordListRepository: CoreWordListRepository(langRepository: langRepository),
+        let wordListMVVM = WordListMVVMImpl(wordListRepository: CoreWordListRepository(langRepository: langRepository,
+                                                                                       logger: SimpleLogger()),
                                             notificationCenter: NotificationCenter.default)
         guard let viewController = wordListMVVM.viewController else { return }
 

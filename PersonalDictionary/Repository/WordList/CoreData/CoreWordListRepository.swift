@@ -26,10 +26,12 @@ final class CoreWordListRepository: WordListRepository {
         return container
     }()
 
-    let langRepository: LangRepository
+    private let langRepository: LangRepository
+    private let logger: Logger
 
-    init(langRepository: LangRepository) {
+    init(langRepository: LangRepository, logger: Logger) {
         self.langRepository = langRepository
+        self.logger = logger
     }
 
     var wordList: [WordItem] {
@@ -43,7 +45,7 @@ final class CoreWordListRepository: WordListRepository {
 
             return wordItemMOList.compactMap { $0.convertToWordItem(with: langRepository) }
         } catch {
-            // logger?.log(error: error)
+            logger.log(error: error)
             return []
         }
     }
@@ -51,7 +53,7 @@ final class CoreWordListRepository: WordListRepository {
     func add(_ wordItem: WordItem, completion: ((Error?) -> Void)?) {
         let backgroundContext = persistentContainer.newBackgroundContext()
 
-        backgroundContext.perform { /* [weak self] */
+        backgroundContext.perform { [weak self] in
             let wordItemMO = WordItemMO(entity: WordItemMO.entity(), insertInto: backgroundContext)
 
             wordItemMO.setData(from: wordItem)
@@ -62,7 +64,7 @@ final class CoreWordListRepository: WordListRepository {
                     completion?(nil)
                 }
             } catch {
-                // self?.logger?.log(error: error)
+                self?.logger.log(error: error)
                 DispatchQueue.main.async {
                     completion?(error)
                 }
@@ -77,7 +79,7 @@ final class CoreWordListRepository: WordListRepository {
 
         fetchRequest.predicate = predicate
 
-        backgroundContext.perform { /* [weak self] in */
+        backgroundContext.perform { [weak self] in
             do {
                 let array = try backgroundContext.fetch(fetchRequest)
 
@@ -91,7 +93,7 @@ final class CoreWordListRepository: WordListRepository {
                     completion?(nil)
                 }
             } catch {
-                // self?.logger?.log(error: error)
+                self?.logger.log(error: error)
                 DispatchQueue.main.async {
                     completion?(error)
                 }
