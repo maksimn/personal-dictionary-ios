@@ -181,6 +181,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5910A44E270EA49000631446 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5953CB4A27063D31006537B9 /* LangPicker */,
+				59A94302270CF2C00076F08B /* WordTableView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		594ACC20270BAA6100D9AB8F /* NewWord */ = {
 			isa = PBXGroup;
 			children = (
@@ -276,11 +285,9 @@
 		596B95C92706AC1D004CE7E6 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				59A94336270E4C5A0076F08B /* Logger */,
-				59A94302270CF2C00076F08B /* WordTableView */,
 				596B95CA2706AC27004CE7E6 /* DataClass */,
-				5953CB4A27063D31006537B9 /* LangPicker */,
-				59A942FD270CE83A0076F08B /* Tagged.swift */,
+				59A94336270E4C5A0076F08B /* Logger */,
+				5910A44E270EA49000631446 /* Views */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -288,6 +295,7 @@
 		596B95CA2706AC27004CE7E6 /* DataClass */ = {
 			isa = PBXGroup;
 			children = (
+				59A942FD270CE83A0076F08B /* Tagged.swift */,
 				596B95CB2706AC35004CE7E6 /* Lang.swift */,
 				59A942F8270CE6C80076F08B /* WordItem.swift */,
 			);
