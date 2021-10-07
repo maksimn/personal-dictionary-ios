@@ -7,6 +7,12 @@
 
 struct Lang: Equatable {
 
-    let id: Int
+    typealias Id = Tagged<Lang, Int>
+
+    let id: Id
     let name: String
+
+    static func == (lhs: Lang, rhs: Lang) -> Bool {
+        lhs.id.raw == lhs.id.raw
+    }
 }

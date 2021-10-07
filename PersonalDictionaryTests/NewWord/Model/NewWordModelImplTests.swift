@@ -13,8 +13,8 @@ extension Lang: Matchable {}
 
 class NewWordModelImplTests: XCTestCase {
 
-    let langOne = Lang(id: 1, name: "a")
-    let langTwo = Lang(id: 2, name: "b")
+    let langOne = Lang(id: Lang.Id(raw: 1), name: "a")
+    let langTwo = Lang(id: Lang.Id(raw: 2), name: "b")
 
     func test_fetchData() throws {
         // Arrange:

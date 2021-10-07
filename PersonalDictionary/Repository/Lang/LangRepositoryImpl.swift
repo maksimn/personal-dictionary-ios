@@ -35,7 +35,7 @@ final class LangRepositoryImpl: LangRepository {
             findLang(with: data.sourceLangKey) ?? data.defaultSourceLang
         }
         set {
-            userDefaults.set(newValue.id, forKey: data.sourceLangKey)
+            userDefaults.set(newValue.id.raw, forKey: data.sourceLangKey)
         }
     }
 
@@ -44,13 +44,13 @@ final class LangRepositoryImpl: LangRepository {
             findLang(with: data.targetLangKey) ?? data.defaultTargetLang
         }
         set {
-            userDefaults.set(newValue.id, forKey: data.targetLangKey)
+            userDefaults.set(newValue.id.raw, forKey: data.targetLangKey)
         }
     }
 
     private func findLang(with key: String) -> Lang? {
         let langId = userDefaults.integer(forKey: key)
 
-        return data.allLangs.first(where: { $0.id == langId })
+        return data.allLangs.first(where: { $0.id.raw == langId })
     }
 }

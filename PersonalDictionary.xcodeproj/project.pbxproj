@@ -289,8 +289,8 @@
 			children = (
 				596B95CA2706AC27004CE7E6 /* DataClass */,
 				59A94336270E4C5A0076F08B /* Logger */,
-				5910A44E270EA49000631446 /* Views */,
 				59BA6E98270F7FA600A70594 /* UserSwipes */,
+				5910A44E270EA49000631446 /* Views */,
 			);
 			path = Core;
 			sourceTree = "<group>";

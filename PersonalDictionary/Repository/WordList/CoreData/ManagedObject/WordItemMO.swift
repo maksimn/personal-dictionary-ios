@@ -24,8 +24,8 @@ public class WordItemMO: NSManagedObject {
         id = wordItem.id.raw
         text = wordItem.text
         createdAt = Date(timeIntervalSince1970: TimeInterval(wordItem.createdAt))
-        sourceLangId = wordItem.sourceLang.id
-        targetLangId = wordItem.targetLang.id
+        sourceLangId = wordItem.sourceLang.id.raw
+        targetLangId = wordItem.targetLang.id.raw
     }
 
     func convertToWordItem(with langRepository: LangRepository) -> WordItem? {
@@ -33,8 +33,8 @@ public class WordItemMO: NSManagedObject {
         guard let id = id,
               let text = text,
               let createdAt = createdAt?.timeIntervalSince1970,
-              let sourceLang = langs.first(where: { $0.id == sourceLangId  }),
-              let targetLang = langs.first(where: { $0.id == targetLangId  }) else {
+              let sourceLang = langs.first(where: { $0.id.raw == sourceLangId  }),
+              let targetLang = langs.first(where: { $0.id.raw == targetLangId  }) else {
             return nil
         }
 
