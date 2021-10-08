@@ -10,6 +10,9 @@ final class WordListViewModelImpl: WordListViewModel {
     private unowned let view: WordListView
     private let model: WordListModel
 
+    private var previousWordCount = -1
+    private var removedItemPosition = -1
+
     init(model: WordListModel, view: WordListView) {
         self.model = model
         self.view = view
@@ -24,13 +27,25 @@ final class WordListViewModelImpl: WordListViewModel {
     }
 
     func remove(_ wordItem: WordItem, _ position: Int) {
+        removedItemPosition = position
         wordList.remove(at: position)
         model.removeFromRepository(wordItem)
     }
 
     var wordList: [WordItem] = [] {
+        willSet {
+            previousWordCount = wordList.count
+        }
         didSet {
             view.set(wordList: self.wordList)
+
+            if wordList.count == previousWordCount - 1 {
+                view.removeRowAt(removedItemPosition)
+            } else if wordList.count == previousWordCount + 1 {
+                view.addNewRowToList()
+            } else {
+                view.reloadList()
+            }
         }
     }
 }

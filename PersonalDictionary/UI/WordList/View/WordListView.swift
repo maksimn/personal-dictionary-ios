@@ -10,4 +10,10 @@ protocol WordListView: AnyObject {
     var viewModel: WordListViewModel? { get set }
 
     func set(wordList: [WordItem])
+
+    func addNewRowToList()
+
+    func removeRowAt(_ position: Int)
+
+    func reloadList()
 }
