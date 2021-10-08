@@ -11,6 +11,7 @@ struct Lang: Equatable {
 
     let id: Id
     let name: String
+    let shortName: String
 
     static func == (lhs: Lang, rhs: Lang) -> Bool {
         lhs.id == lhs.id

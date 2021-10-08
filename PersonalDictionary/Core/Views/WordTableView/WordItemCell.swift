@@ -24,7 +24,7 @@ final class WordItemCell: UITableViewCell {
 
     func set(wordItem: WordItem) {
         wordlabel.text = wordItem.text
-        sourceLangLabel.text = wordItem.sourceLang.name
-        targetLangLabel.text = wordItem.targetLang.name
+        sourceLangLabel.text = wordItem.sourceLang.shortName
+        targetLangLabel.text = wordItem.targetLang.shortName
     }
 }
