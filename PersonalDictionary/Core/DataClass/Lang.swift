@@ -13,6 +13,6 @@ struct Lang: Equatable {
     let name: String
 
     static func == (lhs: Lang, rhs: Lang) -> Bool {
-        lhs.id.raw == lhs.id.raw
+        lhs.id == lhs.id
     }
 }

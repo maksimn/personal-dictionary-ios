@@ -39,7 +39,7 @@ final class LangPickerPopup: UIView {
     }
 
     func select(lang: Lang) {
-        guard let row = langPickerController.langs.firstIndex(where: { $0.name == lang.name }) else { return }
+        guard let row = langPickerController.langs.firstIndex(where: { $0.id == lang.id }) else { return }
 
         pickerView.selectRow(row, inComponent: 0, animated: false)
     }

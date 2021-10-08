@@ -33,8 +33,8 @@ public class WordItemMO: NSManagedObject {
         guard let id = id,
               let text = text,
               let createdAt = createdAt?.timeIntervalSince1970,
-              let sourceLang = langs.first(where: { $0.id.raw == sourceLangId  }),
-              let targetLang = langs.first(where: { $0.id.raw == targetLangId  }) else {
+              let sourceLang = langs.first(where: { $0.id == Lang.Id(raw: sourceLangId)  }),
+              let targetLang = langs.first(where: { $0.id == Lang.Id(raw: targetLangId)  }) else {
             return nil
         }
 
