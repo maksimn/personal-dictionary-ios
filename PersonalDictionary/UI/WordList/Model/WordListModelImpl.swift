@@ -38,8 +38,8 @@ final class WordListModelImpl<TService: TranslationService>: WordListModel
             switch result {
             case .success(let dataArray):
                 print("req success")
-                if let ponsResponseData = dataArray.first {
-                    print(ponsResponseData.translation ?? "no translation")
+                if let translation = dataArray.first?.translation {
+                    print(translation)
                 } else {
                     print("no translation")
                 }
