@@ -5,9 +5,9 @@
 //  Created by Maxim Ivanov on 09.10.2021.
 //
 
-typealias TranslationServiceResult = Result<YandexTranslatorResponseData, Error>
-
 protocol TranslationService {
 
-    func fetchTranslation(for wordItem: WordItem, _ completion: @escaping (TranslationServiceResult) -> Void)
+    associatedtype Success
+
+    func fetchTranslation(for wordItem: WordItem, _ completion: @escaping (Result<Success, Error>) -> Void)
 }

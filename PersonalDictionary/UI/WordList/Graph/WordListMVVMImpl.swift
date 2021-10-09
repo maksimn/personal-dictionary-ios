@@ -7,12 +7,13 @@
 
 import UIKit
 
-final class WordListMVVMImpl: WordListMVVM {
+final class WordListMVVMImpl<TService: TranslationService>: WordListMVVM
+    where TService.Success == YandexTranslatorResponseData {
 
     private let view: WordListViewController
 
     init(wordListRepository: WordListRepository,
-         translationService: TranslationService,
+         translationService: TService,
          notificationCenter: NotificationCenter) {
         view = WordListViewController()
         let model = WordListModelImpl(wordListRepository: wordListRepository,

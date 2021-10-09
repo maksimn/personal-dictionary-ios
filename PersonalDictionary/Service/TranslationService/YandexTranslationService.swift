@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct YandexApiData {
+    let apiUrl: String
+    let apiKey: String
+}
+
 final class YandexTranslationService: TranslationService {
 
     private let coreService: CoreService
@@ -19,7 +24,7 @@ final class YandexTranslationService: TranslationService {
         self.jsonCoder = jsonCoder
     }
 
-    func fetchTranslation(for wordItem: WordItem, _ completion: @escaping (TranslationServiceResult) -> Void) {
+    func fetchTranslation(for wordItem: WordItem, _ completion: @escaping (YandexTranslationServiceResult) -> Void) {
         let key = "key=\(apiData.apiKey)"
         let text = "text=\(wordItem.text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
         let lang = "lang=\(wordItem.sourceLang.shortName.lowercased())-\(wordItem.targetLang.shortName.lowercased())"
@@ -33,14 +38,14 @@ final class YandexTranslationService: TranslationService {
     }
 
     private func resultHandler(_ result: Result<Data, Error>,
-                               _ completion: @escaping (TranslationServiceResult) -> Void) {
+                               _ completion: @escaping (YandexTranslationServiceResult) -> Void) {
         do {
             let data = try result.get()
 
-            jsonCoder.decodeAsync(data) { (result: TranslationServiceResult) in
+            jsonCoder.decodeAsync(data) { (result: YandexTranslationServiceResult) in
                 switch result {
-                case .success(let array):
-                    completion(.success(array))
+                case .success(let object):
+                    completion(.success(object))
                 case .failure(let error):
                     completion(.failure(error))
                 }

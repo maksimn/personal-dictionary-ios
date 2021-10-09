@@ -61,7 +61,6 @@
 		59A94327270E47030076F08B /* StorageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 59A94325270E47030076F08B /* StorageModel.xcdatamodeld */; };
 		59A9432F270E4B8D0076F08B /* CoreWordListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9432E270E4B8D0076F08B /* CoreWordListRepository.swift */; };
 		59A94339270E4DB90076F08B /* WordItemMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A94338270E4DB90076F08B /* WordItemMO.swift */; };
-		59A94341270E5EFC0076F08B /* WordListModelImpl+Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A94340270E5EFC0076F08B /* WordListModelImpl+Events.swift */; };
 		59BA6E9A270F7FD000A70594 /* SwipeToDeleteActionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BA6E99270F7FD000A70594 /* SwipeToDeleteActionFactory.swift */; };
 		B6D3C3649E5902C8C6F61BC1 /* Pods_PersonalDictionaryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */; };
 		C1D164D517B600803F101FE8 /* Pods_PersonalDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11F2A6FDE4C3A546FFBF62BB /* Pods_PersonalDictionary.framework */; };
@@ -149,7 +148,6 @@
 		59A94326270E47030076F08B /* StorageModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StorageModel.xcdatamodel; sourceTree = "<group>"; };
 		59A9432E270E4B8D0076F08B /* CoreWordListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreWordListRepository.swift; sourceTree = "<group>"; };
 		59A94338270E4DB90076F08B /* WordItemMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItemMO.swift; sourceTree = "<group>"; };
-		59A94340270E5EFC0076F08B /* WordListModelImpl+Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordListModelImpl+Events.swift"; sourceTree = "<group>"; };
 		59BA6E99270F7FD000A70594 /* SwipeToDeleteActionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeToDeleteActionFactory.swift; sourceTree = "<group>"; };
 		92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PersonalDictionaryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAB8B82192D6040F2CE7B2AA /* Pods-PersonalDictionaryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionaryTests.debug.xcconfig"; path = "Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -460,7 +458,6 @@
 			children = (
 				59A942D1270C500F0076F08B /* WordListModel.swift */,
 				59A942D6270C50290076F08B /* WordListModelImpl.swift */,
-				59A94340270E5EFC0076F08B /* WordListModelImpl+Events.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -900,7 +897,6 @@
 				59A94304270CF2DD0076F08B /* WordTableController.swift in Sources */,
 				5976022B271112AF0077B5F7 /* CoreService.swift in Sources */,
 				59A9430E270CF36B0076F08B /* WordItemCell+Layout.swift in Sources */,
-				59A94341270E5EFC0076F08B /* WordListModelImpl+Events.swift in Sources */,
 				59760236271113860077B5F7 /* YandexTranslatorResponseData.swift in Sources */,
 				5976024A271115650077B5F7 /* JsonCoder.swift in Sources */,
 				59760241271114DA0077B5F7 /* YandexTranslationService.swift in Sources */,
