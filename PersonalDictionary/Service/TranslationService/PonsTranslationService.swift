@@ -28,7 +28,7 @@ final class PonsTranslationService: TranslationService {
         self.logger = logger
     }
 
-    func fetchTranslation(for wordItem: WordItem, _ completion: @escaping (PonsTranslationServiceResult) -> Void) {
+    func fetchTranslation(for wordItem: WordItem, _ completion: @escaping (TranslationServiceResult) -> Void) {
         let shortSourceLang = wordItem.sourceLang.shortName.lowercased()
         let qParam = "q=\(wordItem.text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
         let lParam = "l=\(shortSourceLang)\(wordItem.targetLang.shortName.lowercased())"
@@ -44,15 +44,17 @@ final class PonsTranslationService: TranslationService {
     }
 
     private func resultHandler(_ result: Result<Data, Error>,
-                               _ completion: @escaping (PonsTranslationServiceResult) -> Void) {
+                               _ completion: @escaping (TranslationServiceResult) -> Void) {
         do {
             let data = try result.get()
 
-            jsonCoder.decodeAsync(data) { (result: PonsTranslationServiceResult) in
+            jsonCoder.decodeAsync(data) { (result: Result<[PonsResponseData], Error>) in
                 switch result {
-                case .success(let array):
+                case .success(let ponsResponseArray):
+                    let translation = ponsResponseArray.first?.translation ?? ""
+
                     self.logger.networkRequestSuccess(self.fetchTranslationRequestName)
-                    completion(.success(array))
+                    completion(.success(translation))
                 case .failure(let error):
                     self.logger.log(error: error)
                     completion(.failure(error))

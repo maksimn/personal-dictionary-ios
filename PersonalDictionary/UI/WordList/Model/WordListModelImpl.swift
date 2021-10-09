@@ -36,15 +36,11 @@ final class WordListModelImpl: WordListModel {
         wordListRepository.add(wordItem, completion: nil)
         translationService.fetchTranslation(for: wordItem, { [weak self] result in
             switch result {
-            case .success(let dataArray):
-                if let translation = dataArray.first?.translation {
-                    let updatedWordItem = wordItem.update(translation: translation)
+            case .success(let translation):
+                let updatedWordItem = wordItem.update(translation: translation)
 
-                    self?.wordListRepository.update(updatedWordItem, completion: nil)
-                    self?.viewModel?.update(updatedWordItem, position)
-                } else {
-
-                }
+                self?.wordListRepository.update(updatedWordItem, completion: nil)
+                self?.viewModel?.update(updatedWordItem, position)
             case .failure:
                 break
             }
