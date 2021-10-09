@@ -17,11 +17,15 @@ final class PonsTranslationService: TranslationService {
     private let coreService: CoreService
     private let jsonCoder: JsonCoder
     private let apiData: PonsApiData
+    private let logger: Logger
 
-    init(apiData: PonsApiData, coreService: CoreService, jsonCoder: JsonCoder) {
+    private let fetchTranslationRequestName = "FETCH TRANSLATION"
+
+    init(apiData: PonsApiData, coreService: CoreService, jsonCoder: JsonCoder, logger: Logger) {
         self.apiData = apiData
         self.coreService = coreService
         self.jsonCoder = jsonCoder
+        self.logger = logger
     }
 
     func fetchTranslation(for wordItem: WordItem, _ completion: @escaping (PonsTranslationServiceResult) -> Void) {
@@ -30,6 +34,7 @@ final class PonsTranslationService: TranslationService {
         let lParam = "l=\(shortSourceLang)\(wordItem.targetLang.shortName.lowercased())"
         let inParam = "in=\(shortSourceLang)"
 
+        logger.networkRequestStart(fetchTranslationRequestName)
         coreService.set(urlString: apiData.url + "?" + lParam + "&" + qParam + "&" + inParam,
                         httpMethod: "GET",
                         headers: ["X-Secret": apiData.secret])
@@ -46,12 +51,15 @@ final class PonsTranslationService: TranslationService {
             jsonCoder.decodeAsync(data) { (result: PonsTranslationServiceResult) in
                 switch result {
                 case .success(let array):
+                    self.logger.networkRequestSuccess(self.fetchTranslationRequestName)
                     completion(.success(array))
                 case .failure(let error):
+                    self.logger.log(error: error)
                     completion(.failure(error))
                 }
             }
         } catch {
+            self.logger.networkRequestError(self.fetchTranslationRequestName)
             completion(.failure(error))
         }
     }

@@ -15,13 +15,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
+        let logger = SimpleLogger()
         let langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard,
                                                 data: langResourceData)
         let translationService = PonsTranslationService(apiData: ponsApiData,
                                                         coreService: UrlSessionCoreService(),
-                                                        jsonCoder: JSONCoderImpl())
+                                                        jsonCoder: JSONCoderImpl(),
+                                                        logger: logger)
         let wordListMVVM = WordListMVVMImpl(wordListRepository: CoreWordListRepository(langRepository: langRepository,
-                                                                                       logger: SimpleLogger()),
+                                                                                       logger: logger),
                                             translationService: translationService,
                                             notificationCenter: NotificationCenter.default)
         guard let viewController = wordListMVVM.viewController else { return }

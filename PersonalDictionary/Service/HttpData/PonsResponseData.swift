@@ -5,8 +5,6 @@
 //  Created by Maxim Ivanov on 09.10.2021.
 //
 
-typealias PonsTranslationServiceResult = Result<[PonsResponseData], Error>
-
 struct PonsResponseData: Codable {
     let hits: [PonsResponseDataHit]
 

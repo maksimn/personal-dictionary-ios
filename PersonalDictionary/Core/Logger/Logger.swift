@@ -7,5 +7,11 @@
 
 protocol Logger {
 
+    func networkRequestStart(_ requestName: String)
+
+    func networkRequestSuccess(_ requestName: String)
+
+    func networkRequestError(_ requestName: String)
+
     func log(error: Error)
 }
