@@ -17,8 +17,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard,
                                                 data: langResourceData)
+        let translationService = YandexTranslationService(yandexApiData,
+                                                          UrlSessionCoreService(),
+                                                          JSONCoderImpl())
         let wordListMVVM = WordListMVVMImpl(wordListRepository: CoreWordListRepository(langRepository: langRepository,
                                                                                        logger: SimpleLogger()),
+                                            translationService: translationService,
                                             notificationCenter: NotificationCenter.default)
         guard let viewController = wordListMVVM.viewController else { return }
 

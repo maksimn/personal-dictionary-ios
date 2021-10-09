@@ -9,7 +9,7 @@ import Foundation
 
 protocol JsonCoder {
 
-    func encodeAsync<T: Encodable>(_ requestData: T,
+    func encodeAsync<T: Encodable>(_ object: T,
                                    _ completion: @escaping (Result<Data, Error>) -> Void)
 
     func decodeAsync<T: Decodable>(_ data: Data,

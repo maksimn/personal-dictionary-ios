@@ -9,5 +9,7 @@ struct YandexTranslatorResponseData: Codable {
 
     let code: Int
 
-    let text: [String]
+    let text: [String]?
+
+    let message: String?
 }

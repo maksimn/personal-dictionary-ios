@@ -13,10 +13,13 @@ final class WordListModelImpl: WordListModel {
 
     let wordListRepository: WordListRepository
     let notificationCenter: NotificationCenter
+    let translationService: TranslationService
 
     init(wordListRepository: WordListRepository,
+         translationService: TranslationService,
          notificationCenter: NotificationCenter) {
         self.wordListRepository = wordListRepository
+        self.translationService = translationService
         self.notificationCenter = notificationCenter
 
         addObservers()
@@ -29,6 +32,19 @@ final class WordListModelImpl: WordListModel {
     func add(_ wordItem: WordItem) {
         viewModel?.add(wordItem)
         wordListRepository.add(wordItem, completion: nil)
+        print("req start")
+        translationService.fetchTranslation(for: wordItem, { result in
+            switch result {
+            case .success(let translationData):
+                print("req success")
+                print(translationData.code)
+                print(translationData.text ?? "")
+                print(translationData.message ?? "")
+            case .failure(let error):
+                print("req error")
+                print(error)
+            }
+        })
     }
 
     func removeFromRepository(_ wordItem: WordItem) {

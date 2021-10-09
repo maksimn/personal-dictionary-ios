@@ -46,7 +46,7 @@ class WordListViewController: UIViewController, WordListView {
     }
 
     func removeRowAt(_ position: Int) {
-        guard position > -1 && position < tableController.wordList.count else { return }
+        guard position > -1 && position <= tableController.wordList.count else { return }
         tableView.deleteRows(at: [IndexPath(row: position, section: 0)], with: .automatic)
     }
 

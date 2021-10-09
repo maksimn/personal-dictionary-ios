@@ -9,14 +9,14 @@ import Foundation
 
 final class JSONCoderImpl: JsonCoder {
 
-    func encodeAsync<T: Encodable>(_ requestData: T,
+    func encodeAsync<T: Encodable>(_ object: T,
                                    _ completion: @escaping (Result<Data, Error>) -> Void) {
         if Thread.isMainThread {
             DispatchQueue.global(qos: .default).async { [weak self] in
-                self?.encodeAndReturnToMainThread(requestData, completion)
+                self?.encodeAndReturnToMainThread(object, completion)
             }
         } else {
-            encodeAndReturnToMainThread(requestData, completion)
+            encodeAndReturnToMainThread(object, completion)
         }
     }
 
@@ -31,10 +31,10 @@ final class JSONCoderImpl: JsonCoder {
         }
     }
 
-    func encodeAndReturnToMainThread<T: Encodable>(_ requestData: T,
+    func encodeAndReturnToMainThread<T: Encodable>(_ object: T,
                                                    _ completion: @escaping (Result<Data, Error>) -> Void) {
         do {
-            let data = try JSONEncoder().encode(requestData)
+            let data = try JSONEncoder().encode(object)
 
             DispatchQueue.main.async {
                 completion(.success(data))
