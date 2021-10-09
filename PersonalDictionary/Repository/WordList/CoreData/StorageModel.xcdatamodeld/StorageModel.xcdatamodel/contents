@@ -3,9 +3,10 @@
     <entity name="WordItemMO" representedClassName="WordItemMO" syncable="YES">
         <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="String"/>
-        <attribute name="sourceLangId" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="targetLangId" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sourceLangId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="targetLangId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="text" attributeType="String"/>
+        <attribute name="translation" optional="YES" attributeType="String"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -13,6 +14,6 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="WordItemMO" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="WordItemMO" positionX="-63" positionY="-18" width="128" height="133"/>
     </elements>
 </model>

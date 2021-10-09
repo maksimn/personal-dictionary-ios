@@ -13,6 +13,7 @@ public class WordItemMO: NSManagedObject {
     @NSManaged public var createdAt: Date?
     @NSManaged public var id: String?
     @NSManaged public var text: String?
+    @NSManaged public var translation: String?
     @NSManaged public var sourceLangId: Int
     @NSManaged public var targetLangId: Int
 
@@ -23,6 +24,7 @@ public class WordItemMO: NSManagedObject {
     func setData(from wordItem: WordItem) {
         id = wordItem.id.raw
         text = wordItem.text
+        translation = wordItem.translation
         createdAt = Date(timeIntervalSince1970: TimeInterval(wordItem.createdAt))
         sourceLangId = wordItem.sourceLang.id.raw
         targetLangId = wordItem.targetLang.id.raw
@@ -40,6 +42,7 @@ public class WordItemMO: NSManagedObject {
 
         return WordItem(id: WordItem.Id(raw: id),
                         text: text,
+                        translation: translation,
                         sourceLang: sourceLang,
                         targetLang: targetLang,
                         createdAt: Int(createdAt))
