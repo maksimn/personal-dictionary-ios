@@ -31,15 +31,21 @@ final class WordListModelImpl<TService: TranslationService>: WordListModel
     }
 
     func add(_ wordItem: WordItem) {
+        guard let position = viewModel?.wordList.count else { return }
+
         viewModel?.add(wordItem)
         wordListRepository.add(wordItem, completion: nil)
         print("req start")
-        translationService.fetchTranslation(for: wordItem, { result in
+        translationService.fetchTranslation(for: wordItem, { [weak self] result in
             switch result {
             case .success(let dataArray):
                 print("req success")
                 if let translation = dataArray.first?.translation {
                     print(translation)
+                    let updatedWordItem = wordItem.update(translation: translation)
+
+                    self?.wordListRepository.update(updatedWordItem, completion: nil)
+                    self?.viewModel?.update(updatedWordItem, position)
                 } else {
                     print("no translation")
                 }

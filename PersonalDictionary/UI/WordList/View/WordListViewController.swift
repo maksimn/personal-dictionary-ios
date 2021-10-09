@@ -45,8 +45,15 @@ class WordListViewController: UIViewController, WordListView {
         tableView.insertRows(at: [IndexPath(row: count, section: 0)], with: .automatic)
     }
 
+    func updateRowAt(_ position: Int) {
+        guard position > -1 && position < tableController.wordList.count else { return }
+
+        tableView.reloadRows(at: [IndexPath(row: position, section: 0)], with: .automatic)
+    }
+
     func removeRowAt(_ position: Int) {
         guard position > -1 && position <= tableController.wordList.count else { return }
+
         tableView.deleteRows(at: [IndexPath(row: position, section: 0)], with: .automatic)
     }
 

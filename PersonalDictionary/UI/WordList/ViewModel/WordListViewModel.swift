@@ -13,5 +13,7 @@ protocol WordListViewModel: AnyObject {
 
     func add(_ wordItem: WordItem)
 
+    func update(_ wordItem: WordItem, _ position: Int)
+
     func remove(_ wordItem: WordItem, _ position: Int)
 }
