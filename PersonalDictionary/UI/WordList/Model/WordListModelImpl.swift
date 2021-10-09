@@ -8,7 +8,7 @@
 import Foundation
 
 final class WordListModelImpl<TService: TranslationService>: WordListModel
-    where TService.Success == YandexTranslatorResponseData {
+    where TService.Success == [PonsResponseData] {
 
     weak var viewModel: WordListViewModel?
 
@@ -36,11 +36,13 @@ final class WordListModelImpl<TService: TranslationService>: WordListModel
         print("req start")
         translationService.fetchTranslation(for: wordItem, { result in
             switch result {
-            case .success(let translationData):
+            case .success(let dataArray):
                 print("req success")
-                print(translationData.code)
-                print(translationData.text ?? "")
-                print(translationData.message ?? "")
+                if let ponsResponseData = dataArray.first {
+                    print(ponsResponseData.translation ?? "no translation")
+                } else {
+                    print("no translation")
+                }
             case .failure(let error):
                 print("req error")
                 print(error)

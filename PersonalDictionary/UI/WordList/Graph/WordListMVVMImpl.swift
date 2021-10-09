@@ -8,7 +8,7 @@
 import UIKit
 
 final class WordListMVVMImpl<TService: TranslationService>: WordListMVVM
-    where TService.Success == YandexTranslatorResponseData {
+    where TService.Success == [PonsResponseData] {
 
     private let view: WordListViewController
 

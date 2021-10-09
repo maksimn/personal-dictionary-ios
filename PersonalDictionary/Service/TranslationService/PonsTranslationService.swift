@@ -7,12 +7,6 @@
 
 import Foundation
 
-typealias PonsTranslationServiceResult = Result<PonsResponseData, Error>
-
-struct PonsResponseData: Codable {
-
-}
-
 struct PonsApiData {
     let url: String
     let secret: String
@@ -24,17 +18,19 @@ final class PonsTranslationService: TranslationService {
     private let jsonCoder: JsonCoder
     private let apiData: PonsApiData
 
-    init(_ apiData: PonsApiData, _ coreService: CoreService, _ jsonCoder: JsonCoder) {
+    init(apiData: PonsApiData, coreService: CoreService, jsonCoder: JsonCoder) {
         self.apiData = apiData
         self.coreService = coreService
         self.jsonCoder = jsonCoder
     }
 
     func fetchTranslation(for wordItem: WordItem, _ completion: @escaping (PonsTranslationServiceResult) -> Void) {
+        let shortSourceLang = wordItem.sourceLang.shortName.lowercased()
         let qParam = "q=\(wordItem.text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
-        let lParam = "l=\(wordItem.sourceLang.shortName.lowercased())\(wordItem.targetLang.shortName.lowercased())"
+        let lParam = "l=\(shortSourceLang)\(wordItem.targetLang.shortName.lowercased())"
+        let inParam = "in=\(shortSourceLang)"
 
-        coreService.set(urlString: apiData.url + "?" + lParam + "&" + qParam,
+        coreService.set(urlString: apiData.url + "?" + lParam + "&" + qParam + "&" + inParam,
                         httpMethod: "GET",
                         headers: ["X-Secret": apiData.secret])
         coreService.send(nil) { [weak self] result in
@@ -49,8 +45,8 @@ final class PonsTranslationService: TranslationService {
 
             jsonCoder.decodeAsync(data) { (result: PonsTranslationServiceResult) in
                 switch result {
-                case .success(let object):
-                    completion(.success(object))
+                case .success(let array):
+                    completion(.success(array))
                 case .failure(let error):
                     completion(.failure(error))
                 }

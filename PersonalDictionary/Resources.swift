@@ -28,3 +28,6 @@ let yandexApiData = YandexApiData(
     apiUrl: "https://translate.yandex.net/api/v1.5/tr.json/translate",
     apiKey: "trnsl.1.1.20190308T225103Z.03f7eccfa6946358.fcc85b6387d6223f20a548dbcc0789a46272150b"
 )
+
+let ponsApiData = PonsApiData(url: "https://api.pons.com/v1/dictionary",
+                              secret: "")
