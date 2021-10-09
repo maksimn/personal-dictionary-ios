@@ -7,7 +7,5 @@
 
 protocol TranslationService {
 
-    associatedtype Success
-
-    func fetchTranslation(for wordItem: WordItem, _ completion: @escaping (Result<Success, Error>) -> Void)
+    func fetchTranslation(for wordItem: WordItem, _ completion: @escaping (PonsTranslationServiceResult) -> Void)
 }

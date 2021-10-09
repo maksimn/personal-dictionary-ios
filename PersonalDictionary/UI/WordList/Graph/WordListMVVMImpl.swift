@@ -7,13 +7,12 @@
 
 import UIKit
 
-final class WordListMVVMImpl<TService: TranslationService>: WordListMVVM
-    where TService.Success == [PonsResponseData] {
+final class WordListMVVMImpl: WordListMVVM {
 
     private let view: WordListViewController
 
     init(wordListRepository: WordListRepository,
-         translationService: TService,
+         translationService: TranslationService,
          notificationCenter: NotificationCenter) {
         view = WordListViewController()
         let model = WordListModelImpl(wordListRepository: wordListRepository,

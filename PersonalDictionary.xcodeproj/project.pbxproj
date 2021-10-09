@@ -37,9 +37,7 @@
 		596D721227051D5200872D6C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 596D721027051D5200872D6C /* LaunchScreen.storyboard */; };
 		5976022B271112AF0077B5F7 /* CoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5976022A271112AF0077B5F7 /* CoreService.swift */; };
 		59760230271112D90077B5F7 /* UrlSessionCoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5976022F271112D90077B5F7 /* UrlSessionCoreService.swift */; };
-		59760236271113860077B5F7 /* YandexTranslatorResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59760235271113860077B5F7 /* YandexTranslatorResponseData.swift */; };
 		5976023B271114430077B5F7 /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5976023A271114430077B5F7 /* TranslationService.swift */; };
-		59760241271114DA0077B5F7 /* YandexTranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59760240271114DA0077B5F7 /* YandexTranslationService.swift */; };
 		5976024A271115650077B5F7 /* JsonCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59760249271115650077B5F7 /* JsonCoder.swift */; };
 		59760252271115770077B5F7 /* JsonCoderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59760251271115770077B5F7 /* JsonCoderImpl.swift */; };
 		598B79DF270C45E1007ED9FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 598B79E1270C45E1007ED9FD /* Localizable.strings */; };
@@ -126,9 +124,7 @@
 		596D722927051D5300872D6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5976022A271112AF0077B5F7 /* CoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreService.swift; sourceTree = "<group>"; };
 		5976022F271112D90077B5F7 /* UrlSessionCoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlSessionCoreService.swift; sourceTree = "<group>"; };
-		59760235271113860077B5F7 /* YandexTranslatorResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexTranslatorResponseData.swift; sourceTree = "<group>"; };
 		5976023A271114430077B5F7 /* TranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationService.swift; sourceTree = "<group>"; };
-		59760240271114DA0077B5F7 /* YandexTranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexTranslationService.swift; sourceTree = "<group>"; };
 		59760249271115650077B5F7 /* JsonCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonCoder.swift; sourceTree = "<group>"; };
 		59760251271115770077B5F7 /* JsonCoderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonCoderImpl.swift; sourceTree = "<group>"; };
 		598B79E0270C45E1007ED9FD /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -414,7 +410,6 @@
 		597602342711134C0077B5F7 /* HttpData */ = {
 			isa = PBXGroup;
 			children = (
-				59760235271113860077B5F7 /* YandexTranslatorResponseData.swift */,
 				59E037932712226800197F19 /* PonsResponseData.swift */,
 			);
 			path = HttpData;
@@ -424,7 +419,6 @@
 			isa = PBXGroup;
 			children = (
 				5976023A271114430077B5F7 /* TranslationService.swift */,
-				59760240271114DA0077B5F7 /* YandexTranslationService.swift */,
 				59E0378E271216F700197F19 /* PonsTranslationService.swift */,
 			);
 			path = TranslationService;
@@ -905,9 +899,7 @@
 				59A94304270CF2DD0076F08B /* WordTableController.swift in Sources */,
 				5976022B271112AF0077B5F7 /* CoreService.swift in Sources */,
 				59A9430E270CF36B0076F08B /* WordItemCell+Layout.swift in Sources */,
-				59760236271113860077B5F7 /* YandexTranslatorResponseData.swift in Sources */,
 				5976024A271115650077B5F7 /* JsonCoder.swift in Sources */,
-				59760241271114DA0077B5F7 /* YandexTranslationService.swift in Sources */,
 				5976023B271114430077B5F7 /* TranslationService.swift in Sources */,
 				59A942D2270C500F0076F08B /* WordListModel.swift in Sources */,
 				5953CB132706279B006537B9 /* NewWordModel.swift in Sources */,

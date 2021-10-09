@@ -7,17 +7,16 @@
 
 import Foundation
 
-final class WordListModelImpl<TService: TranslationService>: WordListModel
-    where TService.Success == [PonsResponseData] {
+final class WordListModelImpl: WordListModel {
 
     weak var viewModel: WordListViewModel?
 
     let wordListRepository: WordListRepository
     let notificationCenter: NotificationCenter
-    let translationService: TService
+    let translationService: TranslationService
 
     init(wordListRepository: WordListRepository,
-         translationService: TService,
+         translationService: TranslationService,
          notificationCenter: NotificationCenter) {
         self.wordListRepository = wordListRepository
         self.translationService = translationService

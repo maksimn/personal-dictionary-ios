@@ -24,10 +24,5 @@ let newWordViewResource = NewWordViewResource(selectButtonTitle: NSLocalizedStri
                                               textFieldPlaceholder: NSLocalizedString("Enter a new word", comment: ""),
                                               backgroundColor: UIColor(red: 0.97, green: 0.97, blue: 0.95, alpha: 1.0))
 
-let yandexApiData = YandexApiData(
-    apiUrl: "https://translate.yandex.net/api/v1.5/tr.json/translate",
-    apiKey: "trnsl.1.1.20190308T225103Z.03f7eccfa6946358.fcc85b6387d6223f20a548dbcc0789a46272150b"
-)
-
 let ponsApiData = PonsApiData(url: "https://api.pons.com/v1/dictionary",
                               secret: "")
