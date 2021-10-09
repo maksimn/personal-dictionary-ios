@@ -10,6 +10,7 @@ import UIKit
 final class WordItemCell: UITableViewCell {
 
     let wordlabel = UILabel()
+    let translationLabel = UILabel()
     let sourceLangLabel = UILabel()
     let targetLangLabel = UILabel()
 
@@ -24,6 +25,7 @@ final class WordItemCell: UITableViewCell {
 
     func set(wordItem: WordItem) {
         wordlabel.text = wordItem.text
+        translationLabel.text = wordItem.translation
         sourceLangLabel.text = wordItem.sourceLang.shortName
         targetLangLabel.text = wordItem.targetLang.shortName
     }

@@ -11,7 +11,13 @@ struct PonsResponseData: Codable {
     let hits: [PonsResponseDataHit]
 
     var translation: String? {
-        hits.first?.roms.first?.arabs.first?.translations.first?.target
+        guard let str = hits.first?.roms.first?.arabs.first?.translations.first?.target else { return nil }
+
+        if let end = str.firstIndex(of: "<") {
+            return String(str[..<end])
+        }
+
+        return str
     }
 }
 
