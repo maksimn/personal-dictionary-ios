@@ -15,6 +15,8 @@
 		591EDC892713715C00008074 /* StaticContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591EDC882713715C00008074 /* StaticContent.swift */; };
 		591EDC8E2713716B00008074 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591EDC8D2713716B00008074 /* Styles.swift */; };
 		591EDC932713718C00008074 /* ApiData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591EDC922713718C00008074 /* ApiData.swift */; };
+		591EDCAE2713AA6400008074 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591EDCAD2713AA6400008074 /* Router.swift */; };
+		591EDCB62713AA7A00008074 /* RouterImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591EDCB52713AA7A00008074 /* RouterImpl.swift */; };
 		5926504B270BA17600029BAA /* PersonalDictionaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5926504A270BA17600029BAA /* PersonalDictionaryUITests.swift */; };
 		594ACC19270BA96100D9AB8F /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594ACC18270BA96100D9AB8F /* GeneratedMocks.swift */; };
 		594ACC23270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594ACC22270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift */; };
@@ -100,6 +102,8 @@
 		591EDC882713715C00008074 /* StaticContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticContent.swift; sourceTree = "<group>"; };
 		591EDC8D2713716B00008074 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		591EDC922713718C00008074 /* ApiData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiData.swift; sourceTree = "<group>"; };
+		591EDCAD2713AA6400008074 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		591EDCB52713AA7A00008074 /* RouterImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterImpl.swift; sourceTree = "<group>"; };
 		5926504A270BA17600029BAA /* PersonalDictionaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDictionaryUITests.swift; sourceTree = "<group>"; };
 		594ACC18270BA96100D9AB8F /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
 		594ACC22270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordMVVMImplTests.swift; sourceTree = "<group>"; };
@@ -210,6 +214,15 @@
 				59A94302270CF2C00076F08B /* WordTableView */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		591EDCAC2713AA5400008074 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				591EDCAD2713AA6400008074 /* Router.swift */,
+				591EDCB52713AA7A00008074 /* RouterImpl.swift */,
+			);
+			path = Router;
 			sourceTree = "<group>";
 		};
 		594ACC20270BAA6100D9AB8F /* NewWord */ = {
@@ -361,6 +374,7 @@
 			isa = PBXGroup;
 			children = (
 				596B95C92706AC1D004CE7E6 /* Core */,
+				591EDCAC2713AA5400008074 /* Router */,
 				5953CB3727062EAB006537B9 /* Repository */,
 				59760228271110390077B5F7 /* Service */,
 				5967E785270FADDD00DCD8E4 /* UI */,
@@ -892,6 +906,7 @@
 				59760252271115770077B5F7 /* JsonCoderImpl.swift in Sources */,
 				5953CAF4270615D2006537B9 /* Args.swift in Sources */,
 				59A942C8270C4F970076F08B /* WordListMVVM.swift in Sources */,
+				591EDCAE2713AA6400008074 /* Router.swift in Sources */,
 				59A94327270E47030076F08B /* StorageModel.xcdatamodeld in Sources */,
 				596B95CC2706AC35004CE7E6 /* Lang.swift in Sources */,
 				59A942F1270CE6430076F08B /* Notifications.swift in Sources */,
@@ -917,6 +932,7 @@
 				5976024A271115650077B5F7 /* JsonCoder.swift in Sources */,
 				5976023B271114430077B5F7 /* TranslationService.swift in Sources */,
 				59A942D2270C500F0076F08B /* WordListModel.swift in Sources */,
+				591EDCB62713AA7A00008074 /* RouterImpl.swift in Sources */,
 				5953CB132706279B006537B9 /* NewWordModel.swift in Sources */,
 				59BA6E9A270F7FD000A70594 /* SwipeToDeleteActionFactory.swift in Sources */,
 				5953CB0927062712006537B9 /* NewWordMVVM.swift in Sources */,

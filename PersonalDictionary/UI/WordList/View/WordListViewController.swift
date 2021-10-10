@@ -86,24 +86,5 @@ extension WordListViewController {
 
     @objc
     func onNewWordButtonTap() {
-        let newWordMVVM = NewWordMVVMImpl(langRepository: LangRepositoryImpl(userDefaults: UserDefaults.standard,
-                                                                             data: langData),
-                                          notificationCenter: NotificationCenter.default,
-                                          staticContent: newWordViewStaticContent,
-                                          styles: newWordViewStyles)
-        guard let newWordViewController = newWordMVVM.viewController else { return }
-
-        newWordViewController.modalPresentationStyle = .overFullScreen
-
-        present(newWordViewController, animated: true, completion: nil)
-    }
-}
-
-extension WordListViewController: UISearchBarDelegate {
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if let searchText = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
-            print(searchText)
-        }
     }
 }

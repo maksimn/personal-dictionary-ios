@@ -20,13 +20,13 @@ extension WordListViewController {
     }
 
     func initSearchBar() {
+        searchBar.isUserInteractionEnabled = false
         searchBar.snp.makeConstraints { make -> Void in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
             make.height.equalTo(44)
         }
-        searchBar.delegate = self
     }
 
     private func initNewWordButton() {
