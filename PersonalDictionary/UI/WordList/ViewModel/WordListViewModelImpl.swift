@@ -21,6 +21,7 @@ final class WordListViewModelImpl: WordListViewModel {
 
     func fetchDataFromModel() {
         model.fetchWordList()
+        model.requestTranslationsIfNeeded()
     }
 
     func add(_ wordItem: WordItem) {

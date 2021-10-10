@@ -34,6 +34,22 @@ final class WordListModelImpl: WordListModel {
 
         viewModel?.add(wordItem)
         wordListRepository.add(wordItem, completion: nil)
+        requestTranslation(for: wordItem, position)
+    }
+
+    func removeFromRepository(_ wordItem: WordItem) {
+        wordListRepository.remove(with: wordItem.id, completion: nil)
+    }
+
+    func requestTranslationsIfNeeded() {
+        guard let wordList = viewModel?.wordList else { return }
+
+        for position in 0..<wordList.count where wordList[position].translation == nil {
+            requestTranslation(for: wordList[position], position)
+        }
+    }
+
+    private func requestTranslation(for wordItem: WordItem, _ position: Int) {
         translationService.fetchTranslation(for: wordItem, { [weak self] result in
             switch result {
             case .success(let translation):
@@ -45,10 +61,6 @@ final class WordListModelImpl: WordListModel {
                 break
             }
         })
-    }
-
-    func removeFromRepository(_ wordItem: WordItem) {
-        wordListRepository.remove(with: wordItem.id, completion: nil)
     }
 
     func addObservers() {

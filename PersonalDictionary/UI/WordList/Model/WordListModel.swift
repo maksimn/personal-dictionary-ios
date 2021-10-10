@@ -11,5 +11,7 @@ protocol WordListModel {
 
     func fetchWordList()
 
+    func requestTranslationsIfNeeded()
+
     func removeFromRepository(_ wordItem: WordItem)
 }
