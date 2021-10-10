@@ -7,19 +7,25 @@
 
 import UIKit
 
-struct DeleteActionViewResource {
+struct DeleteActionStaticContent {
     let image: UIImage
+}
+
+struct DeleteActionStyles {
     let backgroundColor: UIColor
 }
 
 final class SwipeToDeleteActionFactory {
 
-    private let viewResource: DeleteActionViewResource
+    private let staticContent: DeleteActionStaticContent
+    private let styles: DeleteActionStyles
     private var onDeleteTap: ((Int) -> Void)?
 
-    init(viewResource: DeleteActionViewResource,
+    init(staticContent: DeleteActionStaticContent,
+         styles: DeleteActionStyles,
          onDeleteTap: ((Int) -> Void)?) {
-        self.viewResource = viewResource
+        self.staticContent = staticContent
+        self.styles = styles
         self.onDeleteTap = onDeleteTap
     }
 
@@ -30,8 +36,8 @@ final class SwipeToDeleteActionFactory {
                                                 success(true)
                                               })
 
-        deleteAction.image = viewResource.image
-        deleteAction.backgroundColor = viewResource.backgroundColor
+        deleteAction.image = staticContent.image
+        deleteAction.backgroundColor = styles.backgroundColor
 
         return deleteAction
     }

@@ -13,8 +13,10 @@ final class WordListMVVMImpl: WordListMVVM {
 
     init(wordListRepository: WordListRepository,
          translationService: TranslationService,
-         notificationCenter: NotificationCenter) {
-        view = WordListViewController()
+         notificationCenter: NotificationCenter,
+         staticContent: WordListViewStaticContent,
+         styles: WordListViewStyles) {
+        view = WordListViewController(staticContent: staticContent, styles: styles)
         let model = WordListModelImpl(wordListRepository: wordListRepository,
                                       translationService: translationService,
                                       notificationCenter: notificationCenter)

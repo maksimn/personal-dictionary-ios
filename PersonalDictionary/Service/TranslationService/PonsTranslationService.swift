@@ -9,6 +9,7 @@ import Foundation
 
 struct PonsApiData {
     let url: String
+    let secretHeaderKey: String
     let secret: String
 }
 
@@ -37,7 +38,7 @@ final class PonsTranslationService: TranslationService {
         logger.networkRequestStart(fetchTranslationRequestName)
         coreService.set(urlString: apiData.url + "?" + lParam + "&" + qParam + "&" + inParam,
                         httpMethod: "GET",
-                        headers: ["X-Secret": apiData.secret])
+                        headers: [apiData.secretHeaderKey: apiData.secret])
         coreService.send(nil) { [weak self] result in
             self?.resultHandler(result, completion)
         }

@@ -39,7 +39,7 @@ extension NewWordViewController {
 
     private func initContentView() {
         contentView.layer.cornerRadius = 16
-        contentView.backgroundColor = viewResource.backgroundColor
+        contentView.backgroundColor = styles.backgroundColor
         contentView.snp.makeConstraints { (make) -> Void in
             make.centerY.equalTo(view)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-12)
@@ -91,7 +91,7 @@ extension NewWordViewController {
         arrowLabel.font = UIFont.systemFont(ofSize: 17)
         arrowLabel.numberOfLines = 1
         arrowLabel.textAlignment = .center
-        arrowLabel.text = viewResource.arrowText
+        arrowLabel.text = staticContent.arrowText
         arrowLabel.snp.makeConstraints { make -> Void in
             make.centerY.equalTo(sourceLangLabel)
             make.centerX.equalTo(contentView)
@@ -99,7 +99,7 @@ extension NewWordViewController {
     }
 
     private func initTextField() {
-        textField.placeholder = viewResource.textFieldPlaceholder
+        textField.placeholder = staticContent.textFieldPlaceholder
         textField.borderStyle = UITextField.BorderStyle.roundedRect
         textField.backgroundColor = UIColor.white
         textField.textColor = .black
@@ -109,7 +109,7 @@ extension NewWordViewController {
     }
 
     private func initOkButton() {
-        okButton.setTitle(viewResource.okText, for: .normal)
+        okButton.setTitle(staticContent.okText, for: .normal)
         okButton.setTitleColor(.white, for: .normal)
         okButton.backgroundColor = .green
         okButton.layer.cornerRadius = 8

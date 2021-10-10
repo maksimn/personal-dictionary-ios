@@ -10,7 +10,7 @@ import UIKit
 extension WordListViewController {
 
     func initViews() {
-        view.backgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.95, alpha: 1.0)
+        view.backgroundColor = styles.backgroundColor
         view.addSubview(tableView)
         view.addSubview(newWordButton)
         initTableView()
@@ -18,7 +18,7 @@ extension WordListViewController {
     }
 
     private func initNewWordButton() {
-        newWordButton.setImage(UIImage(named: "icon-plus")!, for: .normal)
+        newWordButton.setImage(staticContent.newWordButtonImage, for: .normal)
         newWordButton.imageView?.contentMode = .scaleAspectFit
         newWordButton.addTarget(self, action: #selector(onNewWordButtonTap), for: .touchUpInside)
         newWordButton.snp.makeConstraints { make -> Void in
@@ -35,7 +35,7 @@ extension WordListViewController {
 
     func initTableView() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.95, alpha: 1.0)
+        tableView.backgroundColor = styles.backgroundColor
         tableView.layer.cornerRadius = 16
         tableView.rowHeight = WordItemCell.height
         tableView.register(WordItemCell.self, forCellReuseIdentifier: "\(WordItemCell.self)")
@@ -47,12 +47,10 @@ extension WordListViewController {
             make.edges.equalTo(view.safeAreaLayoutGuide).inset(UIEdgeInsets(top: 10, left: 12, bottom: 0, right: 12))
         }
 
-        let deleteActionViewResource = DeleteActionViewResource(
-            image: UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!,
-            backgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
+        tableController.swipeToDeleteActionFactory = SwipeToDeleteActionFactory(
+            staticContent: staticContent.deleteAction,
+            styles: styles.deleteAction,
+            onDeleteTap: onDeleteWordTap
         )
-
-        tableController.swipeToDeleteActionFactory = SwipeToDeleteActionFactory(viewResource: deleteActionViewResource,
-                                                                            onDeleteTap: onDeleteWordTap)
     }
 }

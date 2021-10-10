@@ -7,14 +7,37 @@
 
 import UIKit
 
+struct WordListViewStaticContent {
+    let newWordButtonImage: UIImage
+    let deleteAction: DeleteActionStaticContent
+}
+
+struct WordListViewStyles {
+    let backgroundColor: UIColor
+    let deleteAction: DeleteActionStyles
+}
+
 class WordListViewController: UIViewController, WordListView {
 
     var viewModel: WordListViewModel?
+
+    let staticContent: WordListViewStaticContent
+    let styles: WordListViewStyles
 
     let tableView = UITableView()
     let tableController = WordTableController()
 
     let newWordButton = UIButton()
+
+    init(staticContent: WordListViewStaticContent, styles: WordListViewStyles) {
+        self.staticContent = staticContent
+        self.styles = styles
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,9 +48,10 @@ class WordListViewController: UIViewController, WordListView {
     @objc
     func onNewWordButtonTap() {
         let newWordMVVM = NewWordMVVMImpl(langRepository: LangRepositoryImpl(userDefaults: UserDefaults.standard,
-                                                                             data: langResourceData),
+                                                                             data: langData),
                                           notificationCenter: NotificationCenter.default,
-                                          viewResource: newWordViewResource)
+                                          staticContent: newWordViewStaticContent,
+                                          styles: newWordViewStyles)
         guard let newWordViewController = newWordMVVM.viewController else { return }
 
         newWordViewController.modalPresentationStyle = .overFullScreen

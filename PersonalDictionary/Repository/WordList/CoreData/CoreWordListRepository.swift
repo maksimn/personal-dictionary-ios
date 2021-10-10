@@ -8,6 +8,11 @@
 import Foundation
 import CoreData
 
+struct CoreWordListRepositoryArgs {
+
+    let persistentContainerName: String
+}
+
 final class CoreWordListRepository: WordListRepository {
 
     private var mainContext: NSManagedObjectContext {
@@ -15,12 +20,12 @@ final class CoreWordListRepository: WordListRepository {
     }
 
     private lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "StorageModel")
+        let container = NSPersistentContainer(name: args.persistentContainerName)
         container.loadPersistentStores(completionHandler: { (_, error) in
             container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
 
             if let error = error {
-
+                self.logger.log(error: error)
             }
         })
         return container
@@ -28,8 +33,10 @@ final class CoreWordListRepository: WordListRepository {
 
     private let langRepository: LangRepository
     private let logger: Logger
+    private let args: CoreWordListRepositoryArgs
 
-    init(langRepository: LangRepository, logger: Logger) {
+    init(args: CoreWordListRepositoryArgs, langRepository: LangRepository, logger: Logger) {
+        self.args = args
         self.langRepository = langRepository
         self.logger = logger
     }

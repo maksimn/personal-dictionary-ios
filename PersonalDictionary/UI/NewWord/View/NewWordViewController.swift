@@ -7,11 +7,14 @@
 
 import UIKit
 
-struct NewWordViewResource {
+struct NewWordViewStaticContent {
     let selectButtonTitle: String
     let arrowText: String
     let okText: String
     let textFieldPlaceholder: String
+}
+
+struct NewWordViewStyles {
     let backgroundColor: UIColor
 }
 
@@ -19,7 +22,8 @@ class NewWordViewController: UIViewController, NewWordView {
 
     var viewModel: NewWordViewModel?
 
-    let viewResource: NewWordViewResource
+    let staticContent: NewWordViewStaticContent
+    let styles: NewWordViewStyles
 
     let contentView = UIView()
     let sourceLangLabel = UILabel()
@@ -37,8 +41,9 @@ class NewWordViewController: UIViewController, NewWordView {
         }
     }
 
-    init(viewResource: NewWordViewResource) {
-        self.viewResource = viewResource
+    init(staticContent: NewWordViewStaticContent, styles: NewWordViewStyles) {
+        self.staticContent = staticContent
+        self.styles = styles
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -57,8 +62,8 @@ class NewWordViewController: UIViewController, NewWordView {
 
         langPickerPopup = LangPickerPopup(langPickerController: LangPickerController(langs: allLangs),
                                           onSelectLang: self.onSelectLang,
-                                          selectButtonTitle: viewResource.selectButtonTitle,
-                                          backgroundColor: viewResource.backgroundColor,
+                                          selectButtonTitle: staticContent.selectButtonTitle,
+                                          backgroundColor: styles.backgroundColor,
                                           isHidden: true)
 
         layoutLangPickerPopup()

@@ -17,25 +17,25 @@ class LangRepositoryImplTests: XCTestCase {
     let lang3 = Lang(id: Lang.Id(raw: 3), name: NSLocalizedString("French", comment: ""), shortName: "c")
     let lang4 = Lang(id: Lang.Id(raw: 4), name: NSLocalizedString("Italian", comment: ""), shortName: "d")
 
-    lazy var testLangResourceData = LangResourceData(allLangs: [lang1, lang2, lang3, lang4],
-                                                     sourceLangKey: "testing.io.github.maksimn.pd.sourceLang",
-                                                     targetLangKey: "testing.io.github.maksimn.pd.targetLang",
-                                                     defaultSourceLang: lang1,
-                                                     defaultTargetLang: lang2)
+    lazy var testLangData = LangData(allLangs: [lang1, lang2, lang3, lang4],
+                                     sourceLangKey: "testing.io.github.maksimn.pd.sourceLang",
+                                     targetLangKey: "testing.io.github.maksimn.pd.targetLang",
+                                     defaultSourceLang: lang1,
+                                     defaultTargetLang: lang2)
 
     override func setUpWithError() throws {
-        langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard, data: testLangResourceData)
+        langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard, data: testLangData)
     }
 
     override func tearDownWithError() throws {
-        UserDefaults.standard.removeObject(forKey: testLangResourceData.sourceLangKey)
-        UserDefaults.standard.removeObject(forKey: testLangResourceData.targetLangKey)
+        UserDefaults.standard.removeObject(forKey: testLangData.sourceLangKey)
+        UserDefaults.standard.removeObject(forKey: testLangData.targetLangKey)
     }
 
     func test_allLangs__returnsTheSameArrayAsInitArgument() throws {
         let langs = langRepository.allLangs
 
-        XCTAssertEqual(langs, testLangResourceData.allLangs)
+        XCTAssertEqual(langs, testLangData.allLangs)
     }
 
     func test_sourceLang__returnsTheLangThatWasSet() throws {
@@ -53,12 +53,12 @@ class LangRepositoryImplTests: XCTestCase {
     func test_sourceLang__returnsDefaultSourceLang() throws {
         let lang = langRepository.sourceLang
 
-        XCTAssertEqual(lang, testLangResourceData.defaultSourceLang)
+        XCTAssertEqual(lang, testLangData.defaultSourceLang)
     }
 
     func test_targetLang__returnsDefaultTargetLang() throws {
         let lang = langRepository.targetLang
 
-        XCTAssertEqual(lang, testLangResourceData.defaultTargetLang)
+        XCTAssertEqual(lang, testLangData.defaultTargetLang)
     }
 }
