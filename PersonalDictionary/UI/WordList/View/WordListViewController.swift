@@ -17,16 +17,16 @@ struct WordListViewStyles {
     let deleteAction: DeleteActionStyles
 }
 
-class WordListViewController: UIViewController, WordListView {
+class WordListViewController: UIViewController {
 
     var viewModel: WordListViewModel?
 
     let staticContent: WordListViewStaticContent
     let styles: WordListViewStyles
 
+    let searchBar = UISearchBar()
     let tableView = UITableView()
     let tableController = WordTableController()
-
     let newWordButton = UIButton()
 
     init(staticContent: WordListViewStaticContent, styles: WordListViewStyles) {
@@ -44,20 +44,9 @@ class WordListViewController: UIViewController, WordListView {
         initViews()
         viewModel?.fetchDataFromModel()
     }
+}
 
-    @objc
-    func onNewWordButtonTap() {
-        let newWordMVVM = NewWordMVVMImpl(langRepository: LangRepositoryImpl(userDefaults: UserDefaults.standard,
-                                                                             data: langData),
-                                          notificationCenter: NotificationCenter.default,
-                                          staticContent: newWordViewStaticContent,
-                                          styles: newWordViewStyles)
-        guard let newWordViewController = newWordMVVM.viewController else { return }
-
-        newWordViewController.modalPresentationStyle = .overFullScreen
-
-        present(newWordViewController, animated: true, completion: nil)
-    }
+extension WordListViewController: WordListView {
 
     func set(wordList: [WordItem]) {
         tableController.wordList = wordList
@@ -84,10 +73,37 @@ class WordListViewController: UIViewController, WordListView {
     func reloadList() {
         tableView.reloadData()
     }
+}
+
+// User Action Handlers:
+extension WordListViewController {
 
     func onDeleteWordTap(_ position: Int) {
         let item = tableController.wordList[position]
 
         viewModel?.remove(item, position)
+    }
+
+    @objc
+    func onNewWordButtonTap() {
+        let newWordMVVM = NewWordMVVMImpl(langRepository: LangRepositoryImpl(userDefaults: UserDefaults.standard,
+                                                                             data: langData),
+                                          notificationCenter: NotificationCenter.default,
+                                          staticContent: newWordViewStaticContent,
+                                          styles: newWordViewStyles)
+        guard let newWordViewController = newWordMVVM.viewController else { return }
+
+        newWordViewController.modalPresentationStyle = .overFullScreen
+
+        present(newWordViewController, animated: true, completion: nil)
+    }
+}
+
+extension WordListViewController: UISearchBarDelegate {
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if let searchText = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
+            print(searchText)
+        }
     }
 }

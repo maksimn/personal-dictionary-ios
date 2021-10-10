@@ -11,10 +11,22 @@ extension WordListViewController {
 
     func initViews() {
         view.backgroundColor = styles.backgroundColor
+        view.addSubview(searchBar)
         view.addSubview(tableView)
         view.addSubview(newWordButton)
+        initSearchBar()
         initTableView()
         initNewWordButton()
+    }
+
+    func initSearchBar() {
+        searchBar.snp.makeConstraints { make -> Void in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
+            make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
+            make.height.equalTo(44)
+        }
+        searchBar.delegate = self
     }
 
     private func initNewWordButton() {
@@ -34,7 +46,6 @@ extension WordListViewController {
     }
 
     func initTableView() {
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = styles.backgroundColor
         tableView.layer.cornerRadius = 16
         tableView.rowHeight = WordItemCell.height
@@ -44,7 +55,7 @@ extension WordListViewController {
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         tableView.snp.makeConstraints { make -> Void in
-            make.edges.equalTo(view.safeAreaLayoutGuide).inset(UIEdgeInsets(top: 10, left: 12, bottom: 0, right: 12))
+            make.edges.equalTo(view.safeAreaLayoutGuide).inset(UIEdgeInsets(top: 54, left: 12, bottom: 0, right: 12))
         }
 
         tableController.swipeToDeleteActionFactory = SwipeToDeleteActionFactory(
