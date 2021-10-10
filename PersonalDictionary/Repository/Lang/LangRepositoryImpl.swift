@@ -7,6 +7,14 @@
 
 import Foundation
 
+struct LangData {
+    let allLangs: [Lang]
+    let sourceLangKey: String
+    let targetLangKey: String
+    let defaultSourceLang: Lang
+    let defaultTargetLang: Lang
+}
+
 final class LangRepositoryImpl: LangRepository {
 
     let userDefaults: UserDefaults

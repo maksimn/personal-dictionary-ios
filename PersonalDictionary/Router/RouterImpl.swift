@@ -11,13 +11,16 @@ final class RouterImpl: Router {
 
     private weak var viewController: UIViewController?
 
-    init(viewController: UIViewController?) {
+    private let langRepository: LangRepository
+
+    init(viewController: UIViewController?,
+         langRepository: LangRepository) {
+        self.langRepository = langRepository
         self.viewController = viewController
     }
 
     func navigateToNewWord() {
-        let newWordMVVM = NewWordMVVMImpl(langRepository: LangRepositoryImpl(userDefaults: UserDefaults.standard,
-                                                                             data: langData),
+        let newWordMVVM = NewWordMVVMImpl(langRepository: langRepository,
                                           notificationCenter: NotificationCenter.default,
                                           staticContent: newWordViewStaticContent,
                                           styles: newWordViewStyles)

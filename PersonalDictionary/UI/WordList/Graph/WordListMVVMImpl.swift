@@ -11,16 +11,18 @@ final class WordListMVVMImpl: WordListMVVM {
 
     private let view: WordListViewController
 
-    init(wordListRepository: WordListRepository,
+    init(langRepository: LangRepository,
+         wordListRepository: WordListRepository,
          translationService: TranslationService,
          notificationCenter: NotificationCenter,
          staticContent: WordListViewStaticContent,
          styles: WordListViewStyles) {
         view = WordListViewController(staticContent: staticContent, styles: styles)
+        let router = RouterImpl(viewController: view, langRepository: langRepository)
         let model = WordListModelImpl(wordListRepository: wordListRepository,
                                       translationService: translationService,
                                       notificationCenter: notificationCenter)
-        let viewModel = WordListViewModelImpl(model: model, view: view)
+        let viewModel = WordListViewModelImpl(model: model, view: view, router: router)
 
         view.viewModel = viewModel
         model.viewModel = viewModel

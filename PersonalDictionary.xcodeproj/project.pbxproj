@@ -11,7 +11,6 @@
 		590F78FB2709D1A000BCBD2C /* LangPickerPopup+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F78FA2709D1A000BCBD2C /* LangPickerPopup+Layout.swift */; };
 		5910A445270EA04E00631446 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5910A444270EA04E00631446 /* Logger.swift */; };
 		5910A44A270EA07400631446 /* SimpleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5910A449270EA07400631446 /* SimpleLogger.swift */; };
-		591EDC7E2713689800008074 /* LangData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591EDC7D2713689800008074 /* LangData.swift */; };
 		591EDC892713715C00008074 /* StaticContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591EDC882713715C00008074 /* StaticContent.swift */; };
 		591EDC8E2713716B00008074 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591EDC8D2713716B00008074 /* Styles.swift */; };
 		591EDC932713718C00008074 /* ApiData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591EDC922713718C00008074 /* ApiData.swift */; };
@@ -98,7 +97,6 @@
 		590F78FA2709D1A000BCBD2C /* LangPickerPopup+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LangPickerPopup+Layout.swift"; sourceTree = "<group>"; };
 		5910A444270EA04E00631446 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		5910A449270EA07400631446 /* SimpleLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleLogger.swift; sourceTree = "<group>"; };
-		591EDC7D2713689800008074 /* LangData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangData.swift; sourceTree = "<group>"; };
 		591EDC882713715C00008074 /* StaticContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticContent.swift; sourceTree = "<group>"; };
 		591EDC8D2713716B00008074 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		591EDC922713718C00008074 /* ApiData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiData.swift; sourceTree = "<group>"; };
@@ -379,7 +377,6 @@
 				59760228271110390077B5F7 /* Service */,
 				5967E785270FADDD00DCD8E4 /* UI */,
 				596D720227051D4E00872D6C /* AppDelegate.swift */,
-				591EDC7D2713689800008074 /* LangData.swift */,
 				59A942F0270CE6430076F08B /* Notifications.swift */,
 				596D720427051D4E00872D6C /* SceneDelegate.swift */,
 				596D720E27051D5200872D6C /* Assets.xcassets */,
@@ -900,7 +897,6 @@
 				591EDC892713715C00008074 /* StaticContent.swift in Sources */,
 				596D720727051D4E00872D6C /* WordListViewController.swift in Sources */,
 				59A94339270E4DB90076F08B /* WordItemMO.swift in Sources */,
-				591EDC7E2713689800008074 /* LangData.swift in Sources */,
 				596D720327051D4E00872D6C /* AppDelegate.swift in Sources */,
 				59A942FE270CE83A0076F08B /* Tagged.swift in Sources */,
 				59760252271115770077B5F7 /* JsonCoderImpl.swift in Sources */,

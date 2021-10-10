@@ -9,14 +9,16 @@ final class WordListViewModelImpl: WordListViewModel {
 
     private unowned let view: WordListView
     private let model: WordListModel
+    private let router: Router
 
     private var previousWordCount = -1
     private var removedItemPosition = -1
     private var updatedItemPosition = -1
 
-    init(model: WordListModel, view: WordListView) {
+    init(model: WordListModel, view: WordListView, router: Router) {
         self.model = model
         self.view = view
+        self.router = router
     }
 
     func fetchDataFromModel() {
@@ -37,6 +39,10 @@ final class WordListViewModelImpl: WordListViewModel {
         removedItemPosition = position
         wordList.remove(at: position)
         model.removeFromRepository(wordItem)
+    }
+
+    func navigateToNewWord() {
+        router.navigateToNewWord()
     }
 
     var wordList: [WordItem] = [] {

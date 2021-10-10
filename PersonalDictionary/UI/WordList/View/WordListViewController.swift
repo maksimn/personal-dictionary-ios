@@ -86,5 +86,6 @@ extension WordListViewController {
 
     @objc
     func onNewWordButtonTap() {
+        viewModel?.navigateToNewWord()
     }
 }
