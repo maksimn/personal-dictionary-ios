@@ -57,13 +57,17 @@ final class PonsTranslationService: TranslationService {
                     self.logger.networkRequestSuccess(self.fetchTranslationRequestName)
                     completion(.success(translation))
                 case .failure(let error):
-                    self.logger.log(error: error)
-                    completion(.failure(error))
+                    self.completionWithLog(error, completion)
                 }
             }
         } catch {
-            self.logger.networkRequestError(self.fetchTranslationRequestName)
-            completion(.failure(error))
+            completionWithLog(error, completion)
         }
+    }
+
+    private func completionWithLog(_ error: Error, _ completion: @escaping (TranslationServiceResult) -> Void) {
+        self.logger.networkRequestError(self.fetchTranslationRequestName)
+        self.logger.log(error: error)
+        completion(.failure(error))
     }
 }

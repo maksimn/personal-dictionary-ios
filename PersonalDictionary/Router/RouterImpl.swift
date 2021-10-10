@@ -21,9 +21,7 @@ final class RouterImpl: Router {
 
     func navigateToNewWord() {
         let newWordMVVM = NewWordMVVMImpl(langRepository: langRepository,
-                                          notificationCenter: NotificationCenter.default,
-                                          staticContent: newWordViewStaticContent,
-                                          styles: newWordViewStyles)
+                                          notificationCenter: NotificationCenter.default)
         guard let newWordViewController = newWordMVVM.viewController else { return }
 
         newWordViewController.modalPresentationStyle = .overFullScreen

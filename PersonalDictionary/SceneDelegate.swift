@@ -15,6 +15,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
+        let ponsApiData = PonsApiData(url: "https://api.pons.com/v1/dictionary",
+                                      secretHeaderKey: "X-Secret",
+                                      secret: "")
+
+        let coreWordListRepositoryArgs = CoreWordListRepositoryArgs(persistentContainerName: "StorageModel")
+
         let lang1 = Lang(id: Lang.Id(raw: 1), name: NSLocalizedString("English", comment: ""), shortName: "EN")
         let lang2 = Lang(id: Lang.Id(raw: 2), name: NSLocalizedString("Russian", comment: ""), shortName: "RU")
         let lang3 = Lang(id: Lang.Id(raw: 3), name: NSLocalizedString("French", comment: ""), shortName: "FR")
@@ -33,14 +39,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                                         coreService: UrlSessionCoreService(),
                                                         jsonCoder: JSONCoderImpl(),
                                                         logger: logger)
+
         let wordListMVVM = WordListMVVMImpl(langRepository: langRepository,
                                             wordListRepository: CoreWordListRepository(args: coreWordListRepositoryArgs,
                                                                                        langRepository: langRepository,
                                                                                        logger: logger),
                                             translationService: translationService,
-                                            notificationCenter: NotificationCenter.default,
-                                            staticContent: wordListViewStaticContent,
-                                            styles: wordListViewStyles)
+                                            notificationCenter: NotificationCenter.default)
         guard let viewController = wordListMVVM.viewController else { return }
 
         window = UIWindow(windowScene: windowScene)
