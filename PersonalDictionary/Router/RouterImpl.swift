@@ -27,7 +27,9 @@ final class RouterImpl: Router {
                                           notificationCenter: NotificationCenter.default)
         guard let newWordViewController = newWordMVVM.viewController else { return }
 
-        navigationController.pushViewController(newWordViewController, animated: true)
+        newWordViewController.modalPresentationStyle = .overFullScreen
+
+        navigationController.topViewController?.present(newWordViewController, animated: true, completion: nil)
     }
 
     func navigateToSearch() {

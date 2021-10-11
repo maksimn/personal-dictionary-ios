@@ -20,5 +20,6 @@ extension SearchWordViewController {
         navigationItem.titleView = searchBar
         searchBar.placeholder = "Enter a word for searching"
         searchBar.becomeFirstResponder()
+        searchBar.delegate = self
     }
 }
