@@ -12,14 +12,16 @@ extension WordListViewController {
     func initViews() {
         view.backgroundColor = styles.backgroundColor
         view.addSubview(searchBar)
+        view.addSubview(navigateToSearchButton)
         view.addSubview(tableView)
         view.addSubview(newWordButton)
         initSearchBar()
+        initNavigateToSearchButton()
         initTableView()
         initNewWordButton()
     }
 
-    func initSearchBar() {
+    private func initSearchBar() {
         searchBar.isUserInteractionEnabled = false
         searchBar.snp.makeConstraints { make -> Void in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -27,6 +29,13 @@ extension WordListViewController {
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
             make.height.equalTo(44)
         }
+    }
+
+    private func initNavigateToSearchButton() {
+        navigateToSearchButton.snp.makeConstraints { make -> Void in
+            make.edges.equalTo(searchBar)
+        }
+        navigateToSearchButton.addTarget(self, action: #selector(onNavigateToSearchButtonTap), for: .touchUpInside)
     }
 
     private func initNewWordButton() {

@@ -28,6 +28,7 @@ class WordListViewController: UIViewController {
     let tableView = UITableView()
     let tableController = WordTableController()
     let newWordButton = UIButton()
+    let navigateToSearchButton = UIButton()
 
     init(staticContent: WordListViewStaticContent, styles: WordListViewStyles) {
         self.staticContent = staticContent
@@ -87,5 +88,15 @@ extension WordListViewController {
     @objc
     func onNewWordButtonTap() {
         viewModel?.navigateToNewWord()
+    }
+
+    @objc
+    func onNavigateToSearchButtonTap() {
+        let vcc = UIViewController()
+
+        vcc.view.backgroundColor = .yellow
+        vcc.modalPresentationStyle = .fullScreen
+
+        present(vcc, animated: false, completion: nil)
     }
 }
