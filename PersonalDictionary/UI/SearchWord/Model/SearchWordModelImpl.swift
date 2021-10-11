@@ -5,7 +5,24 @@
 //  Created by Maxim Ivanov on 11.10.2021.
 //
 
-final class SearchWordModelImpl: SearchWordModel {
+import Foundation
 
-    weak var viewModel: SearchWordViewModel?
+final class SearchWordModelImpl: WordListModel, SearchWordModel {
+
+    weak var viewModel: WordListViewModel?
+
+    let notificationCenter: NotificationCenter
+
+    init(notificationCenter: NotificationCenter) {
+        self.notificationCenter = notificationCenter
+    }
+
+    func fetchWordList() {
+    }
+
+    func requestTranslationsIfNeeded() {
+    }
+
+    func removeFromRepository(_ wordItem: WordItem) {
+    }
 }

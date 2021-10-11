@@ -7,14 +7,10 @@
 
 import UIKit
 
-class SearchWordViewController: UIViewController, SearchWordView {
-
-    var viewModel: SearchWordViewModel?
+final class SearchWordViewController: WordListViewController, SearchWordView {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .green
+        newWordButton.isHidden = true
     }
-
 }

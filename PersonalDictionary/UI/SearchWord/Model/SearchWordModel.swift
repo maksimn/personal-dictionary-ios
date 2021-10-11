@@ -6,6 +6,4 @@
 //
 
 protocol SearchWordModel {
-
-    var viewModel: SearchWordViewModel? { get set }
 }

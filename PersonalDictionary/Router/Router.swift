@@ -8,4 +8,6 @@
 protocol Router {
 
     func navigateToNewWord()
+
+    func navigateToSearch()
 }

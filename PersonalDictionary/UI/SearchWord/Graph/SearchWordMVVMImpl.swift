@@ -7,20 +7,22 @@
 
 import UIKit
 
-final class SearchWordMVVMImpl: SearchWordMVVM {
+final class SearchWordMVVMImpl: WordListMVVMImpl {
 
-    private let view: SearchWordViewController
+    private var viewOne: SearchWordViewController?
 
-    init() {
-        view = SearchWordViewController()
-        let model = SearchWordModelImpl()
-        let viewModel = SearchWordViewModelImpl(model: model, view: view)
+    init(notificationCenter: NotificationCenter) {
+        super.init()
+        viewOne = SearchWordViewController(staticContent: staticContent, styles: styles)
+        guard let viewOne = viewOne else { return }
+        let model = SearchWordModelImpl(notificationCenter: notificationCenter)
+        let viewModel = SearchWordViewModelImpl(model: model, view: viewOne)
 
-        view.viewModel = viewModel
+        viewOne.viewModel = viewModel
         model.viewModel = viewModel
     }
 
-    var viewController: UIViewController? {
-        view
+    override var viewController: UIViewController? {
+        viewOne
     }
 }

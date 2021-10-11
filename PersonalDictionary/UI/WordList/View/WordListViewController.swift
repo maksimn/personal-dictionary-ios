@@ -92,9 +92,6 @@ extension WordListViewController {
 
     @objc
     func onNavigateToSearchButtonTap() {
-        let mvvm = SearchWordMVVMImpl()
-        guard let searchWordVC = mvvm.viewController else { return }
-
-        present(searchWordVC, animated: false, completion: nil)
+        viewModel?.navigateToSearch()
     }
 }

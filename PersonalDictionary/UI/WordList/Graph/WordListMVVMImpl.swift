@@ -7,30 +7,37 @@
 
 import UIKit
 
-final class WordListMVVMImpl: WordListMVVM {
+class WordListMVVMImpl: WordListMVVM {
 
-    private let view: WordListViewController
+    private var view: WordListViewController?
+
+    let staticContent = WordListViewStaticContent(
+        newWordButtonImage: UIImage(named: "icon-plus")!,
+        deleteAction: DeleteActionStaticContent(
+            image: UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!
+        )
+    )
+
+    let styles = WordListViewStyles(
+        backgroundColor: appBackgroundColor,
+        deleteAction: DeleteActionStyles(
+            backgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
+        )
+    )
+
+    init() {
+        view = nil
+    }
 
     init(langRepository: LangRepository,
          wordListRepository: WordListRepository,
          translationService: TranslationService,
          notificationCenter: NotificationCenter) {
-        let staticContent = WordListViewStaticContent(
-            newWordButtonImage: UIImage(named: "icon-plus")!,
-            deleteAction: DeleteActionStaticContent(
-                image: UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!
-            )
-        )
-
-        let styles = WordListViewStyles(
-            backgroundColor: appBackgroundColor,
-            deleteAction: DeleteActionStyles(
-                backgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
-            )
-        )
-
         view = WordListViewController(staticContent: staticContent, styles: styles)
-        let router = RouterImpl(viewController: view, langRepository: langRepository)
+        guard let view = view else { return }
+        let router = RouterImpl(viewController: view,
+                                langRepository: langRepository,
+                                notificationCenter: notificationCenter)
         let model = WordListModelImpl(wordListRepository: wordListRepository,
                                       translationService: translationService,
                                       notificationCenter: notificationCenter)

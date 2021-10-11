@@ -5,17 +5,17 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-final class WordListViewModelImpl: WordListViewModel {
+class WordListViewModelImpl: WordListViewModel {
 
     private unowned let view: WordListView
     private let model: WordListModel
-    private let router: Router
+    private var router: Router?
 
     private var previousWordCount = -1
     private var removedItemPosition = -1
     private var updatedItemPosition = -1
 
-    init(model: WordListModel, view: WordListView, router: Router) {
+    init(model: WordListModel, view: WordListView, router: Router? = nil) {
         self.model = model
         self.view = view
         self.router = router
@@ -42,7 +42,11 @@ final class WordListViewModelImpl: WordListViewModel {
     }
 
     func navigateToNewWord() {
-        router.navigateToNewWord()
+        router?.navigateToNewWord()
+    }
+
+    func navigateToSearch() {
+        router?.navigateToSearch()
     }
 
     var wordList: [WordItem] = [] {

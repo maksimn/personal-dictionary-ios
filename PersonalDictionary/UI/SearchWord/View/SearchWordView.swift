@@ -7,5 +7,4 @@
 
 protocol SearchWordView: AnyObject {
 
-    var viewModel: SearchWordViewModel? { get set }
 }

@@ -12,11 +12,14 @@ final class RouterImpl: Router {
     private weak var viewController: UIViewController?
 
     private let langRepository: LangRepository
+    private let notificationCenter: NotificationCenter
 
     init(viewController: UIViewController?,
-         langRepository: LangRepository) {
+         langRepository: LangRepository,
+         notificationCenter: NotificationCenter) {
         self.langRepository = langRepository
         self.viewController = viewController
+        self.notificationCenter = notificationCenter
     }
 
     func navigateToNewWord() {
@@ -27,5 +30,12 @@ final class RouterImpl: Router {
         newWordViewController.modalPresentationStyle = .overFullScreen
 
         viewController?.present(newWordViewController, animated: true, completion: nil)
+    }
+
+    func navigateToSearch() {
+        let mvvm = SearchWordMVVMImpl(notificationCenter: notificationCenter)
+        guard let searchWordVC = mvvm.viewController else { return }
+
+        viewController?.present(searchWordVC, animated: false, completion: nil)
     }
 }

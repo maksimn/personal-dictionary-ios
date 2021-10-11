@@ -18,4 +18,6 @@ protocol WordListViewModel: AnyObject {
     func remove(_ wordItem: WordItem, _ position: Int)
 
     func navigateToNewWord()
+
+    func navigateToSearch()
 }
