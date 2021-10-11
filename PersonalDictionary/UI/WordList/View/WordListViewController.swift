@@ -92,11 +92,9 @@ extension WordListViewController {
 
     @objc
     func onNavigateToSearchButtonTap() {
-        let vcc = UIViewController()
+        let mvvm = SearchWordMVVMImpl()
+        guard let searchWordVC = mvvm.viewController else { return }
 
-        vcc.view.backgroundColor = .yellow
-        vcc.modalPresentationStyle = .fullScreen
-
-        present(vcc, animated: false, completion: nil)
+        present(searchWordVC, animated: false, completion: nil)
     }
 }
