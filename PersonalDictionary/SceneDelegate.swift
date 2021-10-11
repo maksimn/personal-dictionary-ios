@@ -40,7 +40,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                                         jsonCoder: JSONCoderImpl(),
                                                         logger: logger)
 
-        let wordListMVVM = WordListMVVMImpl(langRepository: langRepository,
+        let navigationController = UINavigationController()
+
+        let wordListMVVM = WordListMVVMImpl(navigationController: navigationController,
+                                            langRepository: langRepository,
                                             wordListRepository: CoreWordListRepository(args: coreWordListRepositoryArgs,
                                                                                        langRepository: langRepository,
                                                                                        logger: logger),
@@ -48,8 +51,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                             notificationCenter: NotificationCenter.default)
         guard let viewController = wordListMVVM.viewController else { return }
 
+        navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
+        navigationController.setViewControllers([viewController], animated: false)
+
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = viewController
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
 }

@@ -11,6 +11,6 @@ final class SearchWordViewController: WordListViewController, SearchWordView {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        newWordButton.isHidden = true
+        rearrangeViews()
     }
 }

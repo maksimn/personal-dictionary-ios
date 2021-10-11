@@ -52,6 +52,7 @@
 		59760252271115770077B5F7 /* JsonCoderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59760251271115770077B5F7 /* JsonCoderImpl.swift */; };
 		598B79DF270C45E1007ED9FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 598B79E1270C45E1007ED9FD /* Localizable.strings */; };
 		598ED937270B965900747AEE /* LangRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598ED936270B965900747AEE /* LangRepositoryImplTests.swift */; };
+		599EFD312714DF8D002307F0 /* SearchWordViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599EFD302714DF8C002307F0 /* SearchWordViewController+Layout.swift */; };
 		59A942C8270C4F970076F08B /* WordListMVVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942C7270C4F970076F08B /* WordListMVVM.swift */; };
 		59A942CD270C4FC10076F08B /* WordListMVVMImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942CC270C4FC10076F08B /* WordListMVVMImpl.swift */; };
 		59A942D2270C500F0076F08B /* WordListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942D1270C500F0076F08B /* WordListModel.swift */; };
@@ -149,6 +150,7 @@
 		59760251271115770077B5F7 /* JsonCoderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonCoderImpl.swift; sourceTree = "<group>"; };
 		598B79E0270C45E1007ED9FD /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		598ED936270B965900747AEE /* LangRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangRepositoryImplTests.swift; sourceTree = "<group>"; };
+		599EFD302714DF8C002307F0 /* SearchWordViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchWordViewController+Layout.swift"; sourceTree = "<group>"; };
 		59A942C7270C4F970076F08B /* WordListMVVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListMVVM.swift; sourceTree = "<group>"; };
 		59A942CC270C4FC10076F08B /* WordListMVVMImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListMVVMImpl.swift; sourceTree = "<group>"; };
 		59A942D1270C500F0076F08B /* WordListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListModel.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 			children = (
 				59169F092713D3AD00DB37A1 /* SearchWordView.swift */,
 				59169F0E2713D3D200DB37A1 /* SearchWordViewController.swift */,
+				599EFD302714DF8C002307F0 /* SearchWordViewController+Layout.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -956,6 +959,7 @@
 				59760252271115770077B5F7 /* JsonCoderImpl.swift in Sources */,
 				59A942C8270C4F970076F08B /* WordListMVVM.swift in Sources */,
 				591EDCAE2713AA6400008074 /* Router.swift in Sources */,
+				599EFD312714DF8D002307F0 /* SearchWordViewController+Layout.swift in Sources */,
 				59169F142713D3F900DB37A1 /* SearchWordViewModel.swift in Sources */,
 				59A94327270E47030076F08B /* StorageModel.xcdatamodeld in Sources */,
 				596B95CC2706AC35004CE7E6 /* Lang.swift in Sources */,

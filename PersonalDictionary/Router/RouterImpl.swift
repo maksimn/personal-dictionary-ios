@@ -9,16 +9,16 @@ import UIKit
 
 final class RouterImpl: Router {
 
-    private weak var viewController: UIViewController?
+    private let navigationController: UINavigationController
 
     private let langRepository: LangRepository
     private let notificationCenter: NotificationCenter
 
-    init(viewController: UIViewController?,
+    init(navigationController: UINavigationController,
          langRepository: LangRepository,
          notificationCenter: NotificationCenter) {
         self.langRepository = langRepository
-        self.viewController = viewController
+        self.navigationController = navigationController
         self.notificationCenter = notificationCenter
     }
 
@@ -27,15 +27,13 @@ final class RouterImpl: Router {
                                           notificationCenter: NotificationCenter.default)
         guard let newWordViewController = newWordMVVM.viewController else { return }
 
-        newWordViewController.modalPresentationStyle = .overFullScreen
-
-        viewController?.present(newWordViewController, animated: true, completion: nil)
+        navigationController.pushViewController(newWordViewController, animated: true)
     }
 
     func navigateToSearch() {
         let mvvm = SearchWordMVVMImpl(notificationCenter: notificationCenter)
         guard let searchWordVC = mvvm.viewController else { return }
 
-        viewController?.present(searchWordVC, animated: false, completion: nil)
+        navigationController.pushViewController(searchWordVC, animated: true)
     }
 }

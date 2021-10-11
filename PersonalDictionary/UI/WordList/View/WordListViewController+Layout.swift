@@ -12,30 +12,26 @@ extension WordListViewController {
     func initViews() {
         view.backgroundColor = styles.backgroundColor
         view.addSubview(searchBar)
-        view.addSubview(navigateToSearchButton)
         view.addSubview(tableView)
         view.addSubview(newWordButton)
         initSearchBar()
-        initNavigateToSearchButton()
         initTableView()
         initNewWordButton()
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 
     private func initSearchBar() {
-        searchBar.isUserInteractionEnabled = false
-        searchBar.snp.makeConstraints { make -> Void in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
-            make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
-            make.height.equalTo(44)
-        }
-    }
+        let parentView = UIView()
+        let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 32, height: 44)
 
-    private func initNavigateToSearchButton() {
-        navigateToSearchButton.snp.makeConstraints { make -> Void in
-            make.edges.equalTo(searchBar)
-        }
+        searchBar.isUserInteractionEnabled = false
         navigateToSearchButton.addTarget(self, action: #selector(onNavigateToSearchButtonTap), for: .touchUpInside)
+        parentView.frame = frame
+        parentView.addSubview(searchBar)
+        parentView.addSubview(navigateToSearchButton)
+        searchBar.frame = frame
+        navigateToSearchButton.frame = frame
+        navigationItem.titleView = parentView
     }
 
     private func initNewWordButton() {
@@ -64,7 +60,7 @@ extension WordListViewController {
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         tableView.snp.makeConstraints { make -> Void in
-            make.edges.equalTo(view.safeAreaLayoutGuide).inset(UIEdgeInsets(top: 54, left: 12, bottom: 0, right: 12))
+            make.edges.equalTo(view.safeAreaLayoutGuide).inset(UIEdgeInsets(top: 14, left: 12, bottom: 0, right: 12))
         }
 
         tableController.swipeToDeleteActionFactory = SwipeToDeleteActionFactory(

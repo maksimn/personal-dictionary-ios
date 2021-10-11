@@ -29,13 +29,14 @@ class WordListMVVMImpl: WordListMVVM {
         view = nil
     }
 
-    init(langRepository: LangRepository,
+    init(navigationController: UINavigationController,
+         langRepository: LangRepository,
          wordListRepository: WordListRepository,
          translationService: TranslationService,
          notificationCenter: NotificationCenter) {
         view = WordListViewController(staticContent: staticContent, styles: styles)
         guard let view = view else { return }
-        let router = RouterImpl(viewController: view,
+        let router = RouterImpl(navigationController: navigationController,
                                 langRepository: langRepository,
                                 notificationCenter: notificationCenter)
         let model = WordListModelImpl(wordListRepository: wordListRepository,
