@@ -10,6 +10,7 @@ import UIKit
 final class SearchWordViewController: WordListViewController, SearchWordView {
 
     let wordsNotFoundLabel = UILabel()
+    let searchByLabel = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()

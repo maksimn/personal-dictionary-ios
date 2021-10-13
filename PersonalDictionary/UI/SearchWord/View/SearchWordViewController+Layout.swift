@@ -11,7 +11,8 @@ extension SearchWordViewController {
 
     func rearrangeViews() {
         rearrangeSearchBar()
-        initMessageLabel()
+        initWordsNotFoundLabelLabel()
+        initSearchByLabel()
     }
 
     private func rearrangeSearchBar() {
@@ -27,7 +28,7 @@ extension SearchWordViewController {
         searchBar.delegate = self
     }
 
-    private func initMessageLabel() {
+    private func initWordsNotFoundLabelLabel() {
         wordsNotFoundLabel.textColor = .darkGray
         wordsNotFoundLabel.font = UIFont.systemFont(ofSize: 17)
         wordsNotFoundLabel.numberOfLines = 1
@@ -39,6 +40,19 @@ extension SearchWordViewController {
             make.centerY.equalTo(view).offset(-20)
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
+        }
+    }
+
+    private func initSearchByLabel() {
+        searchByLabel.textColor = .darkGray
+        searchByLabel.font = UIFont.systemFont(ofSize: 16)
+        searchByLabel.numberOfLines = 1
+        searchByLabel.textAlignment = .center
+        searchByLabel.text = "Search by:"
+        view.addSubview(searchByLabel)
+        searchByLabel.snp.makeConstraints { make -> Void in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
+            make.left.equalTo(view.safeAreaLayoutGuide.snp.left).offset(26)
         }
     }
 
