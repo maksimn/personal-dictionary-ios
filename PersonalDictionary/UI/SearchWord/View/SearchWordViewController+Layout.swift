@@ -10,7 +10,11 @@ import UIKit
 extension SearchWordViewController {
 
     func rearrangeViews() {
-        newWordButton.isHidden = true
+        rearrangeSearchBar()
+        initMessageLabel()
+    }
+
+    private func rearrangeSearchBar() {
         searchBar.removeFromSuperview()
 
         let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 72, height: 44)
@@ -21,8 +25,6 @@ extension SearchWordViewController {
         searchBar.placeholder = "Enter a word for searching"
         searchBar.becomeFirstResponder()
         searchBar.delegate = self
-
-        initMessageLabel()
     }
 
     private func initMessageLabel() {
@@ -38,5 +40,10 @@ extension SearchWordViewController {
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
         }
+    }
+
+    @objc
+    override var tableViewEdgeInsets: UIEdgeInsets {
+        UIEdgeInsets(top: 54, left: 12, bottom: 0, right: 12)
     }
 }
