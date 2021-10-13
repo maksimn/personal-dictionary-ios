@@ -20,9 +20,20 @@ final class SearchWordModelImpl: WordListModelImpl, SearchWordModel {
     }
 
     func searchWord(contains string: String) {
-        let searchedWordList = allWordList.filter { $0.text.lowercased().contains(string.lowercased()) }
+        guard let searchMode = viewModelOne?.searchMode else { return }
+        let string = string.lowercased()
 
-        viewModelOne?.wordList = searchedWordList
-        viewModelOne?.isWordsNotFoundLabelHidden = searchedWordList.count > 0
+        DispatchQueue.global(qos: .default).async { [weak self] in
+            let searchedWordList = self?.allWordList.filter { item in
+                (searchMode == .bySourceWord ? item.text : (item.translation ?? ""))
+                    .folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil)
+                    .contains(string)
+            } ?? []
+
+            DispatchQueue.main.async { [weak self] in
+                self?.viewModelOne?.wordList = searchedWordList
+                self?.viewModelOne?.isWordsNotFoundLabelHidden = searchedWordList.count > 0
+            }
+        }
     }
 }
