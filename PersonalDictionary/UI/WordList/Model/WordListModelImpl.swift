@@ -21,7 +21,6 @@ class WordListModelImpl: WordListModel {
         self.wordListRepository = wordListRepository
         self.translationService = translationService
         self.notificationCenter = notificationCenter
-
         addObservers()
     }
 
@@ -61,16 +60,5 @@ class WordListModelImpl: WordListModel {
                 break
             }
         })
-    }
-
-    func addObservers() {
-        notificationCenter.addObserver(self, selector: #selector(onAddNewWordItem), name: .addNewWord, object: nil)
-    }
-
-    @objc
-    func onAddNewWordItem(_ notification: Notification) {
-        if let wordItem = notification.userInfo?[Notification.Name.addNewWord] as? WordItem {
-            add(wordItem)
-        }
     }
 }

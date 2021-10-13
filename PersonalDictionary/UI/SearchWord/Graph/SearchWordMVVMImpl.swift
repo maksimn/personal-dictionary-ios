@@ -11,11 +11,15 @@ final class SearchWordMVVMImpl: WordListMVVMImpl {
 
     private var viewOne: SearchWordViewController?
 
-    init(notificationCenter: NotificationCenter) {
+    init(wordListRepository: WordListRepository,
+         translationService: TranslationService,
+         notificationCenter: NotificationCenter) {
         super.init()
         viewOne = SearchWordViewController(staticContent: staticContent, styles: styles)
         guard let viewOne = viewOne else { return }
-        let model = SearchWordModelImpl(notificationCenter: notificationCenter)
+        let model = SearchWordModelImpl(wordListRepository: wordListRepository,
+                                        translationService: translationService,
+                                        notificationCenter: notificationCenter)
         let viewModel = SearchWordViewModelImpl(model: model, view: viewOne)
 
         viewOne.viewModel = viewModel

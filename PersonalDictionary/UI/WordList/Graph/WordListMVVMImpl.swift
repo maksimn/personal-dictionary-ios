@@ -38,6 +38,8 @@ class WordListMVVMImpl: WordListMVVM {
         guard let view = view else { return }
         let router = RouterImpl(navigationController: navigationController,
                                 langRepository: langRepository,
+                                wordListRepository: wordListRepository,
+                                translationService: translationService,
                                 notificationCenter: notificationCenter)
         let model = WordListModelImpl(wordListRepository: wordListRepository,
                                       translationService: translationService,

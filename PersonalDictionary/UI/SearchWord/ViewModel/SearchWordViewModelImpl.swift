@@ -7,4 +7,6 @@
 
 final class SearchWordViewModelImpl: WordListViewModelImpl, SearchWordViewModel {
 
+    override func fetchDataFromModel() {
+    }
 }
