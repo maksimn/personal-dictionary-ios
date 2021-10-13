@@ -13,6 +13,7 @@ extension SearchWordViewController {
         rearrangeSearchBar()
         initWordsNotFoundLabelLabel()
         initSearchByLabel()
+        initSearchBySegmentedControl()
     }
 
     private func rearrangeSearchBar() {
@@ -51,8 +52,19 @@ extension SearchWordViewController {
         searchByLabel.text = "Search by:"
         view.addSubview(searchByLabel)
         searchByLabel.snp.makeConstraints { make -> Void in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(18)
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left).offset(26)
+        }
+    }
+
+    private func initSearchBySegmentedControl() {
+        searchBySegmentedControl = UISegmentedControl(items: ["source word", "translation"])
+        searchBySegmentedControl?.selectedSegmentIndex = 0
+        searchBySegmentedControl?.addTarget(self, action: #selector(onSearchByValueChanged), for: .valueChanged)
+        view.addSubview(searchBySegmentedControl ?? UIView())
+        searchBySegmentedControl?.snp.makeConstraints { make -> Void in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10.5)
+            make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-22)
         }
     }
 

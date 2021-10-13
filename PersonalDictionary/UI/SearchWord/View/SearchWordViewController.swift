@@ -11,6 +11,7 @@ final class SearchWordViewController: WordListViewController, SearchWordView {
 
     let wordsNotFoundLabel = UILabel()
     let searchByLabel = UILabel()
+    var searchBySegmentedControl: UISegmentedControl?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,11 @@ final class SearchWordViewController: WordListViewController, SearchWordView {
 
     func setWordsNotFoundLabel(hidden: Bool) {
         wordsNotFoundLabel.isHidden = hidden
+    }
+
+    @objc
+    func onSearchByValueChanged() {
+
     }
 }
 
