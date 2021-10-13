@@ -18,6 +18,7 @@ final class SearchWordViewController: WordListViewController, SearchWordView {
 
         rearrangeViews()
         viewModelOne?.prepareForSearching()
+        viewModelOne?.searchMode = .bySourceWord
     }
 
     private var viewModelOne: SearchWordViewModel? {
@@ -28,9 +29,27 @@ final class SearchWordViewController: WordListViewController, SearchWordView {
         wordsNotFoundLabel.isHidden = hidden
     }
 
+    func set(_ searchMode: SearchWordMode) {
+        switch searchMode {
+        case .bySourceWord:
+            searchBySegmentedControl?.selectedSegmentIndex = 0
+        case .byTranslation:
+            searchBySegmentedControl?.selectedSegmentIndex = 1
+        }
+    }
+
     @objc
     func onSearchByValueChanged() {
+        guard let selectedIndex = searchBySegmentedControl?.selectedSegmentIndex else { return }
 
+        switch selectedIndex {
+        case 0:
+            viewModelOne?.searchMode = .bySourceWord
+        case 1:
+            viewModelOne?.searchMode = .byTranslation
+        default:
+            break
+        }
     }
 }
 

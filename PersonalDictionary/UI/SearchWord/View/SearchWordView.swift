@@ -8,4 +8,6 @@
 protocol SearchWordView: WordListView {
 
     func setWordsNotFoundLabel(hidden: Bool)
+
+    func set(_ searchMode: SearchWordMode)
 }

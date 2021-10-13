@@ -32,6 +32,13 @@ final class SearchWordViewModelImpl: WordListViewModelImpl, SearchWordViewModel 
         }
     }
 
+    var searchMode: SearchWordMode = .bySourceWord {
+        didSet {
+            viewOne?.set(searchMode)
+            print(searchMode)
+        }
+    }
+
     override func fetchDataFromModel() { }
 
     func prepareForSearching() {
