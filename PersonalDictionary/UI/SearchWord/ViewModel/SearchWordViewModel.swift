@@ -7,7 +7,7 @@
 
 protocol SearchWordViewModel: WordListViewModel {
 
-    var isMessageLabelHidden: Bool { get set }
+    var isWordsNotFoundLabelHidden: Bool { get set }
 
     func prepareForSearching()
 

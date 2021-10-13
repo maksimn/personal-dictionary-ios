@@ -23,6 +23,6 @@ final class SearchWordModelImpl: WordListModelImpl, SearchWordModel {
         let searchedWordList = allWordList.filter { $0.text.lowercased().contains(string.lowercased()) }
 
         viewModelOne?.wordList = searchedWordList
-        viewModelOne?.isMessageLabelHidden = searchedWordList.count > 0
+        viewModelOne?.isWordsNotFoundLabelHidden = searchedWordList.count > 0
     }
 }

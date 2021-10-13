@@ -28,14 +28,14 @@ extension SearchWordViewController {
     }
 
     private func initMessageLabel() {
-        messageLabel.textColor = .darkGray
-        messageLabel.font = UIFont.systemFont(ofSize: 17)
-        messageLabel.numberOfLines = 1
-        messageLabel.textAlignment = .center
-        messageLabel.text = "No words found"
-        messageLabel.isHidden = true
-        view.addSubview(messageLabel)
-        messageLabel.snp.makeConstraints { make -> Void in
+        wordsNotFoundLabel.textColor = .darkGray
+        wordsNotFoundLabel.font = UIFont.systemFont(ofSize: 17)
+        wordsNotFoundLabel.numberOfLines = 1
+        wordsNotFoundLabel.textAlignment = .center
+        wordsNotFoundLabel.text = "No words found"
+        wordsNotFoundLabel.isHidden = true
+        view.addSubview(wordsNotFoundLabel)
+        wordsNotFoundLabel.snp.makeConstraints { make -> Void in
             make.centerY.equalTo(view).offset(-20)
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)

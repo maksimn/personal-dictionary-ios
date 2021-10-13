@@ -9,7 +9,7 @@ import UIKit
 
 final class SearchWordViewController: WordListViewController, SearchWordView {
 
-    let messageLabel = UILabel()
+    let wordsNotFoundLabel = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,8 +22,8 @@ final class SearchWordViewController: WordListViewController, SearchWordView {
         viewModel as? SearchWordViewModel
     }
 
-    func setMessageLabel(hidden: Bool) {
-        messageLabel.isHidden = hidden
+    func setWordsNotFoundLabel(hidden: Bool) {
+        wordsNotFoundLabel.isHidden = hidden
     }
 }
 

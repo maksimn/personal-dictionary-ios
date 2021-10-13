@@ -7,5 +7,5 @@
 
 protocol SearchWordView: WordListView {
 
-    func setMessageLabel(hidden: Bool)
+    func setWordsNotFoundLabel(hidden: Bool)
 }
