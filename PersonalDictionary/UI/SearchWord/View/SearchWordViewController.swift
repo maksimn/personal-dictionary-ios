@@ -9,6 +9,8 @@ import UIKit
 
 final class SearchWordViewController: WordListViewController, SearchWordView {
 
+    let messageLabel = UILabel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         rearrangeViews()
