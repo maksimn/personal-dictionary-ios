@@ -31,6 +31,7 @@ extension SearchWordViewController {
         messageLabel.numberOfLines = 1
         messageLabel.textAlignment = .center
         messageLabel.text = "No words found"
+        messageLabel.isHidden = true
         view.addSubview(messageLabel)
         messageLabel.snp.makeConstraints { make -> Void in
             make.centerY.equalTo(view).offset(-20)

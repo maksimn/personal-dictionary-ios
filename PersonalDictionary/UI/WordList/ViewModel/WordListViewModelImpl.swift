@@ -7,8 +7,8 @@
 
 class WordListViewModelImpl: WordListViewModel {
 
-    private unowned let view: WordListView
-    private let model: WordListModel
+    unowned let view: WordListView
+    let model: WordListModel
     private var router: Router?
 
     private var previousWordCount = -1

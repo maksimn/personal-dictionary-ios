@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 11.10.2021.
 //
 
-protocol SearchWordView: AnyObject {
+protocol SearchWordView: WordListView {
 
+    func setMessageLabel(hidden: Bool)
 }
