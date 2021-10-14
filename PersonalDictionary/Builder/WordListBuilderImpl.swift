@@ -9,31 +9,18 @@ import UIKit
 
 final class WordListBuilderImpl: WordListBuilder {
 
-    func buildMVVM() -> WordListMVVM {
-        let ponsApiData = PonsApiData(url: "https://api.pons.com/v1/dictionary",
-                                      secretHeaderKey: "X-Secret",
-                                      secret: "")
-        let logger = buildLogger()
-        let translationService = PonsTranslationService(apiData: ponsApiData,
-                                                        coreService: UrlSessionCoreService(),
-                                                        jsonCoder: JSONCoderImpl(),
-                                                        logger: logger)
+    let ponsApiData = PonsApiData(url: "https://api.pons.com/v1/dictionary",
+                                  secretHeaderKey: "X-Secret",
+                                  secret: "")
 
-        let navigationController = UINavigationController()
-        let wordListMVVM = WordListMVVMImpl(navigationController: navigationController,
-                                            langRepository: buildLangRepository(),
-                                            wordListRepository: buildWordListRepository(),
-                                            translationService: translationService,
-                                            notificationCenter: NotificationCenter.default)
-        let viewController = wordListMVVM.viewController ?? UIViewController()
+    let logger = SimpleLogger()
 
-        navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
-        navigationController.setViewControllers([viewController], animated: false)
+    lazy var translationService = PonsTranslationService(apiData: ponsApiData,
+                                                         coreService: UrlSessionCoreService(),
+                                                         jsonCoder: JSONCoderImpl(),
+                                                         logger: logger)
 
-        return wordListMVVM
-    }
-
-    private func buildLangData() -> LangData {
+    lazy var langData: LangData = {
         let lang1 = Lang(id: Lang.Id(raw: 1), name: NSLocalizedString("English", comment: ""), shortName: "EN")
         let lang2 = Lang(id: Lang.Id(raw: 2), name: NSLocalizedString("Russian", comment: ""), shortName: "RU")
         let lang3 = Lang(id: Lang.Id(raw: 3), name: NSLocalizedString("French", comment: ""), shortName: "FR")
@@ -46,26 +33,44 @@ final class WordListBuilderImpl: WordListBuilder {
                                 defaultTargetLang: lang2)
 
         return langData
-    }
+    }()
 
-    private func buildLogger() -> Logger {
-        SimpleLogger()
-    }
+    lazy var langRepository = {
+        LangRepositoryImpl(userDefaults: UserDefaults.standard,
+                           data: langData)
+    }()
 
-    private func buildLangRepository() -> LangRepository {
-        let langData = buildLangData()
-        let langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard,
-                                                data: langData)
-
-        return langRepository
-    }
-
-    private func buildWordListRepository() -> WordListRepository {
+    lazy var wordListRepository: WordListRepository = {
         let coreWordListRepositoryArgs = CoreWordListRepositoryArgs(persistentContainerName: "StorageModel")
-        let logger = buildLogger()
 
         return CoreWordListRepository(args: coreWordListRepositoryArgs,
-                                      langRepository: buildLangRepository(),
+                                      langRepository: langRepository,
                                       logger: logger)
+    }()
+
+    func buildMVVM() -> WordListMVVM {
+        let navigationController = UINavigationController()
+        let router = RouterImpl(navigationController: navigationController, builder: self)
+        let wordListMVVM = WordListMVVMImpl(router: router,
+                                            wordListRepository: wordListRepository,
+                                            translationService: translationService,
+                                            notificationCenter: NotificationCenter.default)
+        let viewController = wordListMVVM.viewController ?? UIViewController()
+
+        navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
+        navigationController.setViewControllers([viewController], animated: false)
+
+        return wordListMVVM
+    }
+
+    func buildNewWordMVVM() -> NewWordMVVM {
+        NewWordMVVMImpl(langRepository: langRepository,
+                        notificationCenter: NotificationCenter.default)
+    }
+
+    func buildSearchWordMVVM() -> WordListMVVM {
+        SearchWordMVVMImpl(wordListRepository: wordListRepository,
+                           translationService: translationService,
+                           notificationCenter: NotificationCenter.default)
     }
 }

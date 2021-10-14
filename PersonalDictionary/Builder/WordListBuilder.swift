@@ -8,4 +8,8 @@
 protocol WordListBuilder {
 
     func buildMVVM() -> WordListMVVM
+
+    func buildNewWordMVVM() -> NewWordMVVM
+
+    func buildSearchWordMVVM() -> WordListMVVM
 }

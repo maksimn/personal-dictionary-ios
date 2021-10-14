@@ -10,26 +10,16 @@ import UIKit
 final class RouterImpl: Router {
 
     private let navigationController: UINavigationController
-    private let langRepository: LangRepository
-    private let notificationCenter: NotificationCenter
-    private let wordListRepository: WordListRepository
-    private let translationService: TranslationService
+    private let builder: WordListBuilder
 
     init(navigationController: UINavigationController,
-         langRepository: LangRepository,
-         wordListRepository: WordListRepository,
-         translationService: TranslationService,
-         notificationCenter: NotificationCenter) {
-        self.langRepository = langRepository
+         builder: WordListBuilder) {
         self.navigationController = navigationController
-        self.notificationCenter = notificationCenter
-        self.wordListRepository = wordListRepository
-        self.translationService = translationService
+        self.builder = builder
     }
 
     func navigateToNewWord() {
-        let newWordMVVM = NewWordMVVMImpl(langRepository: langRepository,
-                                          notificationCenter: NotificationCenter.default)
+        let newWordMVVM = builder.buildNewWordMVVM()
         guard let newWordViewController = newWordMVVM.viewController else { return }
 
         newWordViewController.modalPresentationStyle = .overFullScreen
@@ -38,9 +28,7 @@ final class RouterImpl: Router {
     }
 
     func navigateToSearch() {
-        let mvvm = SearchWordMVVMImpl(wordListRepository: wordListRepository,
-                                      translationService: translationService,
-                                      notificationCenter: notificationCenter)
+        let mvvm = builder.buildSearchWordMVVM()
         guard let searchWordVC = mvvm.viewController else { return }
 
         navigationController.pushViewController(searchWordVC, animated: true)
