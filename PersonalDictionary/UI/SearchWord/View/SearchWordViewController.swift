@@ -7,11 +7,31 @@
 
 import UIKit
 
+struct SearchWordViewStaticContent {
+    let baseContent: WordListViewStaticContent
+    let searchBarPlaceholderText: String
+    let noWordsFoundText: String
+    let searchByLabelText: String
+    let sourceWordText: String
+    let translationText: String
+}
+
 final class SearchWordViewController: WordListViewController, SearchWordView {
+
+    let searchStaticContent: SearchWordViewStaticContent
 
     let wordsNotFoundLabel = UILabel()
     let searchByLabel = UILabel()
     var searchBySegmentedControl: UISegmentedControl?
+
+    init(staticContent: SearchWordViewStaticContent, styles: WordListViewStyles) {
+        self.searchStaticContent = staticContent
+        super.init(staticContent: staticContent.baseContent, styles: styles)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
