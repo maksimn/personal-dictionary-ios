@@ -53,4 +53,8 @@ class WordListMVVMImpl: WordListMVVM {
     var viewController: UIViewController? {
         view
     }
+
+    var navigationController: UINavigationController? {
+        view?.navigationController
+    }
 }

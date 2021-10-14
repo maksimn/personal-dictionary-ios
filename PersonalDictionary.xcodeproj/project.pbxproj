@@ -70,6 +70,8 @@
 		59A94327270E47030076F08B /* StorageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 59A94325270E47030076F08B /* StorageModel.xcdatamodeld */; };
 		59A9432F270E4B8D0076F08B /* CoreWordListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9432E270E4B8D0076F08B /* CoreWordListRepository.swift */; };
 		59A94339270E4DB90076F08B /* WordItemMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A94338270E4DB90076F08B /* WordItemMO.swift */; };
+		59B320352717D1A30083DFD7 /* WordListBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B320342717D1A30083DFD7 /* WordListBuilder.swift */; };
+		59B3203D2717D1B60083DFD7 /* WordListBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B3203C2717D1B60083DFD7 /* WordListBuilderImpl.swift */; };
 		59BA6E9A270F7FD000A70594 /* SwipeToDeleteActionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BA6E99270F7FD000A70594 /* SwipeToDeleteActionFactory.swift */; };
 		59E0378F271216F700197F19 /* PonsTranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0378E271216F700197F19 /* PonsTranslationService.swift */; };
 		59E037942712226800197F19 /* PonsResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E037932712226800197F19 /* PonsResponseData.swift */; };
@@ -168,6 +170,8 @@
 		59A94326270E47030076F08B /* StorageModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StorageModel.xcdatamodel; sourceTree = "<group>"; };
 		59A9432E270E4B8D0076F08B /* CoreWordListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreWordListRepository.swift; sourceTree = "<group>"; };
 		59A94338270E4DB90076F08B /* WordItemMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItemMO.swift; sourceTree = "<group>"; };
+		59B320342717D1A30083DFD7 /* WordListBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListBuilder.swift; sourceTree = "<group>"; };
+		59B3203C2717D1B60083DFD7 /* WordListBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListBuilderImpl.swift; sourceTree = "<group>"; };
 		59BA6E99270F7FD000A70594 /* SwipeToDeleteActionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeToDeleteActionFactory.swift; sourceTree = "<group>"; };
 		59E0378E271216F700197F19 /* PonsTranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PonsTranslationService.swift; sourceTree = "<group>"; };
 		59E037932712226800197F19 /* PonsResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PonsResponseData.swift; sourceTree = "<group>"; };
@@ -432,6 +436,7 @@
 			isa = PBXGroup;
 			children = (
 				596B95C92706AC1D004CE7E6 /* Core */,
+				59B320332717D0EE0083DFD7 /* Builder */,
 				591EDCAC2713AA5400008074 /* Router */,
 				5953CB3727062EAB006537B9 /* Repository */,
 				59760228271110390077B5F7 /* Service */,
@@ -631,6 +636,15 @@
 				59A94338270E4DB90076F08B /* WordItemMO.swift */,
 			);
 			path = ManagedObject;
+			sourceTree = "<group>";
+		};
+		59B320332717D0EE0083DFD7 /* Builder */ = {
+			isa = PBXGroup;
+			children = (
+				59B320342717D1A30083DFD7 /* WordListBuilder.swift */,
+				59B3203C2717D1B60083DFD7 /* WordListBuilderImpl.swift */,
+			);
+			path = Builder;
 			sourceTree = "<group>";
 		};
 		59BA6E98270F7FA600A70594 /* UserSwipes */ = {
@@ -968,11 +982,13 @@
 				590F78F32709317800BCBD2C /* LangPickerPopup.swift in Sources */,
 				59A942F9270CE6C80076F08B /* WordItem.swift in Sources */,
 				5953CAEF270615AE006537B9 /* WordListViewController+Layout.swift in Sources */,
+				59B320352717D1A30083DFD7 /* WordListBuilder.swift in Sources */,
 				59A94319270DED370076F08B /* WordListRepository.swift in Sources */,
 				59A942E6270C52BF0076F08B /* WordListView.swift in Sources */,
 				5953CB3927062EF2006537B9 /* LangRepository.swift in Sources */,
 				59E037942712226800197F19 /* PonsResponseData.swift in Sources */,
 				5953CB18270627AF006537B9 /* NewWordModelImpl.swift in Sources */,
+				59B3203D2717D1B60083DFD7 /* WordListBuilderImpl.swift in Sources */,
 				5953CB2227062830006537B9 /* NewWordViewController.swift in Sources */,
 				59A942D7270C50290076F08B /* WordListModelImpl.swift in Sources */,
 				59A9432F270E4B8D0076F08B /* CoreWordListRepository.swift in Sources */,

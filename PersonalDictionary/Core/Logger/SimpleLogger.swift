@@ -8,19 +8,19 @@
 final class SimpleLogger: Logger {
 
     func networkRequestStart(_ requestName: String) {
-        print("\n\n\(requestName) NETWORK REQUEST START\n\n")
+        print("\n\(requestName) NETWORK REQUEST START\n")
     }
 
     func networkRequestSuccess(_ requestName: String) {
-        print("\n\n\(requestName) NETWORK REQUEST SUCCESS\n\n")
+        print("\n\(requestName) NETWORK REQUEST SUCCESS\n")
     }
 
     func networkRequestError(_ requestName: String) {
-        print("\n\n\(requestName) NETWORK REQUEST ERROR\n\n")
+        print("\n\(requestName) NETWORK REQUEST ERROR\n")
     }
 
     func log(error: Error) {
-        print("\n\nError happened during the app execution:")
+        print("\nError happened during the app execution:")
         print(error)
     }
 }
