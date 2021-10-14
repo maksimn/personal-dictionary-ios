@@ -36,4 +36,10 @@ final class SearchWordModelImpl: WordListModelImpl, SearchWordModel {
             }
         }
     }
+
+    func sendRemoveWordEvent(_ wordItem: WordItem) {
+        notificationCenter.post(name: .removeWord, object: nil, userInfo: [Notification.Name.removeWord: wordItem])
+    }
+
+    override func addObservers() { }
 }

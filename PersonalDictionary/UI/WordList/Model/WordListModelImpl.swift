@@ -36,6 +36,12 @@ class WordListModelImpl: WordListModel {
         requestTranslation(for: wordItem, position)
     }
 
+    func remove(wordItem: WordItem) {
+        guard let position = viewModel?.wordList.firstIndex(where: { $0.id == wordItem.id }) else { return }
+
+        viewModel?.remove(wordItem, position)
+    }
+
     func removeFromRepository(_ wordItem: WordItem) {
         wordListRepository.remove(with: wordItem.id, completion: nil)
     }

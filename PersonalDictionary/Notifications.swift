@@ -10,4 +10,5 @@ import Foundation
 extension Notification.Name {
 
     static let addNewWord = Notification.Name("addNewWord")
+    static let removeWord = Notification.Name("removeWord")
 }

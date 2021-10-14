@@ -10,4 +10,6 @@ protocol SearchWordModel: WordListModel {
     func prepareForSearching()
 
     func searchWord(contains string: String)
+
+    func sendRemoveWordEvent(_ wordItem: WordItem)
 }

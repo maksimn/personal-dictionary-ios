@@ -47,6 +47,11 @@ final class SearchWordViewModelImpl: WordListViewModelImpl, SearchWordViewModel 
 
     override func fetchDataFromModel() { }
 
+    override func remove(_ wordItem: WordItem, _ position: Int) {
+        modelOne?.sendRemoveWordEvent(wordItem)
+        super.remove(wordItem, position)
+    }
+
     func prepareForSearching() {
         modelOne?.prepareForSearching()
     }

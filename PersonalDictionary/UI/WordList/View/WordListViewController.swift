@@ -79,6 +79,7 @@ extension WordListViewController: WordListView {
 // User Action Handlers:
 extension WordListViewController {
 
+    @objc
     func onDeleteWordTap(_ position: Int) {
         let item = tableController.wordList[position]
 
