@@ -6,17 +6,16 @@
 //
 
 enum SearchWordMode {
-    case bySourceWord
-    case byTranslation
+    case bySourceWord, byTranslation
 }
 
 protocol SearchWordViewModel: WordListViewModel {
+
+    var searchText: String { get set }
 
     var isWordsNotFoundLabelHidden: Bool { get set }
 
     var searchMode: SearchWordMode { get set }
 
     func prepareForSearching()
-
-    func searchWord(contains string: String)
 }

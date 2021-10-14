@@ -57,7 +57,7 @@ extension SearchWordViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if let searchText = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
-            viewModelOne?.searchWord(contains: searchText)
+            viewModelOne?.searchText = searchText
         }
     }
 }

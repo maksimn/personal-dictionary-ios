@@ -26,6 +26,12 @@ final class SearchWordViewModelImpl: WordListViewModelImpl, SearchWordViewModel 
         }
     }
 
+    var searchText: String = "" {
+        didSet {
+            performSearch()
+        }
+    }
+
     var isWordsNotFoundLabelHidden: Bool = true {
         didSet {
             viewOne?.setWordsNotFoundLabel(hidden: isWordsNotFoundLabelHidden)
@@ -35,7 +41,7 @@ final class SearchWordViewModelImpl: WordListViewModelImpl, SearchWordViewModel 
     var searchMode: SearchWordMode = .bySourceWord {
         didSet {
             viewOne?.set(searchMode)
-            print(searchMode)
+            performSearch()
         }
     }
 
@@ -45,9 +51,9 @@ final class SearchWordViewModelImpl: WordListViewModelImpl, SearchWordViewModel 
         modelOne?.prepareForSearching()
     }
 
-    func searchWord(contains string: String) {
-        if string.count > 0 {
-            modelOne?.searchWord(contains: string)
+    private func performSearch() {
+        if searchText.count > 0 {
+            modelOne?.searchWord(contains: searchText)
         } else {
             wordList = []
             isWordsNotFoundLabelHidden = true
