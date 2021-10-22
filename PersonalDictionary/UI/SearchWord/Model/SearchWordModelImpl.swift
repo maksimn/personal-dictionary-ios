@@ -32,7 +32,7 @@ final class SearchWordModelImpl: WordListModelImpl, SearchWordModel {
 
             DispatchQueue.main.async { [weak self] in
                 self?.viewModelOne?.wordList = searchedWordList
-                self?.viewModelOne?.isWordsNotFoundLabelHidden = searchedWordList.count > 0
+                self?.viewModelOne?.nothingWasFoundLabelHidden = searchedWordList.count > 0
             }
         }
     }

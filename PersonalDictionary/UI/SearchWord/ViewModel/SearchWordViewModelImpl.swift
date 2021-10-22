@@ -32,9 +32,9 @@ final class SearchWordViewModelImpl: WordListViewModelImpl, SearchWordViewModel 
         }
     }
 
-    var isWordsNotFoundLabelHidden: Bool = true {
+    var nothingWasFoundLabelHidden: Bool = true {
         didSet {
-            viewOne?.setWordsNotFoundLabel(hidden: isWordsNotFoundLabelHidden)
+            viewOne?.setNothingWasFoundLabel(hidden: nothingWasFoundLabelHidden)
         }
     }
 
@@ -61,7 +61,7 @@ final class SearchWordViewModelImpl: WordListViewModelImpl, SearchWordViewModel 
             modelOne?.searchWord(contains: searchText)
         } else {
             wordList = []
-            isWordsNotFoundLabelHidden = true
+            nothingWasFoundLabelHidden = true
         }
     }
 }

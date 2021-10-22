@@ -45,7 +45,7 @@ final class SearchWordViewController: WordListViewController, SearchWordView {
         viewModel as? SearchWordViewModel
     }
 
-    func setWordsNotFoundLabel(hidden: Bool) {
+    func setNothingWasFoundLabel(hidden: Bool) {
         wordsNotFoundLabel.isHidden = hidden
     }
 

@@ -7,7 +7,7 @@
 
 protocol SearchWordView: WordListView {
 
-    func setWordsNotFoundLabel(hidden: Bool)
+    func setNothingWasFoundLabel(hidden: Bool)
 
     func set(_ searchMode: SearchWordMode)
 }

@@ -76,10 +76,18 @@ class NewWordViewController: UIViewController, NewWordView {
     func set(targetLang: Lang) {
         targetLangLabel.text = targetLang.name
     }
+
+    private func sendNewWordEventAndDismiss() {
+        if let text = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
+            viewModel?.sendNewWordEvent(text)
+        }
+
+        dismiss(animated: true, completion: nil)
+    }
 }
 
 // User Action handlers
-extension NewWordViewController {
+extension NewWordViewController: UITextFieldDelegate {
 
     @objc
     func onSourceLangLabelTap() {
@@ -95,11 +103,7 @@ extension NewWordViewController {
 
     @objc
     func onOkButtonTap() {
-        if let text = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
-            viewModel?.sendNewWordEvent(text)
-        }
-
-        dismiss(animated: true, completion: nil)
+        sendNewWordEventAndDismiss()
     }
 
     func onSelectLang(_ lang: Lang) {
@@ -110,5 +114,10 @@ extension NewWordViewController {
         } else {
             viewModel?.targetLang = lang
         }
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        sendNewWordEventAndDismiss()
+        return true
     }
 }
