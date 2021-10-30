@@ -61,7 +61,9 @@ class NewWordViewController: UIViewController, NewWordView {
         releaseLangPickerPopup()
 
         langPickerPopup = LangPickerPopup(langPickerController: LangPickerController(langs: allLangs),
-                                          onSelectLang: self.onSelectLang,
+                                          onSelectLang: { [weak self] lang in
+                                            self?.onSelectLang(lang)
+                                          },
                                           selectButtonTitle: staticContent.selectButtonTitle,
                                           backgroundColor: styles.backgroundColor,
                                           isHidden: true)
