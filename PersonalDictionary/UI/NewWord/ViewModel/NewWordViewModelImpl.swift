@@ -17,6 +17,12 @@ class NewWordViewModelImpl: NewWordViewModel {
         self.view = view
     }
 
+    var text: String = "" {
+        didSet {
+            view.set(text: text)
+        }
+    }
+
     var allLangs: [Lang] = [] {
         didSet {
             view.set(allLangs: allLangs)
@@ -41,7 +47,9 @@ class NewWordViewModelImpl: NewWordViewModel {
         model.fetchData()
     }
 
-    func sendNewWordEvent(_ newWordText: String) {
+    func sendNewWordEvent() {
+        let newWordText = text.trimmingCharacters(in: .whitespacesAndNewlines)
+
         model.sendNewWordEvent(newWordText)
     }
 }

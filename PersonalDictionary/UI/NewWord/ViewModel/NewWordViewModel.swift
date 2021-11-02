@@ -7,6 +7,8 @@
 
 protocol NewWordViewModel: AnyObject {
 
+    var text: String { get set }
+
     var allLangs: [Lang] { get set }
 
     var sourceLang: Lang { get set }
@@ -15,5 +17,5 @@ protocol NewWordViewModel: AnyObject {
 
     func fetchDataFromModel()
 
-    func sendNewWordEvent(_ newWordText: String)
+    func sendNewWordEvent()
 }

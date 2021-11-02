@@ -57,6 +57,10 @@ class NewWordViewController: UIViewController, NewWordView {
         viewModel?.fetchDataFromModel()
     }
 
+    func set(text: String) {
+        textField.text = text
+    }
+
     func set(allLangs: [Lang]) {
         releaseLangPickerPopup()
 
@@ -80,10 +84,7 @@ class NewWordViewController: UIViewController, NewWordView {
     }
 
     private func sendNewWordEventAndDismiss() {
-        if let text = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
-            viewModel?.sendNewWordEvent(text)
-        }
-
+        viewModel?.sendNewWordEvent()
         dismiss(animated: true, completion: nil)
     }
 }
@@ -116,6 +117,11 @@ extension NewWordViewController: UITextFieldDelegate {
         } else {
             viewModel?.targetLang = lang
         }
+    }
+
+    @objc
+    func textFieldDidChange(_ textField: UITextField) {
+        viewModel?.text = textField.text ?? ""
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

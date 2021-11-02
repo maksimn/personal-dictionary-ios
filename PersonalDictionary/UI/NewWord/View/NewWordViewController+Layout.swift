@@ -107,6 +107,7 @@ extension NewWordViewController {
             make.edges.equalTo(contentView).inset(UIEdgeInsets(top: 62, left: 12, bottom: 74, right: 12))
         }
         textField.delegate = self
+        textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
     }
 
     private func initOkButton() {
