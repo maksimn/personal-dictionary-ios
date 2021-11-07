@@ -24,7 +24,7 @@ extension SearchWordViewController {
         searchBar.isUserInteractionEnabled = true
         searchBar.frame = frame
         navigationItem.titleView = searchBar
-        searchBar.placeholder = searchStaticContent.searchBarPlaceholderText
+        searchBar.placeholder = selfParams.staticContent.searchBarPlaceholderText
         searchBar.becomeFirstResponder()
         searchBar.delegate = self
     }
@@ -34,7 +34,7 @@ extension SearchWordViewController {
         wordsNotFoundLabel.font = UIFont.systemFont(ofSize: 17)
         wordsNotFoundLabel.numberOfLines = 1
         wordsNotFoundLabel.textAlignment = .center
-        wordsNotFoundLabel.text = searchStaticContent.noWordsFoundText
+        wordsNotFoundLabel.text = selfParams.staticContent.noWordsFoundText
         wordsNotFoundLabel.isHidden = true
         view.addSubview(wordsNotFoundLabel)
         wordsNotFoundLabel.snp.makeConstraints { make -> Void in
@@ -49,7 +49,7 @@ extension SearchWordViewController {
         searchByLabel.font = UIFont.systemFont(ofSize: 16)
         searchByLabel.numberOfLines = 1
         searchByLabel.textAlignment = .center
-        searchByLabel.text = searchStaticContent.searchByLabelText
+        searchByLabel.text = selfParams.staticContent.searchByLabelText
         view.addSubview(searchByLabel)
         searchByLabel.snp.makeConstraints { make -> Void in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(18)
@@ -58,8 +58,8 @@ extension SearchWordViewController {
     }
 
     private func initSearchBySegmentedControl() {
-        searchBySegmentedControl = UISegmentedControl(items: [searchStaticContent.sourceWordText,
-                                                              searchStaticContent.translationText])
+        searchBySegmentedControl = UISegmentedControl(items: [selfParams.staticContent.sourceWordText,
+                                                              selfParams.staticContent.translationText])
         searchBySegmentedControl?.selectedSegmentIndex = 0
         searchBySegmentedControl?.addTarget(self, action: #selector(onSearchByValueChanged), for: .valueChanged)
         view.addSubview(searchBySegmentedControl ?? UIView())

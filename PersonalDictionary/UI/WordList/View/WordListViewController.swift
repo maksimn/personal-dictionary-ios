@@ -7,32 +7,34 @@
 
 import UIKit
 
-struct WordListViewStaticContent {
-    let newWordButtonImage: UIImage
-    let deleteAction: DeleteActionStaticContent
-}
-
-struct WordListViewStyles {
-    let backgroundColor: UIColor
-    let deleteAction: DeleteActionStyles
-}
-
-class WordListViewController: UIViewController {
+class WordListViewController: UIViewController, WordListView {
 
     var viewModel: WordListViewModel?
 
-    let staticContent: WordListViewStaticContent
-    let styles: WordListViewStyles
+    let params: WordListViewParams
 
     let searchBar = UISearchBar()
     let tableView = UITableView()
-    let tableController = WordTableController()
     let newWordButton = UIButton()
     let navigateToSearchButton = UIButton()
 
-    init(staticContent: WordListViewStaticContent, styles: WordListViewStyles) {
-        self.staticContent = staticContent
-        self.styles = styles
+    lazy var tableDataSource: WordTableDataSource = {
+        WordTableDataSource(tableView: tableView, data: WordListData(wordList: [], changedItemPosition: nil))
+    }()
+
+    lazy var tableActions: WordTableDelegate = {
+        WordTableDelegate(onDeleteTap: { [weak self] position in
+                            self?.onDeleteWordTap(position)
+                          },
+                          deleteActionViewParams: DeleteActionViewParams(
+                            staticContent: params.staticContent.deleteAction,
+                            styles: params.styles.deleteAction
+                          )
+        )
+    }()
+
+    init(params: WordListViewParams) {
+        self.params = params
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -45,43 +47,28 @@ class WordListViewController: UIViewController {
         initViews()
         viewModel?.fetchDataFromModel()
     }
-}
 
-extension WordListViewController: WordListView {
+    // MARK: - WordListView
 
-    func set(wordList: [WordItem]) {
-        tableController.wordList = wordList
+    func set(_ wordListData: WordListData) {
+        tableDataSource.data = wordListData
     }
 
-    func addNewRowToList() {
-        let count = tableController.wordList.count - 1
+    func set(wordList: [WordItem]) {}
 
-        tableView.insertRows(at: [IndexPath(row: count, section: 0)], with: .automatic)
-    }
+    func addNewRowToList() {}
 
-    func updateRowAt(_ position: Int) {
-        guard position > -1 && position < tableController.wordList.count else { return }
+    func updateRowAt(_ position: Int) {}
 
-        tableView.reloadRows(at: [IndexPath(row: position, section: 0)], with: .automatic)
-    }
+    func removeRowAt(_ position: Int) {}
 
-    func removeRowAt(_ position: Int) {
-        guard position > -1 && position <= tableController.wordList.count else { return }
+    func reloadList() {}
 
-        tableView.deleteRows(at: [IndexPath(row: position, section: 0)], with: .automatic)
-    }
-
-    func reloadList() {
-        tableView.reloadData()
-    }
-}
-
-// User Action Handlers:
-extension WordListViewController {
+    // MARK: - User Action Handlers
 
     @objc
     func onDeleteWordTap(_ position: Int) {
-        let item = tableController.wordList[position]
+        let item = tableDataSource.data.wordList[position]
 
         viewModel?.remove(item, position)
     }

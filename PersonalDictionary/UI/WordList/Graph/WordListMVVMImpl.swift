@@ -11,20 +11,6 @@ class WordListMVVMImpl: WordListMVVM {
 
     private var view: WordListViewController?
 
-    let staticContent = WordListViewStaticContent(
-        newWordButtonImage: UIImage(named: "icon-plus")!,
-        deleteAction: DeleteActionStaticContent(
-            image: UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!
-        )
-    )
-
-    let styles = WordListViewStyles(
-        backgroundColor: appBackgroundColor,
-        deleteAction: DeleteActionStyles(
-            backgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
-        )
-    )
-
     init() {
         view = nil
     }
@@ -32,8 +18,9 @@ class WordListMVVMImpl: WordListMVVM {
     init(router: Router,
          wordListRepository: WordListRepository,
          translationService: TranslationService,
-         notificationCenter: NotificationCenter) {
-        view = WordListViewController(staticContent: staticContent, styles: styles)
+         notificationCenter: NotificationCenter,
+         viewParams: WordListViewParams) {
+        view = WordListViewController(params: viewParams)
         guard let view = view else { return }
         let model = WordListModelImpl(wordListRepository: wordListRepository,
                                       translationService: translationService,

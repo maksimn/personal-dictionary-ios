@@ -10,7 +10,7 @@ import UIKit
 extension WordListViewController {
 
     func initViews() {
-        view.backgroundColor = styles.backgroundColor
+        view.backgroundColor = params.styles.backgroundColor
         view.addSubview(searchBar)
         view.addSubview(tableView)
         view.addSubview(newWordButton)
@@ -35,7 +35,7 @@ extension WordListViewController {
     }
 
     private func initNewWordButton() {
-        newWordButton.setImage(staticContent.newWordButtonImage, for: .normal)
+        newWordButton.setImage(params.staticContent.newWordButtonImage, for: .normal)
         newWordButton.imageView?.contentMode = .scaleAspectFit
         newWordButton.addTarget(self, action: #selector(onNewWordButtonTap), for: .touchUpInside)
         newWordButton.snp.makeConstraints { make -> Void in
@@ -51,23 +51,17 @@ extension WordListViewController {
     }
 
     func initTableView() {
-        tableView.backgroundColor = styles.backgroundColor
+        tableView.backgroundColor = params.styles.backgroundColor
         tableView.layer.cornerRadius = 16
         tableView.rowHeight = WordItemCell.height
         tableView.register(WordItemCell.self, forCellReuseIdentifier: "\(WordItemCell.self)")
-        tableView.dataSource = tableController
-        tableView.delegate = tableController
+        tableView.dataSource = tableDataSource
+        tableView.delegate = tableActions
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         tableView.snp.makeConstraints { make -> Void in
             make.edges.equalTo(view.safeAreaLayoutGuide).inset(tableViewEdgeInsets)
         }
-
-        tableController.swipeToDeleteActionFactory = SwipeToDeleteActionFactory(
-            staticContent: staticContent.deleteAction,
-            styles: styles.deleteAction,
-            onDeleteTap: onDeleteWordTap
-        )
     }
 
     @objc
