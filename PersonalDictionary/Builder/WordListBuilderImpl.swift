@@ -16,7 +16,6 @@ final class WordListBuilderImpl: WordListBuilder {
     private lazy var wordListViewParams: WordListViewParams = {
         WordListViewParams(
             staticContent: WordListViewStaticContent(
-                newWordButtonImage: UIImage(named: "icon-plus")!,
                 deleteAction: DeleteActionStaticContent(
                     image: UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!
                 )
@@ -57,11 +56,13 @@ final class WordListBuilderImpl: WordListBuilder {
 
     // MARK: - WordListBuilder
 
+    func buildMainWordListContainer() -> MainWordListContainer {
+        MainWordListContainer(wordListMVVM: buildMVVM(), wordListRepository: buildWordListRepository())
+    }
+
     func buildMVVM() -> WordListMVVM {
         let navigationController = UINavigationController()
-        let router = RouterImpl(navigationController: navigationController, builder: self)
-        let wordListMVVM = WordListMVVMImpl(router: router,
-                                            wordListRepository: buildWordListRepository(),
+        let wordListMVVM = WordListMVVMImpl(wordListRepository: buildWordListRepository(),
                                             translationService: buildTranslationService(),
                                             notificationCenter: NotificationCenter.default,
                                             viewParams: wordListViewParams)

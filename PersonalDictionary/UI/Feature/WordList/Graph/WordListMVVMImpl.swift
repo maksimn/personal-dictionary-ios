@@ -15,8 +15,7 @@ class WordListMVVMImpl: WordListMVVM {
         view = nil
     }
 
-    init(router: Router,
-         wordListRepository: WordListRepository,
+    init(wordListRepository: WordListRepository,
          translationService: TranslationService,
          notificationCenter: NotificationCenter,
          viewParams: WordListViewParams) {
@@ -25,7 +24,7 @@ class WordListMVVMImpl: WordListMVVM {
         let model = WordListModelImpl(wordListRepository: wordListRepository,
                                       translationService: translationService,
                                       notificationCenter: notificationCenter)
-        let viewModel = WordListViewModelImpl(model: model, view: view, router: router)
+        let viewModel = WordListViewModelImpl(model: model, view: view)
 
         view.viewModel = viewModel
         model.viewModel = viewModel
@@ -33,9 +32,5 @@ class WordListMVVMImpl: WordListMVVM {
 
     var viewController: UIViewController? {
         view
-    }
-
-    var navigationController: UINavigationController? {
-        view?.navigationController
     }
 }

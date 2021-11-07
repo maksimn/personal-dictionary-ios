@@ -43,13 +43,7 @@ class WordListModelImpl: WordListModel {
         wordListRepository.remove(with: wordItem.id, completion: nil)
     }
 
-    func remove(wordItem: WordItem) {
-        if let position = data.wordList.firstIndex(where: { $0.id == wordItem.id }) {
-            remove(wordItem, at: position)
-        }
-    }
-
-    // MARK: - NewWordListener
+    // MARK: - Events
 
     func addNewWord(_ wordItem: WordItem) {
         var wordList = data.wordList
@@ -58,6 +52,12 @@ class WordListModelImpl: WordListModel {
         data = WordListData(wordList: wordList, changedItemPosition: 0)
         wordListRepository.add(wordItem, completion: nil)
         requestTranslation(for: wordItem, data.wordList.count - 1)
+    }
+
+    func remove(wordItem: WordItem) {
+        if let position = data.wordList.firstIndex(where: { $0.id == wordItem.id }) {
+            remove(wordItem, at: position)
+        }
     }
 
     // MARK: - Private

@@ -17,16 +17,7 @@ extension SearchWordViewController {
     }
 
     private func rearrangeSearchBar() {
-        searchBar.removeFromSuperview()
 
-        let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 72, height: 44)
-
-        searchBar.isUserInteractionEnabled = true
-        searchBar.frame = frame
-        navigationItem.titleView = searchBar
-        searchBar.placeholder = selfParams.staticContent.searchBarPlaceholderText
-        searchBar.becomeFirstResponder()
-        searchBar.delegate = self
     }
 
     private func initWordsNotFoundLabelLabel() {
@@ -67,10 +58,5 @@ extension SearchWordViewController {
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10.5)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-22)
         }
-    }
-
-    @objc
-    override var tableViewEdgeInsets: UIEdgeInsets {
-        UIEdgeInsets(top: 54, left: 12, bottom: 0, right: 12)
     }
 }

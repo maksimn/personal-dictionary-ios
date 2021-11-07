@@ -12,8 +12,4 @@ protocol WordListViewModel: AnyObject {
     func fetchData()
 
     func remove(_ wordItem: WordItem, at position: Int)
-
-    func navigateToNewWord()
-
-    func navigateToSearch()
 }
