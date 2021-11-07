@@ -7,26 +7,20 @@
 
 import UIKit
 
-struct SearchWordViewStaticContent {
-    let baseContent: WordListViewStaticContent
-    let searchBarPlaceholderText: String
-    let noWordsFoundText: String
-    let searchByLabelText: String
-    let sourceWordText: String
-    let translationText: String
-}
-
 final class SearchWordViewController: WordListViewController, SearchWordView {
 
-    let searchStaticContent: SearchWordViewStaticContent
+    let selfParams: SearchWordViewParams
 
     let wordsNotFoundLabel = UILabel()
     let searchByLabel = UILabel()
     var searchBySegmentedControl: UISegmentedControl?
 
-    init(staticContent: SearchWordViewStaticContent, styles: WordListViewStyles) {
-        self.searchStaticContent = staticContent
-        super.init(staticContent: staticContent.baseContent, styles: styles)
+    init(params: SearchWordViewParams) {
+        selfParams = params
+        super.init(params: WordListViewParams(
+            staticContent: params.staticContent.baseContent,
+            styles: params.styles
+        ))
     }
 
     required init?(coder: NSCoder) {

@@ -15,6 +15,10 @@ protocol NewWordViewModel: AnyObject {
 
     var targetLang: Lang { get set }
 
+    func save(sourceLang: Lang)
+
+    func save(targetLang: Lang)
+
     func fetchDataFromModel()
 
     func sendNewWordEvent()

@@ -7,15 +7,11 @@
 
 protocol WordListViewModel: AnyObject {
 
-    var wordList: [WordItem] { get set }
+    var wordListData: WordListData { get set }
 
-    func fetchDataFromModel()
+    func fetchData()
 
-    func add(_ wordItem: WordItem)
-
-    func update(_ wordItem: WordItem, _ position: Int)
-
-    func remove(_ wordItem: WordItem, _ position: Int)
+    func remove(_ wordItem: WordItem, at position: Int)
 
     func navigateToNewWord()
 

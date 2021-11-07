@@ -31,7 +31,7 @@ final class SearchWordModelImpl: WordListModelImpl, SearchWordModel {
             } ?? []
 
             DispatchQueue.main.async { [weak self] in
-                self?.viewModelOne?.wordList = searchedWordList
+                self?.data = WordListData(wordList: searchedWordList, changedItemPosition: nil)
                 self?.viewModelOne?.nothingWasFoundLabelHidden = searchedWordList.count > 0
             }
         }

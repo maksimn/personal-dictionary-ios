@@ -11,7 +11,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-    let wordListBuilder = WordListBuilderImpl()
+    let wordListBuilder = WordListBuilderImpl(globalSettings: pdGlobalSettings)
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {

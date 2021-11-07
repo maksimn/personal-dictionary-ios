@@ -18,7 +18,7 @@ extension WordListModelImpl {
     @objc
     func onAddNewWordItem(_ notification: Notification) {
         if let wordItem = notification.userInfo?[Notification.Name.addNewWord] as? WordItem {
-            add(wordItem)
+            addNewWord(wordItem)
         }
     }
 

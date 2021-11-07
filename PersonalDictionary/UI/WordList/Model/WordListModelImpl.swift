@@ -15,6 +15,12 @@ class WordListModelImpl: WordListModel {
     let notificationCenter: NotificationCenter
     let translationService: TranslationService
 
+    var data: WordListData = WordListData(wordList: [], changedItemPosition: nil) {
+        didSet {
+            viewModel?.wordListData = data
+        }
+    }
+
     init(wordListRepository: WordListRepository,
          translationService: TranslationService,
          notificationCenter: NotificationCenter) {
@@ -24,33 +30,45 @@ class WordListModelImpl: WordListModel {
         addObservers()
     }
 
-    func fetchWordList() {
-        viewModel?.wordList = wordListRepository.wordList
+    func fetchData() {
+        fetchWordList()
+        requestTranslationsIfNeeded()
     }
 
-    func add(_ wordItem: WordItem) {
-        guard let position = viewModel?.wordList.count else { return }
+    func remove(_ wordItem: WordItem, at position: Int) {
+        var wordList = data.wordList
 
-        viewModel?.add(wordItem)
-        wordListRepository.add(wordItem, completion: nil)
-        requestTranslation(for: wordItem, position)
-    }
-
-    func remove(wordItem: WordItem) {
-        guard let position = viewModel?.wordList.firstIndex(where: { $0.id == wordItem.id }) else { return }
-
-        viewModel?.remove(wordItem, position)
-    }
-
-    func removeFromRepository(_ wordItem: WordItem) {
+        wordList.remove(at: position)
+        data = WordListData(wordList: wordList, changedItemPosition: position)
         wordListRepository.remove(with: wordItem.id, completion: nil)
     }
 
-    func requestTranslationsIfNeeded() {
-        guard let wordList = viewModel?.wordList else { return }
+    func remove(wordItem: WordItem) {
+        if let position = data.wordList.firstIndex(where: { $0.id == wordItem.id }) {
+            remove(wordItem, at: position)
+        }
+    }
 
-        for position in 0..<wordList.count where wordList[position].translation == nil {
-            requestTranslation(for: wordList[position], position)
+    // MARK: - NewWordListener
+
+    func addNewWord(_ wordItem: WordItem) {
+        var wordList = data.wordList
+
+        wordList.insert(wordItem, at: 0)
+        data = WordListData(wordList: wordList, changedItemPosition: 0)
+        wordListRepository.add(wordItem, completion: nil)
+        requestTranslation(for: wordItem, data.wordList.count - 1)
+    }
+
+    // MARK: - Private
+
+    private func fetchWordList() {
+        data = WordListData(wordList: wordListRepository.wordList, changedItemPosition: nil)
+    }
+
+    private func requestTranslationsIfNeeded() {
+        for position in 0..<data.wordList.count where data.wordList[position].translation == nil {
+            requestTranslation(for: data.wordList[position], position)
         }
     }
 
@@ -58,13 +76,21 @@ class WordListModelImpl: WordListModel {
         translationService.fetchTranslation(for: wordItem, { [weak self] result in
             switch result {
             case .success(let translation):
-                let updatedWordItem = wordItem.update(translation: translation)
-
-                self?.wordListRepository.update(updatedWordItem, completion: nil)
-                self?.viewModel?.update(updatedWordItem, position)
+                self?.update(wordItem: wordItem, with: translation, at: position)
             case .failure:
                 break
             }
         })
+    }
+
+    private func update(wordItem: WordItem, with translation: String, at position: Int) {
+        let updatedWordItem = wordItem.update(translation: translation)
+        var wordList = data.wordList
+
+        guard position > -1 && position < wordList.count else { return }
+
+        wordList[position] = updatedWordItem
+        wordListRepository.update(updatedWordItem, completion: nil)
+        data = WordListData(wordList: wordList, changedItemPosition: position)
     }
 }

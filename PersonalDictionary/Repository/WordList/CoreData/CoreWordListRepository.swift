@@ -43,7 +43,7 @@ final class CoreWordListRepository: WordListRepository {
 
     var wordList: [WordItem] {
         let fetchRequest: NSFetchRequest<WordItemMO> = WordItemMO.fetchRequest()
-        let sortDescriptor = NSSortDescriptor.init(key: "createdAt", ascending: true)
+        let sortDescriptor = NSSortDescriptor.init(key: "createdAt", ascending: false)
 
         fetchRequest.sortDescriptors = [sortDescriptor]
 

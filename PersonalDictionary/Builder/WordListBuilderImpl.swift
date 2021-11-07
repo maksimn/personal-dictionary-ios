@@ -9,7 +9,51 @@ import UIKit
 
 final class WordListBuilderImpl: WordListBuilder {
 
-    private static let langRepository = buildLangRepository()
+    private lazy var langRepository = { buildLangRepository() }()
+
+    private let globalSettings: PDGlobalSettings
+
+    private lazy var wordListViewParams: WordListViewParams = {
+        WordListViewParams(
+            staticContent: WordListViewStaticContent(
+                newWordButtonImage: UIImage(named: "icon-plus")!,
+                deleteAction: DeleteActionStaticContent(
+                    image: UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!
+                )
+            ),
+            styles: WordListViewStyles(
+                backgroundColor: globalSettings.appBackgroundColor,
+                deleteAction: DeleteActionStyles(
+                    backgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
+                )
+            )
+        )
+    }()
+
+    lazy var searchStaticContent = SearchWordViewStaticContent(
+        baseContent: wordListViewParams.staticContent,
+        searchBarPlaceholderText: NSLocalizedString("Enter a word for searching", comment: ""),
+        noWordsFoundText: NSLocalizedString("No words found", comment: ""),
+        searchByLabelText: NSLocalizedString("Search by:", comment: ""),
+        sourceWordText: NSLocalizedString("source word", comment: ""),
+        translationText: NSLocalizedString("translation", comment: "")
+    )
+
+    lazy var newWordViewParams: NewWordViewParams = {
+        NewWordViewParams(
+            staticContent: NewWordViewStaticContent(
+                selectButtonTitle: NSLocalizedString("Select", comment: ""),
+                arrowText: NSLocalizedString("⇋", comment: ""),
+                okText: NSLocalizedString("OK", comment: ""),
+                textFieldPlaceholder: NSLocalizedString("Enter a new word", comment: "")
+            ),
+            styles: NewWordViewStyles(backgroundColor: globalSettings.appBackgroundColor)
+        )
+    }()
+
+    init(globalSettings: PDGlobalSettings) {
+        self.globalSettings = globalSettings
+    }
 
     // MARK: - WordListBuilder
 
@@ -19,7 +63,8 @@ final class WordListBuilderImpl: WordListBuilder {
         let wordListMVVM = WordListMVVMImpl(router: router,
                                             wordListRepository: buildWordListRepository(),
                                             translationService: buildTranslationService(),
-                                            notificationCenter: NotificationCenter.default)
+                                            notificationCenter: NotificationCenter.default,
+                                            viewParams: wordListViewParams)
         let viewController = wordListMVVM.viewController ?? UIViewController()
 
         navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
@@ -29,26 +74,29 @@ final class WordListBuilderImpl: WordListBuilder {
     }
 
     func buildNewWordMVVM() -> NewWordMVVM {
-        NewWordMVVMImpl(langRepository: WordListBuilderImpl.langRepository,
-                        notificationCenter: NotificationCenter.default)
+        NewWordMVVMImpl(langRepository: langRepository,
+                        notificationCenter: NotificationCenter.default,
+                        viewParams: newWordViewParams)
     }
 
     func buildSearchWordMVVM() -> WordListMVVM {
         SearchWordMVVMImpl(wordListRepository: buildWordListRepository(),
                            translationService: buildTranslationService(),
-                           notificationCenter: NotificationCenter.default)
+                           notificationCenter: NotificationCenter.default,
+                           viewParams: SearchWordViewParams(staticContent: searchStaticContent,
+                                                            styles: wordListViewParams.styles))
     }
 
     // MARK: - private
 
     private func buildLogger() -> Logger {
-        SimpleLogger()
+        SimpleLogger(isLoggingEnabled: globalSettings.isLoggingEnabled)
     }
 
     private func buildTranslationService() -> TranslationService {
         let ponsApiData = PonsApiData(url: "https://api.pons.com/v1/dictionary",
                                       secretHeaderKey: "X-Secret",
-                                      secret: "")
+                                      secret: globalSettings.ponsApiSecret)
 
         return PonsTranslationService(apiData: ponsApiData,
                                       coreService: UrlSessionCoreService(),
@@ -60,29 +108,12 @@ final class WordListBuilderImpl: WordListBuilder {
         let coreWordListRepositoryArgs = CoreWordListRepositoryArgs(persistentContainerName: "StorageModel")
 
         return CoreWordListRepository(args: coreWordListRepositoryArgs,
-                                      langRepository: WordListBuilderImpl.langRepository,
+                                      langRepository: langRepository,
                                       logger: buildLogger())
     }
 
-    private static func buildLangRepository() -> LangRepository {
-        let langData = buildLangData()
-
+    private func buildLangRepository() -> LangRepository {
         return LangRepositoryImpl(userDefaults: UserDefaults.standard,
-                                  data: langData)
-    }
-
-    private static func buildLangData() -> LangData {
-        let lang1 = Lang(id: Lang.Id(raw: 1), name: NSLocalizedString("English", comment: ""), shortName: "EN")
-        let lang2 = Lang(id: Lang.Id(raw: 2), name: NSLocalizedString("Russian", comment: ""), shortName: "RU")
-        let lang3 = Lang(id: Lang.Id(raw: 3), name: NSLocalizedString("French", comment: ""), shortName: "FR")
-        let lang4 = Lang(id: Lang.Id(raw: 4), name: NSLocalizedString("Italian", comment: ""), shortName: "IT")
-
-        let langData = LangData(allLangs: [lang1, lang2, lang3, lang4],
-                                sourceLangKey: "io.github.maksimn.pd.sourceLang",
-                                targetLangKey: "io.github.maksimn.pd.targetLang",
-                                defaultSourceLang: lang1,
-                                defaultTargetLang: lang2)
-
-        return langData
+                                  data: globalSettings.langData)
     }
 }

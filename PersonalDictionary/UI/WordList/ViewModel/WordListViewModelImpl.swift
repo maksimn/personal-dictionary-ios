@@ -21,24 +21,18 @@ class WordListViewModelImpl: WordListViewModel {
         self.router = router
     }
 
-    func fetchDataFromModel() {
-        model.fetchWordList()
-        model.requestTranslationsIfNeeded()
+    var wordListData: WordListData = WordListData(wordList: [], changedItemPosition: nil) {
+        didSet {
+            view.set(wordListData)
+        }
     }
 
-    func add(_ wordItem: WordItem) {
-        wordList.append(wordItem)
+    func fetchData() {
+        model.fetchData()
     }
 
-    func update(_ wordItem: WordItem, _ position: Int) {
-        updatedItemPosition = position
-        wordList[position] = wordItem
-    }
-
-    func remove(_ wordItem: WordItem, _ position: Int) {
-        removedItemPosition = position
-        wordList.remove(at: position)
-        model.removeFromRepository(wordItem)
+    func remove(_ wordItem: WordItem, at position: Int) {
+        model.remove(wordItem, at: position)
     }
 
     func navigateToNewWord() {
@@ -47,24 +41,5 @@ class WordListViewModelImpl: WordListViewModel {
 
     func navigateToSearch() {
         router?.navigateToSearch()
-    }
-
-    var wordList: [WordItem] = [] {
-        willSet {
-            previousWordCount = wordList.count
-        }
-        didSet {
-            view.set(wordList: self.wordList)
-
-            if wordList.count == previousWordCount - 1 {
-                view.removeRowAt(removedItemPosition)
-            } else if wordList.count == previousWordCount {
-                view.updateRowAt(updatedItemPosition)
-            } else if wordList.count == previousWordCount + 1 {
-                view.addNewRowToList()
-            } else {
-                view.reloadList()
-            }
-        }
     }
 }

@@ -11,20 +11,12 @@ final class SearchWordMVVMImpl: WordListMVVMImpl {
 
     private var viewOne: SearchWordViewController?
 
-    lazy var searchStaticContent = SearchWordViewStaticContent(
-        baseContent: staticContent,
-        searchBarPlaceholderText: NSLocalizedString("Enter a word for searching", comment: ""),
-        noWordsFoundText: NSLocalizedString("No words found", comment: ""),
-        searchByLabelText: NSLocalizedString("Search by:", comment: ""),
-        sourceWordText: NSLocalizedString("source word", comment: ""),
-        translationText: NSLocalizedString("translation", comment: "")
-    )
-
     init(wordListRepository: WordListRepository,
          translationService: TranslationService,
-         notificationCenter: NotificationCenter) {
+         notificationCenter: NotificationCenter,
+         viewParams: SearchWordViewParams) {
         super.init()
-        viewOne = SearchWordViewController(staticContent: searchStaticContent, styles: styles)
+        viewOne = SearchWordViewController(params: viewParams)
         guard let viewOne = viewOne else { return }
         let model = SearchWordModelImpl(wordListRepository: wordListRepository,
                                         translationService: translationService,

@@ -13,7 +13,13 @@ class NewWordMVVMImplTests: XCTestCase {
     func test_mvvmGraphOutputNotNil() throws {
         let mockLangRepository = MockLangRepository()
         let newWordMVVM = NewWordMVVMImpl(langRepository: mockLangRepository,
-                                          notificationCenter: NotificationCenter.default)
+                                          notificationCenter: NotificationCenter.default,
+                                          viewParams: NewWordViewParams(
+                                            staticContent: NewWordViewStaticContent(selectButtonTitle: "",
+                                                                                    arrowText: "",
+                                                                                    okText: "",
+                                                                                    textFieldPlaceholder: ""),
+                                            styles: NewWordViewStyles(backgroundColor: .clear)))
 
         XCTAssertNotNil(newWordMVVM.viewController)
     }
