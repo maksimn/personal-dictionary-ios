@@ -19,13 +19,6 @@ final class SearchWordViewModelImpl: WordListViewModelImpl, SearchWordViewModel 
         model as? SearchWordModel
     }
 
-    override var wordList: [WordItem] {
-        didSet {
-            viewOne?.set(wordList: self.wordList)
-            viewOne?.reloadList()
-        }
-    }
-
     var searchText: String = "" {
         didSet {
             performSearch()
@@ -45,11 +38,9 @@ final class SearchWordViewModelImpl: WordListViewModelImpl, SearchWordViewModel 
         }
     }
 
-    override func fetchDataFromModel() { }
-
-    override func remove(_ wordItem: WordItem, _ position: Int) {
+    override func remove(_ wordItem: WordItem, at position: Int) {
         modelOne?.sendRemoveWordEvent(wordItem)
-        super.remove(wordItem, position)
+        super.remove(wordItem, at: position)
     }
 
     func prepareForSearching() {
@@ -60,7 +51,7 @@ final class SearchWordViewModelImpl: WordListViewModelImpl, SearchWordViewModel 
         if searchText.count > 0 {
             modelOne?.searchWord(contains: searchText)
         } else {
-            wordList = []
+            wordListData = WordListData(wordList: [], changedItemPosition: nil)
             nothingWasFoundLabelHidden = true
         }
     }

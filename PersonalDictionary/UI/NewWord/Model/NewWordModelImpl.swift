@@ -14,15 +14,35 @@ class NewWordModelImpl: NewWordModel {
     private var langRepository: LangRepository
     private let notificationCenter: NotificationCenter
 
+    private(set) var allLangs: [Lang] = [] {
+        didSet {
+            viewModel?.allLangs = allLangs
+        }
+    }
+
+    private(set) var sourceLang: Lang = empty {
+        didSet {
+            viewModel?.sourceLang = sourceLang
+        }
+    }
+
+    private(set) var targetLang: Lang = empty {
+        didSet {
+            viewModel?.targetLang = targetLang
+        }
+    }
+
+    private static let empty = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
+
     init(_ langRepository: LangRepository, _ notificationCenter: NotificationCenter) {
         self.langRepository = langRepository
         self.notificationCenter = notificationCenter
     }
 
     func fetchData() {
-        viewModel?.allLangs = langRepository.allLangs
-        viewModel?.sourceLang = langRepository.sourceLang
-        viewModel?.targetLang = langRepository.targetLang
+        allLangs = langRepository.allLangs
+        sourceLang = langRepository.sourceLang
+        targetLang = langRepository.targetLang
     }
 
     func save(sourceLang: Lang) {
@@ -33,14 +53,13 @@ class NewWordModelImpl: NewWordModel {
         langRepository.targetLang = targetLang
     }
 
-    func sendNewWordEvent(_ newWordText: String) {
-        guard !newWordText.isEmpty,
-              let sourceLang = viewModel?.sourceLang,
-              let targetLang = viewModel?.targetLang else {
+    func sendNewWord() {
+        guard let text = viewModel?.text.trimmingCharacters(in: .whitespacesAndNewlines),
+              !text.isEmpty else {
             return
         }
-        let newWordItem = WordItem(text: newWordText, sourceLang: sourceLang, targetLang: targetLang)
+        let wordItem = WordItem(text: text, sourceLang: sourceLang, targetLang: targetLang)
 
-        notificationCenter.post(name: .addNewWord, object: nil, userInfo: [Notification.Name.addNewWord: newWordItem])
+        notificationCenter.post(name: .addNewWord, object: nil, userInfo: [Notification.Name.addNewWord: wordItem])
     }
 }

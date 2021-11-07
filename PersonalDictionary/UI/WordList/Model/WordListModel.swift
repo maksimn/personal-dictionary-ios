@@ -9,9 +9,7 @@ protocol WordListModel {
 
     var viewModel: WordListViewModel? { get set }
 
-    func fetchWordList()
+    func fetchData()
 
-    func requestTranslationsIfNeeded()
-
-    func removeFromRepository(_ wordItem: WordItem)
+    func remove(_ wordItem: WordItem, at position: Int)
 }

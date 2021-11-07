@@ -45,7 +45,7 @@ class WordListViewController: UIViewController, WordListView {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
-        viewModel?.fetchDataFromModel()
+        viewModel?.fetchData()
     }
 
     // MARK: - WordListView
@@ -54,23 +54,13 @@ class WordListViewController: UIViewController, WordListView {
         tableDataSource.data = wordListData
     }
 
-    func set(wordList: [WordItem]) {}
-
-    func addNewRowToList() {}
-
-    func updateRowAt(_ position: Int) {}
-
-    func removeRowAt(_ position: Int) {}
-
-    func reloadList() {}
-
     // MARK: - User Action Handlers
 
     @objc
     func onDeleteWordTap(_ position: Int) {
         let item = tableDataSource.data.wordList[position]
 
-        viewModel?.remove(item, position)
+        viewModel?.remove(item, at: position)
     }
 
     @objc

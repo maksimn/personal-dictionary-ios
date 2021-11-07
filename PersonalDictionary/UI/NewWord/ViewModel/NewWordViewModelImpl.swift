@@ -32,15 +32,21 @@ class NewWordViewModelImpl: NewWordViewModel {
     var sourceLang: Lang = empty {
         didSet {
             view.set(sourceLang: sourceLang)
-            model.save(sourceLang: sourceLang)
         }
     }
 
     var targetLang: Lang = empty {
         didSet {
             view.set(targetLang: targetLang)
-            model.save(targetLang: targetLang)
         }
+    }
+
+    func save(sourceLang: Lang) {
+        model.save(sourceLang: sourceLang)
+    }
+
+    func save(targetLang: Lang) {
+        model.save(targetLang: targetLang)
     }
 
     func fetchDataFromModel() {
@@ -48,8 +54,6 @@ class NewWordViewModelImpl: NewWordViewModel {
     }
 
     func sendNewWordEvent() {
-        let newWordText = text.trimmingCharacters(in: .whitespacesAndNewlines)
-
-        model.sendNewWordEvent(newWordText)
+        model.sendNewWord()
     }
 }

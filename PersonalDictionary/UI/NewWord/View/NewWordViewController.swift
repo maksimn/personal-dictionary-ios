@@ -101,8 +101,10 @@ extension NewWordViewController: UITextFieldDelegate {
 
         if isSelectingSourceLang {
             viewModel?.sourceLang = lang
+            viewModel?.save(sourceLang: lang)
         } else {
             viewModel?.targetLang = lang
+            viewModel?.save(targetLang: lang)
         }
     }
 

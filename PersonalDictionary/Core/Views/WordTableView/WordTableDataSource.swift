@@ -53,7 +53,8 @@ final class WordTableDataSource: NSObject, UITableViewDataSource {
         let wordList = data.wordList
 
         if wordList.count == previousWordCount - 1 {
-            guard let changedItemPosition = verifyChangedItemPosition() else {
+            guard let changedItemPosition = data.changedItemPosition,
+                  changedItemPosition > -1 && changedItemPosition <= data.wordList.count else {
                 tableView.reloadData()
                 return
             }
@@ -80,7 +81,7 @@ final class WordTableDataSource: NSObject, UITableViewDataSource {
 
     private func verifyChangedItemPosition() -> Int? {
         guard let changedItemPosition = data.changedItemPosition,
-              changedItemPosition > -1 && changedItemPosition <= data.wordList.count else {
+              changedItemPosition > -1 && changedItemPosition < data.wordList.count else {
             return nil
         }
         return changedItemPosition
