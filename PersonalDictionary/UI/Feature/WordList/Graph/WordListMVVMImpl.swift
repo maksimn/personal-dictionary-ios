@@ -18,7 +18,7 @@ class WordListMVVMImpl: WordListMVVM {
         model = nil
     }
 
-    init(cudOperations: WordListCUDOperations,
+    init(cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
          notificationCenter: NotificationCenter,
          viewParams: WordListViewParams) {

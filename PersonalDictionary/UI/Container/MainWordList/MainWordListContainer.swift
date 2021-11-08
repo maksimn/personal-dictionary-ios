@@ -12,6 +12,7 @@ class MainWordListContainer: UIViewController {
     let wordListMVVM: WordListMVVM
     let wordListFetcher: WordListFetcher
     let router: Router
+    let visibleItemMaxCount: Int
 
     lazy var navToSearchView = {
         NavToSearchView(onTap: { [weak self] in
@@ -23,10 +24,12 @@ class MainWordListContainer: UIViewController {
 
     init(wordListMVVM: WordListMVVM,
          wordListFetcher: WordListFetcher,
-         router: Router) {
+         router: Router,
+         visibleItemMaxCount: Int) {
         self.wordListMVVM = wordListMVVM
         self.wordListFetcher = wordListFetcher
         self.router = router
+        self.visibleItemMaxCount = visibleItemMaxCount
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -37,7 +40,7 @@ class MainWordListContainer: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
-        setDataForWordListMVVM()
+        initWordListModel()
     }
 
     func navigateToSearch() {
@@ -49,11 +52,11 @@ class MainWordListContainer: UIViewController {
         router.navigateToNewWord()
     }
 
-    private func setDataForWordListMVVM() {
+    private func initWordListModel() {
         let wordList = wordListFetcher.wordList
         guard let wordListModel = wordListMVVM.model else { return }
 
         wordListModel.data = WordListData(wordList: wordList, changedItemPosition: nil)
-        wordListModel.requestTranslationsIfNeededForFirstItems()
+        wordListModel.requestTranslationsIfNeededWithin(startPosition: 0, endPosition: visibleItemMaxCount + 1)
     }
 }

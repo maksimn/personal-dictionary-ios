@@ -63,7 +63,8 @@ final class WordListBuilderImpl: WordListBuilder {
         MainWordListContainer(wordListMVVM: buildMVVM(),
                               wordListFetcher: buildWordListRepository(),
                               router: RouterImpl(navigationController: navigationController,
-                                                 builder: self))
+                                                 builder: self),
+                              visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height)))
     }
 
     func buildMVVM() -> WordListMVVM {

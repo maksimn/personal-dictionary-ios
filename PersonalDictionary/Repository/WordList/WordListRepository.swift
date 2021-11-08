@@ -10,7 +10,7 @@ protocol WordListFetcher {
     var wordList: [WordItem] { get }
 }
 
-protocol WordListCUDOperations {
+protocol WordItemCUDOperations {
 
     func add(_ wordItem: WordItem, completion: ((Error?) -> Void)?)
 
@@ -19,6 +19,6 @@ protocol WordListCUDOperations {
     func remove(with wordItemId: WordItem.Id, completion: ((Error?) -> Void)?)
 }
 
-protocol WordListRepository: WordListFetcher, WordListCUDOperations {
+protocol WordListRepository: WordListFetcher, WordItemCUDOperations {
 
 }
