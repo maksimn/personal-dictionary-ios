@@ -25,16 +25,20 @@ class MainWordListContainer: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let wordList = wordListFetcher.wordList
-        guard let wordListModel = wordListMVVM.model else { return }
-
-        addWordListChild()
-        wordListModel.data = WordListData(wordList: wordList, changedItemPosition: nil)
+        addWordListChildController()
+        setDataForWordListMVVM()
     }
 
-    func addWordListChild() {
+    private func addWordListChildController() {
         guard let wordListViewController = wordListMVVM.viewController else { return }
 
         add(child: wordListViewController)
+    }
+
+    private func setDataForWordListMVVM() {
+        let wordList = wordListFetcher.wordList
+        guard let wordListModel = wordListMVVM.model else { return }
+
+        wordListModel.data = WordListData(wordList: wordList, changedItemPosition: nil)
     }
 }
