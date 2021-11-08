@@ -24,7 +24,12 @@ class MainWordListContainer: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let wordList = wordListRepository.wordList
+        guard let wordListModel = wordListMVVM.model else { return }
+
         addWordListChild()
+        wordListModel.data = WordListData(wordList: wordList, changedItemPosition: nil)
     }
 
     func addWordListChild() {

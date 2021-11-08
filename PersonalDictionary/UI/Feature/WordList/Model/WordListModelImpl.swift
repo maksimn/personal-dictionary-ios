@@ -30,17 +30,18 @@ class WordListModelImpl: WordListModel {
         addObservers()
     }
 
-    func fetchData() {
-        fetchWordList()
-        requestTranslationsIfNeeded()
-    }
-
     func remove(_ wordItem: WordItem, at position: Int) {
         var wordList = data.wordList
 
         wordList.remove(at: position)
         data = WordListData(wordList: wordList, changedItemPosition: position)
         wordListRepository.remove(with: wordItem.id, completion: nil)
+    }
+
+    func requestTranslationsIfNeeded() {
+        for position in 0..<data.wordList.count where data.wordList[position].translation == nil {
+            requestTranslation(for: data.wordList[position], position)
+        }
     }
 
     // MARK: - Events
@@ -61,16 +62,6 @@ class WordListModelImpl: WordListModel {
     }
 
     // MARK: - Private
-
-    private func fetchWordList() {
-        data = WordListData(wordList: wordListRepository.wordList, changedItemPosition: nil)
-    }
-
-    private func requestTranslationsIfNeeded() {
-        for position in 0..<data.wordList.count where data.wordList[position].translation == nil {
-            requestTranslation(for: data.wordList[position], position)
-        }
-    }
 
     private func requestTranslation(for wordItem: WordItem, _ position: Int) {
         translationService.fetchTranslation(for: wordItem, { [weak self] result in

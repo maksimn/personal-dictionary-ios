@@ -21,11 +21,11 @@ class WordListViewModelImpl: WordListViewModel {
         }
     }
 
-    func fetchData() {
-        model.fetchData()
-    }
-
     func remove(_ wordItem: WordItem, at position: Int) {
         model.remove(wordItem, at: position)
+    }
+
+    func requestTranslationsIfNeeded() {
+        model.requestTranslationsIfNeeded()
     }
 }

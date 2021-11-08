@@ -10,4 +10,6 @@ import UIKit
 protocol WordListMVVM {
 
     var viewController: UIViewController? { get }
+
+    var model: WordListModel? { get }
 }

@@ -42,7 +42,11 @@ class WordListViewController: UIViewController, WordListView {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
-        viewModel?.fetchData()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel?.requestTranslationsIfNeeded()
     }
 
     // MARK: - WordListView

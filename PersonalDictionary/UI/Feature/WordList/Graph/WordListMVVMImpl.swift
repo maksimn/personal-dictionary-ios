@@ -11,8 +11,11 @@ class WordListMVVMImpl: WordListMVVM {
 
     private var view: WordListViewController?
 
+    weak var model: WordListModel?
+
     init() {
         view = nil
+        model = nil
     }
 
     init(wordListRepository: WordListRepository,
@@ -28,6 +31,7 @@ class WordListMVVMImpl: WordListMVVM {
 
         view.viewModel = viewModel
         model.viewModel = viewModel
+        self.model = model
     }
 
     var viewController: UIViewController? {

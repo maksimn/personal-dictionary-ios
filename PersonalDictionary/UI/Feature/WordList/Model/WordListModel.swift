@@ -5,11 +5,13 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-protocol WordListModel {
+protocol WordListModel: AnyObject {
 
     var viewModel: WordListViewModel? { get set }
 
-    func fetchData()
+    var data: WordListData { get set }
 
     func remove(_ wordItem: WordItem, at position: Int)
+
+    func requestTranslationsIfNeeded()
 }
