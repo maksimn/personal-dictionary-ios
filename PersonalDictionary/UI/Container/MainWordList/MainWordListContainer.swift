@@ -40,5 +40,7 @@ class MainWordListContainer: UIViewController {
         guard let wordListModel = wordListMVVM.model else { return }
 
         wordListModel.data = WordListData(wordList: wordList, changedItemPosition: nil)
+        let count = Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
+        wordListModel.requestTranslationsIfNeededWithin(startPosition: 0, endPosition: count)
     }
 }

@@ -13,5 +13,5 @@ protocol WordListModel: AnyObject {
 
     func remove(_ wordItem: WordItem, at position: Int)
 
-    func requestTranslationsIfNeeded()
+    func requestTranslationsIfNeededWithin(startPosition: Int, endPosition: Int)
 }

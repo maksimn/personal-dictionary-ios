@@ -38,8 +38,14 @@ class WordListModelImpl: WordListModel {
         cudOperations.remove(with: wordItem.id, completion: nil)
     }
 
-    func requestTranslationsIfNeeded() {
-        for position in 0..<data.wordList.count where data.wordList[position].translation == nil {
+    func requestTranslationsIfNeededWithin(startPosition: Int, endPosition: Int) {
+        guard endPosition > startPosition,
+              startPosition > -1 else {
+            return
+        }
+        let endPosition = min(data.wordList.count, endPosition)
+
+        for position in startPosition..<endPosition where data.wordList[position].translation == nil {
             requestTranslation(for: data.wordList[position], position)
         }
     }

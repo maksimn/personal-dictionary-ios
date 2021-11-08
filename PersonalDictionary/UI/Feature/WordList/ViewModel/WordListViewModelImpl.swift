@@ -25,7 +25,7 @@ class WordListViewModelImpl: WordListViewModel {
         model.remove(wordItem, at: position)
     }
 
-    func requestTranslationsIfNeeded() {
-        model.requestTranslationsIfNeeded()
+    func requestTranslationsIfNeededWithin(startPosition: Int, endPosition: Int) {
+        model.requestTranslationsIfNeededWithin(startPosition: startPosition, endPosition: endPosition)
     }
 }

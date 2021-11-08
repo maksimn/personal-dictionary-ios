@@ -20,13 +20,17 @@ class WordListViewController: UIViewController, WordListView {
     }()
 
     lazy var tableActions: WordTableDelegate = {
-        WordTableDelegate(onDeleteTap: { [weak self] position in
-                            self?.onDeleteWordTap(position)
-                          },
-                          deleteActionViewParams: DeleteActionViewParams(
-                            staticContent: params.staticContent.deleteAction,
-                            styles: params.styles.deleteAction
-                          )
+        WordTableDelegate(
+            onScrollFinish: { [weak self] in
+                self?.onTableViewScrollFinish()
+            },
+            onDeleteTap: { [weak self] position in
+                self?.onDeleteWordTap(position)
+            },
+            deleteActionViewParams: DeleteActionViewParams(
+                staticContent: params.staticContent.deleteAction,
+                styles: params.styles.deleteAction
+            )
         )
     }()
 
@@ -44,11 +48,6 @@ class WordListViewController: UIViewController, WordListView {
         initViews()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        viewModel?.requestTranslationsIfNeeded()
-    }
-
     // MARK: - WordListView
 
     func set(_ wordListData: WordListData) {
@@ -57,10 +56,17 @@ class WordListViewController: UIViewController, WordListView {
 
     // MARK: - User Action Handlers
 
-    @objc
-    func onDeleteWordTap(_ position: Int) {
+    private func onDeleteWordTap(_ position: Int) {
         let item = tableDataSource.data.wordList[position]
 
         viewModel?.remove(item, at: position)
+    }
+
+    private func onTableViewScrollFinish() {
+        guard let indexPaths = tableView.indexPathsForVisibleRows,
+              let start = indexPaths.first?.row,
+              let end = indexPaths.last?.row else { return }
+
+        viewModel?.requestTranslationsIfNeededWithin(startPosition: start, endPosition: end + 1)
     }
 }
