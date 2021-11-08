@@ -18,13 +18,13 @@ class WordListMVVMImpl: WordListMVVM {
         model = nil
     }
 
-    init(wordListRepository: WordListRepository,
+    init(cudOperations: WordListCUDOperations,
          translationService: TranslationService,
          notificationCenter: NotificationCenter,
          viewParams: WordListViewParams) {
         view = WordListViewController(params: viewParams)
         guard let view = view else { return }
-        let model = WordListModelImpl(wordListRepository: wordListRepository,
+        let model = WordListModelImpl(cudOperations: cudOperations,
                                       translationService: translationService,
                                       notificationCenter: notificationCenter)
         let viewModel = WordListViewModelImpl(model: model, view: view)

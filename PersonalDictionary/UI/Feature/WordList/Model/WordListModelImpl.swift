@@ -11,7 +11,7 @@ class WordListModelImpl: WordListModel {
 
     weak var viewModel: WordListViewModel?
 
-    let wordListRepository: WordListRepository
+    let cudOperations: WordListCUDOperations
     let notificationCenter: NotificationCenter
     let translationService: TranslationService
 
@@ -21,10 +21,10 @@ class WordListModelImpl: WordListModel {
         }
     }
 
-    init(wordListRepository: WordListRepository,
+    init(cudOperations: WordListCUDOperations,
          translationService: TranslationService,
          notificationCenter: NotificationCenter) {
-        self.wordListRepository = wordListRepository
+        self.cudOperations = cudOperations
         self.translationService = translationService
         self.notificationCenter = notificationCenter
         addObservers()
@@ -35,7 +35,7 @@ class WordListModelImpl: WordListModel {
 
         wordList.remove(at: position)
         data = WordListData(wordList: wordList, changedItemPosition: position)
-        wordListRepository.remove(with: wordItem.id, completion: nil)
+        cudOperations.remove(with: wordItem.id, completion: nil)
     }
 
     func requestTranslationsIfNeeded() {
@@ -51,7 +51,7 @@ class WordListModelImpl: WordListModel {
 
         wordList.insert(wordItem, at: 0)
         data = WordListData(wordList: wordList, changedItemPosition: 0)
-        wordListRepository.add(wordItem, completion: nil)
+        cudOperations.add(wordItem, completion: nil)
         requestTranslation(for: wordItem, data.wordList.count - 1)
     }
 
@@ -81,7 +81,7 @@ class WordListModelImpl: WordListModel {
         guard position > -1 && position < wordList.count else { return }
 
         wordList[position] = updatedWordItem
-        wordListRepository.update(updatedWordItem, completion: nil)
+        cudOperations.update(updatedWordItem, completion: nil)
         data = WordListData(wordList: wordList, changedItemPosition: position)
     }
 }

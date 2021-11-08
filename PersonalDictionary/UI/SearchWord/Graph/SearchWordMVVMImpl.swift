@@ -18,7 +18,7 @@ final class SearchWordMVVMImpl: WordListMVVMImpl {
         super.init()
         viewOne = SearchWordViewController(params: viewParams)
         guard let viewOne = viewOne else { return }
-        let model = SearchWordModelImpl(wordListRepository: wordListRepository,
+        let model = SearchWordModelImpl(cudOperations: wordListRepository,
                                         translationService: translationService,
                                         notificationCenter: notificationCenter)
         let viewModel = SearchWordViewModelImpl(model: model, view: viewOne)

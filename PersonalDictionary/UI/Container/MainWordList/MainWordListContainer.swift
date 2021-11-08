@@ -10,11 +10,11 @@ import UIKit
 class MainWordListContainer: UIViewController {
 
     let wordListMVVM: WordListMVVM
-    let wordListRepository: WordListRepository
+    let wordListFetcher: WordListFetcher
 
-    init(wordListMVVM: WordListMVVM, wordListRepository: WordListRepository) {
+    init(wordListMVVM: WordListMVVM, wordListFetcher: WordListFetcher) {
         self.wordListMVVM = wordListMVVM
-        self.wordListRepository = wordListRepository
+        self.wordListFetcher = wordListFetcher
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -25,7 +25,7 @@ class MainWordListContainer: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let wordList = wordListRepository.wordList
+        let wordList = wordListFetcher.wordList
         guard let wordListModel = wordListMVVM.model else { return }
 
         addWordListChild()

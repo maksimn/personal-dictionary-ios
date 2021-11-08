@@ -57,12 +57,12 @@ final class WordListBuilderImpl: WordListBuilder {
     // MARK: - WordListBuilder
 
     func buildMainWordListContainer() -> MainWordListContainer {
-        MainWordListContainer(wordListMVVM: buildMVVM(), wordListRepository: buildWordListRepository())
+        MainWordListContainer(wordListMVVM: buildMVVM(), wordListFetcher: buildWordListRepository())
     }
 
     func buildMVVM() -> WordListMVVM {
         let navigationController = UINavigationController()
-        let wordListMVVM = WordListMVVMImpl(wordListRepository: buildWordListRepository(),
+        let wordListMVVM = WordListMVVMImpl(cudOperations: buildWordListRepository(),
                                             translationService: buildTranslationService(),
                                             notificationCenter: NotificationCenter.default,
                                             viewParams: wordListViewParams)
