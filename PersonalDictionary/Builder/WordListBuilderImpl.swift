@@ -12,6 +12,7 @@ final class WordListBuilderImpl: WordListBuilder {
     private lazy var langRepository = { buildLangRepository() }()
 
     private let globalSettings: PDGlobalSettings
+    private let navigationController: UINavigationController
 
     private lazy var wordListViewParams: WordListViewParams = {
         WordListViewParams(
@@ -50,14 +51,19 @@ final class WordListBuilderImpl: WordListBuilder {
         )
     }()
 
-    init(globalSettings: PDGlobalSettings) {
+    init(globalSettings: PDGlobalSettings,
+         navigationController: UINavigationController) {
         self.globalSettings = globalSettings
+        self.navigationController = navigationController
     }
 
     // MARK: - WordListBuilder
 
     func buildMainWordListContainer() -> MainWordListContainer {
-        MainWordListContainer(wordListMVVM: buildMVVM(), wordListFetcher: buildWordListRepository())
+        MainWordListContainer(wordListMVVM: buildMVVM(),
+                              wordListFetcher: buildWordListRepository(),
+                              router: RouterImpl(navigationController: navigationController,
+                                                 builder: self))
     }
 
     func buildMVVM() -> WordListMVVM {

@@ -12,7 +12,7 @@ extension MainWordListContainer {
     func initViews() {
         navigationItem.titleView = navToSearchView
         addWordListChildController()
-        view.addSubview(newWordButton)
+        view.addSubview(navToNewWordButton)
         initNewWordButton()
     }
 
@@ -23,17 +23,17 @@ extension MainWordListContainer {
     }
 
     private func initNewWordButton() {
-        newWordButton.setImage(UIImage(named: "icon-plus")!, for: .normal)
-        newWordButton.imageView?.contentMode = .scaleAspectFit
-        newWordButton.addTarget(self, action: #selector(onNewWordButtonTap), for: .touchUpInside)
-        newWordButton.snp.makeConstraints { make -> Void in
+        navToNewWordButton.setImage(UIImage(named: "icon-plus")!, for: .normal)
+        navToNewWordButton.imageView?.contentMode = .scaleAspectFit
+        navToNewWordButton.addTarget(self, action: #selector(navigateToNewWord), for: .touchUpInside)
+        navToNewWordButton.snp.makeConstraints { make -> Void in
             make.size.equalTo(CGSize(width: 44, height: 44))
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-26)
             make.centerX.equalTo(view)
         }
-        if let imageView = newWordButton.imageView {
+        if let imageView = navToNewWordButton.imageView {
             imageView.snp.makeConstraints { (make) -> Void in
-                make.edges.equalTo(newWordButton)
+                make.edges.equalTo(navToNewWordButton)
             }
         }
     }
