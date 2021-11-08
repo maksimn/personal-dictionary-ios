@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
+import UIKit
 import Foundation
 
 class WordListModelImpl: WordListModel {
@@ -48,6 +49,11 @@ class WordListModelImpl: WordListModel {
         for position in startPosition..<endPosition where data.wordList[position].translation == nil {
             requestTranslation(for: data.wordList[position], position)
         }
+    }
+
+    func requestTranslationsIfNeededForFirstItems() {
+        let count = Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
+        requestTranslationsIfNeededWithin(startPosition: 0, endPosition: count)
     }
 
     // MARK: - Events

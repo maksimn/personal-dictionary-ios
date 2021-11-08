@@ -9,8 +9,14 @@ import UIKit
 
 class MainWordListContainer: UIViewController {
 
-    let wordListMVVM: WordListMVVM
-    let wordListFetcher: WordListFetcher
+    private let wordListMVVM: WordListMVVM
+    private let wordListFetcher: WordListFetcher
+
+    private lazy var navToSearchView = {
+        NavToSearchView(onTap: { [weak self] in
+            self?.onNavigateToSearchTap()
+        })
+    }()
 
     init(wordListMVVM: WordListMVVM, wordListFetcher: WordListFetcher) {
         self.wordListMVVM = wordListMVVM
@@ -24,6 +30,8 @@ class MainWordListContainer: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        navigationItem.titleView = navToSearchView
 
         addWordListChildController()
         setDataForWordListMVVM()
@@ -40,7 +48,10 @@ class MainWordListContainer: UIViewController {
         guard let wordListModel = wordListMVVM.model else { return }
 
         wordListModel.data = WordListData(wordList: wordList, changedItemPosition: nil)
-        let count = Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
-        wordListModel.requestTranslationsIfNeededWithin(startPosition: 0, endPosition: count)
+        wordListModel.requestTranslationsIfNeededForFirstItems()
+    }
+
+    private func onNavigateToSearchTap() {
+        print("onNavigateToSearchTap")
     }
 }
