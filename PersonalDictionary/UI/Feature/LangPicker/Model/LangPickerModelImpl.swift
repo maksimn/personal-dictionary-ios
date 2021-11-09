@@ -7,4 +7,11 @@
 
 final class LangPickerModelImpl: LangPickerModel {
 
+    var viewModel: LangPickerViewModel?
+
+    private(set) var data: LangSelectorData
+
+    init(data: LangSelectorData) {
+        self.data = data
+    }
 }

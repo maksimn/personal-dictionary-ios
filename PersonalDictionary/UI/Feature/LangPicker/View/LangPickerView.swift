@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 09.11.2021.
 //
 
-protocol LangPickerView {
+protocol LangPickerView: AnyObject {
 
+    var viewModel: LangPickerViewModel? { get set }
 }

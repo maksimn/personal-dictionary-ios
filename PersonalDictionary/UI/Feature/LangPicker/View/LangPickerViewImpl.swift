@@ -9,4 +9,6 @@ import UIKit
 
 final class LangPickerViewImpl: UIView, LangPickerView {
 
+    var viewModel: LangPickerViewModel?
+
 }

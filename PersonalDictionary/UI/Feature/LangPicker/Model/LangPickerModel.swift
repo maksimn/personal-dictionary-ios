@@ -7,4 +7,5 @@
 
 protocol LangPickerModel {
 
+    var viewModel: LangPickerViewModel? { get set }
 }

@@ -8,5 +8,19 @@
 import UIKit
 
 final class LangPickerMVVMImpl: LangPickerMVVM {
-    var uiview: UIView?
+
+    private let view: LangPickerViewImpl
+
+    init(with data: LangSelectorData) {
+        view = LangPickerViewImpl()
+        let model = LangPickerModelImpl(data: data)
+        let viewModel = LangPickerViewModelImpl(model: model, view: view)
+
+        view.viewModel = viewModel
+        model.viewModel = viewModel
+    }
+
+    var uiview: UIView? {
+        view
+    }
 }
