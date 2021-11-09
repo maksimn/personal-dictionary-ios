@@ -14,9 +14,9 @@ final class NavToSearchView: UIView {
 
     private var onTap: (() -> Void)?
 
-    init(onTap: (() -> Void)?) {
+    init(size: CGSize, onTap: (() -> Void)?) {
         self.onTap = onTap
-        let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 32, height: 44)
+        let frame = CGRect(origin: .zero, size: size)
         super.init(frame: frame)
         searchBar.isUserInteractionEnabled = false
         navigateToSearchButton.addTarget(self, action: #selector(onNavigateToSearchButtonTap), for: .touchUpInside)

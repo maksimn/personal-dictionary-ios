@@ -62,6 +62,7 @@
 		597C2BCA27382717009780D5 /* UIViewController+Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2BC927382717009780D5 /* UIViewController+Core.swift */; };
 		597C2BDB2739181D009780D5 /* NavToSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2BDA2739181D009780D5 /* NavToSearchView.swift */; };
 		597C2BE927391C22009780D5 /* MainWordListContainer+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2BE827391C22009780D5 /* MainWordListContainer+Layout.swift */; };
+		597C2BF42739F21E009780D5 /* MainWordListViewParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2BF32739F21E009780D5 /* MainWordListViewParams.swift */; };
 		598B79DF270C45E1007ED9FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 598B79E1270C45E1007ED9FD /* Localizable.strings */; };
 		598ED937270B965900747AEE /* LangRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598ED936270B965900747AEE /* LangRepositoryImplTests.swift */; };
 		599EFD312714DF8D002307F0 /* SearchWordViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599EFD302714DF8C002307F0 /* SearchWordViewController+Layout.swift */; };
@@ -173,6 +174,7 @@
 		597C2BC927382717009780D5 /* UIViewController+Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Core.swift"; sourceTree = "<group>"; };
 		597C2BDA2739181D009780D5 /* NavToSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavToSearchView.swift; sourceTree = "<group>"; };
 		597C2BE827391C22009780D5 /* MainWordListContainer+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainWordListContainer+Layout.swift"; sourceTree = "<group>"; };
+		597C2BF32739F21E009780D5 /* MainWordListViewParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWordListViewParams.swift; sourceTree = "<group>"; };
 		598B79E0270C45E1007ED9FD /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		598ED936270B965900747AEE /* LangRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangRepositoryImplTests.swift; sourceTree = "<group>"; };
 		599EFD302714DF8C002307F0 /* SearchWordViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchWordViewController+Layout.swift"; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 			children = (
 				596D04922738137100A33EA5 /* MainWordListContainer.swift */,
 				597C2BE827391C22009780D5 /* MainWordListContainer+Layout.swift */,
+				597C2BF32739F21E009780D5 /* MainWordListViewParams.swift */,
 			);
 			path = MainWordList;
 			sourceTree = "<group>";
@@ -1055,6 +1058,7 @@
 				59A9430E270CF36B0076F08B /* WordItemCell+Layout.swift in Sources */,
 				597C2BDB2739181D009780D5 /* NavToSearchView.swift in Sources */,
 				5976024A271115650077B5F7 /* JsonCoder.swift in Sources */,
+				597C2BF42739F21E009780D5 /* MainWordListViewParams.swift in Sources */,
 				596D04612737C49B00A33EA5 /* ViewParams.swift in Sources */,
 				596D04662737C4E300A33EA5 /* PDGlobalSettings+values.swift in Sources */,
 				5976023B271114430077B5F7 /* TranslationService.swift in Sources */,

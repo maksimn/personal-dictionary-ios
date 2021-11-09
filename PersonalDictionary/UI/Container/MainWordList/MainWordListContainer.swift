@@ -9,23 +9,30 @@ import UIKit
 
 class MainWordListContainer: UIViewController {
 
+    let params: MainWordListViewParams
+
     let wordListMVVM: WordListMVVM
     let wordListFetcher: WordListFetcher
     let router: Router
     let visibleItemMaxCount: Int
 
     lazy var navToSearchView = {
-        NavToSearchView(onTap: { [weak self] in
-            self?.navigateToSearch()
-        })
+        NavToSearchView(
+            size: self.params.styles.navToSearchViewSize,
+            onTap: { [weak self] in
+                self?.navigateToSearch()
+            }
+        )
     }()
 
     let navToNewWordButton = UIButton()
 
-    init(wordListMVVM: WordListMVVM,
+    init(viewParams: MainWordListViewParams,
+         wordListMVVM: WordListMVVM,
          wordListFetcher: WordListFetcher,
          router: Router,
          visibleItemMaxCount: Int) {
+        self.params = viewParams
         self.wordListMVVM = wordListMVVM
         self.wordListFetcher = wordListFetcher
         self.router = router

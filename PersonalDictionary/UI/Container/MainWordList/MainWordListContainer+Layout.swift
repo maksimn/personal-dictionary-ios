@@ -23,16 +23,17 @@ extension MainWordListContainer {
     }
 
     private func initNewWordButton() {
-        navToNewWordButton.setImage(UIImage(named: "icon-plus")!, for: .normal)
+        navToNewWordButton.setImage(params.staticContent.navToNewWordImage, for: .normal)
         navToNewWordButton.imageView?.contentMode = .scaleAspectFit
         navToNewWordButton.addTarget(self, action: #selector(navigateToNewWord), for: .touchUpInside)
         navToNewWordButton.snp.makeConstraints { make -> Void in
-            make.size.equalTo(CGSize(width: 44, height: 44))
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-26)
+            make.size.equalTo(params.styles.navToNewWordButtonSize)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+                .offset(params.styles.navToNewWordButtonBottomOffset)
             make.centerX.equalTo(view)
         }
         if let imageView = navToNewWordButton.imageView {
-            imageView.snp.makeConstraints { (make) -> Void in
+            imageView.snp.makeConstraints { make -> Void in
                 make.edges.equalTo(navToNewWordButton)
             }
         }
