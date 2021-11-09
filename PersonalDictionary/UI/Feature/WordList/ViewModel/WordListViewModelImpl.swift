@@ -9,16 +9,10 @@ class WordListViewModelImpl: WordListViewModel {
 
     unowned let view: WordListView
     let model: WordListModel
-    private var router: Router?
 
-    private var previousWordCount = -1
-    private var removedItemPosition = -1
-    private var updatedItemPosition = -1
-
-    init(model: WordListModel, view: WordListView, router: Router? = nil) {
+    init(model: WordListModel, view: WordListView) {
         self.model = model
         self.view = view
-        self.router = router
     }
 
     var wordListData: WordListData = WordListData(wordList: [], changedItemPosition: nil) {
@@ -27,19 +21,11 @@ class WordListViewModelImpl: WordListViewModel {
         }
     }
 
-    func fetchData() {
-        model.fetchData()
-    }
-
     func remove(_ wordItem: WordItem, at position: Int) {
         model.remove(wordItem, at: position)
     }
 
-    func navigateToNewWord() {
-        router?.navigateToNewWord()
-    }
-
-    func navigateToSearch() {
-        router?.navigateToSearch()
+    func requestTranslationsIfNeededWithin(startPosition: Int, endPosition: Int) {
+        model.requestTranslationsIfNeededWithin(startPosition: startPosition, endPosition: endPosition)
     }
 }

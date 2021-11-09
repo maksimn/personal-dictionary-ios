@@ -7,8 +7,8 @@
 
 final class SearchWordViewModelImpl: WordListViewModelImpl, SearchWordViewModel {
 
-    init(model: SearchWordModel, view: SearchWordView, router: Router? = nil) {
-        super.init(model: model, view: view, router: router)
+    init(model: SearchWordModel, view: SearchWordView) {
+        super.init(model: model, view: view)
     }
 
     private var viewOne: SearchWordView? {

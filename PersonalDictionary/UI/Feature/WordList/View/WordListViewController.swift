@@ -13,23 +13,24 @@ class WordListViewController: UIViewController, WordListView {
 
     let params: WordListViewParams
 
-    let searchBar = UISearchBar()
     let tableView = UITableView()
-    let newWordButton = UIButton()
-    let navigateToSearchButton = UIButton()
 
     lazy var tableDataSource: WordTableDataSource = {
         WordTableDataSource(tableView: tableView, data: WordListData(wordList: [], changedItemPosition: nil))
     }()
 
     lazy var tableActions: WordTableDelegate = {
-        WordTableDelegate(onDeleteTap: { [weak self] position in
-                            self?.onDeleteWordTap(position)
-                          },
-                          deleteActionViewParams: DeleteActionViewParams(
-                            staticContent: params.staticContent.deleteAction,
-                            styles: params.styles.deleteAction
-                          )
+        WordTableDelegate(
+            onScrollFinish: { [weak self] in
+                self?.onTableViewScrollFinish()
+            },
+            onDeleteTap: { [weak self] position in
+                self?.onDeleteWordTap(position)
+            },
+            deleteActionViewParams: DeleteActionViewParams(
+                staticContent: params.staticContent.deleteAction,
+                styles: params.styles.deleteAction
+            )
         )
     }()
 
@@ -45,7 +46,6 @@ class WordListViewController: UIViewController, WordListView {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
-        viewModel?.fetchData()
     }
 
     // MARK: - WordListView
@@ -56,20 +56,17 @@ class WordListViewController: UIViewController, WordListView {
 
     // MARK: - User Action Handlers
 
-    @objc
-    func onDeleteWordTap(_ position: Int) {
+    private func onDeleteWordTap(_ position: Int) {
         let item = tableDataSource.data.wordList[position]
 
         viewModel?.remove(item, at: position)
     }
 
-    @objc
-    func onNewWordButtonTap() {
-        viewModel?.navigateToNewWord()
-    }
+    private func onTableViewScrollFinish() {
+        guard let indexPaths = tableView.indexPathsForVisibleRows,
+              let start = indexPaths.first?.row,
+              let end = indexPaths.last?.row else { return }
 
-    @objc
-    func onNavigateToSearchButtonTap() {
-        viewModel?.navigateToSearch()
+        viewModel?.requestTranslationsIfNeededWithin(startPosition: start, endPosition: end + 1)
     }
 }

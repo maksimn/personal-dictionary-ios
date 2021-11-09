@@ -10,7 +10,6 @@ import UIKit
 typealias WordListViewParams = ViewParams<WordListViewStaticContent, WordListViewStyles>
 
 struct WordListViewStaticContent {
-    let newWordButtonImage: UIImage
     let deleteAction: DeleteActionStaticContent
 }
 

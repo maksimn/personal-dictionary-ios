@@ -7,6 +7,8 @@
 
 protocol WordListBuilder {
 
+    func buildMainWordListContainer() -> MainWordListContainer
+
     func buildMVVM() -> WordListMVVM
 
     func buildNewWordMVVM() -> NewWordMVVM

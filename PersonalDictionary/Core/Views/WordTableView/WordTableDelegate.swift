@@ -23,9 +23,12 @@ final class WordTableDelegate: NSObject, UITableViewDelegate {
 
     private let deleteActionViewParams: DeleteActionViewParams?
     private var onDeleteTap: ((Int) -> Void)?
+    private var onScrollFinish: (() -> Void)?
 
-    init(onDeleteTap: ((Int) -> Void)?,
+    init(onScrollFinish: (() -> Void)?,
+         onDeleteTap: ((Int) -> Void)?,
          deleteActionViewParams: DeleteActionViewParams?) {
+        self.onScrollFinish = onScrollFinish
         self.onDeleteTap = onDeleteTap
         self.deleteActionViewParams = deleteActionViewParams
         super.init()
@@ -49,5 +52,11 @@ final class WordTableDelegate: NSObject, UITableViewDelegate {
         deleteAction.backgroundColor = deleteActionViewParams.styles.backgroundColor
 
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+
+    // MARK: - UIScrollViewDelegate
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        onScrollFinish?()
     }
 }

@@ -16,7 +16,7 @@ final class SearchWordModelImpl: WordListModelImpl, SearchWordModel {
     private var allWordList: [WordItem] = []
 
     func prepareForSearching() {
-        allWordList = wordListRepository.wordList
+        allWordList = []
     }
 
     func searchWord(contains string: String) {

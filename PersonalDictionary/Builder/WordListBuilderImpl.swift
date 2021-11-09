@@ -12,11 +12,11 @@ final class WordListBuilderImpl: WordListBuilder {
     private lazy var langRepository = { buildLangRepository() }()
 
     private let globalSettings: PDGlobalSettings
+    private let navigationController: UINavigationController
 
     private lazy var wordListViewParams: WordListViewParams = {
         WordListViewParams(
             staticContent: WordListViewStaticContent(
-                newWordButtonImage: UIImage(named: "icon-plus")!,
                 deleteAction: DeleteActionStaticContent(
                     image: UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!
                 )
@@ -51,17 +51,34 @@ final class WordListBuilderImpl: WordListBuilder {
         )
     }()
 
-    init(globalSettings: PDGlobalSettings) {
+    let mainWordListViewParams = MainWordListViewParams(
+        staticContent: MainWordListStaticContent(navToNewWordImage: UIImage(named: "icon-plus")!),
+        styles: MainWordListStyles(
+            navToSearchViewSize: CGSize(width: UIScreen.main.bounds.width - 32, height: 44),
+            navToNewWordButtonSize: CGSize(width: 44, height: 44),
+            navToNewWordButtonBottomOffset: -26)
+    )
+
+    init(globalSettings: PDGlobalSettings,
+         navigationController: UINavigationController) {
         self.globalSettings = globalSettings
+        self.navigationController = navigationController
     }
 
     // MARK: - WordListBuilder
 
+    func buildMainWordListContainer() -> MainWordListContainer {
+        MainWordListContainer(viewParams: mainWordListViewParams,
+                              wordListMVVM: buildMVVM(),
+                              wordListFetcher: buildWordListRepository(),
+                              router: RouterImpl(navigationController: navigationController,
+                                                 builder: self),
+                              visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height)))
+    }
+
     func buildMVVM() -> WordListMVVM {
         let navigationController = UINavigationController()
-        let router = RouterImpl(navigationController: navigationController, builder: self)
-        let wordListMVVM = WordListMVVMImpl(router: router,
-                                            wordListRepository: buildWordListRepository(),
+        let wordListMVVM = WordListMVVMImpl(cudOperations: buildWordListRepository(),
                                             translationService: buildTranslationService(),
                                             notificationCenter: NotificationCenter.default,
                                             viewParams: wordListViewParams)

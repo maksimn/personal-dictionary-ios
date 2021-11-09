@@ -11,31 +11,30 @@ class WordListMVVMImpl: WordListMVVM {
 
     private var view: WordListViewController?
 
+    weak var model: WordListModel?
+
     init() {
         view = nil
+        model = nil
     }
 
-    init(router: Router,
-         wordListRepository: WordListRepository,
+    init(cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
          notificationCenter: NotificationCenter,
          viewParams: WordListViewParams) {
         view = WordListViewController(params: viewParams)
         guard let view = view else { return }
-        let model = WordListModelImpl(wordListRepository: wordListRepository,
+        let model = WordListModelImpl(cudOperations: cudOperations,
                                       translationService: translationService,
                                       notificationCenter: notificationCenter)
-        let viewModel = WordListViewModelImpl(model: model, view: view, router: router)
+        let viewModel = WordListViewModelImpl(model: model, view: view)
 
         view.viewModel = viewModel
         model.viewModel = viewModel
+        self.model = model
     }
 
     var viewController: UIViewController? {
         view
-    }
-
-    var navigationController: UINavigationController? {
-        view?.navigationController
     }
 }
