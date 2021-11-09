@@ -8,4 +8,6 @@
 protocol LangPickerModel {
 
     var viewModel: LangPickerViewModel? { get set }
+
+    func sendSelectedLang(_ lang: Lang)
 }

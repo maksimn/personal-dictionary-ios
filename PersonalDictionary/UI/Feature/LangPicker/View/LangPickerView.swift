@@ -8,4 +8,6 @@
 protocol LangPickerView: AnyObject {
 
     var viewModel: LangPickerViewModel? { get set }
+
+    func set(langSelectorData: LangSelectorData)
 }

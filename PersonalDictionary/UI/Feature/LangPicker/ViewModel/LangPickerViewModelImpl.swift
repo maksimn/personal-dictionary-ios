@@ -14,4 +14,18 @@ final class LangPickerViewModelImpl: LangPickerViewModel {
         self.model = model
         self.view = view
     }
+
+    private static let empty = LangSelectorData(allLangs: [],
+                                                lang: Lang(id: Lang.Id(raw: -1), name: "", shortName: ""),
+                                                isSourceLang: false)
+
+    var langSelectorData: LangSelectorData = empty {
+        didSet {
+            view.set(langSelectorData: langSelectorData)
+        }
+    }
+
+    func sendSelectedLang(_ lang: Lang) {
+        model.sendSelectedLang(lang)
+    }
 }
