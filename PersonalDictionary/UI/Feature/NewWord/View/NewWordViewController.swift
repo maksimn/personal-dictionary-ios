@@ -67,7 +67,15 @@ class NewWordViewController: UIViewController, NewWordView {
         let langPickerMVVM = LangPickerMVVMImpl(with: LangSelectorData(allLangs: allLangs,
                                                                        lang: lang,
                                                                        isSourceLang: isSourceLang),
-                                                notificationCenter: NotificationCenter.default)
+                                                notificationCenter: NotificationCenter.default,
+                                                viewParams: LangPickerViewParams(
+                                                    staticContent: LangPickerViewStaticContent(
+                                                        selectButtonTitle: NSLocalizedString("Select", comment: "")
+                                                    ),
+                                                    styles: LangPickerViewStyles(
+                                                        backgroundColor: pdGlobalSettings.appBackgroundColor
+                                                    )
+                                                ))
         langPickerView = langPickerMVVM.uiview
         view.addSubview(langPickerView ?? UIView())
         langPickerView?.snp.makeConstraints { make -> Void in

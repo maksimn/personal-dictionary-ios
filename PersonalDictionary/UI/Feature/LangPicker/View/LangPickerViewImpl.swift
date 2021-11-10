@@ -13,14 +13,25 @@ final class LangPickerViewImpl: UIView, LangPickerView {
 
     private var langPickerPopup: LangPickerPopup?
 
+    private let params: LangPickerViewParams
+
+    init(params: LangPickerViewParams) {
+        self.params = params
+        super.init(frame: .zero)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     func set(langSelectorData: LangSelectorData) {
         langPickerPopup = LangPickerPopup(initialLang: langSelectorData.lang,
                                           langPickerController: LangPickerController(langs: langSelectorData.allLangs),
                                           onSelectLang: { [weak self] lang in
                                             self?.onSelectLang(lang)
                                           },
-                                          selectButtonTitle: NSLocalizedString("Select", comment: ""),
-                                          backgroundColor: pdGlobalSettings.appBackgroundColor)
+                                          selectButtonTitle: params.staticContent.selectButtonTitle,
+                                          backgroundColor: params.styles.backgroundColor)
         addSubview(langPickerPopup ?? UIView())
         langPickerPopup?.snp.makeConstraints { make -> Void in
             make.edges.equalTo(self)
