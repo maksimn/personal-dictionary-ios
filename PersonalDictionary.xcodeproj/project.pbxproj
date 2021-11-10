@@ -72,6 +72,7 @@
 		597C2C22273A856C009780D5 /* LangPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C21273A856C009780D5 /* LangPickerViewModel.swift */; };
 		597C2C27273A858F009780D5 /* LangPickerViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C26273A858E009780D5 /* LangPickerViewModelImpl.swift */; };
 		597C2C37273A920A009780D5 /* LangSelectorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C36273A920A009780D5 /* LangSelectorData.swift */; };
+		597C2C42273BB99A009780D5 /* InitiallyBindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C41273BB99A009780D5 /* InitiallyBindable.swift */; };
 		598B79DF270C45E1007ED9FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 598B79E1270C45E1007ED9FD /* Localizable.strings */; };
 		598ED937270B965900747AEE /* LangRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598ED936270B965900747AEE /* LangRepositoryImplTests.swift */; };
 		599EFD312714DF8D002307F0 /* SearchWordViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599EFD302714DF8C002307F0 /* SearchWordViewController+Layout.swift */; };
@@ -193,6 +194,7 @@
 		597C2C21273A856C009780D5 /* LangPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerViewModel.swift; sourceTree = "<group>"; };
 		597C2C26273A858E009780D5 /* LangPickerViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerViewModelImpl.swift; sourceTree = "<group>"; };
 		597C2C36273A920A009780D5 /* LangSelectorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangSelectorData.swift; sourceTree = "<group>"; };
+		597C2C41273BB99A009780D5 /* InitiallyBindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiallyBindable.swift; sourceTree = "<group>"; };
 		598B79E0270C45E1007ED9FD /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		598ED936270B965900747AEE /* LangRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangRepositoryImplTests.swift; sourceTree = "<group>"; };
 		599EFD302714DF8C002307F0 /* SearchWordViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchWordViewController+Layout.swift"; sourceTree = "<group>"; };
@@ -440,6 +442,7 @@
 				597602482711154E0077B5F7 /* JsonCoder */,
 				59A94336270E4C5A0076F08B /* Logger */,
 				5910A44E270EA49000631446 /* Views */,
+				597C2C41273BB99A009780D5 /* InitiallyBindable.swift */,
 				59A942FD270CE83A0076F08B /* Tagged.swift */,
 				597C2BC927382717009780D5 /* UIViewController+Core.swift */,
 				596D04602737C49B00A33EA5 /* ViewParams.swift */,
@@ -1147,6 +1150,7 @@
 				5953CB2D270628D5006537B9 /* NewWordViewModelImpl.swift in Sources */,
 				591EDC8E2713716B00008074 /* PDGlobalSettings.swift in Sources */,
 				597C2C04273A83C8009780D5 /* LangPickerMVVM.swift in Sources */,
+				597C2C42273BB99A009780D5 /* InitiallyBindable.swift in Sources */,
 				596D04542737C45900A33EA5 /* WordTableDataSource.swift in Sources */,
 				596D720527051D4E00872D6C /* SceneDelegate.swift in Sources */,
 				590F78FB2709D1A000BCBD2C /* LangPickerPopup+Layout.swift in Sources */,
