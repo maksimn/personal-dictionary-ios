@@ -19,18 +19,15 @@ class NewWordViewController: UIViewController, NewWordView {
     let arrowLabel = UILabel()
     let okButton = UIButton()
     let textField = UITextField()
-    var langPickerPopup: LangPickerPopup?
 
-    private var isSelectingSourceLang: Bool = false {
-        didSet {
-            if let lang = isSelectingSourceLang ? viewModel?.sourceLang : viewModel?.targetLang {
-                langPickerPopup?.select(lang: lang)
-            }
-        }
-    }
+    var langPickerView: UIView?
 
-    init(params: NewWordViewParams) {
+    private let langPickerBuilder: LangPickerBuilder
+
+    init(params: NewWordViewParams,
+         langPickerBuilder: LangPickerBuilder) {
         self.params = params
+        self.langPickerBuilder = langPickerBuilder
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -48,20 +45,6 @@ class NewWordViewController: UIViewController, NewWordView {
         textField.text = text
     }
 
-    func set(allLangs: [Lang]) {
-        releaseLangPickerPopup()
-
-        langPickerPopup = LangPickerPopup(langPickerController: LangPickerController(langs: allLangs),
-                                          onSelectLang: { [weak self] lang in
-                                            self?.onSelectLang(lang)
-                                          },
-                                          selectButtonTitle: params.staticContent.selectButtonTitle,
-                                          backgroundColor: params.styles.backgroundColor,
-                                          isHidden: true)
-
-        layoutLangPickerPopup()
-    }
-
     func set(sourceLang: Lang) {
         sourceLangLabel.text = sourceLang.name
     }
@@ -70,9 +53,25 @@ class NewWordViewController: UIViewController, NewWordView {
         targetLangLabel.text = targetLang.name
     }
 
+    func dismissLangPicker() {
+        langPickerView?.removeFromSuperview()
+        langPickerView = nil
+    }
+
     private func sendNewWordEventAndDismiss() {
         viewModel?.sendNewWordEvent()
         dismiss(animated: true, completion: nil)
+    }
+
+    private func showLangPickerView(isSourceLang: Bool) {
+        guard let lang = isSourceLang ? viewModel?.sourceLang : viewModel?.targetLang else { return }
+        let langPickerMVVM = langPickerBuilder.build(with: lang, isSourceLang: isSourceLang)
+
+        langPickerView = langPickerMVVM.uiview
+        view.addSubview(langPickerView ?? UIView())
+        langPickerView?.snp.makeConstraints { make -> Void in
+            make.edges.equalTo(contentView)
+        }
     }
 }
 
@@ -81,31 +80,17 @@ extension NewWordViewController: UITextFieldDelegate {
 
     @objc
     func onSourceLangLabelTap() {
-        isSelectingSourceLang = true
-        langPickerPopup?.isHidden = false
+        showLangPickerView(isSourceLang: true)
     }
 
     @objc
     func onTargetLangLabelTap() {
-        isSelectingSourceLang = false
-        langPickerPopup?.isHidden = false
+        showLangPickerView(isSourceLang: false)
     }
 
     @objc
     func onOkButtonTap() {
         sendNewWordEventAndDismiss()
-    }
-
-    func onSelectLang(_ lang: Lang) {
-        langPickerPopup?.isHidden = true
-
-        if isSelectingSourceLang {
-            viewModel?.sourceLang = lang
-            viewModel?.save(sourceLang: lang)
-        } else {
-            viewModel?.targetLang = lang
-            viewModel?.save(targetLang: lang)
-        }
     }
 
     @objc

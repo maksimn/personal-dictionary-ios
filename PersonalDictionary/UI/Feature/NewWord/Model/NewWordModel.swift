@@ -11,9 +11,5 @@ protocol NewWordModel {
 
     func fetchData()
 
-    func save(sourceLang: Lang)
-
-    func save(targetLang: Lang)
-
     func sendNewWord()
 }

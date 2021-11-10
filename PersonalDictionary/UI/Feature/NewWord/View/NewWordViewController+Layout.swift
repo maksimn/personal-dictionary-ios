@@ -20,18 +20,6 @@ extension NewWordViewController {
         initOkButton()
     }
 
-    func layoutLangPickerPopup() {
-        view.addSubview(langPickerPopup ?? UIView())
-        langPickerPopup?.snp.makeConstraints { (make) -> Void in
-            make.edges.equalTo(contentView)
-        }
-    }
-
-    func releaseLangPickerPopup() {
-        langPickerPopup?.removeFromSuperview()
-        langPickerPopup = nil
-    }
-
     private func addSubviews() {
         [contentView, sourceLangLabel, targetLangLabel, arrowLabel, textField, okButton]
             .forEach { view.addSubview($0) }

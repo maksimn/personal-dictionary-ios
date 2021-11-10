@@ -23,12 +23,6 @@ class NewWordViewModelImpl: NewWordViewModel {
         }
     }
 
-    var allLangs: [Lang] = [] {
-        didSet {
-            view.set(allLangs: allLangs)
-        }
-    }
-
     var sourceLang: Lang = empty {
         didSet {
             view.set(sourceLang: sourceLang)
@@ -41,19 +35,15 @@ class NewWordViewModelImpl: NewWordViewModel {
         }
     }
 
-    func save(sourceLang: Lang) {
-        model.save(sourceLang: sourceLang)
-    }
-
-    func save(targetLang: Lang) {
-        model.save(targetLang: targetLang)
-    }
-
     func fetchDataFromModel() {
         model.fetchData()
     }
 
     func sendNewWordEvent() {
         model.sendNewWord()
+    }
+
+    func dismissLangPicker() {
+        view.dismissLangPicker()
     }
 }

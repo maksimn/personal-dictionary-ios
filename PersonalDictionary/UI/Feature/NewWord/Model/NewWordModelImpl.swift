@@ -14,12 +14,6 @@ class NewWordModelImpl: NewWordModel {
     private var langRepository: LangRepository
     private let notificationCenter: NotificationCenter
 
-    private(set) var allLangs: [Lang] = [] {
-        didSet {
-            viewModel?.allLangs = allLangs
-        }
-    }
-
     private(set) var sourceLang: Lang = empty {
         didSet {
             viewModel?.sourceLang = sourceLang
@@ -37,20 +31,12 @@ class NewWordModelImpl: NewWordModel {
     init(_ langRepository: LangRepository, _ notificationCenter: NotificationCenter) {
         self.langRepository = langRepository
         self.notificationCenter = notificationCenter
+        notificationCenter.addObserver(self, selector: #selector(onLangSelected), name: .langSelected, object: nil)
     }
 
     func fetchData() {
-        allLangs = langRepository.allLangs
         sourceLang = langRepository.sourceLang
         targetLang = langRepository.targetLang
-    }
-
-    func save(sourceLang: Lang) {
-        langRepository.sourceLang = sourceLang
-    }
-
-    func save(targetLang: Lang) {
-        langRepository.targetLang = targetLang
     }
 
     func sendNewWord() {
@@ -61,5 +47,19 @@ class NewWordModelImpl: NewWordModel {
         let wordItem = WordItem(text: text, sourceLang: sourceLang, targetLang: targetLang)
 
         notificationCenter.post(name: .addNewWord, object: nil, userInfo: [Notification.Name.addNewWord: wordItem])
+    }
+
+    @objc
+    func onLangSelected(_ notification: Notification) {
+        if let langSelectorData = notification.userInfo?[Notification.Name.langSelected] as? LangSelectorData {
+            if langSelectorData.isSourceLang {
+                langRepository.sourceLang = langSelectorData.lang
+                sourceLang = langSelectorData.lang
+            } else {
+                langRepository.targetLang = langSelectorData.lang
+                targetLang = langSelectorData.lang
+            }
+            viewModel?.dismissLangPicker()
+        }
     }
 }
