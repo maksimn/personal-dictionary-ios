@@ -26,12 +26,6 @@ class NewWordModelImpl: NewWordModel {
         }
     }
 
-    private(set) var allLangs: [Lang] = [] {
-        didSet {
-            viewModel?.allLangs = allLangs
-        }
-    }
-
     private static let empty = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
 
     init(_ langRepository: LangRepository, _ notificationCenter: NotificationCenter) {
@@ -41,7 +35,6 @@ class NewWordModelImpl: NewWordModel {
     }
 
     func fetchData() {
-        allLangs = langRepository.allLangs
         sourceLang = langRepository.sourceLang
         targetLang = langRepository.targetLang
     }

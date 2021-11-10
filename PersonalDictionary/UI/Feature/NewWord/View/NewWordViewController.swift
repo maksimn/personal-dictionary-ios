@@ -22,8 +22,12 @@ class NewWordViewController: UIViewController, NewWordView {
 
     var langPickerView: UIView?
 
-    init(params: NewWordViewParams) {
+    private let langPickerBuilder: LangPickerBuilder
+
+    init(params: NewWordViewParams,
+         langPickerBuilder: LangPickerBuilder) {
         self.params = params
+        self.langPickerBuilder = langPickerBuilder
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -60,22 +64,9 @@ class NewWordViewController: UIViewController, NewWordView {
     }
 
     private func showLangPickerView(isSourceLang: Bool) {
-        guard let allLangs = viewModel?.allLangs,
-              let lang = isSourceLang ? viewModel?.sourceLang : viewModel?.targetLang else {
-            return
-        }
-        let langPickerMVVM = LangPickerMVVMImpl(with: LangSelectorData(allLangs: allLangs,
-                                                                       lang: lang,
-                                                                       isSourceLang: isSourceLang),
-                                                notificationCenter: NotificationCenter.default,
-                                                viewParams: LangPickerViewParams(
-                                                    staticContent: LangPickerViewStaticContent(
-                                                        selectButtonTitle: NSLocalizedString("Select", comment: "")
-                                                    ),
-                                                    styles: LangPickerViewStyles(
-                                                        backgroundColor: pdGlobalSettings.appBackgroundColor
-                                                    )
-                                                ))
+        guard let lang = isSourceLang ? viewModel?.sourceLang : viewModel?.targetLang else { return }
+        let langPickerMVVM = langPickerBuilder.build(with: lang, isSourceLang: isSourceLang)
+
         langPickerView = langPickerMVVM.uiview
         view.addSubview(langPickerView ?? UIView())
         langPickerView?.snp.makeConstraints { make -> Void in

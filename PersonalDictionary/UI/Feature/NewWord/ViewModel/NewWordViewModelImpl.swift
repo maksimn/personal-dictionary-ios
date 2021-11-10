@@ -17,8 +17,6 @@ class NewWordViewModelImpl: NewWordViewModel {
         self.view = view
     }
 
-    var allLangs: [Lang] = []
-
     var text: String = "" {
         didSet {
             view.set(text: text)

@@ -93,7 +93,9 @@ final class WordListBuilderImpl: WordListBuilder {
     func buildNewWordMVVM() -> NewWordMVVM {
         NewWordMVVMImpl(langRepository: langRepository,
                         notificationCenter: NotificationCenter.default,
-                        viewParams: newWordViewParams)
+                        viewParams: newWordViewParams,
+                        langPickerBuilder: LangPickerBuilderImpl(allLangs: langRepository.allLangs,
+                                                                 notificationCenter: NotificationCenter.default))
     }
 
     func buildSearchWordMVVM() -> WordListMVVM {

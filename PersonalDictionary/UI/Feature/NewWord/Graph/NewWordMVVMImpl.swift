@@ -13,8 +13,9 @@ final class NewWordMVVMImpl: NewWordMVVM {
 
     init(langRepository: LangRepository,
          notificationCenter: NotificationCenter,
-         viewParams: NewWordViewParams) {
-        view = NewWordViewController(params: viewParams)
+         viewParams: NewWordViewParams,
+         langPickerBuilder: LangPickerBuilder) {
+        view = NewWordViewController(params: viewParams, langPickerBuilder: langPickerBuilder)
         let model = NewWordModelImpl(langRepository, notificationCenter)
         let viewModel = NewWordViewModelImpl(model: model, view: view)
 
