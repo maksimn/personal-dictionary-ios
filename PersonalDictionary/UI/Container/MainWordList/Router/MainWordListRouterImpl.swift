@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class RouterImpl: Router {
+final class MainWordListRouterImpl: MainWordListRouter {
 
     private let navigationController: UINavigationController
     private let builder: MainWordListBuilder

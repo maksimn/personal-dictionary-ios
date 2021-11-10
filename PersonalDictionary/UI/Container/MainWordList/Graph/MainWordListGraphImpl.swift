@@ -16,7 +16,8 @@ final class MainWordListGraphImpl: MainWordListGraph {
         styles: MainWordListStyles(
             navToSearchViewSize: CGSize(width: UIScreen.main.bounds.width - 32, height: 44),
             navToNewWordButtonSize: CGSize(width: 44, height: 44),
-            navToNewWordButtonBottomOffset: -26)
+            navToNewWordButtonBottomOffset: -26
+        )
     )
 
     let navigationController: UINavigationController?
@@ -27,8 +28,8 @@ final class MainWordListGraphImpl: MainWordListGraph {
          mainWordListBuilder: MainWordListBuilder) {
         self.navigationController = navigationController
         let visibleItemMaxCount = Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
-        let router = RouterImpl(navigationController: navigationController,
-                                builder: mainWordListBuilder)
+        let router = MainWordListRouterImpl(navigationController: navigationController,
+                                            builder: mainWordListBuilder)
 
         container = MainWordListContainer(viewParams: mainWordListViewParams,
                                           wordListMVVM: wordListBuilder.build(),
