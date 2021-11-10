@@ -25,7 +25,7 @@ final class LangPickerViewImpl: UIView, LangPickerView {
     }
 
     func set(langSelectorData: LangSelectorData) {
-        langPickerPopup = LangPickerPopup(initialLang: langSelectorData.lang,
+        langPickerPopup = LangPickerPopup(initialLang: langSelectorData.selectedLang,
                                           langPickerController: LangPickerController(langs: langSelectorData.allLangs),
                                           onSelectLang: { [weak self] lang in
                                             self?.onSelectLang(lang)

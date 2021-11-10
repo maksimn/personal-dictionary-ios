@@ -52,12 +52,13 @@ class NewWordModelImpl: NewWordModel {
     @objc
     func onLangSelected(_ notification: Notification) {
         if let langSelectorData = notification.userInfo?[Notification.Name.langSelected] as? LangSelectorData {
-            if langSelectorData.isSourceLang {
-                langRepository.sourceLang = langSelectorData.lang
-                sourceLang = langSelectorData.lang
-            } else {
-                langRepository.targetLang = langSelectorData.lang
-                targetLang = langSelectorData.lang
+            switch langSelectorData.selectedLangType {
+            case .source:
+                langRepository.sourceLang = langSelectorData.selectedLang
+                sourceLang = langSelectorData.selectedLang
+            case .target:
+                langRepository.targetLang = langSelectorData.selectedLang
+                targetLang = langSelectorData.selectedLang
             }
             viewModel?.dismissLangPicker()
         }

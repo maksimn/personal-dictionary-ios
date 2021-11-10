@@ -29,7 +29,9 @@ final class LangPickerModelImpl: LangPickerModel {
     }
 
     func sendSelectedLang(_ lang: Lang) {
-        let newData = LangSelectorData(allLangs: data.allLangs, lang: lang, isSourceLang: data.isSourceLang)
+        let newData = LangSelectorData(allLangs: data.allLangs,
+                                       selectedLang: lang,
+                                       selectedLangType: data.selectedLangType)
 
         notificationCenter.post(name: .langSelected, object: nil, userInfo: [Notification.Name.langSelected: newData])
     }

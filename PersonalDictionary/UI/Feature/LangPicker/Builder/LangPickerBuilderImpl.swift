@@ -27,10 +27,10 @@ final class LangPickerBuilderImpl: LangPickerBuilder {
         self.notificationCenter = notificationCenter
     }
 
-    func build(with initLang: Lang, isSourceLang: Bool) -> LangPickerMVVM {
+    func build(with initLang: Lang, selectedLangType: SelectedLangType) -> LangPickerMVVM {
         LangPickerMVVMImpl(with: LangSelectorData(allLangs: allLangs,
-                                                  lang: initLang,
-                                                  isSourceLang: isSourceLang),
+                                                  selectedLang: initLang,
+                                                  selectedLangType: selectedLangType),
                            notificationCenter: notificationCenter,
                            viewParams: viewParams)
     }
