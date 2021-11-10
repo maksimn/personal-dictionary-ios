@@ -38,7 +38,7 @@ final class NewWordBuilderImpl: NewWordBuilder {
 
     func build() -> NewWordMVVM {
         NewWordMVVMImpl(langRepository: langRepository,
-                        notificationCenter: NotificationCenter.default,
+                        notificationCenter: notificationCenter,
                         viewParams: newWordViewParams,
                         langPickerBuilder: langPickerBuilder)
     }

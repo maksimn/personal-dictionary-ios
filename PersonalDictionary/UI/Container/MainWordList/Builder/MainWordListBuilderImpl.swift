@@ -9,6 +9,15 @@ import UIKit
 
 final class MainWordListBuilderImpl: MainWordListBuilder {
 
+    private lazy var langRepository = { buildLangRepository() }()
+
+    private let globalSettings: PDGlobalSettings
+    private let navigationController = UINavigationController()
+
+    init(globalSettings: PDGlobalSettings) {
+        self.globalSettings = globalSettings
+    }
+
     func build() -> MainWordListGraph {
         MainWordListGraphImpl(wordListBuilder: createWordListBuilder(),
                               wordListFetcher: buildWordListRepository(),
@@ -16,40 +25,11 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
                               mainWordListBuilder: self)
     }
 
-    private lazy var langRepository = { buildLangRepository() }()
-
-    private let globalSettings: PDGlobalSettings
-    private let navigationController = UINavigationController()
-
-    lazy var searchStaticContent = SearchWordViewStaticContent(
-        baseContent: WordListViewStaticContent(
-            deleteAction: DeleteActionStaticContent(
-                image: UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!
-            )
-        ),
-        searchBarPlaceholderText: NSLocalizedString("Enter a word for searching", comment: ""),
-        noWordsFoundText: NSLocalizedString("No words found", comment: ""),
-        searchByLabelText: NSLocalizedString("Search by:", comment: ""),
-        sourceWordText: NSLocalizedString("source word", comment: ""),
-        translationText: NSLocalizedString("translation", comment: "")
-    )
-
-    init(globalSettings: PDGlobalSettings) {
-        self.globalSettings = globalSettings
-    }
-
     func buildSearchWordMVVM() -> WordListMVVM {
-        SearchWordMVVMImpl(wordListRepository: buildWordListRepository(),
+        SearchWordMVVMImpl(globalSettings: globalSettings,
+                           wordListRepository: buildWordListRepository(),
                            translationService: buildTranslationService(),
-                           notificationCenter: NotificationCenter.default,
-                           viewParams: SearchWordViewParams(
-                            staticContent: searchStaticContent,
-                            styles: WordListViewStyles(
-                                backgroundColor: globalSettings.appBackgroundColor,
-                                deleteAction: DeleteActionStyles(
-                                    backgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
-                                )
-                            )))
+                           notificationCenter: NotificationCenter.default)
     }
 
     func createNewWordBuilder() -> NewWordBuilder {

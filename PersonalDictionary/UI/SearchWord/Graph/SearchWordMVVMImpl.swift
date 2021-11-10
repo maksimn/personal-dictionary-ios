@@ -11,12 +11,31 @@ final class SearchWordMVVMImpl: WordListMVVMImpl {
 
     private var viewOne: SearchWordViewController?
 
-    init(wordListRepository: WordListRepository,
+    lazy var searchStaticContent = SearchWordViewStaticContent(
+        baseContent: WordListViewStaticContent(
+            deleteAction: DeleteActionStaticContent(
+                image: UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!
+            )
+        ),
+        searchBarPlaceholderText: NSLocalizedString("Enter a word for searching", comment: ""),
+        noWordsFoundText: NSLocalizedString("No words found", comment: ""),
+        searchByLabelText: NSLocalizedString("Search by:", comment: ""),
+        sourceWordText: NSLocalizedString("source word", comment: ""),
+        translationText: NSLocalizedString("translation", comment: "")
+    )
+
+    init(globalSettings: PDGlobalSettings, wordListRepository: WordListRepository,
          translationService: TranslationService,
-         notificationCenter: NotificationCenter,
-         viewParams: SearchWordViewParams) {
+         notificationCenter: NotificationCenter) {
         super.init()
-        viewOne = SearchWordViewController(params: viewParams)
+        viewOne = SearchWordViewController(params: SearchWordViewParams(
+                                            staticContent: searchStaticContent,
+                                            styles: WordListViewStyles(
+                                                backgroundColor: globalSettings.appBackgroundColor,
+                                                deleteAction: DeleteActionStyles(
+                                                   backgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
+                                                )
+                                            )))
         guard let viewOne = viewOne else { return }
         let model = SearchWordModelImpl(cudOperations: wordListRepository,
                                         translationService: translationService,
