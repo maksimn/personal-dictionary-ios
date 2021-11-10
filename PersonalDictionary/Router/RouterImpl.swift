@@ -10,10 +10,10 @@ import UIKit
 final class RouterImpl: Router {
 
     private let navigationController: UINavigationController
-    private let builder: WordListBuilder
+    private let builder: MainWordListBuilder
 
     init(navigationController: UINavigationController,
-         builder: WordListBuilder) {
+         builder: MainWordListBuilder) {
         self.navigationController = navigationController
         self.builder = builder
     }

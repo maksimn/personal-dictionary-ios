@@ -1,18 +1,25 @@
 //
-//  WordListBuilderImpl.swift
+//  MainWordListBuilderImpl.swift
 //  PersonalDictionary
 //
-//  Created by Maxim Ivanov on 14.10.2021.
+//  Created by Maxim Ivanov on 10.11.2021.
 //
 
 import UIKit
 
-final class WordListBuilderImpl: WordListBuilder {
+final class MainWordListBuilderImpl: MainWordListBuilder {
+
+    func build() -> MainWordListGraph {
+        MainWordListGraphImpl(wordListMVVM: buildWordListMVVM(),
+                              wordListFetcher: buildWordListRepository(),
+                              navigationController: navigationController,
+                              mainWordListBuilder: self)
+    }
 
     private lazy var langRepository = { buildLangRepository() }()
 
     private let globalSettings: PDGlobalSettings
-    private let navigationController: UINavigationController
+    private let navigationController = UINavigationController()
 
     private lazy var wordListViewParams: WordListViewParams = {
         WordListViewParams(
@@ -51,43 +58,8 @@ final class WordListBuilderImpl: WordListBuilder {
         )
     }()
 
-    let mainWordListViewParams = MainWordListViewParams(
-        staticContent: MainWordListStaticContent(navToNewWordImage: UIImage(named: "icon-plus")!),
-        styles: MainWordListStyles(
-            navToSearchViewSize: CGSize(width: UIScreen.main.bounds.width - 32, height: 44),
-            navToNewWordButtonSize: CGSize(width: 44, height: 44),
-            navToNewWordButtonBottomOffset: -26)
-    )
-
-    init(globalSettings: PDGlobalSettings,
-         navigationController: UINavigationController) {
+    init(globalSettings: PDGlobalSettings) {
         self.globalSettings = globalSettings
-        self.navigationController = navigationController
-    }
-
-    // MARK: - WordListBuilder
-
-    func buildMainWordListContainer() -> MainWordListContainer {
-        MainWordListContainer(viewParams: mainWordListViewParams,
-                              wordListMVVM: buildMVVM(),
-                              wordListFetcher: buildWordListRepository(),
-                              router: RouterImpl(navigationController: navigationController,
-                                                 builder: self),
-                              visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height)))
-    }
-
-    func buildMVVM() -> WordListMVVM {
-        let navigationController = UINavigationController()
-        let wordListMVVM = WordListMVVMImpl(cudOperations: buildWordListRepository(),
-                                            translationService: buildTranslationService(),
-                                            notificationCenter: NotificationCenter.default,
-                                            viewParams: wordListViewParams)
-        let viewController = wordListMVVM.viewController ?? UIViewController()
-
-        navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
-        navigationController.setViewControllers([viewController], animated: false)
-
-        return wordListMVVM
     }
 
     func buildNewWordMVVM() -> NewWordMVVM {
@@ -134,5 +106,12 @@ final class WordListBuilderImpl: WordListBuilder {
     private func buildLangRepository() -> LangRepository {
         return LangRepositoryImpl(userDefaults: UserDefaults.standard,
                                   data: globalSettings.langData)
+    }
+
+    private func buildWordListMVVM() -> WordListMVVM {
+        WordListMVVMImpl(cudOperations: buildWordListRepository(),
+                         translationService: buildTranslationService(),
+                         notificationCenter: NotificationCenter.default,
+                         viewParams: wordListViewParams)
     }
 }
