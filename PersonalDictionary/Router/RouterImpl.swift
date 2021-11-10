@@ -19,7 +19,8 @@ final class RouterImpl: Router {
     }
 
     func navigateToNewWord() {
-        let newWordMVVM = builder.buildNewWordMVVM()
+        let newWordBuilder = builder.createNewWordBuilder()
+        let newWordMVVM = newWordBuilder.build()
         guard let newWordViewController = newWordMVVM.viewController else { return }
 
         newWordViewController.modalPresentationStyle = .overFullScreen

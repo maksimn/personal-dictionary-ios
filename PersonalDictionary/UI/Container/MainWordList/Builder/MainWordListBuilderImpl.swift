@@ -34,28 +34,8 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
         translationText: NSLocalizedString("translation", comment: "")
     )
 
-    lazy var newWordViewParams: NewWordViewParams = {
-        NewWordViewParams(
-            staticContent: NewWordViewStaticContent(
-                selectButtonTitle: NSLocalizedString("Select", comment: ""),
-                arrowText: NSLocalizedString("⇋", comment: ""),
-                okText: NSLocalizedString("OK", comment: ""),
-                textFieldPlaceholder: NSLocalizedString("Enter a new word", comment: "")
-            ),
-            styles: NewWordViewStyles(backgroundColor: globalSettings.appBackgroundColor)
-        )
-    }()
-
     init(globalSettings: PDGlobalSettings) {
         self.globalSettings = globalSettings
-    }
-
-    func buildNewWordMVVM() -> NewWordMVVM {
-        NewWordMVVMImpl(langRepository: langRepository,
-                        notificationCenter: NotificationCenter.default,
-                        viewParams: newWordViewParams,
-                        langPickerBuilder: LangPickerBuilderImpl(allLangs: langRepository.allLangs,
-                                                                 notificationCenter: NotificationCenter.default))
     }
 
     func buildSearchWordMVVM() -> WordListMVVM {
@@ -70,6 +50,14 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
                                     backgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
                                 )
                             )))
+    }
+
+    func createNewWordBuilder() -> NewWordBuilder {
+        NewWordBuilderImpl(globalSettings: globalSettings,
+                           langRepository: langRepository,
+                           notificationCenter: NotificationCenter.default,
+                           langPickerBuilder: LangPickerBuilderImpl(allLangs: langRepository.allLangs,
+                                                                    notificationCenter: NotificationCenter.default))
     }
 
     // MARK: - private

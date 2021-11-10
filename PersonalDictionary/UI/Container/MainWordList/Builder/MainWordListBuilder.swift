@@ -9,7 +9,7 @@ protocol MainWordListBuilder {
 
     func build() -> MainWordListGraph
 
-    func buildNewWordMVVM() -> NewWordMVVM
+    func createNewWordBuilder() -> NewWordBuilder
 
     func buildSearchWordMVVM() -> WordListMVVM
 }
