@@ -10,7 +10,7 @@ import UIKit
 final class MainWordListBuilderImpl: MainWordListBuilder {
 
     func build() -> MainWordListGraph {
-        MainWordListGraphImpl(wordListMVVM: buildWordListMVVM(),
+        MainWordListGraphImpl(wordListBuilder: createWordListBuilder(),
                               wordListFetcher: buildWordListRepository(),
                               navigationController: navigationController,
                               mainWordListBuilder: self)
@@ -21,24 +21,12 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
     private let globalSettings: PDGlobalSettings
     private let navigationController = UINavigationController()
 
-    private lazy var wordListViewParams: WordListViewParams = {
-        WordListViewParams(
-            staticContent: WordListViewStaticContent(
-                deleteAction: DeleteActionStaticContent(
-                    image: UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!
-                )
-            ),
-            styles: WordListViewStyles(
-                backgroundColor: globalSettings.appBackgroundColor,
-                deleteAction: DeleteActionStyles(
-                    backgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
-                )
-            )
-        )
-    }()
-
     lazy var searchStaticContent = SearchWordViewStaticContent(
-        baseContent: wordListViewParams.staticContent,
+        baseContent: WordListViewStaticContent(
+            deleteAction: DeleteActionStaticContent(
+                image: UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!
+            )
+        ),
         searchBarPlaceholderText: NSLocalizedString("Enter a word for searching", comment: ""),
         noWordsFoundText: NSLocalizedString("No words found", comment: ""),
         searchByLabelText: NSLocalizedString("Search by:", comment: ""),
@@ -74,8 +62,14 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
         SearchWordMVVMImpl(wordListRepository: buildWordListRepository(),
                            translationService: buildTranslationService(),
                            notificationCenter: NotificationCenter.default,
-                           viewParams: SearchWordViewParams(staticContent: searchStaticContent,
-                                                            styles: wordListViewParams.styles))
+                           viewParams: SearchWordViewParams(
+                            staticContent: searchStaticContent,
+                            styles: WordListViewStyles(
+                                backgroundColor: globalSettings.appBackgroundColor,
+                                deleteAction: DeleteActionStyles(
+                                    backgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
+                                )
+                            )))
     }
 
     // MARK: - private
@@ -108,10 +102,10 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
                                   data: globalSettings.langData)
     }
 
-    private func buildWordListMVVM() -> WordListMVVM {
-        WordListMVVMImpl(cudOperations: buildWordListRepository(),
-                         translationService: buildTranslationService(),
-                         notificationCenter: NotificationCenter.default,
-                         viewParams: wordListViewParams)
+    private func createWordListBuilder() -> WordListBuilder {
+        WordListBuilderImpl(cudOperations: buildWordListRepository(),
+                            translationService: buildTranslationService(),
+                            notificationCenter: NotificationCenter.default,
+                            globalSettings: globalSettings)
     }
 }

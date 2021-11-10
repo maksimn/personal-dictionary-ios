@@ -21,7 +21,7 @@ final class MainWordListGraphImpl: MainWordListGraph {
 
     let navigationController: UINavigationController?
 
-    init(wordListMVVM: WordListMVVM,
+    init(wordListBuilder: WordListBuilder,
          wordListFetcher: WordListFetcher,
          navigationController: UINavigationController,
          mainWordListBuilder: MainWordListBuilder) {
@@ -31,7 +31,7 @@ final class MainWordListGraphImpl: MainWordListGraph {
                                 builder: mainWordListBuilder)
 
         container = MainWordListContainer(viewParams: mainWordListViewParams,
-                                          wordListMVVM: wordListMVVM,
+                                          wordListMVVM: wordListBuilder.build(),
                                           wordListFetcher: wordListFetcher,
                                           router: router,
                                           visibleItemMaxCount: visibleItemMaxCount)
