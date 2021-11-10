@@ -11,21 +11,24 @@ final class LangPickerModelImpl: LangPickerModel {
 
     var viewModel: LangPickerViewModel?
 
-    var data: LangSelectorData? = nil {
+    private(set) var data: LangSelectorData {
         didSet {
-            guard let data = data else { return }
             viewModel?.langSelectorData = data
         }
     }
 
-    let notificationCenter: NotificationCenter
+    private let notificationCenter: NotificationCenter
 
-    init(notificationCenter: NotificationCenter) {
+    init(data: LangSelectorData, notificationCenter: NotificationCenter) {
+        self.data = data
         self.notificationCenter = notificationCenter
     }
 
+    func bindInitially() {
+        viewModel?.langSelectorData = data
+    }
+
     func sendSelectedLang(_ lang: Lang) {
-        guard let data = data else { return }
         let newData = LangSelectorData(allLangs: data.allLangs, lang: lang, isSourceLang: data.isSourceLang)
 
         notificationCenter.post(name: .langSelected, object: nil, userInfo: [Notification.Name.langSelected: newData])

@@ -15,13 +15,10 @@ final class LangPickerViewModelImpl: LangPickerViewModel {
         self.view = view
     }
 
-    private static let empty = LangSelectorData(allLangs: [],
-                                                lang: Lang(id: Lang.Id(raw: -1), name: "", shortName: ""),
-                                                isSourceLang: false)
-
-    var langSelectorData: LangSelectorData = empty {
+    var langSelectorData: LangSelectorData? {
         didSet {
-            view.set(langSelectorData: langSelectorData)
+            guard let data = langSelectorData else { return }
+            view.set(langSelectorData: data)
         }
     }
 

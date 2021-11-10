@@ -14,12 +14,12 @@ final class LangPickerMVVMImpl: LangPickerMVVM {
     init(with data: LangSelectorData,
          notificationCenter: NotificationCenter) {
         view = LangPickerViewImpl()
-        let model = LangPickerModelImpl(notificationCenter: notificationCenter)
+        let model = LangPickerModelImpl(data: data, notificationCenter: notificationCenter)
         let viewModel = LangPickerViewModelImpl(model: model, view: view)
 
         view.viewModel = viewModel
         model.viewModel = viewModel
-        model.data = data
+        model.bindInitially()
     }
 
     var uiview: UIView? {

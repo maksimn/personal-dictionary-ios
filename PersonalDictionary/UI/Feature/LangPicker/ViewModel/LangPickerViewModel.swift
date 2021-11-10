@@ -7,7 +7,7 @@
 
 protocol LangPickerViewModel {
 
-    var langSelectorData: LangSelectorData { get set }
+    var langSelectorData: LangSelectorData? { get set }
 
     func sendSelectedLang(_ lang: Lang)
 }
