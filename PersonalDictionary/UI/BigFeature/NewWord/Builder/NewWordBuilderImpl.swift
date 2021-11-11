@@ -17,20 +17,20 @@ final class NewWordBuilderImpl: NewWordBuilder {
                 okText: NSLocalizedString("OK", comment: ""),
                 textFieldPlaceholder: NSLocalizedString("Enter a new word", comment: "")
             ),
-            styles: NewWordViewStyles(backgroundColor: globalViewSettings.appBackgroundColor)
+            styles: NewWordViewStyles(backgroundColor: appViewConfigs.appBackgroundColor)
         )
     }()
 
-    private let globalViewSettings: GlobalViewSettings
+    private let appViewConfigs: AppViewConfigs
     private let langRepository: LangRepository
     private let notificationCenter: NotificationCenter
     private let langPickerBuilder: LangPickerBuilder
 
-    init(globalViewSettings: GlobalViewSettings,
+    init(appViewConfigs: AppViewConfigs,
          langRepository: LangRepository,
          notificationCenter: NotificationCenter,
          langPickerBuilder: LangPickerBuilder) {
-        self.globalViewSettings = globalViewSettings
+        self.appViewConfigs = appViewConfigs
         self.langRepository = langRepository
         self.notificationCenter = notificationCenter
         self.langPickerBuilder = langPickerBuilder

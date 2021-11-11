@@ -11,11 +11,11 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
 
     private lazy var langRepository = { buildLangRepository() }()
 
-    private let globalSettings: GlobalSettings
+    private let appConfigs: AppConfigs
     private let navigationController = UINavigationController()
 
-    init(globalSettings: GlobalSettings) {
-        self.globalSettings = globalSettings
+    init(appConfigs: AppConfigs) {
+        self.appConfigs = appConfigs
     }
 
     func build() -> MainWordListGraph {
@@ -27,29 +27,29 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
     }
 
     private func createSearchBuilder() -> SearchBuilder {
-        SearchBuilderImpl(globalViewSettings: globalSettings.viewSettings,
+        SearchBuilderImpl(appViewConfigs: appConfigs.appViewConfigs,
                           wordListRepository: buildWordListRepository(),
                           translationService: buildTranslationService(),
                           notificationCenter: NotificationCenter.default)
     }
 
     private func createNewWordBuilder() -> NewWordBuilder {
-        NewWordBuilderImpl(globalViewSettings: globalSettings.viewSettings,
+        NewWordBuilderImpl(appViewConfigs: appConfigs.appViewConfigs,
                            langRepository: langRepository,
                            notificationCenter: NotificationCenter.default,
                            langPickerBuilder: LangPickerBuilderImpl(allLangs: langRepository.allLangs,
                                                                     notificationCenter: NotificationCenter.default,
-                                                                    globalViewSettings: globalSettings.viewSettings))
+                                                                    appViewConfigs: appConfigs.appViewConfigs))
     }
 
     private func buildLogger() -> Logger {
-        SimpleLogger(isLoggingEnabled: globalSettings.isLoggingEnabled)
+        SimpleLogger(isLoggingEnabled: appConfigs.isLoggingEnabled)
     }
 
     private func buildTranslationService() -> TranslationService {
         let ponsApiData = PonsApiData(url: "https://api.pons.com/v1/dictionary",
                                       secretHeaderKey: "X-Secret",
-                                      secret: globalSettings.ponsApiSecret)
+                                      secret: appConfigs.ponsApiSecret)
 
         return PonsTranslationService(apiData: ponsApiData,
                                       coreService: UrlSessionCoreService(),
@@ -67,13 +67,13 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
 
     private func buildLangRepository() -> LangRepository {
         return LangRepositoryImpl(userDefaults: UserDefaults.standard,
-                                  data: globalSettings.langData)
+                                  data: appConfigs.langData)
     }
 
     private func createWordListBuilder() -> WordListBuilder {
         WordListBuilderImpl(cudOperations: buildWordListRepository(),
                             translationService: buildTranslationService(),
                             notificationCenter: NotificationCenter.default,
-                            globalViewSettings: globalSettings.viewSettings)
+                            appViewConfigs: appConfigs.appViewConfigs)
     }
 }

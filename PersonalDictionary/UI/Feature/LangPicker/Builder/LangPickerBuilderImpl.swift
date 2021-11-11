@@ -15,21 +15,21 @@ final class LangPickerBuilderImpl: LangPickerBuilder {
                 selectButtonTitle: NSLocalizedString("Select", comment: "")
             ),
             styles: LangPickerViewStyles(
-                backgroundColor: globalViewSettings.appBackgroundColor
+                backgroundColor: appViewConfigs.appBackgroundColor
             )
         )
     }()
 
     private let allLangs: [Lang]
     private let notificationCenter: NotificationCenter
-    private let globalViewSettings: GlobalViewSettings
+    private let appViewConfigs: AppViewConfigs
 
     init(allLangs: [Lang],
          notificationCenter: NotificationCenter,
-         globalViewSettings: GlobalViewSettings) {
+         appViewConfigs: AppViewConfigs) {
         self.allLangs = allLangs
         self.notificationCenter = notificationCenter
-        self.globalViewSettings = globalViewSettings
+        self.appViewConfigs = appViewConfigs
     }
 
     func build(with initLang: Lang, selectedLangType: SelectedLangType) -> LangPickerMVVM {
