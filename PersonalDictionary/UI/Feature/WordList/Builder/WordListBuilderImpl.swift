@@ -12,7 +12,7 @@ final class WordListBuilderImpl: WordListBuilder {
     private let cudOperations: WordItemCUDOperations
     private let translationService: TranslationService
     private let notificationCenter: NotificationCenter
-    private let globalSettings: PDGlobalSettings
+    private let globalViewSettings: GlobalViewSettings
 
     private lazy var viewParams: WordListViewParams = {
         WordListViewParams(
@@ -22,7 +22,7 @@ final class WordListBuilderImpl: WordListBuilder {
                 )
             ),
             styles: WordListViewStyles(
-                backgroundColor: globalSettings.appBackgroundColor,
+                backgroundColor: globalViewSettings.appBackgroundColor,
                 deleteAction: DeleteActionStyles(
                     backgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
                 )
@@ -33,11 +33,11 @@ final class WordListBuilderImpl: WordListBuilder {
     init(cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
          notificationCenter: NotificationCenter,
-         globalSettings: PDGlobalSettings) {
+         globalViewSettings: GlobalViewSettings) {
         self.cudOperations = cudOperations
         self.translationService = translationService
         self.notificationCenter = notificationCenter
-        self.globalSettings = globalSettings
+        self.globalViewSettings = globalViewSettings
     }
 
     func build() -> WordListMVVM {

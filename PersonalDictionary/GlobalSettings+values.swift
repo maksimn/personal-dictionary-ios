@@ -18,13 +18,15 @@ private let langData = LangData(allLangs: [lang1, lang2, lang3, lang4],
                                 defaultSourceLang: lang1,
                                 defaultTargetLang: lang2)
 
-let pdGlobalSettings = PDGlobalSettings(
+let globalSettings = GlobalSettings(
 
     isLoggingEnabled: true,
 
-    appBackgroundColor: UIColor(red: 0.97, green: 0.97, blue: 0.95, alpha: 1.0),
-
     langData: langData,
 
-    ponsApiSecret: ""
+    ponsApiSecret: "",
+
+    viewSettings: GlobalViewSettings(
+        appBackgroundColor: UIColor(red: 0.97, green: 0.97, blue: 0.95, alpha: 1.0)
+    )
 )

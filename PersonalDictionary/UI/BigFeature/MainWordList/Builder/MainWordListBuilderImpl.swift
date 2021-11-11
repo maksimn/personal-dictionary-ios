@@ -11,10 +11,10 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
 
     private lazy var langRepository = { buildLangRepository() }()
 
-    private let globalSettings: PDGlobalSettings
+    private let globalSettings: GlobalSettings
     private let navigationController = UINavigationController()
 
-    init(globalSettings: PDGlobalSettings) {
+    init(globalSettings: GlobalSettings) {
         self.globalSettings = globalSettings
     }
 
@@ -27,18 +27,19 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
     }
 
     private func createSearchBuilder() -> SearchBuilder {
-        SearchBuilderImpl(globalSettings: globalSettings,
+        SearchBuilderImpl(globalViewSettings: globalSettings.viewSettings,
                           wordListRepository: buildWordListRepository(),
                           translationService: buildTranslationService(),
                           notificationCenter: NotificationCenter.default)
     }
 
     private func createNewWordBuilder() -> NewWordBuilder {
-        NewWordBuilderImpl(globalSettings: globalSettings,
+        NewWordBuilderImpl(globalViewSettings: globalSettings.viewSettings,
                            langRepository: langRepository,
                            notificationCenter: NotificationCenter.default,
                            langPickerBuilder: LangPickerBuilderImpl(allLangs: langRepository.allLangs,
-                                                                    notificationCenter: NotificationCenter.default))
+                                                                    notificationCenter: NotificationCenter.default,
+                                                                    globalViewSettings: globalSettings.viewSettings))
     }
 
     private func buildLogger() -> Logger {
@@ -73,6 +74,6 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
         WordListBuilderImpl(cudOperations: buildWordListRepository(),
                             translationService: buildTranslationService(),
                             notificationCenter: NotificationCenter.default,
-                            globalSettings: globalSettings)
+                            globalViewSettings: globalSettings.viewSettings)
     }
 }

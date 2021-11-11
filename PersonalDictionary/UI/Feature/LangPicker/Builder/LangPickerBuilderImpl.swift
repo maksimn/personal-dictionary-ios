@@ -9,22 +9,27 @@ import Foundation
 
 final class LangPickerBuilderImpl: LangPickerBuilder {
 
-    private let viewParams = LangPickerViewParams(
-        staticContent: LangPickerViewStaticContent(
-            selectButtonTitle: NSLocalizedString("Select", comment: "")
-        ),
-        styles: LangPickerViewStyles(
-            backgroundColor: pdGlobalSettings.appBackgroundColor
+    private lazy var viewParams = {
+        LangPickerViewParams(
+            staticContent: LangPickerViewStaticContent(
+                selectButtonTitle: NSLocalizedString("Select", comment: "")
+            ),
+            styles: LangPickerViewStyles(
+                backgroundColor: globalViewSettings.appBackgroundColor
+            )
         )
-    )
+    }()
 
     private let allLangs: [Lang]
     private let notificationCenter: NotificationCenter
+    private let globalViewSettings: GlobalViewSettings
 
     init(allLangs: [Lang],
-         notificationCenter: NotificationCenter) {
+         notificationCenter: NotificationCenter,
+         globalViewSettings: GlobalViewSettings) {
         self.allLangs = allLangs
         self.notificationCenter = notificationCenter
+        self.globalViewSettings = globalViewSettings
     }
 
     func build(with initLang: Lang, selectedLangType: SelectedLangType) -> LangPickerMVVM {

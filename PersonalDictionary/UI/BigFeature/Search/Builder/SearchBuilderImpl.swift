@@ -9,23 +9,23 @@ import Foundation
 
 final class SearchBuilderImpl: SearchBuilder {
 
-    private let globalSettings: PDGlobalSettings
+    private let globalViewSettings: GlobalViewSettings
     private let wordListRepository: WordListRepository
     private let translationService: TranslationService
     private let notificationCenter: NotificationCenter
 
-    init(globalSettings: PDGlobalSettings,
+    init(globalViewSettings: GlobalViewSettings,
          wordListRepository: WordListRepository,
          translationService: TranslationService,
          notificationCenter: NotificationCenter) {
-        self.globalSettings = globalSettings
+        self.globalViewSettings = globalViewSettings
         self.wordListRepository = wordListRepository
         self.translationService = translationService
         self.notificationCenter = notificationCenter
     }
 
     func build() -> WordListMVVM {
-        SearchWordMVVMImpl(globalSettings: globalSettings,
+        SearchWordMVVMImpl(globalViewSettings: globalViewSettings,
                            wordListRepository: wordListRepository,
                            translationService: translationService,
                            notificationCenter: notificationCenter)
