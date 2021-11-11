@@ -22,25 +22,24 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
         MainWordListGraphImpl(wordListBuilder: createWordListBuilder(),
                               wordListFetcher: buildWordListRepository(),
                               navigationController: navigationController,
-                              mainWordListBuilder: self)
+                              newWordBuilder: createNewWordBuilder(),
+                              searchBuilder: createSearchBuilder())
     }
 
-    func buildSearchWordMVVM() -> WordListMVVM {
-        SearchWordMVVMImpl(globalSettings: globalSettings,
-                           wordListRepository: buildWordListRepository(),
-                           translationService: buildTranslationService(),
-                           notificationCenter: NotificationCenter.default)
+    private func createSearchBuilder() -> SearchBuilder {
+        SearchBuilderImpl(globalSettings: globalSettings,
+                          wordListRepository: buildWordListRepository(),
+                          translationService: buildTranslationService(),
+                          notificationCenter: NotificationCenter.default)
     }
 
-    func createNewWordBuilder() -> NewWordBuilder {
+    private func createNewWordBuilder() -> NewWordBuilder {
         NewWordBuilderImpl(globalSettings: globalSettings,
                            langRepository: langRepository,
                            notificationCenter: NotificationCenter.default,
                            langPickerBuilder: LangPickerBuilderImpl(allLangs: langRepository.allLangs,
                                                                     notificationCenter: NotificationCenter.default))
     }
-
-    // MARK: - private
 
     private func buildLogger() -> Logger {
         SimpleLogger(isLoggingEnabled: globalSettings.isLoggingEnabled)

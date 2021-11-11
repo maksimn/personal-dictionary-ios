@@ -10,16 +10,18 @@ import UIKit
 final class MainWordListRouterImpl: MainWordListRouter {
 
     private let navigationController: UINavigationController
-    private let builder: MainWordListBuilder
+    private let newWordBuilder: NewWordBuilder
+    private let searchBuilder: SearchBuilder
 
     init(navigationController: UINavigationController,
-         builder: MainWordListBuilder) {
+         newWordBuilder: NewWordBuilder,
+         searchBuilder: SearchBuilder) {
         self.navigationController = navigationController
-        self.builder = builder
+        self.newWordBuilder = newWordBuilder
+        self.searchBuilder = searchBuilder
     }
 
     func navigateToNewWord() {
-        let newWordBuilder = builder.createNewWordBuilder()
         let newWordMVVM = newWordBuilder.build()
         guard let newWordViewController = newWordMVVM.viewController else { return }
 
@@ -29,7 +31,7 @@ final class MainWordListRouterImpl: MainWordListRouter {
     }
 
     func navigateToSearch() {
-        let mvvm = builder.buildSearchWordMVVM()
+        let mvvm = searchBuilder.build()
         guard let searchWordVC = mvvm.viewController else { return }
 
         navigationController.pushViewController(searchWordVC, animated: true)

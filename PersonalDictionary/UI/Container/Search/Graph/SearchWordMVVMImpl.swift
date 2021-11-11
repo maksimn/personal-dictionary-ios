@@ -24,7 +24,8 @@ final class SearchWordMVVMImpl: WordListMVVMImpl {
         translationText: NSLocalizedString("translation", comment: "")
     )
 
-    init(globalSettings: PDGlobalSettings, wordListRepository: WordListRepository,
+    init(globalSettings: PDGlobalSettings,
+         wordListRepository: WordListRepository,
          translationService: TranslationService,
          notificationCenter: NotificationCenter) {
         super.init()

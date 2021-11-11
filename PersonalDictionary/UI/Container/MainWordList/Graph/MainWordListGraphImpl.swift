@@ -25,11 +25,13 @@ final class MainWordListGraphImpl: MainWordListGraph {
     init(wordListBuilder: WordListBuilder,
          wordListFetcher: WordListFetcher,
          navigationController: UINavigationController,
-         mainWordListBuilder: MainWordListBuilder) {
+         newWordBuilder: NewWordBuilder,
+         searchBuilder: SearchBuilder) {
         self.navigationController = navigationController
         let visibleItemMaxCount = Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
         let router = MainWordListRouterImpl(navigationController: navigationController,
-                                            builder: mainWordListBuilder)
+                                            newWordBuilder: newWordBuilder,
+                                            searchBuilder: searchBuilder)
 
         container = MainWordListContainer(viewParams: mainWordListViewParams,
                                           wordListMVVM: wordListBuilder.build(),
