@@ -16,6 +16,7 @@
 		591EDCB62713AA7A00008074 /* MainWordListRouterImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591EDCB52713AA7A00008074 /* MainWordListRouterImpl.swift */; };
 		59250514273DD0EA00A8621A /* SearchGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59250513273DD0EA00A8621A /* SearchGraph.swift */; };
 		59250519273DD10700A8621A /* SearchGraphImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59250518273DD10700A8621A /* SearchGraphImpl.swift */; };
+		5925051F273DDB6600A8621A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5925051E273DDB6600A8621A /* SearchViewController.swift */; };
 		5926504B270BA17600029BAA /* PersonalDictionaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5926504A270BA17600029BAA /* PersonalDictionaryUITests.swift */; };
 		594ACC19270BA96100D9AB8F /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594ACC18270BA96100D9AB8F /* GeneratedMocks.swift */; };
 		594ACC23270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594ACC22270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift */; };
@@ -139,6 +140,7 @@
 		591EDCB52713AA7A00008074 /* MainWordListRouterImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWordListRouterImpl.swift; sourceTree = "<group>"; };
 		59250513273DD0EA00A8621A /* SearchGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGraph.swift; sourceTree = "<group>"; };
 		59250518273DD10700A8621A /* SearchGraphImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGraphImpl.swift; sourceTree = "<group>"; };
+		5925051E273DDB6600A8621A /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		5926504A270BA17600029BAA /* PersonalDictionaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDictionaryUITests.swift; sourceTree = "<group>"; };
 		594ACC18270BA96100D9AB8F /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
 		594ACC22270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordMVVMImplTests.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 			children = (
 				59A98D6E273CF01600AE4DD5 /* Builder */,
 				59169EF22713D2FA00DB37A1 /* Graph */,
+				5925051D273DDB3500A8621A /* ViewController */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -295,6 +298,14 @@
 				59250518273DD10700A8621A /* SearchGraphImpl.swift */,
 			);
 			path = Graph;
+			sourceTree = "<group>";
+		};
+		5925051D273DDB3500A8621A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5925051E273DDB6600A8621A /* SearchViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		594ACC20270BAA6100D9AB8F /* NewWord */ = {
@@ -1200,6 +1211,7 @@
 				5953CAEF270615AE006537B9 /* WordListViewController+Layout.swift in Sources */,
 				596D04932738137100A33EA5 /* MainWordListViewController.swift in Sources */,
 				597C2C0E273A84BA009780D5 /* LangPickerModel.swift in Sources */,
+				5925051F273DDB6600A8621A /* SearchViewController.swift in Sources */,
 				59A94319270DED370076F08B /* WordListRepository.swift in Sources */,
 				59A942E6270C52BF0076F08B /* WordListView.swift in Sources */,
 				5953CB3927062EF2006537B9 /* LangRepository.swift in Sources */,
