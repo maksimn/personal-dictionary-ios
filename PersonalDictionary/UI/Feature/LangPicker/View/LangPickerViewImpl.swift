@@ -13,10 +13,13 @@ final class LangPickerViewImpl: UIView, LangPickerView {
 
     private var langPickerPopup: LangPickerPopup?
 
-    private let params: LangPickerViewParams
+    private let popupParams: LangPickerPopupParams
 
     init(params: LangPickerViewParams) {
-        self.params = params
+        self.popupParams = LangPickerPopupParams(
+            staticContent: LangPickerPopupStaticContent(selectButtonTitle: params.staticContent.selectButtonTitle),
+            styles: LangPickerPopupStyles(backgroundColor: params.styles.backgroundColor)
+        )
         super.init(frame: .zero)
     }
 
@@ -25,13 +28,12 @@ final class LangPickerViewImpl: UIView, LangPickerView {
     }
 
     func set(langSelectorData: LangSelectorData) {
-        langPickerPopup = LangPickerPopup(initialLang: langSelectorData.selectedLang,
+        langPickerPopup = LangPickerPopup(params: popupParams,
+                                          initialLang: langSelectorData.selectedLang,
                                           langPickerController: LangPickerController(langs: langSelectorData.allLangs),
                                           onSelectLang: { [weak self] lang in
                                             self?.onSelectLang(lang)
-                                          },
-                                          selectButtonTitle: params.staticContent.selectButtonTitle,
-                                          backgroundColor: params.styles.backgroundColor)
+                                          })
         addSubview(langPickerPopup ?? UIView())
         langPickerPopup?.snp.makeConstraints { make -> Void in
             make.edges.equalTo(self)

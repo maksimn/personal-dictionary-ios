@@ -107,6 +107,7 @@
 		59A98D70273CF04700AE4DD5 /* SearchBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A98D6F273CF04700AE4DD5 /* SearchBuilder.swift */; };
 		59A98D75273CF08D00AE4DD5 /* SearchBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A98D74273CF08D00AE4DD5 /* SearchBuilderImpl.swift */; };
 		59C163BA273D308F002B1FCB /* NavToSearchViewParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163B9273D308F002B1FCB /* NavToSearchViewParams.swift */; };
+		59C163C2273D36A7002B1FCB /* LangPickerPopupParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163C1273D36A7002B1FCB /* LangPickerPopupParams.swift */; };
 		59E0378F271216F700197F19 /* PonsTranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0378E271216F700197F19 /* PonsTranslationService.swift */; };
 		59E037942712226800197F19 /* PonsResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E037932712226800197F19 /* PonsResponseData.swift */; };
 		B6D3C3649E5902C8C6F61BC1 /* Pods_PersonalDictionaryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */; };
@@ -241,6 +242,7 @@
 		59A98D6F273CF04700AE4DD5 /* SearchBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBuilder.swift; sourceTree = "<group>"; };
 		59A98D74273CF08D00AE4DD5 /* SearchBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBuilderImpl.swift; sourceTree = "<group>"; };
 		59C163B9273D308F002B1FCB /* NavToSearchViewParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavToSearchViewParams.swift; sourceTree = "<group>"; };
+		59C163C1273D36A7002B1FCB /* LangPickerPopupParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerPopupParams.swift; sourceTree = "<group>"; };
 		59E0378E271216F700197F19 /* PonsTranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PonsTranslationService.swift; sourceTree = "<group>"; };
 		59E037932712226800197F19 /* PonsResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PonsResponseData.swift; sourceTree = "<group>"; };
 		92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PersonalDictionaryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -448,6 +450,7 @@
 				5953CB4B27063D41006537B9 /* LangPickerController.swift */,
 				590F78F22709317800BCBD2C /* LangPickerPopup.swift */,
 				590F78FA2709D1A000BCBD2C /* LangPickerPopup+Layout.swift */,
+				59C163C1273D36A7002B1FCB /* LangPickerPopupParams.swift */,
 			);
 			path = LangPicker;
 			sourceTree = "<group>";
@@ -1257,6 +1260,7 @@
 				596D720527051D4E00872D6C /* SceneDelegate.swift in Sources */,
 				59A98D75273CF08D00AE4DD5 /* SearchBuilderImpl.swift in Sources */,
 				590F78FB2709D1A000BCBD2C /* LangPickerPopup+Layout.swift in Sources */,
+				59C163C2273D36A7002B1FCB /* LangPickerPopupParams.swift in Sources */,
 				599EFD392716A704002307F0 /* WordListModelImpl+Events.swift in Sources */,
 				59169F192713D40A00DB37A1 /* SearchWordViewModelImpl.swift in Sources */,
 				5953CB3E27062F02006537B9 /* LangRepositoryImpl.swift in Sources */,
