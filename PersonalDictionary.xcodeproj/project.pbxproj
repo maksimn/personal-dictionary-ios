@@ -107,8 +107,6 @@
 		59A98D75273CF08D00AE4DD5 /* SearchBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A98D74273CF08D00AE4DD5 /* SearchBuilderImpl.swift */; };
 		59C163BA273D308F002B1FCB /* NavToSearchViewParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163B9273D308F002B1FCB /* NavToSearchViewParams.swift */; };
 		59C163C2273D36A7002B1FCB /* LangPickerPopupParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163C1273D36A7002B1FCB /* LangPickerPopupParams.swift */; };
-		59C163D0273D4416002B1FCB /* ConfigGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163CF273D4416002B1FCB /* ConfigGraph.swift */; };
-		59C163D5273D4428002B1FCB /* ConfigGraphImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163D4273D4428002B1FCB /* ConfigGraphImpl.swift */; };
 		59C163DC273D4444002B1FCB /* ConfigBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163DB273D4444002B1FCB /* ConfigBuilder.swift */; };
 		59C163E4273D4452002B1FCB /* ConfigBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163E3273D4452002B1FCB /* ConfigBuilderImpl.swift */; };
 		59E0378F271216F700197F19 /* PonsTranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0378E271216F700197F19 /* PonsTranslationService.swift */; };
@@ -245,8 +243,6 @@
 		59A98D74273CF08D00AE4DD5 /* SearchBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBuilderImpl.swift; sourceTree = "<group>"; };
 		59C163B9273D308F002B1FCB /* NavToSearchViewParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavToSearchViewParams.swift; sourceTree = "<group>"; };
 		59C163C1273D36A7002B1FCB /* LangPickerPopupParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerPopupParams.swift; sourceTree = "<group>"; };
-		59C163CF273D4416002B1FCB /* ConfigGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigGraph.swift; sourceTree = "<group>"; };
-		59C163D4273D4428002B1FCB /* ConfigGraphImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigGraphImpl.swift; sourceTree = "<group>"; };
 		59C163DB273D4444002B1FCB /* ConfigBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigBuilder.swift; sourceTree = "<group>"; };
 		59C163E3273D4452002B1FCB /* ConfigBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigBuilderImpl.swift; sourceTree = "<group>"; };
 		59E0378E271216F700197F19 /* PonsTranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PonsTranslationService.swift; sourceTree = "<group>"; };
@@ -897,19 +893,9 @@
 			isa = PBXGroup;
 			children = (
 				59C163D9273D442E002B1FCB /* Builder */,
-				59C163CE273D43FA002B1FCB /* Graph */,
 				597709EA273D4CB8003F5B24 /* Domain */,
 			);
 			path = Config;
-			sourceTree = "<group>";
-		};
-		59C163CE273D43FA002B1FCB /* Graph */ = {
-			isa = PBXGroup;
-			children = (
-				59C163CF273D4416002B1FCB /* ConfigGraph.swift */,
-				59C163D4273D4428002B1FCB /* ConfigGraphImpl.swift */,
-			);
-			path = Graph;
 			sourceTree = "<group>";
 		};
 		59C163D9273D442E002B1FCB /* Builder */ = {
@@ -1283,7 +1269,6 @@
 				597C2C09273A8404009780D5 /* LangPickerMVVMImpl.swift in Sources */,
 				597C2BDB2739181D009780D5 /* NavToSearchView.swift in Sources */,
 				597C2C5B273BDA0D009780D5 /* LangPickerBuilderImpl.swift in Sources */,
-				59C163D0273D4416002B1FCB /* ConfigGraph.swift in Sources */,
 				59A98D70273CF04700AE4DD5 /* SearchBuilder.swift in Sources */,
 				5976024A271115650077B5F7 /* JsonCoder.swift in Sources */,
 				597C2BF42739F21E009780D5 /* MainWordListViewParams.swift in Sources */,
@@ -1301,7 +1286,6 @@
 				5953CB0927062712006537B9 /* NewWordMVVM.swift in Sources */,
 				59A94309270CF35B0076F08B /* WordItemCell.swift in Sources */,
 				59169F052713D39000DB37A1 /* SearchWordModelImpl.swift in Sources */,
-				59C163D5273D4428002B1FCB /* ConfigGraphImpl.swift in Sources */,
 				596D04782737D57700A33EA5 /* NewWordViewParams.swift in Sources */,
 				5953CB2D270628D5006537B9 /* NewWordViewModelImpl.swift in Sources */,
 				591EDC8E2713716B00008074 /* AppConfigs.swift in Sources */,

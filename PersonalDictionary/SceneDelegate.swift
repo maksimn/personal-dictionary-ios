@@ -16,9 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let configBuilder = ConfigBuilderImpl()
-        let configGraph = configBuilder.build()
-
-        let mainWordListBuilder = configGraph.createMainWordListBuilder()
+        let mainWordListBuilder = configBuilder.createMainWordListBuilder()
         let mainWordListGraph = mainWordListBuilder.build()
         guard let navigationController = mainWordListGraph.navigationController else { return }
 

@@ -7,5 +7,5 @@
 
 protocol ConfigBuilder {
 
-    func build() -> ConfigGraph
+    func createMainWordListBuilder() -> MainWordListBuilder
 }
