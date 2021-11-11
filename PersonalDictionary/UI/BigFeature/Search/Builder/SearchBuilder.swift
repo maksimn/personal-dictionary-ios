@@ -7,5 +7,5 @@
 
 protocol SearchBuilder {
 
-    func build() -> WordListMVVM
+    func build() -> SearchGraph
 }
