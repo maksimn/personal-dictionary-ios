@@ -9,16 +9,21 @@ import Foundation
 
 class UrlSessionCoreService: CoreService {
 
+    private let sessionConfiguration: URLSessionConfiguration
+
     private var urlString: String?
     private var httpMethod: String?
     private var headers: [String: String]?
 
     private lazy var session: URLSession = {
-        let sessionConfiguration = URLSessionConfiguration.default
         sessionConfiguration.timeoutIntervalForResource = 30.0
         let session = URLSession(configuration: sessionConfiguration)
         return session
     }()
+
+    init(sessionConfiguration: URLSessionConfiguration) {
+        self.sessionConfiguration = sessionConfiguration
+    }
 
     func set(urlString: String, httpMethod: String, headers: [String: String]?) {
         self.urlString = urlString

@@ -13,8 +13,6 @@ protocol NewWordViewModel: AnyObject {
 
     var targetLang: Lang { get set }
 
-    func fetchDataFromModel()
-
     func dismissLangPicker()
 
     func sendNewWordEvent()

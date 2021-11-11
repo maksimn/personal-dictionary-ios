@@ -35,10 +35,6 @@ class NewWordViewModelImpl: NewWordViewModel {
         }
     }
 
-    func fetchDataFromModel() {
-        model.fetchData()
-    }
-
     func sendNewWordEvent() {
         model.sendNewWord()
     }

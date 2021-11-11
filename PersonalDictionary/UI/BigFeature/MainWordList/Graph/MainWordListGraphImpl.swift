@@ -9,19 +9,12 @@ import UIKit
 
 final class MainWordListGraphImpl: MainWordListGraph {
 
-    private let container: MainWordListViewController
-
-    let mainWordListViewParams = MainWordListViewParams(
-        staticContent: MainWordListStaticContent(navToNewWordImage: UIImage(named: "icon-plus")!),
-        styles: MainWordListStyles(
-            navToNewWordButtonSize: CGSize(width: 44, height: 44),
-            navToNewWordButtonBottomOffset: -26
-        )
-    )
+    private let controller: MainWordListViewController
 
     let navigationController: UINavigationController?
 
-    init(wordListBuilder: WordListBuilder,
+    init(viewParams: MainWordListViewParams,
+         wordListBuilder: WordListBuilder,
          wordListFetcher: WordListFetcher,
          navigationController: UINavigationController,
          newWordBuilder: NewWordBuilder,
@@ -32,13 +25,13 @@ final class MainWordListGraphImpl: MainWordListGraph {
                                             newWordBuilder: newWordBuilder,
                                             searchBuilder: searchBuilder)
 
-        container = MainWordListViewController(viewParams: mainWordListViewParams,
-                                          wordListMVVM: wordListBuilder.build(),
-                                          wordListFetcher: wordListFetcher,
-                                          router: router,
-                                          visibleItemMaxCount: visibleItemMaxCount)
+        controller = MainWordListViewController(viewParams: viewParams,
+                                                wordListMVVM: wordListBuilder.build(),
+                                                wordListFetcher: wordListFetcher,
+                                                router: router,
+                                                visibleItemMaxCount: visibleItemMaxCount)
 
         navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
-        navigationController.setViewControllers([container], animated: false)
+        navigationController.setViewControllers([controller], animated: false)
     }
 }

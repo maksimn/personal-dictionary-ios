@@ -21,6 +21,7 @@ final class NewWordMVVMImpl: NewWordMVVM {
 
         view.viewModel = viewModel
         model.viewModel = viewModel
+        model.bindInitially()
     }
 
     var viewController: UIViewController? {

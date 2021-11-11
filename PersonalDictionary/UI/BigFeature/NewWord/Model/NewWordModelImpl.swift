@@ -34,7 +34,7 @@ class NewWordModelImpl: NewWordModel {
         notificationCenter.addObserver(self, selector: #selector(onLangSelected), name: .langSelected, object: nil)
     }
 
-    func fetchData() {
+    func bindInitially() {
         sourceLang = langRepository.sourceLang
         targetLang = langRepository.targetLang
     }

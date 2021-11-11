@@ -38,7 +38,6 @@ class NewWordViewController: UIViewController, NewWordView {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
-        viewModel?.fetchDataFromModel()
     }
 
     func set(text: String) {

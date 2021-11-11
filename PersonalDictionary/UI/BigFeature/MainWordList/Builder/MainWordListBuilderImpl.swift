@@ -14,12 +14,21 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
     private let appConfigs: AppConfigs
     private let navigationController = UINavigationController()
 
+    private let mainWordListViewParams = MainWordListViewParams(
+        staticContent: MainWordListStaticContent(navToNewWordImage: UIImage(named: "icon-plus")!),
+        styles: MainWordListStyles(
+            navToNewWordButtonSize: CGSize(width: 44, height: 44),
+            navToNewWordButtonBottomOffset: -26
+        )
+    )
+
     init(appConfigs: AppConfigs) {
         self.appConfigs = appConfigs
     }
 
     func build() -> MainWordListGraph {
-        MainWordListGraphImpl(wordListBuilder: createWordListBuilder(),
+        MainWordListGraphImpl(viewParams: mainWordListViewParams,
+                              wordListBuilder: createWordListBuilder(),
                               wordListFetcher: buildWordListRepository(),
                               navigationController: navigationController,
                               newWordBuilder: createNewWordBuilder(),
@@ -50,9 +59,10 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
         let ponsApiData = PonsApiData(url: "https://api.pons.com/v1/dictionary",
                                       secretHeaderKey: "X-Secret",
                                       secret: appConfigs.ponsApiSecret)
+        let urlSessionCoreService = UrlSessionCoreService(sessionConfiguration: URLSessionConfiguration.default)
 
         return PonsTranslationService(apiData: ponsApiData,
-                                      coreService: UrlSessionCoreService(),
+                                      coreService: urlSessionCoreService,
                                       jsonCoder: JSONCoderImpl(),
                                       logger: buildLogger())
     }
