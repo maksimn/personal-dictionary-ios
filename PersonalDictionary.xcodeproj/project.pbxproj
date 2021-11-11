@@ -443,7 +443,7 @@
 		5967E785270FADDD00DCD8E4 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				596D04912738134300A33EA5 /* Container */,
+				596D04912738134300A33EA5 /* BigFeature */,
 				596D049D2738138800A33EA5 /* Feature */,
 			);
 			path = UI;
@@ -476,20 +476,20 @@
 			path = DataClass;
 			sourceTree = "<group>";
 		};
-		596D04912738134300A33EA5 /* Container */ = {
+		596D04912738134300A33EA5 /* BigFeature */ = {
 			isa = PBXGroup;
 			children = (
 				596D049E273814B200A33EA5 /* MainWordList */,
+				5953CB03270626AD006537B9 /* NewWord */,
 				59169EF02713D2D600DB37A1 /* Search */,
 			);
-			path = Container;
+			path = BigFeature;
 			sourceTree = "<group>";
 		};
 		596D049D2738138800A33EA5 /* Feature */ = {
 			isa = PBXGroup;
 			children = (
 				597C2BFE273A7C51009780D5 /* LangPicker */,
-				5953CB03270626AD006537B9 /* NewWord */,
 				598B79EF270C4E68007ED9FD /* WordList */,
 			);
 			path = Feature;
