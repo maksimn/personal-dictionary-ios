@@ -287,16 +287,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5910A44E270EA49000631446 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				5953CB4A27063D31006537B9 /* LangPicker */,
-				59A94302270CF2C00076F08B /* WordTableView */,
-				597C2BDA2739181D009780D5 /* NavToSearchView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		59169EF02713D2D600DB37A1 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -369,6 +359,17 @@
 				594ACC31270BB44500D9AB8F /* NewWordModelImplTests.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		594C9D23273D1B6C007D5E16 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				5953CB4A27063D31006537B9 /* LangPicker */,
+				59A94302270CF2C00076F08B /* WordTableView */,
+				597C2BDA2739181D009780D5 /* NavToSearchView.swift */,
+				596D04602737C49B00A33EA5 /* ViewParams.swift */,
+			);
+			path = DesignSystem;
 			sourceTree = "<group>";
 		};
 		5953CB03270626AD006537B9 /* NewWord */ = {
@@ -455,11 +456,9 @@
 				596B95CA2706AC27004CE7E6 /* DataClass */,
 				597602482711154E0077B5F7 /* JsonCoder */,
 				59A94336270E4C5A0076F08B /* Logger */,
-				5910A44E270EA49000631446 /* Views */,
 				597C2C41273BB99A009780D5 /* InitiallyBindable.swift */,
 				59A942FD270CE83A0076F08B /* Tagged.swift */,
 				597C2BC927382717009780D5 /* UIViewController+Core.swift */,
-				596D04602737C49B00A33EA5 /* ViewParams.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -560,6 +559,7 @@
 			isa = PBXGroup;
 			children = (
 				596B95C92706AC1D004CE7E6 /* Core */,
+				594C9D23273D1B6C007D5E16 /* DesignSystem */,
 				5953CB3727062EAB006537B9 /* Repository */,
 				59760228271110390077B5F7 /* Service */,
 				5967E785270FADDD00DCD8E4 /* UI */,
