@@ -7,16 +7,11 @@
 
 import UIKit
 
-class WordListMVVMImpl: WordListMVVM {
+final class WordListMVVMImpl: WordListMVVM {
 
     private var view: WordListViewController?
 
     weak var model: WordListModel?
-
-    init() {
-        view = nil
-        model = nil
-    }
 
     init(cudOperations: WordItemCUDOperations,
          translationService: TranslationService,

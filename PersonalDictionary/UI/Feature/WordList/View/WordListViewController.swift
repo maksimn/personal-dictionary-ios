@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WordListViewController: UIViewController, WordListView {
+final class WordListViewController: UIViewController, WordListView {
 
     var viewModel: WordListViewModel?
 
