@@ -10,6 +10,7 @@ import UIKit
 extension MainWordListViewController {
 
     func initViews() {
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.titleView = navToSearchView
         addWordListChildController()
         view.addSubview(navToNewWordButton)
