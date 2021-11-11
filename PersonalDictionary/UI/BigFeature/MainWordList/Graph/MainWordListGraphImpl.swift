@@ -14,7 +14,6 @@ final class MainWordListGraphImpl: MainWordListGraph {
     let mainWordListViewParams = MainWordListViewParams(
         staticContent: MainWordListStaticContent(navToNewWordImage: UIImage(named: "icon-plus")!),
         styles: MainWordListStyles(
-            navToSearchViewSize: CGSize(width: UIScreen.main.bounds.width - 32, height: 44),
             navToNewWordButtonSize: CGSize(width: 44, height: 44),
             navToNewWordButtonBottomOffset: -26
         )
