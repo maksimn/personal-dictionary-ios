@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainWordListContainer: UIViewController {
+class MainWordListViewController: UIViewController {
 
     let params: MainWordListViewParams
 

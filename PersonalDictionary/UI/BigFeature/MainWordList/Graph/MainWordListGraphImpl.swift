@@ -9,7 +9,7 @@ import UIKit
 
 final class MainWordListGraphImpl: MainWordListGraph {
 
-    private let container: MainWordListContainer
+    private let container: MainWordListViewController
 
     let mainWordListViewParams = MainWordListViewParams(
         staticContent: MainWordListStaticContent(navToNewWordImage: UIImage(named: "icon-plus")!),
@@ -33,7 +33,7 @@ final class MainWordListGraphImpl: MainWordListGraph {
                                             newWordBuilder: newWordBuilder,
                                             searchBuilder: searchBuilder)
 
-        container = MainWordListContainer(viewParams: mainWordListViewParams,
+        container = MainWordListViewController(viewParams: mainWordListViewParams,
                                           wordListMVVM: wordListBuilder.build(),
                                           wordListFetcher: wordListFetcher,
                                           router: router,

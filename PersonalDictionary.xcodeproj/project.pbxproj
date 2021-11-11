@@ -48,7 +48,7 @@
 		596D046E2737CDC200A33EA5 /* WordListViewParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D046D2737CDC200A33EA5 /* WordListViewParams.swift */; };
 		596D04732737D45D00A33EA5 /* SearchWordViewParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D04722737D45D00A33EA5 /* SearchWordViewParams.swift */; };
 		596D04782737D57700A33EA5 /* NewWordViewParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D04772737D57700A33EA5 /* NewWordViewParams.swift */; };
-		596D04932738137100A33EA5 /* MainWordListContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D04922738137100A33EA5 /* MainWordListContainer.swift */; };
+		596D04932738137100A33EA5 /* MainWordListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D04922738137100A33EA5 /* MainWordListViewController.swift */; };
 		596D4F74273C252400B0DD01 /* MainWordListBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D4F73273C252400B0DD01 /* MainWordListBuilder.swift */; };
 		596D4F7A273C256600B0DD01 /* MainWordListGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D4F79273C256600B0DD01 /* MainWordListGraph.swift */; };
 		596D4F7F273C259F00B0DD01 /* MainWordListBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D4F7E273C259F00B0DD01 /* MainWordListBuilderImpl.swift */; };
@@ -69,7 +69,7 @@
 		59760252271115770077B5F7 /* JsonCoderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59760251271115770077B5F7 /* JsonCoderImpl.swift */; };
 		597C2BCA27382717009780D5 /* UIViewController+Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2BC927382717009780D5 /* UIViewController+Core.swift */; };
 		597C2BDB2739181D009780D5 /* NavToSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2BDA2739181D009780D5 /* NavToSearchView.swift */; };
-		597C2BE927391C22009780D5 /* MainWordListContainer+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2BE827391C22009780D5 /* MainWordListContainer+Layout.swift */; };
+		597C2BE927391C22009780D5 /* MainWordListViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2BE827391C22009780D5 /* MainWordListViewController+Layout.swift */; };
 		597C2BF42739F21E009780D5 /* MainWordListViewParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2BF32739F21E009780D5 /* MainWordListViewParams.swift */; };
 		597C2C04273A83C8009780D5 /* LangPickerMVVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C03273A83C8009780D5 /* LangPickerMVVM.swift */; };
 		597C2C09273A8404009780D5 /* LangPickerMVVMImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C08273A8404009780D5 /* LangPickerMVVMImpl.swift */; };
@@ -175,7 +175,7 @@
 		596D046D2737CDC200A33EA5 /* WordListViewParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListViewParams.swift; sourceTree = "<group>"; };
 		596D04722737D45D00A33EA5 /* SearchWordViewParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWordViewParams.swift; sourceTree = "<group>"; };
 		596D04772737D57700A33EA5 /* NewWordViewParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordViewParams.swift; sourceTree = "<group>"; };
-		596D04922738137100A33EA5 /* MainWordListContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWordListContainer.swift; sourceTree = "<group>"; };
+		596D04922738137100A33EA5 /* MainWordListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWordListViewController.swift; sourceTree = "<group>"; };
 		596D4F73273C252400B0DD01 /* MainWordListBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWordListBuilder.swift; sourceTree = "<group>"; };
 		596D4F79273C256600B0DD01 /* MainWordListGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWordListGraph.swift; sourceTree = "<group>"; };
 		596D4F7E273C259F00B0DD01 /* MainWordListBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWordListBuilderImpl.swift; sourceTree = "<group>"; };
@@ -202,7 +202,7 @@
 		59760251271115770077B5F7 /* JsonCoderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonCoderImpl.swift; sourceTree = "<group>"; };
 		597C2BC927382717009780D5 /* UIViewController+Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Core.swift"; sourceTree = "<group>"; };
 		597C2BDA2739181D009780D5 /* NavToSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavToSearchView.swift; sourceTree = "<group>"; };
-		597C2BE827391C22009780D5 /* MainWordListContainer+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainWordListContainer+Layout.swift"; sourceTree = "<group>"; };
+		597C2BE827391C22009780D5 /* MainWordListViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainWordListViewController+Layout.swift"; sourceTree = "<group>"; };
 		597C2BF32739F21E009780D5 /* MainWordListViewParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWordListViewParams.swift; sourceTree = "<group>"; };
 		597C2C03273A83C8009780D5 /* LangPickerMVVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerMVVM.swift; sourceTree = "<group>"; };
 		597C2C08273A8404009780D5 /* LangPickerMVVMImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerMVVMImpl.swift; sourceTree = "<group>"; };
@@ -527,8 +527,8 @@
 		596D4F88273C264000B0DD01 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				596D04922738137100A33EA5 /* MainWordListContainer.swift */,
-				597C2BE827391C22009780D5 /* MainWordListContainer+Layout.swift */,
+				596D04922738137100A33EA5 /* MainWordListViewController.swift */,
+				597C2BE827391C22009780D5 /* MainWordListViewController+Layout.swift */,
 				597C2BF32739F21E009780D5 /* MainWordListViewParams.swift */,
 			);
 			path = ViewController;
@@ -1192,7 +1192,7 @@
 				597C2C22273A856C009780D5 /* LangPickerViewModel.swift in Sources */,
 				59A942F9270CE6C80076F08B /* WordItem.swift in Sources */,
 				5953CAEF270615AE006537B9 /* WordListViewController+Layout.swift in Sources */,
-				596D04932738137100A33EA5 /* MainWordListContainer.swift in Sources */,
+				596D04932738137100A33EA5 /* MainWordListViewController.swift in Sources */,
 				597C2C0E273A84BA009780D5 /* LangPickerModel.swift in Sources */,
 				59A94319270DED370076F08B /* WordListRepository.swift in Sources */,
 				59A942E6270C52BF0076F08B /* WordListView.swift in Sources */,
@@ -1250,7 +1250,7 @@
 				5953CB3E27062F02006537B9 /* LangRepositoryImpl.swift in Sources */,
 				5953CB0E2706273B006537B9 /* NewWordMVVMImpl.swift in Sources */,
 				5953CB1D270627BF006537B9 /* NewWordView.swift in Sources */,
-				597C2BE927391C22009780D5 /* MainWordListContainer+Layout.swift in Sources */,
+				597C2BE927391C22009780D5 /* MainWordListViewController+Layout.swift in Sources */,
 				59760230271112D90077B5F7 /* UrlSessionCoreService.swift in Sources */,
 				59A942DC270C504E0076F08B /* WordListViewModel.swift in Sources */,
 				59169F0F2713D3D200DB37A1 /* SearchWordViewController.swift in Sources */,
