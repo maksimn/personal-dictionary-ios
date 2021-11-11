@@ -24,7 +24,7 @@ final class SearchWordMVVMImpl: WordListMVVMImpl {
         translationText: NSLocalizedString("translation", comment: "")
     )
 
-    init(globalViewSettings: GlobalViewSettings,
+    init(appViewConfigs: AppViewConfigs,
          wordListRepository: WordListRepository,
          translationService: TranslationService,
          notificationCenter: NotificationCenter) {
@@ -32,7 +32,7 @@ final class SearchWordMVVMImpl: WordListMVVMImpl {
         viewOne = SearchWordViewController(params: SearchWordViewParams(
                                             staticContent: searchStaticContent,
                                             styles: WordListViewStyles(
-                                                backgroundColor: globalViewSettings.appBackgroundColor,
+                                                backgroundColor: appViewConfigs.appBackgroundColor,
                                                 deleteAction: DeleteActionStyles(
                                                    backgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
                                                 )

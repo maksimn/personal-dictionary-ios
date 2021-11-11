@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct GlobalSettings {
+struct AppConfigs {
 
     let isLoggingEnabled: Bool
 
@@ -15,10 +15,10 @@ struct GlobalSettings {
 
     let ponsApiSecret: String
 
-    let viewSettings: GlobalViewSettings
+    let appViewConfigs: AppViewConfigs
 }
 
-struct GlobalViewSettings {
+struct AppViewConfigs {
 
     let appBackgroundColor: UIColor
 }
