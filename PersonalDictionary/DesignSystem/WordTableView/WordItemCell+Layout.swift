@@ -68,12 +68,4 @@ extension WordItemCell {
         targetLangLabel.frame = CGRect(origin: CGPoint(x: xMax - shortLangNameWidth, y: 28.5),
                                        size: CGSize(width: shortLangNameWidth, height: 24))
     }
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        wordlabel.text = nil
-        translationLabel.text = nil
-        sourceLangLabel.text = nil
-        targetLangLabel.text = nil
-    }
 }

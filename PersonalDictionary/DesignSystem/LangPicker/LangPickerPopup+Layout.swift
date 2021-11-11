@@ -26,7 +26,7 @@ extension LangPickerPopup {
     }
 
     private func initSelectButton() {
-        selectButton.setTitle(selectButtonTitle, for: .normal)
+        selectButton.setTitle(params.staticContent.selectButtonTitle, for: .normal)
         selectButton.setTitleColor(.white, for: .normal)
         selectButton.backgroundColor = .darkGray
         selectButton.layer.cornerRadius = 8

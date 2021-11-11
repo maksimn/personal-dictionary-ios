@@ -106,6 +106,8 @@
 		59A94339270E4DB90076F08B /* WordItemMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A94338270E4DB90076F08B /* WordItemMO.swift */; };
 		59A98D70273CF04700AE4DD5 /* SearchBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A98D6F273CF04700AE4DD5 /* SearchBuilder.swift */; };
 		59A98D75273CF08D00AE4DD5 /* SearchBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A98D74273CF08D00AE4DD5 /* SearchBuilderImpl.swift */; };
+		59C163BA273D308F002B1FCB /* NavToSearchViewParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163B9273D308F002B1FCB /* NavToSearchViewParams.swift */; };
+		59C163C2273D36A7002B1FCB /* LangPickerPopupParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163C1273D36A7002B1FCB /* LangPickerPopupParams.swift */; };
 		59E0378F271216F700197F19 /* PonsTranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0378E271216F700197F19 /* PonsTranslationService.swift */; };
 		59E037942712226800197F19 /* PonsResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E037932712226800197F19 /* PonsResponseData.swift */; };
 		B6D3C3649E5902C8C6F61BC1 /* Pods_PersonalDictionaryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */; };
@@ -239,6 +241,8 @@
 		59A94338270E4DB90076F08B /* WordItemMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItemMO.swift; sourceTree = "<group>"; };
 		59A98D6F273CF04700AE4DD5 /* SearchBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBuilder.swift; sourceTree = "<group>"; };
 		59A98D74273CF08D00AE4DD5 /* SearchBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBuilderImpl.swift; sourceTree = "<group>"; };
+		59C163B9273D308F002B1FCB /* NavToSearchViewParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavToSearchViewParams.swift; sourceTree = "<group>"; };
+		59C163C1273D36A7002B1FCB /* LangPickerPopupParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerPopupParams.swift; sourceTree = "<group>"; };
 		59E0378E271216F700197F19 /* PonsTranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PonsTranslationService.swift; sourceTree = "<group>"; };
 		59E037932712226800197F19 /* PonsResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PonsResponseData.swift; sourceTree = "<group>"; };
 		92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PersonalDictionaryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -285,16 +289,6 @@
 				92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		5910A44E270EA49000631446 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				5953CB4A27063D31006537B9 /* LangPicker */,
-				59A94302270CF2C00076F08B /* WordTableView */,
-				597C2BDA2739181D009780D5 /* NavToSearchView.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		59169EF02713D2D600DB37A1 /* Search */ = {
@@ -371,6 +365,26 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		594C9D23273D1B6C007D5E16 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				5953CB4A27063D31006537B9 /* LangPicker */,
+				594C9D27273D2198007D5E16 /* NavToSearchView */,
+				59A94302270CF2C00076F08B /* WordTableView */,
+				596D04602737C49B00A33EA5 /* ViewParams.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		594C9D27273D2198007D5E16 /* NavToSearchView */ = {
+			isa = PBXGroup;
+			children = (
+				597C2BDA2739181D009780D5 /* NavToSearchView.swift */,
+				59C163B9273D308F002B1FCB /* NavToSearchViewParams.swift */,
+			);
+			path = NavToSearchView;
+			sourceTree = "<group>";
+		};
 		5953CB03270626AD006537B9 /* NewWord */ = {
 			isa = PBXGroup;
 			children = (
@@ -436,6 +450,7 @@
 				5953CB4B27063D41006537B9 /* LangPickerController.swift */,
 				590F78F22709317800BCBD2C /* LangPickerPopup.swift */,
 				590F78FA2709D1A000BCBD2C /* LangPickerPopup+Layout.swift */,
+				59C163C1273D36A7002B1FCB /* LangPickerPopupParams.swift */,
 			);
 			path = LangPicker;
 			sourceTree = "<group>";
@@ -455,11 +470,9 @@
 				596B95CA2706AC27004CE7E6 /* DataClass */,
 				597602482711154E0077B5F7 /* JsonCoder */,
 				59A94336270E4C5A0076F08B /* Logger */,
-				5910A44E270EA49000631446 /* Views */,
 				597C2C41273BB99A009780D5 /* InitiallyBindable.swift */,
 				59A942FD270CE83A0076F08B /* Tagged.swift */,
 				597C2BC927382717009780D5 /* UIViewController+Core.swift */,
-				596D04602737C49B00A33EA5 /* ViewParams.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -560,6 +573,7 @@
 			isa = PBXGroup;
 			children = (
 				596B95C92706AC1D004CE7E6 /* Core */,
+				594C9D23273D1B6C007D5E16 /* DesignSystem */,
 				5953CB3727062EAB006537B9 /* Repository */,
 				59760228271110390077B5F7 /* Service */,
 				5967E785270FADDD00DCD8E4 /* UI */,
@@ -1185,6 +1199,7 @@
 				596D04442737C3DF00A33EA5 /* LangData.swift in Sources */,
 				59169F142713D3F900DB37A1 /* SearchWordViewModel.swift in Sources */,
 				59A94327270E47030076F08B /* StorageModel.xcdatamodeld in Sources */,
+				59C163BA273D308F002B1FCB /* NavToSearchViewParams.swift in Sources */,
 				596B95CC2706AC35004CE7E6 /* Lang.swift in Sources */,
 				59169F0A2713D3AD00DB37A1 /* SearchWordView.swift in Sources */,
 				59A942F1270CE6430076F08B /* Notifications.swift in Sources */,
@@ -1245,6 +1260,7 @@
 				596D720527051D4E00872D6C /* SceneDelegate.swift in Sources */,
 				59A98D75273CF08D00AE4DD5 /* SearchBuilderImpl.swift in Sources */,
 				590F78FB2709D1A000BCBD2C /* LangPickerPopup+Layout.swift in Sources */,
+				59C163C2273D36A7002B1FCB /* LangPickerPopupParams.swift in Sources */,
 				599EFD392716A704002307F0 /* WordListModelImpl+Events.swift in Sources */,
 				59169F192713D40A00DB37A1 /* SearchWordViewModelImpl.swift in Sources */,
 				5953CB3E27062F02006537B9 /* LangRepositoryImpl.swift in Sources */,

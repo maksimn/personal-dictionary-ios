@@ -12,7 +12,6 @@ struct MainWordListStaticContent {
 }
 
 struct MainWordListStyles {
-    let navToSearchViewSize: CGSize
     let navToNewWordButtonSize: CGSize
     let navToNewWordButtonBottomOffset: CGFloat
 }

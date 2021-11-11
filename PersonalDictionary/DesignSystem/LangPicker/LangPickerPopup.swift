@@ -13,22 +13,21 @@ final class LangPickerPopup: UIView {
 
     let selectButton = UIButton()
 
-    let selectButtonTitle: String
+    let params: LangPickerPopupParams
 
     let langPickerController: LangPickerController
 
     let onSelectLang: ((Lang) -> Void)?
 
-    init(initialLang: Lang,
+    init(params: LangPickerPopupParams,
+         initialLang: Lang,
          langPickerController: LangPickerController,
-         onSelectLang: ((Lang) -> Void)?,
-         selectButtonTitle: String,
-         backgroundColor: UIColor) {
-        self.selectButtonTitle = selectButtonTitle
+         onSelectLang: ((Lang) -> Void)?) {
+        self.params = params
         self.langPickerController = langPickerController
         self.onSelectLang = onSelectLang
         super.init(frame: .zero)
-        self.backgroundColor = backgroundColor
+        self.backgroundColor = params.styles.backgroundColor
         layer.cornerRadius = 16
         initViews()
         select(lang: initialLang)
