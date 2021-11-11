@@ -7,5 +7,5 @@
 
 protocol LangPickerBuilder {
 
-    func build(with initLang: Lang, isSourceLang: Bool) -> LangPickerMVVM
+    func build(with initLang: Lang, selectedLangType: SelectedLangType) -> LangPickerMVVM
 }

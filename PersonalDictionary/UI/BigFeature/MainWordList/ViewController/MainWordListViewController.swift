@@ -7,13 +7,13 @@
 
 import UIKit
 
-class MainWordListContainer: UIViewController {
+class MainWordListViewController: UIViewController {
 
     let params: MainWordListViewParams
 
     let wordListMVVM: WordListMVVM
     let wordListFetcher: WordListFetcher
-    let router: Router
+    let router: MainWordListRouter
     let visibleItemMaxCount: Int
 
     lazy var navToSearchView = {
@@ -30,7 +30,7 @@ class MainWordListContainer: UIViewController {
     init(viewParams: MainWordListViewParams,
          wordListMVVM: WordListMVVM,
          wordListFetcher: WordListFetcher,
-         router: Router,
+         router: MainWordListRouter,
          visibleItemMaxCount: Int) {
         self.params = viewParams
         self.wordListMVVM = wordListMVVM

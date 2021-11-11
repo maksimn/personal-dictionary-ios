@@ -7,13 +7,18 @@
 
 import UIKit
 
-struct PDGlobalSettings {
+struct GlobalSettings {
 
     let isLoggingEnabled: Bool
-
-    let appBackgroundColor: UIColor
 
     let langData: LangData
 
     let ponsApiSecret: String
+
+    let viewSettings: GlobalViewSettings
+}
+
+struct GlobalViewSettings {
+
+    let appBackgroundColor: UIColor
 }

@@ -7,19 +7,22 @@
 
 import UIKit
 
-final class RouterImpl: Router {
+final class MainWordListRouterImpl: MainWordListRouter {
 
     private let navigationController: UINavigationController
-    private let builder: WordListBuilder
+    private let newWordBuilder: NewWordBuilder
+    private let searchBuilder: SearchBuilder
 
     init(navigationController: UINavigationController,
-         builder: WordListBuilder) {
+         newWordBuilder: NewWordBuilder,
+         searchBuilder: SearchBuilder) {
         self.navigationController = navigationController
-        self.builder = builder
+        self.newWordBuilder = newWordBuilder
+        self.searchBuilder = searchBuilder
     }
 
     func navigateToNewWord() {
-        let newWordMVVM = builder.buildNewWordMVVM()
+        let newWordMVVM = newWordBuilder.build()
         guard let newWordViewController = newWordMVVM.viewController else { return }
 
         newWordViewController.modalPresentationStyle = .overFullScreen
@@ -28,7 +31,7 @@ final class RouterImpl: Router {
     }
 
     func navigateToSearch() {
-        let mvvm = builder.buildSearchWordMVVM()
+        let mvvm = searchBuilder.build()
         guard let searchWordVC = mvvm.viewController else { return }
 
         navigationController.pushViewController(searchWordVC, animated: true)

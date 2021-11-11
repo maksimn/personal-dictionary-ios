@@ -15,13 +15,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        let navigationController = UINavigationController()
-        let wordListBuilder = WordListBuilderImpl(globalSettings: pdGlobalSettings,
-                                                  navigationController: navigationController)
-        let mainWordListContainer = wordListBuilder.buildMainWordListContainer()
-
-        navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
-        navigationController.setViewControllers([mainWordListContainer], animated: false)
+        let mainWordListBuilder = MainWordListBuilderImpl(globalSettings: globalSettings)
+        let mainWordListGraph = mainWordListBuilder.build()
+        guard let navigationController = mainWordListGraph.navigationController else { return }
 
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = navigationController

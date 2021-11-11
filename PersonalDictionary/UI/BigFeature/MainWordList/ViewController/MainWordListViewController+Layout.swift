@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension MainWordListContainer {
+extension MainWordListViewController {
 
     func initViews() {
         navigationItem.titleView = navToSearchView

@@ -63,9 +63,9 @@ class NewWordViewController: UIViewController, NewWordView {
         dismiss(animated: true, completion: nil)
     }
 
-    private func showLangPickerView(isSourceLang: Bool) {
-        guard let lang = isSourceLang ? viewModel?.sourceLang : viewModel?.targetLang else { return }
-        let langPickerMVVM = langPickerBuilder.build(with: lang, isSourceLang: isSourceLang)
+    private func showLangPickerView(selectedLangType: SelectedLangType) {
+        guard let lang = selectedLangType == .source ? viewModel?.sourceLang : viewModel?.targetLang else { return }
+        let langPickerMVVM = langPickerBuilder.build(with: lang, selectedLangType: selectedLangType)
 
         langPickerView = langPickerMVVM.uiview
         view.addSubview(langPickerView ?? UIView())
@@ -80,12 +80,12 @@ extension NewWordViewController: UITextFieldDelegate {
 
     @objc
     func onSourceLangLabelTap() {
-        showLangPickerView(isSourceLang: true)
+        showLangPickerView(selectedLangType: .source)
     }
 
     @objc
     func onTargetLangLabelTap() {
-        showLangPickerView(isSourceLang: false)
+        showLangPickerView(selectedLangType: .target)
     }
 
     @objc
