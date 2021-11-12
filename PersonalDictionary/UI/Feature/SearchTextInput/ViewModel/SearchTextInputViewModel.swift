@@ -7,4 +7,7 @@
 
 protocol SearchTextInputViewModel: AnyObject {
 
+    var searchText: String { get set }
+
+    func updateModel(_ searchText: String)
 }

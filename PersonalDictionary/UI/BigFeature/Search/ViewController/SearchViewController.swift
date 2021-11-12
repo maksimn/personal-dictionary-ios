@@ -9,9 +9,12 @@ import UIKit
 
 final class SearchViewController: UIViewController {
 
+    private let searchTextInputMVVM: SearchTextInputMVVM
+
     init(_ searchTextInputBuilder: SearchTextInputBuilder) {
+        searchTextInputMVVM = searchTextInputBuilder.build()
         super.init(nibName: nil, bundle: nil)
-        navigationItem.titleView = searchTextInputBuilder.build().uiview
+        navigationItem.titleView = searchTextInputMVVM.uiview
     }
 
     required init?(coder: NSCoder) {

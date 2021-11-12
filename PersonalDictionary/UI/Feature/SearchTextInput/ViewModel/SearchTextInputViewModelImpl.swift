@@ -14,4 +14,14 @@ final class SearchTextInputViewModelImpl: SearchTextInputViewModel {
         self.model = model
         self.view = view
     }
+
+    var searchText: String = "" {
+        didSet {
+            view.set(searchText)
+        }
+    }
+
+    func updateModel(_ searchText: String) {
+        model.update(searchText)
+    }
 }

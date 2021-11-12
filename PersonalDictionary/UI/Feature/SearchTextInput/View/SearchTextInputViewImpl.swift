@@ -22,13 +22,19 @@ final class SearchTextInputViewImpl: NSObject, SearchTextInputView, UISearchBarD
         searchBar
     }
 
+    func set(_ searchText: String) {
+        searchBar.text = searchText
+    }
+
     // MARK: - UISearchBarDelegate
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if let searchText = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
-            print(searchText)
+        if let searchText = searchBar.text {
+            viewModel?.updateModel(searchText)
         }
     }
+
+    // MARK: - private
 
     private func initSearchBar() {
         let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 72, height: 44)

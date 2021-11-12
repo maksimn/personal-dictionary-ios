@@ -8,4 +8,6 @@
 protocol SearchTextInputModel {
 
     var viewModel: SearchTextInputViewModel? { get set }
+
+    func update(_ searchText: String)
 }

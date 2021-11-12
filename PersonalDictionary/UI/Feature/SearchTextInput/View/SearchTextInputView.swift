@@ -12,4 +12,6 @@ protocol SearchTextInputView: AnyObject {
     var viewModel: SearchTextInputViewModel? { get set }
 
     var uiview: UIView { get }
+
+    func set(_ searchText: String)
 }

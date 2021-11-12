@@ -8,4 +8,15 @@
 final class SearchTextInputModelImpl: SearchTextInputModel {
 
     var viewModel: SearchTextInputViewModel?
+
+    private var searchText: String = "" {
+        didSet {
+            viewModel?.searchText = searchText
+        }
+    }
+
+    func update(_ searchText: String) {
+        self.searchText = searchText
+        print("model update searchtext: \(searchText)")
+    }
 }
