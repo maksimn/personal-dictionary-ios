@@ -5,7 +5,7 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-class WordListViewModelImpl: WordListViewModel {
+final class WordListViewModelImpl: WordListViewModel {
 
     unowned let view: WordListView
     let model: WordListModel

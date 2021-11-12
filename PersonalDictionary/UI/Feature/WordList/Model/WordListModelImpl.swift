@@ -7,7 +7,7 @@
 
 import Foundation
 
-class WordListModelImpl: WordListModel {
+final class WordListModelImpl: WordListModel {
 
     weak var viewModel: WordListViewModel?
 

@@ -13,4 +13,6 @@ extension Notification.Name {
     static let removeWord = Notification.Name("removeWord")
 
     static let langSelected = Notification.Name("langSelected")
+
+    static let searchTextChanged = Notification.Name("searchTextChanged")
 }
