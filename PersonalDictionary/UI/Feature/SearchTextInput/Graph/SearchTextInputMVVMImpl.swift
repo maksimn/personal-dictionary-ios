@@ -11,8 +11,8 @@ final class SearchTextInputMVVMImpl: SearchTextInputMVVM {
 
     private let view: SearchTextInputViewImpl
 
-    init(notificationCenter: NotificationCenter) {
-        view = SearchTextInputViewImpl()
+    init(viewParams: SearchTextInputViewParams, notificationCenter: NotificationCenter) {
+        view = SearchTextInputViewImpl(params: viewParams)
         let model = SearchTextInputModelImpl(notificationCenter: notificationCenter)
         let viewModel = SearchTextInputViewModelImpl(model: model, view: view)
 

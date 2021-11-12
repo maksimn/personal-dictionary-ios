@@ -13,7 +13,10 @@ final class SearchTextInputViewImpl: NSObject, SearchTextInputView, UISearchBarD
 
     private let searchBar = UISearchBar()
 
-    override init() {
+    private let params: SearchTextInputViewParams
+
+    init(params: SearchTextInputViewParams) {
+        self.params = params
         super.init()
         initSearchBar()
     }
@@ -37,12 +40,8 @@ final class SearchTextInputViewImpl: NSObject, SearchTextInputView, UISearchBarD
     // MARK: - private
 
     private func initSearchBar() {
-        let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 72, height: 44)
-
-        searchBar.isUserInteractionEnabled = true
-        searchBar.frame = frame
-        searchBar.placeholder = NSLocalizedString("Enter a new word", comment: "")
-        searchBar.becomeFirstResponder()
+        searchBar.frame = CGRect(origin: .zero, size: params.styles.size)
+        searchBar.placeholder = params.staticContent.placeholder
         searchBar.delegate = self
     }
 }
