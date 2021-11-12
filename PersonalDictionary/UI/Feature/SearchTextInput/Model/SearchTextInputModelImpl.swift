@@ -5,9 +5,17 @@
 //  Created by Maxim Ivanov on 12.11.2021.
 //
 
+import Foundation
+
 final class SearchTextInputModelImpl: SearchTextInputModel {
 
     var viewModel: SearchTextInputViewModel?
+
+    private let notificationCenter: NotificationCenter
+
+    init(notificationCenter: NotificationCenter) {
+        self.notificationCenter = notificationCenter
+    }
 
     private var searchText: String = "" {
         didSet {
@@ -17,6 +25,7 @@ final class SearchTextInputModelImpl: SearchTextInputModel {
 
     func update(_ searchText: String) {
         self.searchText = searchText
-        print("model update searchtext: \(searchText)")
+        notificationCenter.post(name: .searchTextChanged, object: nil,
+                                userInfo: [Notification.Name.searchTextChanged: searchText])
     }
 }

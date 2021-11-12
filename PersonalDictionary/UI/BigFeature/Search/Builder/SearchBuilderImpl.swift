@@ -9,7 +9,13 @@ import Foundation
 
 final class SearchBuilderImpl: SearchBuilder {
 
+    private let notificationCenter: NotificationCenter
+
+    init(notificationCenter: NotificationCenter) {
+        self.notificationCenter = notificationCenter
+    }
+
     func build() -> SearchGraph {
-        SearchGraphImpl(searchTextInputBuilder: SearchTextInputBuilderImpl())
+        SearchGraphImpl(searchTextInputBuilder: SearchTextInputBuilderImpl(notificationCenter: notificationCenter))
     }
 }
