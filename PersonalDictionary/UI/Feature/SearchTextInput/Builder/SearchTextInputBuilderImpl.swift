@@ -22,7 +22,9 @@ final class SearchTextInputBuilderImpl: SearchTextInputBuilder {
         self.notificationCenter = notificationCenter
     }
 
-    func build() -> SearchTextInputMVVM {
-        SearchTextInputMVVMImpl(viewParams: viewParams, notificationCenter: notificationCenter)
+    func build(_ listener: SearchTextInputListener) -> SearchTextInputMVVM {
+        SearchTextInputMVVMImpl(viewParams: viewParams,
+                                notificationCenter: notificationCenter,
+                                listener: listener)
     }
 }

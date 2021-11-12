@@ -7,5 +7,5 @@
 
 protocol SearchTextInputBuilder {
 
-    func build() -> SearchTextInputMVVM
+    func build(_ listener: SearchTextInputListener) -> SearchTextInputMVVM
 }

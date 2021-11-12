@@ -7,14 +7,14 @@
 
 import UIKit
 
-final class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController, SearchTextInputListener {
 
-    private let searchTextInputMVVM: SearchTextInputMVVM
+    private var searchTextInputMVVM: SearchTextInputMVVM?
 
     init(_ searchTextInputBuilder: SearchTextInputBuilder) {
-        searchTextInputMVVM = searchTextInputBuilder.build()
         super.init(nibName: nil, bundle: nil)
-        navigationItem.titleView = searchTextInputMVVM.uiview
+        searchTextInputMVVM = searchTextInputBuilder.build(self)
+        navigationItem.titleView = searchTextInputMVVM?.uiview
     }
 
     required init?(coder: NSCoder) {
@@ -24,5 +24,9 @@ final class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .yellow
+    }
+
+    func onSearchTextChange(_ searchText: String) {
+        print("SearchViewController \(searchText)")
     }
 }

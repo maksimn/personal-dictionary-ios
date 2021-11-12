@@ -12,9 +12,11 @@ final class SearchTextInputModelImpl: SearchTextInputModel {
     var viewModel: SearchTextInputViewModel?
 
     private let notificationCenter: NotificationCenter
+    private weak var listener: SearchTextInputListener?
 
-    init(notificationCenter: NotificationCenter) {
+    init(notificationCenter: NotificationCenter, listener: SearchTextInputListener) {
         self.notificationCenter = notificationCenter
+        self.listener = listener
     }
 
     private var searchText: String = "" {
@@ -25,7 +27,6 @@ final class SearchTextInputModelImpl: SearchTextInputModel {
 
     func update(_ searchText: String) {
         self.searchText = searchText
-        notificationCenter.post(name: .searchTextChanged, object: nil,
-                                userInfo: [Notification.Name.searchTextChanged: searchText])
+        listener?.onSearchTextChange(searchText)
     }
 }
