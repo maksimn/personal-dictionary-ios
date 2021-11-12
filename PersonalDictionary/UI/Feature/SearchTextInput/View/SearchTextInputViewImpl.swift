@@ -7,13 +7,30 @@
 
 import UIKit
 
-final class SearchTextInputViewImpl: UIView, SearchTextInputView, UISearchBarDelegate {
+final class SearchTextInputViewImpl: NSObject, SearchTextInputView, UISearchBarDelegate {
 
     var viewModel: SearchTextInputViewModel?
 
-    let searchBar = UISearchBar()
+    private let searchBar = UISearchBar()
 
-    func initSearchBar() {
+    override init() {
+        super.init()
+        initSearchBar()
+    }
+
+    var uiview: UIView {
+        searchBar
+    }
+
+    // MARK: - UISearchBarDelegate
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if let searchText = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
+            print(searchText)
+        }
+    }
+
+    private func initSearchBar() {
         let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 72, height: 44)
 
         searchBar.isUserInteractionEnabled = true
@@ -21,11 +38,5 @@ final class SearchTextInputViewImpl: UIView, SearchTextInputView, UISearchBarDel
         searchBar.placeholder = NSLocalizedString("Enter a new word", comment: "")
         searchBar.becomeFirstResponder()
         searchBar.delegate = self
-    }
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if let searchText = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
-            print(searchText)
-        }
     }
 }

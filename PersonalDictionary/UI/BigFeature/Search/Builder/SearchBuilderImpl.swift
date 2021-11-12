@@ -10,6 +10,6 @@ import Foundation
 final class SearchBuilderImpl: SearchBuilder {
 
     func build() -> SearchGraph {
-        SearchGraphImpl()
+        SearchGraphImpl(searchTextInputBuilder: SearchTextInputBuilderImpl())
     }
 }

@@ -9,5 +9,5 @@ import UIKit
 
 protocol SearchTextInputMVVM {
 
-    var uiview: UIView? { get }
+    var uiview: UIView { get }
 }

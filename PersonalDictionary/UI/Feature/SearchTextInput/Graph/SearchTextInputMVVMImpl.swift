@@ -20,7 +20,7 @@ final class SearchTextInputMVVMImpl: SearchTextInputMVVM {
         model.viewModel = viewModel
     }
 
-    var uiview: UIView? {
-        view
+    var uiview: UIView {
+        view.uiview
     }
 }
