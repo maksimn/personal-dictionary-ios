@@ -10,8 +10,11 @@ import UIKit
 final class SearchViewController: UIViewController, SearchTextInputListener {
 
     private var searchTextInputMVVM: SearchTextInputMVVM?
+    private let searchEngine: SearchEngine
 
-    init(_ searchTextInputBuilder: SearchTextInputBuilder) {
+    init(_ searchTextInputBuilder: SearchTextInputBuilder,
+         _ searchEngineBuilder: SearchEngineBuilder) {
+        searchEngine = searchEngineBuilder.build()
         super.init(nibName: nil, bundle: nil)
         searchTextInputMVVM = searchTextInputBuilder.build(self)
         navigationItem.titleView = searchTextInputMVVM?.uiview
@@ -27,6 +30,8 @@ final class SearchViewController: UIViewController, SearchTextInputListener {
     }
 
     func onSearchTextChange(_ searchText: String) {
-        print("SearchViewController \(searchText)")
+        searchEngine.findItems(contain: searchText, completion: { foundWordItems in
+            print("foundWordItems.count = \(foundWordItems.count)")
+        })
     }
 }

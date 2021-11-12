@@ -11,8 +11,9 @@ final class SearchGraphImpl: SearchGraph {
 
     private let controller: SearchViewController
 
-    init(searchTextInputBuilder: SearchTextInputBuilder) {
-        controller = SearchViewController(searchTextInputBuilder)
+    init(searchTextInputBuilder: SearchTextInputBuilder,
+         searchEngineBuilder: SearchEngineBuilder) {
+        controller = SearchViewController(searchTextInputBuilder, searchEngineBuilder)
     }
 
     var viewController: UIViewController? {
