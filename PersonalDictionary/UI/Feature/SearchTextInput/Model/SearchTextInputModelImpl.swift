@@ -7,4 +7,5 @@
 
 final class SearchTextInputModelImpl: SearchTextInputModel {
 
+    var viewModel: SearchTextInputViewModel?
 }

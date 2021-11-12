@@ -7,4 +7,11 @@
 
 final class SearchTextInputViewModelImpl: SearchTextInputViewModel {
 
+    private unowned let view: SearchTextInputView
+    private let model: SearchTextInputModel
+
+    init(model: SearchTextInputModel, view: SearchTextInputView) {
+        self.model = model
+        self.view = view
+    }
 }

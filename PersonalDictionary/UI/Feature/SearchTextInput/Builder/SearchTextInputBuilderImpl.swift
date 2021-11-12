@@ -7,4 +7,7 @@
 
 final class SearchTextInputBuilderImpl: SearchTextInputBuilder {
 
+    func build() -> SearchTextInputMVVM {
+        SearchTextInputMVVMImpl()
+    }
 }

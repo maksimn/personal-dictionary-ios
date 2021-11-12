@@ -7,4 +7,5 @@
 
 protocol SearchTextInputModel {
 
+    var viewModel: SearchTextInputViewModel? { get set }
 }

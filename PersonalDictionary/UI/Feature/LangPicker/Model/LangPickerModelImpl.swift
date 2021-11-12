@@ -9,7 +9,7 @@ import Foundation
 
 final class LangPickerModelImpl: LangPickerModel {
 
-    var viewModel: LangPickerViewModel?
+    weak var viewModel: LangPickerViewModel?
 
     private(set) var data: LangSelectorData {
         didSet {
