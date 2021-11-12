@@ -7,7 +7,13 @@
 
 final class SearchEngineBuilderImpl: SearchEngineBuilder {
 
+    private let wordListRepository: WordListRepository
+
+    init(wordListRepository: WordListRepository) {
+        self.wordListRepository = wordListRepository
+    }
+
     func build() -> SearchEngine {
-        SearchEngineImpl()
+        SearchEngineImpl(wordListRepository: wordListRepository)
     }
 }

@@ -7,4 +7,5 @@
 
 protocol SearchEngine {
 
+    func findItems(contain string: String, completion: @escaping ([WordItem]) -> Void)
 }
