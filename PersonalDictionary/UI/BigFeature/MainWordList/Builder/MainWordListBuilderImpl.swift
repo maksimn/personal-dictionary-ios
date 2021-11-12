@@ -36,7 +36,9 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
     }
 
     private func createSearchBuilder() -> SearchBuilder {
-        SearchBuilderImpl(notificationCenter: NotificationCenter.default)
+        SearchBuilderImpl(notificationCenter: NotificationCenter.default,
+                          wordListRepository: buildWordListRepository(),
+                          wordListBuilder: createWordListBuilder())
     }
 
     private func createNewWordBuilder() -> NewWordBuilder {
