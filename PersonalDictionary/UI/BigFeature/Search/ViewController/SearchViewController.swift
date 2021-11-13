@@ -31,10 +31,10 @@ final class SearchViewController: UIViewController, SearchTextInputListener {
     }
 
     func onSearchTextChange(_ searchText: String) {
-        searchEngine.findItems(contain: searchText, completion: { [weak self] foundWordItems in
+        searchEngine.findItems(contain: searchText, completion: { [weak self] data in
             guard let wordListModel = self?.wordListMVVM.model else { return }
 
-            wordListModel.data = WordListData(wordList: foundWordItems, changedItemPosition: nil)
+            wordListModel.data = WordListData(wordList: data.foundWordList, changedItemPosition: nil)
         })
     }
 }
