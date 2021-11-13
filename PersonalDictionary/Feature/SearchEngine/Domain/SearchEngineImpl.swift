@@ -15,7 +15,7 @@ final class SearchEngineImpl: SearchEngine {
         self.wordListRepository = wordListRepository
     }
 
-    func findItems(contain string: String, completion: @escaping (SearchResultData) -> Void) {
+    func findItems(contain string: String, mode: SearchMode, completion: @escaping (SearchResultData) -> Void) {
         let string = string.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
 
         if string == "" {
@@ -26,7 +26,7 @@ final class SearchEngineImpl: SearchEngine {
 
         DispatchQueue.global(qos: .default).async {
             let filteredWordList = allWordList.filter { item in
-                    item.text
+                (mode == .bySourceWord ? item.text : (item.translation ?? ""))
                     .folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil)
                     .contains(string)
             }

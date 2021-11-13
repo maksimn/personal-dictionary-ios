@@ -23,5 +23,6 @@ extension WordListViewController {
         tableView.snp.makeConstraints { make -> Void in
             make.edges.equalTo(view.safeAreaLayoutGuide).inset(UIEdgeInsets(top: 14, left: 12, bottom: 0, right: 12))
         }
+        tableView.keyboardDismissMode = .onDrag
     }
 }
