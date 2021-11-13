@@ -13,10 +13,12 @@ final class SearchGraphImpl: SearchGraph {
 
     init(searchTextInputBuilder: SearchTextInputBuilder,
          searchEngineBuilder: SearchEngineBuilder,
-         wordListBuilder: WordListBuilder) {
+         wordListBuilder: WordListBuilder,
+         textLabelBuilder: TextLabelBuilder) {
         searchViewController = SearchViewController(searchTextInputBuilder,
                                                     searchEngineBuilder,
-                                                    wordListBuilder)
+                                                    wordListBuilder,
+                                                    textLabelBuilder)
     }
 
     var viewController: UIViewController? {

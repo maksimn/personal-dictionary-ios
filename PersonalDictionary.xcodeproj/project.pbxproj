@@ -124,6 +124,7 @@
 		59F83697273F43B0001F1CC7 /* TextLabelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F83696273F43B0001F1CC7 /* TextLabelBuilder.swift */; };
 		59F8369C273F43EE001F1CC7 /* TextLabelBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F8369B273F43EE001F1CC7 /* TextLabelBuilderImpl.swift */; };
 		59F836A1273F4412001F1CC7 /* TextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F836A0273F4412001F1CC7 /* TextLabel.swift */; };
+		59F836AC273F564C001F1CC7 /* TextLabelParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F836AB273F564C001F1CC7 /* TextLabelParams.swift */; };
 		B6D3C3649E5902C8C6F61BC1 /* Pods_PersonalDictionaryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */; };
 		C1D164D517B600803F101FE8 /* Pods_PersonalDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11F2A6FDE4C3A546FFBF62BB /* Pods_PersonalDictionary.framework */; };
 		C3612940DC2F372BEFF1D4BD /* Pods_PersonalDictionary_PersonalDictionaryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D838989D0C1B6F504FEFDD9F /* Pods_PersonalDictionary_PersonalDictionaryUITests.framework */; };
@@ -273,6 +274,7 @@
 		59F83696273F43B0001F1CC7 /* TextLabelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLabelBuilder.swift; sourceTree = "<group>"; };
 		59F8369B273F43EE001F1CC7 /* TextLabelBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLabelBuilderImpl.swift; sourceTree = "<group>"; };
 		59F836A0273F4412001F1CC7 /* TextLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLabel.swift; sourceTree = "<group>"; };
+		59F836AB273F564C001F1CC7 /* TextLabelParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLabelParams.swift; sourceTree = "<group>"; };
 		92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PersonalDictionaryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAB8B82192D6040F2CE7B2AA /* Pods-PersonalDictionaryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionaryTests.debug.xcconfig"; path = "Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D6483A53AA12677B2458433D /* Pods-PersonalDictionaryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionaryTests.release.xcconfig"; path = "Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1022,6 +1024,7 @@
 			isa = PBXGroup;
 			children = (
 				59F836A0273F4412001F1CC7 /* TextLabel.swift */,
+				59F836AB273F564C001F1CC7 /* TextLabelParams.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1443,6 +1446,7 @@
 				596D4F7F273C259F00B0DD01 /* MainWordListBuilderImpl.swift in Sources */,
 				597C2C13273A84DA009780D5 /* LangPickerModelImpl.swift in Sources */,
 				59250593273ED1FE00A8621A /* SearchEngineBuilder.swift in Sources */,
+				59F836AC273F564C001F1CC7 /* TextLabelParams.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

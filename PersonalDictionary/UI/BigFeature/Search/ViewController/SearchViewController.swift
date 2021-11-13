@@ -12,10 +12,12 @@ final class SearchViewController: UIViewController, SearchTextInputListener {
     private var searchTextInputMVVM: SearchTextInputMVVM?
     private let searchEngine: SearchEngine
     private let wordListMVVM: WordListMVVM
+    private var searchResultTextLabel: TextLabel?
 
     init(_ searchTextInputBuilder: SearchTextInputBuilder,
          _ searchEngineBuilder: SearchEngineBuilder,
-         _ wordListBuilder: WordListBuilder) {
+         _ wordListBuilder: WordListBuilder,
+         _ textLabelBuilder: TextLabelBuilder) {
         searchEngine = searchEngineBuilder.build()
         wordListMVVM = wordListBuilder.build()
         super.init(nibName: nil, bundle: nil)
@@ -24,6 +26,15 @@ final class SearchViewController: UIViewController, SearchTextInputListener {
 
         guard let wordListViewController = wordListMVVM.viewController else { return }
         add(child: wordListViewController)
+
+        searchResultTextLabel = textLabelBuilder.build()
+        searchResultTextLabel?.isHidden = true
+        view.addSubview(searchResultTextLabel ?? UIView())
+        searchResultTextLabel?.snp.makeConstraints { make -> Void in
+            make.centerY.equalTo(view).offset(-20)
+            make.left.equalTo(view.snp.left)
+            make.right.equalTo(view.snp.right)
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -34,6 +45,7 @@ final class SearchViewController: UIViewController, SearchTextInputListener {
         searchEngine.findItems(contain: searchText, completion: { [weak self] data in
             guard let wordListModel = self?.wordListMVVM.model else { return }
 
+            self?.searchResultTextLabel?.isHidden = !(data.searchState == .fulfilled && data.foundWordList.count == 0)
             wordListModel.data = WordListData(wordList: data.foundWordList, changedItemPosition: nil)
         })
     }

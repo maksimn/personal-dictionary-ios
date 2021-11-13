@@ -7,7 +7,13 @@
 
 final class TextLabelBuilderImpl: TextLabelBuilder {
 
+    private let params: TextLabelParams
+
+    init(params: TextLabelParams) {
+        self.params = params
+    }
+
     func build() -> TextLabel {
-        TextLabel()
+        TextLabel(params: params)
     }
 }

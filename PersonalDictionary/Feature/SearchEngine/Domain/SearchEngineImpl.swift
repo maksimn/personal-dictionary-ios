@@ -20,6 +20,7 @@ final class SearchEngineImpl: SearchEngine {
 
         if string == "" {
             completion(SearchResultData(searchState: .initial, foundWordList: []))
+            return
         }
 
         let allWordList = wordListRepository.wordList

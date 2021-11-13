@@ -5,13 +5,17 @@
 //  Created by Maxim Ivanov on 11.11.2021.
 //
 
-import Foundation
+import UIKit
 
 final class SearchBuilderImpl: SearchBuilder {
 
     private let notificationCenter: NotificationCenter
     private let wordListRepository: WordListRepository
     private let wordListBuilder: WordListBuilder
+
+    private let searchTextLabelParams = TextLabelParams(textColor: .darkGray,
+                                                        font: UIFont.systemFont(ofSize: 17),
+                                                        text: NSLocalizedString("No words found", comment: ""))
 
     init(notificationCenter: NotificationCenter,
          wordListRepository: WordListRepository,
@@ -24,6 +28,7 @@ final class SearchBuilderImpl: SearchBuilder {
     func build() -> SearchGraph {
         SearchGraphImpl(searchTextInputBuilder: SearchTextInputBuilderImpl(notificationCenter: notificationCenter),
                         searchEngineBuilder: SearchEngineBuilderImpl(wordListRepository: wordListRepository),
-                        wordListBuilder: wordListBuilder)
+                        wordListBuilder: wordListBuilder,
+                        textLabelBuilder: TextLabelBuilderImpl(params: searchTextLabelParams))
     }
 }
