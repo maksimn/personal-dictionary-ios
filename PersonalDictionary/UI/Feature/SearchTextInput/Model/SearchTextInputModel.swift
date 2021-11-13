@@ -10,9 +10,11 @@ protocol SearchTextInputListener: AnyObject {
     func onSearchTextChange(_ searchText: String)
 }
 
-protocol SearchTextInputModel {
+protocol SearchTextInputModel: AnyObject {
 
     var viewModel: SearchTextInputViewModel? { get set }
+
+    var searchText: String { get }
 
     func update(_ searchText: String)
 }

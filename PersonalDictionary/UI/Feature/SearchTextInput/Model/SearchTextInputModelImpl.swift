@@ -11,15 +11,13 @@ final class SearchTextInputModelImpl: SearchTextInputModel {
 
     var viewModel: SearchTextInputViewModel?
 
-    private let notificationCenter: NotificationCenter
     private weak var listener: SearchTextInputListener?
 
-    init(notificationCenter: NotificationCenter, listener: SearchTextInputListener) {
-        self.notificationCenter = notificationCenter
+    init(listener: SearchTextInputListener) {
         self.listener = listener
     }
 
-    private var searchText: String = "" {
+    private(set) var searchText: String = "" {
         didSet {
             viewModel?.searchText = searchText
         }

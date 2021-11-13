@@ -9,8 +9,6 @@ import UIKit
 
 final class SearchTextInputBuilderImpl: SearchTextInputBuilder {
 
-    private let notificationCenter: NotificationCenter
-
     private let viewParams = SearchTextInputViewParams(
         staticContent: SearchTextInputStaticContent(
             placeholder: NSLocalizedString("Enter a word for searching", comment: "")
@@ -18,13 +16,8 @@ final class SearchTextInputBuilderImpl: SearchTextInputBuilder {
         styles: SearchTextInputStyles(size: CGSize(width: UIScreen.main.bounds.width - 72, height: 44))
     )
 
-    init(notificationCenter: NotificationCenter) {
-        self.notificationCenter = notificationCenter
-    }
-
     func build(_ listener: SearchTextInputListener) -> SearchTextInputMVVM {
         SearchTextInputMVVMImpl(viewParams: viewParams,
-                                notificationCenter: notificationCenter,
                                 listener: listener)
     }
 }

@@ -10,4 +10,6 @@ import UIKit
 protocol SearchTextInputMVVM {
 
     var uiview: UIView { get }
+
+    var model: SearchTextInputModel? { get }
 }
