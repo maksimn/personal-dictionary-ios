@@ -136,6 +136,7 @@
 		59F836E9273FB04C001F1CC7 /* SearchModePickerViewImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F836E8273FB04C001F1CC7 /* SearchModePickerViewImpl.swift */; };
 		59F836EE273FB058001F1CC7 /* SearchModePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F836ED273FB058001F1CC7 /* SearchModePickerViewModel.swift */; };
 		59F836F3273FB065001F1CC7 /* SearchModePickerViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F836F2273FB065001F1CC7 /* SearchModePickerViewModelImpl.swift */; };
+		59FEB6D027408B2600DF7171 /* SearchViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FEB6CF27408B2600DF7171 /* SearchViewController+Layout.swift */; };
 		B6D3C3649E5902C8C6F61BC1 /* Pods_PersonalDictionaryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */; };
 		C1D164D517B600803F101FE8 /* Pods_PersonalDictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11F2A6FDE4C3A546FFBF62BB /* Pods_PersonalDictionary.framework */; };
 		C3612940DC2F372BEFF1D4BD /* Pods_PersonalDictionary_PersonalDictionaryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D838989D0C1B6F504FEFDD9F /* Pods_PersonalDictionary_PersonalDictionaryUITests.framework */; };
@@ -297,6 +298,7 @@
 		59F836E8273FB04C001F1CC7 /* SearchModePickerViewImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModePickerViewImpl.swift; sourceTree = "<group>"; };
 		59F836ED273FB058001F1CC7 /* SearchModePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModePickerViewModel.swift; sourceTree = "<group>"; };
 		59F836F2273FB065001F1CC7 /* SearchModePickerViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModePickerViewModelImpl.swift; sourceTree = "<group>"; };
+		59FEB6CF27408B2600DF7171 /* SearchViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchViewController+Layout.swift"; sourceTree = "<group>"; };
 		92F0CC14FD2D0701695C5368 /* Pods_PersonalDictionaryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PersonalDictionaryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAB8B82192D6040F2CE7B2AA /* Pods-PersonalDictionaryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionaryTests.debug.xcconfig"; path = "Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D6483A53AA12677B2458433D /* Pods-PersonalDictionaryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionaryTests.release.xcconfig"; path = "Target Support Files/Pods-PersonalDictionaryTests/Pods-PersonalDictionaryTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 			isa = PBXGroup;
 			children = (
 				5925051E273DDB6600A8621A /* SearchViewController.swift */,
+				59FEB6CF27408B2600DF7171 /* SearchViewController+Layout.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -583,7 +586,6 @@
 		596B95C92706AC1D004CE7E6 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				596B95CA2706AC27004CE7E6 /* DataClass */,
 				597602482711154E0077B5F7 /* JsonCoder */,
 				59A94336270E4C5A0076F08B /* Logger */,
 				597C2C41273BB99A009780D5 /* InitiallyBindable.swift */,
@@ -692,6 +694,7 @@
 			isa = PBXGroup;
 			children = (
 				596B95C92706AC1D004CE7E6 /* Core */,
+				596B95CA2706AC27004CE7E6 /* DataClass */,
 				594C9D23273D1B6C007D5E16 /* DesignSystem */,
 				5953CB3727062EAB006537B9 /* Repository */,
 				59760228271110390077B5F7 /* Service */,
@@ -1474,6 +1477,7 @@
 				596FFCAD273C68CB0034E8AE /* NewWordBuilderImpl.swift in Sources */,
 				59A942D7270C50290076F08B /* WordListModelImpl.swift in Sources */,
 				59250561273E70B800A8621A /* SearchTextInputModelImpl.swift in Sources */,
+				59FEB6D027408B2600DF7171 /* SearchViewController+Layout.swift in Sources */,
 				59F836D5273FB01B001F1CC7 /* SearchModePickerMVVMImpl.swift in Sources */,
 				59A9432F270E4B8D0076F08B /* CoreWordListRepository.swift in Sources */,
 				597C2C37273A920A009780D5 /* LangSelectorData.swift in Sources */,

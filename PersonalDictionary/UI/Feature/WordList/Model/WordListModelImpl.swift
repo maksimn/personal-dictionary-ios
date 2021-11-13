@@ -36,6 +36,7 @@ final class WordListModelImpl: WordListModel {
         wordList.remove(at: position)
         data = WordListData(wordList: wordList, changedItemPosition: position)
         cudOperations.remove(with: wordItem.id, completion: nil)
+        notificationCenter.post(name: .removeWord, object: nil, userInfo: [Notification.Name.removeWord: wordItem])
     }
 
     func requestTranslationsIfNeededWithin(startPosition: Int, endPosition: Int) {
