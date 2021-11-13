@@ -15,19 +15,24 @@ final class SearchEngineImpl: SearchEngine {
         self.wordListRepository = wordListRepository
     }
 
-    func findItems(contain string: String, completion: @escaping ([WordItem]) -> Void) {
+    func findItems(contain string: String, completion: @escaping (SearchResultData) -> Void) {
         let string = string.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+
+        if string == "" {
+            return completion(SearchResultData(searchState: .initial, foundWordList: []))
+        }
+
         let allWordList = wordListRepository.wordList
 
         DispatchQueue.global(qos: .default).async {
-            let searchedWordList = allWordList.filter { item in
+            let filteredWordList = allWordList.filter { item in
                     item.text
                     .folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil)
                     .contains(string)
             }
 
             DispatchQueue.main.async {
-                completion(searchedWordList)
+                completion(SearchResultData(searchState: .fulfilled, foundWordList: filteredWordList))
             }
         }
     }

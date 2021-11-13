@@ -9,17 +9,19 @@ import UIKit
 
 final class SearchGraphImpl: SearchGraph {
 
-    private let controller: SearchViewController
+    private let searchViewController: SearchViewController
 
     init(searchTextInputBuilder: SearchTextInputBuilder,
          searchEngineBuilder: SearchEngineBuilder,
-         wordListBuilder: WordListBuilder) {
-        controller = SearchViewController(searchTextInputBuilder,
-                                          searchEngineBuilder,
-                                          wordListBuilder)
+         wordListBuilder: WordListBuilder,
+         textLabelBuilder: TextLabelBuilder) {
+        searchViewController = SearchViewController(searchTextInputBuilder,
+                                                    searchEngineBuilder,
+                                                    wordListBuilder,
+                                                    textLabelBuilder)
     }
 
     var viewController: UIViewController? {
-        controller
+        searchViewController
     }
 }
