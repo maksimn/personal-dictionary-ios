@@ -19,21 +19,20 @@ final class SearchEngineImpl: SearchEngine {
         let string = string.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
 
         if string == "" {
-            completion(SearchResultData(searchState: .initial, foundWordList: []))
-            return
+            return completion(SearchResultData(searchState: .initial, foundWordList: []))
         }
 
         let allWordList = wordListRepository.wordList
 
         DispatchQueue.global(qos: .default).async {
-            let searchedWordList = allWordList.filter { item in
+            let filteredWordList = allWordList.filter { item in
                     item.text
                     .folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil)
                     .contains(string)
             }
 
             DispatchQueue.main.async {
-                completion(SearchResultData(searchState: .fulfilled, foundWordList: searchedWordList))
+                completion(SearchResultData(searchState: .fulfilled, foundWordList: filteredWordList))
             }
         }
     }
