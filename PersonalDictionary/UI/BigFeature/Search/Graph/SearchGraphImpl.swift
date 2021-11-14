@@ -14,7 +14,7 @@ final class SearchGraphImpl: SearchGraph {
     init(appViewConfigs: AppViewConfigs,
          wordListRepository: WordListRepository,
          wordListBuilder: WordListBuilder,
-         textLabelBuilder: TextLabelBuilder) {
+         searchResultTextLabelParams: TextLabelParams) {
         let searchTextInputBuilder = SearchTextInputBuilderImpl()
         let searchModePickerBuilder = SearchModePickerBuilderImpl()
         let searchEngineBuilder = SearchEngineBuilderImpl(wordListRepository: wordListRepository)
@@ -23,8 +23,8 @@ final class SearchGraphImpl: SearchGraph {
                                                     searchTextInputBuilder,
                                                     searchEngineBuilder,
                                                     wordListBuilder,
-                                                    textLabelBuilder,
-                                                    searchModePickerBuilder)
+                                                    searchModePickerBuilder,
+                                                    searchResultTextLabelParams)
     }
 
     var viewController: UIViewController? {

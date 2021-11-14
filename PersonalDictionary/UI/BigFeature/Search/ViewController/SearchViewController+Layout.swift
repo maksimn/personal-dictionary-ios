@@ -35,8 +35,8 @@ extension SearchViewController {
         }
     }
 
-    func addSearchResultTextLabel(_ textLabelBuilder: TextLabelBuilder) {
-        searchResultTextLabel = textLabelBuilder.build()
+    func addSearchResultTextLabel(_ params: TextLabelParams) {
+        searchResultTextLabel = TextLabel(params: params)
         searchResultTextLabel?.isHidden = true
         view.addSubview(searchResultTextLabel ?? UIView())
         searchResultTextLabel?.snp.makeConstraints { make -> Void in

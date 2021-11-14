@@ -19,14 +19,14 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
          _ searchTextInputBuilder: SearchTextInputBuilder,
          _ searchEngineBuilder: SearchEngineBuilder,
          _ wordListBuilder: WordListBuilder,
-         _ textLabelBuilder: TextLabelBuilder,
-         _ searchModePickerBuilder: SearchModePickerBuilder) {
+         _ searchModePickerBuilder: SearchModePickerBuilder,
+         _ searchResultTextLabelParams: TextLabelParams) {
         searchEngine = searchEngineBuilder.build()
         wordListMVVM = wordListBuilder.build()
         super.init(nibName: nil, bundle: nil)
         addFeature(searchTextInputBuilder)
         addWordListViewController()
-        addSearchResultTextLabel(textLabelBuilder)
+        addSearchResultTextLabel(searchResultTextLabelParams)
         addFeature(searchModePickerBuilder)
         view.backgroundColor = appViewConfigs.appBackgroundColor
     }

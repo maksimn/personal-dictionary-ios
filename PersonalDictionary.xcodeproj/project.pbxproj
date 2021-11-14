@@ -122,8 +122,6 @@
 		59E0378F271216F700197F19 /* PonsTranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0378E271216F700197F19 /* PonsTranslationService.swift */; };
 		59E037942712226800197F19 /* PonsResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E037932712226800197F19 /* PonsResponseData.swift */; };
 		59F8368F273F3E74001F1CC7 /* SearchResultData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F8368E273F3E74001F1CC7 /* SearchResultData.swift */; };
-		59F83697273F43B0001F1CC7 /* TextLabelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F83696273F43B0001F1CC7 /* TextLabelBuilder.swift */; };
-		59F8369C273F43EE001F1CC7 /* TextLabelBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F8369B273F43EE001F1CC7 /* TextLabelBuilderImpl.swift */; };
 		59F836A1273F4412001F1CC7 /* TextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F836A0273F4412001F1CC7 /* TextLabel.swift */; };
 		59F836AC273F564C001F1CC7 /* TextLabelParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F836AB273F564C001F1CC7 /* TextLabelParams.swift */; };
 		59F836C3273FAFE1001F1CC7 /* SearchModePickerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F836C2273FAFE1001F1CC7 /* SearchModePickerBuilder.swift */; };
@@ -284,8 +282,6 @@
 		59E0378E271216F700197F19 /* PonsTranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PonsTranslationService.swift; sourceTree = "<group>"; };
 		59E037932712226800197F19 /* PonsResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PonsResponseData.swift; sourceTree = "<group>"; };
 		59F8368E273F3E74001F1CC7 /* SearchResultData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultData.swift; sourceTree = "<group>"; };
-		59F83696273F43B0001F1CC7 /* TextLabelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLabelBuilder.swift; sourceTree = "<group>"; };
-		59F8369B273F43EE001F1CC7 /* TextLabelBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLabelBuilderImpl.swift; sourceTree = "<group>"; };
 		59F836A0273F4412001F1CC7 /* TextLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLabel.swift; sourceTree = "<group>"; };
 		59F836AB273F564C001F1CC7 /* TextLabelParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLabelParams.swift; sourceTree = "<group>"; };
 		59F836C2273FAFE1001F1CC7 /* SearchModePickerBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModePickerBuilder.swift; sourceTree = "<group>"; };
@@ -489,6 +485,7 @@
 			children = (
 				5953CB4A27063D31006537B9 /* LangPicker */,
 				594C9D27273D2198007D5E16 /* NavToSearchView */,
+				59F83693273F437F001F1CC7 /* TextLabel */,
 				59A94302270CF2C00076F08B /* WordTableView */,
 				596D04602737C49B00A33EA5 /* ViewParams.swift */,
 			);
@@ -623,7 +620,6 @@
 				597C2BFE273A7C51009780D5 /* LangPicker */,
 				59F836BC273FAF75001F1CC7 /* SearchModePicker */,
 				59250537273E6D7500A8621A /* SearchTextInput */,
-				59F83693273F437F001F1CC7 /* TextLabel */,
 				598B79EF270C4E68007ED9FD /* WordList */,
 			);
 			path = Feature;
@@ -1031,28 +1027,10 @@
 		59F83693273F437F001F1CC7 /* TextLabel */ = {
 			isa = PBXGroup;
 			children = (
-				59F83694273F438B001F1CC7 /* Builder */,
-				59F83695273F4392001F1CC7 /* View */,
-			);
-			path = TextLabel;
-			sourceTree = "<group>";
-		};
-		59F83694273F438B001F1CC7 /* Builder */ = {
-			isa = PBXGroup;
-			children = (
-				59F83696273F43B0001F1CC7 /* TextLabelBuilder.swift */,
-				59F8369B273F43EE001F1CC7 /* TextLabelBuilderImpl.swift */,
-			);
-			path = Builder;
-			sourceTree = "<group>";
-		};
-		59F83695273F4392001F1CC7 /* View */ = {
-			isa = PBXGroup;
-			children = (
 				59F836A0273F4412001F1CC7 /* TextLabel.swift */,
 				59F836AB273F564C001F1CC7 /* TextLabelParams.swift */,
 			);
-			path = View;
+			path = TextLabel;
 			sourceTree = "<group>";
 		};
 		59F836BC273FAF75001F1CC7 /* SearchModePicker */ = {
@@ -1470,7 +1448,6 @@
 				59250548273E6E5700A8621A /* SearchTextInputModel.swift in Sources */,
 				596FFC9D273C605D0034E8AE /* WordListBuilder.swift in Sources */,
 				59E037942712226800197F19 /* PonsResponseData.swift in Sources */,
-				59F8369C273F43EE001F1CC7 /* TextLabelBuilderImpl.swift in Sources */,
 				5953CB18270627AF006537B9 /* NewWordModelImpl.swift in Sources */,
 				596D4F84273C25D700B0DD01 /* MainWordListGraphImpl.swift in Sources */,
 				5953CB2227062830006537B9 /* NewWordViewController.swift in Sources */,
@@ -1483,7 +1460,6 @@
 				597C2C37273A920A009780D5 /* LangSelectorData.swift in Sources */,
 				59E0378F271216F700197F19 /* PonsTranslationService.swift in Sources */,
 				5910A445270EA04E00631446 /* Logger.swift in Sources */,
-				59F83697273F43B0001F1CC7 /* TextLabelBuilder.swift in Sources */,
 				59250552273E6E7900A8621A /* SearchTextInputViewModel.swift in Sources */,
 				59A942E1270C506B0076F08B /* WordListViewModelImpl.swift in Sources */,
 				596D044C2737C40B00A33EA5 /* WordListData.swift in Sources */,

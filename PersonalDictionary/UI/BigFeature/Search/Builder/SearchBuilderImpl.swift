@@ -12,9 +12,9 @@ final class SearchBuilderImpl: SearchBuilder {
     private let wordListRepository: WordListRepository
     private let wordListBuilder: WordListBuilder
 
-    private let searchTextLabelParams = TextLabelParams(textColor: .darkGray,
-                                                        font: UIFont.systemFont(ofSize: 17),
-                                                        text: NSLocalizedString("No words found", comment: ""))
+    private let searchResultTextLabelParams = TextLabelParams(textColor: .darkGray,
+                                                              font: UIFont.systemFont(ofSize: 17),
+                                                              text: NSLocalizedString("No words found", comment: ""))
     private let appViewConfigs: AppViewConfigs
 
     init(appViewConfigs: AppViewConfigs,
@@ -29,6 +29,6 @@ final class SearchBuilderImpl: SearchBuilder {
         SearchGraphImpl(appViewConfigs: appViewConfigs,
                         wordListRepository: wordListRepository,
                         wordListBuilder: wordListBuilder,
-                        textLabelBuilder: TextLabelBuilderImpl(params: searchTextLabelParams))
+                        searchResultTextLabelParams: searchResultTextLabelParams)
     }
 }
