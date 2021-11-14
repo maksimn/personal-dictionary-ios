@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 12.11.2021.
 //
 
+import RxSwift
 import UIKit
 
 final class SearchViewController: UIViewController, SearchTextInputListener, SearchModePickerListener {
@@ -52,11 +53,20 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
     // MARK: - Private
 
     private func performSearch(for searchText: String, mode: SearchMode) {
-        searchEngine.findItems(contain: searchText, mode: mode, completion: { [weak self] data in
-            guard let wordListModel = self?.wordListMVVM.model else { return }
-
-            self?.searchResultTextLabel?.isHidden = !(data.searchState == .fulfilled && data.foundWordList.count == 0)
-            wordListModel.data = WordListData(wordList: data.foundWordList, changedItemPosition: nil)
-        })
+        searchEngine.findItems(contain: searchText, mode: mode)
+            .subscribe(
+                onSuccess: { self.showSearchResult(data: $0) },
+                onError: nil
+            )
+            .disposed(by: disposeBag)
     }
+
+    private func showSearchResult(data: SearchResultData) {
+        guard let wordListModel = self.wordListMVVM.model else { return }
+
+        searchResultTextLabel?.isHidden = !(data.searchState == .fulfilled && data.foundWordList.count == 0)
+        wordListModel.data = WordListData(wordList: data.foundWordList, changedItemPosition: nil)
+    }
+
+    private let disposeBag = DisposeBag()
 }
