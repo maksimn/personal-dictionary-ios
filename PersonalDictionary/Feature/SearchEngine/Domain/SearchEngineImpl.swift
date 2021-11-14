@@ -6,6 +6,7 @@
 //
 
 import Dispatch
+import RxSwift
 
 final class SearchEngineImpl: SearchEngine {
 
@@ -15,25 +16,26 @@ final class SearchEngineImpl: SearchEngine {
         self.wordListRepository = wordListRepository
     }
 
-    func findItems(contain string: String, mode: SearchMode, completion: @escaping (SearchResultData) -> Void) {
-        let string = string.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+    func findItems(contain string: String, mode: SearchMode) -> Single<SearchResultData> {
+        Single<SearchResultData>.create { observer in
+            let string = string.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
 
-        if string == "" {
-            return completion(SearchResultData(searchState: .initial, foundWordList: []))
-        }
+            if string == "" {
+                observer(.success(SearchResultData(searchState: .initial, foundWordList: [])))
+                return Disposables.create { }
+            }
 
-        let allWordList = wordListRepository.wordList
-
-        DispatchQueue.global(qos: .default).async {
+            let allWordList = self.wordListRepository.wordList
             let filteredWordList = allWordList.filter { item in
                 (mode == .bySourceWord ? item.text : (item.translation ?? ""))
                     .folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil)
                     .contains(string)
             }
 
-            DispatchQueue.main.async {
-                completion(SearchResultData(searchState: .fulfilled, foundWordList: filteredWordList))
-            }
+            observer(.success(SearchResultData(searchState: .fulfilled, foundWordList: filteredWordList)))
+            return Disposables.create { }
         }
+        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+        .observeOn(MainScheduler.instance)
     }
 }
