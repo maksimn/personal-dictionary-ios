@@ -12,12 +12,12 @@ final class SearchGraphImpl: SearchGraph {
     private let searchViewController: SearchViewController
 
     init(appViewConfigs: AppViewConfigs,
-         wordListRepository: WordListRepository,
+         wordListFetcher: WordListFetcher,
          wordListBuilder: WordListBuilder,
          searchResultTextLabelParams: TextLabelParams) {
         let searchTextInputBuilder = SearchTextInputBuilderImpl()
         let searchModePickerBuilder = SearchModePickerBuilderImpl()
-        let searchEngineBuilder = SearchEngineBuilderImpl(wordListRepository: wordListRepository)
+        let searchEngineBuilder = SearchEngineBuilderImpl(wordListFetcher: wordListFetcher)
 
         searchViewController = SearchViewController(appViewConfigs,
                                                     searchTextInputBuilder,

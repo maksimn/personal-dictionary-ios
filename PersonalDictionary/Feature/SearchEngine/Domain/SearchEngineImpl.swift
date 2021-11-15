@@ -10,10 +10,10 @@ import RxSwift
 
 final class SearchEngineImpl: SearchEngine {
 
-    private let wordListRepository: WordListRepository
+    private let wordListFetcher: WordListFetcher
 
-    init(wordListRepository: WordListRepository) {
-        self.wordListRepository = wordListRepository
+    init(wordListFetcher: WordListFetcher) {
+        self.wordListFetcher = wordListFetcher
     }
 
     func findItems(contain string: String, mode: SearchMode) -> Single<SearchResultData> {
@@ -25,8 +25,7 @@ final class SearchEngineImpl: SearchEngine {
                 return Disposables.create { }
             }
 
-            let allWordList = self.wordListRepository.wordList
-            let filteredWordList = allWordList.filter { item in
+            let filteredWordList = self.wordListFetcher.wordList.filter { item in
                 (mode == .bySourceWord ? item.text : (item.translation ?? ""))
                     .folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil)
                     .contains(string)

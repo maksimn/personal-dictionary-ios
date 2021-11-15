@@ -9,7 +9,7 @@ import UIKit
 
 final class SearchBuilderImpl: SearchBuilder {
 
-    private let wordListRepository: WordListRepository
+    private let wordListFetcher: WordListFetcher
     private let wordListBuilder: WordListBuilder
 
     private let searchResultTextLabelParams = TextLabelParams(textColor: .darkGray,
@@ -18,16 +18,16 @@ final class SearchBuilderImpl: SearchBuilder {
     private let appViewConfigs: AppViewConfigs
 
     init(appViewConfigs: AppViewConfigs,
-         wordListRepository: WordListRepository,
+         wordListFetcher: WordListFetcher,
          wordListBuilder: WordListBuilder) {
         self.appViewConfigs = appViewConfigs
-        self.wordListRepository = wordListRepository
+        self.wordListFetcher = wordListFetcher
         self.wordListBuilder = wordListBuilder
     }
 
     func build() -> SearchGraph {
         SearchGraphImpl(appViewConfigs: appViewConfigs,
-                        wordListRepository: wordListRepository,
+                        wordListFetcher: wordListFetcher,
                         wordListBuilder: wordListBuilder,
                         searchResultTextLabelParams: searchResultTextLabelParams)
     }
