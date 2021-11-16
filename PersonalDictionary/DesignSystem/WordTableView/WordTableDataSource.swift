@@ -22,10 +22,14 @@ final class WordTableDataSource: NSObject, UITableViewDataSource {
 
     private unowned let tableView: UITableView
 
+    private let cellReuseIdentifier: String
+
     init(tableView: UITableView,
-         data: WordListData) {
+         data: WordListData,
+         cellReuseIdentifier: String) {
         self.tableView = tableView
         self.data = data
+        self.cellReuseIdentifier = cellReuseIdentifier
         super.init()
     }
 
@@ -36,7 +40,7 @@ final class WordTableDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(WordItemCell.self)",
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier,
                                                        for: indexPath) as? WordItemCell else {
             return UITableViewCell()
         }

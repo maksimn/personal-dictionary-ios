@@ -26,6 +26,10 @@ final class NewWordBuilderImpl: NewWordBuilder {
     private let notificationCenter: NotificationCenter
     private let langPickerBuilder: LangPickerBuilder
 
+    // Переделать: 1) langPickerBuilder является внутренней зависимостью фичи NewWord,
+    // он должен инстанцироваться внутри NewWordBuilderImpl, а не передаваться извне.
+    // 2) Убрать NotificationCenter, перейти к использованию делегатов
+    // NewWordListener и LangPickerListener.
     init(appViewConfigs: AppViewConfigs,
          langRepository: LangRepository,
          notificationCenter: NotificationCenter,

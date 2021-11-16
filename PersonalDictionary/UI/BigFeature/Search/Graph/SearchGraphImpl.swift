@@ -11,6 +11,7 @@ final class SearchGraphImpl: SearchGraph {
 
     private let searchViewController: SearchViewController
 
+    // ПЕРЕДЕЛАТЬ: вынести зависимости в билдер, и удалить сущность графа, так как здесь создается только один объект.
     init(appViewConfigs: AppViewConfigs,
          wordListFetcher: WordListFetcher,
          wordListBuilder: WordListBuilder,
@@ -19,6 +20,7 @@ final class SearchGraphImpl: SearchGraph {
         let searchModePickerBuilder = SearchModePickerBuilderImpl()
         let searchEngineBuilder = SearchEngineBuilderImpl(wordListFetcher: wordListFetcher)
 
+        // ПЕРЕДЕЛАТЬ: Сделать лейблы для аргументов конструктора.
         searchViewController = SearchViewController(appViewConfigs,
                                                     searchTextInputBuilder,
                                                     searchEngineBuilder,

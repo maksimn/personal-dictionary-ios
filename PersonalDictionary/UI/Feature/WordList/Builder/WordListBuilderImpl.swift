@@ -25,7 +25,11 @@ final class WordListBuilderImpl: WordListBuilder {
                 backgroundColor: appViewConfigs.appBackgroundColor,
                 deleteAction: DeleteActionStyles(
                     backgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
-                )
+                ),
+                itemHeight: WordItemCell.height,
+                cellClass: WordItemCell.self,
+                cellReuseIdentifier: "\(WordItemCell.self)",
+                cellCornerRadius: 16
             )
         )
     }()

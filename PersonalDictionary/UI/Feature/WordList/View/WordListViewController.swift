@@ -16,7 +16,8 @@ final class WordListViewController: UIViewController, WordListView {
     let tableView = UITableView()
 
     lazy var tableDataSource: WordTableDataSource = {
-        WordTableDataSource(tableView: tableView, data: WordListData(wordList: [], changedItemPosition: nil))
+        WordTableDataSource(tableView: tableView, data: WordListData(wordList: [], changedItemPosition: nil),
+                            cellReuseIdentifier: params.styles.cellReuseIdentifier)
     }()
 
     lazy var tableActions: WordTableDelegate = {

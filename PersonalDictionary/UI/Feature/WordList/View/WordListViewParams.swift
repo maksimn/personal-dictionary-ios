@@ -16,4 +16,8 @@ struct WordListViewStaticContent {
 struct WordListViewStyles {
     let backgroundColor: UIColor
     let deleteAction: DeleteActionStyles
+    let itemHeight: CGFloat
+    let cellClass: AnyClass
+    let cellReuseIdentifier: String
+    let cellCornerRadius: CGFloat
 }

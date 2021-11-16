@@ -5,7 +5,6 @@
 //  Created by Maxim Ivanov on 12.11.2021.
 //
 
-import Dispatch
 import RxSwift
 
 final class SearchEngineImpl: SearchEngine {
