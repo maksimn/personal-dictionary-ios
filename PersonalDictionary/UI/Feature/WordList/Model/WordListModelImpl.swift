@@ -54,12 +54,13 @@ final class WordListModelImpl: WordListModel {
     // MARK: - Events
 
     func addNewWord(_ wordItem: WordItem) {
+        let newWordPosition = 0
         var wordList = data.wordList
 
-        wordList.insert(wordItem, at: 0)
-        data = WordListData(wordList: wordList, changedItemPosition: 0)
+        wordList.insert(wordItem, at: newWordPosition)
+        data = WordListData(wordList: wordList, changedItemPosition: newWordPosition)
         cudOperations.add(wordItem, completion: nil)
-        requestTranslation(for: wordItem, data.wordList.count - 1)
+        requestTranslation(for: wordItem, newWordPosition)
     }
 
     func remove(wordItem: WordItem) {
