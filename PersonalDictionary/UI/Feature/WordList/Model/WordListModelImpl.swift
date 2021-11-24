@@ -11,9 +11,10 @@ final class WordListModelImpl: WordListModel {
 
     weak var viewModel: WordListViewModel?
 
-    let cudOperations: WordItemCUDOperations
+    private let cudOperations: WordItemCUDOperations
     let notificationCenter: NotificationCenter
-    let translationService: TranslationService
+    private let translationService: TranslationService
+    private let logger: Logger
 
     private let disposeBag = DisposeBag()
 
@@ -25,10 +26,12 @@ final class WordListModelImpl: WordListModel {
 
     init(cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
-         notificationCenter: NotificationCenter) {
+         notificationCenter: NotificationCenter,
+         logger: Logger) {
         self.cudOperations = cudOperations
         self.translationService = translationService
         self.notificationCenter = notificationCenter
+        self.logger = logger
         addObservers()
     }
 
@@ -77,8 +80,8 @@ final class WordListModelImpl: WordListModel {
         translationService.fetchTranslation(for: wordItem)
             .subscribe(onSuccess: { [weak self] translation in
                 self?.update(wordItem: wordItem, with: translation, at: position)
-            }, onError: { error in
-
+            }, onError: { [weak self] error in
+                self?.logger.log(error: error)
             }).disposed(by: disposeBag)
     }
 

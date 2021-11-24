@@ -13,6 +13,7 @@ final class WordListBuilderImpl: WordListBuilder {
     private let translationService: TranslationService
     private let notificationCenter: NotificationCenter
     private let appViewConfigs: AppViewConfigs
+    private let logger: Logger
 
     private lazy var viewParams: WordListViewParams = {
         WordListViewParams(
@@ -37,17 +38,20 @@ final class WordListBuilderImpl: WordListBuilder {
     init(cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
          notificationCenter: NotificationCenter,
-         appViewConfigs: AppViewConfigs) {
+         appViewConfigs: AppViewConfigs,
+         logger: Logger) {
         self.cudOperations = cudOperations
         self.translationService = translationService
         self.notificationCenter = notificationCenter
         self.appViewConfigs = appViewConfigs
+        self.logger = logger
     }
 
     func build() -> WordListMVVM {
         WordListMVVMImpl(cudOperations: cudOperations,
                          translationService: translationService,
                          notificationCenter: notificationCenter,
-                         viewParams: viewParams)
+                         viewParams: viewParams,
+                         logger: logger)
     }
 }

@@ -83,6 +83,7 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
         WordListBuilderImpl(cudOperations: buildWordListRepository(),
                             translationService: buildTranslationService(),
                             notificationCenter: NotificationCenter.default,
-                            appViewConfigs: appConfigs.appViewConfigs)
+                            appViewConfigs: appConfigs.appViewConfigs,
+                            logger: buildLogger())
     }
 }

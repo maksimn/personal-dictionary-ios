@@ -16,12 +16,14 @@ final class WordListMVVMImpl: WordListMVVM {
     init(cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
          notificationCenter: NotificationCenter,
-         viewParams: WordListViewParams) {
+         viewParams: WordListViewParams,
+         logger: Logger) {
         view = WordListViewController(params: viewParams)
         guard let view = view else { return }
         let model = WordListModelImpl(cudOperations: cudOperations,
                                       translationService: translationService,
-                                      notificationCenter: notificationCenter)
+                                      notificationCenter: notificationCenter,
+                                      logger: logger)
         let viewModel = WordListViewModelImpl(model: model, view: view)
 
         view.viewModel = viewModel

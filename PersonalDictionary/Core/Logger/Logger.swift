@@ -11,7 +11,5 @@ protocol Logger {
 
     func networkRequestSuccess(_ requestName: String)
 
-    func networkRequestError(_ requestName: String)
-
     func log(error: Error)
 }

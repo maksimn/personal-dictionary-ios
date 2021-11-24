@@ -25,12 +25,6 @@ final class SimpleLogger: Logger {
         print("\n\(requestName) NETWORK REQUEST SUCCESS\n")
     }
 
-    func networkRequestError(_ requestName: String) {
-        guard isLoggingEnabled else { return }
-
-        print("\n\(requestName) NETWORK REQUEST ERROR\n")
-    }
-
     func log(error: Error) {
         guard isLoggingEnabled else { return }
 
