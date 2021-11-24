@@ -9,7 +9,7 @@ import Foundation
 
 final class SearchTextInputModelImpl: SearchTextInputModel {
 
-    var viewModel: SearchTextInputViewModel?
+    weak var viewModel: SearchTextInputViewModel?
 
     private weak var listener: SearchTextInputListener?
 
