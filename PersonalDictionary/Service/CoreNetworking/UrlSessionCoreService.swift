@@ -5,15 +5,12 @@
 //  Created by Maxim Ivanov on 09.10.2021.
 //
 
-import Foundation
+import RxCocoa
+import RxSwift
 
 class UrlSessionCoreService: CoreService {
 
     private let sessionConfiguration: URLSessionConfiguration
-
-    private var urlString: String?
-    private var httpMethod: String?
-    private var headers: [String: String]?
 
     private lazy var session: URLSession = {
         sessionConfiguration.timeoutIntervalForResource = 30.0
@@ -25,42 +22,33 @@ class UrlSessionCoreService: CoreService {
         self.sessionConfiguration = sessionConfiguration
     }
 
-    func set(urlString: String, httpMethod: String, headers: [String: String]?) {
-        self.urlString = urlString
-        self.httpMethod = httpMethod
-        self.headers = headers
-    }
-
-    func send(_ requestData: Data?, _ completion: @escaping (Result<Data, Error>) -> Void) {
-        guard let urlString = urlString,
-              let url = URL(string: urlString) else {
-            return completion(.failure(HttpError.urlUndefined))
-        }
-
-        var request = URLRequest(url: url)
-
-        request.httpMethod = httpMethod
-        request.httpBody = requestData
-
-        if let headers = headers {
-            for (key, value) in headers {
-                request.addValue(value, forHTTPHeaderField: key)
+    func send(_ http: Http) -> Single<Data> {
+        Single<Data>.create { observer in
+            let urlString = http.urlString
+            guard let url = URL(string: urlString) else {
+                observer(.error(HttpError.urlUndefined))
+                return Disposables.create {}
             }
-        }
 
-        let sessionDataTask = session.dataTask(with: request) { (data, _, error) in
-            if let error = error {
-                return DispatchQueue.main.async {
-                    completion(.failure(error))
+            var request = URLRequest(url: url)
+
+            request.httpMethod = http.method
+            request.httpBody = http.body
+
+            if let headers = http.headers {
+                for (key, value) in headers {
+                    request.addValue(value, forHTTPHeaderField: key)
                 }
             }
 
-            DispatchQueue.main.async {
-                completion(.success(data ?? Data()))
-            }
+            return self.session.rx.response(request: request)
+                .subscribe(
+                    onNext: { observer(.success($1)) },
+                    onError: { observer(.error($0)) }
+                )
         }
-
-        sessionDataTask.resume()
+        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+        .observeOn(MainScheduler.instance)
     }
 
     enum HttpError: Error {

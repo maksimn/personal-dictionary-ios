@@ -5,11 +5,16 @@
 //  Created by Maxim Ivanov on 09.10.2021.
 //
 
-import Foundation
+import RxSwift
+
+struct Http {
+    let urlString: String
+    let method: String
+    let headers: [String: String]?
+    let body: Data?
+}
 
 protocol CoreService {
 
-    func set(urlString: String, httpMethod: String, headers: [String: String]?)
-
-    func send(_ requestData: Data?, _ completion: @escaping (Result<Data, Error>) -> Void)
+    func send(_ http: Http) -> Single<Data>
 }

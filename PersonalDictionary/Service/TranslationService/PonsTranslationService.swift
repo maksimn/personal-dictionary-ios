@@ -36,34 +36,26 @@ final class PonsTranslationService: TranslationService {
         let inParam = "in=\(shortSourceLang)"
 
         logger.networkRequestStart(fetchTranslationRequestName)
-        coreService.set(urlString: apiData.url + "?" + lParam + "&" + qParam + "&" + inParam,
-                        httpMethod: "GET",
-                        headers: [apiData.secretHeaderKey: apiData.secret])
-        coreService.send(nil) { [weak self] result in
-            self?.resultHandler(result, completion)
-        }
-    }
+        coreService
+            .send(Http(urlString: apiData.url + "?" + lParam + "&" + qParam + "&" + inParam,
+                       method: "GET",
+                       headers: [apiData.secretHeaderKey: apiData.secret],
+                       body: nil))
+            .map { data -> Single<[PonsResponseData]> in
+                self.jsonCoder.parseFromJson(data)
+            }
+            .asObservable().concat().asSingle()
+            .subscribe(
+                onSuccess: { ponsResponseArray in
+                    let translation = ponsResponseArray.first?.translation ?? ""
 
-    private func resultHandler(_ result: Result<Data, Error>,
-                               _ completion: @escaping (TranslationServiceResult) -> Void) {
-        do {
-            let data = try result.get()
-
-            jsonCoder.parseFromJson(data)
-                .subscribe(
-                    onSuccess: { (ponsResponseArray: [PonsResponseData]) in
-                        let translation = ponsResponseArray.first?.translation ?? ""
-
-                        self.logger.networkRequestSuccess(self.fetchTranslationRequestName)
-                        completion(.success(translation))
-                    },
-                    onError: { error in
-                        self.completionWithLog(error, completion)
-                    }
-                ).disposed(by: disposeBag)
-        } catch {
-            completionWithLog(error, completion)
-        }
+                    self.logger.networkRequestSuccess(self.fetchTranslationRequestName)
+                    completion(.success(translation))
+                },
+                onError: { error in
+                    self.completionWithLog(error, completion)
+                })
+            .disposed(by: disposeBag)
     }
 
     private func completionWithLog(_ error: Error, _ completion: @escaping (TranslationServiceResult) -> Void) {
