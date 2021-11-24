@@ -40,7 +40,9 @@ final class WordListModelImpl: WordListModel {
 
         wordList.remove(at: position)
         data = WordListData(wordList: wordList, changedItemPosition: position)
-        cudOperations.remove(with: wordItem.id, completion: nil)
+        cudOperations.remove(with: wordItem.id)
+            .subscribe()
+            .disposed(by: disposeBag)
         notificationCenter.post(name: .removeWord, object: nil, userInfo: [Notification.Name.removeWord: wordItem])
     }
 
@@ -64,7 +66,9 @@ final class WordListModelImpl: WordListModel {
 
         wordList.insert(wordItem, at: newWordPosition)
         data = WordListData(wordList: wordList, changedItemPosition: newWordPosition)
-        cudOperations.add(wordItem, completion: nil)
+        cudOperations.add(wordItem)
+            .subscribe()
+            .disposed(by: disposeBag)
         requestTranslation(for: wordItem, newWordPosition)
     }
 
@@ -92,7 +96,9 @@ final class WordListModelImpl: WordListModel {
         guard position > -1 && position < wordList.count else { return }
 
         wordList[position] = updatedWordItem
-        cudOperations.update(updatedWordItem, completion: nil)
+        cudOperations.update(updatedWordItem)
+            .subscribe()
+            .disposed(by: disposeBag)
         data = WordListData(wordList: wordList, changedItemPosition: position)
     }
 }

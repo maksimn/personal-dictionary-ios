@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 06.10.2021.
 //
 
+import RxSwift
+
 protocol WordListFetcher {
 
     var wordList: [WordItem] { get }
@@ -12,11 +14,11 @@ protocol WordListFetcher {
 
 protocol WordItemCUDOperations {
 
-    func add(_ wordItem: WordItem, completion: ((Error?) -> Void)?)
+    func add(_ wordItem: WordItem) -> Completable
 
-    func update(_ wordItem: WordItem, completion: ((Error?) -> Void)?)
+    func update(_ wordItem: WordItem) -> Completable
 
-    func remove(with wordItemId: WordItem.Id, completion: ((Error?) -> Void)?)
+    func remove(with wordItemId: WordItem.Id) -> Completable
 }
 
 protocol WordListRepository: WordListFetcher, WordItemCUDOperations {

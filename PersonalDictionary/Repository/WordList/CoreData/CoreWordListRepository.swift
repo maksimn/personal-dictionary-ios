@@ -5,8 +5,8 @@
 //  Created by Maxim Ivanov on 07.10.2021.
 //
 
-import Foundation
 import CoreData
+import RxSwift
 
 struct CoreWordListRepositoryArgs {
 
@@ -57,83 +57,93 @@ final class CoreWordListRepository: WordListRepository {
         }
     }
 
-    func add(_ wordItem: WordItem, completion: ((Error?) -> Void)?) {
-        let backgroundContext = persistentContainer.newBackgroundContext()
+    func add(_ wordItem: WordItem) -> Completable {
+        return Completable.create { [weak self] completable in
+            let backgroundContext = self?.persistentContainer.newBackgroundContext()
 
-        backgroundContext.perform { [weak self] in
-            let wordItemMO = WordItemMO(entity: WordItemMO.entity(), insertInto: backgroundContext)
+            backgroundContext?.perform { [weak self] in
+                let wordItemMO = WordItemMO(entity: WordItemMO.entity(), insertInto: backgroundContext)
 
-            wordItemMO.setData(from: wordItem)
+                wordItemMO.setData(from: wordItem)
 
-            do {
-                try backgroundContext.save()
-                DispatchQueue.main.async {
-                    completion?(nil)
-                }
-            } catch {
-                self?.logger.log(error: error)
-                DispatchQueue.main.async {
-                    completion?(error)
+                do {
+                    try backgroundContext?.save()
+                    DispatchQueue.main.async {
+                        completable(.completed)
+                    }
+                } catch {
+                    self?.logger.log(error: error)
+                    DispatchQueue.main.async {
+                        completable(.error(error))
+                    }
                 }
             }
+
+            return Disposables.create {}
         }
     }
 
-    func update(_ wordItem: WordItem, completion: ((Error?) -> Void)?) {
-        let backgroundContext = persistentContainer.newBackgroundContext()
-        let predicate = NSPredicate.init(format: "id = '\(wordItem.id.raw)'")
-        let fetchRequest: NSFetchRequest<WordItemMO> = WordItemMO.fetchRequest()
+    func update(_ wordItem: WordItem) -> Completable {
+        return Completable.create { [weak self] completable in
+            let backgroundContext = self?.persistentContainer.newBackgroundContext()
+            let predicate = NSPredicate.init(format: "id = '\(wordItem.id.raw)'")
+            let fetchRequest: NSFetchRequest<WordItemMO> = WordItemMO.fetchRequest()
 
-        fetchRequest.predicate = predicate
+            fetchRequest.predicate = predicate
 
-        backgroundContext.perform { [weak self] in
-            do {
-                let array = try backgroundContext.fetch(fetchRequest)
+            backgroundContext?.perform { [weak self] in
+                do {
+                    let array = try backgroundContext?.fetch(fetchRequest) ?? []
 
-                if array.count > 0 {
-                    let wordItemMO = array[0]
+                    if array.count > 0 {
+                        let wordItemMO = array[0]
 
-                    wordItemMO.setData(from: wordItem)
-                }
-                try backgroundContext.save()
-                DispatchQueue.main.async {
-                    completion?(nil)
-                }
-            } catch {
-                self?.logger.log(error: error)
-                DispatchQueue.main.async {
-                    completion?(error)
+                        wordItemMO.setData(from: wordItem)
+                    }
+                    try backgroundContext?.save()
+                    DispatchQueue.main.async {
+                        completable(.completed)
+                    }
+                } catch {
+                    self?.logger.log(error: error)
+                    DispatchQueue.main.async {
+                        completable(.error(error))
+                    }
                 }
             }
+            return Disposables.create {}
         }
     }
 
-    func remove(with wordItemId: WordItem.Id, completion: ((Error?) -> Void)?) {
-        let backgroundContext = persistentContainer.newBackgroundContext()
-        let predicate = NSPredicate.init(format: "id = '\(wordItemId.raw)'")
-        let fetchRequest: NSFetchRequest<WordItemMO> = WordItemMO.fetchRequest()
+    func remove(with wordItemId: WordItem.Id) -> Completable {
+        return Completable.create { [weak self] completable in
+            let backgroundContext = self?.persistentContainer.newBackgroundContext()
+            let predicate = NSPredicate.init(format: "id = '\(wordItemId.raw)'")
+            let fetchRequest: NSFetchRequest<WordItemMO> = WordItemMO.fetchRequest()
 
-        fetchRequest.predicate = predicate
+            fetchRequest.predicate = predicate
 
-        backgroundContext.perform { [weak self] in
-            do {
-                let array = try backgroundContext.fetch(fetchRequest)
+            backgroundContext?.perform { [weak self] in
+                do {
+                    let array = try backgroundContext?.fetch(fetchRequest) ?? []
 
-                if array.count > 0 {
-                    let itemMO = array[0]
+                    if array.count > 0 {
+                        let itemMO = array[0]
 
-                    backgroundContext.delete(itemMO)
-                }
-                try backgroundContext.save()
-                DispatchQueue.main.async {
-                    completion?(nil)
-                }
-            } catch {
-                self?.logger.log(error: error)
-                DispatchQueue.main.async {
-                    completion?(error)
+                        backgroundContext?.delete(itemMO)
+                    }
+                    try backgroundContext?.save()
+                    DispatchQueue.main.async {
+                        completable(.completed)
+                    }
+                } catch {
+                    self?.logger.log(error: error)
+                    DispatchQueue.main.async {
+                        completable(.error(error))
+                    }
                 }
             }
+            return Disposables.create {}
         }
     }
 }
