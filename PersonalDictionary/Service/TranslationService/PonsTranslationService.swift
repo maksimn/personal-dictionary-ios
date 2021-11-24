@@ -29,14 +29,14 @@ final class PonsTranslationService: TranslationService {
         self.logger = logger
     }
 
-    func fetchTranslation(for wordItem: WordItem, _ completion: @escaping (TranslationServiceResult) -> Void) {
+    func fetchTranslation(for wordItem: WordItem) -> Single<String> {
         let shortSourceLang = wordItem.sourceLang.shortName.lowercased()
         let qParam = "q=\(wordItem.text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
         let lParam = "l=\(shortSourceLang)\(wordItem.targetLang.shortName.lowercased())"
         let inParam = "in=\(shortSourceLang)"
 
         logger.networkRequestStart(fetchTranslationRequestName)
-        coreService
+        return coreService
             .send(Http(urlString: apiData.url + "?" + lParam + "&" + qParam + "&" + inParam,
                        method: "GET",
                        headers: [apiData.secretHeaderKey: apiData.secret],
@@ -45,24 +45,9 @@ final class PonsTranslationService: TranslationService {
                 self.jsonCoder.parseFromJson(data)
             }
             .asObservable().concat().asSingle()
-            .subscribe(
-                onSuccess: { ponsResponseArray in
-                    let translation = ponsResponseArray.first?.translation ?? ""
-
-                    self.logger.networkRequestSuccess(self.fetchTranslationRequestName)
-                    completion(.success(translation))
-                },
-                onError: { error in
-                    self.completionWithLog(error, completion)
-                })
-            .disposed(by: disposeBag)
+            .map { ponsResponseArray in
+                self.logger.networkRequestSuccess(self.fetchTranslationRequestName)
+                return ponsResponseArray.first?.translation ?? ""
+            }
     }
-
-    private func completionWithLog(_ error: Error, _ completion: @escaping (TranslationServiceResult) -> Void) {
-        self.logger.networkRequestError(self.fetchTranslationRequestName)
-        self.logger.log(error: error)
-        completion(.failure(error))
-    }
-
-    private let disposeBag = DisposeBag()
 }

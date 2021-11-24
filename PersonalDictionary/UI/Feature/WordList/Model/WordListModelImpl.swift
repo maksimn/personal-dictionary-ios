@@ -5,7 +5,7 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-import Foundation
+import RxSwift
 
 final class WordListModelImpl: WordListModel {
 
@@ -14,6 +14,8 @@ final class WordListModelImpl: WordListModel {
     let cudOperations: WordItemCUDOperations
     let notificationCenter: NotificationCenter
     let translationService: TranslationService
+
+    private let disposeBag = DisposeBag()
 
     var data: WordListData = WordListData(wordList: [], changedItemPosition: nil) {
         didSet {
@@ -72,14 +74,12 @@ final class WordListModelImpl: WordListModel {
     // MARK: - Private
 
     private func requestTranslation(for wordItem: WordItem, _ position: Int) {
-        translationService.fetchTranslation(for: wordItem, { [weak self] result in
-            switch result {
-            case .success(let translation):
+        translationService.fetchTranslation(for: wordItem)
+            .subscribe(onSuccess: { [weak self] translation in
                 self?.update(wordItem: wordItem, with: translation, at: position)
-            case .failure:
-                break
-            }
-        })
+            }, onError: { error in
+
+            }).disposed(by: disposeBag)
     }
 
     private func update(wordItem: WordItem, with translation: String, at position: Int) {
