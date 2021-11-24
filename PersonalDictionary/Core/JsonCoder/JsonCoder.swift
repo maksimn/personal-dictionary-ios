@@ -5,13 +5,9 @@
 //  Created by Maxim Ivanov on 09.10.2021.
 //
 
-import Foundation
+import RxSwift
 
 protocol JsonCoder {
 
-    func encodeAsync<T: Encodable>(_ object: T,
-                                   _ completion: @escaping (Result<Data, Error>) -> Void)
-
-    func decodeAsync<T: Decodable>(_ data: Data,
-                                   _ completion: @escaping (Result<T, Error>) -> Void)
+    func parseFromJson<T: Decodable>(_ data: Data) -> Single<T>
 }

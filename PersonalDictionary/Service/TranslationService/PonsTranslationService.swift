@@ -5,7 +5,7 @@
 //  Created by Maxim Ivanov on 09.10.2021.
 //
 
-import Foundation
+import RxSwift
 
 struct PonsApiData {
     let url: String
@@ -20,7 +20,7 @@ final class PonsTranslationService: TranslationService {
     private let apiData: PonsApiData
     private let logger: Logger
 
-    private let fetchTranslationRequestName = "FETCH TRANSLATION"
+    private let fetchTranslationRequestName = "PONS FETCH TRANSLATION"
 
     init(apiData: PonsApiData, coreService: CoreService, jsonCoder: JsonCoder, logger: Logger) {
         self.apiData = apiData
@@ -49,17 +49,18 @@ final class PonsTranslationService: TranslationService {
         do {
             let data = try result.get()
 
-            jsonCoder.decodeAsync(data) { (result: Result<[PonsResponseData], Error>) in
-                switch result {
-                case .success(let ponsResponseArray):
-                    let translation = ponsResponseArray.first?.translation ?? ""
+            jsonCoder.parseFromJson(data)
+                .subscribe(
+                    onSuccess: { (ponsResponseArray: [PonsResponseData]) in
+                        let translation = ponsResponseArray.first?.translation ?? ""
 
-                    self.logger.networkRequestSuccess(self.fetchTranslationRequestName)
-                    completion(.success(translation))
-                case .failure(let error):
-                    self.completionWithLog(error, completion)
-                }
-            }
+                        self.logger.networkRequestSuccess(self.fetchTranslationRequestName)
+                        completion(.success(translation))
+                    },
+                    onError: { error in
+                        self.completionWithLog(error, completion)
+                    }
+                ).disposed(by: disposeBag)
         } catch {
             completionWithLog(error, completion)
         }
@@ -70,4 +71,6 @@ final class PonsTranslationService: TranslationService {
         self.logger.log(error: error)
         completion(.failure(error))
     }
+
+    private let disposeBag = DisposeBag()
 }
