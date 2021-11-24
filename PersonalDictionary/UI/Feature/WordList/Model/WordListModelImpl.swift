@@ -9,7 +9,8 @@ import RxSwift
 
 final class WordListModelImpl: WordListModel {
 
-    weak var viewModel: WordListViewModel?
+    private let viewModelBlock: () -> WordListViewModel?
+    private lazy var viewModel: WordListViewModel? = viewModelBlock()
 
     private let cudOperations: WordItemCUDOperations
     let notificationCenter: NotificationCenter
@@ -24,10 +25,12 @@ final class WordListModelImpl: WordListModel {
         }
     }
 
-    init(cudOperations: WordItemCUDOperations,
+    init(viewModelBlock: @escaping () -> WordListViewModel?,
+         cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
          notificationCenter: NotificationCenter,
          logger: Logger) {
+        self.viewModelBlock = viewModelBlock
         self.cudOperations = cudOperations
         self.translationService = translationService
         self.notificationCenter = notificationCenter

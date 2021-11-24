@@ -7,8 +7,6 @@
 
 protocol WordListModel: AnyObject {
 
-    var viewModel: WordListViewModel? { get set }
-
     var data: WordListData { get set }
 
     func remove(_ wordItem: WordItem, at position: Int)

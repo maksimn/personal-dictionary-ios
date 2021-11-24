@@ -20,14 +20,16 @@ final class WordListMVVMImpl: WordListMVVM {
          logger: Logger) {
         view = WordListViewController(params: viewParams)
         guard let view = view else { return }
-        let model = WordListModelImpl(cudOperations: cudOperations,
+        weak var viewModelLazy: WordListViewModel?
+        let model = WordListModelImpl(viewModelBlock: { viewModelLazy },
+                                      cudOperations: cudOperations,
                                       translationService: translationService,
                                       notificationCenter: notificationCenter,
                                       logger: logger)
         let viewModel = WordListViewModelImpl(model: model, view: view)
 
+        viewModelLazy = viewModel
         view.viewModel = viewModel
-        model.viewModel = viewModel
         self.model = model
     }
 
