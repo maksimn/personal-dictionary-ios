@@ -13,7 +13,7 @@ protocol NewWordViewModel: AnyObject {
 
     var targetLang: Lang { get set }
 
-    func dismissLangPicker()
+    func updateModel(_ langType: SelectedLangType, _ lang: Lang)
 
     func sendNewWordEvent()
 }

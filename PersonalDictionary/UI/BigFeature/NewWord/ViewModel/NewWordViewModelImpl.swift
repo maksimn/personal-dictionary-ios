@@ -39,7 +39,7 @@ class NewWordViewModelImpl: NewWordViewModel {
         model.sendNewWord()
     }
 
-    func dismissLangPicker() {
-        view.dismissLangPicker()
+    func updateModel(_ langType: SelectedLangType, _ lang: Lang) {
+        model.update(langType, lang)
     }
 }

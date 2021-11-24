@@ -14,6 +14,4 @@ protocol NewWordView: AnyObject {
     func set(sourceLang: Lang)
 
     func set(targetLang: Lang)
-
-    func dismissLangPicker()
 }

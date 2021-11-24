@@ -44,10 +44,7 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
     private func createNewWordBuilder() -> NewWordBuilder {
         NewWordBuilderImpl(appViewConfigs: appConfigs.appViewConfigs,
                            langRepository: langRepository,
-                           notificationCenter: NotificationCenter.default,
-                           langPickerBuilder: LangPickerBuilderImpl(allLangs: langRepository.allLangs,
-                                                                    notificationCenter: NotificationCenter.default,
-                                                                    appViewConfigs: appConfigs.appViewConfigs))
+                           notificationCenter: NotificationCenter.default)
     }
 
     private func buildLogger() -> Logger {

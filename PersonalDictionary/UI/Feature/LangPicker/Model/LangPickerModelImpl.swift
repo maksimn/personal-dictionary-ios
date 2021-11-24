@@ -17,11 +17,11 @@ final class LangPickerModelImpl: LangPickerModel {
         }
     }
 
-    private let notificationCenter: NotificationCenter
+    private weak var listener: LangPickerListener?
 
-    init(data: LangSelectorData, notificationCenter: NotificationCenter) {
+    init(data: LangSelectorData, listener: LangPickerListener?) {
         self.data = data
-        self.notificationCenter = notificationCenter
+        self.listener = listener
     }
 
     func bindInitially() {
@@ -32,7 +32,6 @@ final class LangPickerModelImpl: LangPickerModel {
         let newData = LangSelectorData(allLangs: data.allLangs,
                                        selectedLang: lang,
                                        selectedLangType: data.selectedLangType)
-
-        notificationCenter.post(name: .langSelected, object: nil, userInfo: [Notification.Name.langSelected: newData])
+        listener?.onLangSelected(newData)
     }
 }

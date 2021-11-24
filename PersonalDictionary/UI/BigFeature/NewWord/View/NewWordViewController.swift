@@ -52,7 +52,7 @@ class NewWordViewController: UIViewController, NewWordView {
         targetLangLabel.text = targetLang.name
     }
 
-    func dismissLangPicker() {
+    private func dismissLangPicker() {
         langPickerView?.removeFromSuperview()
         langPickerView = nil
     }
@@ -64,7 +64,9 @@ class NewWordViewController: UIViewController, NewWordView {
 
     private func showLangPickerView(selectedLangType: SelectedLangType) {
         guard let lang = selectedLangType == .source ? viewModel?.sourceLang : viewModel?.targetLang else { return }
-        let langPickerMVVM = langPickerBuilder.build(with: lang, selectedLangType: selectedLangType)
+        let langPickerMVVM = langPickerBuilder.build(with: lang,
+                                                     selectedLangType: selectedLangType,
+                                                     listener: self)
 
         langPickerView = langPickerMVVM.uiview
         view.addSubview(langPickerView ?? UIView())
@@ -75,7 +77,7 @@ class NewWordViewController: UIViewController, NewWordView {
 }
 
 // User Action handlers
-extension NewWordViewController: UITextFieldDelegate {
+extension NewWordViewController: UITextFieldDelegate, LangPickerListener {
 
     @objc
     func onSourceLangLabelTap() {
@@ -100,5 +102,10 @@ extension NewWordViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         sendNewWordEventAndDismiss()
         return true
+    }
+
+    func onLangSelected(_ data: LangSelectorData) {
+        viewModel?.updateModel(data.selectedLangType, data.selectedLang)
+        dismissLangPicker()
     }
 }

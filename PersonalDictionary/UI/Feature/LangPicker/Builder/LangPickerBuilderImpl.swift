@@ -21,22 +21,21 @@ final class LangPickerBuilderImpl: LangPickerBuilder {
     }()
 
     private let allLangs: [Lang]
-    private let notificationCenter: NotificationCenter
     private let appViewConfigs: AppViewConfigs
 
     init(allLangs: [Lang],
-         notificationCenter: NotificationCenter,
          appViewConfigs: AppViewConfigs) {
         self.allLangs = allLangs
-        self.notificationCenter = notificationCenter
         self.appViewConfigs = appViewConfigs
     }
 
-    func build(with initLang: Lang, selectedLangType: SelectedLangType) -> LangPickerMVVM {
+    func build(with initLang: Lang,
+               selectedLangType: SelectedLangType,
+               listener: LangPickerListener?) -> LangPickerMVVM {
         LangPickerMVVMImpl(with: LangSelectorData(allLangs: allLangs,
                                                   selectedLang: initLang,
                                                   selectedLangType: selectedLangType),
-                           notificationCenter: notificationCenter,
+                           listener: listener,
                            viewParams: viewParams)
     }
 }

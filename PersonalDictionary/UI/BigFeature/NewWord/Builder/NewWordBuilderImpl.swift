@@ -24,20 +24,19 @@ final class NewWordBuilderImpl: NewWordBuilder {
     private let appViewConfigs: AppViewConfigs
     private let langRepository: LangRepository
     private let notificationCenter: NotificationCenter
-    private let langPickerBuilder: LangPickerBuilder
+    private lazy var langPickerBuilder = {
+        LangPickerBuilderImpl(allLangs: langRepository.allLangs, appViewConfigs: appViewConfigs)
+    }()
 
-    // Переделать: 1) langPickerBuilder является внутренней зависимостью фичи NewWord,
-    // он должен инстанцироваться внутри NewWordBuilderImpl, а не передаваться извне.
+    // Переделать:
     // 2) Убрать NotificationCenter, перейти к использованию делегатов
     // NewWordListener и LangPickerListener.
     init(appViewConfigs: AppViewConfigs,
          langRepository: LangRepository,
-         notificationCenter: NotificationCenter,
-         langPickerBuilder: LangPickerBuilder) {
+         notificationCenter: NotificationCenter) {
         self.appViewConfigs = appViewConfigs
         self.langRepository = langRepository
         self.notificationCenter = notificationCenter
-        self.langPickerBuilder = langPickerBuilder
     }
 
     func build() -> NewWordMVVM {

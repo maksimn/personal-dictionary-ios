@@ -31,7 +31,6 @@ class NewWordModelImpl: NewWordModel {
     init(_ langRepository: LangRepository, _ notificationCenter: NotificationCenter) {
         self.langRepository = langRepository
         self.notificationCenter = notificationCenter
-        notificationCenter.addObserver(self, selector: #selector(onLangSelected), name: .langSelected, object: nil)
     }
 
     func bindInitially() {
@@ -49,18 +48,14 @@ class NewWordModelImpl: NewWordModel {
         notificationCenter.post(name: .addNewWord, object: nil, userInfo: [Notification.Name.addNewWord: wordItem])
     }
 
-    @objc
-    func onLangSelected(_ notification: Notification) {
-        if let langSelectorData = notification.userInfo?[Notification.Name.langSelected] as? LangSelectorData {
-            switch langSelectorData.selectedLangType {
-            case .source:
-                langRepository.sourceLang = langSelectorData.selectedLang
-                sourceLang = langSelectorData.selectedLang
-            case .target:
-                langRepository.targetLang = langSelectorData.selectedLang
-                targetLang = langSelectorData.selectedLang
-            }
-            viewModel?.dismissLangPicker()
+    func update(_ langType: SelectedLangType, _ lang: Lang) {
+        switch langType {
+        case .source:
+            langRepository.sourceLang = lang
+            sourceLang = lang
+        case .target:
+            langRepository.targetLang = lang
+            targetLang = lang
         }
     }
 }
