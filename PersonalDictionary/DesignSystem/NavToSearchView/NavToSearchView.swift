@@ -14,7 +14,6 @@ final class NavToSearchView: UIView {
 
     private var onTap: (() -> Void)?
 
-    // ПЕРЕДЕЛАТЬ: убрать дефолтное значение params.
     init(params: NavToSearchViewParams
             = NavToSearchViewParams(staticContent: NavToSearchStaticContent(),
                                     styles: NavToSearchStyles(size: CGSize(width: UIScreen.main.bounds.width - 32,

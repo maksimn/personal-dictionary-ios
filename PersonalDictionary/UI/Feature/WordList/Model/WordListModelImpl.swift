@@ -49,15 +49,25 @@ final class WordListModelImpl: WordListModel {
     }
 
     func requestTranslationsIfNeededWithin(startPosition: Int, endPosition: Int) {
-        guard endPosition > startPosition,
-              startPosition > -1 else {
-            return
-        }
+        guard endPosition > startPosition, startPosition > -1 else { return }
         let endPosition = min(data.wordList.count, endPosition)
+        var notTranslatedItems = [(word: WordItem, position: Int)]()
 
         for position in startPosition..<endPosition where data.wordList[position].translation == nil {
-            requestTranslation(for: data.wordList[position], position)
+            notTranslatedItems.append((word: data.wordList[position], position: position))
         }
+
+        guard notTranslatedItems.count > 0 else { return }
+
+        Observable.from(notTranslatedItems)
+            .concatMap { tuple in
+                Single.just(tuple).delay(.milliseconds(500), scheduler: MainScheduler.instance)
+            }
+            .do(onNext: { [weak self] tuple in
+                self?.requestTranslation(for: tuple.word, tuple.position)
+            })
+            .subscribe()
+            .disposed(by: disposeBag)
     }
 
     func sendRemovedWordItem(_ wordItem: WordItem) {
@@ -108,13 +118,10 @@ final class WordListModelImpl: WordListModel {
 
     private func subscribeToWordItemStream() {
         wordItemStream.newWordItem
-            .subscribe(onNext: { wordItem in
-                self.addNewWord(wordItem)
-            })
+            .subscribe(onNext: { self.addNewWord($0) })
             .disposed(by: disposeBag)
         wordItemStream.removedWordItem
-            .subscribe(onNext: { wordItem in
-                self.remove(wordItem: wordItem)
-            }).disposed(by: disposeBag)
+            .subscribe(onNext: { self.remove(wordItem: $0) })
+            .disposed(by: disposeBag)
     }
 }
