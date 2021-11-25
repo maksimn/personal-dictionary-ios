@@ -22,6 +22,12 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
         )
     )
 
+    private static let sharedWordItemStream = WordItemStreamImpl()
+
+    private var wordItemStream: WordItemStream {
+        return MainWordListBuilderImpl.sharedWordItemStream
+    }
+
     init(appConfigs: AppConfigs) {
         self.appConfigs = appConfigs
     }
@@ -32,7 +38,8 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
                               wordListFetcher: buildWordListRepository(),
                               navigationController: navigationController,
                               newWordBuilder: createNewWordBuilder(),
-                              searchBuilder: createSearchBuilder())
+                              searchBuilder: createSearchBuilder(),
+                              wordItemStream: wordItemStream)
     }
 
     private func createSearchBuilder() -> SearchBuilder {
@@ -43,8 +50,7 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
 
     private func createNewWordBuilder() -> NewWordBuilder {
         NewWordBuilderImpl(appViewConfigs: appConfigs.appViewConfigs,
-                           langRepository: langRepository,
-                           notificationCenter: NotificationCenter.default)
+                           langRepository: langRepository)
     }
 
     private func buildLogger() -> Logger {
@@ -79,7 +85,7 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
     private func createWordListBuilder() -> WordListBuilder {
         WordListBuilderImpl(cudOperations: buildWordListRepository(),
                             translationService: buildTranslationService(),
-                            notificationCenter: NotificationCenter.default,
+                            wordItemStream: wordItemStream,
                             appViewConfigs: appConfigs.appViewConfigs,
                             logger: buildLogger())
     }

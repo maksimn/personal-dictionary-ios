@@ -12,7 +12,7 @@ class NewWordModelImpl: NewWordModel {
     weak var viewModel: NewWordViewModel?
 
     private var langRepository: LangRepository
-    private let notificationCenter: NotificationCenter
+    private weak var listener: NewWordListener?
 
     private(set) var sourceLang: Lang = empty {
         didSet {
@@ -28,9 +28,9 @@ class NewWordModelImpl: NewWordModel {
 
     private static let empty = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
 
-    init(_ langRepository: LangRepository, _ notificationCenter: NotificationCenter) {
+    init(_ langRepository: LangRepository, _ listener: NewWordListener?) {
         self.langRepository = langRepository
-        self.notificationCenter = notificationCenter
+        self.listener = listener
     }
 
     func bindInitially() {
@@ -45,7 +45,7 @@ class NewWordModelImpl: NewWordModel {
         }
         let wordItem = WordItem(text: text, sourceLang: sourceLang, targetLang: targetLang)
 
-        notificationCenter.post(name: .addNewWord, object: nil, userInfo: [Notification.Name.addNewWord: wordItem])
+        listener?.onNewWord(wordItem)
     }
 
     func update(_ langType: SelectedLangType, _ lang: Lang) {

@@ -15,7 +15,7 @@ final class WordListMVVMImpl: WordListMVVM {
 
     init(cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
-         notificationCenter: NotificationCenter,
+         wordItemStream: WordItemStream,
          viewParams: WordListViewParams,
          logger: Logger) {
         view = WordListViewController(params: viewParams)
@@ -24,7 +24,7 @@ final class WordListMVVMImpl: WordListMVVM {
         let model = WordListModelImpl(viewModelBlock: { viewModelLazy },
                                       cudOperations: cudOperations,
                                       translationService: translationService,
-                                      notificationCenter: notificationCenter,
+                                      wordItemStream: wordItemStream,
                                       logger: logger)
         let viewModel = WordListViewModelImpl(model: model, view: view)
 

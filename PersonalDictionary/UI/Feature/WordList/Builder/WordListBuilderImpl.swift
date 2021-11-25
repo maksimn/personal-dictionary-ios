@@ -11,7 +11,7 @@ final class WordListBuilderImpl: WordListBuilder {
 
     private let cudOperations: WordItemCUDOperations
     private let translationService: TranslationService
-    private let notificationCenter: NotificationCenter
+    private let wordItemStream: WordItemStream
     private let appViewConfigs: AppViewConfigs
     private let logger: Logger
 
@@ -37,12 +37,12 @@ final class WordListBuilderImpl: WordListBuilder {
 
     init(cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
-         notificationCenter: NotificationCenter,
+         wordItemStream: WordItemStream,
          appViewConfigs: AppViewConfigs,
          logger: Logger) {
         self.cudOperations = cudOperations
         self.translationService = translationService
-        self.notificationCenter = notificationCenter
+        self.wordItemStream = wordItemStream
         self.appViewConfigs = appViewConfigs
         self.logger = logger
     }
@@ -50,7 +50,7 @@ final class WordListBuilderImpl: WordListBuilder {
     func build() -> WordListMVVM {
         WordListMVVMImpl(cudOperations: cudOperations,
                          translationService: translationService,
-                         notificationCenter: notificationCenter,
+                         wordItemStream: wordItemStream,
                          viewParams: viewParams,
                          logger: logger)
     }

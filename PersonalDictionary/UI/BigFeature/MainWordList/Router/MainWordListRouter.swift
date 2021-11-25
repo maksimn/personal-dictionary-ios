@@ -7,7 +7,7 @@
 
 protocol MainWordListRouter {
 
-    func navigateToNewWord()
+    func navigateToNewWord(listener: NewWordListener?)
 
     func navigateToSearch()
 }

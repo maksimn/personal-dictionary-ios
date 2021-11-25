@@ -13,7 +13,7 @@ final class WordListModelImpl: WordListModel {
     private lazy var viewModel: WordListViewModel? = viewModelBlock()
 
     private let cudOperations: WordItemCUDOperations
-    let notificationCenter: NotificationCenter
+    private let wordItemStream: WordItemStream
     private let translationService: TranslationService
     private let logger: Logger
 
@@ -28,14 +28,14 @@ final class WordListModelImpl: WordListModel {
     init(viewModelBlock: @escaping () -> WordListViewModel?,
          cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
-         notificationCenter: NotificationCenter,
+         wordItemStream: WordItemStream,
          logger: Logger) {
         self.viewModelBlock = viewModelBlock
         self.cudOperations = cudOperations
         self.translationService = translationService
-        self.notificationCenter = notificationCenter
+        self.wordItemStream = wordItemStream
         self.logger = logger
-        addObservers()
+        subscribeToWordItemStream()
     }
 
     func remove(_ wordItem: WordItem, at position: Int) {
@@ -46,7 +46,7 @@ final class WordListModelImpl: WordListModel {
         cudOperations.remove(with: wordItem.id)
             .subscribe()
             .disposed(by: disposeBag)
-        notificationCenter.post(name: .removeWord, object: nil, userInfo: [Notification.Name.removeWord: wordItem])
+        wordItemStream.sendRemovedWordItem(wordItem)
     }
 
     func requestTranslationsIfNeededWithin(startPosition: Int, endPosition: Int) {
@@ -61,9 +61,9 @@ final class WordListModelImpl: WordListModel {
         }
     }
 
-    // MARK: - Events
+    // MARK: - Private
 
-    func addNewWord(_ wordItem: WordItem) {
+    private func addNewWord(_ wordItem: WordItem) {
         let newWordPosition = 0
         var wordList = data.wordList
 
@@ -80,8 +80,6 @@ final class WordListModelImpl: WordListModel {
             remove(wordItem, at: position)
         }
     }
-
-    // MARK: - Private
 
     private func requestTranslation(for wordItem: WordItem, _ position: Int) {
         translationService.fetchTranslation(for: wordItem)
@@ -103,5 +101,17 @@ final class WordListModelImpl: WordListModel {
             .subscribe()
             .disposed(by: disposeBag)
         data = WordListData(wordList: wordList, changedItemPosition: position)
+    }
+
+    private func subscribeToWordItemStream() {
+        wordItemStream.newWordItem
+            .subscribe(onNext: { wordItem in
+                self.addNewWord(wordItem)
+            })
+            .disposed(by: disposeBag)
+        wordItemStream.removedWordItem
+            .subscribe(onNext: { wordItem in
+                self.remove(wordItem: wordItem)
+            }).disposed(by: disposeBag)
     }
 }
