@@ -31,8 +31,7 @@ final class MainWordListRouterImpl: MainWordListRouter {
     }
 
     func navigateToSearch() {
-        let mvvm = searchBuilder.build()
-        guard let searchWordVC = mvvm.viewController else { return }
+        let searchWordVC = searchBuilder.build()
 
         navigationController.pushViewController(searchWordVC, animated: true)
     }

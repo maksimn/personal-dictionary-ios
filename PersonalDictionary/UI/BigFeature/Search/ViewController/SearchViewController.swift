@@ -16,12 +16,12 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
     var searchResultTextLabel: TextLabel?
     var searchModePickerMVVM: SearchModePickerMVVM?
 
-    init(_ appViewConfigs: AppViewConfigs,
-         _ searchTextInputBuilder: SearchTextInputBuilder,
-         _ searchEngineBuilder: SearchEngineBuilder,
-         _ wordListBuilder: WordListBuilder,
-         _ searchModePickerBuilder: SearchModePickerBuilder,
-         _ searchResultTextLabelParams: TextLabelParams) {
+    init(appViewConfigs: AppViewConfigs,
+         searchTextInputBuilder: SearchTextInputBuilder,
+         searchEngineBuilder: SearchEngineBuilder,
+         wordListBuilder: WordListBuilder,
+         searchModePickerBuilder: SearchModePickerBuilder,
+         searchResultTextLabelParams: TextLabelParams) {
         searchEngine = searchEngineBuilder.build()
         wordListMVVM = wordListBuilder.build()
         super.init(nibName: nil, bundle: nil)

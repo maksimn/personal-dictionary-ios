@@ -17,6 +17,10 @@ final class SearchBuilderImpl: SearchBuilder {
                                                               text: NSLocalizedString("No words found", comment: ""))
     private let appViewConfigs: AppViewConfigs
 
+    private let searchTextInputBuilder = SearchTextInputBuilderImpl()
+    private let searchModePickerBuilder = SearchModePickerBuilderImpl()
+    private lazy var searchEngineBuilder = SearchEngineBuilderImpl(wordListFetcher: wordListFetcher)
+
     init(appViewConfigs: AppViewConfigs,
          wordListFetcher: WordListFetcher,
          wordListBuilder: WordListBuilder) {
@@ -25,10 +29,12 @@ final class SearchBuilderImpl: SearchBuilder {
         self.wordListBuilder = wordListBuilder
     }
 
-    func build() -> SearchGraph {
-        SearchGraphImpl(appViewConfigs: appViewConfigs,
-                        wordListFetcher: wordListFetcher,
-                        wordListBuilder: wordListBuilder,
-                        searchResultTextLabelParams: searchResultTextLabelParams)
+    func build() -> UIViewController {
+        SearchViewController(appViewConfigs: appViewConfigs,
+                             searchTextInputBuilder: searchTextInputBuilder,
+                             searchEngineBuilder: searchEngineBuilder,
+                             wordListBuilder: wordListBuilder,
+                             searchModePickerBuilder: searchModePickerBuilder,
+                             searchResultTextLabelParams: searchResultTextLabelParams)
     }
 }
