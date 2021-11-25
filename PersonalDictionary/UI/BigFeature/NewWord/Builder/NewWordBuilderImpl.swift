@@ -26,11 +26,11 @@ final class NewWordBuilderImpl: NewWordBuilder {
     private lazy var langPickerBuilder = {
         LangPickerBuilderImpl(allLangs: langRepository.allLangs, appViewConfigs: appViewConfigs)
     }()
-    private let wordItemStream: WordItemStream
+    private let wordItemStream: NewWordItemStream
 
     init(appViewConfigs: AppViewConfigs,
          langRepository: LangRepository,
-         wordItemStream: WordItemStream) {
+         wordItemStream: NewWordItemStream) {
         self.appViewConfigs = appViewConfigs
         self.langRepository = langRepository
         self.wordItemStream = wordItemStream

@@ -15,7 +15,7 @@ final class WordListMVVMImpl: WordListMVVM {
 
     init(cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
-         wordItemStream: WordItemStream,
+         wordItemStream: ReadableWordItemStream & RemovedWordItemStream,
          viewParams: WordListViewParams,
          logger: Logger) {
         view = WordListViewController(params: viewParams)

@@ -13,7 +13,7 @@ final class WordListModelImpl: WordListModel {
     private lazy var viewModel: WordListViewModel? = viewModelBlock()
 
     private let cudOperations: WordItemCUDOperations
-    private let wordItemStream: WordItemStream
+    private let wordItemStream: ReadableWordItemStream & RemovedWordItemStream
     private let translationService: TranslationService
     private let logger: Logger
 
@@ -28,7 +28,7 @@ final class WordListModelImpl: WordListModel {
     init(viewModelBlock: @escaping () -> WordListViewModel?,
          cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
-         wordItemStream: WordItemStream,
+         wordItemStream: ReadableWordItemStream & RemovedWordItemStream,
          logger: Logger) {
         self.viewModelBlock = viewModelBlock
         self.cudOperations = cudOperations

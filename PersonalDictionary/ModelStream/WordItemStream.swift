@@ -7,13 +7,22 @@
 
 import RxSwift
 
-protocol WordItemStream: AnyObject {
+protocol ReadableWordItemStream: AnyObject {
 
     var newWordItem: Observable<WordItem> { get }
 
     var removedWordItem: Observable<WordItem> { get }
+}
+
+protocol NewWordItemStream: AnyObject {
 
     func sendNewWord(_ wordItem: WordItem)
+}
+
+protocol RemovedWordItemStream: AnyObject {
 
     func sendRemovedWordItem(_ wordItem: WordItem)
+}
+
+protocol WordItemStream: ReadableWordItemStream, NewWordItemStream, RemovedWordItemStream {
 }

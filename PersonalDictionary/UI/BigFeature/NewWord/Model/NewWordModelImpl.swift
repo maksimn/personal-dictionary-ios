@@ -12,7 +12,7 @@ class NewWordModelImpl: NewWordModel {
     weak var viewModel: NewWordViewModel?
 
     private var langRepository: LangRepository
-    private weak var wordItemStream: WordItemStream?
+    private weak var wordItemStream: NewWordItemStream?
 
     private(set) var sourceLang: Lang = empty {
         didSet {
@@ -28,7 +28,7 @@ class NewWordModelImpl: NewWordModel {
 
     private static let empty = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
 
-    init(_ langRepository: LangRepository, _ wordItemStream: WordItemStream) {
+    init(_ langRepository: LangRepository, _ wordItemStream: NewWordItemStream) {
         self.langRepository = langRepository
         self.wordItemStream = wordItemStream
     }
