@@ -612,8 +612,8 @@
 			isa = PBXGroup;
 			children = (
 				596D4F72273C251300B0DD01 /* Builder */,
-				596FFCB1273C7F280034E8AE /* Router */,
 				596D4F78273C255200B0DD01 /* Graph */,
+				596FFCB1273C7F280034E8AE /* Router */,
 				596D4F88273C264000B0DD01 /* ViewController */,
 			);
 			path = MainWordList;

@@ -12,7 +12,6 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
     private lazy var langRepository = { buildLangRepository() }()
 
     private let appConfigs: AppConfigs
-    private let navigationController = UINavigationController()
 
     private let mainWordListViewParams = MainWordListViewParams(
         staticContent: MainWordListStaticContent(navToNewWordImage: UIImage(named: "icon-plus")!),
@@ -36,7 +35,6 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
         MainWordListGraphImpl(viewParams: mainWordListViewParams,
                               wordListBuilder: createWordListBuilder(),
                               wordListFetcher: buildWordListRepository(),
-                              navigationController: navigationController,
                               newWordBuilder: createNewWordBuilder(),
                               searchBuilder: createSearchBuilder())
     }

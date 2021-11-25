@@ -9,29 +9,27 @@ import UIKit
 
 final class MainWordListGraphImpl: MainWordListGraph {
 
-    private let controller: MainWordListViewController
-
-    let navigationController: UINavigationController?
+    weak var navigationController: UINavigationController?
 
     init(viewParams: MainWordListViewParams,
          wordListBuilder: WordListBuilder,
          wordListFetcher: WordListFetcher,
-         navigationController: UINavigationController,
          newWordBuilder: NewWordBuilder,
          searchBuilder: SearchBuilder) {
-        self.navigationController = navigationController
+        let navigationController = UINavigationController()
         let visibleItemMaxCount = Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
         let router = MainWordListRouterImpl(navigationController: navigationController,
                                             newWordBuilder: newWordBuilder,
                                             searchBuilder: searchBuilder)
 
-        controller = MainWordListViewController(viewParams: viewParams,
-                                                wordListMVVM: wordListBuilder.build(),
-                                                wordListFetcher: wordListFetcher,
-                                                router: router,
-                                                visibleItemMaxCount: visibleItemMaxCount)
+        let controller = MainWordListViewController(viewParams: viewParams,
+                                                    wordListMVVM: wordListBuilder.build(),
+                                                    wordListFetcher: wordListFetcher,
+                                                    router: router,
+                                                    visibleItemMaxCount: visibleItemMaxCount)
 
         navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
         navigationController.setViewControllers([controller], animated: false)
+        self.navigationController = navigationController
     }
 }
