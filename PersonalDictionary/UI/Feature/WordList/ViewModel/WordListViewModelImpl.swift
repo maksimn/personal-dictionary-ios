@@ -28,4 +28,8 @@ final class WordListViewModelImpl: WordListViewModel {
     func requestTranslationsIfNeededWithin(startPosition: Int, endPosition: Int) {
         model.requestTranslationsIfNeededWithin(startPosition: startPosition, endPosition: endPosition)
     }
+
+    func sendRemovedWordItem(_ wordItem: WordItem) {
+        model.sendRemovedWordItem(wordItem)
+    }
 }

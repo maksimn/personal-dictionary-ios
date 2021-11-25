@@ -61,6 +61,7 @@ final class WordListViewController: UIViewController, WordListView {
         let item = tableDataSource.data.wordList[position]
 
         viewModel?.remove(item, at: position)
+        viewModel?.sendRemovedWordItem(item)
     }
 
     private func onTableViewScrollFinish() {

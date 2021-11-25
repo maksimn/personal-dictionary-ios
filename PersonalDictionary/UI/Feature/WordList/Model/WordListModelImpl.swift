@@ -46,7 +46,6 @@ final class WordListModelImpl: WordListModel {
         cudOperations.remove(with: wordItem.id)
             .subscribe()
             .disposed(by: disposeBag)
-        wordItemStream.sendRemovedWordItem(wordItem)
     }
 
     func requestTranslationsIfNeededWithin(startPosition: Int, endPosition: Int) {
@@ -59,6 +58,10 @@ final class WordListModelImpl: WordListModel {
         for position in startPosition..<endPosition where data.wordList[position].translation == nil {
             requestTranslation(for: data.wordList[position], position)
         }
+    }
+
+    func sendRemovedWordItem(_ wordItem: WordItem) {
+        wordItemStream.sendRemovedWordItem(wordItem)
     }
 
     // MARK: - Private
@@ -75,7 +78,7 @@ final class WordListModelImpl: WordListModel {
         requestTranslation(for: wordItem, newWordPosition)
     }
 
-    func remove(wordItem: WordItem) {
+    private func remove(wordItem: WordItem) {
         if let position = data.wordList.firstIndex(where: { $0.id == wordItem.id }) {
             remove(wordItem, at: position)
         }
