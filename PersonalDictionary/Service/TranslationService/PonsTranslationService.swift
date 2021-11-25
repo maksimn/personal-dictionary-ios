@@ -33,11 +33,10 @@ final class PonsTranslationService: TranslationService {
         let shortSourceLang = wordItem.sourceLang.shortName.lowercased()
         let qParam = "q=\(wordItem.text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
         let lParam = "l=\(shortSourceLang)\(wordItem.targetLang.shortName.lowercased())"
-        let inParam = "in=\(shortSourceLang)"
 
         logger.networkRequestStart(fetchTranslationRequestName)
         return coreService
-            .send(Http(urlString: apiData.url + "?" + lParam + "&" + qParam + "&" + inParam,
+            .send(Http(urlString: apiData.url + "?" + lParam + "&" + qParam,
                        method: "GET",
                        headers: [apiData.secretHeaderKey: apiData.secret],
                        body: nil))
