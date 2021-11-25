@@ -469,7 +469,7 @@
 		594C9D23273D1B6C007D5E16 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
-				5953CB4A27063D31006537B9 /* LangPicker */,
+				5953CB4A27063D31006537B9 /* LangPickerPopup */,
 				594C9D27273D2198007D5E16 /* NavToSearchView */,
 				59F83693273F437F001F1CC7 /* TextLabel */,
 				59A94302270CF2C00076F08B /* WordTableView */,
@@ -546,7 +546,7 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
-		5953CB4A27063D31006537B9 /* LangPicker */ = {
+		5953CB4A27063D31006537B9 /* LangPickerPopup */ = {
 			isa = PBXGroup;
 			children = (
 				5953CB4B27063D41006537B9 /* LangPickerController.swift */,
@@ -554,7 +554,7 @@
 				590F78FA2709D1A000BCBD2C /* LangPickerPopup+Layout.swift */,
 				59C163C1273D36A7002B1FCB /* LangPickerPopupParams.swift */,
 			);
-			path = LangPicker;
+			path = LangPickerPopup;
 			sourceTree = "<group>";
 		};
 		5967E785270FADDD00DCD8E4 /* UI */ = {
