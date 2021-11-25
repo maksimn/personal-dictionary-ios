@@ -18,8 +18,7 @@ final class MainWordListGraphImpl: MainWordListGraph {
          wordListFetcher: WordListFetcher,
          navigationController: UINavigationController,
          newWordBuilder: NewWordBuilder,
-         searchBuilder: SearchBuilder,
-         wordItemStream: WordItemStream) {
+         searchBuilder: SearchBuilder) {
         self.navigationController = navigationController
         let visibleItemMaxCount = Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
         let router = MainWordListRouterImpl(navigationController: navigationController,
@@ -30,8 +29,7 @@ final class MainWordListGraphImpl: MainWordListGraph {
                                                 wordListMVVM: wordListBuilder.build(),
                                                 wordListFetcher: wordListFetcher,
                                                 router: router,
-                                                visibleItemMaxCount: visibleItemMaxCount,
-                                                wordItemStream: wordItemStream)
+                                                visibleItemMaxCount: visibleItemMaxCount)
 
         navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
         navigationController.setViewControllers([controller], animated: false)

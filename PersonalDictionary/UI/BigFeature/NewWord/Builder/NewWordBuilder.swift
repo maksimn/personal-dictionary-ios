@@ -7,5 +7,5 @@
 
 protocol NewWordBuilder {
 
-    func build(withListener listener: NewWordListener?) -> NewWordMVVM
+    func build() -> NewWordMVVM
 }

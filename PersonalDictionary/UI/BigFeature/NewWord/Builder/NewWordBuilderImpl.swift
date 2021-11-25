@@ -26,16 +26,19 @@ final class NewWordBuilderImpl: NewWordBuilder {
     private lazy var langPickerBuilder = {
         LangPickerBuilderImpl(allLangs: langRepository.allLangs, appViewConfigs: appViewConfigs)
     }()
+    private let wordItemStream: WordItemStream
 
     init(appViewConfigs: AppViewConfigs,
-         langRepository: LangRepository) {
+         langRepository: LangRepository,
+         wordItemStream: WordItemStream) {
         self.appViewConfigs = appViewConfigs
         self.langRepository = langRepository
+        self.wordItemStream = wordItemStream
     }
 
-    func build(withListener listener: NewWordListener?) -> NewWordMVVM {
+    func build() -> NewWordMVVM {
         NewWordMVVMImpl(langRepository: langRepository,
-                        listener: listener,
+                        wordItemStream: wordItemStream,
                         viewParams: newWordViewParams,
                         langPickerBuilder: langPickerBuilder)
     }

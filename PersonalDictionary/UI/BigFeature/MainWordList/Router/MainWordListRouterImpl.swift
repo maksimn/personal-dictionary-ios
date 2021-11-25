@@ -21,8 +21,8 @@ final class MainWordListRouterImpl: MainWordListRouter {
         self.searchBuilder = searchBuilder
     }
 
-    func navigateToNewWord(listener: NewWordListener?) {
-        let newWordMVVM = newWordBuilder.build(withListener: listener)
+    func navigateToNewWord() {
+        let newWordMVVM = newWordBuilder.build()
         guard let newWordViewController = newWordMVVM.viewController else { return }
 
         newWordViewController.modalPresentationStyle = .overFullScreen

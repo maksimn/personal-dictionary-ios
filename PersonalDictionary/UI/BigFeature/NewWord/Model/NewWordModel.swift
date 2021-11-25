@@ -5,11 +5,6 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
-protocol NewWordListener: AnyObject {
-
-    func onNewWord(_ wordItem: WordItem)
-}
-
 protocol NewWordModel: InitiallyBindable {
 
     var viewModel: NewWordViewModel? { get set }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainWordListViewController: UIViewController, NewWordListener {
+class MainWordListViewController: UIViewController {
 
     let params: MainWordListViewParams
 
@@ -20,20 +20,16 @@ class MainWordListViewController: UIViewController, NewWordListener {
 
     let navToNewWordButton = UIButton()
 
-    let wordItemStream: WordItemStream
-
     init(viewParams: MainWordListViewParams,
          wordListMVVM: WordListMVVM,
          wordListFetcher: WordListFetcher,
          router: MainWordListRouter,
-         visibleItemMaxCount: Int,
-         wordItemStream: WordItemStream) {
+         visibleItemMaxCount: Int) {
         self.params = viewParams
         self.wordListMVVM = wordListMVVM
         self.wordListFetcher = wordListFetcher
         self.router = router
         self.visibleItemMaxCount = visibleItemMaxCount
-        self.wordItemStream = wordItemStream
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -53,7 +49,7 @@ class MainWordListViewController: UIViewController, NewWordListener {
 
     @objc
     func navigateToNewWord() {
-        router.navigateToNewWord(listener: self)
+        router.navigateToNewWord()
     }
 
     private func initWordListModel() {
@@ -62,9 +58,5 @@ class MainWordListViewController: UIViewController, NewWordListener {
 
         wordListModel.data = WordListData(wordList: wordList, changedItemPosition: nil)
         wordListModel.requestTranslationsIfNeededWithin(startPosition: 0, endPosition: visibleItemMaxCount + 1)
-    }
-
-    func onNewWord(_ wordItem: WordItem) {
-        wordItemStream.sendNewWord(wordItem)
     }
 }

@@ -12,11 +12,11 @@ final class NewWordMVVMImpl: NewWordMVVM {
     private let view: NewWordViewController
 
     init(langRepository: LangRepository,
-         listener: NewWordListener?,
+         wordItemStream: WordItemStream,
          viewParams: NewWordViewParams,
          langPickerBuilder: LangPickerBuilder) {
         view = NewWordViewController(params: viewParams, langPickerBuilder: langPickerBuilder)
-        let model = NewWordModelImpl(langRepository, listener)
+        let model = NewWordModelImpl(langRepository, wordItemStream)
         let viewModel = NewWordViewModelImpl(model: model, view: view)
 
         view.viewModel = viewModel

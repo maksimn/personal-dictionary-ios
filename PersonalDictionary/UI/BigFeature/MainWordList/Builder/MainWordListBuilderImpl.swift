@@ -38,8 +38,7 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
                               wordListFetcher: buildWordListRepository(),
                               navigationController: navigationController,
                               newWordBuilder: createNewWordBuilder(),
-                              searchBuilder: createSearchBuilder(),
-                              wordItemStream: wordItemStream)
+                              searchBuilder: createSearchBuilder())
     }
 
     private func createSearchBuilder() -> SearchBuilder {
@@ -50,7 +49,8 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
 
     private func createNewWordBuilder() -> NewWordBuilder {
         NewWordBuilderImpl(appViewConfigs: appConfigs.appViewConfigs,
-                           langRepository: langRepository)
+                           langRepository: langRepository,
+                           wordItemStream: wordItemStream)
     }
 
     private func buildLogger() -> Logger {

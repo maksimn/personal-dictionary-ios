@@ -12,7 +12,7 @@ class NewWordModelImpl: NewWordModel {
     weak var viewModel: NewWordViewModel?
 
     private var langRepository: LangRepository
-    private weak var listener: NewWordListener?
+    private weak var wordItemStream: WordItemStream?
 
     private(set) var sourceLang: Lang = empty {
         didSet {
@@ -28,9 +28,9 @@ class NewWordModelImpl: NewWordModel {
 
     private static let empty = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
 
-    init(_ langRepository: LangRepository, _ listener: NewWordListener?) {
+    init(_ langRepository: LangRepository, _ wordItemStream: WordItemStream) {
         self.langRepository = langRepository
-        self.listener = listener
+        self.wordItemStream = wordItemStream
     }
 
     func bindInitially() {
@@ -45,7 +45,7 @@ class NewWordModelImpl: NewWordModel {
         }
         let wordItem = WordItem(text: text, sourceLang: sourceLang, targetLang: targetLang)
 
-        listener?.onNewWord(wordItem)
+        wordItemStream?.sendNewWord(wordItem)
     }
 
     func update(_ langType: SelectedLangType, _ lang: Lang) {
