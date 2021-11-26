@@ -2,6 +2,8 @@ PODS:
   - Cuckoo (1.5.1):
     - Cuckoo/Swift (= 1.5.1)
   - Cuckoo/Swift (1.5.1)
+  - RxBlocking (5.1.0):
+    - RxSwift (~> 5)
   - RxCocoa (5.1.0):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -13,6 +15,7 @@ PODS:
 
 DEPENDENCIES:
   - Cuckoo
+  - RxBlocking (= 5.1)
   - RxCocoa (= 5.1)
   - RxSwift (= 5.1)
   - SnapKit (~> 4.0)
@@ -21,6 +24,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Cuckoo
+    - RxBlocking
     - RxCocoa
     - RxRelay
     - RxSwift
@@ -29,12 +33,13 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Cuckoo: 9124fe138270854903483c270370e6e7658fbc9b
+  RxBlocking: 5ef131267220f92ef68531dd6afeaf407cd6b41a
   RxCocoa: 13d2a4d7546a34b8ececae8c281e4ea1dbb94f2b
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: ad5874f24bb0dbffd1e9bb8443604e3578796c7a
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
 
-PODFILE CHECKSUM: b826dd069a291a35e90c24e30f8048df2f94de62
+PODFILE CHECKSUM: 34e418444f1325c9b8e956f9c7777fe7883f5ccc
 
 COCOAPODS: 1.10.0

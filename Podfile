@@ -10,7 +10,8 @@ target 'PersonalDictionary' do
     inherit! :search_paths
     
     pod 'Cuckoo'
-  
+    pod 'RxBlocking', '5.1'
+
   end
 
   target 'PersonalDictionaryUITests' do

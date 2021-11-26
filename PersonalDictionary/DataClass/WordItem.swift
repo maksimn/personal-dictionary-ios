@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WordItem {
+struct WordItem: Equatable {
 
     typealias Id = Tagged<WordItem, String>
 
@@ -39,5 +39,14 @@ struct WordItem {
                  sourceLang: sourceLang,
                  targetLang: targetLang,
                  createdAt: createdAt)
+    }
+
+    static func == (lhs: WordItem, rhs: WordItem) -> Bool {
+        return lhs.id == rhs.id &&
+            lhs.text == rhs.text &&
+            lhs.translation == rhs.translation &&
+            lhs.sourceLang.id == rhs.sourceLang.id &&
+            lhs.targetLang.id == rhs.targetLang.id &&
+            lhs.createdAt == rhs.createdAt
     }
 }
