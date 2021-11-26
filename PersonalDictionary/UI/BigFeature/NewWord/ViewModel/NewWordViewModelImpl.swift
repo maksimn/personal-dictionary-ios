@@ -7,7 +7,7 @@
 
 class NewWordViewModelImpl: NewWordViewModel {
 
-    private unowned let view: NewWordView
+    private weak var view: NewWordView?
     private let model: NewWordModel
 
     private static let empty = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
@@ -19,19 +19,19 @@ class NewWordViewModelImpl: NewWordViewModel {
 
     var text: String = "" {
         didSet {
-            view.set(text: text)
+            view?.set(text: text)
         }
     }
 
     var sourceLang: Lang = empty {
         didSet {
-            view.set(sourceLang: sourceLang)
+            view?.set(sourceLang: sourceLang)
         }
     }
 
     var targetLang: Lang = empty {
         didSet {
-            view.set(targetLang: targetLang)
+            view?.set(targetLang: targetLang)
         }
     }
 

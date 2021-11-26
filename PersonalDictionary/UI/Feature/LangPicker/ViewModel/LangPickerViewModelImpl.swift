@@ -7,7 +7,7 @@
 
 final class LangPickerViewModelImpl: LangPickerViewModel {
 
-    private unowned let view: LangPickerView
+    private weak var view: LangPickerView?
     private let model: LangPickerModel
 
     init(model: LangPickerModel, view: LangPickerView) {
@@ -18,7 +18,7 @@ final class LangPickerViewModelImpl: LangPickerViewModel {
     var langSelectorData: LangSelectorData? {
         didSet {
             guard let data = langSelectorData else { return }
-            view.set(langSelectorData: data)
+            view?.set(langSelectorData: data)
         }
     }
 

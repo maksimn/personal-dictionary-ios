@@ -7,7 +7,7 @@
 
 final class SearchModePickerViewModelImpl: SearchModePickerViewModel {
 
-    private unowned let view: SearchModePickerView
+    private weak var view: SearchModePickerView?
     private let model: SearchModePickerModel
 
     init(model: SearchModePickerModel, view: SearchModePickerView) {
@@ -18,7 +18,7 @@ final class SearchModePickerViewModelImpl: SearchModePickerViewModel {
     var searchMode: SearchMode? {
         didSet {
             guard let searchMode = searchMode else { return }
-            view.set(searchMode)
+            view?.set(searchMode)
         }
     }
 

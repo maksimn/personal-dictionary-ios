@@ -7,7 +7,7 @@
 
 final class SearchTextInputViewModelImpl: SearchTextInputViewModel {
 
-    private unowned let view: SearchTextInputView
+    private weak var view: SearchTextInputView?
     private let model: SearchTextInputModel
 
     init(model: SearchTextInputModel, view: SearchTextInputView) {
@@ -17,7 +17,7 @@ final class SearchTextInputViewModelImpl: SearchTextInputViewModel {
 
     var searchText: String = "" {
         didSet {
-            view.set(searchText)
+            view?.set(searchText)
         }
     }
 

@@ -7,8 +7,8 @@
 
 final class WordListViewModelImpl: WordListViewModel {
 
-    unowned let view: WordListView
-    let model: WordListModel
+    private weak var view: WordListView?
+    private let model: WordListModel
 
     init(model: WordListModel, view: WordListView) {
         self.model = model
@@ -17,7 +17,7 @@ final class WordListViewModelImpl: WordListViewModel {
 
     var wordListData: WordListData = WordListData(wordList: [], changedItemPosition: nil) {
         didSet {
-            view.set(wordListData)
+            view?.set(wordListData)
         }
     }
 

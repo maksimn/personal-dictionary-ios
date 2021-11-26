@@ -20,7 +20,7 @@ final class WordTableDataSource: NSObject, UITableViewDataSource {
 
     private var previousWordCount = -1
 
-    private unowned let tableView: UITableView
+    private weak var tableView: UITableView?
 
     private let cellReuseIdentifier: String
 
@@ -59,27 +59,27 @@ final class WordTableDataSource: NSObject, UITableViewDataSource {
         if wordList.count == previousWordCount - 1 {
             guard let changedItemPosition = data.changedItemPosition,
                   changedItemPosition > -1 && changedItemPosition <= data.wordList.count else {
-                tableView.reloadData()
+                tableView?.reloadData()
                 return
             }
 
-            tableView.deleteRows(at: [IndexPath(row: changedItemPosition, section: 0)], with: .automatic)
+            tableView?.deleteRows(at: [IndexPath(row: changedItemPosition, section: 0)], with: .automatic)
         } else if wordList.count == previousWordCount {
             guard let changedItemPosition = verifyChangedItemPosition() else {
-                tableView.reloadData()
+                tableView?.reloadData()
                 return
             }
 
-            tableView.reloadRows(at: [IndexPath(row: changedItemPosition, section: 0)], with: .automatic)
+            tableView?.reloadRows(at: [IndexPath(row: changedItemPosition, section: 0)], with: .automatic)
         } else if wordList.count == previousWordCount + 1 {
             guard let changedItemPosition = verifyChangedItemPosition() else {
-                tableView.reloadData()
+                tableView?.reloadData()
                 return
             }
 
-            tableView.insertRows(at: [IndexPath(row: changedItemPosition, section: 0)], with: .automatic)
+            tableView?.insertRows(at: [IndexPath(row: changedItemPosition, section: 0)], with: .automatic)
         } else {
-            tableView.reloadData()
+            tableView?.reloadData()
         }
     }
 
