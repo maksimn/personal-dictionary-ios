@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		590F78F32709317800BCBD2C /* LangPickerPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F78F22709317800BCBD2C /* LangPickerPopup.swift */; };
-		590F78FB2709D1A000BCBD2C /* LangPickerPopup+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F78FA2709D1A000BCBD2C /* LangPickerPopup+Layout.swift */; };
 		5910A445270EA04E00631446 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5910A444270EA04E00631446 /* Logger.swift */; };
 		5910A44A270EA07400631446 /* SimpleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5910A449270EA07400631446 /* SimpleLogger.swift */; };
 		591EDC8E2713716B00008074 /* AppConfigs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591EDC8D2713716B00008074 /* AppConfigs.swift */; };
@@ -89,7 +88,6 @@
 		597C2C27273A858F009780D5 /* LangPickerViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C26273A858E009780D5 /* LangPickerViewModelImpl.swift */; };
 		597C2C37273A920A009780D5 /* LangSelectorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C36273A920A009780D5 /* LangSelectorData.swift */; };
 		597C2C42273BB99A009780D5 /* InitiallyBindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C41273BB99A009780D5 /* InitiallyBindable.swift */; };
-		597C2C50273BD4B9009780D5 /* LangPickerViewParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C4F273BD4B9009780D5 /* LangPickerViewParams.swift */; };
 		597C2C56273BD9F5009780D5 /* LangPickerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C55273BD9F5009780D5 /* LangPickerBuilder.swift */; };
 		597C2C5B273BDA0D009780D5 /* LangPickerBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C5A273BDA0D009780D5 /* LangPickerBuilderImpl.swift */; };
 		598B79DF270C45E1007ED9FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 598B79E1270C45E1007ED9FD /* Localizable.strings */; };
@@ -160,7 +158,6 @@
 		11F2A6FDE4C3A546FFBF62BB /* Pods_PersonalDictionary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PersonalDictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A06193F6648141055C88D89 /* Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig"; path = "Target Support Files/Pods-PersonalDictionary-PersonalDictionaryUITests/Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig"; sourceTree = "<group>"; };
 		590F78F22709317800BCBD2C /* LangPickerPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerPopup.swift; sourceTree = "<group>"; };
-		590F78FA2709D1A000BCBD2C /* LangPickerPopup+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LangPickerPopup+Layout.swift"; sourceTree = "<group>"; };
 		5910A444270EA04E00631446 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		5910A449270EA07400631446 /* SimpleLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleLogger.swift; sourceTree = "<group>"; };
 		591EDC8D2713716B00008074 /* AppConfigs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigs.swift; sourceTree = "<group>"; };
@@ -247,7 +244,6 @@
 		597C2C26273A858E009780D5 /* LangPickerViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerViewModelImpl.swift; sourceTree = "<group>"; };
 		597C2C36273A920A009780D5 /* LangSelectorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangSelectorData.swift; sourceTree = "<group>"; };
 		597C2C41273BB99A009780D5 /* InitiallyBindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiallyBindable.swift; sourceTree = "<group>"; };
-		597C2C4F273BD4B9009780D5 /* LangPickerViewParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerViewParams.swift; sourceTree = "<group>"; };
 		597C2C55273BD9F5009780D5 /* LangPickerBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerBuilder.swift; sourceTree = "<group>"; };
 		597C2C5A273BDA0D009780D5 /* LangPickerBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerBuilderImpl.swift; sourceTree = "<group>"; };
 		598B79E0270C45E1007ED9FD /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -550,7 +546,6 @@
 			children = (
 				5953CB4B27063D41006537B9 /* LangPickerController.swift */,
 				590F78F22709317800BCBD2C /* LangPickerPopup.swift */,
-				590F78FA2709D1A000BCBD2C /* LangPickerPopup+Layout.swift */,
 				59C163C1273D36A7002B1FCB /* LangPickerPopupParams.swift */,
 			);
 			path = LangPickerPopup;
@@ -828,7 +823,6 @@
 			children = (
 				597C2C17273A8506009780D5 /* LangPickerView.swift */,
 				597C2C1C273A8543009780D5 /* LangPickerViewImpl.swift */,
-				597C2C4F273BD4B9009780D5 /* LangPickerViewParams.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1496,7 +1490,6 @@
 				59F836CB273FAFF9001F1CC7 /* SearchModePickerBuilderImpl.swift in Sources */,
 				5925055C273E70A400A8621A /* SearchTextInputMVVMImpl.swift in Sources */,
 				59A942D2270C500F0076F08B /* WordListModel.swift in Sources */,
-				597C2C50273BD4B9009780D5 /* LangPickerViewParams.swift in Sources */,
 				597C2C56273BD9F5009780D5 /* LangPickerBuilder.swift in Sources */,
 				596FFCA2273C606B0034E8AE /* WordListBuilderImpl.swift in Sources */,
 				591EDCB62713AA7A00008074 /* MainWordListRouterImpl.swift in Sources */,
@@ -1517,7 +1510,6 @@
 				596D720527051D4E00872D6C /* SceneDelegate.swift in Sources */,
 				59F836E4273FB040001F1CC7 /* SearchModePickerView.swift in Sources */,
 				59A98D75273CF08D00AE4DD5 /* SearchBuilderImpl.swift in Sources */,
-				590F78FB2709D1A000BCBD2C /* LangPickerPopup+Layout.swift in Sources */,
 				59C163C2273D36A7002B1FCB /* LangPickerPopupParams.swift in Sources */,
 				59F836E9273FB04C001F1CC7 /* SearchModePickerViewImpl.swift in Sources */,
 				5953CB3E27062F02006537B9 /* LangRepositoryImpl.swift in Sources */,

@@ -64,7 +64,7 @@ class NewWordViewController: UIViewController, NewWordView {
 
     private func showLangPickerView(selectedLangType: SelectedLangType) {
         guard let lang = selectedLangType == .source ? viewModel?.sourceLang : viewModel?.targetLang else { return }
-        let langPickerMVVM = langPickerBuilder.build(with: lang,
+        let langPickerMVVM = langPickerBuilder.build(withInitLang: lang,
                                                      selectedLangType: selectedLangType,
                                                      listener: self)
 

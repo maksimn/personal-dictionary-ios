@@ -7,19 +7,18 @@
 
 import UIKit
 
+typealias LangPickerViewParams = LangPickerPopupParams
+
 final class LangPickerViewImpl: UIView, LangPickerView {
 
     var viewModel: LangPickerViewModel?
 
     private var langPickerPopup: LangPickerPopup?
 
-    private let popupParams: LangPickerPopupParams
+    private let params: LangPickerPopupParams
 
     init(params: LangPickerViewParams) {
-        self.popupParams = LangPickerPopupParams(
-            staticContent: LangPickerPopupStaticContent(selectButtonTitle: params.staticContent.selectButtonTitle),
-            styles: LangPickerPopupStyles(backgroundColor: params.styles.backgroundColor)
-        )
+        self.params = params
         super.init(frame: .zero)
     }
 
@@ -28,9 +27,9 @@ final class LangPickerViewImpl: UIView, LangPickerView {
     }
 
     func set(langSelectorData: LangSelectorData) {
-        langPickerPopup = LangPickerPopup(params: popupParams,
+        langPickerPopup = LangPickerPopup(params: params,
                                           initialLang: langSelectorData.selectedLang,
-                                          langPickerController: LangPickerController(langs: langSelectorData.allLangs),
+                                          allLangs: langSelectorData.allLangs,
                                           onSelectLang: { [weak self] lang in
                                             self?.onSelectLang(lang)
                                           })
@@ -40,7 +39,7 @@ final class LangPickerViewImpl: UIView, LangPickerView {
         }
     }
 
-    func onSelectLang(_ lang: Lang) {
+    private func onSelectLang(_ lang: Lang) {
         viewModel?.sendSelectedLang(lang)
     }
 }

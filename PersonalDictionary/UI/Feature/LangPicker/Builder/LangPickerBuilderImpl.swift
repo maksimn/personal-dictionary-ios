@@ -11,10 +11,10 @@ final class LangPickerBuilderImpl: LangPickerBuilder {
 
     private lazy var viewParams = {
         LangPickerViewParams(
-            staticContent: LangPickerViewStaticContent(
+            staticContent: LangPickerPopupStaticContent(
                 selectButtonTitle: NSLocalizedString("Select", comment: "")
             ),
-            styles: LangPickerViewStyles(
+            styles: LangPickerPopupStyles(
                 backgroundColor: appViewConfigs.appBackgroundColor
             )
         )
@@ -29,7 +29,7 @@ final class LangPickerBuilderImpl: LangPickerBuilder {
         self.appViewConfigs = appViewConfigs
     }
 
-    func build(with initLang: Lang,
+    func build(withInitLang initLang: Lang,
                selectedLangType: SelectedLangType,
                listener: LangPickerListener?) -> LangPickerMVVM {
         LangPickerMVVMImpl(with: LangSelectorData(allLangs: allLangs,
