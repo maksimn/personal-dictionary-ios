@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewWordViewController: UIViewController, NewWordView {
+class NewWordViewController: UIViewController, NewWordView, LangPickerListener, UITextFieldDelegate {
 
     var viewModel: NewWordViewModel?
 
@@ -36,7 +36,7 @@ class NewWordViewController: UIViewController, NewWordView {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
-        initChildFeature(langPickerMVVM: langPickerMVVM)
+        addChildFeature(langPickerMVVM: langPickerMVVM)
     }
 
     func set(text: String) {
@@ -51,27 +51,26 @@ class NewWordViewController: UIViewController, NewWordView {
         targetLangLabel.text = targetLang.name
     }
 
-    private func dismissLangPicker() {
-        langPickerMVVM?.uiview?.isHidden = true
+    // MARK: - UITextFieldDelegate
+
+    @objc
+    func textFieldDidChange(_ textField: UITextField) {
+        viewModel?.text = textField.text ?? ""
     }
 
-    private func sendNewWordEventAndDismiss() {
-        viewModel?.sendNewWordEvent()
-        dismiss(animated: true, completion: nil)
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        sendNewWordEventAndDismiss()
+        return true
     }
 
-    private func showLangPickerView(selectedLangType: SelectedLangType) {
-        guard let lang = selectedLangType == .source ? viewModel?.sourceLang : viewModel?.targetLang else { return }
-        guard let langPickerModel = langPickerMVVM?.model else { return }
+    // MARK: - LangPickerListener
 
-        langPickerMVVM?.uiview?.isHidden = false
-        langPickerModel.listener = self
-        langPickerModel.data = LangSelectorData(selectedLang: lang, selectedLangType: selectedLangType)
+    func onLangSelected(_ data: LangSelectorData) {
+        viewModel?.updateModel(data.selectedLangType, data.selectedLang)
+        dismissLangPicker()
     }
-}
 
-// User Action handlers
-extension NewWordViewController: UITextFieldDelegate, LangPickerListener {
+    // MARK: - User Action Handlers
 
     @objc
     func onSourceLangLabelTap() {
@@ -88,18 +87,22 @@ extension NewWordViewController: UITextFieldDelegate, LangPickerListener {
         sendNewWordEventAndDismiss()
     }
 
-    @objc
-    func textFieldDidChange(_ textField: UITextField) {
-        viewModel?.text = textField.text ?? ""
+    // MARK: - Private
+
+    private func dismissLangPicker() {
+        langPickerMVVM?.uiview?.isHidden = true
     }
 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        sendNewWordEventAndDismiss()
-        return true
+    private func sendNewWordEventAndDismiss() {
+        viewModel?.sendNewWordEvent()
+        dismiss(animated: true, completion: nil)
     }
 
-    func onLangSelected(_ data: LangSelectorData) {
-        viewModel?.updateModel(data.selectedLangType, data.selectedLang)
-        dismissLangPicker()
+    private func showLangPickerView(selectedLangType: SelectedLangType) {
+        guard let lang = selectedLangType == .source ? viewModel?.sourceLang : viewModel?.targetLang else { return }
+        guard let langPickerModel = langPickerMVVM?.model else { return }
+
+        langPickerMVVM?.uiview?.isHidden = false
+        langPickerModel.data = LangSelectorData(selectedLang: lang, selectedLangType: selectedLangType)
     }
 }

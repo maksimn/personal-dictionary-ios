@@ -11,7 +11,7 @@ final class WordListBuilderImpl: WordListBuilder {
 
     private let cudOperations: WordItemCUDOperations
     private let translationService: TranslationService
-    private let wordItemStream: ReadableWordItemStream & RemovedWordItemStream
+    private let wordItemStream: ReadableWordItemStream & RemovedWordItemStream = WordItemStreamImpl.instance
     private let appViewConfigs: AppViewConfigs
     private let logger: Logger
 
@@ -37,12 +37,10 @@ final class WordListBuilderImpl: WordListBuilder {
 
     init(cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
-         wordItemStream: ReadableWordItemStream & RemovedWordItemStream,
          appViewConfigs: AppViewConfigs,
          logger: Logger) {
         self.cudOperations = cudOperations
         self.translationService = translationService
-        self.wordItemStream = wordItemStream
         self.appViewConfigs = appViewConfigs
         self.logger = logger
     }

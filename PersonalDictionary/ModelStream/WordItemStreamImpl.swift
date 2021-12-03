@@ -13,6 +13,10 @@ final class WordItemStreamImpl: WordItemStream {
     private let newWordPublishRelay = PublishRelay<WordItem>()
     private let removedWordPublishRelay = PublishRelay<WordItem>()
 
+    private init() {}
+
+    static let instance = WordItemStreamImpl()
+
     var newWordItem: Observable<WordItem> {
         newWordPublishRelay.asObservable()
     }
