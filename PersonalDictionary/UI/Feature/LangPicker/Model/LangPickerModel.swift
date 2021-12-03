@@ -10,9 +10,11 @@ protocol LangPickerListener: AnyObject {
     func onLangSelected(_ data: LangSelectorData)
 }
 
-protocol LangPickerModel: InitiallyBindable {
+protocol LangPickerModel: AnyObject {
 
-    var viewModel: LangPickerViewModel? { get set }
+    var data: LangSelectorData? { get set }
+
+    var listener: LangPickerListener? { get set }
 
     func sendSelectedLang(_ lang: Lang)
 }

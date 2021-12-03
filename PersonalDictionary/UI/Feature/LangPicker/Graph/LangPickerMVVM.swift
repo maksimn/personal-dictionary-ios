@@ -10,4 +10,6 @@ import UIKit
 protocol LangPickerMVVM {
 
     var uiview: UIView? { get }
+
+    var model: LangPickerModel? { get }
 }

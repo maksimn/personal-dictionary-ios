@@ -11,19 +11,20 @@ final class LangPickerMVVMImpl: LangPickerMVVM {
 
     private let view: LangPickerViewImpl
 
-    init(with data: LangSelectorData,
-         listener: LangPickerListener?,
-         viewParams: LangPickerViewParams) {
-        view = LangPickerViewImpl(params: viewParams)
-        let model = LangPickerModelImpl(data: data, listener: listener)
-        let viewModel = LangPickerViewModelImpl(model: model, view: view)
-
-        view.viewModel = viewModel
-        model.viewModel = viewModel
-        model.bindInitially()
-    }
-
     var uiview: UIView? {
         view
+    }
+
+    weak var model: LangPickerModel?
+
+    init(allLangs: [Lang],
+         viewParams: LangPickerViewParams) {
+        view = LangPickerViewImpl(params: viewParams, allLangs: allLangs)
+        let model = LangPickerModelImpl()
+        let viewModel = LangPickerViewModelImpl(model: model, view: view)
+
+        model.viewModel = viewModel
+        view.viewModel = viewModel
+        self.model = model
     }
 }

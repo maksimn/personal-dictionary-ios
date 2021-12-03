@@ -8,7 +8,6 @@
 enum SelectedLangType { case source, target }
 
 struct LangSelectorData {
-    let allLangs: [Lang]
     let selectedLang: Lang
     let selectedLangType: SelectedLangType
 }

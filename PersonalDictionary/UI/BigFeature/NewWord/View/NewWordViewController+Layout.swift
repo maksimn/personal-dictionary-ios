@@ -20,6 +20,15 @@ extension NewWordViewController {
         initOkButton()
     }
 
+    func initChildFeature(langPickerMVVM: LangPickerMVVM?) {
+        guard let langPickerView = langPickerMVVM?.uiview else { return }
+        view.addSubview(langPickerView)
+        langPickerView.snp.makeConstraints { make -> Void in
+            make.edges.equalTo(contentView)
+        }
+        langPickerView.isHidden = true
+    }
+
     private func addSubviews() {
         [contentView, sourceLangLabel, targetLangLabel, arrowLabel, textField, okButton]
             .forEach { view.addSubview($0) }

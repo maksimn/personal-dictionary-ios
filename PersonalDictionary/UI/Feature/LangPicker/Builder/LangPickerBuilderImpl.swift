@@ -29,13 +29,8 @@ final class LangPickerBuilderImpl: LangPickerBuilder {
         self.appViewConfigs = appViewConfigs
     }
 
-    func build(withInitLang initLang: Lang,
-               selectedLangType: SelectedLangType,
-               listener: LangPickerListener?) -> LangPickerMVVM {
-        LangPickerMVVMImpl(with: LangSelectorData(allLangs: allLangs,
-                                                  selectedLang: initLang,
-                                                  selectedLangType: selectedLangType),
-                           listener: listener,
+    func build() -> LangPickerMVVM {
+        LangPickerMVVMImpl(allLangs: allLangs,
                            viewParams: viewParams)
     }
 }

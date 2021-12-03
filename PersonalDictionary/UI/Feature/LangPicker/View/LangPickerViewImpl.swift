@@ -17,19 +17,11 @@ final class LangPickerViewImpl: UIView, LangPickerView {
 
     private let params: LangPickerPopupParams
 
-    init(params: LangPickerViewParams) {
+    init(params: LangPickerViewParams, allLangs: [Lang]) {
         self.params = params
         super.init(frame: .zero)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func set(langSelectorData: LangSelectorData) {
         langPickerPopup = LangPickerPopup(params: params,
-                                          initialLang: langSelectorData.selectedLang,
-                                          allLangs: langSelectorData.allLangs,
+                                          allLangs: allLangs,
                                           onSelectLang: { [weak self] lang in
                                             self?.onSelectLang(lang)
                                           })
@@ -37,6 +29,14 @@ final class LangPickerViewImpl: UIView, LangPickerView {
         langPickerPopup?.snp.makeConstraints { make -> Void in
             make.edges.equalTo(self)
         }
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func set(langSelectorData: LangSelectorData) {
+        langPickerPopup?.selectLang(langSelectorData.selectedLang)
     }
 
     private func onSelectLang(_ lang: Lang) {

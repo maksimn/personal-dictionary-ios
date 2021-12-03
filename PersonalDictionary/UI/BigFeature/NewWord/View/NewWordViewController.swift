@@ -20,15 +20,13 @@ class NewWordViewController: UIViewController, NewWordView {
     let okButton = UIButton()
     let textField = UITextField()
 
-    var langPickerView: UIView?
-
-    private let langPickerBuilder: LangPickerBuilder
+    private var langPickerMVVM: LangPickerMVVM? // Child Feature
 
     init(params: NewWordViewParams,
          langPickerBuilder: LangPickerBuilder) {
         self.params = params
-        self.langPickerBuilder = langPickerBuilder
         super.init(nibName: nil, bundle: nil)
+        langPickerMVVM = langPickerBuilder.build()
     }
 
     required init?(coder: NSCoder) {
@@ -38,6 +36,7 @@ class NewWordViewController: UIViewController, NewWordView {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
+        initChildFeature(langPickerMVVM: langPickerMVVM)
     }
 
     func set(text: String) {
@@ -53,8 +52,7 @@ class NewWordViewController: UIViewController, NewWordView {
     }
 
     private func dismissLangPicker() {
-        langPickerView?.removeFromSuperview()
-        langPickerView = nil
+        langPickerMVVM?.uiview?.isHidden = true
     }
 
     private func sendNewWordEventAndDismiss() {
@@ -64,15 +62,11 @@ class NewWordViewController: UIViewController, NewWordView {
 
     private func showLangPickerView(selectedLangType: SelectedLangType) {
         guard let lang = selectedLangType == .source ? viewModel?.sourceLang : viewModel?.targetLang else { return }
-        let langPickerMVVM = langPickerBuilder.build(withInitLang: lang,
-                                                     selectedLangType: selectedLangType,
-                                                     listener: self)
+        guard let langPickerModel = langPickerMVVM?.model else { return }
 
-        langPickerView = langPickerMVVM.uiview
-        view.addSubview(langPickerView ?? UIView())
-        langPickerView?.snp.makeConstraints { make -> Void in
-            make.edges.equalTo(contentView)
-        }
+        langPickerMVVM?.uiview?.isHidden = false
+        langPickerModel.listener = self
+        langPickerModel.data = LangSelectorData(selectedLang: lang, selectedLangType: selectedLangType)
     }
 }
 

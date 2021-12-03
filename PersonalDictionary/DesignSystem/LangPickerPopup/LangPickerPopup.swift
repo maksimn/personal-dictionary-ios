@@ -21,7 +21,6 @@ final class LangPickerPopup: UIView {
     private let onSelectLang: ((Lang) -> Void)?
 
     init(params: LangPickerPopupParams,
-         initialLang: Lang,
          allLangs: [Lang],
          onSelectLang: ((Lang) -> Void)?) {
         self.params = params
@@ -31,14 +30,13 @@ final class LangPickerPopup: UIView {
         self.backgroundColor = params.styles.backgroundColor
         layer.cornerRadius = 16
         initViews()
-        select(lang: initialLang)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func select(lang: Lang) {
+    func selectLang(_ lang: Lang) {
         guard let row = langPickerController.langs.firstIndex(where: { $0.id == lang.id }) else { return }
 
         pickerView.selectRow(row, inComponent: 0, animated: false)
