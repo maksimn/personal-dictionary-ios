@@ -117,6 +117,10 @@
 		59AAC39B275B986900068B00 /* SearchModePickerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AAC39A275B986900068B00 /* SearchModePickerDependencies.swift */; };
 		59AAC3A1275B9BF200068B00 /* SearchTextInputDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AAC3A0275B9BF200068B00 /* SearchTextInputDependencies.swift */; };
 		59AAC3AA275B9C8C00068B00 /* WordListDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AAC3A9275B9C8C00068B00 /* WordListDependencies.swift */; };
+		59AAC3BB275C15D300068B00 /* PersonalDictionaryAppBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AAC3BA275C15D300068B00 /* PersonalDictionaryAppBuilder.swift */; };
+		59AAC3C0275C160300068B00 /* PersonalDictionaryAppImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AAC3BF275C160300068B00 /* PersonalDictionaryAppImpl.swift */; };
+		59AAC3C5275C161400068B00 /* PersonalDictionaryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AAC3C4275C161400068B00 /* PersonalDictionaryApp.swift */; };
+		59AAC3CA275C162900068B00 /* PersonalDictionaryAppBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AAC3C9275C162900068B00 /* PersonalDictionaryAppBuilderImpl.swift */; };
 		59C163C2273D36A7002B1FCB /* LangPickerPopupParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163C1273D36A7002B1FCB /* LangPickerPopupParams.swift */; };
 		59C163DC273D4444002B1FCB /* ConfigBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163DB273D4444002B1FCB /* ConfigBuilder.swift */; };
 		59C163E4273D4452002B1FCB /* ConfigBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163E3273D4452002B1FCB /* ConfigBuilderImpl.swift */; };
@@ -281,6 +285,10 @@
 		59AAC39A275B986900068B00 /* SearchModePickerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModePickerDependencies.swift; sourceTree = "<group>"; };
 		59AAC3A0275B9BF200068B00 /* SearchTextInputDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextInputDependencies.swift; sourceTree = "<group>"; };
 		59AAC3A9275B9C8C00068B00 /* WordListDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListDependencies.swift; sourceTree = "<group>"; };
+		59AAC3BA275C15D300068B00 /* PersonalDictionaryAppBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDictionaryAppBuilder.swift; sourceTree = "<group>"; };
+		59AAC3BF275C160300068B00 /* PersonalDictionaryAppImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDictionaryAppImpl.swift; sourceTree = "<group>"; };
+		59AAC3C4275C161400068B00 /* PersonalDictionaryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDictionaryApp.swift; sourceTree = "<group>"; };
+		59AAC3C9275C162900068B00 /* PersonalDictionaryAppBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDictionaryAppBuilderImpl.swift; sourceTree = "<group>"; };
 		59C163C1273D36A7002B1FCB /* LangPickerPopupParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerPopupParams.swift; sourceTree = "<group>"; };
 		59C163DB273D4444002B1FCB /* ConfigBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigBuilder.swift; sourceTree = "<group>"; };
 		59C163E3273D4452002B1FCB /* ConfigBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigBuilderImpl.swift; sourceTree = "<group>"; };
@@ -695,6 +703,7 @@
 				59760228271110390077B5F7 /* Service */,
 				59C163CC273D43CF002B1FCB /* Feature */,
 				5967E785270FADDD00DCD8E4 /* UI */,
+				59AAC3B7275C158000068B00 /* PersonalDictionaryApp */,
 				596D720227051D4E00872D6C /* AppDelegate.swift */,
 				596D720427051D4E00872D6C /* SceneDelegate.swift */,
 				596D720E27051D5200872D6C /* Assets.xcassets */,
@@ -1028,6 +1037,33 @@
 				59AAC3A9275B9C8C00068B00 /* WordListDependencies.swift */,
 			);
 			path = Dependencies;
+			sourceTree = "<group>";
+		};
+		59AAC3B7275C158000068B00 /* PersonalDictionaryApp */ = {
+			isa = PBXGroup;
+			children = (
+				59AAC3B8275C15A300068B00 /* Builder */,
+				59AAC3B9275C15AB00068B00 /* App */,
+			);
+			path = PersonalDictionaryApp;
+			sourceTree = "<group>";
+		};
+		59AAC3B8275C15A300068B00 /* Builder */ = {
+			isa = PBXGroup;
+			children = (
+				59AAC3BA275C15D300068B00 /* PersonalDictionaryAppBuilder.swift */,
+				59AAC3C9275C162900068B00 /* PersonalDictionaryAppBuilderImpl.swift */,
+			);
+			path = Builder;
+			sourceTree = "<group>";
+		};
+		59AAC3B9275C15AB00068B00 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				59AAC3C4275C161400068B00 /* PersonalDictionaryApp.swift */,
+				59AAC3BF275C160300068B00 /* PersonalDictionaryAppImpl.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 		59C163CC273D43CF002B1FCB /* Feature */ = {
@@ -1496,6 +1532,8 @@
 				59A94327270E47030076F08B /* StorageModel.xcdatamodeld in Sources */,
 				5925054D273E6E6800A8621A /* SearchTextInputView.swift in Sources */,
 				596B95CC2706AC35004CE7E6 /* Lang.swift in Sources */,
+				59AAC3C5275C161400068B00 /* PersonalDictionaryApp.swift in Sources */,
+				59AAC3C0275C160300068B00 /* PersonalDictionaryAppImpl.swift in Sources */,
 				5925056B273E70E200A8621A /* SearchTextInputViewModelImpl.swift in Sources */,
 				590F78F32709317800BCBD2C /* LangPickerPopup.swift in Sources */,
 				597C2C22273A856C009780D5 /* LangPickerViewModel.swift in Sources */,
@@ -1530,6 +1568,7 @@
 				5910A445270EA04E00631446 /* Logger.swift in Sources */,
 				59250552273E6E7900A8621A /* SearchTextInputViewModel.swift in Sources */,
 				59A942E1270C506B0076F08B /* WordListViewModelImpl.swift in Sources */,
+				59AAC3BB275C15D300068B00 /* PersonalDictionaryAppBuilder.swift in Sources */,
 				59AAC392275B8FF700068B00 /* LangPickerDependencies.swift in Sources */,
 				596D044C2737C40B00A33EA5 /* WordListData.swift in Sources */,
 				5953CB4627063A9B006537B9 /* NewWordViewController+Layout.swift in Sources */,
@@ -1554,6 +1593,7 @@
 				597C2C56273BD9F5009780D5 /* LangPickerBuilder.swift in Sources */,
 				596FFCA2273C606B0034E8AE /* WordListBuilderImpl.swift in Sources */,
 				591EDCB62713AA7A00008074 /* MainWordListRouterImpl.swift in Sources */,
+				59AAC3CA275C162900068B00 /* PersonalDictionaryAppBuilderImpl.swift in Sources */,
 				59250573273EA39300A8621A /* SearchTextInputViewParams.swift in Sources */,
 				5953CB132706279B006537B9 /* NewWordModel.swift in Sources */,
 				5953CB0927062712006537B9 /* NewWordMVVM.swift in Sources */,

@@ -15,13 +15,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        let configBuilder = ConfigBuilderImpl()
-        let mainWordListBuilder = configBuilder.createMainWordListBuilder()
-        let mainWordListGraph = mainWordListBuilder.build()
-        guard let navigationController = mainWordListGraph.navigationController else { return }
+        let personalDictionaryAppBuilder = PersonalDictionaryAppBuilderImpl()
+        let personalDictionaryApp = personalDictionaryAppBuilder.build()
 
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = navigationController
+        window?.rootViewController = personalDictionaryApp.navigationController
         window?.makeKeyAndVisible()
     }
 }
