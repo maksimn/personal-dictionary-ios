@@ -10,7 +10,8 @@ import UIKit
 extension SearchViewController {
 
     func addFeature(_ searchTextInputBuilder: SearchTextInputBuilder) {
-        searchTextInputMVVM = searchTextInputBuilder.build(self)
+        searchTextInputMVVM = searchTextInputBuilder.build()
+        searchTextInputMVVM?.model?.listener = self
         navigationItem.titleView = searchTextInputMVVM?.uiview
     }
 
@@ -47,7 +48,8 @@ extension SearchViewController {
     }
 
     func addFeature(_ searchModePickerBuilder: SearchModePickerBuilder) {
-        searchModePickerMVVM = searchModePickerBuilder.build(self)
+        searchModePickerMVVM = searchModePickerBuilder.build()
+        searchModePickerMVVM?.model?.listener = self
 
         guard let searchModePickerView = searchModePickerMVVM?.uiview else { return }
         view.addSubview(searchModePickerView)

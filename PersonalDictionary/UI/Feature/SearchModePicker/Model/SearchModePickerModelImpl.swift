@@ -16,9 +16,8 @@ final class SearchModePickerModelImpl: SearchModePickerModel, InitiallyBindable 
         }
     }
 
-    init(searchMode: SearchMode, listener: SearchModePickerListener) {
+    init(searchMode: SearchMode) {
         self.searchMode = searchMode
-        self.listener = listener
     }
 
     func bindInitially() {

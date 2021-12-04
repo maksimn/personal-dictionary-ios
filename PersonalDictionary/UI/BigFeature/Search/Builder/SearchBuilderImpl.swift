@@ -9,32 +9,22 @@ import UIKit
 
 final class SearchBuilderImpl: SearchBuilder {
 
-    private let wordListFetcher: WordListFetcher
-    private let wordListBuilder: WordListBuilder
-
-    private let searchResultTextLabelParams = TextLabelParams(textColor: .darkGray,
-                                                              font: UIFont.systemFont(ofSize: 17),
-                                                              text: NSLocalizedString("No words found", comment: ""))
-    private let appViewConfigs: AppViewConfigs
-
-    private let searchTextInputBuilder = SearchTextInputBuilderImpl()
-    private let searchModePickerBuilder = SearchModePickerBuilderImpl()
-    private lazy var searchEngineBuilder = SearchEngineBuilderImpl(wordListFetcher: wordListFetcher)
+    private let dependencies: SearchDependencies
 
     init(appViewConfigs: AppViewConfigs,
          wordListFetcher: WordListFetcher,
          wordListBuilder: WordListBuilder) {
-        self.appViewConfigs = appViewConfigs
-        self.wordListFetcher = wordListFetcher
-        self.wordListBuilder = wordListBuilder
+        dependencies = SearchDependencies(appViewConfigs: appViewConfigs,
+                                          wordListFetcher: wordListFetcher,
+                                          wordListBuilder: wordListBuilder)
     }
 
     func build() -> UIViewController {
-        SearchViewController(appViewConfigs: appViewConfigs,
-                             searchTextInputBuilder: searchTextInputBuilder,
-                             searchEngineBuilder: searchEngineBuilder,
-                             wordListBuilder: wordListBuilder,
-                             searchModePickerBuilder: searchModePickerBuilder,
-                             searchResultTextLabelParams: searchResultTextLabelParams)
+        SearchViewController(appViewConfigs: dependencies.appViewConfigs,
+                             searchTextInputBuilder: dependencies.searchTextInputBuilder,
+                             searchEngineBuilder: dependencies.searchEngineBuilder,
+                             wordListBuilder: dependencies.wordListBuilder,
+                             searchModePickerBuilder: dependencies.searchModePickerBuilder,
+                             searchResultTextLabelParams: dependencies.searchResultTextLabelParams)
     }
 }

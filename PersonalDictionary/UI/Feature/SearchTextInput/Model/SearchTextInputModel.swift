@@ -14,6 +14,8 @@ protocol SearchTextInputModel: AnyObject {
 
     var viewModel: SearchTextInputViewModel? { get set }
 
+    var listener: SearchTextInputListener? { get set }
+
     var searchText: String { get }
 
     func update(_ searchText: String)

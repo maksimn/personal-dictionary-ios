@@ -7,5 +7,5 @@
 
 protocol SearchModePickerBuilder {
 
-    func build(_ listener: SearchModePickerListener) -> SearchModePickerMVVM
+    func build() -> SearchModePickerMVVM
 }

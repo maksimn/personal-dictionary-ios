@@ -16,6 +16,8 @@ protocol SearchModePickerModel: AnyObject {
 
     var viewModel: SearchModePickerViewModel? { get set }
 
+    var listener: SearchModePickerListener? { get set }
+
     var searchMode: SearchMode { get }
 
     func update(_ searchMode: SearchMode)

@@ -14,10 +14,9 @@ final class SearchModePickerMVVMImpl: SearchModePickerMVVM {
     weak var model: SearchModePickerModel?
 
     init(searchMode: SearchMode,
-         viewParams: SearchModePickerViewParams,
-         listener: SearchModePickerListener) {
+         viewParams: SearchModePickerViewParams) {
         view = SearchModePickerViewImpl(params: viewParams)
-        let model = SearchModePickerModelImpl(searchMode: searchMode, listener: listener)
+        let model = SearchModePickerModelImpl(searchMode: searchMode)
         let viewModel = SearchModePickerViewModelImpl(model: model, view: view)
 
         view.viewModel = viewModel

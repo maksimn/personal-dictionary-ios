@@ -11,11 +11,7 @@ final class SearchTextInputModelImpl: SearchTextInputModel {
 
     weak var viewModel: SearchTextInputViewModel?
 
-    private weak var listener: SearchTextInputListener?
-
-    init(listener: SearchTextInputListener) {
-        self.listener = listener
-    }
+    weak var listener: SearchTextInputListener?
 
     private(set) var searchText: String = "" {
         didSet {

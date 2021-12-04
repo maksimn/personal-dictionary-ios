@@ -12,10 +12,9 @@ final class SearchTextInputMVVMImpl: SearchTextInputMVVM {
     private let view: SearchTextInputViewImpl
     weak var model: SearchTextInputModel?
 
-    init(viewParams: SearchTextInputViewParams,
-         listener: SearchTextInputListener) {
+    init(viewParams: SearchTextInputViewParams) {
         view = SearchTextInputViewImpl(params: viewParams)
-        let model = SearchTextInputModelImpl(listener: listener)
+        let model = SearchTextInputModelImpl()
         let viewModel = SearchTextInputViewModelImpl(model: model, view: view)
 
         view.viewModel = viewModel
