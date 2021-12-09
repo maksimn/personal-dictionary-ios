@@ -104,7 +104,9 @@ final class WordListModelImpl: WordListModel {
     }
 
     private func update(wordItem: WordItem, with translation: String, at position: Int) {
-        let updatedWordItem = wordItem.update(translation: translation)
+        var updatedWordItem = wordItem
+
+        updatedWordItem.translation = translation
         var wordList = data.wordList
 
         guard position > -1 && position < wordList.count else { return }

@@ -16,7 +16,7 @@ class MainWordListViewController: UIViewController {
     let router: MainWordListRouter
     let visibleItemMaxCount: Int
 
-    lazy var navToSearchView = { NavToSearchView(onTap: { [weak self] in self?.navigateToSearch() }) }()
+    lazy var navToSearchView = NavToSearchView(onTap: { [weak self] in self?.navigateToSearch() })
 
     let navToNewWordButton = UIButton()
 
@@ -43,13 +43,13 @@ class MainWordListViewController: UIViewController {
         initWordListModel()
     }
 
-    func navigateToSearch() {
-        router.navigateToSearch()
-    }
-
     @objc
     func navigateToNewWord() {
         router.navigateToNewWord()
+    }
+
+    private func navigateToSearch() {
+        router.navigateToSearch()
     }
 
     private func initWordListModel() {

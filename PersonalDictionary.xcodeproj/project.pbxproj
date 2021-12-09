@@ -487,7 +487,7 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		594C9D23273D1B6C007D5E16 /* DesignSystem */ = {
+		594C9D23273D1B6C007D5E16 /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
 				5953CB4A27063D31006537B9 /* LangPickerPopup */,
@@ -496,7 +496,7 @@
 				59A94302270CF2C00076F08B /* WordTableView */,
 				596D04602737C49B00A33EA5 /* ViewParams.swift */,
 			);
-			path = DesignSystem;
+			path = CustomView;
 			sourceTree = "<group>";
 		};
 		594C9D27273D2198007D5E16 /* NavToSearchView */ = {
@@ -697,7 +697,7 @@
 			children = (
 				596B95C92706AC1D004CE7E6 /* Core */,
 				596B95CA2706AC27004CE7E6 /* DataClass */,
-				594C9D23273D1B6C007D5E16 /* DesignSystem */,
+				594C9D23273D1B6C007D5E16 /* CustomView */,
 				59D07985274F1E43000D2C9E /* ModelStream */,
 				5953CB3727062EAB006537B9 /* Repository */,
 				59760228271110390077B5F7 /* Service */,

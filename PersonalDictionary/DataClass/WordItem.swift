@@ -13,7 +13,7 @@ struct WordItem: Equatable {
 
     let id: Id
     let text: String
-    let translation: String?
+    var translation: String?
     let sourceLang: Lang
     let targetLang: Lang
     let createdAt: Int
@@ -30,15 +30,6 @@ struct WordItem: Equatable {
         self.sourceLang = sourceLang
         self.targetLang = targetLang
         self.createdAt = createdAt
-    }
-
-    func update(translation: String) -> WordItem {
-        WordItem(id: id,
-                 text: text,
-                 translation: translation,
-                 sourceLang: sourceLang,
-                 targetLang: targetLang,
-                 createdAt: createdAt)
     }
 
     static func == (lhs: WordItem, rhs: WordItem) -> Bool {

@@ -66,8 +66,8 @@ class NewWordViewController: UIViewController, NewWordView, LangPickerListener, 
     // MARK: - LangPickerListener
 
     func onLangSelected(_ data: LangSelectorData) {
+        langPickerMVVM?.uiview?.isHidden = true
         viewModel?.updateModel(data.selectedLangType, data.selectedLang)
-        dismissLangPicker()
     }
 
     // MARK: - User Action Handlers
@@ -88,10 +88,6 @@ class NewWordViewController: UIViewController, NewWordView, LangPickerListener, 
     }
 
     // MARK: - Private
-
-    private func dismissLangPicker() {
-        langPickerMVVM?.uiview?.isHidden = true
-    }
 
     private func sendNewWordEventAndDismiss() {
         viewModel?.sendNewWordEvent()
