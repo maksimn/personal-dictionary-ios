@@ -14,19 +14,11 @@ class NewWordModelImpl: NewWordModel {
     private var langRepository: LangRepository
     private weak var wordItemStream: NewWordItemStream?
 
-    private(set) var sourceLang: Lang = empty {
+    private(set) var state: NewWordModelState? {
         didSet {
-            viewModel?.sourceLang = sourceLang
+            viewModel?.state = state
         }
     }
-
-    private(set) var targetLang: Lang = empty {
-        didSet {
-            viewModel?.targetLang = targetLang
-        }
-    }
-
-    private static let empty = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
 
     init(_ langRepository: LangRepository, _ wordItemStream: NewWordItemStream) {
         self.langRepository = langRepository
@@ -34,28 +26,35 @@ class NewWordModelImpl: NewWordModel {
     }
 
     func bindInitially() {
-        sourceLang = langRepository.sourceLang
-        targetLang = langRepository.targetLang
+        state = NewWordModelState(text: "",
+                                  sourceLang: langRepository.sourceLang,
+                                  targetLang: langRepository.targetLang)
     }
 
     func sendNewWord() {
-        guard let text = viewModel?.text.trimmingCharacters(in: .whitespacesAndNewlines),
-              !text.isEmpty else {
+        guard let text = state?.text.trimmingCharacters(in: .whitespacesAndNewlines),
+            !text.isEmpty,
+            let sourceLang = state?.sourceLang,
+            let targetLang = state?.targetLang else {
             return
         }
+
         let wordItem = WordItem(text: text, sourceLang: sourceLang, targetLang: targetLang)
 
         wordItemStream?.sendNewWord(wordItem)
     }
 
-    func update(_ langType: SelectedLangType, _ lang: Lang) {
-        switch langType {
-        case .source:
-            langRepository.sourceLang = lang
-            sourceLang = lang
-        case .target:
-            langRepository.targetLang = lang
-            targetLang = lang
+    func update(text: String) {
+        state?.text = text
+    }
+
+    func update(data: LangSelectorData) {
+        if data.selectedLangType == .source {
+            state?.sourceLang = data.selectedLang
+            langRepository.sourceLang = data.selectedLang
+        } else {
+            state?.targetLang = data.selectedLang
+            langRepository.targetLang = data.selectedLang
         }
     }
 }

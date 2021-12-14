@@ -10,36 +10,26 @@ class NewWordViewModelImpl: NewWordViewModel {
     private weak var view: NewWordView?
     private let model: NewWordModel
 
-    private static let empty = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
-
     init(model: NewWordModel, view: NewWordView) {
         self.model = model
         self.view = view
     }
 
-    var text: String = "" {
+    var state: NewWordModelState? {
         didSet {
-            view?.set(text: text)
+            view?.set(state: state)
         }
     }
 
-    var sourceLang: Lang = empty {
-        didSet {
-            view?.set(sourceLang: sourceLang)
-        }
-    }
-
-    var targetLang: Lang = empty {
-        didSet {
-            view?.set(targetLang: targetLang)
-        }
-    }
-
-    func sendNewWordEvent() {
+    func sendNewWord() {
         model.sendNewWord()
     }
 
-    func updateModel(_ langType: SelectedLangType, _ lang: Lang) {
-        model.update(langType, lang)
+    func updateModel(text: String) {
+        model.update(text: text)
+    }
+
+    func updateModel(data: LangSelectorData) {
+        model.update(data: data)
     }
 }

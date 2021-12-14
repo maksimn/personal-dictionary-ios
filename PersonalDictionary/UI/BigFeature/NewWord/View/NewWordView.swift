@@ -9,9 +9,5 @@ protocol NewWordView: AnyObject {
 
     var viewModel: NewWordViewModel? { get set }
 
-    func set(text: String)
-
-    func set(sourceLang: Lang)
-
-    func set(targetLang: Lang)
+    func set(state: NewWordModelState?)
 }

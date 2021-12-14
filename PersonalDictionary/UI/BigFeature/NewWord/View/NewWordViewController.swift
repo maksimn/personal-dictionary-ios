@@ -39,23 +39,18 @@ class NewWordViewController: UIViewController, NewWordView, LangPickerListener, 
         addChildFeature(langPickerMVVM: langPickerMVVM)
     }
 
-    func set(text: String) {
-        textField.text = text
-    }
-
-    func set(sourceLang: Lang) {
-        sourceLangLabel.text = sourceLang.name
-    }
-
-    func set(targetLang: Lang) {
-        targetLangLabel.text = targetLang.name
+    func set(state: NewWordModelState?) {
+        guard let state = state else { return }
+        textField.text = state.text
+        sourceLangLabel.text = state.sourceLang.name
+        targetLangLabel.text = state.targetLang.name
     }
 
     // MARK: - UITextFieldDelegate
 
     @objc
     func textFieldDidChange(_ textField: UITextField) {
-        viewModel?.text = textField.text ?? ""
+        viewModel?.updateModel(text: textField.text ?? "")
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -67,7 +62,7 @@ class NewWordViewController: UIViewController, NewWordView, LangPickerListener, 
 
     func onLangSelected(_ data: LangSelectorData) {
         langPickerMVVM?.uiview?.isHidden = true
-        viewModel?.updateModel(data.selectedLangType, data.selectedLang)
+        viewModel?.updateModel(data: data)
     }
 
     // MARK: - User Action Handlers
@@ -90,12 +85,13 @@ class NewWordViewController: UIViewController, NewWordView, LangPickerListener, 
     // MARK: - Private
 
     private func sendNewWordEventAndDismiss() {
-        viewModel?.sendNewWordEvent()
+        viewModel?.sendNewWord()
         dismiss(animated: true, completion: nil)
     }
 
     private func showLangPickerView(selectedLangType: SelectedLangType) {
-        guard let lang = selectedLangType == .source ? viewModel?.sourceLang : viewModel?.targetLang else { return }
+        guard let lang = selectedLangType == .source ? viewModel?.state?.sourceLang :
+                                                       viewModel?.state?.targetLang else { return }
         guard let langPickerModel = langPickerMVVM?.model else { return }
 
         langPickerMVVM?.uiview?.isHidden = false

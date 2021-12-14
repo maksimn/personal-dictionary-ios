@@ -7,13 +7,11 @@
 
 protocol NewWordViewModel: AnyObject {
 
-    var text: String { get set }
+    var state: NewWordModelState? { get set }
 
-    var sourceLang: Lang { get set }
+    func updateModel(text: String)
 
-    var targetLang: Lang { get set }
+    func updateModel(data: LangSelectorData)
 
-    func updateModel(_ langType: SelectedLangType, _ lang: Lang)
-
-    func sendNewWordEvent()
+    func sendNewWord()
 }
