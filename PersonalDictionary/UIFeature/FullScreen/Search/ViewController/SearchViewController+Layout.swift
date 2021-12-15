@@ -16,7 +16,7 @@ extension SearchViewController {
     }
 
     func addWordListViewController() {
-        guard let wordListViewController = wordListMVVM.viewController else { return }
+        let wordListViewController = wordListMVVM.viewController
         let wordListParentView = UIView()
 
         view.addSubview(wordListParentView)

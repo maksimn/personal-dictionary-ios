@@ -9,7 +9,7 @@ import UIKit
 
 final class WordListMVVMImpl: WordListMVVM {
 
-    private var view: WordListViewController?
+    private var view: WordListViewController
 
     weak var model: WordListModel?
 
@@ -18,22 +18,24 @@ final class WordListMVVMImpl: WordListMVVM {
          wordItemStream: ReadableWordItemStream & RemovedWordItemStream,
          viewParams: WordListViewParams,
          logger: Logger) {
-        view = WordListViewController(params: viewParams)
-        guard let view = view else { return }
-        weak var viewModelLazy: WordListViewModel?
-        let model = WordListModelImpl(viewModelBlock: { viewModelLazy },
+        weak var viewModelLazyWeak: WordListViewModel?
+        var viewModelLazy: WordListViewModel?
+
+        view = WordListViewController(viewModelBlock: { viewModelLazy },
+                                      params: viewParams)
+        let model = WordListModelImpl(viewModelBlock: { viewModelLazyWeak },
                                       cudOperations: cudOperations,
                                       translationService: translationService,
                                       wordItemStream: wordItemStream,
                                       logger: logger)
         let viewModel = WordListViewModelImpl(model: model, view: view)
 
+        viewModelLazyWeak = viewModel
         viewModelLazy = viewModel
-        view.viewModel = viewModel
         self.model = model
     }
 
-    var viewController: UIViewController? {
+    var viewController: UIViewController {
         view
     }
 }

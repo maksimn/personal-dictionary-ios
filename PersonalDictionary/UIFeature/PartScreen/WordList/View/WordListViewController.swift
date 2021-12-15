@@ -9,7 +9,8 @@ import UIKit
 
 final class WordListViewController: UIViewController, WordListView {
 
-    var viewModel: WordListViewModel?
+    private let viewModelBlock: () -> WordListViewModel?
+    private lazy var viewModel: WordListViewModel? = viewModelBlock()
 
     let params: WordListViewParams
 
@@ -35,7 +36,9 @@ final class WordListViewController: UIViewController, WordListView {
         )
     }()
 
-    init(params: WordListViewParams) {
+    init(viewModelBlock: @escaping () -> WordListViewModel?,
+         params: WordListViewParams) {
+        self.viewModelBlock = viewModelBlock
         self.params = params
         super.init(nibName: nil, bundle: nil)
     }

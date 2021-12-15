@@ -740,6 +740,7 @@
 			children = (
 				596FFC9C273C605D0034E8AE /* WordListBuilder.swift */,
 				596FFCA1273C606B0034E8AE /* WordListBuilderImpl.swift */,
+				59AAC3A9275B9C8C00068B00 /* WordListDependencies.swift */,
 			);
 			path = Builder;
 			sourceTree = "<group>";
@@ -877,7 +878,6 @@
 		598B79EF270C4E68007ED9FD /* WordList */ = {
 			isa = PBXGroup;
 			children = (
-				59AAC3A8275B9C7800068B00 /* Dependencies */,
 				596FFC9B273C60260034E8AE /* Builder */,
 				598B79F0270C4E88007ED9FD /* Graph */,
 				598B79F1270C4E92007ED9FD /* Model */,
@@ -1027,14 +1027,6 @@
 			isa = PBXGroup;
 			children = (
 				59AAC3A0275B9BF200068B00 /* SearchTextInputDependencies.swift */,
-			);
-			path = Dependencies;
-			sourceTree = "<group>";
-		};
-		59AAC3A8275B9C7800068B00 /* Dependencies */ = {
-			isa = PBXGroup;
-			children = (
-				59AAC3A9275B9C8C00068B00 /* WordListDependencies.swift */,
 			);
 			path = Dependencies;
 			sourceTree = "<group>";

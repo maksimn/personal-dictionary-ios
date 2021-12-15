@@ -18,9 +18,7 @@ extension MainWordListViewController {
     }
 
     private func addWordListChildController() {
-        guard let wordListViewController = wordListMVVM.viewController else { return }
-
-        add(child: wordListViewController)
+        add(child: wordListMVVM.viewController)
     }
 
     private func initNewWordButton() {
