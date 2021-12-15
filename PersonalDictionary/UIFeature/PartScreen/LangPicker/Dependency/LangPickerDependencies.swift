@@ -17,7 +17,8 @@ final class LangPickerDependencies {
         self.allLangs = allLangs
         viewParams = LangPickerViewParams(
             staticContent: LangPickerPopupStaticContent(
-                selectButtonTitle: NSLocalizedString("Select", comment: "")
+                selectButtonTitle: NSLocalizedString("Select", comment: ""),
+                langs: allLangs
             ),
             styles: LangPickerPopupStyles(
                 backgroundColor: appViewConfigs.appBackgroundColor

@@ -15,13 +15,9 @@ final class LangPickerViewImpl: UIView, LangPickerView {
 
     private var langPickerPopup: LangPickerPopup?
 
-    private let params: LangPickerPopupParams
-
     init(params: LangPickerViewParams, allLangs: [Lang]) {
-        self.params = params
         super.init(frame: .zero)
         langPickerPopup = LangPickerPopup(params: params,
-                                          allLangs: allLangs,
                                           onSelectLang: { [weak self] lang in
                                             self?.onSelectLang(lang)
                                           })

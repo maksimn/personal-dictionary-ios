@@ -27,16 +27,12 @@ class NewWordViewController: UIViewController, NewWordView, LangPickerListener, 
         self.params = params
         super.init(nibName: nil, bundle: nil)
         langPickerMVVM = langPickerBuilder.build()
+        initViews()
+        addChildFeature(langPickerMVVM: langPickerMVVM)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        initViews()
-        addChildFeature(langPickerMVVM: langPickerMVVM)
     }
 
     func set(state: NewWordModelState?) {

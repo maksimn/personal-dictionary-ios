@@ -21,10 +21,9 @@ final class LangPickerPopup: UIView {
     private let onSelectLang: ((Lang) -> Void)?
 
     init(params: LangPickerPopupParams,
-         allLangs: [Lang],
          onSelectLang: ((Lang) -> Void)?) {
         self.params = params
-        self.langPickerController = LangPickerController(langs: allLangs)
+        self.langPickerController = LangPickerController(langs: params.staticContent.langs)
         self.onSelectLang = onSelectLang
         super.init(frame: .zero)
         self.backgroundColor = params.styles.backgroundColor

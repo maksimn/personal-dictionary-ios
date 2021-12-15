@@ -9,6 +9,7 @@ import UIKit
 
 struct LangPickerPopupStaticContent {
     let selectButtonTitle: String
+    let langs: [Lang]
 }
 
 struct LangPickerPopupStyles {
