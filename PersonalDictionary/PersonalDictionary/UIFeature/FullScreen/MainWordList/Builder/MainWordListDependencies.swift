@@ -9,9 +9,15 @@ import UIKit
 
 final class MainWordListDependencies {
 
-    let viewParams = MainWordListViewParams(
-        staticContent: MainWordListStaticContent(navToNewWordImage: UIImage(named: "icon-plus")!),
+    private(set) lazy var viewParams = MainWordListViewParams(
+        staticContent: MainWordListStaticContent(
+            heading: NSLocalizedString("My dictionary", comment: ""),
+            navToNewWordImage: UIImage(named: "icon-plus")!,
+            superAppRoutingButtonTitle: superAppRoutingButtonTitle,
+            visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
+        ),
         styles: MainWordListStyles(
+            backgroundColor: appConfigs.appViewConfigs.appBackgroundColor,
             navToNewWordButtonSize: CGSize(width: 44, height: 44),
             navToNewWordButtonBottomOffset: -26
         )
@@ -19,10 +25,17 @@ final class MainWordListDependencies {
 
     private let appConfigs: AppConfigs
 
+    let superAppRouter: SuperAppRouter?
+    private let superAppRoutingButtonTitle: String
+
     private lazy var langRepository = buildLangRepository()
 
-    init(appConfigs: AppConfigs) {
+    init(appConfigs: AppConfigs,
+         superAppRouter: SuperAppRouter?,
+         superAppRoutingButtonTitle: String) {
         self.appConfigs = appConfigs
+        self.superAppRouter = superAppRouter
+        self.superAppRoutingButtonTitle = superAppRoutingButtonTitle
     }
 
     func buildWordListRepository() -> WordListRepository {

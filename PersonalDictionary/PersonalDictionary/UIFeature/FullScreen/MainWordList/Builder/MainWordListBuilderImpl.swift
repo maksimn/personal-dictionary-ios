@@ -9,8 +9,12 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
 
     private let dependencies: MainWordListDependencies
 
-    init(appConfigs: AppConfigs) {
-        dependencies = MainWordListDependencies(appConfigs: appConfigs)
+    init(appConfigs: AppConfigs,
+         superAppRouter: SuperAppRouter?,
+         superAppRoutingButtonTitle: String) {
+        dependencies = MainWordListDependencies(appConfigs: appConfigs,
+                                                superAppRouter: superAppRouter,
+                                                superAppRoutingButtonTitle: superAppRoutingButtonTitle)
     }
 
     func build() -> MainWordListGraph {
@@ -18,6 +22,7 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
                               wordListBuilder: dependencies.createWordListBuilder(),
                               wordListFetcher: dependencies.buildWordListRepository(),
                               newWordBuilder: dependencies.createNewWordBuilder(),
-                              searchBuilder: dependencies.createSearchBuilder())
+                              searchBuilder: dependencies.createSearchBuilder(),
+                              superAppRouter: dependencies.superAppRouter)
     }
 }
