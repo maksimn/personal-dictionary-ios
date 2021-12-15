@@ -768,7 +768,6 @@
 			isa = PBXGroup;
 			children = (
 				59760229271112940077B5F7 /* CoreNetworking */,
-				597602342711134C0077B5F7 /* HttpData */,
 				5976023F271114C00077B5F7 /* TranslationService */,
 			);
 			path = Service;
@@ -783,19 +782,12 @@
 			path = CoreNetworking;
 			sourceTree = "<group>";
 		};
-		597602342711134C0077B5F7 /* HttpData */ = {
-			isa = PBXGroup;
-			children = (
-				59E037932712226800197F19 /* PonsResponseData.swift */,
-			);
-			path = HttpData;
-			sourceTree = "<group>";
-		};
 		5976023F271114C00077B5F7 /* TranslationService */ = {
 			isa = PBXGroup;
 			children = (
 				5976023A271114430077B5F7 /* TranslationService.swift */,
 				59E0378E271216F700197F19 /* PonsTranslationService.swift */,
+				59E037932712226800197F19 /* PonsResponseData.swift */,
 			);
 			path = TranslationService;
 			sourceTree = "<group>";
