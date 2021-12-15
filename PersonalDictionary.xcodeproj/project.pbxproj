@@ -576,13 +576,13 @@
 			path = LangPickerPopup;
 			sourceTree = "<group>";
 		};
-		5967E785270FADDD00DCD8E4 /* UI */ = {
+		5967E785270FADDD00DCD8E4 /* UIFeature */ = {
 			isa = PBXGroup;
 			children = (
-				596D04912738134300A33EA5 /* BigFeature */,
-				596D049D2738138800A33EA5 /* Feature */,
+				596D04912738134300A33EA5 /* FullScreen */,
+				596D049D2738138800A33EA5 /* PartScreen */,
 			);
-			path = UI;
+			path = UIFeature;
 			sourceTree = "<group>";
 		};
 		596B95C92706AC1D004CE7E6 /* Core */ = {
@@ -609,17 +609,17 @@
 			path = DataClass;
 			sourceTree = "<group>";
 		};
-		596D04912738134300A33EA5 /* BigFeature */ = {
+		596D04912738134300A33EA5 /* FullScreen */ = {
 			isa = PBXGroup;
 			children = (
 				596D049E273814B200A33EA5 /* MainWordList */,
 				5953CB03270626AD006537B9 /* NewWord */,
 				59169EF02713D2D600DB37A1 /* Search */,
 			);
-			path = BigFeature;
+			path = FullScreen;
 			sourceTree = "<group>";
 		};
-		596D049D2738138800A33EA5 /* Feature */ = {
+		596D049D2738138800A33EA5 /* PartScreen */ = {
 			isa = PBXGroup;
 			children = (
 				597C2BFE273A7C51009780D5 /* LangPicker */,
@@ -627,7 +627,7 @@
 				59250537273E6D7500A8621A /* SearchTextInput */,
 				598B79EF270C4E68007ED9FD /* WordList */,
 			);
-			path = Feature;
+			path = PartScreen;
 			sourceTree = "<group>";
 		};
 		596D049E273814B200A33EA5 /* MainWordList */ = {
@@ -702,7 +702,7 @@
 				5953CB3727062EAB006537B9 /* Repository */,
 				59760228271110390077B5F7 /* Service */,
 				59C163CC273D43CF002B1FCB /* Feature */,
-				5967E785270FADDD00DCD8E4 /* UI */,
+				5967E785270FADDD00DCD8E4 /* UIFeature */,
 				59AAC3B7275C158000068B00 /* PersonalDictionaryApp */,
 				596D720227051D4E00872D6C /* AppDelegate.swift */,
 				596D720427051D4E00872D6C /* SceneDelegate.swift */,
