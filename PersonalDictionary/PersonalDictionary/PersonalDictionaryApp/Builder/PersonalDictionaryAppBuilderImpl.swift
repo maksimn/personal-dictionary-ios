@@ -7,18 +7,18 @@
 
 final class PersonalDictionaryAppBuilderImpl: PersonalDictionaryAppBuilder {
 
-    private let superAppRouter: SuperAppRouter?
-    private let superAppRoutingButtonTitle: String
+    private let coreRouter: CoreRouter?
+    private let routingButtonTitle: String
 
-    init(superAppRouter: SuperAppRouter?,
-         superAppRoutingButtonTitle: String) {
-        self.superAppRouter = superAppRouter
-        self.superAppRoutingButtonTitle = superAppRoutingButtonTitle
+    init(coreRouter: CoreRouter?,
+         routingButtonTitle: String) {
+        self.coreRouter = coreRouter
+        self.routingButtonTitle = routingButtonTitle
     }
 
     func build() -> PersonalDictionaryApp {
-        let configBuilder = ConfigBuilderImpl(superAppRouter: superAppRouter,
-                                              superAppRoutingButtonTitle: superAppRoutingButtonTitle)
+        let configBuilder = ConfigBuilderImpl(coreRouter: coreRouter,
+                                              routingButtonTitle: routingButtonTitle)
 
         return PersonalDictionaryAppImpl(configBuilder: configBuilder)
     }

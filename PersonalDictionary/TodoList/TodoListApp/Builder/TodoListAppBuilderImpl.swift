@@ -7,13 +7,13 @@
 
 final class TodoListAppBuilderImpl: TodoListAppBuilder {
 
-    private let superAppRoutingButtonTitle: String
+    private let routingButtonTitle: String
 
-    init(superAppRoutingButtonTitle: String) {
-        self.superAppRoutingButtonTitle = superAppRoutingButtonTitle
+    init(routingButtonTitle: String) {
+        self.routingButtonTitle = routingButtonTitle
     }
 
     func build() -> TodoListApp {
-        TodoListAppImpl(superAppRoutingButtonTitle: superAppRoutingButtonTitle)
+        TodoListAppImpl(routingButtonTitle: routingButtonTitle)
     }
 }

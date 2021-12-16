@@ -9,14 +9,10 @@ import UIKit
 
 final class TodoListAppImpl: TodoListApp {
 
-    private let superAppRoutingButtonTitle: String
+    private let todoListViewController: TodoListViewController
 
-    private lazy var todoListViewController = TodoListViewController(
-        superAppRoutingButtonTitle: superAppRoutingButtonTitle
-    )
-
-    init(superAppRoutingButtonTitle: String) {
-        self.superAppRoutingButtonTitle = superAppRoutingButtonTitle
+    init(routingButtonTitle: String) {
+        todoListViewController = TodoListViewController(routingButtonTitle: routingButtonTitle)
     }
 
     var viewController: UIViewController {

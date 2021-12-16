@@ -13,7 +13,7 @@ final class MainWordListDependencies {
         staticContent: MainWordListStaticContent(
             heading: NSLocalizedString("My dictionary", comment: ""),
             navToNewWordImage: UIImage(named: "icon-plus")!,
-            superAppRoutingButtonTitle: superAppRoutingButtonTitle,
+            routingButtonTitle: routingButtonTitle,
             visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
         ),
         styles: MainWordListStyles(
@@ -25,17 +25,17 @@ final class MainWordListDependencies {
 
     private let appConfigs: AppConfigs
 
-    let superAppRouter: SuperAppRouter?
-    private let superAppRoutingButtonTitle: String
+    let coreRouter: CoreRouter?
+    private let routingButtonTitle: String
 
     private lazy var langRepository = buildLangRepository()
 
     init(appConfigs: AppConfigs,
-         superAppRouter: SuperAppRouter?,
-         superAppRoutingButtonTitle: String) {
+         coreRouter: CoreRouter?,
+         routingButtonTitle: String) {
         self.appConfigs = appConfigs
-        self.superAppRouter = superAppRouter
-        self.superAppRoutingButtonTitle = superAppRoutingButtonTitle
+        self.coreRouter = coreRouter
+        self.routingButtonTitle = routingButtonTitle
     }
 
     func buildWordListRepository() -> WordListRepository {

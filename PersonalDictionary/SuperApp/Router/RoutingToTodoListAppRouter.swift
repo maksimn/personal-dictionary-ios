@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SuperAppRouterToTodoList: SuperAppRouter {
+final class RoutingToTodoListAppRouter: CoreRouter {
 
     private let rootViewController: UIViewController
     private let todoListAppBuilder: TodoListAppBuilder

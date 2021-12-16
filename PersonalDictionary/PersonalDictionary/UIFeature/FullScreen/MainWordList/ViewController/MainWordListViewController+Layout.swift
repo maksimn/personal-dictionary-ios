@@ -58,14 +58,14 @@ extension MainWordListViewController {
     }
 
     private func initRoutingButton() {
-        superAppRoutingButton.setTitle(params.staticContent.superAppRoutingButtonTitle, for: .normal)
-        superAppRoutingButton.setTitleColor(.darkGray, for: .normal)
-        superAppRoutingButton.backgroundColor = .clear
-        superAppRoutingButton.layer.cornerRadius = 8
-        superAppRoutingButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
-        superAppRoutingButton.addTarget(self, action: #selector(onSuperAppRoutingButtonTap), for: .touchUpInside)
-        view.addSubview(superAppRoutingButton)
-        superAppRoutingButton.snp.makeConstraints { (make) -> Void in
+        routingButton.setTitle(params.staticContent.routingButtonTitle, for: .normal)
+        routingButton.setTitleColor(.darkGray, for: .normal)
+        routingButton.backgroundColor = .clear
+        routingButton.layer.cornerRadius = 8
+        routingButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        routingButton.addTarget(self, action: #selector(onSuperAppRoutingButtonTap), for: .touchUpInside)
+        view.addSubview(routingButton)
+        routingButton.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(21)
             make.right.equalTo(view.snp.right).offset(-10)
         }
