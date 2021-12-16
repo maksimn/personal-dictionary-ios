@@ -16,7 +16,7 @@ final class MainWordListGraphImpl: MainWordListGraph {
          wordListFetcher: WordListFetcher,
          newWordBuilder: NewWordBuilder,
          searchBuilder: SearchBuilder,
-         superAppRouter: SuperAppRouter?) {
+         coreRouter: CoreRouter?) {
         let navigationController = UINavigationController()
         let router = MainWordListRouterImpl(navigationController: navigationController,
                                             newWordBuilder: newWordBuilder,
@@ -26,7 +26,7 @@ final class MainWordListGraphImpl: MainWordListGraph {
                                                     wordListMVVM: wordListBuilder.build(),
                                                     wordListFetcher: wordListFetcher,
                                                     router: router,
-                                                    superAppRouter: superAppRouter)
+                                                    coreRouter: coreRouter)
 
         navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
         navigationController.setViewControllers([controller], animated: false)

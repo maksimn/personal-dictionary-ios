@@ -14,24 +14,24 @@ class MainWordListViewController: UIViewController {
     let wordListMVVM: WordListMVVM
     let wordListFetcher: WordListFetcher
     let router: MainWordListRouter
-    let superAppRouter: SuperAppRouter?
+    let coreRouter: CoreRouter?
 
     lazy var navToSearchView = NavToSearchView(onTap: { [weak self] in self?.navigateToSearch() })
 
     let navToNewWordButton = UIButton()
-    let superAppRoutingButton = UIButton()
+    let routingButton = UIButton()
     let myDictionaryLabel = UILabel()
 
     init(viewParams: MainWordListViewParams,
          wordListMVVM: WordListMVVM,
          wordListFetcher: WordListFetcher,
          router: MainWordListRouter,
-         superAppRouter: SuperAppRouter?) {
+         coreRouter: CoreRouter?) {
         self.params = viewParams
         self.wordListMVVM = wordListMVVM
         self.wordListFetcher = wordListFetcher
         self.router = router
-        self.superAppRouter = superAppRouter
+        self.coreRouter = coreRouter
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -47,7 +47,7 @@ class MainWordListViewController: UIViewController {
 
     @objc
     func onSuperAppRoutingButtonTap() {
-        superAppRouter?.navigate()
+        coreRouter?.navigate()
     }
 
     @objc

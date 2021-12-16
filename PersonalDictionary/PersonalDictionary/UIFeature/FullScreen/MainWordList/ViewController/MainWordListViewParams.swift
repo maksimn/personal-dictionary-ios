@@ -10,7 +10,7 @@ import UIKit
 struct MainWordListStaticContent {
     let heading: String
     let navToNewWordImage: UIImage
-    let superAppRoutingButtonTitle: String
+    let routingButtonTitle: String
     let visibleItemMaxCount: Int
 }
 

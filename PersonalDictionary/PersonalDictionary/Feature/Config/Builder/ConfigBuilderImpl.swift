@@ -8,18 +8,18 @@
 final class ConfigBuilderImpl: ConfigBuilder {
 
     private let appConfigs = ConfigDependencies().appConfigs
-    private let superAppRouter: SuperAppRouter?
-    private let superAppRoutingButtonTitle: String
+    private let coreRouter: CoreRouter?
+    private let routingButtonTitle: String
 
-    init(superAppRouter: SuperAppRouter?,
-         superAppRoutingButtonTitle: String) {
-        self.superAppRouter = superAppRouter
-        self.superAppRoutingButtonTitle = superAppRoutingButtonTitle
+    init(coreRouter: CoreRouter?,
+         routingButtonTitle: String) {
+        self.coreRouter = coreRouter
+        self.routingButtonTitle = routingButtonTitle
     }
 
     func createMainWordListBuilder() -> MainWordListBuilder {
         MainWordListBuilderImpl(appConfigs: appConfigs,
-                                superAppRouter: superAppRouter,
-                                superAppRoutingButtonTitle: superAppRoutingButtonTitle)
+                                coreRouter: coreRouter,
+                                routingButtonTitle: routingButtonTitle)
     }
 }

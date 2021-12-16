@@ -129,9 +129,9 @@
 		59BDF91D276A92F9006A66B2 /* SuperAppImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BDF91C276A92F9006A66B2 /* SuperAppImpl.swift */; };
 		59BDF925276A9330006A66B2 /* SuperAppBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BDF924276A9330006A66B2 /* SuperAppBuilder.swift */; };
 		59BDF92A276A935D006A66B2 /* SuperAppBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BDF929276A935D006A66B2 /* SuperAppBuilderImpl.swift */; };
-		59BDF93D276AB25B006A66B2 /* SuperAppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BDF93C276AB25B006A66B2 /* SuperAppRouter.swift */; };
-		59BDF945276AB279006A66B2 /* SuperAppRouterToTodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BDF944276AB279006A66B2 /* SuperAppRouterToTodoList.swift */; };
+		59BDF945276AB279006A66B2 /* RoutingToTodoListAppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BDF944276AB279006A66B2 /* RoutingToTodoListAppRouter.swift */; };
 		59BDF94D276ADE8F006A66B2 /* UIViewController+Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BDF94C276ADE8F006A66B2 /* UIViewController+Core.swift */; };
+		59BE120E276B7CDC00D48BD1 /* CoreRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BE120D276B7CDC00D48BD1 /* CoreRouter.swift */; };
 		59C163C2273D36A7002B1FCB /* LangPickerPopupParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163C1273D36A7002B1FCB /* LangPickerPopupParams.swift */; };
 		59C163DC273D4444002B1FCB /* ConfigBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163DB273D4444002B1FCB /* ConfigBuilder.swift */; };
 		59C163E4273D4452002B1FCB /* ConfigBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163E3273D4452002B1FCB /* ConfigBuilderImpl.swift */; };
@@ -308,9 +308,9 @@
 		59BDF91C276A92F9006A66B2 /* SuperAppImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperAppImpl.swift; sourceTree = "<group>"; };
 		59BDF924276A9330006A66B2 /* SuperAppBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperAppBuilder.swift; sourceTree = "<group>"; };
 		59BDF929276A935D006A66B2 /* SuperAppBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperAppBuilderImpl.swift; sourceTree = "<group>"; };
-		59BDF93C276AB25B006A66B2 /* SuperAppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperAppRouter.swift; sourceTree = "<group>"; };
-		59BDF944276AB279006A66B2 /* SuperAppRouterToTodoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperAppRouterToTodoList.swift; sourceTree = "<group>"; };
+		59BDF944276AB279006A66B2 /* RoutingToTodoListAppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingToTodoListAppRouter.swift; sourceTree = "<group>"; };
 		59BDF94C276ADE8F006A66B2 /* UIViewController+Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Core.swift"; sourceTree = "<group>"; };
+		59BE120D276B7CDC00D48BD1 /* CoreRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreRouter.swift; sourceTree = "<group>"; };
 		59C163C1273D36A7002B1FCB /* LangPickerPopupParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerPopupParams.swift; sourceTree = "<group>"; };
 		59C163DB273D4444002B1FCB /* ConfigBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigBuilder.swift; sourceTree = "<group>"; };
 		59C163E3273D4452002B1FCB /* ConfigBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigBuilderImpl.swift; sourceTree = "<group>"; };
@@ -601,7 +601,6 @@
 		5962C146276A6B4A00F30078 /* PersonalDictionary */ = {
 			isa = PBXGroup;
 			children = (
-				596B95C92706AC1D004CE7E6 /* Core */,
 				596B95CA2706AC27004CE7E6 /* DataClass */,
 				594C9D23273D1B6C007D5E16 /* CustomView */,
 				59D07985274F1E43000D2C9E /* ModelStream */,
@@ -637,6 +636,8 @@
 			children = (
 				597602482711154E0077B5F7 /* JsonCoder */,
 				59A94336270E4C5A0076F08B /* Logger */,
+				59760229271112940077B5F7 /* Networking */,
+				59BE120D276B7CDC00D48BD1 /* CoreRouter.swift */,
 				597C2C41273BB99A009780D5 /* InitiallyBindable.swift */,
 				59A942FD270CE83A0076F08B /* Tagged.swift */,
 				59BDF94C276ADE8F006A66B2 /* UIViewController+Core.swift */,
@@ -742,9 +743,10 @@
 		596D720127051D4E00872D6C /* PersonalDictionary */ = {
 			isa = PBXGroup;
 			children = (
-				59BDF912276A9279006A66B2 /* SuperApp */,
+				596B95C92706AC1D004CE7E6 /* Core */,
 				5962C146276A6B4A00F30078 /* PersonalDictionary */,
 				5962C14A276A6D7C00F30078 /* TodoList */,
+				59BDF912276A9279006A66B2 /* SuperApp */,
 				596D720227051D4E00872D6C /* AppDelegate.swift */,
 				596D720427051D4E00872D6C /* SceneDelegate.swift */,
 				596D720E27051D5200872D6C /* Assets.xcassets */,
@@ -808,19 +810,18 @@
 		59760228271110390077B5F7 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				59760229271112940077B5F7 /* CoreNetworking */,
 				5976023F271114C00077B5F7 /* TranslationService */,
 			);
 			path = Service;
 			sourceTree = "<group>";
 		};
-		59760229271112940077B5F7 /* CoreNetworking */ = {
+		59760229271112940077B5F7 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
 				5976022A271112AF0077B5F7 /* CoreService.swift */,
 				5976022F271112D90077B5F7 /* UrlSessionCoreService.swift */,
 			);
-			path = CoreNetworking;
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		5976023F271114C00077B5F7 /* TranslationService */ = {
@@ -1157,8 +1158,7 @@
 		59BDF93B276AB246006A66B2 /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				59BDF93C276AB25B006A66B2 /* SuperAppRouter.swift */,
-				59BDF944276AB279006A66B2 /* SuperAppRouterToTodoList.swift */,
+				59BDF944276AB279006A66B2 /* RoutingToTodoListAppRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -1632,7 +1632,7 @@
 				596B95CC2706AC35004CE7E6 /* Lang.swift in Sources */,
 				59AAC3C5275C161400068B00 /* PersonalDictionaryApp.swift in Sources */,
 				59AAC3C0275C160300068B00 /* PersonalDictionaryAppImpl.swift in Sources */,
-				59BDF945276AB279006A66B2 /* SuperAppRouterToTodoList.swift in Sources */,
+				59BDF945276AB279006A66B2 /* RoutingToTodoListAppRouter.swift in Sources */,
 				5925056B273E70E200A8621A /* SearchTextInputViewModelImpl.swift in Sources */,
 				590F78F32709317800BCBD2C /* LangPickerPopup.swift in Sources */,
 				59BDF92A276A935D006A66B2 /* SuperAppBuilderImpl.swift in Sources */,
@@ -1683,6 +1683,7 @@
 				59A9430E270CF36B0076F08B /* WordItemCell+Layout.swift in Sources */,
 				597C2C09273A8404009780D5 /* LangPickerMVVMImpl.swift in Sources */,
 				597C2BDB2739181D009780D5 /* NavToSearchView.swift in Sources */,
+				59BE120E276B7CDC00D48BD1 /* CoreRouter.swift in Sources */,
 				597C2C5B273BDA0D009780D5 /* LangPickerBuilderImpl.swift in Sources */,
 				59A98D70273CF04700AE4DD5 /* SearchBuilder.swift in Sources */,
 				5976024A271115650077B5F7 /* JsonCoder.swift in Sources */,
@@ -1722,7 +1723,6 @@
 				59F836E4273FB040001F1CC7 /* SearchModePickerView.swift in Sources */,
 				59A98D75273CF08D00AE4DD5 /* SearchBuilderImpl.swift in Sources */,
 				59C163C2273D36A7002B1FCB /* LangPickerPopupParams.swift in Sources */,
-				59BDF93D276AB25B006A66B2 /* SuperAppRouter.swift in Sources */,
 				59F836E9273FB04C001F1CC7 /* SearchModePickerViewImpl.swift in Sources */,
 				5953CB3E27062F02006537B9 /* LangRepositoryImpl.swift in Sources */,
 				59250598273ED20E00A8621A /* SearchEngineBuilderImpl.swift in Sources */,

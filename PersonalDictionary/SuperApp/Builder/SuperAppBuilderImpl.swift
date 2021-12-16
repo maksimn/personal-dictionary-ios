@@ -10,7 +10,6 @@ import Foundation
 final class SuperAppBuilderImpl: SuperAppBuilder {
 
     func build() -> SuperApp {
-        SuperAppImpl(routeToTodoListButtonTitle: NSLocalizedString("My todos", comment: ""),
-                     routeToPersonalDictionaryButtonTitle: NSLocalizedString("My dictionary", comment: ""))
+        SuperAppImpl()
     }
 }

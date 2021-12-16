@@ -11,11 +11,11 @@ class TodoListViewController: UIViewController {
 
     private let label = UILabel()
 
-    private let superAppRoutingButton = UIButton()
-    private let superAppRoutingButtonTitle: String
+    private let routingButton = UIButton()
+    private let routingButtonTitle: String
 
-    init(superAppRoutingButtonTitle: String) {
-        self.superAppRoutingButtonTitle = superAppRoutingButtonTitle
+    init(routingButtonTitle: String) {
+        self.routingButtonTitle = routingButtonTitle
         super.init(nibName: nil, bundle: nil)
         view.backgroundColor = .cyan
         initLabel()
@@ -39,15 +39,15 @@ class TodoListViewController: UIViewController {
     }
 
     func initRoutingButton() {
-        superAppRoutingButton.setTitle(superAppRoutingButtonTitle, for: .normal)
-        superAppRoutingButton.setTitleColor(.white, for: .normal)
-        superAppRoutingButton.backgroundColor = .darkGray
-        superAppRoutingButton.layer.cornerRadius = 8
-        superAppRoutingButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
-        superAppRoutingButton.addTarget(self, action: #selector(onSuperAppRoutingButtonTap), for: .touchUpInside)
-        view.addSubview(superAppRoutingButton)
-        superAppRoutingButton.snp.makeConstraints { (make) -> Void in
-            make.bottom.equalTo(view.snp.bottom)
+        routingButton.setTitle(routingButtonTitle, for: .normal)
+        routingButton.setTitleColor(.white, for: .normal)
+        routingButton.backgroundColor = .darkGray
+        routingButton.layer.cornerRadius = 8
+        routingButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        routingButton.addTarget(self, action: #selector(onSuperAppRoutingButtonTap), for: .touchUpInside)
+        view.addSubview(routingButton)
+        routingButton.snp.makeConstraints { (make) -> Void in
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
             make.right.equalTo(view.snp.right)
         }
     }
