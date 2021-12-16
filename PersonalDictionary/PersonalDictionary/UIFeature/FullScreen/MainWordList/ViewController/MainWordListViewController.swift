@@ -14,22 +14,24 @@ class MainWordListViewController: UIViewController {
     let wordListMVVM: WordListMVVM
     let wordListFetcher: WordListFetcher
     let router: MainWordListRouter
-    let visibleItemMaxCount: Int
+    let superAppRouter: SuperAppRouter?
 
     lazy var navToSearchView = NavToSearchView(onTap: { [weak self] in self?.navigateToSearch() })
 
     let navToNewWordButton = UIButton()
+    let superAppRoutingButton = UIButton()
+    let myDictionaryLabel = UILabel()
 
     init(viewParams: MainWordListViewParams,
          wordListMVVM: WordListMVVM,
          wordListFetcher: WordListFetcher,
          router: MainWordListRouter,
-         visibleItemMaxCount: Int) {
+         superAppRouter: SuperAppRouter?) {
         self.params = viewParams
         self.wordListMVVM = wordListMVVM
         self.wordListFetcher = wordListFetcher
         self.router = router
-        self.visibleItemMaxCount = visibleItemMaxCount
+        self.superAppRouter = superAppRouter
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -41,6 +43,11 @@ class MainWordListViewController: UIViewController {
         super.viewDidLoad()
         initViews()
         initWordListModel()
+    }
+
+    @objc
+    func onSuperAppRoutingButtonTap() {
+        superAppRouter?.navigate()
     }
 
     @objc
@@ -57,6 +64,7 @@ class MainWordListViewController: UIViewController {
         guard let wordListModel = wordListMVVM.model else { return }
 
         wordListModel.data = WordListData(wordList: wordList, changedItemPosition: nil)
-        wordListModel.requestTranslationsIfNeededWithin(startPosition: 0, endPosition: visibleItemMaxCount + 1)
+        wordListModel.requestTranslationsIfNeededWithin(startPosition: 0,
+                                                        endPosition: params.staticContent.visibleItemMaxCount + 1)
     }
 }
