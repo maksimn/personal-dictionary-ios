@@ -46,7 +46,7 @@ class MainWordListViewController: UIViewController {
     }
 
     @objc
-    func onSuperAppRoutingButtonTap() {
+    func onRoutingButtonTap() {
         coreRouter?.navigate()
     }
 

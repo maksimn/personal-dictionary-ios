@@ -63,7 +63,7 @@ extension MainWordListViewController {
         routingButton.backgroundColor = .clear
         routingButton.layer.cornerRadius = 8
         routingButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
-        routingButton.addTarget(self, action: #selector(onSuperAppRoutingButtonTap), for: .touchUpInside)
+        routingButton.addTarget(self, action: #selector(onRoutingButtonTap), for: .touchUpInside)
         view.addSubview(routingButton)
         routingButton.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(21)
