@@ -15,11 +15,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        let superListAppBuilder = SuperAppBuilderImpl()
-        let superListApp = superListAppBuilder.build()
+        let superAppBuilder = SuperAppBuilderImpl()
+        let superApp = superAppBuilder.build()
 
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = superListApp.rootViewController
+        window?.rootViewController = superApp.rootViewController
         window?.makeKeyAndVisible()
     }
 }
