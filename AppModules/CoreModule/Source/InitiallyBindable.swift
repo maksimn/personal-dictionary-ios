@@ -6,7 +6,7 @@
 //
 
 /// Protocol to bind initial data from Model to View.
-protocol InitiallyBindable {
+public protocol InitiallyBindable {
 
     func bindInitially()
 }

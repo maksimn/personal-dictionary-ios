@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 10.11.2021.
 //
 
+import CoreModule
+
 final class MainWordListBuilderImpl: MainWordListBuilder {
 
     private let dependencies: MainWordListDependencies

@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 10.11.2021.
 //
 
+import CoreModule
 import UIKit
 
 final class MainWordListGraphImpl: MainWordListGraph {

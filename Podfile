@@ -6,6 +6,9 @@ target 'PersonalDictionary' do
   pod 'SnapKit', '~> 4.0'
   pod 'SwiftLint'
 
+  pod 'CoreModule',
+    :path => './AppModules/CoreModule'
+
   target 'PersonalDictionaryTests' do
     inherit! :search_paths
     

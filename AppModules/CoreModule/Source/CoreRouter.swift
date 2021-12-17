@@ -5,7 +5,7 @@
 //  Created by Maxim Ivanov on 16.12.2021.
 //
 
-protocol CoreRouter {
+public protocol CoreRouter {
 
     func navigate()
 }

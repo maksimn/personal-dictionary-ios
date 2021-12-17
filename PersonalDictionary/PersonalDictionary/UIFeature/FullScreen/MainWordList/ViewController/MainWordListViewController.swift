@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 07.11.2021.
 //
 
+import CoreModule
 import UIKit
 
 class MainWordListViewController: UIViewController {

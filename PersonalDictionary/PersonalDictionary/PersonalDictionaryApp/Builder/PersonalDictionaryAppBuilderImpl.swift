@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 05.12.2021.
 //
 
+import CoreModule
+
 final class PersonalDictionaryAppBuilderImpl: PersonalDictionaryAppBuilder {
 
     private let coreRouter: CoreRouter?

@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		590F78F32709317800BCBD2C /* LangPickerPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F78F22709317800BCBD2C /* LangPickerPopup.swift */; };
-		5910A445270EA04E00631446 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5910A444270EA04E00631446 /* Logger.swift */; };
-		5910A44A270EA07400631446 /* SimpleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5910A449270EA07400631446 /* SimpleLogger.swift */; };
 		591EDC8E2713716B00008074 /* AppConfigs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591EDC8D2713716B00008074 /* AppConfigs.swift */; };
 		591EDCAE2713AA6400008074 /* MainWordListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591EDCAD2713AA6400008074 /* MainWordListRouter.swift */; };
 		591EDCB62713AA7A00008074 /* MainWordListRouterImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591EDCB52713AA7A00008074 /* MainWordListRouterImpl.swift */; };
@@ -70,11 +68,7 @@
 		596FFCA2273C606B0034E8AE /* WordListBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596FFCA1273C606B0034E8AE /* WordListBuilderImpl.swift */; };
 		596FFCA8273C68BE0034E8AE /* NewWordBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596FFCA7273C68BE0034E8AE /* NewWordBuilder.swift */; };
 		596FFCAD273C68CB0034E8AE /* NewWordBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596FFCAC273C68CB0034E8AE /* NewWordBuilderImpl.swift */; };
-		5976022B271112AF0077B5F7 /* CoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5976022A271112AF0077B5F7 /* CoreService.swift */; };
-		59760230271112D90077B5F7 /* UrlSessionCoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5976022F271112D90077B5F7 /* UrlSessionCoreService.swift */; };
 		5976023B271114430077B5F7 /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5976023A271114430077B5F7 /* TranslationService.swift */; };
-		5976024A271115650077B5F7 /* JsonCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59760249271115650077B5F7 /* JsonCoder.swift */; };
-		59760252271115770077B5F7 /* JsonCoderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59760251271115770077B5F7 /* JsonCoderImpl.swift */; };
 		597C2BDB2739181D009780D5 /* NavToSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2BDA2739181D009780D5 /* NavToSearchView.swift */; };
 		597C2BE927391C22009780D5 /* MainWordListViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2BE827391C22009780D5 /* MainWordListViewController+Layout.swift */; };
 		597C2BF42739F21E009780D5 /* MainWordListViewParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2BF32739F21E009780D5 /* MainWordListViewParams.swift */; };
@@ -87,7 +81,6 @@
 		597C2C22273A856C009780D5 /* LangPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C21273A856C009780D5 /* LangPickerViewModel.swift */; };
 		597C2C27273A858F009780D5 /* LangPickerViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C26273A858E009780D5 /* LangPickerViewModelImpl.swift */; };
 		597C2C37273A920A009780D5 /* LangSelectorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C36273A920A009780D5 /* LangSelectorData.swift */; };
-		597C2C42273BB99A009780D5 /* InitiallyBindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C41273BB99A009780D5 /* InitiallyBindable.swift */; };
 		597C2C56273BD9F5009780D5 /* LangPickerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C55273BD9F5009780D5 /* LangPickerBuilder.swift */; };
 		597C2C5B273BDA0D009780D5 /* LangPickerBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C5A273BDA0D009780D5 /* LangPickerBuilderImpl.swift */; };
 		598B79DF270C45E1007ED9FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 598B79E1270C45E1007ED9FD /* Localizable.strings */; };
@@ -100,7 +93,6 @@
 		59A942E1270C506B0076F08B /* WordListViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942E0270C506B0076F08B /* WordListViewModelImpl.swift */; };
 		59A942E6270C52BF0076F08B /* WordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942E5270C52BF0076F08B /* WordListView.swift */; };
 		59A942F9270CE6C80076F08B /* WordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942F8270CE6C80076F08B /* WordItem.swift */; };
-		59A942FE270CE83A0076F08B /* Tagged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942FD270CE83A0076F08B /* Tagged.swift */; };
 		59A94309270CF35B0076F08B /* WordItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A94308270CF35B0076F08B /* WordItemCell.swift */; };
 		59A9430E270CF36B0076F08B /* WordItemCell+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9430D270CF36B0076F08B /* WordItemCell+Layout.swift */; };
 		59A94319270DED370076F08B /* WordListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A94318270DED370076F08B /* WordListRepository.swift */; };
@@ -130,8 +122,6 @@
 		59BDF925276A9330006A66B2 /* SuperAppBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BDF924276A9330006A66B2 /* SuperAppBuilder.swift */; };
 		59BDF92A276A935D006A66B2 /* SuperAppBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BDF929276A935D006A66B2 /* SuperAppBuilderImpl.swift */; };
 		59BDF945276AB279006A66B2 /* RoutingToTodoListAppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BDF944276AB279006A66B2 /* RoutingToTodoListAppRouter.swift */; };
-		59BDF94D276ADE8F006A66B2 /* UIViewController+Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BDF94C276ADE8F006A66B2 /* UIViewController+Core.swift */; };
-		59BE120E276B7CDC00D48BD1 /* CoreRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BE120D276B7CDC00D48BD1 /* CoreRouter.swift */; };
 		59C163C2273D36A7002B1FCB /* LangPickerPopupParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163C1273D36A7002B1FCB /* LangPickerPopupParams.swift */; };
 		59C163DC273D4444002B1FCB /* ConfigBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163DB273D4444002B1FCB /* ConfigBuilder.swift */; };
 		59C163E4273D4452002B1FCB /* ConfigBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163E3273D4452002B1FCB /* ConfigBuilderImpl.swift */; };
@@ -181,8 +171,6 @@
 		11F2A6FDE4C3A546FFBF62BB /* Pods_PersonalDictionary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PersonalDictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A06193F6648141055C88D89 /* Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig"; path = "Target Support Files/Pods-PersonalDictionary-PersonalDictionaryUITests/Pods-PersonalDictionary-PersonalDictionaryUITests.release.xcconfig"; sourceTree = "<group>"; };
 		590F78F22709317800BCBD2C /* LangPickerPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerPopup.swift; sourceTree = "<group>"; };
-		5910A444270EA04E00631446 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		5910A449270EA07400631446 /* SimpleLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleLogger.swift; sourceTree = "<group>"; };
 		591EDC8D2713716B00008074 /* AppConfigs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigs.swift; sourceTree = "<group>"; };
 		591EDCAD2713AA6400008074 /* MainWordListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWordListRouter.swift; sourceTree = "<group>"; };
 		591EDCB52713AA7A00008074 /* MainWordListRouterImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWordListRouterImpl.swift; sourceTree = "<group>"; };
@@ -249,11 +237,7 @@
 		596FFCA1273C606B0034E8AE /* WordListBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListBuilderImpl.swift; sourceTree = "<group>"; };
 		596FFCA7273C68BE0034E8AE /* NewWordBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordBuilder.swift; sourceTree = "<group>"; };
 		596FFCAC273C68CB0034E8AE /* NewWordBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordBuilderImpl.swift; sourceTree = "<group>"; };
-		5976022A271112AF0077B5F7 /* CoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreService.swift; sourceTree = "<group>"; };
-		5976022F271112D90077B5F7 /* UrlSessionCoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlSessionCoreService.swift; sourceTree = "<group>"; };
 		5976023A271114430077B5F7 /* TranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationService.swift; sourceTree = "<group>"; };
-		59760249271115650077B5F7 /* JsonCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonCoder.swift; sourceTree = "<group>"; };
-		59760251271115770077B5F7 /* JsonCoderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonCoderImpl.swift; sourceTree = "<group>"; };
 		597C2BDA2739181D009780D5 /* NavToSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavToSearchView.swift; sourceTree = "<group>"; };
 		597C2BE827391C22009780D5 /* MainWordListViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainWordListViewController+Layout.swift"; sourceTree = "<group>"; };
 		597C2BF32739F21E009780D5 /* MainWordListViewParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWordListViewParams.swift; sourceTree = "<group>"; };
@@ -266,7 +250,6 @@
 		597C2C21273A856C009780D5 /* LangPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerViewModel.swift; sourceTree = "<group>"; };
 		597C2C26273A858E009780D5 /* LangPickerViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerViewModelImpl.swift; sourceTree = "<group>"; };
 		597C2C36273A920A009780D5 /* LangSelectorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangSelectorData.swift; sourceTree = "<group>"; };
-		597C2C41273BB99A009780D5 /* InitiallyBindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiallyBindable.swift; sourceTree = "<group>"; };
 		597C2C55273BD9F5009780D5 /* LangPickerBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerBuilder.swift; sourceTree = "<group>"; };
 		597C2C5A273BDA0D009780D5 /* LangPickerBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerBuilderImpl.swift; sourceTree = "<group>"; };
 		598B79E0270C45E1007ED9FD /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -279,7 +262,6 @@
 		59A942E0270C506B0076F08B /* WordListViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListViewModelImpl.swift; sourceTree = "<group>"; };
 		59A942E5270C52BF0076F08B /* WordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListView.swift; sourceTree = "<group>"; };
 		59A942F8270CE6C80076F08B /* WordItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItem.swift; sourceTree = "<group>"; };
-		59A942FD270CE83A0076F08B /* Tagged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tagged.swift; sourceTree = "<group>"; };
 		59A94308270CF35B0076F08B /* WordItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItemCell.swift; sourceTree = "<group>"; };
 		59A9430D270CF36B0076F08B /* WordItemCell+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordItemCell+Layout.swift"; sourceTree = "<group>"; };
 		59A94318270DED370076F08B /* WordListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListRepository.swift; sourceTree = "<group>"; };
@@ -309,8 +291,6 @@
 		59BDF924276A9330006A66B2 /* SuperAppBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperAppBuilder.swift; sourceTree = "<group>"; };
 		59BDF929276A935D006A66B2 /* SuperAppBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperAppBuilderImpl.swift; sourceTree = "<group>"; };
 		59BDF944276AB279006A66B2 /* RoutingToTodoListAppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingToTodoListAppRouter.swift; sourceTree = "<group>"; };
-		59BDF94C276ADE8F006A66B2 /* UIViewController+Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Core.swift"; sourceTree = "<group>"; };
-		59BE120D276B7CDC00D48BD1 /* CoreRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreRouter.swift; sourceTree = "<group>"; };
 		59C163C1273D36A7002B1FCB /* LangPickerPopupParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerPopupParams.swift; sourceTree = "<group>"; };
 		59C163DB273D4444002B1FCB /* ConfigBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigBuilder.swift; sourceTree = "<group>"; };
 		59C163E3273D4452002B1FCB /* ConfigBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigBuilderImpl.swift; sourceTree = "<group>"; };
@@ -631,20 +611,6 @@
 			path = UIFeature;
 			sourceTree = "<group>";
 		};
-		596B95C92706AC1D004CE7E6 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				597602482711154E0077B5F7 /* JsonCoder */,
-				59A94336270E4C5A0076F08B /* Logger */,
-				59760229271112940077B5F7 /* Networking */,
-				59BE120D276B7CDC00D48BD1 /* CoreRouter.swift */,
-				597C2C41273BB99A009780D5 /* InitiallyBindable.swift */,
-				59A942FD270CE83A0076F08B /* Tagged.swift */,
-				59BDF94C276ADE8F006A66B2 /* UIViewController+Core.swift */,
-			);
-			path = Core;
-			sourceTree = "<group>";
-		};
 		596B95CA2706AC27004CE7E6 /* DataClass */ = {
 			isa = PBXGroup;
 			children = (
@@ -743,7 +709,6 @@
 		596D720127051D4E00872D6C /* PersonalDictionary */ = {
 			isa = PBXGroup;
 			children = (
-				596B95C92706AC1D004CE7E6 /* Core */,
 				5962C146276A6B4A00F30078 /* PersonalDictionary */,
 				5962C14A276A6D7C00F30078 /* TodoList */,
 				59BDF912276A9279006A66B2 /* SuperApp */,
@@ -815,15 +780,6 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
-		59760229271112940077B5F7 /* Networking */ = {
-			isa = PBXGroup;
-			children = (
-				5976022A271112AF0077B5F7 /* CoreService.swift */,
-				5976022F271112D90077B5F7 /* UrlSessionCoreService.swift */,
-			);
-			path = Networking;
-			sourceTree = "<group>";
-		};
 		5976023F271114C00077B5F7 /* TranslationService */ = {
 			isa = PBXGroup;
 			children = (
@@ -832,15 +788,6 @@
 				59E037932712226800197F19 /* PonsResponseData.swift */,
 			);
 			path = TranslationService;
-			sourceTree = "<group>";
-		};
-		597602482711154E0077B5F7 /* JsonCoder */ = {
-			isa = PBXGroup;
-			children = (
-				59760249271115650077B5F7 /* JsonCoder.swift */,
-				59760251271115770077B5F7 /* JsonCoderImpl.swift */,
-			);
-			path = JsonCoder;
 			sourceTree = "<group>";
 		};
 		597709EA273D4CB8003F5B24 /* Domain */ = {
@@ -1012,15 +959,6 @@
 				59A94325270E47030076F08B /* StorageModel.xcdatamodeld */,
 			);
 			path = CoreData;
-			sourceTree = "<group>";
-		};
-		59A94336270E4C5A0076F08B /* Logger */ = {
-			isa = PBXGroup;
-			children = (
-				5910A444270EA04E00631446 /* Logger.swift */,
-				5910A449270EA07400631446 /* SimpleLogger.swift */,
-			);
-			path = Logger;
 			sourceTree = "<group>";
 		};
 		59A94337270E4D9C0076F08B /* ManagedObject */ = {
@@ -1615,13 +1553,11 @@
 				59F836EE273FB058001F1CC7 /* SearchModePickerViewModel.swift in Sources */,
 				59A94339270E4DB90076F08B /* WordItemMO.swift in Sources */,
 				596D720327051D4E00872D6C /* AppDelegate.swift in Sources */,
-				59A942FE270CE83A0076F08B /* Tagged.swift in Sources */,
 				59223A14273FB96000CD201C /* SearchModePickerViewParams.swift in Sources */,
 				596D04592737C47600A33EA5 /* WordTableDelegate.swift in Sources */,
 				59F836C3273FAFE1001F1CC7 /* SearchModePickerBuilder.swift in Sources */,
 				59C163E4273D4452002B1FCB /* ConfigBuilderImpl.swift in Sources */,
 				59250566273E70D500A8621A /* SearchTextInputViewImpl.swift in Sources */,
-				59760252271115770077B5F7 /* JsonCoderImpl.swift in Sources */,
 				59A942C8270C4F970076F08B /* WordListMVVM.swift in Sources */,
 				591EDCAE2713AA6400008074 /* MainWordListRouter.swift in Sources */,
 				596D4F74273C252400B0DD01 /* MainWordListBuilder.swift in Sources */,
@@ -1638,7 +1574,6 @@
 				59BDF92A276A935D006A66B2 /* SuperAppBuilderImpl.swift in Sources */,
 				597C2C22273A856C009780D5 /* LangPickerViewModel.swift in Sources */,
 				59A942F9270CE6C80076F08B /* WordItem.swift in Sources */,
-				59BDF94D276ADE8F006A66B2 /* UIViewController+Core.swift in Sources */,
 				59F8368F273F3E74001F1CC7 /* SearchResultData.swift in Sources */,
 				5953CAEF270615AE006537B9 /* WordListViewController+Layout.swift in Sources */,
 				59B447CF276B4F4000C67354 /* TodoListApp.swift in Sources */,
@@ -1671,7 +1606,6 @@
 				59A9432F270E4B8D0076F08B /* CoreWordListRepository.swift in Sources */,
 				597C2C37273A920A009780D5 /* LangSelectorData.swift in Sources */,
 				59E0378F271216F700197F19 /* PonsTranslationService.swift in Sources */,
-				5910A445270EA04E00631446 /* Logger.swift in Sources */,
 				59250552273E6E7900A8621A /* SearchTextInputViewModel.swift in Sources */,
 				59A942E1270C506B0076F08B /* WordListViewModelImpl.swift in Sources */,
 				59AAC3BB275C15D300068B00 /* PersonalDictionaryAppBuilder.swift in Sources */,
@@ -1679,14 +1613,11 @@
 				59AAC392275B8FF700068B00 /* LangPickerDependencies.swift in Sources */,
 				596D044C2737C40B00A33EA5 /* WordListData.swift in Sources */,
 				5953CB4627063A9B006537B9 /* NewWordViewController+Layout.swift in Sources */,
-				5976022B271112AF0077B5F7 /* CoreService.swift in Sources */,
 				59A9430E270CF36B0076F08B /* WordItemCell+Layout.swift in Sources */,
 				597C2C09273A8404009780D5 /* LangPickerMVVMImpl.swift in Sources */,
 				597C2BDB2739181D009780D5 /* NavToSearchView.swift in Sources */,
-				59BE120E276B7CDC00D48BD1 /* CoreRouter.swift in Sources */,
 				597C2C5B273BDA0D009780D5 /* LangPickerBuilderImpl.swift in Sources */,
 				59A98D70273CF04700AE4DD5 /* SearchBuilder.swift in Sources */,
-				5976024A271115650077B5F7 /* JsonCoder.swift in Sources */,
 				59F836A1273F4412001F1CC7 /* TextLabel.swift in Sources */,
 				597C2BF42739F21E009780D5 /* MainWordListViewParams.swift in Sources */,
 				596D04612737C49B00A33EA5 /* ViewParams.swift in Sources */,
@@ -1713,7 +1644,6 @@
 				591EDC8E2713716B00008074 /* AppConfigs.swift in Sources */,
 				59250543273E6E4500A8621A /* SearchTextInputMVVM.swift in Sources */,
 				597C2C04273A83C8009780D5 /* LangPickerMVVM.swift in Sources */,
-				597C2C42273BB99A009780D5 /* InitiallyBindable.swift in Sources */,
 				5962C14C276A6DB900F30078 /* TodoListViewController.swift in Sources */,
 				59AAC376275ACCB500068B00 /* NewWordDependencies.swift in Sources */,
 				59F836DF273FB033001F1CC7 /* SearchModePickerModelImpl.swift in Sources */,
@@ -1730,9 +1660,7 @@
 				59250557273E6ED600A8621A /* SearchTextInputBuilderImpl.swift in Sources */,
 				5953CB1D270627BF006537B9 /* NewWordView.swift in Sources */,
 				597C2BE927391C22009780D5 /* MainWordListViewController+Layout.swift in Sources */,
-				59760230271112D90077B5F7 /* UrlSessionCoreService.swift in Sources */,
 				59A942DC270C504E0076F08B /* WordListViewModel.swift in Sources */,
-				5910A44A270EA07400631446 /* SimpleLogger.swift in Sources */,
 				5925053E273E6E3200A8621A /* SearchTextInputBuilder.swift in Sources */,
 				596D4F7F273C259F00B0DD01 /* MainWordListBuilderImpl.swift in Sources */,
 				597C2C13273A84DA009780D5 /* LangPickerModelImpl.swift in Sources */,

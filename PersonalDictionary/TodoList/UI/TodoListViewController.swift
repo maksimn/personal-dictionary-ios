@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 15.12.2021.
 //
 
+import CoreModule
 import UIKit
 
 class TodoListViewController: UIViewController {
@@ -14,7 +15,7 @@ class TodoListViewController: UIViewController {
     private let routingButton = UIButton()
     private let routingButtonTitle: String
 
-    init(routingButtonTitle: String) {
+    init(routingButtonTitle: String, coreRouter: CoreRouter? = nil) {
         self.routingButtonTitle = routingButtonTitle
         super.init(nibName: nil, bundle: nil)
         view.backgroundColor = .cyan
@@ -31,7 +32,7 @@ class TodoListViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 17)
         label.numberOfLines = 1
         label.textAlignment = .center
-        label.text = "Здесь будет Тудулист"
+        label.text = "TodoList in progress..."
         view.addSubview(label)
         label.snp.makeConstraints { make -> Void in
             make.center.equalTo(view.center)
