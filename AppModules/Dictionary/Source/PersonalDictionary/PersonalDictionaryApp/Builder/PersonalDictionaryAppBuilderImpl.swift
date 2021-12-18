@@ -7,18 +7,18 @@
 
 import CoreModule
 
-final class PersonalDictionaryAppBuilderImpl: PersonalDictionaryAppBuilder {
+public final class PersonalDictionaryAppBuilderImpl: PersonalDictionaryAppBuilder {
 
     private let coreRouter: CoreRouter?
     private let routingButtonTitle: String
 
-    init(coreRouter: CoreRouter?,
-         routingButtonTitle: String) {
+    public init(coreRouter: CoreRouter?,
+                routingButtonTitle: String) {
         self.coreRouter = coreRouter
         self.routingButtonTitle = routingButtonTitle
     }
 
-    func build() -> PersonalDictionaryApp {
+    public func build() -> PersonalDictionaryApp {
         let configBuilder = ConfigBuilderImpl(coreRouter: coreRouter,
                                               routingButtonTitle: routingButtonTitle)
 
