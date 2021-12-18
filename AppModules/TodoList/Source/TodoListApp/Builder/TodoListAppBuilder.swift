@@ -5,7 +5,7 @@
 //  Created by Maxim Ivanov on 16.12.2021.
 //
 
-protocol TodoListAppBuilder {
+public protocol TodoListAppBuilder {
 
     func build() -> TodoListApp
 }

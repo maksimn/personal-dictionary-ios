@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol TodoListApp {
+public protocol TodoListApp {
 
     var viewController: UIViewController { get }
 }
