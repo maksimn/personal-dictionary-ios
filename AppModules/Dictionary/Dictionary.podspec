@@ -19,7 +19,9 @@ Pod::Spec.new do |spec|
   spec.source_files  = 'Source/**/*'
   spec.source = { :path => '.' }
 
-  spec.resources = ['Resources/{*.xcassets}', "Resources/StorageModel.xcdatamodeld"]
+  spec.resources = ["Resources/{*.xcassets}", 
+                    "Resources/StorageModel.xcdatamodeld",
+                    "Resources/{*.lproj}/Localizable.strings"]
 
   spec.dependency 'CoreModule'
   spec.dependency 'RxCocoa', '5.1'

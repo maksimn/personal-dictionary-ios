@@ -11,12 +11,16 @@ final class SearchModePickerDependencies {
 
     let initialSearchMode: SearchMode = .bySourceWord
 
-    let viewParams = SearchModePickerViewParams(
-        staticContent: SearchModePickerStaticContent(
-            searchByLabelText: NSLocalizedString("Search by:", comment: ""),
-            sourceWordText: NSLocalizedString("source word", comment: ""),
-            translationText: NSLocalizedString("translation", comment: "")
-        ),
-        styles: SearchModePickerStyles()
-    )
+    private(set) lazy var viewParams: SearchModePickerViewParams = {
+        let bundle = Bundle(for: type(of: self))
+
+        return SearchModePickerViewParams(
+            staticContent: SearchModePickerStaticContent(
+                searchByLabelText: bundle.moduleLocalizedString("Search by:"),
+                sourceWordText: bundle.moduleLocalizedString("source word"),
+                translationText: bundle.moduleLocalizedString("translation")
+            ),
+            styles: SearchModePickerStyles()
+        )
+    }()
 }

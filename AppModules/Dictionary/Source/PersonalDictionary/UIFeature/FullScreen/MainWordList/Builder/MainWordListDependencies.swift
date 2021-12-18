@@ -10,19 +10,23 @@ import UIKit
 
 final class MainWordListDependencies {
 
-    private(set) lazy var viewParams = MainWordListViewParams(
-        staticContent: MainWordListStaticContent(
-            heading: NSLocalizedString("My dictionary", comment: ""),
-            navToNewWordImage: UIImage(named: "icon-plus", in: Bundle(for: type(of: self)), compatibleWith: nil)!,
-            routingButtonTitle: routingButtonTitle,
-            visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
-        ),
-        styles: MainWordListStyles(
-            backgroundColor: appConfigs.appViewConfigs.appBackgroundColor,
-            navToNewWordButtonSize: CGSize(width: 44, height: 44),
-            navToNewWordButtonBottomOffset: -26
+    private(set) lazy var viewParams: MainWordListViewParams = {
+        let bundle = Bundle(for: type(of: self))
+
+        return MainWordListViewParams(
+            staticContent: MainWordListStaticContent(
+                heading: bundle.moduleLocalizedString("My dictionary"),
+                navToNewWordImage: UIImage(named: "icon-plus", in: bundle, compatibleWith: nil)!,
+                routingButtonTitle: routingButtonTitle,
+                visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
+            ),
+            styles: MainWordListStyles(
+                backgroundColor: appConfigs.appViewConfigs.appBackgroundColor,
+                navToNewWordButtonSize: CGSize(width: 44, height: 44),
+                navToNewWordButtonBottomOffset: -26
+            )
         )
-    )
+    }()
 
     private let appConfigs: AppConfigs
 
