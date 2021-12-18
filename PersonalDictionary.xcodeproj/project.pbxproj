@@ -29,9 +29,6 @@
 		59250593273ED1FE00A8621A /* SearchEngineBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59250592273ED1FE00A8621A /* SearchEngineBuilder.swift */; };
 		59250598273ED20E00A8621A /* SearchEngineBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59250597273ED20E00A8621A /* SearchEngineBuilderImpl.swift */; };
 		5926504B270BA17600029BAA /* PersonalDictionaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5926504A270BA17600029BAA /* PersonalDictionaryUITests.swift */; };
-		594ACC19270BA96100D9AB8F /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594ACC18270BA96100D9AB8F /* GeneratedMocks.swift */; };
-		594ACC23270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594ACC22270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift */; };
-		594ACC32270BB44500D9AB8F /* NewWordModelImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594ACC31270BB44500D9AB8F /* NewWordModelImplTests.swift */; };
 		5953CAEF270615AE006537B9 /* WordListViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CAEE270615AE006537B9 /* WordListViewController+Layout.swift */; };
 		5953CB0927062712006537B9 /* NewWordMVVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB0827062712006537B9 /* NewWordMVVM.swift */; };
 		5953CB0E2706273B006537B9 /* NewWordMVVMImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953CB0D2706273B006537B9 /* NewWordMVVMImpl.swift */; };
@@ -83,7 +80,6 @@
 		597C2C56273BD9F5009780D5 /* LangPickerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C55273BD9F5009780D5 /* LangPickerBuilder.swift */; };
 		597C2C5B273BDA0D009780D5 /* LangPickerBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597C2C5A273BDA0D009780D5 /* LangPickerBuilderImpl.swift */; };
 		598B79DF270C45E1007ED9FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 598B79E1270C45E1007ED9FD /* Localizable.strings */; };
-		598ED937270B965900747AEE /* LangRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598ED936270B965900747AEE /* LangRepositoryImplTests.swift */; };
 		59A942C8270C4F970076F08B /* WordListMVVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942C7270C4F970076F08B /* WordListMVVM.swift */; };
 		59A942CD270C4FC10076F08B /* WordListMVVMImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942CC270C4FC10076F08B /* WordListMVVMImpl.swift */; };
 		59A942D2270C500F0076F08B /* WordListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A942D1270C500F0076F08B /* WordListModel.swift */; };
@@ -122,7 +118,6 @@
 		59C163E4273D4452002B1FCB /* ConfigBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C163E3273D4452002B1FCB /* ConfigBuilderImpl.swift */; };
 		59D07987274F1EC6000D2C9E /* WordItemStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D07986274F1EC5000D2C9E /* WordItemStream.swift */; };
 		59D07995274F1FB3000D2C9E /* WordItemStreamImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D07994274F1FB3000D2C9E /* WordItemStreamImpl.swift */; };
-		59D079EC27506A68000D2C9E /* SearchEngineImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D079EB27506A68000D2C9E /* SearchEngineImplTests.swift */; };
 		59E0378F271216F700197F19 /* PonsTranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0378E271216F700197F19 /* PonsTranslationService.swift */; };
 		59E037942712226800197F19 /* PonsResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E037932712226800197F19 /* PonsResponseData.swift */; };
 		59F8368F273F3E74001F1CC7 /* SearchResultData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F8368E273F3E74001F1CC7 /* SearchResultData.swift */; };
@@ -187,9 +182,6 @@
 		59250592273ED1FE00A8621A /* SearchEngineBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEngineBuilder.swift; sourceTree = "<group>"; };
 		59250597273ED20E00A8621A /* SearchEngineBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEngineBuilderImpl.swift; sourceTree = "<group>"; };
 		5926504A270BA17600029BAA /* PersonalDictionaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDictionaryUITests.swift; sourceTree = "<group>"; };
-		594ACC18270BA96100D9AB8F /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
-		594ACC22270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordMVVMImplTests.swift; sourceTree = "<group>"; };
-		594ACC31270BB44500D9AB8F /* NewWordModelImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordModelImplTests.swift; sourceTree = "<group>"; };
 		5953CAEE270615AE006537B9 /* WordListViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordListViewController+Layout.swift"; sourceTree = "<group>"; };
 		5953CB0827062712006537B9 /* NewWordMVVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordMVVM.swift; sourceTree = "<group>"; };
 		5953CB0D2706273B006537B9 /* NewWordMVVMImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordMVVMImpl.swift; sourceTree = "<group>"; };
@@ -247,7 +239,6 @@
 		597C2C55273BD9F5009780D5 /* LangPickerBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerBuilder.swift; sourceTree = "<group>"; };
 		597C2C5A273BDA0D009780D5 /* LangPickerBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangPickerBuilderImpl.swift; sourceTree = "<group>"; };
 		598B79E0270C45E1007ED9FD /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		598ED936270B965900747AEE /* LangRepositoryImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangRepositoryImplTests.swift; sourceTree = "<group>"; };
 		59A942C7270C4F970076F08B /* WordListMVVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListMVVM.swift; sourceTree = "<group>"; };
 		59A942CC270C4FC10076F08B /* WordListMVVMImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListMVVMImpl.swift; sourceTree = "<group>"; };
 		59A942D1270C500F0076F08B /* WordListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListModel.swift; sourceTree = "<group>"; };
@@ -286,7 +277,6 @@
 		59C163E3273D4452002B1FCB /* ConfigBuilderImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigBuilderImpl.swift; sourceTree = "<group>"; };
 		59D07986274F1EC5000D2C9E /* WordItemStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItemStream.swift; sourceTree = "<group>"; };
 		59D07994274F1FB3000D2C9E /* WordItemStreamImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItemStreamImpl.swift; sourceTree = "<group>"; };
-		59D079EB27506A68000D2C9E /* SearchEngineImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEngineImplTests.swift; sourceTree = "<group>"; };
 		59E0378E271216F700197F19 /* PonsTranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PonsTranslationService.swift; sourceTree = "<group>"; };
 		59E037932712226800197F19 /* PonsResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PonsResponseData.swift; sourceTree = "<group>"; };
 		59F8368E273F3E74001F1CC7 /* SearchResultData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultData.swift; sourceTree = "<group>"; };
@@ -452,31 +442,6 @@
 				59F8368E273F3E74001F1CC7 /* SearchResultData.swift */,
 			);
 			path = Domain;
-			sourceTree = "<group>";
-		};
-		594ACC20270BAA6100D9AB8F /* NewWord */ = {
-			isa = PBXGroup;
-			children = (
-				594ACC21270BAA6B00D9AB8F /* Graph */,
-				594ACC30270BB42800D9AB8F /* Model */,
-			);
-			path = NewWord;
-			sourceTree = "<group>";
-		};
-		594ACC21270BAA6B00D9AB8F /* Graph */ = {
-			isa = PBXGroup;
-			children = (
-				594ACC22270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift */,
-			);
-			path = Graph;
-			sourceTree = "<group>";
-		};
-		594ACC30270BB42800D9AB8F /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				594ACC31270BB44500D9AB8F /* NewWordModelImplTests.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		594C9D23273D1B6C007D5E16 /* CustomView */ = {
@@ -705,10 +670,6 @@
 		596D721B27051D5300872D6C /* PersonalDictionaryTests */ = {
 			isa = PBXGroup;
 			children = (
-				594ACC18270BA96100D9AB8F /* GeneratedMocks.swift */,
-				598ED935270B961300747AEE /* Repository */,
-				594ACC20270BAA6100D9AB8F /* NewWord */,
-				59D079E827506A28000D2C9E /* Feature */,
 				596D721E27051D5300872D6C /* Info.plist */,
 			);
 			path = PersonalDictionaryTests;
@@ -886,14 +847,6 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		598ED935270B961300747AEE /* Repository */ = {
-			isa = PBXGroup;
-			children = (
-				59A94313270DECF60076F08B /* Lang */,
-			);
-			path = Repository;
-			sourceTree = "<group>";
-		};
 		59A94302270CF2C00076F08B /* WordTableView */ = {
 			isa = PBXGroup;
 			children = (
@@ -910,14 +863,6 @@
 			children = (
 				5953CB3827062EF2006537B9 /* LangRepository.swift */,
 				5953CB3D27062F02006537B9 /* LangRepositoryImpl.swift */,
-			);
-			path = Lang;
-			sourceTree = "<group>";
-		};
-		59A94313270DECF60076F08B /* Lang */ = {
-			isa = PBXGroup;
-			children = (
-				598ED936270B965900747AEE /* LangRepositoryImplTests.swift */,
 			);
 			path = Lang;
 			sourceTree = "<group>";
@@ -1083,30 +1028,6 @@
 			path = ModelStream;
 			sourceTree = "<group>";
 		};
-		59D079E827506A28000D2C9E /* Feature */ = {
-			isa = PBXGroup;
-			children = (
-				59D079E927506A32000D2C9E /* SearchEngine */,
-			);
-			path = Feature;
-			sourceTree = "<group>";
-		};
-		59D079E927506A32000D2C9E /* SearchEngine */ = {
-			isa = PBXGroup;
-			children = (
-				59D079EA27506A3B000D2C9E /* Domain */,
-			);
-			path = SearchEngine;
-			sourceTree = "<group>";
-		};
-		59D079EA27506A3B000D2C9E /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-				59D079EB27506A68000D2C9E /* SearchEngineImplTests.swift */,
-			);
-			path = Domain;
-			sourceTree = "<group>";
-		};
 		59F83693273F437F001F1CC7 /* TextLabel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1196,7 +1117,6 @@
 			buildConfigurationList = 596D722C27051D5300872D6C /* Build configuration list for PBXNativeTarget "PersonalDictionary" */;
 			buildPhases = (
 				831A74C7F21836B9E72EC050 /* [CP] Check Pods Manifest.lock */,
-				598ED92E270B92A500747AEE /* ShellScript */,
 				596D71FB27051D4E00872D6C /* Sources */,
 				596D71FC27051D4E00872D6C /* Frameworks */,
 				596D71FD27051D4E00872D6C /* Resources */,
@@ -1341,23 +1261,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PersonalDictionary/Pods-PersonalDictionary-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		598ED92E270B92A500747AEE /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Define output file. Change \"${PROJECT_DIR}/${PROJECT_NAME}Tests\" to your test's root source folder, if it's not the default name.\nOUTPUT_FILE=\"${PROJECT_DIR}/${PROJECT_NAME}Tests/GeneratedMocks.swift\"\necho \"Generated Mocks File = ${OUTPUT_FILE}\"\n\n# Define input directory. Change \"${PROJECT_DIR}/${PROJECT_NAME}\" to your project's root source folder, if it's not the default name.\nINPUT_DIR=\"${PROJECT_DIR}/${PROJECT_NAME}\"\necho \"Mocks Input Directory = ${INPUT_DIR}\"\n\n# Generate mock files, include as many input files as you'd like to create mocks for.\n\"${PODS_ROOT}/Cuckoo/run\" generate --testable \"${PROJECT_NAME}\" \\\n--output \"${OUTPUT_FILE}\" \\\n\"${INPUT_DIR}/PersonalDictionary/Repository/Lang/LangRepository.swift\" \\\n\"${INPUT_DIR}/PersonalDictionary/Repository/WordList/WordListRepository.swift\"\n# ... and so forth, the last line should never end with a backslash\n\n# After running once, locate `GeneratedMocks.swift` and drag it into your Xcode test target group.\n";
 		};
 		59D43E0D27051EC300E068B1 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1613,11 +1516,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				594ACC23270BAA8B00D9AB8F /* NewWordMVVMImplTests.swift in Sources */,
-				598ED937270B965900747AEE /* LangRepositoryImplTests.swift in Sources */,
-				594ACC32270BB44500D9AB8F /* NewWordModelImplTests.swift in Sources */,
-				594ACC19270BA96100D9AB8F /* GeneratedMocks.swift in Sources */,
-				59D079EC27506A68000D2C9E /* SearchEngineImplTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
