@@ -15,6 +15,9 @@ PODS:
   - RxSwift (5.1.0)
   - SnapKit (4.2.0)
   - SwiftLint (0.43.1)
+  - TodoList (0.1.0):
+    - CoreModule
+    - SnapKit (~> 4.0)
 
 DEPENDENCIES:
   - CoreModule (from `./AppModules/CoreModule`)
@@ -24,6 +27,7 @@ DEPENDENCIES:
   - RxSwift (= 5.1)
   - SnapKit (~> 4.0)
   - SwiftLint
+  - TodoList (from `./AppModules/TodoList`)
 
 SPEC REPOS:
   trunk:
@@ -38,6 +42,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   CoreModule:
     :path: "./AppModules/CoreModule"
+  TodoList:
+    :path: "./AppModules/TodoList"
 
 SPEC CHECKSUMS:
   CoreModule: 16314c212f5f68d86c3656b5f5e9e1b1fbc9ee87
@@ -48,7 +54,8 @@ SPEC CHECKSUMS:
   RxSwift: ad5874f24bb0dbffd1e9bb8443604e3578796c7a
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
+  TodoList: 2f4aa69d2d975aa39d75405bbbdce722daca9c50
 
-PODFILE CHECKSUM: c02dccaf295fa1ecbb0b4a88932c57b236e5d096
+PODFILE CHECKSUM: 6de960a191bdd3820fd07d3701e3bf7ffe6e1efd
 
 COCOAPODS: 1.10.0

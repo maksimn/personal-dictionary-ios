@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 16.12.2021.
 //
 
+import TodoList
 import UIKit
 
 final class SuperAppImpl: SuperApp {

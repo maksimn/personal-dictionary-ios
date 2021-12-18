@@ -8,6 +8,8 @@ target 'PersonalDictionary' do
 
   pod 'CoreModule',
     :path => './AppModules/CoreModule'
+  pod 'TodoList',
+    :path => './AppModules/TodoList'
 
   target 'PersonalDictionaryTests' do
     inherit! :search_paths
