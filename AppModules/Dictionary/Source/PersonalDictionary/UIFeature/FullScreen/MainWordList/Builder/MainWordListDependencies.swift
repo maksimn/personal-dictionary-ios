@@ -13,7 +13,7 @@ final class MainWordListDependencies {
     private(set) lazy var viewParams = MainWordListViewParams(
         staticContent: MainWordListStaticContent(
             heading: NSLocalizedString("My dictionary", comment: ""),
-            navToNewWordImage: UIImage(named: "icon-plus")!,
+            navToNewWordImage: UIImage(named: "icon-plus", in: Bundle(for: type(of: self)), compatibleWith: nil)!,
             routingButtonTitle: routingButtonTitle,
             visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
         ),

@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 16.12.2021.
 //
 
+import Dictionary
 import TodoList
 import UIKit
 

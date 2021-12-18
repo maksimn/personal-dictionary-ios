@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol PersonalDictionaryApp {
+public protocol PersonalDictionaryApp {
 
     var navigationController: UINavigationController { get }
 }

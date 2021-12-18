@@ -21,7 +21,16 @@ final class CoreWordListRepository: WordListRepository {
     }
 
     private lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: args.persistentContainerName)
+        let bundle = Bundle(for: type(of: self))
+
+        guard let modelURL = bundle.url(forResource: args.persistentContainerName, withExtension: "momd"),
+              let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL) else {
+            return NSPersistentContainer()
+        }
+
+        let container = NSPersistentContainer(name: args.persistentContainerName,
+                                              managedObjectModel: managedObjectModel)
+
         container.loadPersistentStores(completionHandler: { (_, error) in
             container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
 
