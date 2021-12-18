@@ -7,9 +7,11 @@
 
 import RxSwift
 
-final class JSONCoderImpl: JsonCoder {
+public final class JSONCoderImpl: JsonCoder {
 
-    func parseFromJson<T: Decodable>(_ data: Data) -> Single<T> {
+    public init() { }
+
+    public func parseFromJson<T: Decodable>(_ data: Data) -> Single<T> {
         Single<T>.create { observer in
             do {
                 let typedObject = try JSONDecoder().decode(T.self, from: data)

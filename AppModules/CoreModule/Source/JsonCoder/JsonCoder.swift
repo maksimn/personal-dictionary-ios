@@ -7,7 +7,7 @@
 
 import RxSwift
 
-protocol JsonCoder {
+public protocol JsonCoder {
 
     func parseFromJson<T: Decodable>(_ data: Data) -> Single<T>
 }

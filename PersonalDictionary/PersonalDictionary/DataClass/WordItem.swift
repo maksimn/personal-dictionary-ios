@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
+import CoreModule
 import Foundation
 
 struct WordItem: Equatable {

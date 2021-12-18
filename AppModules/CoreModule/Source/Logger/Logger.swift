@@ -5,7 +5,7 @@
 //  Created by Maxim Ivanov on 07.10.2021.
 //
 
-protocol Logger {
+public protocol Logger {
 
     func networkRequestStart(_ requestName: String)
 

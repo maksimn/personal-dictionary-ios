@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
+import CoreModule
+
 struct NewWordModelState {
     var text: String
     var sourceLang: Lang

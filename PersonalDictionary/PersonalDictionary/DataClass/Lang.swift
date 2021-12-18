@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 01.10.2021.
 //
 
+import CoreModule
+
 struct Lang: Equatable {
 
     typealias Id = Tagged<Lang, Int>

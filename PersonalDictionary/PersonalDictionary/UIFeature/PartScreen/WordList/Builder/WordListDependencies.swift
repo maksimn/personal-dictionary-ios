@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 04.12.2021.
 //
 
+import CoreModule
 import UIKit
 
 final class WordListDependencies {

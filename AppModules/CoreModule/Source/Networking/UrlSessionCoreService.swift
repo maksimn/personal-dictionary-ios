@@ -8,7 +8,7 @@
 import RxCocoa
 import RxSwift
 
-class UrlSessionCoreService: CoreService {
+public class UrlSessionCoreService: CoreService {
 
     private let sessionConfiguration: URLSessionConfiguration
 
@@ -18,11 +18,11 @@ class UrlSessionCoreService: CoreService {
         return session
     }()
 
-    init(sessionConfiguration: URLSessionConfiguration) {
+    public init(sessionConfiguration: URLSessionConfiguration) {
         self.sessionConfiguration = sessionConfiguration
     }
 
-    func send(_ http: Http) -> Single<Data> {
+    public func send(_ http: Http) -> Single<Data> {
         Single<Data>.create { observer in
             let urlString = http.urlString
             guard let url = URL(string: urlString) else {

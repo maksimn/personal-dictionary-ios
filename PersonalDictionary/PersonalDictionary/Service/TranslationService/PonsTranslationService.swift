@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 09.10.2021.
 //
 
+import CoreModule
 import RxSwift
 
 struct PonsApiData {

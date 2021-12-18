@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 16.12.2021.
 //
 
+import CoreModule
 import UIKit
 
 final class RoutingToTodoListAppRouter: CoreRouter {
