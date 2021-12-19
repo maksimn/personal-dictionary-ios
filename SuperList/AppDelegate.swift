@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  PersonalDictionary
+//  SuperList
 //
-//  Created by Maxim Ivanov on 30.09.2021.
+//  Created by Maxim Ivanov on 19.12.2021.
 //
 
 import UIKit
