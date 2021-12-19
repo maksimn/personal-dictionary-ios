@@ -19,12 +19,14 @@ final class NewWordDependencies {
 
     init(appViewConfigs: AppViewConfigs,
          langRepository: LangRepository) {
+        let bundle = Bundle(for: type(of: self))
+
         viewParams = NewWordViewParams(
             staticContent: NewWordViewStaticContent(
-                selectButtonTitle: NSLocalizedString("Select", comment: ""),
-                arrowText: NSLocalizedString("⇋", comment: ""),
-                okText: NSLocalizedString("OK", comment: ""),
-                textFieldPlaceholder: NSLocalizedString("Enter a new word", comment: "")
+                selectButtonTitle: bundle.moduleLocalizedString("Select"),
+                arrowText: bundle.moduleLocalizedString("⇋"),
+                okText: bundle.moduleLocalizedString("OK"),
+                textFieldPlaceholder: bundle.moduleLocalizedString("Enter a new word")
             ),
             styles: NewWordViewStyles(backgroundColor: appViewConfigs.appBackgroundColor)
         )

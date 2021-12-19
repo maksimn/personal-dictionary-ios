@@ -9,10 +9,12 @@ import UIKit
 
 final class SearchTextInputDependencies {
 
-    let viewParams = SearchTextInputViewParams(
-        staticContent: SearchTextInputStaticContent(
-            placeholder: NSLocalizedString("Enter a word for searching", comment: "")
-        ),
-        styles: SearchTextInputStyles(size: CGSize(width: UIScreen.main.bounds.width - 72, height: 44))
-    )
+    private(set) lazy var viewParams = {
+        SearchTextInputViewParams(
+            staticContent: SearchTextInputStaticContent(
+                placeholder: Bundle(for: type(of: self)).moduleLocalizedString("Enter a word for searching")
+            ),
+            styles: SearchTextInputStyles(size: CGSize(width: UIScreen.main.bounds.width - 72, height: 44))
+        )
+    }()
 }

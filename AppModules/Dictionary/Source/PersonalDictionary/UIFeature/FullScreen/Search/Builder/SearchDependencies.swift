@@ -12,9 +12,11 @@ final class SearchDependencies {
     let appViewConfigs: AppViewConfigs
     let wordListBuilder: WordListBuilder
 
-    let searchResultTextLabelParams = TextLabelParams(textColor: .darkGray,
-                                                      font: UIFont.systemFont(ofSize: 17),
-                                                      text: NSLocalizedString("No words found", comment: ""))
+    private(set) lazy var searchResultTextLabelParams = TextLabelParams(
+        textColor: .darkGray,
+        font: UIFont.systemFont(ofSize: 17),
+        text: Bundle(for: type(of: self)).moduleLocalizedString("No words found")
+    )
 
     let searchTextInputBuilder = SearchTextInputBuilderImpl()
     let searchModePickerBuilder = SearchModePickerBuilderImpl()
