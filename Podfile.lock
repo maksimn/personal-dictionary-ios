@@ -2,11 +2,23 @@ PODS:
   - CoreModule (0.1.0):
     - RxCocoa (= 5.1)
     - RxSwift (= 5.1)
+  - Cuckoo (1.5.1):
+    - Cuckoo/Swift (= 1.5.1)
+  - Cuckoo/Swift (1.5.1)
   - PersonalDictionary (0.1.0):
     - CoreModule
     - RxCocoa (= 5.1)
     - RxSwift (= 5.1)
     - SnapKit (~> 4.0)
+  - PersonalDictionary/PersonalDictionaryTests (0.1.0):
+    - CoreModule
+    - Cuckoo
+    - RxBlocking (= 5.1)
+    - RxCocoa (= 5.1)
+    - RxSwift (= 5.1)
+    - SnapKit (~> 4.0)
+  - RxBlocking (5.1.0):
+    - RxSwift (~> 5)
   - RxCocoa (5.1.0):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -22,11 +34,14 @@ PODS:
 DEPENDENCIES:
   - CoreModule (from `./AppModules/CoreModule`)
   - PersonalDictionary (from `./AppModules/PersonalDictionary`)
+  - PersonalDictionary/PersonalDictionaryTests (from `./AppModules/PersonalDictionary`)
   - SwiftLint
   - TodoList (from `./AppModules/TodoList`)
 
 SPEC REPOS:
   trunk:
+    - Cuckoo
+    - RxBlocking
     - RxCocoa
     - RxRelay
     - RxSwift
@@ -43,7 +58,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CoreModule: 16314c212f5f68d86c3656b5f5e9e1b1fbc9ee87
-  PersonalDictionary: 85cd57a0fcc449eda5ba588f6cfe2e763241948d
+  Cuckoo: 9124fe138270854903483c270370e6e7658fbc9b
+  PersonalDictionary: 725657694ed4dad0304385e7ba118ed5cf99ebaa
+  RxBlocking: 5ef131267220f92ef68531dd6afeaf407cd6b41a
   RxCocoa: 13d2a4d7546a34b8ececae8c281e4ea1dbb94f2b
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: ad5874f24bb0dbffd1e9bb8443604e3578796c7a
@@ -51,6 +68,6 @@ SPEC CHECKSUMS:
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
   TodoList: 2f4aa69d2d975aa39d75405bbbdce722daca9c50
 
-PODFILE CHECKSUM: 8b8fce94a4443175565d1660d38402b04ef8e7fe
+PODFILE CHECKSUM: adb3bb46aa073758abed9a7d16dad7f7f3e2b269
 
 COCOAPODS: 1.10.0
