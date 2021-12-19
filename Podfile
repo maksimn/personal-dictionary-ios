@@ -1,21 +1,21 @@
-target 'PersonalDictionary' do
+target 'SuperList' do
   use_frameworks!
 
   pod 'SwiftLint'
 
   pod 'CoreModule',
     :path => './AppModules/CoreModule'
-  pod 'Dictionary',
-    :path => './AppModules/Dictionary'
+  pod 'PersonalDictionary',
+    :path => './AppModules/PersonalDictionary'
   pod 'TodoList',
     :path => './AppModules/TodoList'
 
-  target 'PersonalDictionaryTests' do
+  target 'SuperListTests' do
     inherit! :search_paths
 
   end
 
-  target 'PersonalDictionaryUITests' do
+  target 'SuperListUITests' do
 
   end
 

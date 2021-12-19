@@ -2,7 +2,7 @@ PODS:
   - CoreModule (0.1.0):
     - RxCocoa (= 5.1)
     - RxSwift (= 5.1)
-  - Dictionary (0.1.0):
+  - PersonalDictionary (0.1.0):
     - CoreModule
     - RxCocoa (= 5.1)
     - RxSwift (= 5.1)
@@ -21,7 +21,7 @@ PODS:
 
 DEPENDENCIES:
   - CoreModule (from `./AppModules/CoreModule`)
-  - Dictionary (from `./AppModules/Dictionary`)
+  - PersonalDictionary (from `./AppModules/PersonalDictionary`)
   - SwiftLint
   - TodoList (from `./AppModules/TodoList`)
 
@@ -36,14 +36,14 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   CoreModule:
     :path: "./AppModules/CoreModule"
-  Dictionary:
-    :path: "./AppModules/Dictionary"
+  PersonalDictionary:
+    :path: "./AppModules/PersonalDictionary"
   TodoList:
     :path: "./AppModules/TodoList"
 
 SPEC CHECKSUMS:
   CoreModule: 16314c212f5f68d86c3656b5f5e9e1b1fbc9ee87
-  Dictionary: 054264ad7675c5b587eb6875125f8a303f4652ac
+  PersonalDictionary: 85cd57a0fcc449eda5ba588f6cfe2e763241948d
   RxCocoa: 13d2a4d7546a34b8ececae8c281e4ea1dbb94f2b
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: ad5874f24bb0dbffd1e9bb8443604e3578796c7a
@@ -51,6 +51,6 @@ SPEC CHECKSUMS:
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
   TodoList: 2f4aa69d2d975aa39d75405bbbdce722daca9c50
 
-PODFILE CHECKSUM: e59e5d0fa311f6ddacbb662c91588d0db72a11e6
+PODFILE CHECKSUM: 8b8fce94a4443175565d1660d38402b04ef8e7fe
 
 COCOAPODS: 1.10.0

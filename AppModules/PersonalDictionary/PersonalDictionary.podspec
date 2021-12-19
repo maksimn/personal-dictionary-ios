@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
 
-  spec.name         = "Dictionary"
+  spec.name         = "PersonalDictionary"
   spec.version      = "0.1.0"
   spec.summary      = "Personal Dictionary app"
 
