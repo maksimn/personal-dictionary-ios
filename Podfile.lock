@@ -30,6 +30,9 @@ PODS:
   - TodoList (0.1.0):
     - CoreModule
     - SnapKit (~> 4.0)
+  - TodoList/TodoListTests (0.1.0):
+    - CoreModule
+    - SnapKit (~> 4.0)
 
 DEPENDENCIES:
   - CoreModule (from `./AppModules/CoreModule`)
@@ -37,6 +40,7 @@ DEPENDENCIES:
   - PersonalDictionary/PersonalDictionaryTests (from `./AppModules/PersonalDictionary`)
   - SwiftLint
   - TodoList (from `./AppModules/TodoList`)
+  - TodoList/TodoListTests (from `./AppModules/TodoList`)
 
 SPEC REPOS:
   trunk:
@@ -66,8 +70,8 @@ SPEC CHECKSUMS:
   RxSwift: ad5874f24bb0dbffd1e9bb8443604e3578796c7a
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
-  TodoList: 2f4aa69d2d975aa39d75405bbbdce722daca9c50
+  TodoList: 14cfb7cdc120a12bf00aeeb19a6daba51aafd165
 
-PODFILE CHECKSUM: adb3bb46aa073758abed9a7d16dad7f7f3e2b269
+PODFILE CHECKSUM: 8ad51901659750ed0930b6d1ca704fe5724f8f05
 
 COCOAPODS: 1.10.0

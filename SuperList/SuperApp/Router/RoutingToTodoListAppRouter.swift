@@ -22,7 +22,7 @@ final class RoutingToTodoListAppRouter: CoreRouter {
 
     func navigate() {
         let todoListApp = todoListAppBuilder.build()
-        let todoListViewController = todoListApp.viewController
+        let todoListViewController = todoListApp.navigationController
 
         todoListViewController.modalPresentationStyle = .fullScreen
 

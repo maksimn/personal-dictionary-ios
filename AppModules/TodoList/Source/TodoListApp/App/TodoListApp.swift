@@ -9,5 +9,5 @@ import UIKit
 
 public protocol TodoListApp {
 
-    var viewController: UIViewController { get }
+    var navigationController: UINavigationController { get }
 }
