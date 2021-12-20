@@ -25,6 +25,8 @@ class TodoListViewOne: UIViewController {
     var shouldTableViewScrollToBottom: Bool = false
     var isFirstKeyboardShow: Bool = true
 
+    let routingButton = UIButton()
+
     init() {
         super.init(nibName: nil, bundle: nil)
         navigationItem.title = Strings.myTodos

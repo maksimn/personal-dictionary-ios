@@ -8,7 +8,7 @@
 import UIKit
 
 enum Colors {
-    static let backgroundLightColor = UIColor(red: 0.97, green: 0.97, blue: 0.95, alpha: 1.0)
+    static let backgroundLightColor = UIColor(red: 1.00, green: 0.80, blue: 1.00, alpha: 1.00)
     static let labelLightTextColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
 
     static let darkRed = UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)

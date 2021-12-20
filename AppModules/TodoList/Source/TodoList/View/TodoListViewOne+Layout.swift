@@ -22,6 +22,8 @@ extension TodoListViewOne {
 
         tapGestureRecognizer.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGestureRecognizer)
+
+        initRoutingButton()
     }
 
     func addSubviews() {
@@ -131,6 +133,25 @@ extension TodoListViewOne {
             shouldTableViewScrollToBottom = false
             tableView.scrollToBottom(animated: false)
         }
+    }
+
+    func initRoutingButton() {
+        routingButton.setTitle("Back", for: .normal)
+        routingButton.setTitleColor(.white, for: .normal)
+        routingButton.backgroundColor = .darkGray
+        routingButton.layer.cornerRadius = 8
+        routingButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        routingButton.addTarget(self, action: #selector(onRoutingButtonTap), for: .touchUpInside)
+        view.addSubview(routingButton)
+        routingButton.snp.makeConstraints { (make) -> Void in
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
+            make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-8)
+        }
+    }
+
+    @objc
+    func onRoutingButtonTap() {
+        dismiss(animated: true, completion: nil)
     }
 }
 

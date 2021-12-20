@@ -9,7 +9,7 @@ class TodoListPresenterOne: TodoListPresenter {
 
     private unowned let view: TodoListView
     private let model: TodoListModel
-    private weak var mvp: TodoListMVP?
+    private var mvp: TodoListMVP
 
     init(model: TodoListModel, view: TodoListView, mvp: TodoListMVP) {
         self.view = view
@@ -82,9 +82,9 @@ class TodoListPresenterOne: TodoListPresenter {
     }
 
     func navigateToEditor(_ todoItem: TodoItem?) {
-        let todoEditorMVP = mvp?.buildTodoEditorMVP(todoItem)
+        let todoEditorMVP = mvp.buildTodoEditorMVP(todoItem)
 
-        if let todoEditorViewController = todoEditorMVP?.viewController {
+        if let todoEditorViewController = todoEditorMVP.viewController {
             todoEditorViewController.modalPresentationStyle = .overFullScreen
             todoEditorViewController.navigationItem.largeTitleDisplayMode = .never
 
