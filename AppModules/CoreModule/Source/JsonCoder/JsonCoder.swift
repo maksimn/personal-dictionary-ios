@@ -10,4 +10,6 @@ import RxSwift
 public protocol JsonCoder {
 
     func parseFromJson<T: Decodable>(_ data: Data) -> Single<T>
+
+    func convertToJson<T: Encodable>(_ object: T) -> Single<Data>
 }

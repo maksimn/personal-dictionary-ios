@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 30.06.2021.
 //
 
+import CoreModule
 import Foundation
 
 /// Общая логика отправки и обработки сетевых запросов создания, обновления и удаления todo item'a.

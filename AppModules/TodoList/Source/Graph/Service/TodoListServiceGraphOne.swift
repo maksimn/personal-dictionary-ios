@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 15.07.2021.
 //
 
+import CoreModule
 import Foundation
 
 final class TodoListServiceGraphOne: TodoListServiceGraph {
@@ -14,7 +15,7 @@ final class TodoListServiceGraphOne: TodoListServiceGraph {
     init(todoListCache: TodoListCache,
          coreService: CoreService,
          logger: Logger,
-         todoCoder: TodoCoder,
+         todoCoder: JsonCoder,
          notificationCenter: NotificationCenter) {
         let httpRequestCounter: HttpRequestCounter = HttpRequestCounterOne(notificationCenter)
         let networkingService: NetworkingService = DefaultNetworkingService(coreService, todoCoder)

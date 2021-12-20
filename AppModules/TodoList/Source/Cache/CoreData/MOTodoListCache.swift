@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import CoreModule
 import Foundation
 
 class MOTodoListCache: TodoListCache {
