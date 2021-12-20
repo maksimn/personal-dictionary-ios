@@ -5,15 +5,19 @@
 //  Created by Maxim Ivanov on 29.06.2021.
 //
 
+import CoreModule
 import Foundation
+import RxSwift
 
 class DefaultNetworkingService: NetworkingService {
 
     private let coreService: CoreService
-    private let todoCoder: TodoCoder
+    private let todoCoder: JsonCoder
     private let jsonHeaders = [BearerToken.key: BearerToken.value, "Content-Type": "application/json"]
 
-    init(_ coreService: CoreService, _ todoCoder: TodoCoder) {
+    private let disposeBag = DisposeBag()
+
+    init(_ coreService: CoreService, _ todoCoder: JsonCoder) {
         self.coreService = coreService
         self.todoCoder = todoCoder
     }
@@ -31,33 +35,36 @@ class DefaultNetworkingService: NetworkingService {
         coreService.set(urlString: "\(WebAPI.baseUrl)/tasks/",
                         httpMethod: "POST",
                         headers: jsonHeaders)
-        todoCoder.encodeAsync(todoItemDTO) { [weak self] result in
-            do {
-                let data = try result.get()
-
-                self?.coreService.send(data) { [weak self] result in
-                    self?.todoItemRequestHandler(result, completion)
+        todoCoder.convertToJson(todoItemDTO)
+            .subscribe(
+                onSuccess: { [weak self] data in
+                    self?.coreService.send(data) { [weak self] result in
+                        self?.todoItemRequestHandler(result, completion)
+                    }
+                },
+                onError: { error in
+                    completion(.failure(error))
                 }
-            } catch {
-                completion(.failure(error))
-            }
-        }
+            )
+            .disposed(by: disposeBag)
     }
 
     func updateTodoItem(_ todoItemDTO: TodoItemDTO, _ completion: @escaping (TodoItemResult) -> Void) {
         coreService.set(urlString: "\(WebAPI.baseUrl)/tasks/\(todoItemDTO.id)",
                         httpMethod: "PUT",
                         headers: jsonHeaders)
-        todoCoder.encodeAsync(todoItemDTO) { [weak self] result in
-            switch result {
-            case .success(let data):
-                self?.coreService.send(data) { [weak self] result in
-                    self?.todoItemRequestHandler(result, completion)
+        todoCoder.convertToJson(todoItemDTO)
+            .subscribe(
+                onSuccess: { [weak self] data in
+                    self?.coreService.send(data) { [weak self] result in
+                        self?.todoItemRequestHandler(result, completion)
+                    }
+                },
+                onError: { error in
+                    completion(.failure(error))
                 }
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+            )
+            .disposed(by: disposeBag)
     }
 
     func deleteTodoItem(_ id: String, _ completion: @escaping (TodoItemResult) -> Void) {
@@ -73,16 +80,18 @@ class DefaultNetworkingService: NetworkingService {
         coreService.set(urlString: "\(WebAPI.baseUrl)/tasks/",
                         httpMethod: "PUT",
                         headers: jsonHeaders)
-        todoCoder.encodeAsync(requestData) { [weak self] result in
-            switch result {
-            case .success(let data):
-                self?.coreService.send(data) { [weak self] result in
-                    self?.todoListRequestHandler(result, completion)
+        todoCoder.convertToJson(requestData)
+            .subscribe(
+                onSuccess: { [weak self] data in
+                    self?.coreService.send(data) { [weak self] result in
+                        self?.todoListRequestHandler(result, completion)
+                    }
+                },
+                onError: { error in
+                    completion(.failure(error))
                 }
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+            )
+            .disposed(by: disposeBag)
     }
 
     private func todoListRequestHandler(_ result: Result<Data, Error>,
@@ -90,14 +99,16 @@ class DefaultNetworkingService: NetworkingService {
         do {
             let data = try result.get()
 
-            todoCoder.decodeAsync(data) { (result: Result<[TodoItemDTO], Error>) in
-                switch result {
-                case .success(let array):
-                    completion(.success(array))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
+            todoCoder.parseFromJson(data)
+                .subscribe(
+                    onSuccess: { (array: [TodoItemDTO]) in
+                        completion(.success(array))
+                    },
+                    onError: { error in
+                        completion(.failure(error))
+                    }
+                )
+                .disposed(by: disposeBag)
         } catch {
             completion(.failure(error))
         }
@@ -108,14 +119,16 @@ class DefaultNetworkingService: NetworkingService {
         do {
             let data = try result.get()
 
-            todoCoder.decodeAsync(data) { (result: Result<TodoItemDTO, Error>) in
-                switch result {
-                case .success(let todoItemDTO):
-                    completion(.success(todoItemDTO))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
+            todoCoder.parseFromJson(data)
+                .subscribe(
+                    onSuccess: { (todoItemDTO: TodoItemDTO) in
+                        completion(.success(todoItemDTO))
+                    },
+                    onError: { error in
+                        completion(.failure(error))
+                    }
+                )
+                .disposed(by: disposeBag)
         } catch {
             completion(.failure(error))
         }

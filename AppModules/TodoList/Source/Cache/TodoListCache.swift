@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 08.07.2021.
 //
 
+import CoreModule
+
 protocol TodoListCache {
 
     var isDirty: Bool { get }

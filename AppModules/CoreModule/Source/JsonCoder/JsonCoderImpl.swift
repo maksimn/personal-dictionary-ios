@@ -25,4 +25,19 @@ public final class JSONCoderImpl: JsonCoder {
         .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
         .observeOn(MainScheduler.instance)
     }
+
+    public func convertToJson<T: Encodable>(_ object: T) -> Single<Data> {
+        Single<Data>.create { observer in
+            do {
+                let data = try JSONEncoder().encode(object)
+
+                observer(.success(data))
+            } catch {
+                observer(.error(error))
+            }
+            return Disposables.create { }
+        }
+        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+        .observeOn(MainScheduler.instance)
+    }
 }

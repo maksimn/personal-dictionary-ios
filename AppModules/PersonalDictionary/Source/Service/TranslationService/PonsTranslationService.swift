@@ -41,11 +41,12 @@ final class PonsTranslationService: TranslationService {
                        method: "GET",
                        headers: [apiData.secretHeaderKey: apiData.secret],
                        body: nil))
-            .map { data -> Single<[PonsResponseData]> in
-                self.jsonCoder.parseFromJson(data)
+            .map { [weak self] data -> Single<[PonsResponseData]> in
+                self?.jsonCoder.parseFromJson(data) ?? Single.just([])
             }
             .asObservable().concat().asSingle()
-            .map { ponsResponseArray in
+            .map { [weak self] ponsResponseArray in
+                guard let self = self else { return "" }
                 self.logger.networkRequestSuccess(self.fetchTranslationRequestName)
                 return ponsResponseArray.first?.translation ?? ""
             }
