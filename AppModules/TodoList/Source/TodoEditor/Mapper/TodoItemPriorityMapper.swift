@@ -5,9 +5,9 @@
 //  Created by Maxim Ivanov on 12.06.2021.
 //
 
-public class TodoItemPriorityMapper {
+class TodoItemPriorityMapper {
 
-    public func priority(for index: Int) -> TodoItemPriority {
+    func priority(for index: Int) -> TodoItemPriority {
         switch index {
         case 0:
             return .low
@@ -18,7 +18,7 @@ public class TodoItemPriorityMapper {
         }
     }
 
-    public func index(for priority: TodoItemPriority) -> Int {
+    func index(for priority: TodoItemPriority) -> Int {
         switch priority {
         case .high:
             return 2

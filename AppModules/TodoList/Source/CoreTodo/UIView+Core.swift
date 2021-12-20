@@ -9,10 +9,10 @@ import UIKit
 
 extension UIView {
 
-    public func constraints(_ top: (anchor: NSLayoutYAxisAnchor?, value: CGFloat),
-                            _ height: CGFloat?,
-                            _ leading: (anchor: NSLayoutXAxisAnchor?, value: CGFloat),
-                            _ trailing: (anchor: NSLayoutXAxisAnchor?, value: CGFloat)) {
+    func constraints(_ top: (anchor: NSLayoutYAxisAnchor?, value: CGFloat),
+                     _ height: CGFloat?,
+                     _ leading: (anchor: NSLayoutXAxisAnchor?, value: CGFloat),
+                     _ trailing: (anchor: NSLayoutXAxisAnchor?, value: CGFloat)) {
         translatesAutoresizingMaskIntoConstraints = false
         if let topAnchor = top.anchor {
             self.topAnchor.constraint(equalTo: topAnchor, constant: top.value).isActive = true

@@ -9,19 +9,19 @@ import UIKit
 
 extension Array where Element == TodoItem {
 
-    public var completedTodoItemIndexPaths: [IndexPath] {
+    var completedTodoItemIndexPaths: [IndexPath] {
         self.enumerated()
             .filter { $1.isCompleted }
             .map { IndexPath(row: $0.offset, section: 0) }
     }
 
-    public mutating func sortByCreateAt() {
+    mutating func sortByCreateAt() {
         sort(by: { todo1, todo2 in
             todo1.createdAt < todo2.createdAt
         })
     }
 
-    public func mergeWith(_ remoteTodoList: [TodoItem]) -> [TodoItem] {
+    func mergeWith(_ remoteTodoList: [TodoItem]) -> [TodoItem] {
         let localTodoList = self
         var resultTodoList: [TodoItem] = []
 

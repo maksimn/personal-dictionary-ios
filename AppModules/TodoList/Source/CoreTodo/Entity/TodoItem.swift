@@ -7,24 +7,24 @@
 
 import Foundation
 
-public enum TodoItemPriority: String, Codable {
+enum TodoItemPriority: String, Codable {
     case high
     case normal
     case low
 }
 
-public struct TodoItem: Equatable, Codable {
+struct TodoItem: Equatable, Codable {
 
-    public let id: String
-    public let text: String
-    public let priority: TodoItemPriority
-    public let deadline: Date?
-    public let isCompleted: Bool
-    public let createdAt: Int
-    public let updatedAt: Int
-    public let isDirty: Bool
+    let id: String
+    let text: String
+    let priority: TodoItemPriority
+    let deadline: Date?
+    let isCompleted: Bool
+    let createdAt: Int
+    let updatedAt: Int
+    let isDirty: Bool
 
-    public init(id: String = UUID().uuidString,
+    init(id: String = UUID().uuidString,
                 text: String,
                 priority: TodoItemPriority = .normal,
                 deadline: Date? = nil,
@@ -43,7 +43,7 @@ public struct TodoItem: Equatable, Codable {
         self.updatedAt = updatedAt ?? now.integer
     }
 
-    public func update(text: String? = nil,
+    func update(text: String? = nil,
                        priority: TodoItemPriority? = nil,
                        deadline: Date? = nil,
                        isCompleted: Bool? = nil,
@@ -59,7 +59,7 @@ public struct TodoItem: Equatable, Codable {
                  isDirty: isDirty ?? self.isDirty)
     }
 
-    public static func == (lhs: TodoItem, rhs: TodoItem) -> Bool {
+    static func == (lhs: TodoItem, rhs: TodoItem) -> Bool {
         return lhs.id == rhs.id &&
             lhs.text == rhs.text &&
             lhs.priority == rhs.priority &&

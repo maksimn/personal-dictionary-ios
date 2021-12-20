@@ -7,15 +7,15 @@
 
 import Foundation
 
-public struct TodoItemDTO: Codable {
+struct TodoItemDTO: Codable {
 
-    public let id: String
-    public let text: String
-    public let importance: String
-    public let done: Bool
-    public let deadline: Int?
-    public let createdAt: Int
-    public let updatedAt: Int
+    let id: String
+    let text: String
+    let importance: String
+    let done: Bool
+    let deadline: Int?
+    let createdAt: Int
+    let updatedAt: Int
 
     private enum CodingKeys: String, CodingKey {
         case id,
@@ -27,7 +27,7 @@ public struct TodoItemDTO: Codable {
              updatedAt = "updated_at"
     }
 
-    public static func map(_ item: TodoItem) -> TodoItemDTO {
+    static func map(_ item: TodoItem) -> TodoItemDTO {
         var deadlineInteger: Int?
 
         if let deadline = item.deadline {
@@ -43,7 +43,7 @@ public struct TodoItemDTO: Codable {
                            updatedAt: item.updatedAt)
     }
 
-    public func map() -> TodoItem {
+    func map() -> TodoItem {
         var deadlineDate: Date?
 
         if let deadline = deadline {
@@ -59,7 +59,7 @@ public struct TodoItemDTO: Codable {
                         updatedAt: updatedAt)
     }
 
-    public static func mapPriority(_ string: String) -> TodoItemPriority {
+    static func mapPriority(_ string: String) -> TodoItemPriority {
         switch string {
         case "low":
             return .low
@@ -70,7 +70,7 @@ public struct TodoItemDTO: Codable {
         }
     }
 
-    public static func mapPriority(_ priority: TodoItemPriority) -> String {
+    static func mapPriority(_ priority: TodoItemPriority) -> String {
         switch priority {
         case .high:
             return "important"

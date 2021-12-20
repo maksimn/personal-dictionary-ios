@@ -42,7 +42,7 @@ enum Characters {
     static let lineBreak: Character = "\n"
 }
 
-final class SPPImages {
+final class TodolistImages {
     private lazy var bundle = Bundle(for: type(of: self))
     lazy var highPriorityMark = UIImage(named: "high-priority", in: bundle, with: nil)!
     lazy var lowPriorityMark = UIImage(named: "low-priority", in: bundle, with: nil)!
@@ -60,7 +60,7 @@ final class SPPImages {
     lazy var plusIcon = UIImage(named: "icon-plus", in: bundle, with: nil)!
 }
 
-var Images = SPPImages()
+var Images = TodolistImages()
 
 enum WebAPI {
     static let baseUrl = "https://d5dps3h13rv6902lp5c8.apigw.yandexcloud.net"

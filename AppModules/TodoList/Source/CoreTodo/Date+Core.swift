@@ -9,14 +9,14 @@ import Foundation
 
 extension Date {
 
-    public var formattedDate: String {
+    var formattedDate: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d MMMM yyyy"
 
         return dateFormatter.string(from: self)
     }
 
-    public var integer: Int {
+    var integer: Int {
         Int(timeIntervalSince1970)
     }
 }
