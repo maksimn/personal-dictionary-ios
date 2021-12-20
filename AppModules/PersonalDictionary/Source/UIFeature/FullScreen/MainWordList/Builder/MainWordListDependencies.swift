@@ -17,7 +17,7 @@ final class MainWordListDependencies {
             staticContent: MainWordListStaticContent(
                 heading: bundle.moduleLocalizedString("My dictionary"),
                 navToNewWordImage: UIImage(named: "icon-plus", in: bundle, compatibleWith: nil)!,
-                routingButtonTitle: routingButtonTitle,
+                routingButtonTitle: appConfigs.outer.routingButtonTitle,
                 visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
             ),
             styles: MainWordListStyles(
@@ -28,19 +28,16 @@ final class MainWordListDependencies {
         )
     }()
 
-    private let appConfigs: AppConfigs
+    var coreRouter: CoreRouter? {
+        appConfigs.outer.coreRouter
+    }
 
-    let coreRouter: CoreRouter?
-    private let routingButtonTitle: String
+    private let appConfigs: AppConfigs
 
     private lazy var langRepository = buildLangRepository()
 
-    init(appConfigs: AppConfigs,
-         coreRouter: CoreRouter?,
-         routingButtonTitle: String) {
+    init(appConfigs: AppConfigs) {
         self.appConfigs = appConfigs
-        self.coreRouter = coreRouter
-        self.routingButtonTitle = routingButtonTitle
     }
 
     func buildWordListRepository() -> WordListRepository {
@@ -75,14 +72,16 @@ final class MainWordListDependencies {
     }
 
     private func buildLogger() -> Logger {
-        SimpleLogger(isLoggingEnabled: appConfigs.isLoggingEnabled)
+        SimpleLogger(isLoggingEnabled: appConfigs.outer.coreModuleParams.isLoggingEnabled)
     }
 
     private func buildTranslationService() -> TranslationService {
         let ponsApiData = PonsApiData(url: "https://api.pons.com/v1/dictionary",
                                       secretHeaderKey: "X-Secret",
                                       secret: appConfigs.ponsApiSecret)
-        let urlSessionCoreService = UrlSessionCoreService(sessionConfiguration: URLSessionConfiguration.default)
+        let urlSessionCoreService = UrlSessionCoreService(
+            sessionConfiguration: appConfigs.outer.coreModuleParams.urlSessionConfiguration
+        )
 
         return PonsTranslationService(apiData: ponsApiData,
                                       coreService: urlSessionCoreService,

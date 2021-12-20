@@ -10,12 +10,14 @@ import UIKit
 
 final class TodoListAppImpl: TodoListApp {
 
-    init(routingButtonTitle: String) {
-        let todoListServiceGraph = TodoListServiceGraphOne(todoListCache: MOTodoListCache.instance,
-                                                           coreService: URLSessionCoreService(),
-                                                           logger: SimpleLogger(isLoggingEnabled: true),
-                                                           todoCoder: JSONCoderImpl(),
-                                                           notificationCenter: NotificationCenter.default)
+    init(appParams: TodoListAppParams) {
+        let todoListServiceGraph = TodoListServiceGraphOne(
+            todoListCache: MOTodoListCache.instance,
+            coreService: URLSessionCoreService(),
+            logger: SimpleLogger(isLoggingEnabled: appParams.coreModuleParams.isLoggingEnabled),
+            todoCoder: JSONCoderImpl(),
+            notificationCenter: NotificationCenter.default
+        )
         let todoListMVP = TodoListMVPGraph(todoListServiceGraph.service)
         guard let todoListViewController = todoListMVP.viewController else { return }
 

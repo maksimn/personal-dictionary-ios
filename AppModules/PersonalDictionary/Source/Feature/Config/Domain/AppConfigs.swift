@@ -9,7 +9,7 @@ import UIKit
 
 struct AppConfigs {
 
-    let isLoggingEnabled: Bool
+    let outer: PersonalDictionaryAppParams
 
     let langData: LangData
 

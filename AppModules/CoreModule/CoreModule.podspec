@@ -17,7 +17,7 @@ Pod::Spec.new do |spec|
   spec.swift_version = '5.0'
   spec.ios.deployment_target = '14.0'
   spec.source_files  = 'Source/**/*'
-  spec.source = { :path => './Source' }
+  spec.source = { :path => '.' }
 
   spec.dependency 'RxCocoa', '5.1'
   spec.dependency 'RxSwift', '5.1'

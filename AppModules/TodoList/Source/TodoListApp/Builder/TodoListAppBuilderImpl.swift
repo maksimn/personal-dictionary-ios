@@ -5,15 +5,29 @@
 //  Created by Maxim Ivanov on 16.12.2021.
 //
 
+import CoreModule
+
+public struct TodoListAppParams {
+
+    public let routingButtonTitle: String
+    public let coreModuleParams: CoreModuleParams
+
+    public init(routingButtonTitle: String,
+                coreModuleParams: CoreModuleParams) {
+        self.routingButtonTitle = routingButtonTitle
+        self.coreModuleParams = coreModuleParams
+    }
+}
+
 public final class TodoListAppBuilderImpl: TodoListAppBuilder {
 
-    private let routingButtonTitle: String
+    private let appParams: TodoListAppParams
 
-    public init(routingButtonTitle: String) {
-        self.routingButtonTitle = routingButtonTitle
+    public init(appParams: TodoListAppParams) {
+        self.appParams = appParams
     }
 
     public func build() -> TodoListApp {
-        TodoListAppImpl(routingButtonTitle: routingButtonTitle)
+        TodoListAppImpl(appParams: appParams)
     }
 }

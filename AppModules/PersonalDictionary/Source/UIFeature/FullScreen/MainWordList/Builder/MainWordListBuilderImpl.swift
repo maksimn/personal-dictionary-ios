@@ -11,12 +11,8 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
 
     private let dependencies: MainWordListDependencies
 
-    init(appConfigs: AppConfigs,
-         coreRouter: CoreRouter?,
-         routingButtonTitle: String) {
-        dependencies = MainWordListDependencies(appConfigs: appConfigs,
-                                                coreRouter: coreRouter,
-                                                routingButtonTitle: routingButtonTitle)
+    init(appConfigs: AppConfigs) {
+        dependencies = MainWordListDependencies(appConfigs: appConfigs)
     }
 
     func build() -> MainWordListGraph {

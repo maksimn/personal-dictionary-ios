@@ -9,19 +9,13 @@ import CoreModule
 
 final class ConfigBuilderImpl: ConfigBuilder {
 
-    private let appConfigs = ConfigDependencies().appConfigs
-    private let coreRouter: CoreRouter?
-    private let routingButtonTitle: String
+    private let appConfigs: AppConfigs
 
-    init(coreRouter: CoreRouter?,
-         routingButtonTitle: String) {
-        self.coreRouter = coreRouter
-        self.routingButtonTitle = routingButtonTitle
+    init(appParams: PersonalDictionaryAppParams) {
+        appConfigs = ConfigDependencies(appParams: appParams).appConfigs
     }
 
     func createMainWordListBuilder() -> MainWordListBuilder {
-        MainWordListBuilderImpl(appConfigs: appConfigs,
-                                coreRouter: coreRouter,
-                                routingButtonTitle: routingButtonTitle)
+        MainWordListBuilderImpl(appConfigs: appConfigs)
     }
 }

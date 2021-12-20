@@ -25,7 +25,7 @@ final class ConfigDependencies {
 
         return AppConfigs(
 
-            isLoggingEnabled: true,
+            outer: appParams,
 
             langData: langData,
 
@@ -36,4 +36,10 @@ final class ConfigDependencies {
             )
         )
     }()
+
+    private let appParams: PersonalDictionaryAppParams
+
+    init(appParams: PersonalDictionaryAppParams) {
+        self.appParams = appParams
+    }
 }

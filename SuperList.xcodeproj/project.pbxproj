@@ -112,8 +112,8 @@
 		59983892276ED32D002D800C /* App */ = {
 			isa = PBXGroup;
 			children = (
-				59983893276ED32D002D800C /* SuperAppImpl.swift */,
 				59983894276ED32D002D800C /* SuperApp.swift */,
+				59983893276ED32D002D800C /* SuperAppImpl.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";

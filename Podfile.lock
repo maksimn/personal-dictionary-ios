@@ -61,7 +61,7 @@ EXTERNAL SOURCES:
     :path: "./AppModules/TodoList"
 
 SPEC CHECKSUMS:
-  CoreModule: 16314c212f5f68d86c3656b5f5e9e1b1fbc9ee87
+  CoreModule: 95a0784ca0b9f49a973a1680872219c96cfe8856
   Cuckoo: 9124fe138270854903483c270370e6e7658fbc9b
   PersonalDictionary: 725657694ed4dad0304385e7ba118ed5cf99ebaa
   RxBlocking: 5ef131267220f92ef68531dd6afeaf407cd6b41a
