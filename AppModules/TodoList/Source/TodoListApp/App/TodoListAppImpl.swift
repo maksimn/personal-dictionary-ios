@@ -9,13 +9,19 @@ import UIKit
 
 final class TodoListAppImpl: TodoListApp {
 
-    private let todoListViewController: TodoListViewController
-
     init(routingButtonTitle: String) {
-        todoListViewController = TodoListViewController(routingButtonTitle: routingButtonTitle)
+        let todoListServiceGraph = TodoListServiceGraphOne(todoListCache: MOTodoListCache.instance,
+                                                           coreService: URLSessionCoreService(),
+                                                           logger: SimpleLogger(),
+                                                           todoCoder: JSONTodoCoder(),
+                                                           notificationCenter: NotificationCenter.default)
+        let todoListMVP = TodoListMVPGraph(todoListServiceGraph.service)
+        guard let todoListViewController = todoListMVP.viewController else { return }
+
+        navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
+        navigationController.navigationBar.prefersLargeTitles = true
+        navigationController.setViewControllers([todoListViewController], animated: false)
     }
 
-    var viewController: UIViewController {
-        todoListViewController
-    }
+    let navigationController = UINavigationController()
 }
