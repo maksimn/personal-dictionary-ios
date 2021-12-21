@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 10.06.2021.
 //
 
+// Technical debt.
+// The code needs to be refactored.
 class TodoEditorPresenterOne: TodoEditorPresenter {
 
     private let model: TodoEditorModel

@@ -7,6 +7,9 @@
 
 import CoreModule
 
+// Technical debt.
+// The code needs to be refactored.
+// Decompose to TodoListCache, DeadTodoItemsCache.
 protocol TodoListCache {
 
     var isDirty: Bool { get }

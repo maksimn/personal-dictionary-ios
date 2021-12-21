@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 17.06.2021.
 //
 
+// Technical debt.
+// The code needs to be refactored.
 class TodoListPresenterOne: TodoListPresenter {
 
     private unowned let view: TodoListView

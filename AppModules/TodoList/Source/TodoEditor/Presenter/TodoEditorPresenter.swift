@@ -13,6 +13,8 @@ struct TodoEditorUserInput {
     let deadline: Date?
 }
 
+// Technical debt.
+// The code needs to be refactored.
 protocol TodoEditorPresenter: AnyObject {
 
     var mode: TodoEditorMode { get }

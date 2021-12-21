@@ -7,6 +7,8 @@
 
 import UIKit
 
+// Technical debt.
+// The code needs to be refactored.
 class TodoListModelOne: TodoListModel {
 
     weak var presenter: TodoListPresenter?

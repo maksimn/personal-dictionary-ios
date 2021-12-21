@@ -7,6 +7,8 @@
 
 import Foundation
 
+// Technical debt.
+// The code needs to be refactored.
 class TodoEditorModelOne: TodoEditorModel {
 
     weak var presenter: TodoEditorPresenter? {

@@ -9,6 +9,8 @@ import CoreData
 import CoreModule
 import Foundation
 
+// Technical debt.
+// The code needs to be refactored.
 class MOTodoListCache: TodoListCache {
 
     static let instance = MOTodoListCache()

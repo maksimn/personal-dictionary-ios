@@ -7,6 +7,8 @@
 
 import UIKit
 
+// Technical debt.
+// The code needs to be refactored.
 class TodoListViewOne: UIViewController {
 
     var presenter: TodoListPresenter?

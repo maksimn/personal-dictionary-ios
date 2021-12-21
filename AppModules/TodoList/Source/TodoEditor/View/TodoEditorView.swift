@@ -7,6 +7,8 @@
 
 import UIKit
 
+// Technical debt.
+// The code needs to be refactored.
 protocol TodoEditorView: AnyObject {
 
     var presenter: TodoEditorPresenter? { get set }

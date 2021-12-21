@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 20.06.2021.
 //
 
+// Technical debt.
+// The code needs to be refactored.
 protocol TodoListModel {
 
     var presenter: TodoListPresenter? { get set }

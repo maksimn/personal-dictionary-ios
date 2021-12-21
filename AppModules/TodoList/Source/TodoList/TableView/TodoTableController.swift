@@ -7,6 +7,8 @@
 
 import UIKit
 
+// Technical debt.
+// The code needs to be refactored.
 class TodoTableController: NSObject, UITableViewDataSource, UITableViewDelegate {
 
     var todoList: [TodoItem] = []

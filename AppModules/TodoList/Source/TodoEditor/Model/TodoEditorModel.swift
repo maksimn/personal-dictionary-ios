@@ -12,6 +12,8 @@ enum TodoEditorMode {
     case editingExisting
 }
 
+// Technical debt.
+// The code needs to be refactored.
 protocol TodoEditorModel {
 
     var presenter: TodoEditorPresenter? { get set }
