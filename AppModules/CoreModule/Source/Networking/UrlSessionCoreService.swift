@@ -47,8 +47,6 @@ public class UrlSessionCoreService: CoreService {
                     onError: { observer(.error($0)) }
                 )
         }
-        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-        .observeOn(MainScheduler.instance)
     }
 
     enum HttpError: Error {

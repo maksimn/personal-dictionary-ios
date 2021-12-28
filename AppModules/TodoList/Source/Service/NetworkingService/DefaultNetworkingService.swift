@@ -36,6 +36,8 @@ class DefaultNetworkingService: NetworkingService {
                         httpMethod: "POST",
                         headers: jsonHeaders)
         todoCoder.convertToJson(todoItemDTO)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+            .observeOn(MainScheduler.instance)
             .subscribe(
                 onSuccess: { [weak self] data in
                     self?.coreService.send(data) { [weak self] result in
@@ -54,6 +56,8 @@ class DefaultNetworkingService: NetworkingService {
                         httpMethod: "PUT",
                         headers: jsonHeaders)
         todoCoder.convertToJson(todoItemDTO)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+            .observeOn(MainScheduler.instance)
             .subscribe(
                 onSuccess: { [weak self] data in
                     self?.coreService.send(data) { [weak self] result in
@@ -81,6 +85,8 @@ class DefaultNetworkingService: NetworkingService {
                         httpMethod: "PUT",
                         headers: jsonHeaders)
         todoCoder.convertToJson(requestData)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+            .observeOn(MainScheduler.instance)
             .subscribe(
                 onSuccess: { [weak self] data in
                     self?.coreService.send(data) { [weak self] result in
@@ -100,6 +106,8 @@ class DefaultNetworkingService: NetworkingService {
             let data = try result.get()
 
             todoCoder.parseFromJson(data)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+                .observeOn(MainScheduler.instance)
                 .subscribe(
                     onSuccess: { (array: [TodoItemDTO]) in
                         completion(.success(array))
@@ -120,6 +128,8 @@ class DefaultNetworkingService: NetworkingService {
             let data = try result.get()
 
             todoCoder.parseFromJson(data)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+                .observeOn(MainScheduler.instance)
                 .subscribe(
                     onSuccess: { (todoItemDTO: TodoItemDTO) in
                         completion(.success(todoItemDTO))

@@ -97,6 +97,8 @@ final class WordListModelImpl: WordListModel {
 
     private func requestTranslation(for wordItem: WordItem, _ position: Int) {
         translationService.fetchTranslation(for: wordItem)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+            .observeOn(MainScheduler.instance)
             .subscribe(onSuccess: { [weak self] translation in
                 self?.update(wordItem: wordItem, with: translation, at: position)
             }, onError: { [weak self] error in
@@ -121,10 +123,10 @@ final class WordListModelImpl: WordListModel {
 
     private func subscribeToWordItemStream() {
         wordItemStream.newWordItem
-            .subscribe(onNext: { self.addNewWord($0) })
+            .subscribe(onNext: { [weak self] in self?.addNewWord($0) })
             .disposed(by: disposeBag)
         wordItemStream.removedWordItem
-            .subscribe(onNext: { self.remove(wordItem: $0) })
+            .subscribe(onNext: { [weak self] in self?.remove(wordItem: $0) })
             .disposed(by: disposeBag)
     }
 }

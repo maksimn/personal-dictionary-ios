@@ -22,8 +22,6 @@ public final class JSONCoderImpl: JsonCoder {
             }
             return Disposables.create { }
         }
-        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-        .observeOn(MainScheduler.instance)
     }
 
     public func convertToJson<T: Encodable>(_ object: T) -> Single<Data> {
@@ -37,7 +35,5 @@ public final class JSONCoderImpl: JsonCoder {
             }
             return Disposables.create { }
         }
-        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-        .observeOn(MainScheduler.instance)
     }
 }
