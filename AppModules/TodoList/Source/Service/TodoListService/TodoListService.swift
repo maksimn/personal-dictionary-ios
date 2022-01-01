@@ -9,7 +9,7 @@ protocol TodoListService {
 
     var cachedTodoList: [TodoItem] { get }
 
-    var areRequestsPending: Bool { get }
+    var httpRequestCounter: HttpRequestCounter { get }
 
     func fetchRemoteTodoList(_ completion: @escaping (Error?) -> Void)
 

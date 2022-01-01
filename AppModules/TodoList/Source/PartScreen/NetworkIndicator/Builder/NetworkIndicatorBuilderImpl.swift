@@ -7,13 +7,13 @@
 
 final class NetworkIndicatorBuilderImpl: NetworkIndicatorBuilder {
 
-    private let service: TodoListService?
+    private let httpRequestCounter: HttpRequestCounter?
 
-    init(service: TodoListService?) {
-        self.service = service
+    init(httpRequestCounter: HttpRequestCounter?) {
+        self.httpRequestCounter = httpRequestCounter
     }
 
     func build() -> NetworkIndicatorVIPER {
-        NetworkIndicatorVIPERImpl(service: service)
+        NetworkIndicatorVIPERImpl(httpRequestCounter: httpRequestCounter)
     }
 }

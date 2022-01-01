@@ -36,8 +36,8 @@ class TodoListServiceOne: TodoListService {
         cache.todoList
     }
 
-    var areRequestsPending: Bool {
-        сounter.areRequestsPending
+    var httpRequestCounter: HttpRequestCounter {
+        сounter
     }
 
     func fetchRemoteTodoList(_ completion: @escaping (Error?) -> Void) {

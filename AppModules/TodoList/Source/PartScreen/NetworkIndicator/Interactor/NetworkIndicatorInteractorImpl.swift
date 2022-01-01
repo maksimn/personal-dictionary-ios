@@ -9,15 +9,15 @@ final class NetworkIndicatorInteractorImpl: NetworkIndicatorInteractor {
 
     weak var presenter: NetworkIndicatorPresenter?
 
-    private let service: TodoListService?
+    private let httpRequestCounter: HttpRequestCounter?
 
-    init(service: TodoListService?) {
-        self.service = service
+    init(httpRequestCounter: HttpRequestCounter?) {
+        self.httpRequestCounter = httpRequestCounter
         self.addNotificationObservers()
     }
 
     var areRequestsPending: Bool {
-        service?.areRequestsPending ?? false
+        httpRequestCounter?.areRequestsPending ?? false
     }
 
     func addNotificationObservers() {
