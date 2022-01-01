@@ -11,8 +11,10 @@ final class TodoEditorMVPGraph: TodoEditorMVP {
     private let view: TodoEditorView
 
     init(_ todoItem: TodoItem?, _ service: TodoListService) {
+        let networkIndicatorBuilder = NetworkIndicatorBuilderImpl(service: service)
+
         var model: TodoEditorModel = TodoEditorModelOne(todoItem, service)
-        view = TodoEditorViewOne()
+        view = TodoEditorViewOne(networkIndicatorBuilder: networkIndicatorBuilder)
         let presenter = TodoEditorPresenterOne(model: model, view: view)
 
         view.presenter = presenter

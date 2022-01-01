@@ -24,6 +24,7 @@ extension TodoListViewOne {
         view.addGestureRecognizer(tapGestureRecognizer)
 
         initRoutingButton()
+        addNetworkIndicator()
     }
 
     func addSubviews() {
@@ -31,7 +32,6 @@ extension TodoListViewOne {
         view.addSubview(completedTodoVisibilityToggle)
         view.addSubview(completedTodoCountLabel)
         view.addSubview(newTodoItemButton)
-        view.addSubview(activityIndicator)
     }
 
     func setConstraints() {
@@ -62,9 +62,6 @@ extension TodoListViewOne {
                 imageView.bottomAnchor.constraint(equalTo: newTodoItemButton.bottomAnchor)
             ])
         }
-        activityIndicator.constraints((view.safeAreaLayoutGuide.topAnchor, 14), 24,
-                                      (view.safeAreaLayoutGuide.leadingAnchor, 0),
-                                      (view.safeAreaLayoutGuide.trailingAnchor, 0))
     }
 
     func initCompletedTodoVisibilityToggle() {
@@ -152,6 +149,17 @@ extension TodoListViewOne {
     @objc
     func onRoutingButtonTap() {
         dismiss(animated: true, completion: nil)
+    }
+
+    func addNetworkIndicator() {
+        let networkIndicatorVIPER = networkIndicatorBuilder.build()
+        let networkIndicatorView = networkIndicatorVIPER.uiview
+
+        view.addSubview(networkIndicatorView)
+        networkIndicatorView.snp.makeConstraints { make -> Void in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(14)
+            make.centerX.equalTo(view.snp.centerX)
+        }
     }
 }
 

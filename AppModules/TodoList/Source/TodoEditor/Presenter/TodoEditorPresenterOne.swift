@@ -31,10 +31,6 @@ class TodoEditorPresenterOne: TodoEditorPresenter {
         view.set(todoItem: model.todoItem)
     }
 
-    func viewUpdateActivityIndicator() {
-        view.setActivityIndicator(visible: model.areRequestsPending)
-    }
-
     func create(_ todoItem: TodoItem) {
         model.create(todoItem)
     }

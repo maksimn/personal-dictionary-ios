@@ -40,10 +40,6 @@ class TodoListModelOne: TodoListModel {
         allTodoList.filter { $0.isCompleted }.count
     }
 
-    var areRequestsPending: Bool {
-        service?.areRequestsPending ?? false
-    }
-
     func loadTodoListFromCache() {
         allTodoList = service?.cachedTodoList ?? []
     }

@@ -14,10 +14,12 @@ class TodoEditorNavBar {
 
     private lazy var saveBarButtonItem = UIBarButtonItem(title: Strings.save, style: .plain,
                                                          target: self, action: #selector(saveButtonTap))
-    private let activityIndicator = UIActivityIndicatorView(style: .medium)
-    private lazy var activityBarButtonItem = UIBarButtonItem(customView: activityIndicator)
 
-    init(_ navigationItem: UINavigationItem) {
+    init(_ navigationItem: UINavigationItem,
+         _ networkIndicatorBuilder: NetworkIndicatorBuilder) {
+        let networkIndicatorVIPER = networkIndicatorBuilder.build()
+        let activityBarButtonItem = UIBarButtonItem(customView: networkIndicatorVIPER.uiview)
+
         navigationItem.title = Strings.todo
         navigationItem.setHidesBackButton(true, animated: false)
         navigationItem.rightBarButtonItems = [saveBarButtonItem, activityBarButtonItem]
@@ -31,12 +33,6 @@ class TodoEditorNavBar {
 
     @objc private func cancelButtonTap() {
         onCancelButtonTap?()
-    }
-
-    func setActivityIndicator(visible: Bool) {
-        visible ?
-            activityIndicator.startAnimating() :
-            activityIndicator.stopAnimating()
     }
 
     func setSaveButton(_ enabled: Bool) {

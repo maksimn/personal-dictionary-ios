@@ -17,8 +17,6 @@ protocol TodoListModel {
 
     var areCompletedTodosVisible: Bool { get }
 
-    var areRequestsPending: Bool { get }
-
     func loadTodoListFromCache()
 
     func loadTodoListFromRemote(_ completion: @escaping (Error?) -> Void)

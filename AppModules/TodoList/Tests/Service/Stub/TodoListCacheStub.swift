@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 22.07.2021.
 //
 
+import CoreModule
 @testable import TodoList
 
 class TodoListCacheStub: TodoListCache {

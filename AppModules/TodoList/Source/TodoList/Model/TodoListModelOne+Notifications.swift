@@ -17,10 +17,6 @@ extension TodoListModelOne {
         ncd.addObserver(self, selector: #selector(onDeleteTodoItemEvent), name: .removeTodoItem, object: nil)
         ncd.addObserver(self, selector: #selector(onMergeTodoListSuccess), name: .mergeTodoListWithRemoteSuccess,
                         object: nil)
-        ncd.addObserver(self, selector: #selector(onHttpRequestCounterIncrement),
-                        name: .httpRequestCounterIncrement, object: nil)
-        ncd.addObserver(self, selector: #selector(onHttpRequestCounterDecrement),
-                        name: .httpRequestCounterDecrement, object: nil)
     }
 
     @objc func onCreateTodoItemEvent(_ notification: Notification) {
@@ -45,13 +41,5 @@ extension TodoListModelOne {
     @objc func onMergeTodoListSuccess(_ notification: Notification) {
         loadTodoListFromCache()
         presenter?.viewUpdate()
-    }
-
-    @objc func onHttpRequestCounterIncrement(_ notification: Notification) {
-        presenter?.viewUpdateActivityIndicator()
-    }
-
-    @objc func onHttpRequestCounterDecrement(_ notification: Notification) {
-        presenter?.viewUpdateActivityIndicator()
     }
 }

@@ -22,8 +22,6 @@ protocol TodoEditorModel {
 
     var mode: TodoEditorMode { get }
 
-    var areRequestsPending: Bool { get }
-
     func create(_ todoItem: TodoItem)
 
     func updateTodoItem(text: String, priority: TodoItemPriority, deadline: Date?)
