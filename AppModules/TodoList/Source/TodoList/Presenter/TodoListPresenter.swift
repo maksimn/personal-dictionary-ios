@@ -23,8 +23,6 @@ protocol TodoListPresenter: AnyObject {
 
     func viewSetToggleTitle(for areCompletedTodoVisible: Bool)
 
-    func viewUpdateActivityIndicator()
-
     func viewUpdate()
 
     func loadTodoList()

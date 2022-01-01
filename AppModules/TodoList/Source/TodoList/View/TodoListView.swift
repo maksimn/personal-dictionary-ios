@@ -34,6 +34,4 @@ protocol TodoListView: AnyObject {
     func removeRowAt(_ position: Int)
 
     func reloadList()
-
-    func setActivityIndicator(visible: Bool)
 }

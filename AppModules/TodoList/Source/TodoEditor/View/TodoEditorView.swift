@@ -15,8 +15,6 @@ protocol TodoEditorView: AnyObject {
 
     func set(todoItem: TodoItem?)
 
-    func setActivityIndicator(visible: Bool)
-
     func setSaveButton(enabled: Bool)
 
     var viewController: UIViewController? { get }

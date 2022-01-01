@@ -36,9 +36,9 @@ class TodoEditorViewOne: UIViewController {
     var isKeyboardActive: Bool = false
     var keyboardSize: CGSize = .zero
 
-    init() {
+    init(networkIndicatorBuilder: NetworkIndicatorBuilder) {
         super.init(nibName: nil, bundle: nil)
-        navBar = TodoEditorNavBar(navigationItem)
+        navBar = TodoEditorNavBar(navigationItem, networkIndicatorBuilder)
         navBar?.onSaveButtonTap = { [weak self] in
             self?.onSaveButtonTap()
         }
@@ -53,11 +53,6 @@ class TodoEditorViewOne: UIViewController {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        presenter?.viewUpdateActivityIndicator()
     }
 
     override func viewDidLayoutSubviews() {
@@ -123,10 +118,6 @@ extension TodoEditorViewOne: TodoEditorView {
         } else {
             deadlineSwitch.setOn(false, animated: false)
         }
-    }
-
-    func setActivityIndicator(visible: Bool) {
-        navBar?.setActivityIndicator(visible: visible)
     }
 
     func setSaveButton(enabled: Bool) {

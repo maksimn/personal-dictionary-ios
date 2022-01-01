@@ -26,11 +26,6 @@ class TodoEditorModelOne: TodoEditorModel {
         self.service = service
         self.todoItem = todoItem
         mode = todoItem == nil ? .creatingNew : .editingExisting
-        addNotificationObservers()
-    }
-
-    var areRequestsPending: Bool {
-        service.areRequestsPending
     }
 
     func create(_ todoItem: TodoItem) {
@@ -72,23 +67,8 @@ class TodoEditorModelOne: TodoEditorModel {
         removeNotificationObservers()
     }
 
-    func addNotificationObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(onHttpRequestCounterIncrement),
-                                               name: .httpRequestCounterIncrement, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(onHttpRequestCounterDecrement),
-                                               name: .httpRequestCounterDecrement, object: nil)
-    }
-
     func removeNotificationObservers() {
         NotificationCenter.default.removeObserver(self, name: .httpRequestCounterIncrement, object: nil)
         NotificationCenter.default.removeObserver(self, name: .httpRequestCounterDecrement, object: nil)
-    }
-
-    @objc func onHttpRequestCounterIncrement(_ notification: Notification) {
-        presenter?.viewUpdateActivityIndicator()
-    }
-
-    @objc func onHttpRequestCounterDecrement(_ notification: Notification) {
-        presenter?.viewUpdateActivityIndicator()
     }
 }

@@ -17,7 +17,6 @@ class TodoListViewOne: UIViewController {
     let completedTodoCountLabel = UILabel()
     let tableView = UITableView()
     let newTodoItemButton = UIButton()
-    let activityIndicator = UIActivityIndicatorView(style: .medium)
     var tableViewBottomConstraint: NSLayoutConstraint?
 
     let tableController = TodoTableController()
@@ -29,7 +28,10 @@ class TodoListViewOne: UIViewController {
 
     let routingButton = UIButton()
 
-    init() {
+    let networkIndicatorBuilder: NetworkIndicatorBuilder
+
+    init(networkIndicatorBuilder: NetworkIndicatorBuilder) {
+        self.networkIndicatorBuilder = networkIndicatorBuilder
         super.init(nibName: nil, bundle: nil)
         navigationItem.title = Strings.myTodos
         initViews()
@@ -104,12 +106,6 @@ extension TodoListViewOne: TodoListView {
 
     func reloadList() {
         tableView.reloadData()
-    }
-
-    func setActivityIndicator(visible: Bool) {
-        visible ?
-            activityIndicator.startAnimating() :
-            activityIndicator.stopAnimating()
     }
 }
 

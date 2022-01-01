@@ -63,10 +63,6 @@ class TodoListPresenterOne: TodoListPresenter {
         view.setToggleTitle(for: areCompletedTodoVisible)
     }
 
-    func viewUpdateActivityIndicator() {
-        view.setActivityIndicator(visible: model.areRequestsPending)
-    }
-
     func toggleCompletedTodoVisibility() {
         model.toggleCompletedTodoVisibility()
     }

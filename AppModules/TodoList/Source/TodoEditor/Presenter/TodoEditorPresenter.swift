@@ -21,8 +21,6 @@ protocol TodoEditorPresenter: AnyObject {
 
     func viewSetTodoItem()
 
-    func viewUpdateActivityIndicator()
-
     func updateTodoItem(_ data: TodoEditorUserInput)
 
     func create(_ todoItem: TodoItem)
