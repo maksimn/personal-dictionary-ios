@@ -7,8 +7,6 @@
 
 import UIKit
 
-// Technical debt.
-// The code needs to be refactored.
 protocol TodoEditorView: AnyObject {
 
     var presenter: TodoEditorPresenter? { get set }
@@ -16,6 +14,4 @@ protocol TodoEditorView: AnyObject {
     func set(todoItem: TodoItem?)
 
     func setSaveButton(enabled: Bool)
-
-    var viewController: UIViewController? { get }
 }

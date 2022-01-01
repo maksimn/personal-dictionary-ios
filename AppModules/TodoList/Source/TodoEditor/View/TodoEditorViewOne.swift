@@ -7,9 +7,7 @@
 
 import UIKit
 
-// Technical debt.
-// The code needs to be refactored.
-class TodoEditorViewOne: UIViewController {
+final class TodoEditorViewOne: UIViewController {
 
     var presenter: TodoEditorPresenter?
 
@@ -123,8 +121,6 @@ extension TodoEditorViewOne: TodoEditorView {
     func setSaveButton(enabled: Bool) {
         navBar?.setSaveButton(enabled)
     }
-
-    var viewController: UIViewController? { self }
 }
 
 /// Обработка пользовательских действий (нажатия и т.д.).

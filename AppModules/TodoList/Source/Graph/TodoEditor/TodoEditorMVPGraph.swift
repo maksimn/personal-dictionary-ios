@@ -8,7 +8,7 @@
 /// DI Container для экрана редактирования todo item'a.
 final class TodoEditorMVPGraph: TodoEditorMVP {
 
-    private let view: TodoEditorView
+    private let view: TodoEditorViewOne
 
     init(_ todoItem: TodoItem?, _ service: TodoListService) {
         let networkIndicatorBuilder = NetworkIndicatorBuilderImpl(httpRequestCounter: service.httpRequestCounter)
@@ -22,6 +22,6 @@ final class TodoEditorMVPGraph: TodoEditorMVP {
     }
 
     var viewController: UIViewController? {
-        view.viewController
+        view
     }
 }
