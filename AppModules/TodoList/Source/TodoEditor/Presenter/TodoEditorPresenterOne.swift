@@ -10,7 +10,7 @@
 class TodoEditorPresenterOne: TodoEditorPresenter {
 
     private let model: TodoEditorModel
-    private unowned let view: TodoEditorView
+    private weak var view: TodoEditorView?
 
     private var savedTodoItem: TodoItem?
     var isSaveButtonEnabled: Bool
@@ -23,35 +23,26 @@ class TodoEditorPresenterOne: TodoEditorPresenter {
         savedTodoItem = model.todoItem
     }
 
-    var mode: TodoEditorMode {
-        model.mode
+    func setInitialData() {
+        view?.set(todoItem: model.todoItem)
     }
 
-    func viewSetTodoItem() {
-        view.set(todoItem: model.todoItem)
-    }
-
-    func create(_ todoItem: TodoItem) {
-        model.create(todoItem)
+    func save(_ data: TodoEditorUserInput) {
+        model.save(data)
+        view?.hide()
     }
 
     func removeTodoItem() {
         model.removeTodoItem()
+        view?.clear()
+        view?.hide()
     }
 
-    func updateTodoItem(_ data: TodoEditorUserInput) {
-        model.updateTodoItem(text: data.text, priority: data.priority, deadline: data.deadline)
-    }
-
-    func onViewInputChanged(_ input: TodoEditorUserInput) {
+    func setIfSaveButtonEnabledOnUserInput(_ input: TodoEditorUserInput) {
         isSaveButtonEnabled = !(savedTodoItem?.text == input.text &&
                                 savedTodoItem?.priority == input.priority &&
                                 savedTodoItem?.deadline == input.deadline)
 
-        view.setSaveButton(enabled: isSaveButtonEnabled)
-    }
-
-    func dispose() {
-        model.dispose()
+        view?.setSaveButton(enabled: isSaveButtonEnabled)
     }
 }

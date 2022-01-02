@@ -13,12 +13,12 @@ class TodoEditorModelOne: TodoEditorModel {
 
     weak var presenter: TodoEditorPresenter? {
         didSet {
-            presenter?.viewSetTodoItem()
+            presenter?.setInitialData()
         }
     }
 
     private(set) var todoItem: TodoItem?
-    private(set) var mode: TodoEditorMode
+    private var mode: TodoEditorMode
 
     private let service: TodoListService
 
@@ -28,27 +28,11 @@ class TodoEditorModelOne: TodoEditorModel {
         mode = todoItem == nil ? .creatingNew : .editingExisting
     }
 
-    func create(_ todoItem: TodoItem) {
-        self.todoItem = todoItem
-        self.mode = .editingExisting
-        NotificationCenter.default.post(name: .createTodoItem, object: self,
-                                        userInfo: [Notification.Name.createTodoItem: todoItem])
-        service.createRemote(todoItem) { _ in
-
-        }
-    }
-
-    func updateTodoItem(text: String, priority: TodoItemPriority, deadline: Date?) {
-        guard let todoItem = todoItem else { return }
-
-        let updatedTodoItem = todoItem.update(text: text, priority: priority, deadline: deadline)
-
-        self.todoItem = updatedTodoItem
-        self.mode = .editingExisting
-        NotificationCenter.default.post(name: .updateTodoItem, object: self,
-                                        userInfo: [Notification.Name.updateTodoItem: updatedTodoItem])
-        service.updateRemote(updatedTodoItem) { _ in
-
+    func save(_ data: TodoEditorUserInput) {
+        if mode == .editingExisting {
+            updateTodoItem(data)
+        } else {
+            createTodoItem(data)
         }
     }
 
@@ -63,12 +47,28 @@ class TodoEditorModelOne: TodoEditorModel {
         }
     }
 
-    func dispose() {
-        removeNotificationObservers()
+    private func createTodoItem(_ data: TodoEditorUserInput) {
+        let newTodoItem = TodoItem(text: data.text, priority: data.priority, deadline: data.deadline)
+        self.todoItem = newTodoItem
+        self.mode = .editingExisting
+        NotificationCenter.default.post(name: .createTodoItem, object: self,
+                                        userInfo: [Notification.Name.createTodoItem: newTodoItem])
+        service.createRemote(newTodoItem) { _ in
+
+        }
     }
 
-    func removeNotificationObservers() {
-        NotificationCenter.default.removeObserver(self, name: .httpRequestCounterIncrement, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .httpRequestCounterDecrement, object: nil)
+    private func updateTodoItem(_ data: TodoEditorUserInput) {
+        guard let todoItem = todoItem else { return }
+
+        let updatedTodoItem = todoItem.update(text: data.text, priority: data.priority, deadline: data.deadline)
+
+        self.todoItem = updatedTodoItem
+        self.mode = .editingExisting
+        NotificationCenter.default.post(name: .updateTodoItem, object: self,
+                                        userInfo: [Notification.Name.updateTodoItem: updatedTodoItem])
+        service.updateRemote(updatedTodoItem) { _ in
+
+        }
     }
 }

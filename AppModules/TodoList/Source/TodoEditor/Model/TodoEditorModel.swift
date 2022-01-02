@@ -20,13 +20,7 @@ protocol TodoEditorModel {
 
     var todoItem: TodoItem? { get }
 
-    var mode: TodoEditorMode { get }
-
-    func create(_ todoItem: TodoItem)
-
-    func updateTodoItem(text: String, priority: TodoItemPriority, deadline: Date?)
+    func save(_ data: TodoEditorUserInput)
 
     func removeTodoItem()
-
-    func dispose()
 }

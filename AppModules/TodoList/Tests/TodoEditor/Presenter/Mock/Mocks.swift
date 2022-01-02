@@ -8,6 +8,10 @@
 @testable import TodoList
 
 final class NilTodoItemTodoEditorModelMock: TodoEditorModel {
+    func save(_ data: TodoEditorUserInput) {
+
+    }
+
 
     var presenter: TodoEditorPresenter?
 
@@ -17,18 +21,16 @@ final class NilTodoItemTodoEditorModelMock: TodoEditorModel {
 
     var mode: TodoEditorMode { .creatingNew }
 
-    var areRequestsPending: Bool = false
-
-    func create(_ todoItem: TodoItem) { }
-
-    func updateTodoItem(text: String, priority: TodoItemPriority, deadline: Date?) { }
-
     func removeTodoItem() { }
 
     func dispose() { }
 }
 
 final class TodoEditorModelMock: TodoEditorModel {
+
+    func save(_ data: TodoEditorUserInput) {
+    }
+
 
     let item: TodoItem
 
@@ -41,14 +43,6 @@ final class TodoEditorModelMock: TodoEditorModel {
     }
 
     var presenter: TodoEditorPresenter?
-
-    var mode: TodoEditorMode { .creatingNew }
-
-    var areRequestsPending: Bool = false
-
-    func create(_ todoItem: TodoItem) { }
-
-    func updateTodoItem(text: String, priority: TodoItemPriority, deadline: Date?) { }
 
     func removeTodoItem() { }
 

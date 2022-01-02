@@ -17,17 +17,11 @@ struct TodoEditorUserInput {
 // The code needs to be refactored.
 protocol TodoEditorPresenter: AnyObject {
 
-    var mode: TodoEditorMode { get }
+    func setInitialData()
 
-    func viewSetTodoItem()
-
-    func updateTodoItem(_ data: TodoEditorUserInput)
-
-    func create(_ todoItem: TodoItem)
+    func save(_ data: TodoEditorUserInput)
 
     func removeTodoItem()
 
-    func onViewInputChanged(_ input: TodoEditorUserInput)
-
-    func dispose()
+    func setIfSaveButtonEnabledOnUserInput(_ input: TodoEditorUserInput)
 }

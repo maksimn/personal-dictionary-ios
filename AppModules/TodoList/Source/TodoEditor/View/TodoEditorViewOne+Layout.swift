@@ -31,6 +31,13 @@ extension TodoEditorViewOne {
     }
 
     func initViews() {
+        navBar = TodoEditorNavBar(navigationItem, networkIndicatorBuilder)
+        navBar?.onSaveButtonTap = { [weak self] in
+            self?.onSaveButtonTap()
+        }
+        navBar?.onCancelButtonTap = { [weak self] in
+            self?.onCancelButtonTap()
+        }
         view.backgroundColor = Colors.backgroundLightColor
         scrollView.backgroundColor = Colors.backgroundLightColor
         initTextView()
@@ -45,6 +52,26 @@ extension TodoEditorViewOne {
         initSeparatorView2()
         initDatePicker()
         initRemoveButton()
+        addViews()
+        clear()
+        initKeyboardEventsHandle()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setupFrameLayout()
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        coordinator.animate(alongsideTransition: { _ in
+            if size.height > size.width {
+                self.setPortraitViewVisibilities()
+            } else {
+                self.setLandscapeViewVisibilities()
+            }
+        })
     }
 
     func setupFrameLayout() {

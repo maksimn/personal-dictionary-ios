@@ -31,7 +31,9 @@ class TestTodoEditorPresenterOne: XCTestCase {
         let presenter = TodoEditorPresenterOne(model: modelMock, view: viewStub)
 
         // Act:
-        presenter.onViewInputChanged(TodoEditorUserInput(text: "a", priority: .normal, deadline: nil))
+        presenter.setIfSaveButtonEnabledOnUserInput(
+            TodoEditorUserInput(text: "a", priority: .normal, deadline: nil)
+        )
 
         // Assert:
         XCTAssertTrue(presenter.isSaveButtonEnabled)
@@ -45,9 +47,9 @@ class TestTodoEditorPresenterOne: XCTestCase {
         let presenter = TodoEditorPresenterOne(model: modelMock, view: viewStub)
 
         // Act:
-        presenter.onViewInputChanged(TodoEditorUserInput(text: initialTodoItem.text,
-                                                         priority: initialTodoItem.priority,
-                                                         deadline: initialTodoItem.deadline))
+        presenter.setIfSaveButtonEnabledOnUserInput(TodoEditorUserInput(text: initialTodoItem.text,
+                                                                               priority: initialTodoItem.priority,
+                                                                               deadline: initialTodoItem.deadline))
 
         // Assert:
         XCTAssertFalse(presenter.isSaveButtonEnabled)
@@ -61,9 +63,11 @@ class TestTodoEditorPresenterOne: XCTestCase {
         let presenter = TodoEditorPresenterOne(model: modelMock, view: viewStub)
 
         // Act:
-        presenter.onViewInputChanged(TodoEditorUserInput(text: initialTodoItem.text,
-                                                         priority: initialTodoItem.priority,
-                                                         deadline: Date(timeIntervalSince1970: 1)))
+        presenter.setIfSaveButtonEnabledOnUserInput(
+            TodoEditorUserInput(text: initialTodoItem.text,
+                                priority: initialTodoItem.priority,
+                                deadline: Date(timeIntervalSince1970: 1))
+        )
 
         // Assert:
         XCTAssertTrue(presenter.isSaveButtonEnabled)

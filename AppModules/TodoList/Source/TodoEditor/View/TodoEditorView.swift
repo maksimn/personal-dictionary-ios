@@ -14,4 +14,8 @@ protocol TodoEditorView: AnyObject {
     func set(todoItem: TodoItem?)
 
     func setSaveButton(enabled: Bool)
+
+    func clear()
+
+    func hide()
 }
