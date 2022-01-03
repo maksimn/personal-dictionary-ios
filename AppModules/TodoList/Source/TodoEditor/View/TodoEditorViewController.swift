@@ -7,20 +7,20 @@
 
 import UIKit
 
-final class TodoEditorViewOne: UIViewController, TodoEditorView {
+final class TodoEditorViewController: UIViewController, TodoEditorView, UITextViewDelegate {
 
     var presenter: TodoEditorPresenter?
 
-    var navBar: TodoEditorNavBar?
+    let params: TodoEditorViewParams
 
+    var navBar: TodoEditorNavBar?
     let scrollView = UIScrollView(frame: .zero)
     let textView = UITextView()
     let placeholderLabel = UILabel()
     let pillowView = UIView()
     let separatorViewOne = UIView()
     let separatorViewTwo = UIView()
-    let prioritySegmentedControl = UISegmentedControl(items: [Images.lowPriorityMark, Strings.noPriority,
-                                                              Images.highPriorityMark])
+    lazy var prioritySegmentedControl = UISegmentedControl(items: params.prioritySegmentedControlItems)
     let importanceLabel = UILabel()
     let shouldBeDoneBeforeLabel = UILabel()
     let deadlineSwitch = UISwitch()
@@ -28,15 +28,15 @@ final class TodoEditorViewOne: UIViewController, TodoEditorView {
     let deadlineDatePicker = UIDatePicker()
     let removeButton = UIButton()
 
-    let priorityMapper = TodoItemPriorityMapper()
     let keyboardEventsHandle = KeyboardEventsHandle()
-
     var isKeyboardActive: Bool = false
     var keyboardSize: CGSize = .zero
 
     let networkIndicatorBuilder: NetworkIndicatorBuilder
 
-    init(networkIndicatorBuilder: NetworkIndicatorBuilder) {
+    init(params: TodoEditorViewParams,
+         networkIndicatorBuilder: NetworkIndicatorBuilder) {
+        self.params = params
         self.networkIndicatorBuilder = networkIndicatorBuilder
         super.init(nibName: nil, bundle: nil)
         initViews()
@@ -51,7 +51,7 @@ final class TodoEditorViewOne: UIViewController, TodoEditorView {
     func set(todoItem: TodoItem?) {
         removeButton.setTitleColor(.systemRed, for: .normal)
         textView.text = todoItem?.text
-        prioritySegmentedControl.selectedSegmentIndex = priorityMapper.index(for: todoItem?.priority ?? .normal)
+        prioritySegmentedControl.setTodoItem(priority: todoItem?.priority ?? .normal)
         placeholderLabel.isHidden = (todoItem?.text.count ?? 0) > 0
 
         if let deadline = todoItem?.deadline {
@@ -68,6 +68,11 @@ final class TodoEditorViewOne: UIViewController, TodoEditorView {
         navBar?.setSaveButton(enabled)
     }
 
+    func setRemoveButton(enabled: Bool) {
+        removeButton.setTitleColor(enabled ? .systemRed : .systemGray, for: .normal)
+        removeButton.isEnabled = enabled
+    }
+
     func hide() {
         dismiss(animated: true, completion: nil)
     }
@@ -76,7 +81,7 @@ final class TodoEditorViewOne: UIViewController, TodoEditorView {
         deadlineDatePicker.isHidden = true
         separatorViewTwo.isHidden = true
         deadlineButton.isHidden = true
-        textView.text = Strings.empty
+        textView.text = ""
         prioritySegmentedControl.selectedSegmentIndex = 1
         placeholderLabel.isHidden = false
         deadlineSwitch.setOn(false, animated: false)
@@ -84,23 +89,28 @@ final class TodoEditorViewOne: UIViewController, TodoEditorView {
         setupFrameLayout()
     }
 
-    // MARK: - Private
+    func setTextPlaceholder(visible: Bool) {
+        placeholderLabel.isHidden = !visible
+    }
 
-    private func setDeadlineButtonTitle() {
+    func setDeadlineButton(visible: Bool) {
+        deadlineButton.isHidden = !visible
+    }
+
+    func updateDeadlineButtonTitle() {
         deadlineButton.setTitle(deadlineDatePicker.date.formattedDate, for: .normal)
     }
 
-    private func userInput() -> TodoEditorUserInput {
-        let deadline = deadlineSwitch.isOn ? deadlineDatePicker.date : nil
-        let priority = priorityMapper.priority(for: prioritySegmentedControl.selectedSegmentIndex)
-        let trimmedText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-
-        return TodoEditorUserInput(text: trimmedText, priority: priority, deadline: deadline)
+    func setDeadlineDatePicker(visible: Bool) {
+        deadlineDatePicker.isHidden = !visible
+        separatorViewTwo.isHidden = deadlineDatePicker.isHidden
     }
-}
 
-/// Обработка пользовательских действий (нажатия и т.д.).
-extension TodoEditorViewOne: UITextViewDelegate {
+    var isDeadlineDatePickerVisible: Bool {
+        !deadlineDatePicker.isHidden
+    }
+
+    // MARK: - User Actions
 
     func onCancelButtonTap() {
         hide()
@@ -110,43 +120,40 @@ extension TodoEditorViewOne: UITextViewDelegate {
         presenter?.save(userInput())
     }
 
-    @objc func onRemoveButtonTap() {
+    @objc
+    func onRemoveButtonTap() {
         presenter?.removeTodoItem()
     }
 
-    @objc func onDeadlineSwitchValueChanged() {
-        if deadlineSwitch.isOn {
-            deadlineButton.isHidden = false
-            setDeadlineButtonTitle()
-        } else {
-            deadlineButton.isHidden = true
-            deadlineDatePicker.isHidden = true
-        }
+    @objc
+    func onDeadlineSwitchValueChanged() {
+        presenter?.handleDeadlineSwitchValueChanged(deadlineSwitch.isOn, userInput())
         setupFrameLayout()
-        presenter?.setIfSaveButtonEnabledOnUserInput(userInput())
     }
 
-    @objc func onDeadlineDatePickerValueChanged() {
-        setDeadlineButtonTitle()
-        presenter?.setIfSaveButtonEnabledOnUserInput(userInput())
+    @objc
+    func onDeadlineDatePickerValueChanged() {
+        presenter?.handleDeadlineDatePickerValueChanged(userInput())
     }
 
-    @objc func onDeadlineButtonTap() {
-        deadlineDatePicker.isHidden = !deadlineDatePicker.isHidden
-        separatorViewTwo.isHidden = deadlineDatePicker.isHidden
+    @objc
+    func onDeadlineButtonTap() {
+        setDeadlineDatePicker(visible: deadlineDatePicker.isHidden)
         setupFrameLayout()
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        let text = textView.text
-        let isTextNotEmpty = (text?.count ?? 0) > 0
+        presenter?.handleTextInput(userInput())
+    }
 
-        placeholderLabel.isHidden = isTextNotEmpty
-        removeButton.setTitleColor(isTextNotEmpty ? .systemRed : .systemGray, for: .normal)
+    @objc
+    func onPriorityChanged() {
         presenter?.setIfSaveButtonEnabledOnUserInput(userInput())
     }
 
-    @objc func onPriorityChanged() {
-        presenter?.setIfSaveButtonEnabledOnUserInput(userInput())
+    private func userInput() -> TodoEditorUserInput {
+        TodoEditorUserInput(text: textView.text.trimmingCharacters(in: .whitespacesAndNewlines),
+                            priority: prioritySegmentedControl.todoItemPriority,
+                            deadline: deadlineSwitch.isOn ? deadlineDatePicker.date : nil)
     }
 }

@@ -7,9 +7,12 @@
 
 import Foundation
 
-// Technical debt.
-// The code needs to be refactored.
-class TodoEditorModelOne: TodoEditorModel {
+enum TodoEditorMode {
+    case creatingNew
+    case editingExisting
+}
+
+final class TodoEditorInteractorImpl: TodoEditorInteractor {
 
     weak var presenter: TodoEditorPresenter? {
         didSet {

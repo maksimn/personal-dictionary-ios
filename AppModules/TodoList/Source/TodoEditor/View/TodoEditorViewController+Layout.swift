@@ -1,5 +1,5 @@
 //
-//  MyTodoDetailsView+Layout.swift
+//  TodoEditorViewController+Layout.swift
 //  ToDoList
 //
 //  Created by Maxim Ivanov on 10.06.2021.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension TodoEditorViewOne {
+extension TodoEditorViewController {
 
     var pillowViewHeight: CGFloat { 112.5 }
     var textMarginTop: CGFloat { 17 }
@@ -31,15 +31,15 @@ extension TodoEditorViewOne {
     }
 
     func initViews() {
-        navBar = TodoEditorNavBar(navigationItem, networkIndicatorBuilder)
+        navBar = TodoEditorNavBar(params: params.navBar, navigationItem, networkIndicatorBuilder)
         navBar?.onSaveButtonTap = { [weak self] in
             self?.onSaveButtonTap()
         }
         navBar?.onCancelButtonTap = { [weak self] in
             self?.onCancelButtonTap()
         }
-        view.backgroundColor = Colors.backgroundLightColor
-        scrollView.backgroundColor = Colors.backgroundLightColor
+        view.backgroundColor = params.backgroundLightColor
+        scrollView.backgroundColor = params.backgroundLightColor
         initTextView()
         initPlaceholderLabel()
         initPillowView()
@@ -161,7 +161,7 @@ extension TodoEditorViewOne {
     }
 
     private func initPlaceholderLabel() {
-        placeholderLabel.text = Strings.newTodoPlaceholder
+        placeholderLabel.text = params.newTodoPlaceholder
         placeholderLabel.font = UIFont.systemFont(ofSize: 17)
         placeholderLabel.textColor = .lightGray
         placeholderLabel.textAlignment = .left
@@ -183,12 +183,12 @@ extension TodoEditorViewOne {
     }
 
     private func initImportanceLabel() {
-        importanceLabel.text = Strings.priority
+        importanceLabel.text = params.priority
         importanceLabel.font = UIFont.systemFont(ofSize: 17)
     }
 
     private func initShouldBeDoneBeforeLabel() {
-        shouldBeDoneBeforeLabel.text = Strings.shouldBeDoneBefore
+        shouldBeDoneBeforeLabel.text = params.shouldBeDoneBefore
         shouldBeDoneBeforeLabel.font = UIFont.systemFont(ofSize: 17)
     }
 
@@ -217,7 +217,7 @@ extension TodoEditorViewOne {
     }
 
     private func initRemoveButton() {
-        removeButton.setTitle(Strings.remove, for: .normal)
+        removeButton.setTitle(params.remove, for: .normal)
         removeButton.addTarget(self, action: #selector(onRemoveButtonTap), for: .touchUpInside)
         removeButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
         removeButton.setTitleColor(.systemGray, for: .normal)
@@ -232,7 +232,7 @@ extension TodoEditorViewOne {
         importanceLabel.isHidden = false
         shouldBeDoneBeforeLabel.isHidden = false
         deadlineSwitch.isHidden = false
-        deadlineButton.isHidden = false
+        deadlineButton.isHidden = !deadlineSwitch.isOn
         removeButton.isHidden = false
     }
 

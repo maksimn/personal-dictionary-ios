@@ -13,8 +13,6 @@ struct TodoEditorUserInput {
     let deadline: Date?
 }
 
-// Technical debt.
-// The code needs to be refactored.
 protocol TodoEditorPresenter: AnyObject {
 
     func setInitialData()
@@ -22,6 +20,12 @@ protocol TodoEditorPresenter: AnyObject {
     func save(_ data: TodoEditorUserInput)
 
     func removeTodoItem()
+
+    func handleDeadlineSwitchValueChanged(_ value: Bool, _ input: TodoEditorUserInput)
+
+    func handleDeadlineDatePickerValueChanged(_ input: TodoEditorUserInput)
+
+    func handleTextInput(_ input: TodoEditorUserInput)
 
     func setIfSaveButtonEnabledOnUserInput(_ input: TodoEditorUserInput)
 }

@@ -8,14 +8,40 @@
 @testable import TodoList
 
 class TodoEditorViewStub: TodoEditorView {
+    func setRemoveButton(enabled: Bool) {
+        
+    }
+
+    func clear() {
+
+    }
+
+    func hide() {
+
+    }
+
+    func setDeadlineButton(visible: Bool) {
+
+    }
+
+    func updateDeadlineButtonTitle() {
+
+    }
+
+    func setTextPlaceholder(visible: Bool) {
+
+    }
+
+    func setDeadlineDatePicker(visible: Bool) {
+
+    }
+
+    var isDeadlineDatePickerVisible: Bool = false
+
 
     var presenter: TodoEditorPresenter?
 
     func set(todoItem: TodoItem?) { }
 
-    func setActivityIndicator(visible: Bool) { }
-
     func setSaveButton(enabled: Bool) { }
-
-    var viewController: UIViewController? { nil }
 }

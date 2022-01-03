@@ -11,12 +11,12 @@ class TodoListPresenterOne: TodoListPresenter {
 
     private unowned let view: TodoListView
     private let model: TodoListModel
-    private var mvp: TodoListMVP
+    private let todoEditorBuilder: TodoEditorBuilder
 
-    init(model: TodoListModel, view: TodoListView, mvp: TodoListMVP) {
+    init(model: TodoListModel, view: TodoListView, todoEditorBuilder: TodoEditorBuilder) {
         self.view = view
         self.model = model
-        self.mvp = mvp
+        self.todoEditorBuilder = todoEditorBuilder
     }
 
     func loadTodoList() {
@@ -80,16 +80,14 @@ class TodoListPresenterOne: TodoListPresenter {
     }
 
     func navigateToEditor(_ todoItem: TodoItem?) {
-        let todoEditorMVP = mvp.buildTodoEditorMVP(todoItem)
+        let todoEditorMVP = todoEditorBuilder.build(initTodoItem: todoItem)
+        let todoEditorViewController = todoEditorMVP.viewController
+        todoEditorViewController.modalPresentationStyle = .overFullScreen
+        todoEditorViewController.navigationItem.largeTitleDisplayMode = .never
 
-        if let todoEditorViewController = todoEditorMVP.viewController {
-            todoEditorViewController.modalPresentationStyle = .overFullScreen
-            todoEditorViewController.navigationItem.largeTitleDisplayMode = .never
+        let navigationController = UINavigationController(rootViewController: todoEditorViewController)
 
-            let navigationController = UINavigationController(rootViewController: todoEditorViewController)
-
-            view.viewController?.present(navigationController, animated: true, completion: nil)
-        }
+        view.viewController?.present(navigationController, animated: true, completion: nil)
     }
 
     private func viewUpdateToggleAndCompletedItemCounter() {
