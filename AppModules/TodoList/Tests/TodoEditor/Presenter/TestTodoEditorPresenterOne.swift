@@ -15,7 +15,7 @@ class TestTodoEditorPresenterOne: XCTestCase {
         // Arrange:
         let modelMock = NilTodoItemTodoEditorModelMock()
         let viewStub = TodoEditorViewStub()
-        let presenter = TodoEditorPresenterOne(model: modelMock, view: viewStub)
+        let presenter = TodoEditorPresenterImpl(model: modelMock, view: viewStub)
 
         // Act:
         let result = presenter.isSaveButtonEnabled
@@ -28,7 +28,7 @@ class TestTodoEditorPresenterOne: XCTestCase {
         // Arrange:
         let modelMock = NilTodoItemTodoEditorModelMock()
         let viewStub = TodoEditorViewStub()
-        let presenter = TodoEditorPresenterOne(model: modelMock, view: viewStub)
+        let presenter = TodoEditorPresenterImpl(model: modelMock, view: viewStub)
 
         // Act:
         presenter.setIfSaveButtonEnabledOnUserInput(
@@ -44,7 +44,7 @@ class TestTodoEditorPresenterOne: XCTestCase {
         let initialTodoItem = TodoItem(text: "a", priority: .high)
         let modelMock = TodoEditorModelMock(initialTodoItem)
         let viewStub = TodoEditorViewStub()
-        let presenter = TodoEditorPresenterOne(model: modelMock, view: viewStub)
+        let presenter = TodoEditorPresenterImpl(model: modelMock, view: viewStub)
 
         // Act:
         presenter.setIfSaveButtonEnabledOnUserInput(TodoEditorUserInput(text: initialTodoItem.text,
@@ -60,7 +60,7 @@ class TestTodoEditorPresenterOne: XCTestCase {
         let initialTodoItem = TodoItem(text: "a", priority: .high)
         let modelMock = TodoEditorModelMock(initialTodoItem)
         let viewStub = TodoEditorViewStub()
-        let presenter = TodoEditorPresenterOne(model: modelMock, view: viewStub)
+        let presenter = TodoEditorPresenterImpl(model: modelMock, view: viewStub)
 
         // Act:
         presenter.setIfSaveButtonEnabledOnUserInput(

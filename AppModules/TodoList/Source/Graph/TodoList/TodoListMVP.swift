@@ -10,6 +10,4 @@ import UIKit
 protocol TodoListMVP: AnyObject {
 
     var viewController: UIViewController? { get }
-
-    func buildTodoEditorMVP(_ todoItem: TodoItem?) -> TodoEditorMVP
 }

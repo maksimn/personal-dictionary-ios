@@ -7,7 +7,7 @@
 
 @testable import TodoList
 
-final class NilTodoItemTodoEditorModelMock: TodoEditorModel {
+final class NilTodoItemTodoEditorModelMock: TodoEditorInteractor {
     func save(_ data: TodoEditorUserInput) {
 
     }
@@ -26,7 +26,7 @@ final class NilTodoItemTodoEditorModelMock: TodoEditorModel {
     func dispose() { }
 }
 
-final class TodoEditorModelMock: TodoEditorModel {
+final class TodoEditorModelMock: TodoEditorInteractor {
 
     func save(_ data: TodoEditorUserInput) {
     }

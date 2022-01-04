@@ -16,10 +16,17 @@ final class TodoListMVPGraph: TodoListMVP {
         self.service = service
 
         let networkIndicatorBuilder = NetworkIndicatorBuilderImpl(httpRequestCounter: service.httpRequestCounter)
+        let appViewParams = AppViewParams(backgroundLightColor: Colors.backgroundLightColor,
+                                          highPriorityMark: Images.highPriorityMark,
+                                          lowPriorityMark: Images.lowPriorityMark)
+        let todoEditorBuilder = TodoEditorBuilderImpl(service: service,
+                                                      appViewParams: appViewParams)
 
         view = TodoListViewOne(networkIndicatorBuilder: networkIndicatorBuilder)
         var model: TodoListModel = TodoListModelOne(service)
-        let presenter: TodoListPresenter = TodoListPresenterOne(model: model, view: view, mvp: self)
+        let presenter: TodoListPresenter = TodoListPresenterOne(model: model,
+                                                                view: view,
+                                                                todoEditorBuilder: todoEditorBuilder)
 
         view.presenter = presenter
         model.presenter = presenter
@@ -27,9 +34,5 @@ final class TodoListMVPGraph: TodoListMVP {
 
     var viewController: UIViewController? {
         view.viewController
-    }
-
-    func buildTodoEditorMVP(_ todoItem: TodoItem?) -> TodoEditorMVP {
-        TodoEditorMVPGraph(todoItem, service)
     }
 }

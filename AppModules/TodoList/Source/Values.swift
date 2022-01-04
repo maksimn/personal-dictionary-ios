@@ -7,6 +7,12 @@
 
 import UIKit
 
+struct AppViewParams {
+    let backgroundLightColor: UIColor
+    let highPriorityMark: UIImage
+    let lowPriorityMark: UIImage
+}
+
 enum Colors {
     static let backgroundLightColor = UIColor(red: 1.00, green: 0.80, blue: 1.00, alpha: 1.00)
     static let labelLightTextColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
@@ -19,18 +25,9 @@ enum Strings {
     static let empty = ""
 
     static let newTodo = "Новое"
-    static let todo = "Дело"
 
-    static let save = "Сохранить"
-    static let cancel = "Отменить"
-    static let remove = "Удалить"
     static let show = "Показать"
     static let hide = "Скрыть"
-    static let noPriority = "нет"
-
-    static let newTodoPlaceholder = "Что надо сделать?"
-    static let priority = "Важность"
-    static let shouldBeDoneBefore = "Сделать до"
 
     static let completed = "Выполнено — "
     static let myTodos = "Мои дела"

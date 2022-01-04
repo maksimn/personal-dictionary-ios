@@ -15,7 +15,19 @@ protocol TodoEditorView: AnyObject {
 
     func setSaveButton(enabled: Bool)
 
+    func setRemoveButton(enabled: Bool)
+
     func clear()
 
     func hide()
+
+    func setDeadlineButton(visible: Bool)
+
+    func updateDeadlineButtonTitle()
+
+    func setTextPlaceholder(visible: Bool)
+
+    func setDeadlineDatePicker(visible: Bool)
+
+    var isDeadlineDatePickerVisible: Bool { get }
 }

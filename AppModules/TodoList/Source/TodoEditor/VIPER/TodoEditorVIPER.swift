@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol TodoEditorMVP {
+protocol TodoEditorVIPER {
 
-    var viewController: UIViewController? { get }
+    var viewController: UIViewController { get }
 }

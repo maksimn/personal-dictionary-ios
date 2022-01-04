@@ -7,23 +7,32 @@
 
 import UIKit
 
+struct TodoEditorNavBarParams {
+    let save: String
+    let todo: String
+    let cancel: String
+}
+
 class TodoEditorNavBar {
 
     var onSaveButtonTap: (() -> Void)?
     var onCancelButtonTap: (() -> Void)?
 
-    private lazy var saveBarButtonItem = UIBarButtonItem(title: Strings.save, style: .plain,
+    private let params: TodoEditorNavBarParams
+    private lazy var saveBarButtonItem = UIBarButtonItem(title: params.save, style: .plain,
                                                          target: self, action: #selector(saveButtonTap))
 
-    init(_ navigationItem: UINavigationItem,
+    init(params: TodoEditorNavBarParams,
+         _ navigationItem: UINavigationItem,
          _ networkIndicatorBuilder: NetworkIndicatorBuilder) {
+        self.params = params
         let networkIndicatorVIPER = networkIndicatorBuilder.build()
         let activityBarButtonItem = UIBarButtonItem(customView: networkIndicatorVIPER.uiview)
 
-        navigationItem.title = Strings.todo
+        navigationItem.title = params.todo
         navigationItem.setHidesBackButton(true, animated: false)
         navigationItem.rightBarButtonItems = [saveBarButtonItem, activityBarButtonItem]
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: Strings.cancel, style: .plain,
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: params.cancel, style: .plain,
                                                             target: self, action: #selector(cancelButtonTap))
     }
 
