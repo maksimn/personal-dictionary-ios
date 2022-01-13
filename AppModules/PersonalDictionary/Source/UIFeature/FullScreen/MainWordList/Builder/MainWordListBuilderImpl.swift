@@ -9,18 +9,20 @@ import CoreModule
 
 final class MainWordListBuilderImpl: MainWordListBuilder {
 
-    private let dependencies: MainWordListDependencies
+    private let appConfigs: AppConfigs
 
     init(appConfigs: AppConfigs) {
-        dependencies = MainWordListDependencies(appConfigs: appConfigs)
+        self.appConfigs = appConfigs
     }
 
     func build() -> MainWordListGraph {
-        MainWordListGraphImpl(viewParams: dependencies.viewParams,
-                              wordListBuilder: dependencies.createWordListBuilder(),
-                              wordListFetcher: dependencies.buildWordListRepository(),
-                              newWordBuilder: dependencies.createNewWordBuilder(),
-                              searchBuilder: dependencies.createSearchBuilder(),
-                              coreRouter: dependencies.coreRouter)
+        let dependencies = MainWordListDependencies(appConfigs: appConfigs)
+
+        return MainWordListGraphImpl(viewParams: dependencies.viewParams,
+                                     wordListBuilder: dependencies.createWordListBuilder(),
+                                     wordListFetcher: dependencies.buildWordListRepository(),
+                                     newWordBuilder: dependencies.createNewWordBuilder(),
+                                     searchBuilder: dependencies.createSearchBuilder(),
+                                     coreRouter: appConfigs.appParams.coreRouter)
     }
 }

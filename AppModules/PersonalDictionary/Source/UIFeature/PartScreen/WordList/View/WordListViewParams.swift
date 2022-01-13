@@ -10,12 +10,11 @@ import UIKit
 typealias WordListViewParams = ViewParams<WordListViewStaticContent, WordListViewStyles>
 
 struct WordListViewStaticContent {
-    let deleteAction: DeleteActionStaticContent
+    let tableViewParams: WordTableViewParams
 }
 
 struct WordListViewStyles {
     let backgroundColor: UIColor
-    let deleteAction: DeleteActionStyles
     let itemHeight: CGFloat
     let cellClass: AnyClass
     let cellReuseIdentifier: String

@@ -25,7 +25,7 @@ final class ConfigDependencies {
 
         return AppConfigs(
 
-            outer: appParams,
+            appParams: appParams,
 
             langData: langData,
 
