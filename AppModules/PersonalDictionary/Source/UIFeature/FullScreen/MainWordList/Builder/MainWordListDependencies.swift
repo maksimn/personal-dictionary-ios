@@ -66,6 +66,6 @@ final class MainWordListDependencies {
     }
 
     private func buildLogger() -> Logger {
-        SimpleLogger(isLoggingEnabled: appConfigs.appParams.coreModuleParams.isLoggingEnabled)
+        SimpleLogger(isLoggingEnabled: appConfigs.isLoggingEnabled)
     }
 }
