@@ -9,7 +9,7 @@ import UIKit
 
 struct AppConfigs {
 
-    let outer: PersonalDictionaryAppParams
+    let appParams: PersonalDictionaryAppParams
 
     let langData: LangData
 

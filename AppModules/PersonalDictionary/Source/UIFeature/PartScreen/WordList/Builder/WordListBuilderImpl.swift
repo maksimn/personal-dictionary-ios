@@ -9,23 +9,22 @@ import CoreModule
 
 final class WordListBuilderImpl: WordListBuilder {
 
-    private let dependencies: WordListDependencies
+    private let appConfigs: AppConfigs
+    private let cudOperations: WordItemCUDOperations
 
-    init(cudOperations: WordItemCUDOperations,
-         translationService: TranslationService,
-         appViewConfigs: AppViewConfigs,
-         logger: Logger) {
-        dependencies = WordListDependencies(cudOperations: cudOperations,
-                                            translationService: translationService,
-                                            appViewConfigs: appViewConfigs,
-                                            logger: logger)
+    init(appConfigs: AppConfigs,
+         cudOperations: WordItemCUDOperations) {
+        self.appConfigs = appConfigs
+        self.cudOperations = cudOperations
     }
 
     func build() -> WordListMVVM {
-        WordListMVVMImpl(cudOperations: dependencies.cudOperations,
-                         translationService: dependencies.translationService,
-                         wordItemStream: dependencies.wordItemStream,
-                         viewParams: dependencies.viewParams,
-                         logger: dependencies.logger)
+        let dependencies = WordListDependencies(appConfigs: appConfigs)
+
+        return WordListMVVMImpl(cudOperations: cudOperations,
+                                translationService: dependencies.translationService,
+                                wordItemStream: dependencies.wordItemStream,
+                                viewParams: dependencies.viewParams,
+                                logger: dependencies.logger)
     }
 }

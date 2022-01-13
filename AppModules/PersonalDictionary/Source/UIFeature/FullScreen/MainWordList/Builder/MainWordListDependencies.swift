@@ -17,7 +17,7 @@ final class MainWordListDependencies {
             staticContent: MainWordListStaticContent(
                 heading: bundle.moduleLocalizedString("My dictionary"),
                 navToNewWordImage: UIImage(named: "icon-plus", in: bundle, compatibleWith: nil)!,
-                routingButtonTitle: appConfigs.outer.routingButtonTitle,
+                routingButtonTitle: appConfigs.appParams.routingButtonTitle,
                 visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
             ),
             styles: MainWordListStyles(
@@ -27,10 +27,6 @@ final class MainWordListDependencies {
             )
         )
     }()
-
-    var coreRouter: CoreRouter? {
-        appConfigs.outer.coreRouter
-    }
 
     private let appConfigs: AppConfigs
 
@@ -60,10 +56,8 @@ final class MainWordListDependencies {
     }
 
     func createWordListBuilder() -> WordListBuilder {
-        WordListBuilderImpl(cudOperations: buildWordListRepository(),
-                            translationService: buildTranslationService(),
-                            appViewConfigs: appConfigs.appViewConfigs,
-                            logger: buildLogger())
+        WordListBuilderImpl(appConfigs: appConfigs,
+                            cudOperations: buildWordListRepository())
     }
 
     private func buildLangRepository() -> LangRepository {
@@ -72,20 +66,6 @@ final class MainWordListDependencies {
     }
 
     private func buildLogger() -> Logger {
-        SimpleLogger(isLoggingEnabled: appConfigs.outer.coreModuleParams.isLoggingEnabled)
-    }
-
-    private func buildTranslationService() -> TranslationService {
-        let ponsApiData = PonsApiData(url: "https://api.pons.com/v1/dictionary",
-                                      secretHeaderKey: "X-Secret",
-                                      secret: appConfigs.ponsApiSecret)
-        let urlSessionCoreService = UrlSessionCoreService(
-            sessionConfiguration: appConfigs.outer.coreModuleParams.urlSessionConfiguration
-        )
-
-        return PonsTranslationService(apiData: ponsApiData,
-                                      coreService: urlSessionCoreService,
-                                      jsonCoder: JSONCoderImpl(),
-                                      logger: buildLogger())
+        SimpleLogger(isLoggingEnabled: appConfigs.appParams.coreModuleParams.isLoggingEnabled)
     }
 }

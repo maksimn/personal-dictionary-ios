@@ -10,38 +10,50 @@ import UIKit
 
 final class WordListDependencies {
 
-    let cudOperations: WordItemCUDOperations
+    let viewParams: WordListViewParams
+
+    let wordItemStream: ReadableWordItemStream & RemovedWordItemStream
+
     let translationService: TranslationService
-    let wordItemStream: ReadableWordItemStream & RemovedWordItemStream = WordItemStreamImpl.instance
+
     let logger: Logger
 
-    private(set) lazy var viewParams = WordListViewParams(
-        staticContent: WordListViewStaticContent(
-            deleteAction: DeleteActionStaticContent(
-                image: UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!
-            )
-        ),
-        styles: WordListViewStyles(
-            backgroundColor: appViewConfigs.appBackgroundColor,
-            deleteAction: DeleteActionStyles(
-                backgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
+    init(appConfigs: AppConfigs) {
+        viewParams = WordListViewParams(
+            staticContent: WordListViewStaticContent(
+                deleteAction: DeleteActionStaticContent(
+                    image: UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!
+                )
             ),
-            itemHeight: WordItemCell.height,
-            cellClass: WordItemCell.self,
-            cellReuseIdentifier: "\(WordItemCell.self)",
-            cellCornerRadius: 16
+            styles: WordListViewStyles(
+                backgroundColor: appConfigs.appViewConfigs.appBackgroundColor,
+                deleteAction: DeleteActionStyles(
+                    backgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
+                ),
+                itemHeight: WordItemCell.height,
+                cellClass: WordItemCell.self,
+                cellReuseIdentifier: "\(WordItemCell.self)",
+                cellCornerRadius: 16
+            )
         )
-    )
 
-    private let appViewConfigs: AppViewConfigs
+        self.wordItemStream = WordItemStreamImpl.instance
 
-    init(cudOperations: WordItemCUDOperations,
-         translationService: TranslationService,
-         appViewConfigs: AppViewConfigs,
-         logger: Logger) {
-        self.cudOperations = cudOperations
-        self.translationService = translationService
-        self.appViewConfigs = appViewConfigs
-        self.logger = logger
+        self.logger = SimpleLogger(isLoggingEnabled: appConfigs.appParams.coreModuleParams.isLoggingEnabled)
+
+        // Building translationService:
+        let ponsApiData = PonsApiData(url: "https://api.pons.com/v1/dictionary",
+                                      secretHeaderKey: "X-Secret",
+                                      secret: appConfigs.ponsApiSecret)
+        let urlSessionCoreService = UrlSessionCoreService(
+            sessionConfiguration: appConfigs.appParams.coreModuleParams.urlSessionConfiguration
+        )
+
+        translationService = PonsTranslationService(
+            apiData: ponsApiData,
+            coreService: urlSessionCoreService,
+            jsonCoder: JSONCoderImpl(),
+            logger: logger
+        )
     }
 }
