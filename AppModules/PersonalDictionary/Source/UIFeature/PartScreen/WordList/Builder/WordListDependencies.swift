@@ -21,15 +21,16 @@ final class WordListDependencies {
     init(appConfigs: AppConfigs) {
         viewParams = WordListViewParams(
             staticContent: WordListViewStaticContent(
-                deleteAction: DeleteActionStaticContent(
-                    image: UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!
+                tableViewParams: WordTableViewParams(
+                    cellSlideInDuration: 0.5,
+                    cellSlideInDelayFactor: 0.05,
+                    deleteActionImage: UIImage(systemName: "trash",
+                                               withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!,
+                    deleteActionBackgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
                 )
             ),
             styles: WordListViewStyles(
                 backgroundColor: appConfigs.appViewConfigs.appBackgroundColor,
-                deleteAction: DeleteActionStyles(
-                    backgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
-                ),
                 itemHeight: WordItemCell.height,
                 cellClass: WordItemCell.self,
                 cellReuseIdentifier: "\(WordItemCell.self)",

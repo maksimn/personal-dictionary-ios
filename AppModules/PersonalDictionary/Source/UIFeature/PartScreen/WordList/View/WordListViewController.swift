@@ -16,25 +16,21 @@ final class WordListViewController: UIViewController, WordListView {
 
     let tableView = UITableView()
 
-    lazy var tableDataSource: WordTableDataSource = {
-        WordTableDataSource(tableView: tableView, data: WordListData(wordList: [], changedItemPosition: nil),
-                            cellReuseIdentifier: params.styles.cellReuseIdentifier)
-    }()
+    lazy var tableDataSource = WordTableDataSource(
+        tableView: tableView,
+        data: WordListData(wordList: [], changedItemPosition: nil),
+        cellReuseIdentifier: params.styles.cellReuseIdentifier
+    )
 
-    lazy var tableActions: WordTableDelegate = {
-        WordTableDelegate(
-            onScrollFinish: { [weak self] in
-                self?.onTableViewScrollFinish()
-            },
-            onDeleteTap: { [weak self] position in
-                self?.onDeleteWordTap(position)
-            },
-            deleteActionViewParams: DeleteActionViewParams(
-                staticContent: params.staticContent.deleteAction,
-                styles: params.styles.deleteAction
-            )
-        )
-    }()
+    lazy var tableActions = WordTableDelegate(
+        onScrollFinish: { [weak self] in
+            self?.onTableViewScrollFinish()
+        },
+        onDeleteTap: { [weak self] position in
+            self?.onDeleteWordTap(position)
+        },
+        params: params.staticContent.tableViewParams
+    )
 
     init(viewModelBlock: @escaping () -> WordListViewModel?,
          params: WordListViewParams) {
