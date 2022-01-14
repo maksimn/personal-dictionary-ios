@@ -7,11 +7,16 @@
 
 import CoreModule
 
+/// Внешние параметры для приложения "Личный словарь иностранных слов".
 public struct PersonalDictionaryAppParams {
 
     public let coreRouter: CoreRouter?
     public let routingButtonTitle: String
 
+    /// Инициализатор
+    /// - Parameters:
+    ///  - coreRouter: базовый роутер, предназначенный для навигации к другому Продукту (Приложению).
+    ///  - routingButtonTitle: надпись для кнопки навигации к упомянутому другому Продукту.
     public init(coreRouter: CoreRouter?,
                 routingButtonTitle: String) {
         self.coreRouter = coreRouter

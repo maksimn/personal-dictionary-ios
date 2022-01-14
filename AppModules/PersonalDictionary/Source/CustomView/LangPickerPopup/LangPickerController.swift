@@ -15,7 +15,7 @@ final class LangPickerController: NSObject, UIPickerViewDataSource, UIPickerView
 
     /// Инициализатор
     /// - Parameters:
-    ///  - langs: список языков.
+    ///  - langs: список языков для выбора.
     init(langs: [Lang]) {
         self.langs = langs
     }

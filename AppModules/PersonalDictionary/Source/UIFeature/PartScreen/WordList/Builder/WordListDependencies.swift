@@ -30,7 +30,7 @@ final class WordListDependencies {
                 )
             ),
             styles: WordListViewStyles(
-                backgroundColor: appConfigs.appViewConfigs.appBackgroundColor,
+                backgroundColor: appConfigs.appViewConfigs.backgroundColor,
                 itemHeight: WordItemCell.height,
                 cellClass: WordItemCell.self,
                 cellReuseIdentifier: "\(WordItemCell.self)",

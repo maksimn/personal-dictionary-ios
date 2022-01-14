@@ -7,8 +7,10 @@
 
 import UIKit
 
+/// Источник данных для таблицы слов из личного словаря.
 final class WordTableDataSource: NSObject, UITableViewDataSource {
 
+    /// Данные списка слов
     var data: WordListData {
         willSet {
             previousWordCount = data.wordList.count
@@ -24,6 +26,11 @@ final class WordTableDataSource: NSObject, UITableViewDataSource {
 
     private let cellReuseIdentifier: String
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - tableView: таблица, в которой отображаются слова
+    ///  - data: данные списка слов
+    ///  - cellReuseIdentifier: идентификатор переиспользования ячейки таблицы в UIKit.
     init(tableView: UITableView,
          data: WordListData,
          cellReuseIdentifier: String) {

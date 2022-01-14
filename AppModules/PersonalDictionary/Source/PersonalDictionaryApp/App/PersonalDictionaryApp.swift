@@ -7,7 +7,9 @@
 
 import UIKit
 
+/// Приложение "Личный словарь иностранных слов".
 public protocol PersonalDictionaryApp {
 
+    /// Получение корневого контроллера приложения
     var navigationController: UINavigationController { get }
 }

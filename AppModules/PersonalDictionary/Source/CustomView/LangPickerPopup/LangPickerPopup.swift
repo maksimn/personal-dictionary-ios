@@ -21,7 +21,7 @@ final class LangPickerPopup: UIView {
 
     private let onSelectLang: ((Lang) -> Void)?
 
-    /// Designated инициализатор.
+    /// Инициализатор.
     /// - Parameters:
     ///  - params: параметры представления;
     ///  - onSelectLang: callback, который вызывается при нажатии кнопки "Выбрать" на попапе.

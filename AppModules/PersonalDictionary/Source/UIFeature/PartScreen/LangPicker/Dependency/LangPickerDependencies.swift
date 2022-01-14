@@ -21,7 +21,7 @@ final class LangPickerDependencies {
                 langs: allLangs
             ),
             styles: LangPickerPopupStyles(
-                backgroundColor: appViewConfigs.appBackgroundColor
+                backgroundColor: appViewConfigs.backgroundColor
             )
         )
     }

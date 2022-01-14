@@ -7,16 +7,24 @@
 
 import UIKit
 
+/// Параметры представления таблицы слов из личного словаря.
 struct WordTableViewParams {
+
+    /// Длительность анимации слайда ячейки при её первом показе
     let cellSlideInDuration: Double
+
+    /// Фактор задержки анимации последующих ячеек
     let cellSlideInDelayFactor: Double
+
+    /// Картинка для действия удаления элемента из таблицы
     let deleteActionImage: UIImage
+
+    /// Цвет фона для действия удаления элемента из таблицы
     let deleteActionBackgroundColor: UIColor
 }
 
+/// Делегат событий для таблицы слов из словаря.
 final class WordTableDelegate: NSObject, UITableViewDelegate {
-
-    var changedItemPosition: Int = -1
 
     private let params: WordTableViewParams
     private var onDeleteTap: ((Int) -> Void)?
@@ -24,9 +32,14 @@ final class WordTableDelegate: NSObject, UITableViewDelegate {
 
     private var hasAnimatedAllCells = false
 
-    init(onScrollFinish: (() -> Void)?,
-         onDeleteTap: ((Int) -> Void)?,
-         params: WordTableViewParams) {
+    /// Инициализатор
+    /// - Parameters:
+    ///  - onScrollFinish: обработчик для события завершения скролла таблицы
+    ///  - onDeleteTap: обработчик нажатия на view для удаления элемента таблицы
+    ///  - params: параметры представления таблицы слов из личного словаря.
+    init(params: WordTableViewParams,
+         onScrollFinish: (() -> Void)?,
+         onDeleteTap: ((Int) -> Void)?) {
         self.onScrollFinish = onScrollFinish
         self.onDeleteTap = onDeleteTap
         self.params = params

@@ -7,11 +7,15 @@
 
 import UIKit
 
+/// Представление для отображения текста.
 final class TextLabel: UIView {
 
     private let label = UILabel()
     private let params: TextLabelParams
 
+    /// Инициализатор представления.
+    /// - Parameters:
+    ///  - params: параметры представления.
     init(params: TextLabelParams) {
         self.params = params
         super.init(frame: .zero)

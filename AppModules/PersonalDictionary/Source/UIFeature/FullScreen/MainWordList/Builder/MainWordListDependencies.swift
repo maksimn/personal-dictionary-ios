@@ -21,7 +21,7 @@ final class MainWordListDependencies {
                 visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
             ),
             styles: MainWordListStyles(
-                backgroundColor: appConfigs.appViewConfigs.appBackgroundColor,
+                backgroundColor: appConfigs.appViewConfigs.backgroundColor,
                 navToNewWordButtonSize: CGSize(width: 44, height: 44),
                 navToNewWordButtonBottomOffset: -26
             )

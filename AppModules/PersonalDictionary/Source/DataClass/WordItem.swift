@@ -8,17 +8,30 @@
 import CoreModule
 import Foundation
 
+/// Данные о слове в словаре.
 struct WordItem: Equatable {
 
     typealias Id = Tagged<WordItem, String>
 
+    /// Идентификатор слова
     let id: Id
+
+    /// Написание слова на исходном языке
     let text: String
+
+    /// Перевод слова на целевой язык
     var translation: String?
+
+    /// Исходный язык
     let sourceLang: Lang
+
+    /// Целевой язык
     let targetLang: Lang
+
+    /// Дата и время создания объекта в целочисленном виде
     let createdAt: Int
 
+    /// Инициализатор
     init(id: Id = Id(raw: UUID().uuidString),
          text: String,
          translation: String? = nil,
@@ -33,6 +46,7 @@ struct WordItem: Equatable {
         self.createdAt = createdAt
     }
 
+    /// Операция сравнения на равенство объектов данного типа.
     static func == (lhs: WordItem, rhs: WordItem) -> Bool {
         return lhs.id == rhs.id &&
             lhs.text == rhs.text &&

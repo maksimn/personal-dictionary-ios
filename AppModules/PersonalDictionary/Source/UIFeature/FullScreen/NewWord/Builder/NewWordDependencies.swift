@@ -28,7 +28,7 @@ final class NewWordDependencies {
                 okText: bundle.moduleLocalizedString("OK"),
                 textFieldPlaceholder: bundle.moduleLocalizedString("Enter a new word")
             ),
-            styles: NewWordViewStyles(backgroundColor: appViewConfigs.appBackgroundColor)
+            styles: NewWordViewStyles(backgroundColor: appViewConfigs.backgroundColor)
         )
         self.langRepository = langRepository
         langPickerBuilder = LangPickerBuilderImpl(allLangs: langRepository.allLangs, appViewConfigs: appViewConfigs)

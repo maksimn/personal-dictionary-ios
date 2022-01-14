@@ -23,13 +23,13 @@ final class WordListViewController: UIViewController, WordListView {
     )
 
     lazy var tableActions = WordTableDelegate(
+        params: params.staticContent.tableViewParams,
         onScrollFinish: { [weak self] in
             self?.onTableViewScrollFinish()
         },
         onDeleteTap: { [weak self] position in
             self?.onDeleteWordTap(position)
-        },
-        params: params.staticContent.tableViewParams
+        }
     )
 
     init(viewModelBlock: @escaping () -> WordListViewModel?,

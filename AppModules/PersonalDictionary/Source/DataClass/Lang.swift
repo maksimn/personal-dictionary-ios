@@ -7,14 +7,21 @@
 
 import CoreModule
 
+/// Структура с данными об отдельном языке.
 struct Lang: Equatable {
 
     typealias Id = Tagged<Lang, Int>
 
+    /// Идентификатор языка
     let id: Id
+
+    /// Название языка
     let name: String
+
+    /// Короткое название языка ("EN" для английского, "RU" для русского и т.д.)
     let shortName: String
 
+    /// Операция сравнения на равенство двух объектов языков
     static func == (lhs: Lang, rhs: Lang) -> Bool {
         lhs.id == rhs.id
     }
