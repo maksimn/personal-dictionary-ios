@@ -14,10 +14,8 @@ final class SuperAppImpl: SuperApp {
 
     let rootViewController = UIViewController()
 
-    init(coreModuleParams: CoreModuleParams,
-         todoListAppBuilder: TodoListAppBuilder) {
+    init(todoListAppBuilder: TodoListAppBuilder) {
         let personalDictionaryAppBuilder = buildPersonalDictionaryAppBuilder(
-            coreModuleParams: coreModuleParams,
             todoListAppBuilder: todoListAppBuilder
         )
         let personalDictionaryApp = personalDictionaryAppBuilder.build()
@@ -26,7 +24,6 @@ final class SuperAppImpl: SuperApp {
     }
 
     private func buildPersonalDictionaryAppBuilder(
-        coreModuleParams: CoreModuleParams,
         todoListAppBuilder: TodoListAppBuilder
     ) -> PersonalDictionaryAppBuilder {
         let routeToTodoListButtonTitle = NSLocalizedString("My todos", comment: "")
@@ -36,8 +33,7 @@ final class SuperAppImpl: SuperApp {
         )
         let personalDictionaryAppParams = PersonalDictionaryAppParams(
             coreRouter: routingToTodoListAppRouter,
-            routingButtonTitle: routeToTodoListButtonTitle,
-            coreModuleParams: coreModuleParams
+            routingButtonTitle: routeToTodoListButtonTitle
         )
 
         return PersonalDictionaryAppBuilderImpl(appParams: personalDictionaryAppParams)

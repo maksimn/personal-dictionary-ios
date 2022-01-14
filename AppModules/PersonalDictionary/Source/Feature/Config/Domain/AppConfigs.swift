@@ -15,6 +15,8 @@ struct AppConfigs {
 
     let ponsApiSecret: String
 
+    let isLoggingEnabled: Bool
+
     let appViewConfigs: AppViewConfigs
 }
 

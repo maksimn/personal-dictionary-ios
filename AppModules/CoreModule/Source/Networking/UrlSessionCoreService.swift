@@ -23,9 +23,10 @@ public class UrlSessionCoreService: CoreService {
     }
 
     public func send(_ http: Http) -> Single<Data> {
-        Single<Data>.create { observer in
+        Single<Data>.create { [weak self] observer in
             let urlString = http.urlString
-            guard let url = URL(string: urlString) else {
+            guard let url = URL(string: urlString),
+                  let self = self else {
                 observer(.error(HttpError.urlUndefined))
                 return Disposables.create {}
             }

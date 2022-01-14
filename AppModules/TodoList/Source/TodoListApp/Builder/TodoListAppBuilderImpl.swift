@@ -10,12 +10,9 @@ import CoreModule
 public struct TodoListAppParams {
 
     public let routingButtonTitle: String
-    public let coreModuleParams: CoreModuleParams
 
-    public init(routingButtonTitle: String,
-                coreModuleParams: CoreModuleParams) {
+    public init(routingButtonTitle: String) {
         self.routingButtonTitle = routingButtonTitle
-        self.coreModuleParams = coreModuleParams
     }
 }
 

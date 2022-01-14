@@ -40,19 +40,13 @@ final class WordListDependencies {
 
         self.wordItemStream = WordItemStreamImpl.instance
 
-        self.logger = SimpleLogger(isLoggingEnabled: appConfigs.appParams.coreModuleParams.isLoggingEnabled)
-
-        // Building translationService:
-        let ponsApiData = PonsApiData(url: "https://api.pons.com/v1/dictionary",
-                                      secretHeaderKey: "X-Secret",
-                                      secret: appConfigs.ponsApiSecret)
-        let urlSessionCoreService = UrlSessionCoreService(
-            sessionConfiguration: appConfigs.appParams.coreModuleParams.urlSessionConfiguration
-        )
+        self.logger = SimpleLogger(isLoggingEnabled: appConfigs.isLoggingEnabled)
 
         translationService = PonsTranslationService(
-            apiData: ponsApiData,
-            coreService: urlSessionCoreService,
+            apiData: PonsApiData(url: "https://api.pons.com/v1/dictionary",
+                                 secretHeaderKey: "X-Secret",
+                                 secret: appConfigs.ponsApiSecret),
+            coreService: UrlSessionCoreService(sessionConfiguration: URLSessionConfiguration.default),
             jsonCoder: JSONCoderImpl(),
             logger: logger
         )

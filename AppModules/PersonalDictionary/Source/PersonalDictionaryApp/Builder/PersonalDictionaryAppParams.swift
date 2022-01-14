@@ -11,13 +11,10 @@ public struct PersonalDictionaryAppParams {
 
     public let coreRouter: CoreRouter?
     public let routingButtonTitle: String
-    public let coreModuleParams: CoreModuleParams
 
     public init(coreRouter: CoreRouter?,
-                routingButtonTitle: String,
-                coreModuleParams: CoreModuleParams) {
+                routingButtonTitle: String) {
         self.coreRouter = coreRouter
         self.routingButtonTitle = routingButtonTitle
-        self.coreModuleParams = coreModuleParams
     }
 }

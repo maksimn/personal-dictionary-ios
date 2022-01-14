@@ -11,21 +11,13 @@ import TodoList
 final class SuperAppBuilderImpl: SuperAppBuilder {
 
     func build() -> SuperApp {
-        let coreModuleParams = CoreModuleParams(
-            isLoggingEnabled: true,
-            urlSessionConfiguration: URLSessionConfiguration.default
-        )
-        let todoListAppBuilder = buildTodoListAppBuilder(coreModuleParams: coreModuleParams)
-
-        return SuperAppImpl(coreModuleParams: coreModuleParams,
-                            todoListAppBuilder: todoListAppBuilder)
+        return SuperAppImpl(todoListAppBuilder: buildTodoListAppBuilder())
     }
 
-    private func buildTodoListAppBuilder(coreModuleParams: CoreModuleParams) -> TodoListAppBuilder {
+    private func buildTodoListAppBuilder() -> TodoListAppBuilder {
         let routeToPersonalDictionaryButtonTitle = NSLocalizedString("My dictionary", comment: "")
         let todoListAppParams = TodoListAppParams(
-            routingButtonTitle: routeToPersonalDictionaryButtonTitle,
-            coreModuleParams: coreModuleParams
+            routingButtonTitle: routeToPersonalDictionaryButtonTitle
         )
 
         return TodoListAppBuilderImpl(appParams: todoListAppParams)
