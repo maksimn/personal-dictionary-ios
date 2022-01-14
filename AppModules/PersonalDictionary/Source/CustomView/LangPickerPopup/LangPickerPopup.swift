@@ -8,6 +8,7 @@
 import SnapKit
 import UIKit
 
+/// "Всплывающее" представление для выбора языка.
 final class LangPickerPopup: UIView {
 
     private let pickerView = UIPickerView()
@@ -20,6 +21,10 @@ final class LangPickerPopup: UIView {
 
     private let onSelectLang: ((Lang) -> Void)?
 
+    /// Designated инициализатор.
+    /// - Parameters:
+    ///  - params: параметры представления;
+    ///  - onSelectLang: callback, который вызывается при нажатии кнопки "Выбрать" на попапе.
     init(params: LangPickerPopupParams,
          onSelectLang: ((Lang) -> Void)?) {
         self.params = params
@@ -35,6 +40,9 @@ final class LangPickerPopup: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    /// Выделить выбранный язык в представлении попапа.
+    /// - Parameters:
+    ///  - lang: выбранный язык.
     func selectLang(_ lang: Lang) {
         guard let row = langPickerController.langs.firstIndex(where: { $0.id == lang.id }) else { return }
 

@@ -7,7 +7,9 @@
 
 import UIKit
 
+/// Суперапп (основное приложение).
 protocol SuperApp {
 
+    /// Получение главного экрана супераппа.
     var rootViewController: UIViewController { get }
 }
