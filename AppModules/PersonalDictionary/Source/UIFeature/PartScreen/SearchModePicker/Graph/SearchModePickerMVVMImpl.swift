@@ -7,26 +7,30 @@
 
 import UIKit
 
+/// Реализация MVVM-графа фичи "Выбор режима поиска" по словам из словаря.
 final class SearchModePickerMVVMImpl: SearchModePickerMVVM {
 
-    private let view: SearchModePickerViewImpl
+    /// Представление выбора режима поиска.
+    private(set) var uiview: UIView
 
+    /// Модель выбора режима поиска.
     weak var model: SearchModePickerModel?
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - searchMode: начальное значение режима поиска;
+    ///  - viewParams: параметры представления.
     init(searchMode: SearchMode,
          viewParams: SearchModePickerViewParams) {
-        view = SearchModePickerViewImpl(params: viewParams)
+        let view = SearchModePickerViewImpl(params: viewParams)
         let model = SearchModePickerModelImpl(searchMode: searchMode)
         let viewModel = SearchModePickerViewModelImpl(model: model, view: view)
 
         view.viewModel = viewModel
         model.viewModel = viewModel
         model.bindInitially()
+
         self.model = model
+        uiview = view
     }
-
-    var uiview: UIView {
-        view
-    }
-
 }

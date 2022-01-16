@@ -8,6 +8,7 @@
 import CoreModule
 import UIKit
 
+/// View controller экрана Главного списка слов.
 class MainWordListViewController: UIViewController {
 
     let params: MainWordListViewParams
@@ -23,6 +24,13 @@ class MainWordListViewController: UIViewController {
     let routingButton = UIButton()
     let myDictionaryLabel = UILabel()
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - viewParams: параметры представления Главного списка слов.
+    ///  - wordListMVVM: MVVM-граф фичи "Список слов".
+    ///  - wordListFetcher: источник данных для получения списка слов из хранилища.
+    ///  - router: роутер для навигации от Главного списка слов к другим экранам приложения.
+    ///  - coreRouter: базовый роутер для навигации к другому Продукту/Приложению в супераппе.
     init(viewParams: MainWordListViewParams,
          wordListMVVM: WordListMVVM,
          wordListFetcher: WordListFetcher,

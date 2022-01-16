@@ -7,7 +7,12 @@
 
 import UIKit
 
+/// Параметры представления элемента ввода поискового текста.
 struct SearchTextInputViewParams {
+
+    /// Плейсхолдер для состояния элемента, когда поисковый текст пуст.
     let placeholder: String
+
+    /// Размер элемента.
     let size: CGSize
 }

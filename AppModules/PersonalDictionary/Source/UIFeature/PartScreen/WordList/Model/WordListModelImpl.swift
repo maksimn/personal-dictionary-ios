@@ -8,6 +8,7 @@
 import CoreModule
 import RxSwift
 
+/// Реализация модели списка слов.
 final class WordListModelImpl: WordListModel {
 
     private let viewModelBlock: () -> WordListViewModel?
@@ -16,31 +17,39 @@ final class WordListModelImpl: WordListModel {
     private let cudOperations: WordItemCUDOperations
     private let wordItemStream: ReadableWordItemStream & RemovedWordItemStream
     private let translationService: TranslationService
-    private let logger: Logger
 
     private let disposeBag = DisposeBag()
 
+    /// Стейт модели списка слов.
     var data: WordListData = WordListData(wordList: [], changedItemPosition: nil) {
         didSet {
             viewModel?.wordListData = data
         }
     }
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - viewModelBlock: замыкание для инициализации ссылки на модель представления.
+    ///  - cudOperations: сервис для операций create, update, delete со словами в хранилище личного словаря.
+    ///  - translationService: cлужба для выполнения перевода слов на целевой язык.
+    ///  - wordItemStream: ModelStream для событий со словами в личном словаре.
     init(viewModelBlock: @escaping () -> WordListViewModel?,
          cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
-         wordItemStream: ReadableWordItemStream & RemovedWordItemStream,
-         logger: Logger) {
+         wordItemStream: ReadableWordItemStream & RemovedWordItemStream) {
         self.viewModelBlock = viewModelBlock
         self.cudOperations = cudOperations
         self.translationService = translationService
         self.wordItemStream = wordItemStream
-        self.logger = logger
         subscribeToWordItemStream()
     }
 
-    func remove(_ wordItem: WordItem, at position: Int) {
+    /// Удалить слово по заданному индексу из списка
+    /// - Parameters:
+    ///  - position: позиция (индекс) слова в списке.
+    func remove(at position: Int) {
         var wordList = data.wordList
+        let wordItem = wordList[position]
 
         wordList.remove(at: position)
         data = WordListData(wordList: wordList, changedItemPosition: position)
@@ -49,6 +58,17 @@ final class WordListModelImpl: WordListModel {
             .disposed(by: disposeBag)
     }
 
+    /// Отправить оповещение об удалении слова.
+    /// - Parameters:
+    ///  - wordItem: удаленное слово.
+    func sendRemovedWordItem(_ wordItem: WordItem) {
+        wordItemStream.sendRemovedWordItem(wordItem)
+    }
+
+    /// Запросить перевод для слов в списке, расположенных в заданном интервале индексов.
+    /// - Parameters:
+    ///  - startPosition: позиция (индекс) начального слова.
+    ///  - endPosition: верхняя граница индексов слов для перевода (не включая).
     func requestTranslationsIfNeededWithin(startPosition: Int, endPosition: Int) {
         guard endPosition > startPosition, startPosition > -1 else { return }
         let endPosition = min(data.wordList.count, endPosition)
@@ -71,10 +91,6 @@ final class WordListModelImpl: WordListModel {
             .disposed(by: disposeBag)
     }
 
-    func sendRemovedWordItem(_ wordItem: WordItem) {
-        wordItemStream.sendRemovedWordItem(wordItem)
-    }
-
     // MARK: - Private
 
     private func addNewWord(_ wordItem: WordItem) {
@@ -91,7 +107,7 @@ final class WordListModelImpl: WordListModel {
 
     private func remove(wordItem: WordItem) {
         if let position = data.wordList.firstIndex(where: { $0.id == wordItem.id }) {
-            remove(wordItem, at: position)
+            remove(at: position)
         }
     }
 
@@ -101,8 +117,8 @@ final class WordListModelImpl: WordListModel {
             .observeOn(MainScheduler.instance)
             .subscribe(onSuccess: { [weak self] translation in
                 self?.update(wordItem: wordItem, with: translation, at: position)
-            }, onError: { [weak self] error in
-                self?.logger.log(error: error)
+            }, onError: { _ in
+
             }).disposed(by: disposeBag)
     }
 

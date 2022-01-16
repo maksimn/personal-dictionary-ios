@@ -7,20 +7,39 @@
 
 import CoreData
 
+/// Core Data Managed object для хранения данных о слове.
 @objc(WordItemMO)
-public class WordItemMO: NSManagedObject {
+class WordItemMO: NSManagedObject {
 
-    @NSManaged public var createdAt: Date?
-    @NSManaged public var id: String?
-    @NSManaged public var text: String?
-    @NSManaged public var translation: String?
-    @NSManaged public var sourceLangId: Int
-    @NSManaged public var targetLangId: Int
+    /// Идентификатор слова
+    @NSManaged var id: String?
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<WordItemMO> {
+    /// Написание слова на исходном языке
+    @NSManaged var text: String?
+
+    /// Перевод слова на целевой язык
+    @NSManaged var translation: String?
+
+    /// Идентификатор исходного языка
+    @NSManaged var sourceLangId: Int
+
+    /// Идентификатор целевого языка
+    @NSManaged var targetLangId: Int
+
+    /// Дата и время создания объекта слова
+    @NSManaged var createdAt: Date?
+
+    /// Запрос для получения списка managed object'ов слов
+    /// - Returns:
+    ///   объект NSFetchRequest для запроса списка слов.
+    @nonobjc
+    class func fetchRequest() -> NSFetchRequest<WordItemMO> {
         return NSFetchRequest<WordItemMO>(entityName: "\(WordItemMO.self)")
     }
 
+    /// Задать данные из объекта WordItem
+    /// - Parameters:
+    ///  - wordItem: данные о слове для его сохранения.
     func setData(from wordItem: WordItem) {
         id = wordItem.id.raw
         text = wordItem.text
@@ -30,6 +49,11 @@ public class WordItemMO: NSManagedObject {
         targetLangId = wordItem.targetLang.id.raw
     }
 
+    /// Преобразовать WordItemMO в WordItem
+    /// - Parameters:
+    ///  - langRepository: хранилище информации о языках.
+    /// - Returns:
+    ///   объект WordItem с данными о слове.
     func convertToWordItem(with langRepository: LangRepository) -> WordItem? {
         let langs = langRepository.allLangs
         guard let id = id,

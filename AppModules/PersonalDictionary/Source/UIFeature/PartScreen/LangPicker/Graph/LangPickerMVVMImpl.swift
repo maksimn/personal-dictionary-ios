@@ -9,22 +9,24 @@ import UIKit
 
 final class LangPickerMVVMImpl: LangPickerMVVM {
 
-    private let view: LangPickerViewImpl
+    /// Представление выбора языка
+    private(set) var uiview: UIView?
 
-    var uiview: UIView? {
-        view
-    }
-
+    /// Модель для выбора языка
     weak var model: LangPickerModel?
 
-    init(allLangs: [Lang],
-         viewParams: LangPickerViewParams) {
-        view = LangPickerViewImpl(params: viewParams, allLangs: allLangs)
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - viewParams: параметры представления выбора языка.
+    init(viewParams: LangPickerViewParams) {
+        let view = LangPickerViewImpl(params: viewParams)
         let model = LangPickerModelImpl()
         let viewModel = LangPickerViewModelImpl(model: model, view: view)
 
         model.viewModel = viewModel
         view.viewModel = viewModel
+
+        uiview = view
         self.model = model
     }
 }

@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Лэйаут представления списка слов.
 extension WordListViewController {
 
     func initViews() {

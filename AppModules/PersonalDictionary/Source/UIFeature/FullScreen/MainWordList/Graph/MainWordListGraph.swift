@@ -7,7 +7,9 @@
 
 import UIKit
 
+/// Граф фичи "Главный список слов".
 protocol MainWordListGraph {
 
+    /// Корневой navigation controller фичи.
     var navigationController: UINavigationController? { get }
 }

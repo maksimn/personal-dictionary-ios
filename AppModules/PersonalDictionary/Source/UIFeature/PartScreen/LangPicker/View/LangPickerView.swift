@@ -7,7 +7,11 @@
 
 protocol LangPickerView: AnyObject {
 
+    /// Модель представления Выбора языка.
     var viewModel: LangPickerViewModel? { get set }
 
+    /// Задать данные для отображения в представлении.
+    /// - Parameters:
+    ///  - langSelectorData: данные для выбора языка.
     func set(langSelectorData: LangSelectorData)
 }

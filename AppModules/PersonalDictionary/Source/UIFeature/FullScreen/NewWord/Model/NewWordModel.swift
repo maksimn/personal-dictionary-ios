@@ -7,19 +7,29 @@
 
 import CoreModule
 
+/// Стейт модели "Добавления нового слова" в личный словарь.
 struct NewWordModelState {
     var text: String
     var sourceLang: Lang
     var targetLang: Lang
 }
 
+/// Модель "Добавления нового слова" в личный словарь.
 protocol NewWordModel: InitiallyBindable {
 
+    /// View model "Добавления нового слова" в личный словарь.
     var viewModel: NewWordViewModel? { get set }
 
+    /// Отправить событие добавления нового слова в словарь
     func sendNewWord()
 
+    /// Обновить написание слова
+    /// - Parameters:
+    ///  - text: написание слова
     func update(text: String)
 
+    /// Обновить данные об исходном / целевом языке для слова
+    /// - Parameters:
+    ///  - data: данные о выбранном языке.
     func update(data: LangSelectorData)
 }

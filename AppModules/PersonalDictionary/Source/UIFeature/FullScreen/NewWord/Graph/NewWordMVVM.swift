@@ -7,7 +7,9 @@
 
 import UIKit
 
+/// MVVM-граф фичи "Добавление нового слова" в личный словарь.
 protocol NewWordMVVM {
 
+    /// View controller экрана "Добавления нового слова" в личный словарь.
     var viewController: UIViewController? { get }
 }

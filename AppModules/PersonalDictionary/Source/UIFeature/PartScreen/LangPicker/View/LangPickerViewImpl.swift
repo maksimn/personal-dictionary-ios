@@ -11,11 +11,15 @@ typealias LangPickerViewParams = LangPickerPopupParams
 
 final class LangPickerViewImpl: UIView, LangPickerView {
 
+    /// Модель представления Выбора языка.
     var viewModel: LangPickerViewModel?
 
     private var langPickerPopup: LangPickerPopup?
 
-    init(params: LangPickerViewParams, allLangs: [Lang]) {
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - params: параметры представления выбора языка.
+    init(params: LangPickerViewParams) {
         super.init(frame: .zero)
         langPickerPopup = LangPickerPopup(params: params,
                                           onSelectLang: { [weak self] lang in
@@ -31,6 +35,9 @@ final class LangPickerViewImpl: UIView, LangPickerView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    /// Задать данные для отображения в представлении.
+    /// - Parameters:
+    ///  - langSelectorData: данные для выбора языка.
     func set(langSelectorData: LangSelectorData) {
         langPickerPopup?.selectLang(langSelectorData.selectedLang)
     }

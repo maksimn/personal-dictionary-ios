@@ -8,16 +8,21 @@
 import CoreModule
 import UIKit
 
+/// Зависимости фичи "Список слов".
 final class WordListDependencies {
 
+    /// Параметры представления фичи
     let viewParams: WordListViewParams
 
+    /// ModelStream для событий со словами в личном словаре.
     let wordItemStream: ReadableWordItemStream & RemovedWordItemStream
 
+    /// Служба для выполнения перевода слов на целевой язык
     let translationService: TranslationService
 
-    let logger: Logger
-
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - appConfigs: конфигурация  приложения.
     init(appConfigs: AppConfigs) {
         viewParams = WordListViewParams(
             tableViewParams: WordTableViewParams(
@@ -36,15 +41,13 @@ final class WordListDependencies {
 
         self.wordItemStream = WordItemStreamImpl.instance
 
-        self.logger = SimpleLogger(isLoggingEnabled: appConfigs.isLoggingEnabled)
-
         translationService = PonsTranslationService(
             apiData: PonsApiData(url: "https://api.pons.com/v1/dictionary",
                                  secretHeaderKey: "X-Secret",
                                  secret: appConfigs.ponsApiSecret),
             coreService: UrlSessionCoreService(sessionConfiguration: URLSessionConfiguration.default),
             jsonCoder: JSONCoderImpl(),
-            logger: logger
+            logger: SimpleLogger(isLoggingEnabled: appConfigs.isLoggingEnabled)
         )
     }
 }

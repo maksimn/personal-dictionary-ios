@@ -9,11 +9,17 @@ import CoreData
 import CoreModule
 import RxSwift
 
+/// Аргументы хранилища слов личного словаря на основе фреймворка Core Data.
 struct CoreWordListRepositoryArgs {
 
+    /// Бандл для работы с ресурсами модуля "Personal Dictionary"
+    let bundle: Bundle
+
+    /// Название Persistent Container'a
     let persistentContainerName: String
 }
 
+/// Реализация хранилища слов личного словаря на основе фреймворка Core Data.
 final class CoreWordListRepository: WordListRepository {
 
     private var mainContext: NSManagedObjectContext {
@@ -21,9 +27,7 @@ final class CoreWordListRepository: WordListRepository {
     }
 
     private lazy var persistentContainer: NSPersistentContainer = {
-        let bundle = Bundle(for: type(of: self))
-
-        guard let modelURL = bundle.url(forResource: args.persistentContainerName, withExtension: "momd"),
+        guard let modelURL = args.bundle.url(forResource: args.persistentContainerName, withExtension: "momd"),
               let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL) else {
             return NSPersistentContainer()
         }
@@ -45,12 +49,18 @@ final class CoreWordListRepository: WordListRepository {
     private let logger: Logger
     private let args: CoreWordListRepositoryArgs
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - args: аргументы хранилища списка слов.
+    ///  - langRepository: хранилище данных о языках.
+    ///  - logger: логгер.
     init(args: CoreWordListRepositoryArgs, langRepository: LangRepository, logger: Logger) {
         self.args = args
         self.langRepository = langRepository
         self.logger = logger
     }
 
+    /// Список слов из личного словаря.
     var wordList: [WordItem] {
         let fetchRequest: NSFetchRequest<WordItemMO> = WordItemMO.fetchRequest()
         let sortDescriptor = NSSortDescriptor.init(key: "createdAt", ascending: false)
@@ -67,6 +77,10 @@ final class CoreWordListRepository: WordListRepository {
         }
     }
 
+    /// Добавить слово в хранилище личного словаря
+    /// - Parameters:
+    ///  - wordItem: слово для добавления.
+    /// - Returns: Rx completable для обработки завершения операции добавления слова в хранилище.
     func add(_ wordItem: WordItem) -> Completable {
         return Completable.create { [weak self] completable in
             let backgroundContext = self?.persistentContainer.newBackgroundContext()
@@ -93,6 +107,10 @@ final class CoreWordListRepository: WordListRepository {
         }
     }
 
+    /// Обновить слово в хранилище личного словаря
+    /// - Parameters:
+    ///  - wordItem: обновленное слово.
+    /// - Returns: Rx completable для обработки завершения операции обновления слова в хранилище.
     func update(_ wordItem: WordItem) -> Completable {
         return Completable.create { [weak self] completable in
             let backgroundContext = self?.persistentContainer.newBackgroundContext()
@@ -125,6 +143,10 @@ final class CoreWordListRepository: WordListRepository {
         }
     }
 
+    /// Удалить слово из хранилища личного словаря
+    /// - Parameters:
+    ///  - wordItemId: идентификатор слова для его удаления из хранилища.
+    /// - Returns: Rx completable для обработки завершения операции удаления слова из хранилища.
     func remove(with wordItemId: WordItem.Id) -> Completable {
         return Completable.create { [weak self] completable in
             let backgroundContext = self?.persistentContainer.newBackgroundContext()

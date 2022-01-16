@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Лэйаут экрана Главного списка слов.
 extension MainWordListViewController {
 
     func initViews() {

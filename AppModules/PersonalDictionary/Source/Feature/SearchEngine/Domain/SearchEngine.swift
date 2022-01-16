@@ -7,7 +7,13 @@
 
 import RxSwift
 
+/// Поисковый движок.
 protocol SearchEngine {
 
-    func findItems(contain string: String, mode: SearchMode) -> Single<SearchResultData>
+    /// Найти слова, соответствующие параметрам поиска.
+    /// - Parameters:
+    ///  - string: строка для поиска.
+    ///  - mode: режим поиска.
+    /// - Returns: данные с результатом поиска.
+    func findWords(contain string: String, mode: SearchMode) -> Single<SearchResultData>
 }

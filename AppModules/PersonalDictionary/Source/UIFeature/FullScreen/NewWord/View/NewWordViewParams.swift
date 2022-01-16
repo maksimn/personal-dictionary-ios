@@ -7,10 +7,18 @@
 
 import UIKit
 
+/// Параметры представления фичи "Добавление нового слова"
 struct NewWordViewParams {
-    let selectButtonTitle: String
+
+    /// Надпись между представлениями исходного и целевого языка
     let arrowText: String
+
+    /// Надпись на кнопке "ОК"
     let okText: String
+
+    /// Плейсхолдер для элемента ввода текста слова
     let textFieldPlaceholder: String
+
+    /// Цвет фона для представления
     let backgroundColor: UIColor
 }

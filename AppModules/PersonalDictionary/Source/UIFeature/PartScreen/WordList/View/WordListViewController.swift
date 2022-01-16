@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Реализация представления списка слов.
 final class WordListViewController: UIViewController, WordListView {
 
     private let viewModelBlock: () -> WordListViewModel?
@@ -32,6 +33,10 @@ final class WordListViewController: UIViewController, WordListView {
         }
     )
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - viewModelBlock: замыкание для инициализации ссылки на модель представления.
+    ///  - params: параметры представления.
     init(viewModelBlock: @escaping () -> WordListViewModel?,
          params: WordListViewParams) {
         self.viewModelBlock = viewModelBlock
@@ -48,8 +53,9 @@ final class WordListViewController: UIViewController, WordListView {
         initViews()
     }
 
-    // MARK: - WordListView
-
+    /// Задать данные для показа в представлении.
+    /// - Parameters:
+    ///  - wordListData: данные о списке слов.
     func set(_ wordListData: WordListData) {
         tableDataSource.data = wordListData
     }
@@ -59,7 +65,7 @@ final class WordListViewController: UIViewController, WordListView {
     private func onDeleteWordTap(_ position: Int) {
         let item = tableDataSource.data.wordList[position]
 
-        viewModel?.remove(item, at: position)
+        viewModel?.remove(at: position)
         viewModel?.sendRemovedWordItem(item)
     }
 

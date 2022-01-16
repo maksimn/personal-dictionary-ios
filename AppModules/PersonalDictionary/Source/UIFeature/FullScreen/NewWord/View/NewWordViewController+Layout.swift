@@ -7,8 +7,10 @@
 
 import UIKit
 
+/// Лэйаут экрана добавления нового слова в личный словарь.
 extension NewWordViewController {
 
+    /// Инициализация представлений экрана.
     func initViews() {
         view.backgroundColor = UIColor(white: 0, alpha: 0.7)
         addSubviews()
@@ -20,6 +22,7 @@ extension NewWordViewController {
         initOkButton()
     }
 
+    /// Добавление вложенной фичи "Выбор языка".
     func addChildFeature(langPickerMVVM: LangPickerMVVM?) {
         guard let langPickerView = langPickerMVVM?.uiview else { return }
         view.addSubview(langPickerView)

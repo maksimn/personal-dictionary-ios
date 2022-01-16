@@ -7,8 +7,10 @@
 
 import UIKit
 
-class NewWordViewController: UIViewController, NewWordView, LangPickerListener, UITextFieldDelegate {
+/// View Controller экрана добавления нового слова в личный словарь.
+final class NewWordViewController: UIViewController, NewWordView, LangPickerListener, UITextFieldDelegate {
 
+    /// View model "Добавления нового слова" в личный словарь.
     var viewModel: NewWordViewModel?
 
     let params: NewWordViewParams
@@ -22,6 +24,10 @@ class NewWordViewController: UIViewController, NewWordView, LangPickerListener, 
 
     private var langPickerMVVM: LangPickerMVVM? // Child Feature
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - params: параметры представления фичи "Добавление нового слова"
+    ///  - langPickerBuilder: билдер вложенной фичи "Выбор языка"
     init(params: NewWordViewParams,
          langPickerBuilder: LangPickerBuilder) {
         self.params = params
@@ -35,6 +41,9 @@ class NewWordViewController: UIViewController, NewWordView, LangPickerListener, 
         fatalError("init(coder:) has not been implemented")
     }
 
+    /// Задать данные для отображения в представлении.
+    /// - Parameters:
+    ///  - state: данные для отображения.
     func set(state: NewWordModelState?) {
         guard let state = state else { return }
         textField.text = state.text

@@ -7,21 +7,28 @@
 
 import Foundation
 
+/// Реализация хранилища данных о языках в приложении,
 final class LangRepositoryImpl: LangRepository {
 
-    let userDefaults: UserDefaults
-    let data: LangData
+    private let userDefaults: UserDefaults
+    private let data: LangData
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - userDefaults: UserDefaults для хранения данных в нём.
+    ///  - data: данные о языках в приложении.
     init(userDefaults: UserDefaults,
          data: LangData) {
         self.userDefaults = userDefaults
         self.data = data
     }
 
+    /// Список всех языков в приложении
     var allLangs: [Lang] {
         data.allLangs
     }
 
+    /// Сохранить и извлечь исходный язык
     var sourceLang: Lang {
         get {
             findLang(with: data.sourceLangKey) ?? data.defaultSourceLang
@@ -31,6 +38,7 @@ final class LangRepositoryImpl: LangRepository {
         }
     }
 
+    /// Сохранить и извлечь целевой язык
     var targetLang: Lang {
         get {
             findLang(with: data.targetLangKey) ?? data.defaultTargetLang
