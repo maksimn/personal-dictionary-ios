@@ -16,13 +16,9 @@ final class LangPickerDependencies {
          appViewConfigs: AppViewConfigs) {
         self.allLangs = allLangs
         viewParams = LangPickerViewParams(
-            staticContent: LangPickerPopupStaticContent(
-                selectButtonTitle: Bundle(for: type(of: self)).moduleLocalizedString("Select"),
-                langs: allLangs
-            ),
-            styles: LangPickerPopupStyles(
-                backgroundColor: appViewConfigs.backgroundColor
-            )
+            selectButtonTitle: Bundle(for: type(of: self)).moduleLocalizedString("Select"),
+            langs: allLangs,
+            backgroundColor: appViewConfigs.backgroundColor
         )
     }
 }

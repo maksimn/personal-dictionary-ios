@@ -15,12 +15,9 @@ final class SearchModePickerDependencies {
         let bundle = Bundle(for: type(of: self))
 
         return SearchModePickerViewParams(
-            staticContent: SearchModePickerStaticContent(
-                searchByLabelText: bundle.moduleLocalizedString("Search by:"),
-                sourceWordText: bundle.moduleLocalizedString("source word"),
-                translationText: bundle.moduleLocalizedString("translation")
-            ),
-            styles: SearchModePickerStyles()
+            searchByLabelText: bundle.moduleLocalizedString("Search by:"),
+            sourceWordText: bundle.moduleLocalizedString("source word"),
+            translationText: bundle.moduleLocalizedString("translation")
         )
     }()
 }

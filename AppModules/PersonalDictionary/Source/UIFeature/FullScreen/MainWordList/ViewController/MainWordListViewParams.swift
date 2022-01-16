@@ -7,17 +7,12 @@
 
 import UIKit
 
-struct MainWordListStaticContent {
+struct MainWordListViewParams {
     let heading: String
     let navToNewWordImage: UIImage
     let routingButtonTitle: String
     let visibleItemMaxCount: Int
-}
-
-struct MainWordListStyles {
     let backgroundColor: UIColor
     let navToNewWordButtonSize: CGSize
     let navToNewWordButtonBottomOffset: CGFloat
 }
-
-typealias MainWordListViewParams = ViewParams<MainWordListStaticContent, MainWordListStyles>

@@ -14,17 +14,13 @@ final class MainWordListDependencies {
         let bundle = Bundle(for: type(of: self))
 
         return MainWordListViewParams(
-            staticContent: MainWordListStaticContent(
-                heading: bundle.moduleLocalizedString("My dictionary"),
-                navToNewWordImage: UIImage(named: "icon-plus", in: bundle, compatibleWith: nil)!,
-                routingButtonTitle: appConfigs.appParams.routingButtonTitle,
-                visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
-            ),
-            styles: MainWordListStyles(
-                backgroundColor: appConfigs.appViewConfigs.backgroundColor,
-                navToNewWordButtonSize: CGSize(width: 44, height: 44),
-                navToNewWordButtonBottomOffset: -26
-            )
+            heading: bundle.moduleLocalizedString("My dictionary"),
+            navToNewWordImage: UIImage(named: "icon-plus", in: bundle, compatibleWith: nil)!,
+            routingButtonTitle: appConfigs.appParams.routingButtonTitle,
+            visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height)),
+            backgroundColor: appConfigs.appViewConfigs.backgroundColor,
+            navToNewWordButtonSize: CGSize(width: 44, height: 44),
+            navToNewWordButtonBottomOffset: -26
         )
     }()
 

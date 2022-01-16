@@ -66,6 +66,6 @@ class MainWordListViewController: UIViewController {
 
         wordListModel.data = WordListData(wordList: wordList, changedItemPosition: nil)
         wordListModel.requestTranslationsIfNeededWithin(startPosition: 0,
-                                                        endPosition: params.staticContent.visibleItemMaxCount + 1)
+                                                        endPosition: params.visibleItemMaxCount + 1)
     }
 }

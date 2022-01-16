@@ -40,8 +40,8 @@ final class SearchTextInputViewImpl: NSObject, SearchTextInputView, UISearchBarD
     // MARK: - private
 
     private func initSearchBar() {
-        searchBar.frame = CGRect(origin: .zero, size: params.styles.size)
-        searchBar.placeholder = params.staticContent.placeholder
+        searchBar.frame = CGRect(origin: .zero, size: params.size)
+        searchBar.placeholder = params.placeholder
         searchBar.delegate = self
     }
 }

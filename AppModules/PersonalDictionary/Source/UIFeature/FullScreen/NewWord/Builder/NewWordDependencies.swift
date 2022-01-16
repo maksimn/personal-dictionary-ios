@@ -22,13 +22,11 @@ final class NewWordDependencies {
         let bundle = Bundle(for: type(of: self))
 
         viewParams = NewWordViewParams(
-            staticContent: NewWordViewStaticContent(
-                selectButtonTitle: bundle.moduleLocalizedString("Select"),
-                arrowText: bundle.moduleLocalizedString("⇋"),
-                okText: bundle.moduleLocalizedString("OK"),
-                textFieldPlaceholder: bundle.moduleLocalizedString("Enter a new word")
-            ),
-            styles: NewWordViewStyles(backgroundColor: appViewConfigs.backgroundColor)
+            selectButtonTitle: bundle.moduleLocalizedString("Select"),
+            arrowText: bundle.moduleLocalizedString("⇋"),
+            okText: bundle.moduleLocalizedString("OK"),
+            textFieldPlaceholder: bundle.moduleLocalizedString("Enter a new word"),
+            backgroundColor: appViewConfigs.backgroundColor
         )
         self.langRepository = langRepository
         langPickerBuilder = LangPickerBuilderImpl(allLangs: langRepository.allLangs, appViewConfigs: appViewConfigs)

@@ -7,13 +7,8 @@
 
 import UIKit
 
-typealias WordListViewParams = ViewParams<WordListViewStaticContent, WordListViewStyles>
-
-struct WordListViewStaticContent {
+struct WordListViewParams {
     let tableViewParams: WordTableViewParams
-}
-
-struct WordListViewStyles {
     let backgroundColor: UIColor
     let itemHeight: CGFloat
     let cellClass: AnyClass

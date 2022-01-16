@@ -7,12 +7,7 @@
 
 import UIKit
 
-struct SearchTextInputStaticContent {
+struct SearchTextInputViewParams {
     let placeholder: String
-}
-
-struct SearchTextInputStyles {
     let size: CGSize
 }
-
-typealias SearchTextInputViewParams = ViewParams<SearchTextInputStaticContent, SearchTextInputStyles>

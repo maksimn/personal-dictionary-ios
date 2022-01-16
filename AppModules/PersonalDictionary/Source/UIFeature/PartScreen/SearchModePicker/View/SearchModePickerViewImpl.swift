@@ -55,7 +55,7 @@ final class SearchModePickerViewImpl: UIView, SearchModePickerView {
         searchByLabel.font = UIFont.systemFont(ofSize: 16)
         searchByLabel.numberOfLines = 1
         searchByLabel.textAlignment = .center
-        searchByLabel.text = params.staticContent.searchByLabelText
+        searchByLabel.text = params.searchByLabelText
         addSubview(searchByLabel)
         searchByLabel.snp.makeConstraints { make -> Void in
             make.top.equalTo(self.snp.top).offset(18)
@@ -64,8 +64,7 @@ final class SearchModePickerViewImpl: UIView, SearchModePickerView {
     }
 
     private func initSearchBySegmentedControl() {
-        searchBySegmentedControl = UISegmentedControl(items: [params.staticContent.sourceWordText,
-                                                              params.staticContent.translationText])
+        searchBySegmentedControl = UISegmentedControl(items: [params.sourceWordText, params.translationText])
         searchBySegmentedControl?.selectedSegmentIndex = 0
         searchBySegmentedControl?.addTarget(self, action: #selector(onSearchByValueChanged), for: .valueChanged)
         addSubview(searchBySegmentedControl ?? UIView())

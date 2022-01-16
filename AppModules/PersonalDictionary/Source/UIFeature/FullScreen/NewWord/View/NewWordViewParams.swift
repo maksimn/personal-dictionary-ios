@@ -7,15 +7,10 @@
 
 import UIKit
 
-struct NewWordViewStaticContent {
+struct NewWordViewParams {
     let selectButtonTitle: String
     let arrowText: String
     let okText: String
     let textFieldPlaceholder: String
-}
-
-struct NewWordViewStyles {
     let backgroundColor: UIColor
 }
-
-typealias NewWordViewParams = ViewParams<NewWordViewStaticContent, NewWordViewStyles>
