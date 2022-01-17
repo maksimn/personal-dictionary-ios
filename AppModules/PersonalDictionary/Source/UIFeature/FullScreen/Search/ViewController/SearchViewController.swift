@@ -19,7 +19,7 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - appConfigs: параметры конфигурации приложения.
+    ///  - appViewConfigs: параметры конфигурации представлений приложения.
     ///  - searchTextInputBuilder: билдер вложенной фичи "Элемент ввода текста для поиска"
     ///  - searchEngineBuilder: билдер вложенной фичи "Поисковый Движок"
     ///  - wordListBuilder: билдер вложенной фичи "Список слов".

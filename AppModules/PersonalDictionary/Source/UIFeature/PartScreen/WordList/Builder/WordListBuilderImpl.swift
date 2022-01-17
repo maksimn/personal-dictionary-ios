@@ -7,19 +7,29 @@
 
 import CoreModule
 
+/// Конфигурация списка слов, которую можно задать в клиентском коде.
+struct WordListConfigs {
+
+    /// Конфигурация приложения
+    let appConfigs: AppConfigs
+
+    /// Запускать ли анимацию при первом появлении данных в таблице.
+    let shouldAnimateWhenAppear: Bool
+}
+
 /// Реализация билдера фичи "Список слов".
 final class WordListBuilderImpl: WordListBuilder {
 
-    private let appConfigs: AppConfigs
+    private let configs: WordListConfigs
     private let cudOperations: WordItemCUDOperations
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - appConfigs: конфигурация  приложения.
+    ///  - configs: конфигурация списка слов.
     ///  - cudOperations: сервис для операций create, update, delete со словами в хранилище личного словаря.
-    init(appConfigs: AppConfigs,
+    init(configs: WordListConfigs,
          cudOperations: WordItemCUDOperations) {
-        self.appConfigs = appConfigs
+        self.configs = configs
         self.cudOperations = cudOperations
     }
 
@@ -27,7 +37,7 @@ final class WordListBuilderImpl: WordListBuilder {
     /// - Returns:
     ///  - MVVM-граф фичи.
     func build() -> WordListMVVM {
-        let dependencies = WordListDependencies(appConfigs: appConfigs)
+        let dependencies = WordListDependencies(configs: configs)
 
         return WordListMVVMImpl(cudOperations: cudOperations,
                                 translationService: dependencies.translationService,

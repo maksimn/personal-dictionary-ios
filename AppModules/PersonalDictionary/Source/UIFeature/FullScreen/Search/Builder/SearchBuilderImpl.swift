@@ -10,33 +10,29 @@ import UIKit
 /// Билдер Фичи "Поиск по словам в словаре".
 final class SearchBuilderImpl: SearchBuilder {
 
-    private let appViewConfigs: AppViewConfigs
-    private let wordListFetcher: WordListFetcher
-    private let wordListBuilder: WordListBuilder
+    private let wordListConfigs: WordListConfigs
+    private let wordListRepository: WordListRepository
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - appConfigs: параметры конфигурации приложения.
-    ///  - wordListFetcher: источник данных для получения списка слов из хранилища.
-    ///  - wordListBuilder: билдер вложенной фичи "Список слов".
-    init(appViewConfigs: AppViewConfigs,
-         wordListFetcher: WordListFetcher,
-         wordListBuilder: WordListBuilder) {
-        self.appViewConfigs = appViewConfigs
-        self.wordListFetcher = wordListFetcher
-        self.wordListBuilder = wordListBuilder
+    ///  - wordListConfigs: параметры конфигурации списка слов.
+    ///  - wordListRepository: хранилище списка слов.
+    init(wordListConfigs: WordListConfigs,
+         wordListRepository: WordListRepository) {
+        self.wordListConfigs = wordListConfigs
+        self.wordListRepository = wordListRepository
     }
 
     /// Создать экран Поиска.
     /// - Returns:
     ///   View controller экрана поиска по словам в словаре.
     func build() -> UIViewController {
-        let dependencies = SearchDependencies(wordListFetcher: wordListFetcher)
+        let dependencies = SearchDependencies(wordListConfigs: wordListConfigs, wordListRepository: wordListRepository)
 
-        return SearchViewController(appViewConfigs: appViewConfigs,
+        return SearchViewController(appViewConfigs: wordListConfigs.appConfigs.appViewConfigs,
                                     searchTextInputBuilder: dependencies.searchTextInputBuilder,
                                     searchEngineBuilder: dependencies.searchEngineBuilder,
-                                    wordListBuilder: wordListBuilder,
+                                    wordListBuilder: dependencies.createWordListBuilder(),
                                     searchModePickerBuilder: dependencies.searchModePickerBuilder,
                                     searchResultTextLabelParams: dependencies.searchResultTextLabelParams)
     }

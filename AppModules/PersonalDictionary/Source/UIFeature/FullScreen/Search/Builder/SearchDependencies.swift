@@ -26,10 +26,25 @@ final class SearchDependencies {
         text: Bundle(for: type(of: self)).moduleLocalizedString("No words found")
     )
 
+    private let wordListConfigs: WordListConfigs
+    private let wordListRepository: WordListRepository
+
     /// Инициализатор.
     /// - Parameters:
-    ///  - wordListFetcher: источник данных для получения списка слов из хранилища.
-    init(wordListFetcher: WordListFetcher) {
-        searchEngineBuilder = SearchEngineBuilderImpl(wordListFetcher: wordListFetcher)
+    ///  - wordListConfigs: параметры конфигурации списка слов.
+    ///  - wordListRepository: хранилище списка слов.
+    init(wordListConfigs: WordListConfigs,
+         wordListRepository: WordListRepository) {
+        self.wordListConfigs = wordListConfigs
+        self.wordListRepository = wordListRepository
+        searchEngineBuilder = SearchEngineBuilderImpl(wordListFetcher: wordListRepository)
+    }
+
+    /// Создать билдер фичи "Список слов".
+    /// - Returns:
+    ///  -  билдер фичи "Список слов".
+    func createWordListBuilder() -> WordListBuilder {
+        WordListBuilderImpl(configs: wordListConfigs,
+                            cudOperations: wordListRepository)
     }
 }

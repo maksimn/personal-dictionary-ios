@@ -10,6 +10,9 @@ import UIKit
 /// Параметры представления таблицы слов из личного словаря.
 struct WordTableViewParams {
 
+    /// Запускать ли анимацию при первом появлении данных в таблице.
+    let shouldAnimateWhenAppear: Bool
+
     /// Длительность анимации слайда ячейки при её первом показе
     let cellSlideInDuration: Double
 
@@ -78,9 +81,8 @@ final class WordTableDelegate: NSObject, UITableViewDelegate {
     private func runCellSlideInAnimationIfNeeded(_ tableView: UITableView,
                                                  cell: UITableViewCell,
                                                  indexPath: IndexPath) {
-        guard !hasAnimatedAllCells else {
-            return
-        }
+        guard params.shouldAnimateWhenAppear,
+              !hasAnimatedAllCells else { return }
 
         cell.transform = CGAffineTransform(translationX: tableView.bounds.width, y: 0)
 

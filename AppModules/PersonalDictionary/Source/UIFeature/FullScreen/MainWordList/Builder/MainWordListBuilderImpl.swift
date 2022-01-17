@@ -27,7 +27,7 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
 
         return MainWordListGraphImpl(viewParams: dependencies.viewParams,
                                      wordListBuilder: dependencies.createWordListBuilder(),
-                                     wordListFetcher: dependencies.buildWordListRepository(),
+                                     wordListFetcher: dependencies.wordListRepository,
                                      newWordBuilder: dependencies.createNewWordBuilder(),
                                      searchBuilder: dependencies.createSearchBuilder(),
                                      coreRouter: appConfigs.appParams.coreRouter)

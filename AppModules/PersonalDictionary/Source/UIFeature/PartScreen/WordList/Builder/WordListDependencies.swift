@@ -22,17 +22,18 @@ final class WordListDependencies {
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - appConfigs: конфигурация  приложения.
-    init(appConfigs: AppConfigs) {
+    ///  - configs: конфигурация  списка слов.
+    init(configs: WordListConfigs) {
         viewParams = WordListViewParams(
             tableViewParams: WordTableViewParams(
+                shouldAnimateWhenAppear: configs.shouldAnimateWhenAppear,
                 cellSlideInDuration: 0.5,
                 cellSlideInDelayFactor: 0.05,
                 deleteActionImage: UIImage(systemName: "trash",
                                            withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!,
                 deleteActionBackgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
             ),
-            backgroundColor: appConfigs.appViewConfigs.backgroundColor,
+            backgroundColor: configs.appConfigs.appViewConfigs.backgroundColor,
             itemHeight: WordItemCell.height,
             cellClass: WordItemCell.self,
             cellReuseIdentifier: "\(WordItemCell.self)",
@@ -44,10 +45,10 @@ final class WordListDependencies {
         translationService = PonsTranslationService(
             apiData: PonsApiData(url: "https://api.pons.com/v1/dictionary",
                                  secretHeaderKey: "X-Secret",
-                                 secret: appConfigs.ponsApiSecret),
+                                 secret: configs.appConfigs.ponsApiSecret),
             coreService: UrlSessionCoreService(sessionConfiguration: URLSessionConfiguration.default),
             jsonCoder: JSONCoderImpl(),
-            logger: SimpleLogger(isLoggingEnabled: appConfigs.isLoggingEnabled)
+            logger: SimpleLogger(isLoggingEnabled: configs.appConfigs.isLoggingEnabled)
         )
     }
 }

@@ -22,6 +22,9 @@ final class MainWordListDependencies {
         navToNewWordButtonBottomOffset: -26
     )
 
+    /// Хранилище слов из личного словаря.
+    private(set) lazy var wordListRepository = buildWordListRepository()
+
     private lazy var bundle = Bundle(for: type(of: self))
 
     private let appConfigs: AppConfigs
@@ -35,25 +38,17 @@ final class MainWordListDependencies {
         self.appConfigs = appConfigs
     }
 
-    /// Создать хранилище слов из личного словаря.
-    /// - Returns:
-    ///  -  хранилище слов.
-    func buildWordListRepository() -> WordListRepository {
-        let coreWordListRepositoryArgs = CoreWordListRepositoryArgs(bundle: bundle,
-                                                                    persistentContainerName: "StorageModel")
-
-        return CoreWordListRepository(args: coreWordListRepositoryArgs,
-                                      langRepository: langRepository,
-                                      logger: buildLogger())
-    }
-
     /// Создать билдер фичи "Поиск".
     /// - Returns:
     ///  -  билдер фичи "Поиск".
     func createSearchBuilder() -> SearchBuilder {
-        SearchBuilderImpl(appViewConfigs: appConfigs.appViewConfigs,
-                          wordListFetcher: buildWordListRepository(),
-                          wordListBuilder: createWordListBuilder())
+        SearchBuilderImpl(
+            wordListConfigs: WordListConfigs(
+                appConfigs: appConfigs,
+                shouldAnimateWhenAppear: false
+            ),
+            wordListRepository: wordListRepository
+        )
     }
 
     /// Создать билдер фичи "Добавление нового слова".
@@ -68,8 +63,13 @@ final class MainWordListDependencies {
     /// - Returns:
     ///  -  билдер фичи "Список слов"..
     func createWordListBuilder() -> WordListBuilder {
-        WordListBuilderImpl(appConfigs: appConfigs,
-                            cudOperations: buildWordListRepository())
+        WordListBuilderImpl(
+            configs: WordListConfigs(
+                appConfigs: appConfigs,
+                shouldAnimateWhenAppear: true
+            ),
+            cudOperations: wordListRepository
+        )
     }
 
     private func buildLangRepository() -> LangRepository {
@@ -79,5 +79,14 @@ final class MainWordListDependencies {
 
     private func buildLogger() -> Logger {
         SimpleLogger(isLoggingEnabled: appConfigs.isLoggingEnabled)
+    }
+
+    private func buildWordListRepository() -> WordListRepository {
+        let coreWordListRepositoryArgs = CoreWordListRepositoryArgs(bundle: bundle,
+                                                                    persistentContainerName: "StorageModel")
+
+        return CoreWordListRepository(args: coreWordListRepositoryArgs,
+                                      langRepository: langRepository,
+                                      logger: buildLogger())
     }
 }

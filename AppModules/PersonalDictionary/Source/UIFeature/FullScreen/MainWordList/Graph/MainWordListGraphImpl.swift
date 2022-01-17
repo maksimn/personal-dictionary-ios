@@ -12,7 +12,7 @@ import UIKit
 final class MainWordListGraphImpl: MainWordListGraph {
 
     /// Корневой navigation controller фичи.
-    weak var navigationController: UINavigationController?
+    private(set) var navigationController: UINavigationController?
 
     /// Инициализатор.
     /// - Parameters:
