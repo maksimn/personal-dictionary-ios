@@ -7,8 +7,10 @@
 
 import UIKit
 
+/// Лэйаут экрана добавления нового слова в личный словарь.
 extension NewWordViewController {
 
+    /// Инициализация представлений экрана.
     func initViews() {
         view.backgroundColor = UIColor(white: 0, alpha: 0.7)
         addSubviews()
@@ -20,6 +22,7 @@ extension NewWordViewController {
         initOkButton()
     }
 
+    /// Добавление вложенной фичи "Выбор языка".
     func addChildFeature(langPickerMVVM: LangPickerMVVM?) {
         guard let langPickerView = langPickerMVVM?.uiview else { return }
         view.addSubview(langPickerView)
@@ -37,7 +40,7 @@ extension NewWordViewController {
 
     private func initContentView() {
         contentView.layer.cornerRadius = 16
-        contentView.backgroundColor = params.styles.backgroundColor
+        contentView.backgroundColor = params.backgroundColor
         contentView.snp.makeConstraints { (make) -> Void in
             make.centerY.equalTo(view)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-12)
@@ -89,7 +92,7 @@ extension NewWordViewController {
         arrowLabel.font = UIFont.systemFont(ofSize: 17)
         arrowLabel.numberOfLines = 1
         arrowLabel.textAlignment = .center
-        arrowLabel.text = params.staticContent.arrowText
+        arrowLabel.text = params.arrowText
         arrowLabel.snp.makeConstraints { make -> Void in
             make.centerY.equalTo(sourceLangLabel)
             make.centerX.equalTo(contentView)
@@ -97,7 +100,7 @@ extension NewWordViewController {
     }
 
     private func initTextField() {
-        textField.placeholder = params.staticContent.textFieldPlaceholder
+        textField.placeholder = params.textFieldPlaceholder
         textField.borderStyle = UITextField.BorderStyle.roundedRect
         textField.backgroundColor = UIColor.white
         textField.textColor = .black
@@ -109,7 +112,7 @@ extension NewWordViewController {
     }
 
     private func initOkButton() {
-        okButton.setTitle(params.staticContent.okText, for: .normal)
+        okButton.setTitle(params.okText, for: .normal)
         okButton.setTitleColor(.white, for: .normal)
         okButton.backgroundColor = .green
         okButton.layer.cornerRadius = 8

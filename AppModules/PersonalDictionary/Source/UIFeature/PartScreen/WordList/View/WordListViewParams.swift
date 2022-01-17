@@ -7,16 +7,24 @@
 
 import UIKit
 
-typealias WordListViewParams = ViewParams<WordListViewStaticContent, WordListViewStyles>
+/// Параметры представления списка слов.
+struct WordListViewParams {
 
-struct WordListViewStaticContent {
+    /// Параметры представления таблицы
     let tableViewParams: WordTableViewParams
-}
 
-struct WordListViewStyles {
+    /// Цвет фона
     let backgroundColor: UIColor
+
+    /// Высота элемента списка (таблицы)
     let itemHeight: CGFloat
+
+    /// Класс ячейки таблицы
     let cellClass: AnyClass
+
+    /// Reuse Id ячейки таблицы
     let cellReuseIdentifier: String
+
+    /// Радиус скругления углов ячейки таблицы
     let cellCornerRadius: CGFloat
 }

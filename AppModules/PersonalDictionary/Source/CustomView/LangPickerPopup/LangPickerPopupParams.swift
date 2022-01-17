@@ -7,13 +7,15 @@
 
 import UIKit
 
-struct LangPickerPopupStaticContent {
-    let selectButtonTitle: String
-    let langs: [Lang]
-}
+/// Параметры "всплывающего" представления для выбора языка.
+struct LangPickerPopupParams {
 
-struct LangPickerPopupStyles {
+    /// Надпись на кнопке "выбрать"
+    let selectButtonTitle: String
+
+    /// Список языков для выбора
+    let langs: [Lang]
+
+    /// Цвет фона представления выбора языка
     let backgroundColor: UIColor
 }
-
-typealias LangPickerPopupParams = ViewParams<LangPickerPopupStaticContent, LangPickerPopupStyles>

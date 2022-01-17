@@ -7,11 +7,17 @@
 
 import UIKit
 
+/// Реализация MVVM-графа фичи "Элемент ввода поискового текста".
 final class SearchTextInputMVVMImpl: SearchTextInputMVVM {
 
     private let view: SearchTextInputViewImpl
-    weak var model: SearchTextInputModel?
 
+    /// Модель фичи.
+    private(set) weak var model: SearchTextInputModel?
+
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - viewParams: параметры представления.
     init(viewParams: SearchTextInputViewParams) {
         view = SearchTextInputViewImpl(params: viewParams)
         let model = SearchTextInputModelImpl()
@@ -22,6 +28,7 @@ final class SearchTextInputMVVMImpl: SearchTextInputMVVM {
         self.model = model
     }
 
+    /// Представление фичи.
     var uiview: UIView {
         view.uiview
     }

@@ -8,10 +8,20 @@
 import CoreModule
 import UIKit
 
+/// Реализация графа фичи "Главный список слов".
 final class MainWordListGraphImpl: MainWordListGraph {
 
+    /// Корневой navigation controller фичи.
     weak var navigationController: UINavigationController?
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - viewParams: параметры представления Главного списка слов.
+    ///  - wordListBuilder: билдер вложенной фичи "Список слов".
+    ///  - wordListFetcher: источник данных для получения списка слов из хранилища.
+    ///  - newWordBuilder: билдер вложенной фичи "Добавление нового слова" в словарь.
+    ///  - searchBuilder: билдер вложенной фичи "Поиск" по словам в словаре.
+    ///  - coreRouter: базовый роутер для навигации к другому Продукту/Приложению в супераппе.
     init(viewParams: MainWordListViewParams,
          wordListBuilder: WordListBuilder,
          wordListFetcher: WordListFetcher,

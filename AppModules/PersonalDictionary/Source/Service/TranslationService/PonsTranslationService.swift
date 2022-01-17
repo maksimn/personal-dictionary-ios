@@ -8,12 +8,20 @@
 import CoreModule
 import RxSwift
 
+/// Данные для обращения к онлайновому PONS API.
 struct PonsApiData {
+
+    /// Строковый URL для запроса
     let url: String
+
+    /// Название HTTP-заголовка для передачи секретного ключа
     let secretHeaderKey: String
+
+    /// Ключ для запроса
     let secret: String
 }
 
+/// Служба для получения перевода слова из PONS Online Dictionary API,
 final class PonsTranslationService: TranslationService {
 
     private let coreService: CoreService
@@ -23,6 +31,12 @@ final class PonsTranslationService: TranslationService {
 
     private let fetchTranslationRequestName = "PONS FETCH TRANSLATION"
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - apiData: данные для обращения к онлайновому PONS API.
+    ///  - coreService: базовая служба для сетевых запросов по протоколу HTTP.
+    ///  - jsonCoder: парсер данных в виде JSON.
+    ///  - logger: логгер.
     init(apiData: PonsApiData, coreService: CoreService, jsonCoder: JsonCoder, logger: Logger) {
         self.apiData = apiData
         self.coreService = coreService
@@ -30,6 +44,11 @@ final class PonsTranslationService: TranslationService {
         self.logger = logger
     }
 
+    /// Извлечь перевод слова.
+    /// - Parameters:
+    ///  - wordItem: данные о слове для его перевода.
+    /// - Returns:
+    ///  - Rx Single, в который завернута строка с переводом заданного слова.
     func fetchTranslation(for wordItem: WordItem) -> Single<String> {
         let shortSourceLang = wordItem.sourceLang.shortName.lowercased()
         let qParam = "q=\(wordItem.text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"

@@ -7,15 +7,18 @@
 
 import UIKit
 
-struct NewWordViewStaticContent {
-    let selectButtonTitle: String
-    let arrowText: String
-    let okText: String
-    let textFieldPlaceholder: String
-}
+/// Параметры представления фичи "Добавление нового слова"
+struct NewWordViewParams {
 
-struct NewWordViewStyles {
+    /// Надпись между представлениями исходного и целевого языка
+    let arrowText: String
+
+    /// Надпись на кнопке "ОК"
+    let okText: String
+
+    /// Плейсхолдер для элемента ввода текста слова
+    let textFieldPlaceholder: String
+
+    /// Цвет фона для представления
     let backgroundColor: UIColor
 }
-
-typealias NewWordViewParams = ViewParams<NewWordViewStaticContent, NewWordViewStyles>

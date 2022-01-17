@@ -7,7 +7,11 @@
 
 import UIKit
 
+/// Билдер Фичи "Поиск по словам в словаре".
 protocol SearchBuilder {
 
+    /// Создать экран Поиска.
+    /// - Returns:
+    ///   View controller экрана поиска по словам в словаре.
     func build() -> UIViewController
 }

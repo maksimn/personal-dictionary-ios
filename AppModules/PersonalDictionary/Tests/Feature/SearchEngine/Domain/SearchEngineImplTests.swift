@@ -29,11 +29,11 @@ final class SearchEngineImplTests: XCTestCase {
         searchEngine = SearchEngineImpl(wordListFetcher: mockWordListFetcher)
     }
 
-    func test_findItems_searchBySourceWord_shouldFindSecondWord() throws {
+    func test_findWords_searchBySourceWord_shouldFindSecondWord() throws {
         // Arrange:
 
         // Act:
-        let single = searchEngine?.findItems(contain: "B", mode: .bySourceWord)
+        let single = searchEngine?.findWords(contain: "B", mode: .bySourceWord)
 
         // Assert:
         let result = try single?.toBlocking().first()
@@ -41,11 +41,11 @@ final class SearchEngineImplTests: XCTestCase {
         XCTAssertEqual(result?.searchState, .fulfilled)
     }
 
-    func test_findItems_searchNonExistingWord_returnsEmptyResult() throws {
+    func test_findWords_searchNonExistingWord_returnsEmptyResult() throws {
         // Arrange:
 
         // Act:
-        let single = searchEngine?.findItems(contain: "D", mode: .bySourceWord)
+        let single = searchEngine?.findWords(contain: "D", mode: .bySourceWord)
 
         // Assert:
         let result = try single?.toBlocking().first()
@@ -53,11 +53,11 @@ final class SearchEngineImplTests: XCTestCase {
         XCTAssertEqual(result?.searchState, .fulfilled)
     }
 
-    func test_findItems_emptyStringParam_returnsEmptyResultWithInitialSearchState() throws {
+    func test_findWords_emptyStringParam_returnsEmptyResultWithInitialSearchState() throws {
         // Arrange:
 
         // Act:
-        let single = searchEngine?.findItems(contain: "", mode: .bySourceWord)
+        let single = searchEngine?.findWords(contain: "", mode: .bySourceWord)
 
         // Assert:
         let result = try single?.toBlocking().first()
@@ -65,11 +65,11 @@ final class SearchEngineImplTests: XCTestCase {
         XCTAssertEqual(result?.searchState, .initial)
     }
 
-    func test_findItems_searchByTranslation_returnsTwoWords() throws {
+    func test_findWords_searchByTranslation_returnsTwoWords() throws {
         // Arrange:
 
         // Act:
-        let single = searchEngine?.findItems(contain: "X", mode: .byTranslation)
+        let single = searchEngine?.findWords(contain: "X", mode: .byTranslation)
 
         // Assert:
         let result = try single?.toBlocking().first()

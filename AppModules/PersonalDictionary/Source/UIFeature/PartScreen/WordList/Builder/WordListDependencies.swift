@@ -8,39 +8,38 @@
 import CoreModule
 import UIKit
 
+/// Зависимости фичи "Список слов".
 final class WordListDependencies {
 
+    /// Параметры представления фичи
     let viewParams: WordListViewParams
 
+    /// ModelStream для событий со словами в личном словаре.
     let wordItemStream: ReadableWordItemStream & RemovedWordItemStream
 
+    /// Служба для выполнения перевода слов на целевой язык
     let translationService: TranslationService
 
-    let logger: Logger
-
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - appConfigs: конфигурация  приложения.
     init(appConfigs: AppConfigs) {
         viewParams = WordListViewParams(
-            staticContent: WordListViewStaticContent(
-                tableViewParams: WordTableViewParams(
-                    cellSlideInDuration: 0.5,
-                    cellSlideInDelayFactor: 0.05,
-                    deleteActionImage: UIImage(systemName: "trash",
-                                               withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!,
-                    deleteActionBackgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
-                )
+            tableViewParams: WordTableViewParams(
+                cellSlideInDuration: 0.5,
+                cellSlideInDelayFactor: 0.05,
+                deleteActionImage: UIImage(systemName: "trash",
+                                           withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!,
+                deleteActionBackgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
             ),
-            styles: WordListViewStyles(
-                backgroundColor: appConfigs.appViewConfigs.appBackgroundColor,
-                itemHeight: WordItemCell.height,
-                cellClass: WordItemCell.self,
-                cellReuseIdentifier: "\(WordItemCell.self)",
-                cellCornerRadius: 16
-            )
+            backgroundColor: appConfigs.appViewConfigs.backgroundColor,
+            itemHeight: WordItemCell.height,
+            cellClass: WordItemCell.self,
+            cellReuseIdentifier: "\(WordItemCell.self)",
+            cellCornerRadius: 16
         )
 
         self.wordItemStream = WordItemStreamImpl.instance
-
-        self.logger = SimpleLogger(isLoggingEnabled: appConfigs.isLoggingEnabled)
 
         translationService = PonsTranslationService(
             apiData: PonsApiData(url: "https://api.pons.com/v1/dictionary",
@@ -48,7 +47,7 @@ final class WordListDependencies {
                                  secret: appConfigs.ponsApiSecret),
             coreService: UrlSessionCoreService(sessionConfiguration: URLSessionConfiguration.default),
             jsonCoder: JSONCoderImpl(),
-            logger: logger
+            logger: SimpleLogger(isLoggingEnabled: appConfigs.isLoggingEnabled)
         )
     }
 }

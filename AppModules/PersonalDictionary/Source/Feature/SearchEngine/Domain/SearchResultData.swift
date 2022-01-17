@@ -5,9 +5,18 @@
 //  Created by Maxim Ivanov on 13.11.2021.
 //
 
-enum SearchState { case initial, fulfilled }
+/// Состояние поиска
+enum SearchState {
+    case initial /// начальное, поиск не выполнен.
+    case fulfilled /// конечное, поиск выполнен.
+}
 
+/// Результат поиска
 struct SearchResultData {
+
+    /// Состояние поиска
     let searchState: SearchState
+
+    /// Список найденных слов
     let foundWordList: [WordItem]
 }

@@ -7,10 +7,15 @@
 
 import UIKit
 
+/// Реализация приложения "Личный словарь иностранных слов".
 final class PersonalDictionaryAppImpl: PersonalDictionaryApp {
 
+    /// Получение корневого контроллера приложения
     private(set) var navigationController: UINavigationController
 
+    /// Инициализатор:
+    /// - Parameters:
+    ///  - configBuilder: билдер конфигурации данного приложения.
     init(configBuilder: ConfigBuilder) {
         let mainWordListBuilder = configBuilder.createMainWordListBuilder()
         let mainWordListGraph = mainWordListBuilder.build()

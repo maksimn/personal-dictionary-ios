@@ -7,10 +7,11 @@
 
 import UIKit
 
+/// Лэйаут экрана Главного списка слов.
 extension MainWordListViewController {
 
     func initViews() {
-        view.backgroundColor = params.styles.backgroundColor
+        view.backgroundColor = params.backgroundColor
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.titleView = navToSearchView
         addWordListChildController()
@@ -41,13 +42,13 @@ extension MainWordListViewController {
     }
 
     private func initNewWordButton() {
-        navToNewWordButton.setImage(params.staticContent.navToNewWordImage, for: .normal)
+        navToNewWordButton.setImage(params.navToNewWordImage, for: .normal)
         navToNewWordButton.imageView?.contentMode = .scaleAspectFit
         navToNewWordButton.addTarget(self, action: #selector(navigateToNewWord), for: .touchUpInside)
         navToNewWordButton.snp.makeConstraints { make -> Void in
-            make.size.equalTo(params.styles.navToNewWordButtonSize)
+            make.size.equalTo(params.navToNewWordButtonSize)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-                .offset(params.styles.navToNewWordButtonBottomOffset)
+                .offset(params.navToNewWordButtonBottomOffset)
             make.centerX.equalTo(view)
         }
         if let imageView = navToNewWordButton.imageView {
@@ -58,7 +59,7 @@ extension MainWordListViewController {
     }
 
     private func initRoutingButton() {
-        routingButton.setTitle(params.staticContent.routingButtonTitle, for: .normal)
+        routingButton.setTitle(params.routingButtonTitle, for: .normal)
         routingButton.setTitleColor(.darkGray, for: .normal)
         routingButton.backgroundColor = .clear
         routingButton.layer.cornerRadius = 8
@@ -76,7 +77,7 @@ extension MainWordListViewController {
         myDictionaryLabel.font = UIFont.systemFont(ofSize: 28, weight: .heavy)
         myDictionaryLabel.numberOfLines = 1
         myDictionaryLabel.textAlignment = .left
-        myDictionaryLabel.text = params.staticContent.heading
+        myDictionaryLabel.text = params.heading
         view.addSubview(myDictionaryLabel)
         myDictionaryLabel.snp.makeConstraints { make -> Void in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(14)

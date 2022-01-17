@@ -7,12 +7,12 @@
 
 import UIKit
 
-struct SearchTextInputStaticContent {
-    let placeholder: String
-}
+/// Параметры представления элемента ввода поискового текста.
+struct SearchTextInputViewParams {
 
-struct SearchTextInputStyles {
+    /// Плейсхолдер для состояния элемента, когда поисковый текст пуст.
+    let placeholder: String
+
+    /// Размер элемента.
     let size: CGSize
 }
-
-typealias SearchTextInputViewParams = ViewParams<SearchTextInputStaticContent, SearchTextInputStyles>

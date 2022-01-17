@@ -8,6 +8,7 @@
 import RxSwift
 import RxCocoa
 
+/// Реализация ModelStream для событий со словами в личном словаре.
 final class WordItemStreamImpl: WordItemStream {
 
     private let newWordPublishRelay = PublishRelay<WordItem>()
@@ -15,20 +16,31 @@ final class WordItemStreamImpl: WordItemStream {
 
     private init() {}
 
+    /// Singleton-объект для событий со словами в личном словаре.
     static let instance = WordItemStreamImpl()
 
+    /// Подписка на события добавления новых слов в словарь.
+    /// - Returns: Rx observable с потоком событий добавления новых слов в словарь.
     var newWordItem: Observable<WordItem> {
         newWordPublishRelay.asObservable()
     }
 
+    /// Подписка на события удаления слов из словаря.
+    /// - Returns: Rx observable с потоком событий удаления слов из словаря.
     var removedWordItem: Observable<WordItem> {
         removedWordPublishRelay.asObservable()
     }
 
+    /// Отправить событие добавления нового слова в словарь.
+    /// - Parameters:
+    ///  - wordItem: новое слово в словаре.
     func sendNewWord(_ wordItem: WordItem) {
         newWordPublishRelay.accept(wordItem)
     }
 
+    /// Отправить событие удаления слова из словаря.
+    /// - Parameters:
+    ///  - wordItem: удалённое из словаря слово.
     func sendRemovedWordItem(_ wordItem: WordItem) {
         removedWordPublishRelay.accept(wordItem)
     }

@@ -21,17 +21,17 @@ final class LangPickerPopup: UIView {
 
     private let onSelectLang: ((Lang) -> Void)?
 
-    /// Designated инициализатор.
+    /// Инициализатор.
     /// - Parameters:
     ///  - params: параметры представления;
     ///  - onSelectLang: callback, который вызывается при нажатии кнопки "Выбрать" на попапе.
     init(params: LangPickerPopupParams,
          onSelectLang: ((Lang) -> Void)?) {
         self.params = params
-        self.langPickerController = LangPickerController(langs: params.staticContent.langs)
+        self.langPickerController = LangPickerController(langs: params.langs)
         self.onSelectLang = onSelectLang
         super.init(frame: .zero)
-        self.backgroundColor = params.styles.backgroundColor
+        self.backgroundColor = params.backgroundColor
         layer.cornerRadius = 16
         initViews()
     }
@@ -75,7 +75,7 @@ final class LangPickerPopup: UIView {
     }
 
     private func initSelectButton() {
-        selectButton.setTitle(params.staticContent.selectButtonTitle, for: .normal)
+        selectButton.setTitle(params.selectButtonTitle, for: .normal)
         selectButton.setTitleColor(.white, for: .normal)
         selectButton.backgroundColor = .darkGray
         selectButton.layer.cornerRadius = 8

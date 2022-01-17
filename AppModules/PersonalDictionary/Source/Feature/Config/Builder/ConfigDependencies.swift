@@ -8,8 +8,10 @@
 import CoreModule
 import UIKit
 
+/// Зависимости для Фичи "Конфигурация приложения".
 final class ConfigDependencies {
 
+    /// Конфигурация приложения "Личный словарь иностранных слов".
     private(set) lazy var appConfigs: AppConfigs = {
         let bundle = Bundle(for: type(of: self))
         let lang1 = Lang(id: Lang.Id(raw: 1), name: bundle.moduleLocalizedString("English"), shortName: "EN")
@@ -34,13 +36,16 @@ final class ConfigDependencies {
             isLoggingEnabled: true,
 
             appViewConfigs: AppViewConfigs(
-                appBackgroundColor: UIColor(red: 0.97, green: 0.97, blue: 0.95, alpha: 1.0)
+                backgroundColor: UIColor(red: 0.97, green: 0.97, blue: 0.95, alpha: 1.0)
             )
         )
     }()
 
     private let appParams: PersonalDictionaryAppParams
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - appParams: внешние параметры приложения "Личный словарь".
     init(appParams: PersonalDictionaryAppParams) {
         self.appParams = appParams
     }

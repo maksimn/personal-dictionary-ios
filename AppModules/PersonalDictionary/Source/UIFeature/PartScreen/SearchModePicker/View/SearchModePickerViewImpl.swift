@@ -7,8 +7,10 @@
 
 import UIKit
 
+/// Реализация представления для выбора режима поиска.
 final class SearchModePickerViewImpl: UIView, SearchModePickerView {
 
+    /// Модель представления выбора режима поиска.
     var viewModel: SearchModePickerViewModel?
 
     let searchByLabel = UILabel()
@@ -16,6 +18,9 @@ final class SearchModePickerViewImpl: UIView, SearchModePickerView {
 
     let params: SearchModePickerViewParams
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - params: параметры представления.
     init(params: SearchModePickerViewParams) {
         self.params = params
         super.init(frame: .zero)
@@ -27,6 +32,9 @@ final class SearchModePickerViewImpl: UIView, SearchModePickerView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    /// Задать выбранный режим поиска в представлении.
+    /// - Parameters:
+    ///  - searchMode: режим поиска.
     func set(_ searchMode: SearchMode) {
         switch searchMode {
         case .bySourceWord:
@@ -55,7 +63,7 @@ final class SearchModePickerViewImpl: UIView, SearchModePickerView {
         searchByLabel.font = UIFont.systemFont(ofSize: 16)
         searchByLabel.numberOfLines = 1
         searchByLabel.textAlignment = .center
-        searchByLabel.text = params.staticContent.searchByLabelText
+        searchByLabel.text = params.searchByLabelText
         addSubview(searchByLabel)
         searchByLabel.snp.makeConstraints { make -> Void in
             make.top.equalTo(self.snp.top).offset(18)
@@ -64,8 +72,7 @@ final class SearchModePickerViewImpl: UIView, SearchModePickerView {
     }
 
     private func initSearchBySegmentedControl() {
-        searchBySegmentedControl = UISegmentedControl(items: [params.staticContent.sourceWordText,
-                                                              params.staticContent.translationText])
+        searchBySegmentedControl = UISegmentedControl(items: [params.sourceWordText, params.translationText])
         searchBySegmentedControl?.selectedSegmentIndex = 0
         searchBySegmentedControl?.addTarget(self, action: #selector(onSearchByValueChanged), for: .valueChanged)
         addSubview(searchBySegmentedControl ?? UIView())

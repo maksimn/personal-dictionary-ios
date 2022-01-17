@@ -7,17 +7,16 @@
 
 import UIKit
 
+/// Лэйаут представления списка слов.
 extension WordListViewController {
 
     func initViews() {
-        let styles = params.styles
-
-        view.backgroundColor = styles.backgroundColor
+        view.backgroundColor = params.backgroundColor
         view.addSubview(tableView)
-        tableView.backgroundColor = styles.backgroundColor
-        tableView.layer.cornerRadius = styles.cellCornerRadius
-        tableView.rowHeight = styles.itemHeight
-        tableView.register(styles.cellClass, forCellReuseIdentifier: styles.cellReuseIdentifier)
+        tableView.backgroundColor = params.backgroundColor
+        tableView.layer.cornerRadius = params.cellCornerRadius
+        tableView.rowHeight = params.itemHeight
+        tableView.register(params.cellClass, forCellReuseIdentifier: params.cellReuseIdentifier)
         tableView.dataSource = tableDataSource
         tableView.delegate = tableActions
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))

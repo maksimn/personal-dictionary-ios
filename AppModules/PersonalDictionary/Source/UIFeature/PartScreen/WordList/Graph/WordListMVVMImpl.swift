@@ -8,17 +8,24 @@
 import CoreModule
 import UIKit
 
+/// Реализация MVVM-графа фичи "Список слов".
 final class WordListMVVMImpl: WordListMVVM {
 
     private var view: WordListViewController
 
-    weak var model: WordListModel?
+    /// Модель списка слов
+    private(set) weak var model: WordListModel?
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - cudOperations: сервис для операций create, update, delete со словами в хранилище личного словаря.
+    ///  - translationService: cлужба для выполнения перевода слов на целевой язык.
+    ///  - wordItemStream: ModelStream для событий со словами в личном словаре.
+    ///  - viewParams: параметры представления фичи.
     init(cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
          wordItemStream: ReadableWordItemStream & RemovedWordItemStream,
-         viewParams: WordListViewParams,
-         logger: Logger) {
+         viewParams: WordListViewParams) {
         weak var viewModelLazyWeak: WordListViewModel?
         var viewModelLazy: WordListViewModel?
 
@@ -27,8 +34,7 @@ final class WordListMVVMImpl: WordListMVVM {
         let model = WordListModelImpl(viewModelBlock: { viewModelLazyWeak },
                                       cudOperations: cudOperations,
                                       translationService: translationService,
-                                      wordItemStream: wordItemStream,
-                                      logger: logger)
+                                      wordItemStream: wordItemStream)
         let viewModel = WordListViewModelImpl(model: model, view: view)
 
         viewModelLazyWeak = viewModel
@@ -36,6 +42,7 @@ final class WordListMVVMImpl: WordListMVVM {
         self.model = model
     }
 
+    /// View controller для показа экрана/части экрана со списком слов
     var viewController: UIViewController {
         view
     }

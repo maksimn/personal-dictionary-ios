@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Представление для навигации на экран Поиска.
 final class NavToSearchView: UIView {
 
     private let searchBar = UISearchBar()
@@ -14,6 +15,9 @@ final class NavToSearchView: UIView {
 
     private var onTap: (() -> Void)?
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - onTap: обработчик нажатия на представление.
     init(onTap: (() -> Void)?) {
         self.onTap = onTap
         let frame = CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.width - 32, height: 44))

@@ -8,6 +8,7 @@
 import RxSwift
 import UIKit
 
+/// View controller экрана поиска по словам в словаре.
 final class SearchViewController: UIViewController, SearchTextInputListener, SearchModePickerListener {
 
     let searchEngine: SearchEngine
@@ -16,6 +17,14 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
     var searchResultTextLabel: TextLabel?
     var searchModePickerMVVM: SearchModePickerMVVM?
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - appConfigs: параметры конфигурации приложения.
+    ///  - searchTextInputBuilder: билдер вложенной фичи "Элемент ввода текста для поиска"
+    ///  - searchEngineBuilder: билдер вложенной фичи "Поисковый Движок"
+    ///  - wordListBuilder: билдер вложенной фичи "Список слов".
+    ///  - searchModePickerBuilder: билдер вложенной фичи "Выбор режима поиска"
+    ///  - searchResultTextLabelParams: параметры надписи с результатом поиска.
     init(appViewConfigs: AppViewConfigs,
          searchTextInputBuilder: SearchTextInputBuilder,
          searchEngineBuilder: SearchEngineBuilder,
@@ -29,7 +38,7 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
         addWordListViewController()
         addSearchResultTextLabel(searchResultTextLabelParams)
         addFeature(searchModePickerBuilder)
-        view.backgroundColor = appViewConfigs.appBackgroundColor
+        view.backgroundColor = appViewConfigs.backgroundColor
     }
 
     required init?(coder: NSCoder) {
@@ -38,7 +47,7 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
 
     // MARK: - SearchTextInputListener
 
-    func onSearchTextChange(_ searchText: String) {
+    func onSearchTextChanged(_ searchText: String) {
         guard let searchMode = searchModePickerMVVM?.model?.searchMode else { return }
         performSearch(for: searchText, mode: searchMode)
     }
@@ -53,7 +62,7 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
     // MARK: - Private
 
     private func performSearch(for searchText: String, mode: SearchMode) {
-        searchEngine.findItems(contain: searchText, mode: mode)
+        searchEngine.findWords(contain: searchText, mode: mode)
             .subscribe(
                 onSuccess: { self.showSearchResult(data: $0) },
                 onError: nil

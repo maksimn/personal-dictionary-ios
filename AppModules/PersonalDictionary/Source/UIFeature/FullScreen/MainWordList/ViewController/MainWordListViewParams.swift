@@ -7,17 +7,27 @@
 
 import UIKit
 
-struct MainWordListStaticContent {
-    let heading: String
-    let navToNewWordImage: UIImage
-    let routingButtonTitle: String
-    let visibleItemMaxCount: Int
-}
+/// Параметры представления Главного списка слов.
+struct MainWordListViewParams {
 
-struct MainWordListStyles {
+    /// Заголовочный текст экрана
+    let heading: String
+
+    /// Картинка для кнопки навигации на экран добавления нового слова
+    let navToNewWordImage: UIImage
+
+    /// Надпись на кнопке навигации к другому приложению в супераппе
+    let routingButtonTitle: String
+
+    /// Максимальное количество видимых элементов (слов) на данном экране
+    let visibleItemMaxCount: Int
+
+    /// Цвет фона
     let backgroundColor: UIColor
+
+    /// Размер кнопки навигации на экран добавления нового слова
     let navToNewWordButtonSize: CGSize
+
+    /// Величина смещения нижней границы кнопки навигации на экран добавления нового слова
     let navToNewWordButtonBottomOffset: CGFloat
 }
-
-typealias MainWordListViewParams = ViewParams<MainWordListStaticContent, MainWordListStyles>

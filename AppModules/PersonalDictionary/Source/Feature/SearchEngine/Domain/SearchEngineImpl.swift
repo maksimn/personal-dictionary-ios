@@ -7,15 +7,24 @@
 
 import RxSwift
 
+/// Реализация поискового движка.
 final class SearchEngineImpl: SearchEngine {
 
     private let wordListFetcher: WordListFetcher
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - wordListFetcher: протокол для получения списка слов для поиска среди них.
     init(wordListFetcher: WordListFetcher) {
         self.wordListFetcher = wordListFetcher
     }
 
-    func findItems(contain string: String, mode: SearchMode) -> Single<SearchResultData> {
+    /// Найти слова, соответствующие параметрам поиска.
+    /// - Parameters:
+    ///  - string: строка для поиска.
+    ///  - mode: режим поиска.
+    /// - Returns: данные с результатом поиска.
+    func findWords(contain string: String, mode: SearchMode) -> Single<SearchResultData> {
         Single<SearchResultData>.create { observer in
             let string = string.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
 

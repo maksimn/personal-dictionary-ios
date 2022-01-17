@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Лэйаут экрана поиска по словам в словаре.
 extension SearchViewController {
 
     func addFeature(_ searchTextInputBuilder: SearchTextInputBuilder) {

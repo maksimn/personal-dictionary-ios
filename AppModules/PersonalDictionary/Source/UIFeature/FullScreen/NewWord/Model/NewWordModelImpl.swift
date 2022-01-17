@@ -7,30 +7,38 @@
 
 import Foundation
 
-class NewWordModelImpl: NewWordModel {
+/// Реализация модели "Добавления нового слова" в личный словарь.
+final class NewWordModelImpl: NewWordModel {
 
+    /// View model "Добавления нового слова" в личный словарь.
     weak var viewModel: NewWordViewModel?
 
     private var langRepository: LangRepository
-    private weak var wordItemStream: NewWordItemStream?
+    private weak var newWordItemStream: NewWordItemStream?
 
-    private(set) var state: NewWordModelState? {
+    private var state: NewWordModelState? {
         didSet {
             viewModel?.state = state
         }
     }
 
-    init(_ langRepository: LangRepository, _ wordItemStream: NewWordItemStream) {
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - langRepository: хранилище с данными о языках в приложении.
+    ///  - newWordItemStream: поток для отправки событий добавления нового слова в словарь
+    init(_ langRepository: LangRepository, _ newWordItemStream: NewWordItemStream) {
         self.langRepository = langRepository
-        self.wordItemStream = wordItemStream
+        self.newWordItemStream = newWordItemStream
     }
 
+    /// Связать начальное состояние модели с представлением
     func bindInitially() {
         state = NewWordModelState(text: "",
                                   sourceLang: langRepository.sourceLang,
                                   targetLang: langRepository.targetLang)
     }
 
+    /// Отправить событие добавления нового слова в словарь
     func sendNewWord() {
         guard let text = state?.text.trimmingCharacters(in: .whitespacesAndNewlines),
             !text.isEmpty,
@@ -41,13 +49,19 @@ class NewWordModelImpl: NewWordModel {
 
         let wordItem = WordItem(text: text, sourceLang: sourceLang, targetLang: targetLang)
 
-        wordItemStream?.sendNewWord(wordItem)
+        newWordItemStream?.sendNewWord(wordItem)
     }
 
+    /// Обновить написание слова
+    /// - Parameters:
+    ///  - text: написание слова
     func update(text: String) {
         state?.text = text
     }
 
+    /// Обновить данные об исходном / целевом языке для слова
+    /// - Parameters:
+    ///  - data: данные о выбранном языке.
     func update(data: LangSelectorData) {
         if data.selectedLangType == .source {
             state?.sourceLang = data.selectedLang

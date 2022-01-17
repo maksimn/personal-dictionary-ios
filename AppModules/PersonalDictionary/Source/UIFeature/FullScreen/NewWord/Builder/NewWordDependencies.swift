@@ -7,31 +7,34 @@
 
 import Foundation
 
+/// Зависимости фичи "Добавление нового слова" в личный словарь.
 final class NewWordDependencies {
 
-    let langRepository: LangRepository
-
+    /// Параметры представления фичи "Добавление нового слова"
     let viewParams: NewWordViewParams
 
+    /// Билдер вложенной фичи "Выбор языка"
     let langPickerBuilder: LangPickerBuilder
 
-    let wordItemStream: NewWordItemStream
+    /// Поток для отправки событий добавления нового слова в словарь
+    let newWordItemStream: NewWordItemStream
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - appViewConfigs: параметры конфигурации приложения.
+    ///  - langRepository: хранилище с данными о языках в приложении.
     init(appViewConfigs: AppViewConfigs,
          langRepository: LangRepository) {
         let bundle = Bundle(for: type(of: self))
 
         viewParams = NewWordViewParams(
-            staticContent: NewWordViewStaticContent(
-                selectButtonTitle: bundle.moduleLocalizedString("Select"),
-                arrowText: bundle.moduleLocalizedString("⇋"),
-                okText: bundle.moduleLocalizedString("OK"),
-                textFieldPlaceholder: bundle.moduleLocalizedString("Enter a new word")
-            ),
-            styles: NewWordViewStyles(backgroundColor: appViewConfigs.appBackgroundColor)
+            arrowText: bundle.moduleLocalizedString("⇋"),
+            okText: bundle.moduleLocalizedString("OK"),
+            textFieldPlaceholder: bundle.moduleLocalizedString("Enter a new word"),
+            backgroundColor: appViewConfigs.backgroundColor
         )
-        self.langRepository = langRepository
+
         langPickerBuilder = LangPickerBuilderImpl(allLangs: langRepository.allLangs, appViewConfigs: appViewConfigs)
-        wordItemStream = WordItemStreamImpl.instance
+        newWordItemStream = WordItemStreamImpl.instance
     }
 }
