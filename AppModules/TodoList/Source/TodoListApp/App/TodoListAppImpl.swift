@@ -10,7 +10,7 @@ import UIKit
 
 final class TodoListAppImpl: TodoListApp {
 
-    init(appParams: TodoListAppParams) {
+    init() {
         let todoListServiceGraph = TodoListServiceGraphOne(
             todoListCache: MOTodoListCache.instance,
             coreService: URLSessionCoreService(),
