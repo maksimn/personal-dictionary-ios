@@ -29,11 +29,10 @@ final class SearchBuilderImpl: SearchBuilder {
     func build() -> UIViewController {
         let dependencies = SearchDependencies(wordListConfigs: wordListConfigs, wordListRepository: wordListRepository)
 
-        return SearchViewController(appViewConfigs: wordListConfigs.appConfigs.appViewConfigs,
+        return SearchViewController(searchViewParams: dependencies.searchViewParams,
                                     searchTextInputBuilder: dependencies.searchTextInputBuilder,
                                     searchEngineBuilder: dependencies.searchEngineBuilder,
                                     wordListBuilder: dependencies.createWordListBuilder(),
-                                    searchModePickerBuilder: dependencies.searchModePickerBuilder,
-                                    searchResultTextLabelParams: dependencies.searchResultTextLabelParams)
+                                    searchModePickerBuilder: dependencies.searchModePickerBuilder)
     }
 }

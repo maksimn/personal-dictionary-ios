@@ -19,26 +19,24 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - appViewConfigs: параметры конфигурации представлений приложения.
+    ///  - searchViewParams: параметры представления поиска.
     ///  - searchTextInputBuilder: билдер вложенной фичи "Элемент ввода текста для поиска"
     ///  - searchEngineBuilder: билдер вложенной фичи "Поисковый Движок"
     ///  - wordListBuilder: билдер вложенной фичи "Список слов".
     ///  - searchModePickerBuilder: билдер вложенной фичи "Выбор режима поиска"
-    ///  - searchResultTextLabelParams: параметры надписи с результатом поиска.
-    init(appViewConfigs: AppViewConfigs,
+    init(searchViewParams: SearchViewParams,
          searchTextInputBuilder: SearchTextInputBuilder,
          searchEngineBuilder: SearchEngineBuilder,
          wordListBuilder: WordListBuilder,
-         searchModePickerBuilder: SearchModePickerBuilder,
-         searchResultTextLabelParams: TextLabelParams) {
+         searchModePickerBuilder: SearchModePickerBuilder) {
         searchEngine = searchEngineBuilder.build()
         wordListMVVM = wordListBuilder.build()
         super.init(nibName: nil, bundle: nil)
         addFeature(searchTextInputBuilder)
         addWordListViewController()
-        addSearchResultTextLabel(searchResultTextLabelParams)
+        addSearchResultTextLabel(searchViewParams.emptySearchResultTextParams)
         addFeature(searchModePickerBuilder)
-        view.backgroundColor = appViewConfigs.backgroundColor
+        view.backgroundColor = searchViewParams.appViewConfigs.backgroundColor
     }
 
     required init?(coder: NSCoder) {

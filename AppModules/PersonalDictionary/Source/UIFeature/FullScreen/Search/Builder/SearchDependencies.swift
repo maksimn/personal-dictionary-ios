@@ -17,13 +17,16 @@ final class SearchDependencies {
     let searchModePickerBuilder = SearchModePickerBuilderImpl()
 
     /// Билдер вложенной фичи "Поисковый Движок"
-    let searchEngineBuilder: SearchEngineBuilder
+    private(set) lazy var searchEngineBuilder = SearchEngineBuilderImpl(wordListFetcher: wordListRepository)
 
-    /// Параметры надписи с результатом поиска (показывается, когда по запросу не найдено ни одного слова)
-    private(set) lazy var searchResultTextLabelParams = TextLabelParams(
-        textColor: .darkGray,
-        font: UIFont.systemFont(ofSize: 17),
-        text: Bundle(for: type(of: self)).moduleLocalizedString("No words found")
+    /// Параметры представления Поиска
+    private(set) lazy var searchViewParams = SearchViewParams(
+        appViewConfigs: wordListConfigs.appConfigs.appViewConfigs,
+        emptySearchResultTextParams: TextLabelParams(
+            textColor: .darkGray,
+            font: UIFont.systemFont(ofSize: 17),
+            text: Bundle(for: type(of: self)).moduleLocalizedString("No words found")
+        )
     )
 
     private let wordListConfigs: WordListConfigs
@@ -37,7 +40,6 @@ final class SearchDependencies {
          wordListRepository: WordListRepository) {
         self.wordListConfigs = wordListConfigs
         self.wordListRepository = wordListRepository
-        searchEngineBuilder = SearchEngineBuilderImpl(wordListFetcher: wordListRepository)
     }
 
     /// Создать билдер фичи "Список слов".
