@@ -7,8 +7,8 @@
 
 import UIKit
 
-/// Параметры представления таблицы слов из личного словаря.
-struct WordTableViewParams {
+/// Параметры делегата таблицы слов из личного словаря.
+struct WordTableDelegateParams {
 
     /// Запускать ли анимацию при первом появлении данных в таблице.
     let shouldAnimateWhenAppear: Bool
@@ -29,7 +29,7 @@ struct WordTableViewParams {
 /// Делегат событий для таблицы слов из словаря.
 final class WordTableDelegate: NSObject, UITableViewDelegate {
 
-    private let params: WordTableViewParams
+    private let params: WordTableDelegateParams
     private var onDeleteTap: ((Int) -> Void)?
     private var onScrollFinish: (() -> Void)?
 
@@ -40,7 +40,7 @@ final class WordTableDelegate: NSObject, UITableViewDelegate {
     ///  - onScrollFinish: обработчик для события завершения скролла таблицы
     ///  - onDeleteTap: обработчик нажатия на view для удаления элемента таблицы
     ///  - params: параметры представления таблицы слов из личного словаря.
-    init(params: WordTableViewParams,
+    init(params: WordTableDelegateParams,
          onScrollFinish: (() -> Void)?,
          onDeleteTap: ((Int) -> Void)?) {
         self.onScrollFinish = onScrollFinish

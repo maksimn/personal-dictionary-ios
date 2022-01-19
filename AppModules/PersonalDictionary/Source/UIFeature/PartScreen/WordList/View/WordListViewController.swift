@@ -24,7 +24,7 @@ final class WordListViewController: UIViewController, WordListView {
     )
 
     lazy var tableActions = WordTableDelegate(
-        params: params.tableViewParams,
+        params: params.delegateParams,
         onScrollFinish: { [weak self] in
             self?.onTableViewScrollFinish()
         },

@@ -10,9 +10,6 @@ import UIKit
 /// Параметры представления списка слов.
 struct WordListViewParams {
 
-    /// Параметры представления таблицы
-    let tableViewParams: WordTableViewParams
-
     /// Цвет фона
     let backgroundColor: UIColor
 
@@ -27,4 +24,7 @@ struct WordListViewParams {
 
     /// Радиус скругления углов ячейки таблицы
     let cellCornerRadius: CGFloat
+
+    /// Параметры делегата таблицы
+    let delegateParams: WordTableDelegateParams
 }

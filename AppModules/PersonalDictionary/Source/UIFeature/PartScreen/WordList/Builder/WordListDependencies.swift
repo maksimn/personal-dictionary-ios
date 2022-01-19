@@ -25,19 +25,19 @@ final class WordListDependencies {
     ///  - configs: конфигурация  списка слов.
     init(configs: WordListConfigs) {
         viewParams = WordListViewParams(
-            tableViewParams: WordTableViewParams(
+            backgroundColor: configs.appConfigs.appViewConfigs.backgroundColor,
+            itemHeight: WordItemCell.height,
+            cellClass: WordItemCell.self,
+            cellReuseIdentifier: "\(WordItemCell.self)",
+            cellCornerRadius: 16,
+            delegateParams: WordTableDelegateParams(
                 shouldAnimateWhenAppear: configs.shouldAnimateWhenAppear,
                 cellSlideInDuration: 0.5,
                 cellSlideInDelayFactor: 0.05,
                 deleteActionImage: UIImage(systemName: "trash",
                                            withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!,
                 deleteActionBackgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
-            ),
-            backgroundColor: configs.appConfigs.appViewConfigs.backgroundColor,
-            itemHeight: WordItemCell.height,
-            cellClass: WordItemCell.self,
-            cellReuseIdentifier: "\(WordItemCell.self)",
-            cellCornerRadius: 16
+            )
         )
 
         self.wordItemStream = WordItemStreamImpl.instance
