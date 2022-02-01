@@ -26,10 +26,10 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
         let dependencies = MainWordListDependencies(appConfigs: appConfigs)
 
         return MainWordListGraphImpl(viewParams: dependencies.viewParams,
-                                     wordListBuilder: dependencies.createWordListBuilder(),
-                                     wordListFetcher: dependencies.wordListRepository,
-                                     newWordBuilder: dependencies.createNewWordBuilder(),
-                                     searchBuilder: dependencies.createSearchBuilder(),
+                                     wordListBuilder: dependencies.wordListBuilder,
+                                     wordListFetcher: dependencies.wordListFetcher,
+                                     newWordBuilder: dependencies.newWordBuilder,
+                                     searchBuilder: dependencies.searchBuilder,
                                      coreRouter: appConfigs.appParams.coreRouter)
     }
 }

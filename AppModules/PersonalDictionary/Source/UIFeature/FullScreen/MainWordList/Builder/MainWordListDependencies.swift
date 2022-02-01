@@ -11,80 +11,69 @@ import UIKit
 /// Зависимости фичи "Главный (основной) список слов" Личного словаря.
 final class MainWordListDependencies {
 
-    /// Параметры представления Главного списка слов
-    private(set) lazy var viewParams = MainWordListViewParams(
-        heading: bundle.moduleLocalizedString("My dictionary"),
-        navToNewWordImage: UIImage(named: "icon-plus", in: bundle, compatibleWith: nil)!,
-        routingButtonTitle: appConfigs.appParams.routingButtonTitle,
-        visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height)),
-        backgroundColor: appConfigs.appViewConfigs.backgroundColor
-    )
+    /// Параметры представления Главного списка слов.
+    let viewParams: MainWordListViewParams
 
-    /// Хранилище слов из личного словаря.
-    private(set) lazy var wordListRepository = buildWordListRepository()
+    /// Билдер фичи "Список слов".
+    let wordListBuilder: WordListBuilder
 
-    private lazy var bundle = Bundle(for: type(of: self))
+    /// Источник данных для получения списка слов из хранилища.
+    let wordListFetcher: WordListFetcher
 
-    private let appConfigs: AppConfigs
+    /// Билдер фичи "Добавление нового слова" в словарь.
+    let newWordBuilder: NewWordBuilder
 
-    private lazy var langRepository = buildLangRepository()
+    /// Билдер фичи "Поиск" по словам в словаре.
+    let searchBuilder: SearchBuilder
 
     /// Инициализатор.
     /// - Parameters:
     ///  - appConfigs: параметры конфигурации приложения.
     init(appConfigs: AppConfigs) {
-        self.appConfigs = appConfigs
-    }
-
-    /// Создать билдер фичи "Поиск".
-    /// - Returns:
-    ///  -  билдер фичи "Поиск".
-    func createSearchBuilder() -> SearchBuilder {
-        SearchBuilderImpl(
-            wordListConfigs: WordListConfigs(
-                appConfigs: appConfigs,
-                shouldAnimateWhenAppear: false
-            ),
-            wordListRepository: wordListRepository
+        let bundle = Bundle(for: type(of: self))
+        let logger = SimpleLogger(isLoggingEnabled: appConfigs.isLoggingEnabled)
+        let langRepository =  LangRepositoryImpl(
+            userDefaults: UserDefaults.standard,
+            data: appConfigs.langData
         )
-    }
+        let wordListRepository = CoreWordListRepository(
+            args: CoreWordListRepositoryArgs(
+                bundle: bundle,
+                persistentContainerName: "StorageModel"
+            ),
+            langRepository: langRepository,
+            logger: logger
+        )
 
-    /// Создать билдер фичи "Добавление нового слова".
-    /// - Returns:
-    ///  - билдер фичи "Добавление нового слова".
-    func createNewWordBuilder() -> NewWordBuilder {
-        NewWordBuilderImpl(appViewConfigs: appConfigs.appViewConfigs,
-                           langRepository: langRepository)
-    }
+        viewParams = MainWordListViewParams(
+            heading: bundle.moduleLocalizedString("My dictionary"),
+            navToNewWordImage: UIImage(named: "icon-plus", in: bundle, compatibleWith: nil)!,
+            routingButtonTitle: appConfigs.appParams.routingButtonTitle,
+            visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height)),
+            backgroundColor: appConfigs.appViewConfigs.backgroundColor
+        )
 
-    /// Создать билдер фичи "Список слов".
-    /// - Returns:
-    ///  -  билдер фичи "Список слов"..
-    func createWordListBuilder() -> WordListBuilder {
-        WordListBuilderImpl(
+        wordListBuilder = WordListBuilderImpl(
             configs: WordListConfigs(
                 appConfigs: appConfigs,
                 shouldAnimateWhenAppear: true
             ),
             cudOperations: wordListRepository
         )
-    }
 
-    private func buildLangRepository() -> LangRepository {
-        return LangRepositoryImpl(userDefaults: UserDefaults.standard,
-                                  data: appConfigs.langData)
-    }
+        wordListFetcher = wordListRepository
 
-    private func buildLogger() -> Logger {
-        SimpleLogger(isLoggingEnabled: appConfigs.isLoggingEnabled)
-    }
+        newWordBuilder = NewWordBuilderImpl(
+            appViewConfigs: appConfigs.appViewConfigs,
+            langRepository: langRepository
+        )
 
-    private func buildWordListRepository() -> WordListRepository {
-        let coreWordListRepositoryArgs = CoreWordListRepositoryArgs(bundle: bundle,
-                                                                    persistentContainerName: "StorageModel")
-
-        return CoreWordListRepository(args: coreWordListRepositoryArgs,
-                                      langRepository: langRepository,
-                                      logger: buildLogger())
+        searchBuilder = SearchBuilderImpl(
+            wordListConfigs: WordListConfigs(
+                appConfigs: appConfigs,
+                shouldAnimateWhenAppear: false
+            ),
+            wordListRepository: wordListRepository
+        )
     }
 }
