@@ -7,32 +7,35 @@
 
 import UIKit
 
+/// Внешние зависимости фичи "Поиска".
+struct SearchExternals {
+
+    let wordListFetcher: WordListFetcher
+    let wordListExternals: WordListExternals
+}
+
 /// Билдер Фичи "Поиск по словам в словаре".
 final class SearchBuilderImpl: SearchBuilder {
 
-    private let wordListConfigs: WordListConfigs
-    private let wordListRepository: WordListRepository
+    private let externals: SearchExternals
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - wordListConfigs: параметры конфигурации списка слов.
-    ///  - wordListRepository: хранилище списка слов.
-    init(wordListConfigs: WordListConfigs,
-         wordListRepository: WordListRepository) {
-        self.wordListConfigs = wordListConfigs
-        self.wordListRepository = wordListRepository
+    ///  - externals: внешние зависимости фичи.
+    init(externals: SearchExternals) {
+        self.externals = externals
     }
 
     /// Создать экран Поиска.
     /// - Returns:
-    ///   View controller экрана поиска по словам в словаре.
+    ///  - View controller экрана поиска по словам в словаре.
     func build() -> UIViewController {
-        let dependencies = SearchDependencies(wordListConfigs: wordListConfigs, wordListRepository: wordListRepository)
+        let dependencies = SearchDependencies(externals: externals)
 
         return SearchViewController(searchViewParams: dependencies.searchViewParams,
                                     searchTextInputBuilder: dependencies.searchTextInputBuilder,
                                     searchEngineBuilder: dependencies.searchEngineBuilder,
-                                    wordListBuilder: dependencies.createWordListBuilder(),
+                                    wordListBuilder: dependencies.wordListBuilder,
                                     searchModePickerBuilder: dependencies.searchModePickerBuilder)
     }
 }

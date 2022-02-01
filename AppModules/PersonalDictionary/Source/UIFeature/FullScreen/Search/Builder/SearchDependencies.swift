@@ -16,12 +16,15 @@ final class SearchDependencies {
     /// Билдер вложенной фичи "Выбор режима поиска"
     let searchModePickerBuilder = SearchModePickerBuilderImpl()
 
+    /// Билдер фичи "Список слов".
+    let wordListBuilder: WordListBuilder
+
     /// Билдер вложенной фичи "Поисковый Движок"
-    private(set) lazy var searchEngineBuilder = SearchEngineBuilderImpl(wordListFetcher: wordListRepository)
+    private(set) lazy var searchEngineBuilder = SearchEngineBuilderImpl(wordListFetcher: externals.wordListFetcher)
 
     /// Параметры представления Поиска
     private(set) lazy var searchViewParams = SearchViewParams(
-        appViewConfigs: wordListConfigs.appConfigs.appViewConfigs,
+        appViewConfigs: externals.wordListExternals.appConfigs.appViewConfigs,
         emptySearchResultTextParams: TextLabelParams(
             textColor: .darkGray,
             font: UIFont.systemFont(ofSize: 17),
@@ -29,24 +32,17 @@ final class SearchDependencies {
         )
     )
 
-    private let wordListConfigs: WordListConfigs
-    private let wordListRepository: WordListRepository
+    private let externals: SearchExternals
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - wordListConfigs: параметры конфигурации списка слов.
-    ///  - wordListRepository: хранилище списка слов.
-    init(wordListConfigs: WordListConfigs,
-         wordListRepository: WordListRepository) {
-        self.wordListConfigs = wordListConfigs
-        self.wordListRepository = wordListRepository
-    }
+    ///  - externals: внешние зависимости фичи.
+    init(externals: SearchExternals) {
+        self.externals = externals
 
-    /// Создать билдер фичи "Список слов".
-    /// - Returns:
-    ///  -  билдер фичи "Список слов".
-    func createWordListBuilder() -> WordListBuilder {
-        WordListBuilderImpl(configs: wordListConfigs,
-                            cudOperations: wordListRepository)
+        wordListBuilder = WordListBuilderImpl(
+            params: WordListParams(shouldAnimateWhenAppear: false),
+            externals: externals.wordListExternals
+        )
     }
 }

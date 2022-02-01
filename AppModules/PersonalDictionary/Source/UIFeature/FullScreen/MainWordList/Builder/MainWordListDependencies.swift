@@ -53,12 +53,15 @@ final class MainWordListDependencies {
             backgroundColor: appConfigs.appViewConfigs.backgroundColor
         )
 
+        let wordListExternals = WordListExternals(
+            appConfigs: appConfigs,
+            cudOperations: wordListRepository,
+            logger: logger
+        )
+
         wordListBuilder = WordListBuilderImpl(
-            configs: WordListConfigs(
-                appConfigs: appConfigs,
-                shouldAnimateWhenAppear: true
-            ),
-            cudOperations: wordListRepository
+            params: WordListParams(shouldAnimateWhenAppear: true),
+            externals: wordListExternals
         )
 
         wordListFetcher = wordListRepository
@@ -69,11 +72,10 @@ final class MainWordListDependencies {
         )
 
         searchBuilder = SearchBuilderImpl(
-            wordListConfigs: WordListConfigs(
-                appConfigs: appConfigs,
-                shouldAnimateWhenAppear: false
-            ),
-            wordListRepository: wordListRepository
+            externals: SearchExternals(
+                wordListFetcher: wordListRepository,
+                wordListExternals: wordListExternals
+            )
         )
     }
 }
