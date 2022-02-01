@@ -17,9 +17,7 @@ final class MainWordListDependencies {
         navToNewWordImage: UIImage(named: "icon-plus", in: bundle, compatibleWith: nil)!,
         routingButtonTitle: appConfigs.appParams.routingButtonTitle,
         visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height)),
-        backgroundColor: appConfigs.appViewConfigs.backgroundColor,
-        navToNewWordButtonSize: CGSize(width: 44, height: 44),
-        navToNewWordButtonBottomOffset: -26
+        backgroundColor: appConfigs.appViewConfigs.backgroundColor
     )
 
     /// Хранилище слов из личного словаря.

@@ -46,9 +46,8 @@ extension MainWordListViewController {
         navToNewWordButton.imageView?.contentMode = .scaleAspectFit
         navToNewWordButton.addTarget(self, action: #selector(navigateToNewWord), for: .touchUpInside)
         navToNewWordButton.snp.makeConstraints { make -> Void in
-            make.size.equalTo(params.navToNewWordButtonSize)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-                .offset(params.navToNewWordButtonBottomOffset)
+            make.size.equalTo(CGSize(width: 44, height: 44))
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-26)
             make.centerX.equalTo(view)
         }
         if let imageView = navToNewWordButton.imageView {

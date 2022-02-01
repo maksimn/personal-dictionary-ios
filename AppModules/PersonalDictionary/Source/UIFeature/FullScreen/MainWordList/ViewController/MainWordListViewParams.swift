@@ -24,10 +24,4 @@ struct MainWordListViewParams {
 
     /// Цвет фона
     let backgroundColor: UIColor
-
-    /// Размер кнопки навигации на экран добавления нового слова
-    let navToNewWordButtonSize: CGSize
-
-    /// Величина смещения нижней границы кнопки навигации на экран добавления нового слова
-    let navToNewWordButtonBottomOffset: CGFloat
 }
