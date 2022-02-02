@@ -8,7 +8,10 @@
 import CoreModule
 
 /// Внешние зависимости фичи "Список слов".
-protocol WordListExternals: MainWordListExternals {
+protocol WordListExternals {
+
+    /// Конфигурация приложения.
+    var appConfig: AppConfigs { get }
 
     /// Операции create, update, delete со словами в хранилище личного словаря.
     var cudOperations: WordItemCUDOperations { get }
