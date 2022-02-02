@@ -9,20 +9,20 @@ import CoreModule
 import UIKit
 
 /// Зависимости фичи "Главный (основной) список слов" Личного словаря.
-final class MainWordListDependencies {
+final class MainWordListDependencies: MainWordListExternals {
 
-    fileprivate let externals: MainWordListExternals
+    private(set) var appConfig: AppConfigs
 
     private lazy var bundle = Bundle(for: type(of: self))
 
     fileprivate lazy var _langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard,
-                                                              data: externals.appConfig.langData)
+                                                              data: appConfig.langData)
 
     /// Инициализатор.
     /// - Parameters:
     ///  - externals: параметры конфигурации приложения.
     init(externals: MainWordListExternals) {
-        self.externals = externals
+        self.appConfig = externals.appConfig
     }
 
     /// Создать параметры представления Главного списка слов.
@@ -30,9 +30,9 @@ final class MainWordListDependencies {
         MainWordListViewParams(
             heading: bundle.moduleLocalizedString("My dictionary"),
             navToNewWordImage: UIImage(named: "icon-plus", in: bundle, compatibleWith: nil)!,
-            routingButtonTitle: externals.appConfig.appParams.routingButtonTitle,
+            routingButtonTitle: appConfig.appParams.routingButtonTitle,
             visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height)),
-            backgroundColor: externals.appConfig.appViewConfigs.backgroundColor
+            backgroundColor: appConfig.appViewConfigs.backgroundColor
         )
     }
 
@@ -67,7 +67,7 @@ final class MainWordListDependencies {
     }
 
     fileprivate func createLogger() -> Logger {
-        SimpleLogger(isLoggingEnabled: externals.appConfig.isLoggingEnabled)
+        SimpleLogger(isLoggingEnabled: appConfig.isLoggingEnabled)
     }
 }
 
@@ -80,10 +80,6 @@ extension MainWordListDependencies: WordListExternals {
 
     var logger: Logger {
         createLogger()
-    }
-
-    var appConfig: AppConfigs {
-        externals.appConfig
     }
 }
 
@@ -99,7 +95,7 @@ extension MainWordListDependencies: SearchExternals {
 extension MainWordListDependencies: NewWordExternals {
 
     var appViewConfigs: AppViewConfigs {
-        externals.appConfig.appViewConfigs
+        appConfig.appViewConfigs
     }
 
     var langRepository: LangRepository {
