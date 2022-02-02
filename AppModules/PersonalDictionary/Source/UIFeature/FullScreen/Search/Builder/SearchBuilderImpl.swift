@@ -8,10 +8,10 @@
 import UIKit
 
 /// Внешние зависимости фичи "Поиска".
-struct SearchExternals {
+protocol SearchExternals: WordListExternals {
 
-    let wordListFetcher: WordListFetcher
-    let wordListExternals: WordListExternals
+    /// Источник данных для списка слов из хранилища личного словаря.
+    var wordListFetcher: WordListFetcher { get }
 }
 
 /// Билдер Фичи "Поиск по словам в словаре".
