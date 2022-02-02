@@ -7,29 +7,38 @@
 
 import CoreModule
 
+/// Внешние зависимости фичи "Главный (основной) список слов" Личного словаря.
+protocol MainWordListExternals {
+
+    /// Конфигурация приложения
+    var appConfig: AppConfigs { get }
+}
+
 /// Реализация билдера фичи "Главный (основной) список слов" Личного словаря.
 final class MainWordListBuilderImpl: MainWordListBuilder {
 
-    private let appConfigs: AppConfigs
+    private let externals: MainWordListExternals
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - appConfigs: параметры конфигурации приложения.
-    init(appConfigs: AppConfigs) {
-        self.appConfigs = appConfigs
+    ///  - externals: внешние зависимости фичи.
+    init(externals: MainWordListExternals) {
+        self.externals = externals
     }
 
     /// Создать граф фичи.
     /// - Returns:
-    ///  - Граф фичи  "Главный (основной) список слов".
+    ///  - Граф фичи "Главный (основной) список слов".
     func build() -> MainWordListGraph {
-        let dependencies = MainWordListDependencies(appConfigs: appConfigs)
+        let dependencies = MainWordListDependencies(externals: externals)
 
-        return MainWordListGraphImpl(viewParams: dependencies.viewParams,
-                                     wordListBuilder: dependencies.wordListBuilder,
-                                     wordListFetcher: dependencies.wordListFetcher,
-                                     newWordBuilder: dependencies.newWordBuilder,
-                                     searchBuilder: dependencies.searchBuilder,
-                                     coreRouter: appConfigs.appParams.coreRouter)
+        return MainWordListGraphImpl(
+            viewParams: dependencies.createViewParams(),
+            wordListBuilder: dependencies.createWordListBuilder(),
+            wordListFetcher: dependencies.createWordListRepository(),
+            newWordBuilder: dependencies.createNewWordBuilder(),
+            searchBuilder: dependencies.createSearchBuilder(),
+            coreRouter: externals.appConfig.appParams.coreRouter
+        )
     }
 }

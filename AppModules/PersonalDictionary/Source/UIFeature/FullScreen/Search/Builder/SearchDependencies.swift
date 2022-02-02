@@ -17,14 +17,17 @@ final class SearchDependencies {
     let searchModePickerBuilder = SearchModePickerBuilderImpl()
 
     /// Билдер фичи "Список слов".
-    let wordListBuilder: WordListBuilder
+    private(set) lazy var wordListBuilder = WordListBuilderImpl(
+        params: WordListParams(shouldAnimateWhenAppear: false),
+        externals: externals
+    )
 
     /// Билдер вложенной фичи "Поисковый Движок"
     private(set) lazy var searchEngineBuilder = SearchEngineBuilderImpl(wordListFetcher: externals.wordListFetcher)
 
     /// Параметры представления Поиска
     private(set) lazy var searchViewParams = SearchViewParams(
-        appViewConfigs: externals.wordListExternals.appConfigs.appViewConfigs,
+        appViewConfigs: externals.appConfig.appViewConfigs,
         emptySearchResultTextParams: TextLabelParams(
             textColor: .darkGray,
             font: UIFont.systemFont(ofSize: 17),
@@ -39,10 +42,5 @@ final class SearchDependencies {
     ///  - externals: внешние зависимости фичи.
     init(externals: SearchExternals) {
         self.externals = externals
-
-        wordListBuilder = WordListBuilderImpl(
-            params: WordListParams(shouldAnimateWhenAppear: false),
-            externals: externals.wordListExternals
-        )
     }
 }

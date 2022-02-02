@@ -14,19 +14,6 @@ struct WordListParams {
     let shouldAnimateWhenAppear: Bool
 }
 
-/// Внешние зависимости фичи "Список слов".
-struct WordListExternals {
-
-    /// Конфигурация приложения
-    let appConfigs: AppConfigs
-
-    /// Операции create, update, delete со словами в хранилище личного словаря.
-    let cudOperations: WordItemCUDOperations
-
-    /// Логгер
-    let logger: Logger
-}
-
 /// Реализация билдера фичи "Список слов".
 final class WordListBuilderImpl: WordListBuilder {
 

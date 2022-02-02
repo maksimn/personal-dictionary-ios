@@ -27,6 +27,14 @@ final class ConfigBuilderImpl: ConfigBuilder {
     /// Создать билдер Фичи "Главный/основной список слов".
     /// - Returns: билдер указанной фичи.
     func createMainWordListBuilder() -> MainWordListBuilder {
-        MainWordListBuilderImpl(appConfigs: build())
+        MainWordListBuilderImpl(externals: self)
+    }
+}
+
+/// Для передачи внешних зависимостей в чайлд-фичу "Главный список слов".
+extension ConfigBuilderImpl: MainWordListExternals {
+
+    var appConfig: AppConfigs {
+        build()
     }
 }

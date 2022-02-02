@@ -26,7 +26,7 @@ final class WordListDependencies {
     init(params: WordListParams,
          externals: WordListExternals) {
         viewParams = WordListViewParams(
-            backgroundColor: externals.appConfigs.appViewConfigs.backgroundColor,
+            backgroundColor: externals.appConfig.appViewConfigs.backgroundColor,
             itemHeight: WordItemCell.height,
             cellClass: WordItemCell.self,
             cellReuseIdentifier: "\(WordItemCell.self)",
@@ -46,7 +46,7 @@ final class WordListDependencies {
         translationService = PonsTranslationService(
             apiData: PonsApiData(url: "https://api.pons.com/v1/dictionary",
                                  secretHeaderKey: "X-Secret",
-                                 secret: externals.appConfigs.ponsApiSecret),
+                                 secret: externals.appConfig.ponsApiSecret),
             coreService: UrlSessionCoreService(sessionConfiguration: URLSessionConfiguration.default),
             jsonCoder: JSONCoderImpl(),
             logger: externals.logger

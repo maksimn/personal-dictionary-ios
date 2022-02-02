@@ -11,71 +11,93 @@ import UIKit
 /// Зависимости фичи "Главный (основной) список слов" Личного словаря.
 final class MainWordListDependencies {
 
-    /// Параметры представления Главного списка слов.
-    let viewParams: MainWordListViewParams
+    fileprivate let externals: MainWordListExternals
 
-    /// Билдер фичи "Список слов".
-    let wordListBuilder: WordListBuilder
-
-    /// Источник данных для получения списка слов из хранилища.
-    let wordListFetcher: WordListFetcher
-
-    /// Билдер фичи "Добавление нового слова" в словарь.
-    let newWordBuilder: NewWordBuilder
-
-    /// Билдер фичи "Поиск" по словам в словаре.
-    let searchBuilder: SearchBuilder
+    private lazy var bundle = Bundle(for: type(of: self))
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - appConfigs: параметры конфигурации приложения.
-    init(appConfigs: AppConfigs) {
-        let bundle = Bundle(for: type(of: self))
-        let logger = SimpleLogger(isLoggingEnabled: appConfigs.isLoggingEnabled)
-        let langRepository =  LangRepositoryImpl(
-            userDefaults: UserDefaults.standard,
-            data: appConfigs.langData
+    ///  - externals: параметры конфигурации приложения.
+    init(externals: MainWordListExternals) {
+        self.externals = externals
+    }
+
+    /// Создать параметры представления Главного списка слов.
+    func createViewParams() -> MainWordListViewParams {
+        MainWordListViewParams(
+            heading: bundle.moduleLocalizedString("My dictionary"),
+            navToNewWordImage: UIImage(named: "icon-plus", in: bundle, compatibleWith: nil)!,
+            routingButtonTitle: externals.appConfig.appParams.routingButtonTitle,
+            visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height)),
+            backgroundColor: externals.appConfig.appViewConfigs.backgroundColor
         )
-        let wordListRepository = CoreWordListRepository(
+    }
+
+    /// Создать билдер фичи "Добавление нового слова" в словарь.
+    func createNewWordBuilder() -> NewWordBuilder {
+        NewWordBuilderImpl(
+            appViewConfigs: externals.appConfig.appViewConfigs,
+            langRepository: createLangRepository()
+        )
+    }
+
+    /// Создать билдер фичи "Список слов".
+    func createWordListBuilder() -> WordListBuilder {
+        WordListBuilderImpl(
+            params: WordListParams(shouldAnimateWhenAppear: true),
+            externals: self
+        )
+    }
+
+    /// Создать билдер фичи "Поиск" по словам в словаре.
+    func createSearchBuilder() -> SearchBuilder {
+        SearchBuilderImpl(externals: self)
+    }
+
+    /// Создать хранилище слов Личного словаря.
+    func createWordListRepository() -> WordListRepository {
+        return CoreWordListRepository(
             args: CoreWordListRepositoryArgs(
                 bundle: bundle,
                 persistentContainerName: "StorageModel"
             ),
-            langRepository: langRepository,
-            logger: logger
+            langRepository: createLangRepository(),
+            logger: createLogger()
         )
+    }
 
-        viewParams = MainWordListViewParams(
-            heading: bundle.moduleLocalizedString("My dictionary"),
-            navToNewWordImage: UIImage(named: "icon-plus", in: bundle, compatibleWith: nil)!,
-            routingButtonTitle: appConfigs.appParams.routingButtonTitle,
-            visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height)),
-            backgroundColor: appConfigs.appViewConfigs.backgroundColor
+    fileprivate func createLogger() -> Logger {
+        SimpleLogger(isLoggingEnabled: externals.appConfig.isLoggingEnabled)
+    }
+
+    private func createLangRepository() -> LangRepository {
+        LangRepositoryImpl(
+            userDefaults: UserDefaults.standard,
+            data: externals.appConfig.langData
         )
+    }
+}
 
-        let wordListExternals = WordListExternals(
-            appConfigs: appConfigs,
-            cudOperations: wordListRepository,
-            logger: logger
-        )
+/// Для передачи внешних зависимостей в фичу "Список слов".
+extension MainWordListDependencies: WordListExternals {
 
-        wordListBuilder = WordListBuilderImpl(
-            params: WordListParams(shouldAnimateWhenAppear: true),
-            externals: wordListExternals
-        )
+    var cudOperations: WordItemCUDOperations {
+        createWordListRepository()
+    }
 
-        wordListFetcher = wordListRepository
+    var logger: Logger {
+        createLogger()
+    }
 
-        newWordBuilder = NewWordBuilderImpl(
-            appViewConfigs: appConfigs.appViewConfigs,
-            langRepository: langRepository
-        )
+    var appConfig: AppConfigs {
+        externals.appConfig
+    }
+}
 
-        searchBuilder = SearchBuilderImpl(
-            externals: SearchExternals(
-                wordListFetcher: wordListRepository,
-                wordListExternals: wordListExternals
-            )
-        )
+/// Для передачи внешних зависимостей в фичу "Поиск по словам Личного словаря".
+extension MainWordListDependencies: SearchExternals {
+
+    var wordListFetcher: WordListFetcher {
+        createWordListRepository()
     }
 }
