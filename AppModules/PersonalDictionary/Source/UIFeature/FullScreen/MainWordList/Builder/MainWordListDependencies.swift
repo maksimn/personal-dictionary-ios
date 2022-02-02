@@ -15,6 +15,9 @@ final class MainWordListDependencies {
 
     private lazy var bundle = Bundle(for: type(of: self))
 
+    fileprivate lazy var _langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard,
+                                                              data: externals.appConfig.langData)
+
     /// Инициализатор.
     /// - Parameters:
     ///  - externals: параметры конфигурации приложения.
@@ -35,10 +38,7 @@ final class MainWordListDependencies {
 
     /// Создать билдер фичи "Добавление нового слова" в словарь.
     func createNewWordBuilder() -> NewWordBuilder {
-        NewWordBuilderImpl(
-            appViewConfigs: externals.appConfig.appViewConfigs,
-            langRepository: createLangRepository()
-        )
+        NewWordBuilderImpl(externals: self)
     }
 
     /// Создать билдер фичи "Список слов".
@@ -61,20 +61,13 @@ final class MainWordListDependencies {
                 bundle: bundle,
                 persistentContainerName: "StorageModel"
             ),
-            langRepository: createLangRepository(),
+            langRepository: _langRepository,
             logger: createLogger()
         )
     }
 
     fileprivate func createLogger() -> Logger {
         SimpleLogger(isLoggingEnabled: externals.appConfig.isLoggingEnabled)
-    }
-
-    private func createLangRepository() -> LangRepository {
-        LangRepositoryImpl(
-            userDefaults: UserDefaults.standard,
-            data: externals.appConfig.langData
-        )
     }
 }
 
@@ -99,5 +92,17 @@ extension MainWordListDependencies: SearchExternals {
 
     var wordListFetcher: WordListFetcher {
         createWordListRepository()
+    }
+}
+
+/// Для передачи внешних зависимостей в фичу "Добавление нового слова" в Личный словарь.
+extension MainWordListDependencies: NewWordExternals {
+
+    var appViewConfigs: AppViewConfigs {
+        externals.appConfig.appViewConfigs
+    }
+
+    var langRepository: LangRepository {
+        _langRepository
     }
 }

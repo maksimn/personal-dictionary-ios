@@ -5,32 +5,39 @@
 //  Created by Maxim Ivanov on 10.11.2021.
 //
 
+/// Внешние зависимости фичи "Добавление нового слова" в личный словарь.
+protocol NewWordExternals {
+
+    /// Параметры конфигурации представлений приложения.
+    var appViewConfigs: AppViewConfigs { get }
+
+    /// Хранилище с данными о языках в приложении.
+    var langRepository: LangRepository { get }
+}
+
 /// Реализация билдера Фичи "Добавление нового слова" в личный словарь.
 final class NewWordBuilderImpl: NewWordBuilder {
 
-    private let appViewConfigs: AppViewConfigs
-    private let langRepository: LangRepository
+    private let externals: NewWordExternals
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - appViewConfigs: параметры конфигурации приложения.
-    ///  - langRepository: хранилище с данными о языках в приложении.
-    init(appViewConfigs: AppViewConfigs,
-         langRepository: LangRepository) {
-        self.appViewConfigs = appViewConfigs
-        self.langRepository = langRepository
+    ///  - externals: внешние зависимости фичи.
+    init(externals: NewWordExternals) {
+        self.externals = externals
     }
 
     /// Создать MVVM-граф фичи
     /// - Returns:
     ///  - MVVM-граф фичи  "Добавление нового слова".
     func build() -> NewWordMVVM {
-        let dependencies = NewWordDependencies(appViewConfigs: appViewConfigs,
-                                               langRepository: langRepository)
+        let dependencies = NewWordDependencies(externals: externals)
 
-        return NewWordMVVMImpl(langRepository: langRepository,
-                               newWordItemStream: dependencies.newWordItemStream,
-                               viewParams: dependencies.viewParams,
-                               langPickerBuilder: dependencies.langPickerBuilder)
+        return NewWordMVVMImpl(
+            langRepository: externals.langRepository,
+            newWordItemStream: dependencies.newWordItemStream,
+            viewParams: dependencies.viewParams,
+            langPickerBuilder: dependencies.langPickerBuilder
+        )
     }
 }

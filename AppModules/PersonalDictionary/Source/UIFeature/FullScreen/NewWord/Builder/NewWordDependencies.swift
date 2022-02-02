@@ -21,20 +21,19 @@ final class NewWordDependencies {
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - appViewConfigs: параметры конфигурации приложения.
-    ///  - langRepository: хранилище с данными о языках в приложении.
-    init(appViewConfigs: AppViewConfigs,
-         langRepository: LangRepository) {
+    ///  - externals: внешние зависимости фичи.
+    init(externals: NewWordExternals) {
         let bundle = Bundle(for: type(of: self))
 
         viewParams = NewWordViewParams(
             arrowText: bundle.moduleLocalizedString("⇋"),
             okText: bundle.moduleLocalizedString("OK"),
             textFieldPlaceholder: bundle.moduleLocalizedString("Enter a new word"),
-            backgroundColor: appViewConfigs.backgroundColor
+            backgroundColor: externals.appViewConfigs.backgroundColor
         )
 
-        langPickerBuilder = LangPickerBuilderImpl(allLangs: langRepository.allLangs, appViewConfigs: appViewConfigs)
+        langPickerBuilder = LangPickerBuilderImpl(allLangs: externals.langRepository.allLangs,
+                                                  appViewConfigs: externals.appViewConfigs)
         newWordItemStream = WordItemStreamImpl.instance
     }
 }
