@@ -12,7 +12,7 @@ import RxSwift
 final class WordListModelImpl: WordListModel {
 
     private let viewModelBlock: () -> WordListViewModel?
-    private lazy var viewModel: WordListViewModel? = viewModelBlock()
+    private weak var viewModel: WordListViewModel?
 
     private let cudOperations: WordItemCUDOperations
     private let wordItemStream: ReadableWordItemStream & RemovedWordItemStream
@@ -23,6 +23,9 @@ final class WordListModelImpl: WordListModel {
     /// Стейт модели списка слов.
     var data: WordListData = WordListData(wordList: [], changedItemPosition: nil) {
         didSet {
+            if viewModel == nil {
+                viewModel = viewModelBlock()
+            }
             viewModel?.wordListData = data
         }
     }
