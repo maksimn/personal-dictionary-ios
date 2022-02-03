@@ -11,7 +11,8 @@ import UIKit
 /// Реализация MVVM-графа фичи "Список слов".
 final class WordListMVVMImpl: WordListMVVM {
 
-    private var view: WordListViewController
+    /// View controller для показа экрана/части экрана со списком слов
+    private(set) var viewController: UIViewController
 
     /// Модель списка слов
     private(set) weak var model: WordListModel?
@@ -29,7 +30,7 @@ final class WordListMVVMImpl: WordListMVVM {
         weak var viewModelLazyWeak: WordListViewModel?
         var viewModelLazy: WordListViewModel?
 
-        view = WordListViewController(viewModelBlock: { viewModelLazy },
+        let view = WordListViewController(viewModelBlock: { viewModelLazy },
                                       params: viewParams)
         let model = WordListModelImpl(viewModelBlock: { viewModelLazyWeak },
                                       cudOperations: cudOperations,
@@ -39,11 +40,8 @@ final class WordListMVVMImpl: WordListMVVM {
 
         viewModelLazyWeak = viewModel
         viewModelLazy = viewModel
-        self.model = model
-    }
 
-    /// View controller для показа экрана/части экрана со списком слов
-    var viewController: UIViewController {
-        view
+        viewController = view
+        self.model = model
     }
 }
