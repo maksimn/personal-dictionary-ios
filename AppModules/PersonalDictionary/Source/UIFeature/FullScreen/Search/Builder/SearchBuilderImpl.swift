@@ -5,13 +5,16 @@
 //  Created by Maxim Ivanov on 11.11.2021.
 //
 
-import UIKit
+import CoreModule
 
 /// Внешние зависимости фичи "Поиска".
-protocol SearchExternals: WordListExternals {
+protocol SearchExternals {
 
-    /// Источник данных для списка слов из хранилища личного словаря.
-    var wordListFetcher: WordListFetcher { get }
+    var appConfig: AppConfigs { get }
+
+    var logger: Logger { get }
+
+    var wordListRepository: WordListRepository { get }
 }
 
 /// Билдер Фичи "Поиск по словам в словаре".

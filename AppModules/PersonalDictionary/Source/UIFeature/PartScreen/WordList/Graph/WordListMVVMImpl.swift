@@ -31,7 +31,7 @@ final class WordListMVVMImpl: WordListMVVM {
         var viewModelLazy: WordListViewModel?
 
         let view = WordListViewController(viewModelBlock: { viewModelLazy },
-                                      params: viewParams)
+                                          params: viewParams)
         let model = WordListModelImpl(viewModelBlock: { viewModelLazyWeak },
                                       cudOperations: cudOperations,
                                       translationService: translationService,

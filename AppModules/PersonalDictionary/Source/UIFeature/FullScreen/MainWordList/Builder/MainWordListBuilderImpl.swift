@@ -5,8 +5,6 @@
 //  Created by Maxim Ivanov on 10.11.2021.
 //
 
-import CoreModule
-
 /// Внешние зависимости фичи "Главный (основной) список слов" Личного словаря.
 protocol MainWordListExternals {
 

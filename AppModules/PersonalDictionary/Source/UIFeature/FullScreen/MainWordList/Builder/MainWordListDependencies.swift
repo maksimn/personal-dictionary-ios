@@ -15,8 +15,8 @@ final class MainWordListDependencies: MainWordListExternals {
 
     private lazy var bundle = Bundle(for: type(of: self))
 
-    fileprivate lazy var _langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard,
-                                                              data: appConfig.langData)
+    private(set) lazy var langRepository: LangRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard,
+                                                                              data: appConfig.langData)
 
     /// Инициализатор.
     /// - Parameters:
@@ -57,16 +57,14 @@ final class MainWordListDependencies: MainWordListExternals {
     /// Создать хранилище слов Личного словаря.
     func createWordListRepository() -> WordListRepository {
         return CoreWordListRepository(
-            args: CoreWordListRepositoryArgs(
-                bundle: bundle,
-                persistentContainerName: "StorageModel"
-            ),
-            langRepository: _langRepository,
-            logger: createLogger()
+            args: CoreWordListRepositoryArgs(bundle: bundle,
+                                             persistentContainerName: "StorageModel"),
+            langRepository: langRepository,
+            logger: logger
         )
     }
 
-    fileprivate func createLogger() -> Logger {
+    var logger: Logger {
         SimpleLogger(isLoggingEnabled: appConfig.isLoggingEnabled)
     }
 }
@@ -77,16 +75,12 @@ extension MainWordListDependencies: WordListExternals {
     var cudOperations: WordItemCUDOperations {
         createWordListRepository()
     }
-
-    var logger: Logger {
-        createLogger()
-    }
 }
 
 /// Для передачи внешних зависимостей в фичу "Поиск по словам Личного словаря".
 extension MainWordListDependencies: SearchExternals {
 
-    var wordListFetcher: WordListFetcher {
+    var wordListRepository: WordListRepository {
         createWordListRepository()
     }
 }
@@ -96,9 +90,5 @@ extension MainWordListDependencies: NewWordExternals {
 
     var appViewConfigs: AppViewConfigs {
         appConfig.appViewConfigs
-    }
-
-    var langRepository: LangRepository {
-        _langRepository
     }
 }
