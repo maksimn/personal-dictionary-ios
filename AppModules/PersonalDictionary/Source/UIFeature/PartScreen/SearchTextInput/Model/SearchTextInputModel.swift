@@ -16,11 +16,6 @@ protocol SearchTextInputModel: AnyObject {
 
     /// Получить поисковый текст
     var searchText: String { get }
-
-    /// Обновить поисковый текст.
-    /// - Parameters:
-    ///  - searchText: поисковый текст.
-    func update(_ searchText: String)
 }
 
 /// Делегат фичи "Элемент ввода поискового текста".
