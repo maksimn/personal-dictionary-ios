@@ -19,17 +19,16 @@ final class SearchTextInputMVVMImpl: SearchTextInputMVVM {
     /// - Parameters:
     ///  - viewParams: параметры представления.
     init(viewParams: SearchTextInputViewParams) {
-        view = SearchTextInputViewImpl(params: viewParams)
         let model = SearchTextInputModelImpl()
         let viewModel = SearchTextInputViewModelImpl(model: model)
+        view = SearchTextInputViewImpl(params: viewParams, viewModel: viewModel)
 
-        view.viewModel = viewModel
         model.viewModel = viewModel
         self.model = model
     }
 
     /// Представление фичи.
-    var uiview: UIView {
+    var searchBar: UIView {
         view.uiview
     }
 }
