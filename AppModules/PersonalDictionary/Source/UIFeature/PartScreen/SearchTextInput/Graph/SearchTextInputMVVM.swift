@@ -11,7 +11,7 @@ import UIKit
 protocol SearchTextInputMVVM {
 
     /// Представление фичи.
-    var uiview: UIView { get }
+    var searchBar: UIView { get }
 
     /// Модель фичи.
     var model: SearchTextInputModel? { get }

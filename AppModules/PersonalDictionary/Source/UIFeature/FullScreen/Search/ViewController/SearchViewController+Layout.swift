@@ -13,7 +13,7 @@ extension SearchViewController {
     func addFeature(_ searchTextInputBuilder: SearchTextInputBuilder) {
         searchTextInputMVVM = searchTextInputBuilder.build()
         searchTextInputMVVM?.model?.listener = self
-        navigationItem.titleView = searchTextInputMVVM?.uiview
+        navigationItem.titleView = searchTextInputMVVM?.searchBar
     }
 
     func addWordListViewController() {
