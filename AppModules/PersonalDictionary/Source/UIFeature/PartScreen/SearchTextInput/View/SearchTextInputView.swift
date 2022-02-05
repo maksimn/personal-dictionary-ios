@@ -15,9 +15,4 @@ protocol SearchTextInputView: AnyObject {
 
     /// UIView элемента ввода поискового текста.
     var uiview: UIView { get }
-
-    /// Задать поисковый текст для представления.
-    /// - Parameters:
-    ///  - searchText: поисковый текст.
-    func set(_ searchText: String)
 }

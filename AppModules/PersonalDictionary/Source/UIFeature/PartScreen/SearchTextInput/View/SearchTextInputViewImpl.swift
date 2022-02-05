@@ -5,17 +5,24 @@
 //  Created by Maxim Ivanov on 12.11.2021.
 //
 
+import RxSwift
 import UIKit
 
 /// Реализация представления элемента ввода поискового текста.
 final class SearchTextInputViewImpl: NSObject, SearchTextInputView, UISearchBarDelegate {
 
     /// Модель представления элемента ввода поискового текста.
-    var viewModel: SearchTextInputViewModel?
+    var viewModel: SearchTextInputViewModel? {
+        didSet {
+            bindToViewModel()
+        }
+    }
 
     private let searchBar = UISearchBar()
 
     private let params: SearchTextInputViewParams
+
+    private let disposeBag = DisposeBag()
 
     /// Инициализатор.
     /// - Parameters:
@@ -31,26 +38,16 @@ final class SearchTextInputViewImpl: NSObject, SearchTextInputView, UISearchBarD
         searchBar
     }
 
-    /// Задать поисковый текст для представления.
-    /// - Parameters:
-    ///  - searchText: поисковый текст.
-    func set(_ searchText: String) {
-        searchBar.text = searchText
-    }
-
-    // MARK: - UISearchBarDelegate
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if let searchText = searchBar.text {
-            viewModel?.updateModel(searchText)
-        }
-    }
-
     // MARK: - private
 
     private func initSearchBar() {
         searchBar.frame = CGRect(origin: .zero, size: params.size)
         searchBar.placeholder = params.placeholder
-        searchBar.delegate = self
+    }
+
+    private func bindToViewModel() {
+        searchBar.rx.text.subscribe(onNext: { [weak self] text in
+            self?.viewModel?.searchText.accept(text ?? "")
+        }).disposed(by: disposeBag)
     }
 }

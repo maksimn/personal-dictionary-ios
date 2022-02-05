@@ -21,7 +21,7 @@ final class SearchTextInputMVVMImpl: SearchTextInputMVVM {
     init(viewParams: SearchTextInputViewParams) {
         view = SearchTextInputViewImpl(params: viewParams)
         let model = SearchTextInputModelImpl()
-        let viewModel = SearchTextInputViewModelImpl(model: model, view: view)
+        let viewModel = SearchTextInputViewModelImpl(model: model)
 
         view.viewModel = viewModel
         model.viewModel = viewModel
