@@ -15,7 +15,7 @@ final class WordListModelImpl: WordListModel {
     private weak var viewModel: WordListViewModel?
 
     private let cudOperations: WordItemCUDOperations
-    private let wordItemStream: ReadableWordItemStream & RemovedWordItemStream
+    private let wordItemStream: WordItemStream
     private let translationService: TranslationService
 
     private let disposeBag = DisposeBag()
@@ -39,7 +39,7 @@ final class WordListModelImpl: WordListModel {
     init(viewModelBlock: @escaping () -> WordListViewModel?,
          cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
-         wordItemStream: ReadableWordItemStream & RemovedWordItemStream) {
+         wordItemStream: WordItemStream) {
         self.viewModelBlock = viewModelBlock
         self.cudOperations = cudOperations
         self.translationService = translationService
@@ -66,6 +66,21 @@ final class WordListModelImpl: WordListModel {
     ///  - wordItem: удаленное слово.
     func sendRemovedWordItem(_ wordItem: WordItem) {
         wordItemStream.sendRemovedWordItem(wordItem)
+    }
+
+    /// Переключить значение флага "избранности" (isFavorite) для слова по заданному индексу из списка
+    /// - Parameters:
+    ///  - position: позиция (индекс) слова в списке.
+    func toggleWordItemIsFavorite(at position: Int) {
+        var wordList = data.wordList
+        var wordItem = wordList[position]
+
+        wordItem.isFavorite = !wordItem.isFavorite
+        wordList[position] = wordItem
+
+        data = WordListData(wordList: wordList, changedItemPosition: position)
+        cudOperations.update(wordItem).subscribe().disposed(by: disposeBag)
+        wordItemStream.sendUpdatedWordItem(wordItem)
     }
 
     /// Запросить перевод для слов в списке, расположенных в заданном интервале индексов.
@@ -140,12 +155,25 @@ final class WordListModelImpl: WordListModel {
         data = WordListData(wordList: wordList, changedItemPosition: position)
     }
 
+    private func update(wordItem: WordItem) {
+        if let position = data.wordList.firstIndex(where: { $0.id == wordItem.id }),
+            data.wordList[position] != wordItem {
+            var wordList = data.wordList
+
+            wordList[position] = wordItem
+            data = WordListData(wordList: wordList, changedItemPosition: position)
+        }
+    }
+
     private func subscribeToWordItemStream() {
         wordItemStream.newWordItem
             .subscribe(onNext: { [weak self] in self?.addNewWord($0) })
             .disposed(by: disposeBag)
         wordItemStream.removedWordItem
             .subscribe(onNext: { [weak self] in self?.remove(wordItem: $0) })
+            .disposed(by: disposeBag)
+        wordItemStream.updatedWordItem
+            .subscribe(onNext: { [weak self] in self?.update(wordItem: $0) })
             .disposed(by: disposeBag)
     }
 }

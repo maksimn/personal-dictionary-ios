@@ -30,6 +30,9 @@ final class WordListViewController: UIViewController, WordListView {
         },
         onDeleteTap: { [weak self] position in
             self?.onDeleteWordTap(position)
+        },
+        onFavoriteTap: { [weak self] position in
+            self?.onFavoriteTap(position)
         }
     )
 
@@ -67,6 +70,10 @@ final class WordListViewController: UIViewController, WordListView {
 
         viewModel?.remove(at: position)
         viewModel?.sendRemovedWordItem(item)
+    }
+
+    private func onFavoriteTap(_ position: Int) {
+        viewModel?.toggleWordItemIsFavorite(at: position)
     }
 
     private func onTableViewScrollFinish() {

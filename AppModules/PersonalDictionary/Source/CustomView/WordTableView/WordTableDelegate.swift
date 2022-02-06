@@ -24,6 +24,12 @@ struct WordTableDelegateParams {
 
     /// Цвет фона для действия удаления элемента из таблицы
     let deleteActionBackgroundColor: UIColor
+
+    /// Картинка для действия добавления/удаления элемента из Избранного
+    let favoriteActionImage: UIImage
+
+    /// Цвет фона для действия добавления/удаления элемента из Избранного
+    let favoriteActionBackgroundColor: UIColor
 }
 
 /// Делегат событий для таблицы слов из словаря.
@@ -32,19 +38,23 @@ final class WordTableDelegate: NSObject, UITableViewDelegate {
     private let params: WordTableDelegateParams
     private var onDeleteTap: ((Int) -> Void)?
     private var onScrollFinish: (() -> Void)?
+    private var onFavoriteTap: ((Int) -> Void)?
 
     private var hasAnimatedAllCells = false
 
     /// Инициализатор
     /// - Parameters:
-    ///  - onScrollFinish: обработчик для события завершения скролла таблицы
-    ///  - onDeleteTap: обработчик нажатия на view для удаления элемента таблицы
     ///  - params: параметры представления таблицы слов из личного словаря.
+    ///  - onScrollFinish: обработчик для события завершения скролла таблицы.
+    ///  - onDeleteTap: обработчик нажатия на view для удаления элемента таблицы.
+    ///  - onFavoriteTap: обработчик нажатия на view для добавления/удаления элемента из Избранного.
     init(params: WordTableDelegateParams,
          onScrollFinish: (() -> Void)?,
-         onDeleteTap: ((Int) -> Void)?) {
+         onDeleteTap: ((Int) -> Void)?,
+         onFavoriteTap: ((Int) -> Void)?) {
         self.onScrollFinish = onScrollFinish
         self.onDeleteTap = onDeleteTap
+        self.onFavoriteTap = onFavoriteTap
         self.params = params
         super.init()
     }
@@ -64,6 +74,22 @@ final class WordTableDelegate: NSObject, UITableViewDelegate {
         deleteAction.backgroundColor = params.deleteActionBackgroundColor
 
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+
+    func tableView(_ tableView: UITableView,
+                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let favoriteAction = UIContextualAction(
+            style: .normal, title: "",
+            handler: { [weak self] (_, _, success: (Bool) -> Void) in
+                self?.onFavoriteTap?(indexPath.row)
+                success(true)
+            }
+        )
+
+        favoriteAction.image = params.favoriteActionImage
+        favoriteAction.backgroundColor = params.favoriteActionBackgroundColor
+
+        return UISwipeActionsConfiguration(actions: [favoriteAction])
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

@@ -14,6 +14,7 @@ final class WordItemCell: UITableViewCell {
     let translationLabel = UILabel()
     let sourceLangLabel = UILabel()
     let targetLangLabel = UILabel()
+    let favoriteWordLabel = UILabel()
 
     /// Стандартный инициализатор ячейки таблицы.
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -33,5 +34,6 @@ final class WordItemCell: UITableViewCell {
         translationLabel.text = wordItem.translation
         sourceLangLabel.text = wordItem.sourceLang.shortName
         targetLangLabel.text = wordItem.targetLang.shortName
+        favoriteWordLabel.isHidden = !wordItem.isFavorite
     }
 }

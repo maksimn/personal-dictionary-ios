@@ -48,4 +48,11 @@ final class WordListViewModelImpl: WordListViewModel {
     func requestTranslationsIfNeededWithin(startPosition: Int, endPosition: Int) {
         model.requestTranslationsIfNeededWithin(startPosition: startPosition, endPosition: endPosition)
     }
+
+    /// Переключить значение флага "избранности" (isFavorite) для слова по заданному индексу из списка
+    /// - Parameters:
+    ///  - position: позиция (индекс) слова в списке.
+    func toggleWordItemIsFavorite(at position: Int) {
+        model.toggleWordItemIsFavorite(at: position)
+    }
 }
