@@ -25,7 +25,7 @@ final class WordListMVVMImpl: WordListMVVM {
     ///  - viewParams: параметры представления фичи.
     init(cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
-         wordItemStream: ReadableWordItemStream & RemovedWordItemStream,
+         wordItemStream: WordItemStream,
          viewParams: WordListViewParams) {
         weak var viewModelLazyWeak: WordListViewModel?
         var viewModelLazy: WordListViewModel?

@@ -25,6 +25,7 @@ extension WordItemCell {
         initSourceLangLabel()
         initTargetLangLabel()
         initTranslationLabel()
+        initFavoriteWordLabel()
         contentView.layer.cornerRadius = 16
         contentView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner,
                                            .layerMinXMinYCorner, .layerMaxXMinYCorner]
@@ -58,17 +59,27 @@ extension WordItemCell {
         contentView.addSubview(targetLangLabel)
     }
 
+    private func initFavoriteWordLabel() {
+        favoriteWordLabel.textColor = UIColor(red: 1.00, green: 0.84, blue: 0.00, alpha: 1.00)
+        favoriteWordLabel.font = UIFont.systemFont(ofSize: 22)
+        favoriteWordLabel.text = "★"
+        contentView.addSubview(favoriteWordLabel)
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
         let xMax = contentView.bounds.width - 16
         let shortLangNameWidth: CGFloat = 30
-        wordlabel.frame = CGRect(origin: CGPoint(x: 40, y: 10.5),
+        let wordLabelOriginX: CGFloat = 50
+
+        wordlabel.frame = CGRect(origin: CGPoint(x: wordLabelOriginX, y: 10.5),
                                  size: CGSize(width: xMax - shortLangNameWidth - 16, height: 24))
-        translationLabel.frame = CGRect(origin: CGPoint(x: 40, y: 31),
+        translationLabel.frame = CGRect(origin: CGPoint(x: wordLabelOriginX, y: 31),
                                         size: CGSize(width: xMax - shortLangNameWidth - 16, height: 24))
         sourceLangLabel.frame = CGRect(origin: CGPoint(x: xMax - shortLangNameWidth, y: 13.5),
                                        size: CGSize(width: shortLangNameWidth, height: 24))
         targetLangLabel.frame = CGRect(origin: CGPoint(x: xMax - shortLangNameWidth, y: 28.5),
                                        size: CGSize(width: shortLangNameWidth, height: 24))
+        favoriteWordLabel.frame = CGRect(origin: CGPoint(x: 15, y: 16), size: CGSize(width: 30, height: 30))
     }
 }

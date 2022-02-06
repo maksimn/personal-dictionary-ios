@@ -15,7 +15,7 @@ final class WordListDependencies {
     let viewParams: WordListViewParams
 
     /// ModelStream для событий со словами в личном словаре.
-    let wordItemStream: ReadableWordItemStream & RemovedWordItemStream
+    let wordItemStream: WordItemStream
 
     /// Служба для выполнения перевода слов на целевой язык
     let translationService: TranslationService
@@ -37,7 +37,9 @@ final class WordListDependencies {
                 cellSlideInDelayFactor: 0.05,
                 deleteActionImage: UIImage(systemName: "trash",
                                            withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!,
-                deleteActionBackgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
+                deleteActionBackgroundColor: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1),
+                favoriteActionImage: UIImage(systemName: "star.fill")!,
+                favoriteActionBackgroundColor: UIColor(red: 1.00, green: 0.84, blue: 0.00, alpha: 1.00)
             )
         )
 

@@ -28,6 +28,9 @@ struct WordItem: Equatable {
     /// Целевой язык
     let targetLang: Lang
 
+    /// Является ли слово избранным
+    var isFavorite: Bool
+
     /// Дата и время создания объекта в целочисленном виде
     let createdAt: Int
 
@@ -37,22 +40,25 @@ struct WordItem: Equatable {
          translation: String? = nil,
          sourceLang: Lang,
          targetLang: Lang,
+         isFavorite: Bool = false,
          createdAt: Int = Int(Date().timeIntervalSince1970)) {
         self.id = id
         self.text = text
         self.translation = translation
         self.sourceLang = sourceLang
         self.targetLang = targetLang
+        self.isFavorite = isFavorite
         self.createdAt = createdAt
     }
 
     /// Операция сравнения на равенство объектов данного типа.
     static func == (lhs: WordItem, rhs: WordItem) -> Bool {
-        return lhs.id == rhs.id &&
-            lhs.text == rhs.text &&
-            lhs.translation == rhs.translation &&
-            lhs.sourceLang.id == rhs.sourceLang.id &&
-            lhs.targetLang.id == rhs.targetLang.id &&
-            lhs.createdAt == rhs.createdAt
+        lhs.id == rhs.id &&
+        lhs.text == rhs.text &&
+        lhs.translation == rhs.translation &&
+        lhs.sourceLang == rhs.sourceLang &&
+        lhs.targetLang == rhs.targetLang &&
+        lhs.isFavorite == rhs.isFavorite &&
+        lhs.createdAt == rhs.createdAt
     }
 }

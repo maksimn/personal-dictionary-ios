@@ -21,6 +21,11 @@ protocol WordListViewModel: AnyObject {
     ///  - wordItem: удаленное слово.
     func sendRemovedWordItem(_ wordItem: WordItem)
 
+    /// Переключить значение флага "избранности" (isFavorite) для слова по заданному индексу из списка
+    /// - Parameters:
+    ///  - position: позиция (индекс) слова в списке.
+    func toggleWordItemIsFavorite(at position: Int)
+
     /// Запросить перевод для слов в списке, расположенных в заданном интервале индексов.
     /// - Parameters:
     ///  - startPosition: позиция (индекс) начального слова.

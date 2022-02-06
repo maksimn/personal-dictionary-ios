@@ -26,6 +26,9 @@ class WordItemMO: NSManagedObject {
     /// Идентификатор целевого языка
     @NSManaged var targetLangId: Int
 
+    /// Является ли слово избранным
+    @NSManaged var isFavorite: Bool
+
     /// Дата и время создания объекта слова
     @NSManaged var createdAt: Date?
 
@@ -47,6 +50,7 @@ class WordItemMO: NSManagedObject {
         createdAt = Date(timeIntervalSince1970: TimeInterval(wordItem.createdAt))
         sourceLangId = wordItem.sourceLang.id.raw
         targetLangId = wordItem.targetLang.id.raw
+        isFavorite = wordItem.isFavorite
     }
 
     /// Преобразовать WordItemMO в WordItem
@@ -69,6 +73,7 @@ class WordItemMO: NSManagedObject {
                         translation: translation,
                         sourceLang: sourceLang,
                         targetLang: targetLang,
+                        isFavorite: isFavorite,
                         createdAt: Int(createdAt))
     }
 }
