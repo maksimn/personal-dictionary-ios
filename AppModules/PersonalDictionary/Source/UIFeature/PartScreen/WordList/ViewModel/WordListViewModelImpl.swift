@@ -5,26 +5,31 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
+import RxSwift
+import RxRelay
+
 /// Реализация модели представления списка слов.
 final class WordListViewModelImpl: WordListViewModel {
 
-    private weak var view: WordListView?
     private let model: WordListModel
+
+    private let wordListRelay = BehaviorRelay<[WordItem]>(value: [])
 
     /// Инициализатор.
     /// - Parameters:
     ///  - model: модель списка слов.
-    ///  - view: представление списка слов.
-    init(model: WordListModel, view: WordListView) {
+    init(model: WordListModel) {
         self.model = model
-        self.view = view
     }
 
     /// Данные модели представления.
-    var wordList: [WordItem] = [] {
-        didSet {
-            view?.set(wordList)
-        }
+    var wordList: Observable<[WordItem]> {
+        wordListRelay.asObservable()
+    }
+
+    /// Обновить данные модели представления.
+    func updateViewModel(_ wordList: [WordItem]) {
+        wordListRelay.accept(wordList)
     }
 
     /// Удалить слово из модели по заданному индексу из списка

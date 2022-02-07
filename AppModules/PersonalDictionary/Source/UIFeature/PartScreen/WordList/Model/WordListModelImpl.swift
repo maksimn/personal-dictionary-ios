@@ -26,7 +26,7 @@ final class WordListModelImpl: WordListModel {
             if viewModel == nil {
                 viewModel = viewModelBlock()
             }
-            viewModel?.wordList = wordList
+            viewModel?.updateViewModel(wordList)
         }
     }
 

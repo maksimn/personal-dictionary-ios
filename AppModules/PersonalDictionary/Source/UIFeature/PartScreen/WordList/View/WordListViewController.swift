@@ -6,12 +6,12 @@
 //
 
 import UIKit
+import RxSwift
 
 /// Реализация представления списка слов.
-final class WordListViewController: UIViewController, WordListView {
+final class WordListViewController: UIViewController {
 
-    private let viewModelBlock: () -> WordListViewModel?
-    private lazy var viewModel: WordListViewModel? = viewModelBlock()
+    private let viewModel: WordListViewModel
 
     let params: WordListViewParams
 
@@ -42,46 +42,45 @@ final class WordListViewController: UIViewController, WordListView {
         }
     )
 
+    private let disposeBag = DisposeBag()
+
     /// Инициализатор.
     /// - Parameters:
-    ///  - viewModelBlock: замыкание для инициализации ссылки на модель представления.
+    ///  - viewModel: модель представления.
     ///  - params: параметры представления.
-    init(viewModelBlock: @escaping () -> WordListViewModel?,
+    init(viewModel: WordListViewModel,
          params: WordListViewParams) {
-        self.viewModelBlock = viewModelBlock
+        self.viewModel = viewModel
         self.params = params
         super.init(nibName: nil, bundle: nil)
+        initViews()
+        subscribeToViewModel()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        initViews()
-    }
+    private func subscribeToViewModel() {
+        viewModel.wordList
+            .subscribe(onNext: { [weak self] wordList in
+                var snapshot = NSDiffableDataSourceSnapshot<Int, WordItem>()
 
-    /// Задать данные для показа в представлении.
-    /// - Parameters:
-    ///  - wordList: данные о списке слов.
-    func set(_ wordList: [WordItem]) {
-        var snapshot = NSDiffableDataSourceSnapshot<Int, WordItem>()
+                snapshot.appendSections([0])
+                snapshot.appendItems(wordList, toSection: 0)
 
-        snapshot.appendSections([0])
-        snapshot.appendItems(wordList, toSection: 0)
-
-        datasource.apply(snapshot)
+                self?.datasource.apply(snapshot)
+            }).disposed(by: disposeBag)
     }
 
     // MARK: - User Action Handlers
 
     private func onDeleteWordTap(_ position: Int) {
-        viewModel?.remove(at: position)
+        viewModel.remove(at: position)
     }
 
     private func onFavoriteTap(_ position: Int) {
-        viewModel?.toggleWordItemIsFavorite(at: position)
+        viewModel.toggleWordItemIsFavorite(at: position)
     }
 
     private func onTableViewScrollFinish() {
@@ -89,6 +88,6 @@ final class WordListViewController: UIViewController, WordListView {
               let start = indexPaths.first?.row,
               let end = indexPaths.last?.row else { return }
 
-        viewModel?.requestTranslationsIfNeededWithin(startPosition: start, endPosition: end + 1)
+        viewModel.requestTranslationsIfNeededWithin(startPosition: start, endPosition: end + 1)
     }
 }
