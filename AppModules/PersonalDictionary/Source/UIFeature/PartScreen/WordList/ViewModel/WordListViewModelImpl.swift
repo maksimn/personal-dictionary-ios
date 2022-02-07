@@ -34,13 +34,6 @@ final class WordListViewModelImpl: WordListViewModel {
         model.remove(at: position)
     }
 
-    /// Отправить оповещение об удалении слова.
-    /// - Parameters:
-    ///  - wordItem: удаленное слово.
-    func sendRemovedWordItem(_ wordItem: WordItem) {
-        model.sendRemovedWordItem(wordItem)
-    }
-
     /// Запросить перевод для слов в списке, расположенных в заданном интервале индексов.
     /// - Parameters:
     ///  - startPosition: позиция (индекс) начального слова.

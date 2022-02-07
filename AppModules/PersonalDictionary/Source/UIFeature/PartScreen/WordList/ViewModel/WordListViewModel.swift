@@ -16,11 +16,6 @@ protocol WordListViewModel: AnyObject {
     ///  - position: позиция (индекс) слова в списке.
     func remove(at position: Int)
 
-    /// Отправить оповещение об удалении слова.
-    /// - Parameters:
-    ///  - wordItem: удаленное слово.
-    func sendRemovedWordItem(_ wordItem: WordItem)
-
     /// Переключить значение флага "избранности" (isFavorite) для слова по заданному индексу из списка
     /// - Parameters:
     ///  - position: позиция (индекс) слова в списке.
