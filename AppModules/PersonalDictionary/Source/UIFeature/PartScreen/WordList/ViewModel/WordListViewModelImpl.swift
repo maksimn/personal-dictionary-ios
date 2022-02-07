@@ -21,9 +21,9 @@ final class WordListViewModelImpl: WordListViewModel {
     }
 
     /// Данные модели представления.
-    var wordListData: WordListData = WordListData(wordList: [], changedItemPosition: nil) {
+    var wordList: [WordItem] = [] {
         didSet {
-            view?.set(wordListData)
+            view?.set(wordList)
         }
     }
 

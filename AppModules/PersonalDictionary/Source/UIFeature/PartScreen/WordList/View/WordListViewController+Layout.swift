@@ -17,7 +17,7 @@ extension WordListViewController {
         tableView.layer.cornerRadius = params.cellCornerRadius
         tableView.rowHeight = params.itemHeight
         tableView.register(params.cellClass, forCellReuseIdentifier: params.cellReuseIdentifier)
-        tableView.dataSource = tableDataSource
+        tableView.dataSource = datasource
         tableView.delegate = tableActions
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))

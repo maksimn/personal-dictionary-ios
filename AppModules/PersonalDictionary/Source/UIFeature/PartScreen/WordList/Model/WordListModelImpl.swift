@@ -21,12 +21,12 @@ final class WordListModelImpl: WordListModel {
     private let disposeBag = DisposeBag()
 
     /// Стейт модели списка слов.
-    var data: WordListData = WordListData(wordList: [], changedItemPosition: nil) {
+    var wordList: [WordItem] = [] {
         didSet {
             if viewModel == nil {
                 viewModel = viewModelBlock()
             }
-            viewModel?.wordListData = data
+            viewModel?.wordList = wordList
         }
     }
 
@@ -73,11 +73,11 @@ final class WordListModelImpl: WordListModel {
     ///  - endPosition: верхняя граница индексов слов для перевода (не включая).
     func requestTranslationsIfNeededWithin(startPosition: Int, endPosition: Int) {
         guard endPosition > startPosition, startPosition > -1 else { return }
-        let endPosition = min(data.wordList.count, endPosition)
+        let endPosition = min(wordList.count, endPosition)
         var notTranslatedItems = [(word: WordItem, position: Int)]()
 
-        for position in startPosition..<endPosition where data.wordList[position].translation == nil {
-            notTranslatedItems.append((word: data.wordList[position], position: position))
+        for position in startPosition..<endPosition where wordList[position].translation == nil {
+            notTranslatedItems.append((word: wordList[position], position: position))
         }
 
         guard notTranslatedItems.count > 0 else { return }
@@ -96,33 +96,26 @@ final class WordListModelImpl: WordListModel {
     // MARK: - Private
 
     private func removeInMemory(at position: Int) -> WordItem {
-        var wordList = data.wordList
         let wordItem = wordList[position]
 
         wordList.remove(at: position)
-        data = WordListData(wordList: wordList, changedItemPosition: position)
 
         return wordItem
     }
 
     private func toggleWordItemIsFavoriteInMemory(at position: Int) -> WordItem {
-        var wordList = data.wordList
         var wordItem = wordList[position]
 
         wordItem.isFavorite = !wordItem.isFavorite
         wordList[position] = wordItem
-
-        data = WordListData(wordList: wordList, changedItemPosition: position)
 
         return wordItem
     }
 
     private func addNewWord(_ wordItem: WordItem) {
         let newWordPosition = 0
-        var wordList = data.wordList
 
         wordList.insert(wordItem, at: newWordPosition)
-        data = WordListData(wordList: wordList, changedItemPosition: newWordPosition)
         cudOperations.add(wordItem)
             .subscribe()
             .disposed(by: disposeBag)
@@ -130,7 +123,7 @@ final class WordListModelImpl: WordListModel {
     }
 
     private func remove(wordItem: WordItem) {
-        if let position = data.wordList.firstIndex(where: { $0.id == wordItem.id }) {
+        if let position = wordList.firstIndex(where: { $0.id == wordItem.id }) {
             _ = removeInMemory(at: position)
         }
     }
@@ -150,7 +143,6 @@ final class WordListModelImpl: WordListModel {
         var updatedWordItem = wordItem
 
         updatedWordItem.translation = translation
-        var wordList = data.wordList
 
         guard position > -1 && position < wordList.count else { return }
 
@@ -158,15 +150,11 @@ final class WordListModelImpl: WordListModel {
         cudOperations.update(updatedWordItem)
             .subscribe()
             .disposed(by: disposeBag)
-        data = WordListData(wordList: wordList, changedItemPosition: position)
     }
 
     private func updateInMemory(updatedWordItem: WordItem) {
-        if let position = data.wordList.firstIndex(where: { $0.id == updatedWordItem.id }) {
-            var wordList = data.wordList
-
+        if let position = wordList.firstIndex(where: { $0.id == updatedWordItem.id }) {
             wordList[position] = updatedWordItem
-            data = WordListData(wordList: wordList, changedItemPosition: position)
         }
     }
 

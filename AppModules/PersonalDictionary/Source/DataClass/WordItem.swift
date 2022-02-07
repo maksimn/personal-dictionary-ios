@@ -9,7 +9,7 @@ import CoreModule
 import Foundation
 
 /// Данные о слове в словаре.
-struct WordItem: Equatable {
+struct WordItem: Equatable, Hashable {
 
     typealias Id = Tagged<WordItem, String>
 
@@ -60,5 +60,9 @@ struct WordItem: Equatable {
         lhs.targetLang == rhs.targetLang &&
         lhs.isFavorite == rhs.isFavorite &&
         lhs.createdAt == rhs.createdAt
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id.raw)
     }
 }

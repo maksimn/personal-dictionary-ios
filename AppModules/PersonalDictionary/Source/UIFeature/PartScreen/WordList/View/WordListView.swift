@@ -10,6 +10,6 @@ protocol WordListView: AnyObject {
 
     /// Задать данные для показа в представлении.
     /// - Parameters:
-    ///  - wordListData: данные о списке слов.
-    func set(_ wordListData: WordListData)
+    ///  - wordList: данные о списке слов.
+    func set(_ wordList: [WordItem])
 }
