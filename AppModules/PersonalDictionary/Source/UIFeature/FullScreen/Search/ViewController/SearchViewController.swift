@@ -72,7 +72,7 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
         guard let wordListModel = self.wordListMVVM.model else { return }
 
         searchResultTextLabel?.isHidden = !(data.searchState == .fulfilled && data.foundWordList.count == 0)
-        wordListModel.data = WordListData(wordList: data.foundWordList, changedItemPosition: nil)
+        wordListModel.wordList = data.foundWordList
     }
 
     private let disposeBag = DisposeBag()

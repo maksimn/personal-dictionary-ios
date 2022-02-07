@@ -17,11 +17,17 @@ final class WordListViewController: UIViewController, WordListView {
 
     let tableView = UITableView()
 
-    lazy var tableDataSource = WordTableDataSource(
-        tableView: tableView,
-        data: WordListData(wordList: [], changedItemPosition: nil),
-        cellReuseIdentifier: params.cellReuseIdentifier
-    )
+    lazy var datasource = UITableViewDiffableDataSource<Int, WordItem>(tableView: tableView) {
+        tableView, indexPath, item in
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: self.params.cellReuseIdentifier,
+                                                       for: indexPath) as? WordItemCell else {
+            return UITableViewCell()
+        }
+
+        cell.set(wordItem: item)
+
+        return cell
+    }
 
     lazy var tableActions = WordTableDelegate(
         params: params.delegateParams,
@@ -58,9 +64,14 @@ final class WordListViewController: UIViewController, WordListView {
 
     /// Задать данные для показа в представлении.
     /// - Parameters:
-    ///  - wordListData: данные о списке слов.
-    func set(_ wordListData: WordListData) {
-        tableDataSource.data = wordListData
+    ///  - wordList: данные о списке слов.
+    func set(_ wordList: [WordItem]) {
+        var snapshot = NSDiffableDataSourceSnapshot<Int, WordItem>()
+
+        snapshot.appendSections([0])
+        snapshot.appendItems(wordList, toSection: 0)
+
+        datasource.apply(snapshot)
     }
 
     // MARK: - User Action Handlers

@@ -9,7 +9,7 @@
 protocol WordListModel: AnyObject {
 
     /// Стейт модели списка слов.
-    var data: WordListData { get set }
+    var wordList: [WordItem] { get set }
 
     /// Удалить слово по заданному индексу из списка
     /// - Parameters:

@@ -72,7 +72,7 @@ class MainWordListViewController: UIViewController {
         let wordList = wordListFetcher.wordList
         guard let wordListModel = wordListMVVM.model else { return }
 
-        wordListModel.data = WordListData(wordList: wordList, changedItemPosition: nil)
+        wordListModel.wordList = wordList
         wordListModel.requestTranslationsIfNeededWithin(startPosition: 0,
                                                         endPosition: params.visibleItemMaxCount + 1)
     }
