@@ -51,36 +51,20 @@ final class WordListModelImpl: WordListModel {
     /// - Parameters:
     ///  - position: позиция (индекс) слова в списке.
     func remove(at position: Int) {
-        var wordList = data.wordList
-        let wordItem = wordList[position]
+        let removedWordItem = removeInMemory(at: position)
 
-        wordList.remove(at: position)
-        data = WordListData(wordList: wordList, changedItemPosition: position)
-        cudOperations.remove(with: wordItem.id)
-            .subscribe()
-            .disposed(by: disposeBag)
-    }
-
-    /// Отправить оповещение об удалении слова.
-    /// - Parameters:
-    ///  - wordItem: удаленное слово.
-    func sendRemovedWordItem(_ wordItem: WordItem) {
-        wordItemStream.sendRemovedWordItem(wordItem)
+        cudOperations.remove(with: removedWordItem.id).subscribe().disposed(by: disposeBag)
+        wordItemStream.sendRemovedWordItem(removedWordItem)
     }
 
     /// Переключить значение флага "избранности" (isFavorite) для слова по заданному индексу из списка
     /// - Parameters:
     ///  - position: позиция (индекс) слова в списке.
     func toggleWordItemIsFavorite(at position: Int) {
-        var wordList = data.wordList
-        var wordItem = wordList[position]
+        let updatedWordItem = toggleWordItemIsFavoriteInMemory(at: position)
 
-        wordItem.isFavorite = !wordItem.isFavorite
-        wordList[position] = wordItem
-
-        data = WordListData(wordList: wordList, changedItemPosition: position)
-        cudOperations.update(wordItem).subscribe().disposed(by: disposeBag)
-        wordItemStream.sendUpdatedWordItem(wordItem)
+        cudOperations.update(updatedWordItem).subscribe().disposed(by: disposeBag)
+        wordItemStream.sendUpdatedWordItem(updatedWordItem)
     }
 
     /// Запросить перевод для слов в списке, расположенных в заданном интервале индексов.
@@ -111,6 +95,28 @@ final class WordListModelImpl: WordListModel {
 
     // MARK: - Private
 
+    private func removeInMemory(at position: Int) -> WordItem {
+        var wordList = data.wordList
+        let wordItem = wordList[position]
+
+        wordList.remove(at: position)
+        data = WordListData(wordList: wordList, changedItemPosition: position)
+
+        return wordItem
+    }
+
+    private func toggleWordItemIsFavoriteInMemory(at position: Int) -> WordItem {
+        var wordList = data.wordList
+        var wordItem = wordList[position]
+
+        wordItem.isFavorite = !wordItem.isFavorite
+        wordList[position] = wordItem
+
+        data = WordListData(wordList: wordList, changedItemPosition: position)
+
+        return wordItem
+    }
+
     private func addNewWord(_ wordItem: WordItem) {
         let newWordPosition = 0
         var wordList = data.wordList
@@ -125,7 +131,7 @@ final class WordListModelImpl: WordListModel {
 
     private func remove(wordItem: WordItem) {
         if let position = data.wordList.firstIndex(where: { $0.id == wordItem.id }) {
-            remove(at: position)
+            _ = removeInMemory(at: position)
         }
     }
 
@@ -155,12 +161,11 @@ final class WordListModelImpl: WordListModel {
         data = WordListData(wordList: wordList, changedItemPosition: position)
     }
 
-    private func update(wordItem: WordItem) {
-        if let position = data.wordList.firstIndex(where: { $0.id == wordItem.id }),
-            data.wordList[position] != wordItem {
+    private func updateInMemory(updatedWordItem: WordItem) {
+        if let position = data.wordList.firstIndex(where: { $0.id == updatedWordItem.id }) {
             var wordList = data.wordList
 
-            wordList[position] = wordItem
+            wordList[position] = updatedWordItem
             data = WordListData(wordList: wordList, changedItemPosition: position)
         }
     }
@@ -173,7 +178,7 @@ final class WordListModelImpl: WordListModel {
             .subscribe(onNext: { [weak self] in self?.remove(wordItem: $0) })
             .disposed(by: disposeBag)
         wordItemStream.updatedWordItem
-            .subscribe(onNext: { [weak self] in self?.update(wordItem: $0) })
+            .subscribe(onNext: { [weak self] in self?.updateInMemory(updatedWordItem: $0) })
             .disposed(by: disposeBag)
     }
 }

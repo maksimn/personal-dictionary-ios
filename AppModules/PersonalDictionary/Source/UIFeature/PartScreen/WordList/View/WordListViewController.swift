@@ -66,10 +66,7 @@ final class WordListViewController: UIViewController, WordListView {
     // MARK: - User Action Handlers
 
     private func onDeleteWordTap(_ position: Int) {
-        let item = tableDataSource.data.wordList[position]
-
         viewModel?.remove(at: position)
-        viewModel?.sendRemovedWordItem(item)
     }
 
     private func onFavoriteTap(_ position: Int) {
