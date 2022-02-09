@@ -29,11 +29,10 @@ final class NewWordDependencies {
             arrowText: bundle.moduleLocalizedString("⇋"),
             okText: bundle.moduleLocalizedString("OK"),
             textFieldPlaceholder: bundle.moduleLocalizedString("Enter a new word"),
-            backgroundColor: externals.appViewConfigs.backgroundColor
+            backgroundColor: Theme.data.backgroundColor
         )
 
-        langPickerBuilder = LangPickerBuilderImpl(allLangs: externals.langRepository.allLangs,
-                                                  appViewConfigs: externals.appViewConfigs)
+        langPickerBuilder = LangPickerBuilderImpl(allLangs: externals.langRepository.allLangs)
         newWordItemStream = WordItemStreamImpl.instance
     }
 }

@@ -9,16 +9,12 @@
 final class LangPickerBuilderImpl: LangPickerBuilder {
 
     private let allLangs: [Lang]
-    private let appViewConfigs: AppViewConfigs
 
     /// Инициализатор.
     /// - Parameters:
     ///  - allLangs: список всех доступных языков.
-    ///  - appViewConfigs: конфигурация представлений приложения.
-    init(allLangs: [Lang],
-         appViewConfigs: AppViewConfigs) {
+    init(allLangs: [Lang]) {
         self.allLangs = allLangs
-        self.appViewConfigs = appViewConfigs
     }
 
     /// Создать MVVM-граф фичи.
@@ -29,7 +25,7 @@ final class LangPickerBuilderImpl: LangPickerBuilder {
             viewParams: LangPickerViewParams(
                 selectButtonTitle: Bundle(for: type(of: self)).moduleLocalizedString("Select"),
                 langs: allLangs,
-                backgroundColor: appViewConfigs.backgroundColor
+                backgroundColor: Theme.data.backgroundColor
             )
         )
     }

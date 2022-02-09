@@ -26,7 +26,7 @@ final class WordListDependencies {
     init(params: WordListParams,
          externals: WordListExternals) {
         viewParams = WordListViewParams(
-            backgroundColor: externals.appConfig.appViewConfigs.backgroundColor,
+            backgroundColor: Theme.data.backgroundColor,
             itemHeight: WordItemCell.height,
             cellClass: WordItemCell.self,
             cellReuseIdentifier: "\(WordItemCell.self)",
