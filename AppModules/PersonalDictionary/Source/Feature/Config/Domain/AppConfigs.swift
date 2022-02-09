@@ -21,14 +21,4 @@ struct AppConfigs {
 
     /// Флаг вкл/выкл логирование в приложении
     let isLoggingEnabled: Bool
-
-    /// Конфигурация представлений в приложении ("тема")
-    let appViewConfigs: AppViewConfigs
-}
-
-/// Конфигурация представлений в приложении ("тема")
-struct AppViewConfigs {
-
-    /// Цвет фона в приложении
-    let backgroundColor: UIColor
 }

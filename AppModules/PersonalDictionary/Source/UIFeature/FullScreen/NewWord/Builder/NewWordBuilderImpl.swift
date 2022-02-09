@@ -8,9 +8,6 @@
 /// Внешние зависимости фичи "Добавление нового слова" в личный словарь.
 protocol NewWordExternals {
 
-    /// Параметры конфигурации представлений приложения.
-    var appViewConfigs: AppViewConfigs { get }
-
     /// Хранилище с данными о языках в приложении.
     var langRepository: LangRepository { get }
 }

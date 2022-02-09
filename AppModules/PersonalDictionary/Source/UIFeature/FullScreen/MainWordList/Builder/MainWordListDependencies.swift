@@ -32,7 +32,7 @@ final class MainWordListDependencies: MainWordListExternals {
             navToNewWordImage: UIImage(named: "icon-plus", in: bundle, compatibleWith: nil)!,
             routingButtonTitle: appConfig.appParams.routingButtonTitle,
             visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height)),
-            backgroundColor: appConfig.appViewConfigs.backgroundColor
+            backgroundColor: Theme.data.backgroundColor
         )
     }
 
@@ -88,7 +88,4 @@ extension MainWordListDependencies: SearchExternals {
 /// Для передачи внешних зависимостей в фичу "Добавление нового слова" в Личный словарь.
 extension MainWordListDependencies: NewWordExternals {
 
-    var appViewConfigs: AppViewConfigs {
-        appConfig.appViewConfigs
-    }
 }

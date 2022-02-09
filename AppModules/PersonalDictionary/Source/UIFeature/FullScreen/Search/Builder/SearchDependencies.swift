@@ -28,7 +28,7 @@ final class SearchDependencies {
 
     /// Параметры представления Поиска
     private(set) lazy var searchViewParams = SearchViewParams(
-        appViewConfigs: externals.appConfig.appViewConfigs,
+        theme: Theme.data,
         emptySearchResultTextParams: TextLabelParams(
             textColor: .darkGray,
             font: UIFont.systemFont(ofSize: 17),

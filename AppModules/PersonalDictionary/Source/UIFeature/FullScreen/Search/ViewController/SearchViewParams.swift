@@ -9,7 +9,7 @@
 struct SearchViewParams {
 
     /// Конфигурация представлений приложения
-    let appViewConfigs: AppViewConfigs
+    let theme: Theme
 
     /// Параметры текстового сообщения о пустом результате поиска.
     let emptySearchResultTextParams: TextLabelParams
