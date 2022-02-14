@@ -8,7 +8,7 @@
 import CoreModule
 
 /// Реализация модели выбора режима поиска.
-final class SearchModePickerModelImpl: SearchModePickerModel, InitiallyBindable {
+final class SearchModePickerModelImpl: SearchModePickerModel {
 
     /// Модель представления выбора режима поиска.
     weak var viewModel: SearchModePickerViewModel?
@@ -19,7 +19,7 @@ final class SearchModePickerModelImpl: SearchModePickerModel, InitiallyBindable 
     /// Режим поиска (стейт)
     private(set) var searchMode: SearchMode {
         didSet {
-            viewModel?.searchMode = searchMode
+            viewModel?.setModelData()
         }
     }
 
@@ -28,11 +28,6 @@ final class SearchModePickerModelImpl: SearchModePickerModel, InitiallyBindable 
     ///  - searchMode: начальное значение режима поиска.
     init(searchMode: SearchMode) {
         self.searchMode = searchMode
-    }
-
-    /// Связать начальное значение модели с представлением.
-    func bindInitially() {
-        viewModel?.searchMode = searchMode
     }
 
     /// Обновить режим поиска.

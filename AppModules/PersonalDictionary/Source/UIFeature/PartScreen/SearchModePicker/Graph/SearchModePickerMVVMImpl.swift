@@ -22,13 +22,12 @@ final class SearchModePickerMVVMImpl: SearchModePickerMVVM {
     ///  - viewParams: параметры представления.
     init(searchMode: SearchMode,
          viewParams: SearchModePickerViewParams) {
-        let view = SearchModePickerViewImpl(params: viewParams)
         let model = SearchModePickerModelImpl(searchMode: searchMode)
-        let viewModel = SearchModePickerViewModelImpl(model: model, view: view)
+        let viewModel = SearchModePickerViewModelImpl(model: model)
+        let view = SearchModePickerViewImpl(params: viewParams, viewModel: viewModel)
 
-        view.viewModel = viewModel
         model.viewModel = viewModel
-        model.bindInitially()
+        viewModel.setModelData()
 
         self.model = model
         uiview = view
