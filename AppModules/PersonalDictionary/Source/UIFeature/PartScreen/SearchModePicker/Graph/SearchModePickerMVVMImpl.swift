@@ -27,7 +27,7 @@ final class SearchModePickerMVVMImpl: SearchModePickerMVVM {
         let view = SearchModePickerViewImpl(params: viewParams, viewModel: viewModel)
 
         model.viewModel = viewModel
-        viewModel.setModelData()
+        viewModel.update(searchMode)
 
         self.model = model
         uiview = view

@@ -22,11 +22,6 @@ protocol SearchModePickerModel: AnyObject {
 
     /// Получить режим поиска
     var searchMode: SearchMode { get }
-
-    /// Обновить режим поиска.
-    /// - Parameters:
-    ///  - searchMode: режим поиска
-    func update(_ searchMode: SearchMode)
 }
 
 /// Делегат фичи "Выбор режима поиска".
