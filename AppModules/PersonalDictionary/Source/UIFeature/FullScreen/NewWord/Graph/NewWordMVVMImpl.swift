@@ -10,7 +10,8 @@ import UIKit
 /// Реализация MVVM-графа фичи "Добавление нового слова" в личный словарь.
 final class NewWordMVVMImpl: NewWordMVVM {
 
-    private let view: NewWordViewController
+    /// View controller экрана "Добавления нового слова" в личный словарь.
+    private(set) var viewController: UIViewController?
 
     /// Инициализатор.
     /// - Parameters:
@@ -22,17 +23,13 @@ final class NewWordMVVMImpl: NewWordMVVM {
          newWordItemStream: NewWordItemStream,
          viewParams: NewWordViewParams,
          langPickerBuilder: LangPickerBuilder) {
-        view = NewWordViewController(params: viewParams, langPickerBuilder: langPickerBuilder)
         let model = NewWordModelImpl(langRepository, newWordItemStream)
-        let viewModel = NewWordViewModelImpl(model: model, view: view)
+        let viewModel = NewWordViewModelImpl(model: model)
+        let view = NewWordViewController(params: viewParams,
+                                         viewModel: viewModel,
+                                         langPickerBuilder: langPickerBuilder)
 
-        view.viewModel = viewModel
         model.viewModel = viewModel
-        model.bindInitially()
-    }
-
-    /// View controller экрана "Добавления нового слова" в личный словарь.
-    var viewController: UIViewController? {
-        view
+        viewController = view
     }
 }
