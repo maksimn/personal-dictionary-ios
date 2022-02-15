@@ -8,19 +8,14 @@
 /// Модель выбора языка.
 protocol LangPickerModel: AnyObject {
 
-    /// Данные о выбранном языке ("стейт").
-    var data: LangSelectorData? { get set }
+    /// Начальные данные о выбранном языке.
+    var initData: LangSelectorData? { get set }
 
     /// Модель представления Выбора языка.
     var viewModel: LangPickerViewModel? { get set }
 
     /// Делегат события выбора языка.
     var listener: LangPickerListener? { get set }
-
-    /// Отправить сведения о выбранном языке.
-    /// - Parameters:
-    ///  - lang: выбранный язык.
-    func sendSelectedLang(_ lang: Lang)
 }
 
 /// Делегат события выбора языка.

@@ -5,33 +5,38 @@
 //  Created by Maxim Ivanov on 09.11.2021.
 //
 
+import RxCocoa
+import RxSwift
+
 /// Реализация модели представления Выбора языка.
 final class LangPickerViewModelImpl: LangPickerViewModel {
 
-    private weak var view: LangPickerView?
     private let model: LangPickerModel
+    private let publishRelay = PublishRelay<LangSelectorData>()
 
     /// Инициализатор.
     /// - Parameters:
     ///  - model: модель фичи "Выбор языка"
-    ///  - view: представление фичи "Выбор языка"
-    init(model: LangPickerModel, view: LangPickerView) {
+    init(model: LangPickerModel) {
         self.model = model
-        self.view = view
     }
 
     /// Данные модели представления.
-    var langSelectorData: LangSelectorData? {
-        didSet {
-            guard let data = langSelectorData else { return }
-            view?.set(langSelectorData: data)
-        }
+    var langSelectorData: Observable<LangSelectorData> {
+        publishRelay.asObservable()
     }
 
-    /// Отправить сведения о выбранном языке.
+    /// Обновить сведения о выбранном языке.
     /// - Parameters:
-    ///  - lang: выбранный язык.
-    func sendSelectedLang(_ lang: Lang) {
-        model.sendSelectedLang(lang)
+    ///  - data: данные о выбранном языке.
+    func updateSelectedLang(_ data: LangSelectorData) {
+        publishRelay.accept(data)
+    }
+
+    /// Оповестить о выбранном языке.
+    /// - Parameters:
+    ///  - data: данные о выбранном языке.
+    func notifyAboutSelectedLang(_ data: LangSelectorData) {
+        model.listener?.onLangSelected(data)
     }
 }
