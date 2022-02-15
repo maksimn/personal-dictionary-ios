@@ -5,19 +5,15 @@
 //  Created by Maxim Ivanov on 13.11.2021.
 //
 
+import RxSwift
+
 /// Модель представления выбора режима поиска.
 protocol SearchModePickerViewModel: AnyObject {
 
     /// Режим поиска (данные модели представления).
-    var searchMode: SearchMode? { get }
+    var searchMode: Observable<SearchMode> { get }
 
-    /// Для подписки view на изменения данных МП.
-    var searchModeChanged: (() -> Void)? { get set }
-
-    /// Задать в модель представления данные из модели.
-    func setModelData()
-
-    /// Обновить состояние модели режима поиска.
+    /// Обновить состояние режима поиска.
     /// - Parameters:
     ///  - searchMode: значение режима поиска.
     func update(_ searchMode: SearchMode)

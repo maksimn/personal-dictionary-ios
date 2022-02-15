@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 13.11.2021.
 //
 
+import RxSwift
 import UIKit
 
 /// Реализация представления для выбора режима поиска.
@@ -18,6 +19,8 @@ final class SearchModePickerViewImpl: UIView {
 
     private let params: SearchModePickerViewParams
 
+    private let disposeBag = DisposeBag()
+
     /// Инициализатор.
     /// - Parameters:
     ///  - params: параметры представления.
@@ -27,7 +30,7 @@ final class SearchModePickerViewImpl: UIView {
         self.viewModel = viewModel
         super.init(frame: .zero)
         initViews()
-        subscribeToViewModel()
+        bindToViewModel()
     }
 
     required init?(coder: NSCoder) {
@@ -53,17 +56,15 @@ final class SearchModePickerViewImpl: UIView {
         initSearchBySegmentedControl()
     }
 
-    private func subscribeToViewModel() {
-        viewModel.searchModeChanged = { [weak self] in
-            guard let searchMode = self?.viewModel.searchMode else { return }
-
+    private func bindToViewModel() {
+        viewModel.searchMode.subscribe(onNext: { [weak self] searchMode in
             switch searchMode {
             case .bySourceWord:
                 self?.searchBySegmentedControl?.selectedSegmentIndex = 0
             case .byTranslation:
                 self?.searchBySegmentedControl?.selectedSegmentIndex = 1
             }
-        }
+        }).disposed(by: disposeBag)
     }
 
     private func initSearchByLabel() {

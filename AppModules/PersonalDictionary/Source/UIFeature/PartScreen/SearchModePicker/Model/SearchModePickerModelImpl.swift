@@ -5,23 +5,25 @@
 //  Created by Maxim Ivanov on 13.11.2021.
 //
 
-import CoreModule
+import RxSwift
 
 /// Реализация модели выбора режима поиска.
 final class SearchModePickerModelImpl: SearchModePickerModel {
 
     /// Модель представления выбора режима поиска.
-    weak var viewModel: SearchModePickerViewModel?
+    weak var viewModel: SearchModePickerViewModel? {
+        didSet {
+            subscribeToViewModel()
+        }
+    }
 
     /// Делегат фичи "Выбор режима поиска".
     weak var listener: SearchModePickerListener?
 
     /// Режим поиска (стейт)
-    private(set) var searchMode: SearchMode {
-        didSet {
-            viewModel?.setModelData()
-        }
-    }
+    private(set) var searchMode: SearchMode
+
+    private let disposeBag = DisposeBag()
 
     /// Инициализатор.
     /// - Parameters:
@@ -30,11 +32,10 @@ final class SearchModePickerModelImpl: SearchModePickerModel {
         self.searchMode = searchMode
     }
 
-    /// Обновить режим поиска.
-    /// - Parameters:
-    ///  - searchMode: значение режима поиска.
-    func update(_ searchMode: SearchMode) {
-        self.searchMode = searchMode
-        listener?.onSearchModeChanged(searchMode)
+    private func subscribeToViewModel() {
+        viewModel?.searchMode.subscribe(onNext: { [weak self] searchMode in
+            self?.searchMode = searchMode
+            self?.listener?.onSearchModeChanged(searchMode)
+        }).disposed(by: disposeBag)
     }
 }
