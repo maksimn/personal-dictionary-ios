@@ -5,15 +5,14 @@
 //  Created by Maxim Ivanov on 09.11.2021.
 //
 
-import Foundation
-
 /// Реализация модели выбора языка.
 final class LangPickerModelImpl: LangPickerModel {
 
-    /// Данные о выбранном языке ("стейт").
-    var data: LangSelectorData? {
+    /// Начальные данные о выбранном языке.
+    var initData: LangSelectorData? {
         didSet {
-            viewModel?.langSelectorData = data
+            guard let data = initData else { return }
+            viewModel?.updateSelectedLang(data)
         }
     }
 
@@ -22,14 +21,4 @@ final class LangPickerModelImpl: LangPickerModel {
 
     /// Делегат события выбора языка.
     weak var listener: LangPickerListener?
-
-    /// Отправить сведения о выбранном языке.
-    /// - Parameters:
-    ///  - lang: выбранный язык.
-    func sendSelectedLang(_ lang: Lang) {
-        guard let langType = data?.selectedLangType else { return }
-
-        listener?.onLangSelected(LangSelectorData(selectedLang: lang,
-                                                  selectedLangType: langType))
-    }
 }

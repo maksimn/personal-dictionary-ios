@@ -66,7 +66,6 @@ final class NewWordViewController: UIViewController, NewWordView, LangPickerList
     // MARK: - LangPickerListener
 
     func onLangSelected(_ data: LangSelectorData) {
-        langPickerMVVM?.uiview?.isHidden = true
         viewModel?.updateModel(data: data)
     }
 
@@ -100,6 +99,6 @@ final class NewWordViewController: UIViewController, NewWordView, LangPickerList
         guard let langPickerModel = langPickerMVVM?.model else { return }
 
         langPickerMVVM?.uiview?.isHidden = false
-        langPickerModel.data = LangSelectorData(selectedLang: lang, selectedLangType: selectedLangType)
+        langPickerModel.initData = LangSelectorData(selectedLang: lang, selectedLangType: selectedLangType)
     }
 }

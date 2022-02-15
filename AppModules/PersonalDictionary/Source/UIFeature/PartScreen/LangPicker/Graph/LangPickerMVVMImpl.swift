@@ -19,12 +19,11 @@ final class LangPickerMVVMImpl: LangPickerMVVM {
     /// - Parameters:
     ///  - viewParams: параметры представления выбора языка.
     init(viewParams: LangPickerViewParams) {
-        let view = LangPickerViewImpl(params: viewParams)
         let model = LangPickerModelImpl()
-        let viewModel = LangPickerViewModelImpl(model: model, view: view)
+        let viewModel = LangPickerViewModelImpl(model: model)
+        let view = LangPickerViewImpl(params: viewParams, viewModel: viewModel)
 
         model.viewModel = viewModel
-        view.viewModel = viewModel
 
         uiview = view
         self.model = model
