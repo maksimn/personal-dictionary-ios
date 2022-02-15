@@ -9,7 +9,13 @@
 protocol SearchModePickerViewModel: AnyObject {
 
     /// Режим поиска (данные модели представления).
-    var searchMode: SearchMode? { get set }
+    var searchMode: SearchMode? { get }
+
+    /// Для подписки view на изменения данных МП.
+    var searchModeChanged: (() -> Void)? { get set }
+
+    /// Задать в модель представления данные из модели.
+    func setModelData()
 
     /// Обновить состояние модели режима поиска.
     /// - Parameters:

@@ -8,53 +8,61 @@
 import UIKit
 
 /// Реализация представления для выбора режима поиска.
-final class SearchModePickerViewImpl: UIView, SearchModePickerView {
+final class SearchModePickerViewImpl: UIView {
 
     /// Модель представления выбора режима поиска.
-    var viewModel: SearchModePickerViewModel?
+    private let viewModel: SearchModePickerViewModel
 
-    let searchByLabel = UILabel()
-    var searchBySegmentedControl: UISegmentedControl?
+    private let searchByLabel = UILabel()
+    private var searchBySegmentedControl: UISegmentedControl?
 
-    let params: SearchModePickerViewParams
+    private let params: SearchModePickerViewParams
 
     /// Инициализатор.
     /// - Parameters:
     ///  - params: параметры представления.
-    init(params: SearchModePickerViewParams) {
+    init(params: SearchModePickerViewParams,
+         viewModel: SearchModePickerViewModel) {
         self.params = params
+        self.viewModel = viewModel
         super.init(frame: .zero)
-        initSearchByLabel()
-        initSearchBySegmentedControl()
+        initViews()
+        subscribeToViewModel()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    /// Задать выбранный режим поиска в представлении.
-    /// - Parameters:
-    ///  - searchMode: режим поиска.
-    func set(_ searchMode: SearchMode) {
-        switch searchMode {
-        case .bySourceWord:
-            searchBySegmentedControl?.selectedSegmentIndex = 0
-        case .byTranslation:
-            searchBySegmentedControl?.selectedSegmentIndex = 1
-        }
-    }
-
     @objc
-    func onSearchByValueChanged() {
+    private func onSearchByValueChanged() {
         guard let selectedIndex = searchBySegmentedControl?.selectedSegmentIndex else { return }
 
         switch selectedIndex {
         case 0:
-            viewModel?.update(.bySourceWord)
+            viewModel.update(.bySourceWord)
         case 1:
-            viewModel?.update(.byTranslation)
+            viewModel.update(.byTranslation)
         default:
             break
+        }
+    }
+
+    private func initViews() {
+        initSearchByLabel()
+        initSearchBySegmentedControl()
+    }
+
+    private func subscribeToViewModel() {
+        viewModel.searchModeChanged = { [weak self] in
+            guard let searchMode = self?.viewModel.searchMode else { return }
+
+            switch searchMode {
+            case .bySourceWord:
+                self?.searchBySegmentedControl?.selectedSegmentIndex = 0
+            case .byTranslation:
+                self?.searchBySegmentedControl?.selectedSegmentIndex = 1
+            }
         }
     }
 

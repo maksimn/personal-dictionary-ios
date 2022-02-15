@@ -8,24 +8,28 @@
 /// Реализация модели представления выбора режима поиска.
 final class SearchModePickerViewModelImpl: SearchModePickerViewModel {
 
-    private weak var view: SearchModePickerView?
     private let model: SearchModePickerModel
 
     /// Инициализатор.
     /// - Parameters:
     ///  - model: модель фичи "Выбор режима поиска"
-    ///  - view: представление фичи "Выбор режима поиска"
-    init(model: SearchModePickerModel, view: SearchModePickerView) {
+    init(model: SearchModePickerModel) {
         self.model = model
-        self.view = view
     }
 
     /// Режим поиска (данные модели представления).
-    var searchMode: SearchMode? {
+    private(set) var searchMode: SearchMode? {
         didSet {
-            guard let searchMode = searchMode else { return }
-            view?.set(searchMode)
+            searchModeChanged?()
         }
+    }
+
+    /// Для подписки view на изменения данных МП.
+    var searchModeChanged: (() -> Void)?
+
+    /// Задать в модель представления данные из модели.
+    func setModelData() {
+        searchMode = model.searchMode
     }
 
     /// Обновить состояние модели режима поиска.
