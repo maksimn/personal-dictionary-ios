@@ -13,8 +13,6 @@ final class WordListViewModelImpl: WordListViewModel {
 
     private let model: WordListModel
 
-    private let wordListRelay = BehaviorRelay<[WordItem]>(value: [])
-
     /// Инициализатор.
     /// - Parameters:
     ///  - model: модель списка слов.
@@ -23,14 +21,7 @@ final class WordListViewModelImpl: WordListViewModel {
     }
 
     /// Данные модели представления.
-    var wordList: Observable<[WordItem]> {
-        wordListRelay.asObservable()
-    }
-
-    /// Обновить данные модели представления.
-    func updateViewModel(_ wordList: [WordItem]) {
-        wordListRelay.accept(wordList)
-    }
+    let wordList = BehaviorRelay<[WordItem]>(value: [])
 
     /// Удалить слово из модели по заданному индексу из списка
     /// - Parameters:

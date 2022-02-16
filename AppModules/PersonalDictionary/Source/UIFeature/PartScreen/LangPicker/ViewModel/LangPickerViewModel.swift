@@ -5,18 +5,13 @@
 //  Created by Maxim Ivanov on 09.11.2021.
 //
 
-import RxSwift
+import RxCocoa
 
 /// Модель представления Выбора языка.
 protocol LangPickerViewModel: AnyObject {
 
     /// Данные модели представления.
-    var langSelectorData: Observable<LangSelectorData> { get }
-
-    /// Обновить сведения о выбранном языке.
-    /// - Parameters:
-    ///  - data: данные о выбранном языке.
-    func updateSelectedLang(_ data: LangSelectorData)
+    var langSelectorData: BehaviorRelay<LangSelectorData?> { get }
 
     /// Оповестить о выбранном языке.
     /// - Parameters:
