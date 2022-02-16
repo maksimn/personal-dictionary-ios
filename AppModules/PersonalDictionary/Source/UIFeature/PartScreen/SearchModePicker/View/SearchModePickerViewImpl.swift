@@ -43,9 +43,9 @@ final class SearchModePickerViewImpl: UIView {
 
         switch selectedIndex {
         case 0:
-            viewModel.update(.bySourceWord)
+            viewModel.searchMode.accept(.bySourceWord)
         case 1:
-            viewModel.update(.byTranslation)
+            viewModel.searchMode.accept(.byTranslation)
         default:
             break
         }

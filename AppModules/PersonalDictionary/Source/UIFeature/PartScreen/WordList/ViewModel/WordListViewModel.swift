@@ -5,16 +5,13 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-import RxSwift
+import RxCocoa
 
 /// Модель представления списка слов.
 protocol WordListViewModel: AnyObject {
 
     /// Данные модели представления.
-    var wordList: Observable<[WordItem]> { get }
-
-    /// Обновить данные модели представления.
-    func updateViewModel(_ wordList: [WordItem])
+    var wordList: BehaviorRelay<[WordItem]> { get }
 
     /// Удалить слово из модели по заданному индексу из списка
     /// - Parameters:

@@ -12,7 +12,7 @@ final class LangPickerModelImpl: LangPickerModel {
     var initData: LangSelectorData? {
         didSet {
             guard let data = initData else { return }
-            viewModel?.updateSelectedLang(data)
+            viewModel?.langSelectorData.accept(data)
         }
     }
 

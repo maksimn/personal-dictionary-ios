@@ -12,7 +12,6 @@ import RxSwift
 final class LangPickerViewModelImpl: LangPickerViewModel {
 
     private let model: LangPickerModel
-    private let publishRelay = PublishRelay<LangSelectorData>()
 
     /// Инициализатор.
     /// - Parameters:
@@ -22,16 +21,7 @@ final class LangPickerViewModelImpl: LangPickerViewModel {
     }
 
     /// Данные модели представления.
-    var langSelectorData: Observable<LangSelectorData> {
-        publishRelay.asObservable()
-    }
-
-    /// Обновить сведения о выбранном языке.
-    /// - Parameters:
-    ///  - data: данные о выбранном языке.
-    func updateSelectedLang(_ data: LangSelectorData) {
-        publishRelay.accept(data)
-    }
+    let langSelectorData = BehaviorRelay<LangSelectorData?>(value: nil)
 
     /// Оповестить о выбранном языке.
     /// - Parameters:

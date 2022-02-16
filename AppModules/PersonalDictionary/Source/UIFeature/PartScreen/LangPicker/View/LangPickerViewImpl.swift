@@ -42,6 +42,7 @@ final class LangPickerViewImpl: UIView {
 
     private func bindToViewModel() {
         viewModel.langSelectorData.subscribe(onNext: { [weak self] langSelectorData in
+            guard let langSelectorData = langSelectorData else { return }
             self?.selectedLangType = langSelectorData.selectedLangType
             self?.langPickerPopup?.selectLang(langSelectorData.selectedLang)
         }).disposed(by: disposeBag)

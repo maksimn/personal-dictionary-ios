@@ -12,7 +12,6 @@ import RxSwift
 final class SearchModePickerViewModelImpl: SearchModePickerViewModel {
 
     private let model: SearchModePickerModel
-    private let searchModePublishRelay = PublishRelay<SearchMode>()
 
     /// Инициализатор.
     /// - Parameters:
@@ -22,14 +21,5 @@ final class SearchModePickerViewModelImpl: SearchModePickerViewModel {
     }
 
     /// Режим поиска (данные модели представления).
-    var searchMode: Observable<SearchMode> {
-        searchModePublishRelay.asObservable()
-    }
-
-    /// Обновить состояние режима поиска.
-    /// - Parameters:
-    ///  - searchMode: значение режима поиска.
-    func update(_ searchMode: SearchMode) {
-        searchModePublishRelay.accept(searchMode)
-    }
+    let searchMode = BehaviorRelay<SearchMode>(value: .bySourceWord)
 }

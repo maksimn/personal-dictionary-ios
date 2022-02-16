@@ -11,5 +11,5 @@ import RxCocoa
 protocol SearchTextInputViewModel: AnyObject {
 
     /// Поисковый текст для представления
-    var searchText: PublishRelay<String> { get }
+    var searchText: BehaviorRelay<String> { get }
 }
