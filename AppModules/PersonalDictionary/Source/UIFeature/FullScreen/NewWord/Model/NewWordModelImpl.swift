@@ -5,22 +5,28 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
-import Foundation
-
 /// Реализация модели "Добавления нового слова" в личный словарь.
 final class NewWordModelImpl: NewWordModel {
 
     /// View model "Добавления нового слова" в личный словарь.
-    weak var viewModel: NewWordViewModel?
+    weak var viewModel: NewWordViewModel? {
+        didSet {
+            let initState = NewWordModelState(
+                text: "",
+                sourceLang: langRepository.sourceLang,
+                targetLang: langRepository.targetLang,
+                selectedLangType: .source,
+                isLangPickerHidden: true
+            )
+            viewModel?.update(initState)
+            self.state = initState
+        }
+    }
+
+    private var state: NewWordModelState?
 
     private var langRepository: LangRepository
     private weak var newWordItemStream: NewWordItemStream?
-
-    private var state: NewWordModelState? {
-        didSet {
-            viewModel?.state = state
-        }
-    }
 
     /// Инициализатор.
     /// - Parameters:
@@ -31,35 +37,27 @@ final class NewWordModelImpl: NewWordModel {
         self.newWordItemStream = newWordItemStream
     }
 
-    /// Связать начальное состояние модели с представлением
-    func bindInitially() {
-        state = NewWordModelState(text: "",
-                                  sourceLang: langRepository.sourceLang,
-                                  targetLang: langRepository.targetLang)
-    }
-
     /// Отправить событие добавления нового слова в словарь
     func sendNewWord() {
-        guard let text = state?.text.trimmingCharacters(in: .whitespacesAndNewlines),
-            !text.isEmpty,
-            let sourceLang = state?.sourceLang,
-            let targetLang = state?.targetLang else {
-            return
-        }
+        guard let state = state else { return }
+        let wordItem = WordItem(text: state.text.trimmingCharacters(in: .whitespacesAndNewlines),
+                                sourceLang: state.sourceLang,
+                                targetLang: state.targetLang)
 
-        let wordItem = WordItem(text: text, sourceLang: sourceLang, targetLang: targetLang)
+        guard !wordItem.text.isEmpty else { return }
 
         newWordItemStream?.sendNewWord(wordItem)
     }
 
-    /// Обновить написание слова
+    /// Обновить написание слова в модели
     /// - Parameters:
     ///  - text: написание слова
     func update(text: String) {
         state?.text = text
+        updateViewModel()
     }
 
-    /// Обновить данные об исходном / целевом языке для слова
+    /// Обновить данные об исходном / целевом языке для слова в модели
     /// - Parameters:
     ///  - data: данные о выбранном языке.
     func update(data: LangSelectorData) {
@@ -70,5 +68,22 @@ final class NewWordModelImpl: NewWordModel {
             state?.targetLang = data.selectedLang
             langRepository.targetLang = data.selectedLang
         }
+        state?.isLangPickerHidden = true
+        updateViewModel()
+    }
+
+    /// Показать представление для выбора языка.
+    /// - Parameters:
+    ///  - selectedLangType: тип выбранного языка (исходный / целевой).
+    func showLangPicker(selectedLangType: SelectedLangType) {
+        state?.selectedLangType = selectedLangType
+        state?.isLangPickerHidden = false
+        updateViewModel()
+    }
+
+    private func updateViewModel() {
+        guard let state = state else { return }
+
+        viewModel?.update(state)
     }
 }
