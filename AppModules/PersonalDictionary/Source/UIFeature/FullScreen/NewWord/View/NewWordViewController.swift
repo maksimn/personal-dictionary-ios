@@ -87,7 +87,8 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
 
     private func bindToViewModel() {
         viewModel.state.subscribe(onNext: { [weak self] state in
-            guard let self = self else { return }
+            guard let self = self,
+                  let state = state else { return }
 
             self.textField.text = state.text
             self.sourceLangLabel.text = state.sourceLang.name
