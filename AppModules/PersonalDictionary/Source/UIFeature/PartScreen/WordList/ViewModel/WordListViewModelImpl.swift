@@ -5,7 +5,6 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-import RxSwift
 import RxRelay
 
 /// Реализация модели представления списка слов.

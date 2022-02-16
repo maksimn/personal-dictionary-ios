@@ -18,7 +18,7 @@ final class NewWordModelImpl: NewWordModel {
                 selectedLangType: .source,
                 isLangPickerHidden: true
             )
-            viewModel?.update(initState)
+            viewModel?.state.accept(initState)
         }
     }
 

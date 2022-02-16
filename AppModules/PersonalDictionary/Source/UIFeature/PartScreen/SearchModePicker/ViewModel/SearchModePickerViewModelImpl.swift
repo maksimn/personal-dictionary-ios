@@ -6,7 +6,6 @@
 //
 
 import RxCocoa
-import RxSwift
 
 /// Реализация модели представления выбора режима поиска.
 final class SearchModePickerViewModelImpl: SearchModePickerViewModel {

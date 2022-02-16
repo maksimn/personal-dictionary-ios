@@ -6,7 +6,6 @@
 //
 
 import RxCocoa
-import RxSwift
 
 /// Реализация модели представления для экрана добавления нового слова в личный словарь.
 final class NewWordViewModelImpl: NewWordViewModel {
@@ -21,13 +20,6 @@ final class NewWordViewModelImpl: NewWordViewModel {
     ///  - model: модель фичи "Добавление нового слова"
     init(model: NewWordModel) {
         self.model = model
-    }
-
-    /// Обновить модель представления.
-    /// - Parameters:
-    ///  - state: данные модели представления.
-    func update(_ state: NewWordModelState) {
-        self.state.accept(state)
     }
 
     /// Отправить событие добавления нового слова в словарь

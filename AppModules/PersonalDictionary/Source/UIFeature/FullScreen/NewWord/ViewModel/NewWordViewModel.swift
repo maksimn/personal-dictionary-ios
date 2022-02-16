@@ -13,11 +13,6 @@ protocol NewWordViewModel: AnyObject {
     /// Данные модели представления
     var state: BehaviorRelay<NewWordModelState?> { get }
 
-    /// Обновить модель представления.
-    /// - Parameters:
-    ///  - state: данные модели представления.
-    func update(_ state: NewWordModelState)
-
     /// Обновить написание слова в модели
     /// - Parameters:
     ///  - text: написание слова

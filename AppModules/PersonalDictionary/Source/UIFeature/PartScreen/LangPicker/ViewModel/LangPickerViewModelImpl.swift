@@ -6,7 +6,6 @@
 //
 
 import RxCocoa
-import RxSwift
 
 /// Реализация модели представления Выбора языка.
 final class LangPickerViewModelImpl: LangPickerViewModel {
