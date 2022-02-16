@@ -15,7 +15,4 @@ struct LangPickerPopupParams {
 
     /// Список языков для выбора
     let langs: [Lang]
-
-    /// Цвет фона представления выбора языка
-    let backgroundColor: UIColor
 }

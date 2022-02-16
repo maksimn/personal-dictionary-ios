@@ -10,9 +10,6 @@ import UIKit
 /// Параметры представления списка слов.
 struct WordListViewParams {
 
-    /// Цвет фона
-    let backgroundColor: UIColor
-
     /// Высота элемента списка (таблицы)
     let itemHeight: CGFloat
 
