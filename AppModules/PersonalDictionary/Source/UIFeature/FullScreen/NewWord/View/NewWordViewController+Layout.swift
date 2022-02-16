@@ -52,7 +52,7 @@ extension NewWordViewController {
     private func initSourceLangLabel() {
         sourceLangLabel.isUserInteractionEnabled = true
         sourceLangLabel.textColor = .black
-        sourceLangLabel.font = UIFont.systemFont(ofSize: 17)
+        sourceLangLabel.font = Theme.data.normalFont
         sourceLangLabel.numberOfLines = 1
         sourceLangLabel.textAlignment = .right
         sourceLangLabel.snp.makeConstraints { make -> Void in
@@ -71,7 +71,7 @@ extension NewWordViewController {
     private func initTargetLangLabel() {
         targetLangLabel.isUserInteractionEnabled = true
         targetLangLabel.textColor = .black
-        targetLangLabel.font = UIFont.systemFont(ofSize: 17)
+        targetLangLabel.font = Theme.data.normalFont
         targetLangLabel.numberOfLines = 1
         targetLangLabel.snp.makeConstraints { make -> Void in
             make.top.equalTo(contentView).offset(12)
@@ -89,7 +89,7 @@ extension NewWordViewController {
     private func initArrowLabel() {
         arrowLabel.isUserInteractionEnabled = false
         arrowLabel.textColor = .black
-        arrowLabel.font = UIFont.systemFont(ofSize: 17)
+        arrowLabel.font = Theme.data.normalFont
         arrowLabel.numberOfLines = 1
         arrowLabel.textAlignment = .center
         arrowLabel.text = params.arrowText

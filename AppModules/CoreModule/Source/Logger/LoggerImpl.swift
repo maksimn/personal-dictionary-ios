@@ -5,7 +5,7 @@
 //  Created by Maxim Ivanov on 07.10.2021.
 //
 
-public final class SimpleLogger: Logger {
+public final class LoggerImpl: Logger {
 
     private let isLoggingEnabled: Bool
 
