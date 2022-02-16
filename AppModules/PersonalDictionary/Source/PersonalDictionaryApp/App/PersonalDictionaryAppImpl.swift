@@ -11,7 +11,7 @@ import UIKit
 final class PersonalDictionaryAppImpl: PersonalDictionaryApp {
 
     /// Получение корневого контроллера приложения
-    private(set) var navigationController: UINavigationController
+    let navigationController: UINavigationController
 
     /// Инициализатор:
     /// - Parameters:
