@@ -5,9 +5,7 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
-import CoreModule
-
-/// Стейт модели "Добавления нового слова" в личный словарь.
+/// Данные модели "Добавления нового слова" в личный словарь.
 struct NewWordModelState {
     var text: String
     var sourceLang: Lang
@@ -25,18 +23,9 @@ protocol NewWordModel {
     /// Отправить событие добавления нового слова в словарь
     func sendNewWord()
 
-    /// Обновить написание слова в модели
-    /// - Parameters:
-    ///  - text: написание слова
-    func update(text: String)
+    /// Сохранить исходный язык.
+    func save(sourceLang: Lang)
 
-    /// Обновить данные об исходном / целевом языке для слова в модели
-    /// - Parameters:
-    ///  - data: данные о выбранном языке.
-    func update(data: LangSelectorData)
-
-    /// Показать представление для выбора языка.
-    /// - Parameters:
-    ///  - selectedLangType: тип выбранного языка (исходный / целевой).
-    func showLangPicker(selectedLangType: SelectedLangType)
+    /// Сохранить целевой язык.
+    func save(targetLang: Lang)
 }

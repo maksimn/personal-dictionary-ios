@@ -19,11 +19,8 @@ final class NewWordModelImpl: NewWordModel {
                 isLangPickerHidden: true
             )
             viewModel?.update(initState)
-            self.state = initState
         }
     }
-
-    private var state: NewWordModelState?
 
     private var langRepository: LangRepository
     private weak var newWordItemStream: NewWordItemStream?
@@ -39,7 +36,7 @@ final class NewWordModelImpl: NewWordModel {
 
     /// Отправить событие добавления нового слова в словарь
     func sendNewWord() {
-        guard let state = state else { return }
+        guard let state = viewModel?.state.value else { return }
         let wordItem = WordItem(text: state.text.trimmingCharacters(in: .whitespacesAndNewlines),
                                 sourceLang: state.sourceLang,
                                 targetLang: state.targetLang)
@@ -49,41 +46,13 @@ final class NewWordModelImpl: NewWordModel {
         newWordItemStream?.sendNewWord(wordItem)
     }
 
-    /// Обновить написание слова в модели
-    /// - Parameters:
-    ///  - text: написание слова
-    func update(text: String) {
-        state?.text = text
-        updateViewModel()
+    /// Сохранить исходный язык.
+    func save(sourceLang: Lang) {
+        langRepository.sourceLang = sourceLang
     }
 
-    /// Обновить данные об исходном / целевом языке для слова в модели
-    /// - Parameters:
-    ///  - data: данные о выбранном языке.
-    func update(data: LangSelectorData) {
-        if data.selectedLangType == .source {
-            state?.sourceLang = data.selectedLang
-            langRepository.sourceLang = data.selectedLang
-        } else {
-            state?.targetLang = data.selectedLang
-            langRepository.targetLang = data.selectedLang
-        }
-        state?.isLangPickerHidden = true
-        updateViewModel()
-    }
-
-    /// Показать представление для выбора языка.
-    /// - Parameters:
-    ///  - selectedLangType: тип выбранного языка (исходный / целевой).
-    func showLangPicker(selectedLangType: SelectedLangType) {
-        state?.selectedLangType = selectedLangType
-        state?.isLangPickerHidden = false
-        updateViewModel()
-    }
-
-    private func updateViewModel() {
-        guard let state = state else { return }
-
-        viewModel?.update(state)
+    /// Сохранить целевой язык.
+    func save(targetLang: Lang) {
+        langRepository.targetLang = targetLang
     }
 }

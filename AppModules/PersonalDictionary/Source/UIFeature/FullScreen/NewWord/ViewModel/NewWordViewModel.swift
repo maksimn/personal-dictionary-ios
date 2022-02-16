@@ -5,13 +5,13 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
-import RxSwift
+import RxCocoa
 
 /// Модель представления для экрана добавления нового слова в личный словарь.
 protocol NewWordViewModel: AnyObject {
 
     /// Данные модели представления
-    var state: Observable<NewWordModelState> { get }
+    var state: BehaviorRelay<NewWordModelState?> { get }
 
     /// Обновить модель представления.
     /// - Parameters:
