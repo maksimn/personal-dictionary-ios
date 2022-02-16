@@ -40,7 +40,7 @@ extension NewWordViewController {
 
     private func initContentView() {
         contentView.layer.cornerRadius = 16
-        contentView.backgroundColor = params.backgroundColor
+        contentView.backgroundColor = Theme.data.backgroundColor
         contentView.snp.makeConstraints { (make) -> Void in
             make.centerY.equalTo(view)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-12)

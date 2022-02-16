@@ -11,7 +11,7 @@ import UIKit
 extension MainWordListViewController {
 
     func initViews() {
-        view.backgroundColor = params.backgroundColor
+        view.backgroundColor = Theme.data.backgroundColor
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.titleView = navToSearchView
         addWordListChildController()

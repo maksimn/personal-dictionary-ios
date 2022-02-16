@@ -24,8 +24,7 @@ final class LangPickerBuilderImpl: LangPickerBuilder {
         LangPickerMVVMImpl(
             viewParams: LangPickerViewParams(
                 selectButtonTitle: Bundle(for: type(of: self)).moduleLocalizedString("Select"),
-                langs: allLangs,
-                backgroundColor: Theme.data.backgroundColor
+                langs: allLangs
             )
         )
     }

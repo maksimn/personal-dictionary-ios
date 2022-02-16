@@ -21,7 +21,4 @@ struct MainWordListViewParams {
 
     /// Максимальное количество видимых элементов (слов) на данном экране
     let visibleItemMaxCount: Int
-
-    /// Цвет фона
-    let backgroundColor: UIColor
 }

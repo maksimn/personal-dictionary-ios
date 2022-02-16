@@ -31,8 +31,7 @@ final class MainWordListDependencies: MainWordListExternals {
             heading: bundle.moduleLocalizedString("My dictionary"),
             navToNewWordImage: UIImage(named: "icon-plus", in: bundle, compatibleWith: nil)!,
             routingButtonTitle: appConfig.appParams.routingButtonTitle,
-            visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height)),
-            backgroundColor: Theme.data.backgroundColor
+            visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
         )
     }
 

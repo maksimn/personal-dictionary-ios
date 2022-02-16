@@ -18,7 +18,4 @@ struct NewWordViewParams {
 
     /// Плейсхолдер для элемента ввода текста слова
     let textFieldPlaceholder: String
-
-    /// Цвет фона для представления
-    let backgroundColor: UIColor
 }
