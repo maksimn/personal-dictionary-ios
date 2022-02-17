@@ -24,7 +24,7 @@ public struct Http {
     }
 }
 
-public protocol CoreService {
+public protocol HttpClient {
 
     func send(_ http: Http) -> Single<Data>
 }

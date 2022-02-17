@@ -79,7 +79,7 @@ final class WordListBuilderImpl: WordListBuilder {
             apiData: PonsApiData(url: "https://api.pons.com/v1/dictionary",
                                  secretHeaderKey: "X-Secret",
                                  secret: externals.appConfig.ponsApiSecret),
-            coreService: UrlSessionCoreService(sessionConfiguration: URLSessionConfiguration.default),
+            httpClient: HttpClientImpl(sessionConfiguration: URLSessionConfiguration.default),
             jsonCoder: JSONCoderImpl(),
             logger: externals.logger
         )

@@ -24,7 +24,7 @@ struct PonsApiData {
 /// Служба для получения перевода слова из PONS Online Dictionary API,
 final class PonsTranslationService: TranslationService {
 
-    private let coreService: CoreService
+    private let httpClient: HttpClient
     private let jsonCoder: JsonCoder
     private let apiData: PonsApiData
     private let logger: Logger
@@ -34,12 +34,12 @@ final class PonsTranslationService: TranslationService {
     /// Инициализатор.
     /// - Parameters:
     ///  - apiData: данные для обращения к онлайновому PONS API.
-    ///  - coreService: базовая служба для сетевых запросов по протоколу HTTP.
+    ///  - httpClient: базовая служба для сетевых запросов по протоколу HTTP.
     ///  - jsonCoder: парсер данных в виде JSON.
     ///  - logger: логгер.
-    init(apiData: PonsApiData, coreService: CoreService, jsonCoder: JsonCoder, logger: Logger) {
+    init(apiData: PonsApiData, httpClient: HttpClient, jsonCoder: JsonCoder, logger: Logger) {
         self.apiData = apiData
-        self.coreService = coreService
+        self.httpClient = httpClient
         self.jsonCoder = jsonCoder
         self.logger = logger
     }
@@ -55,7 +55,7 @@ final class PonsTranslationService: TranslationService {
         let lParam = "l=\(shortSourceLang)\(wordItem.targetLang.shortName.lowercased())"
 
         logger.networkRequestStart(fetchTranslationRequestName)
-        return coreService
+        return httpClient
             .send(Http(urlString: apiData.url + "?" + lParam + "&" + qParam,
                        method: "GET",
                        headers: [apiData.secretHeaderKey: apiData.secret],

@@ -8,7 +8,7 @@
 import RxCocoa
 import RxSwift
 
-public class UrlSessionCoreService: CoreService {
+public class HttpClientImpl: HttpClient {
 
     private let sessionConfiguration: URLSessionConfiguration
 
