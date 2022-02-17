@@ -22,7 +22,7 @@ struct Theme {
         self.normalFont = normalFont
     }
 
-    static let data = Theme(
+    static let standard = Theme(
         backgroundColor: UIColor(red: 0.97, green: 0.97, blue: 0.95, alpha: 1.0),
         normalFont: UIFont.systemFont(ofSize: 17)
     )

@@ -55,7 +55,7 @@ final class SearchBuilderImpl: SearchBuilder {
         SearchViewParams(
             emptySearchResultTextParams: TextLabelParams(
                 textColor: .darkGray,
-                font: Theme.data.normalFont,
+                font: Theme.standard.normalFont,
                 text: Bundle(for: type(of: self)).moduleLocalizedString("No words found")
             )
         )

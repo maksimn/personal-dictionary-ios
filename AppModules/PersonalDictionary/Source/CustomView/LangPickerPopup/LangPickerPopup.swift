@@ -31,7 +31,7 @@ final class LangPickerPopup: UIView {
         self.langPickerController = LangPickerController(langs: params.langs)
         self.onSelectLang = onSelectLang
         super.init(frame: .zero)
-        self.backgroundColor = Theme.data.backgroundColor
+        self.backgroundColor = Theme.standard.backgroundColor
         layer.cornerRadius = 16
         initViews()
     }
