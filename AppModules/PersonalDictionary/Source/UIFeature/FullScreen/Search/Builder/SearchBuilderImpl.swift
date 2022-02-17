@@ -39,14 +39,16 @@ final class SearchBuilderImpl: SearchBuilder {
     /// - Returns:
     ///  - View controller экрана поиска по словам в словаре.
     func build() -> UIViewController {
-        SearchViewController(searchViewParams: createSearchViewParams(),
-                             searchTextInputBuilder: SearchTextInputBuilderImpl(),
-                             searchEngineBuilder: SearchEngineBuilderImpl(wordListFetcher: wordListRepository),
-                             wordListBuilder: WordListBuilderImpl(
-                                 params: WordListParams(shouldAnimateWhenAppear: false),
-                                 externals: self
-                             ),
-                             searchModePickerBuilder: SearchModePickerBuilderImpl())
+        SearchViewController(
+            searchViewParams: createSearchViewParams(),
+            searchTextInputBuilder: SearchTextInputBuilderImpl(),
+            searchEngineBuilder: SearchEngineBuilderImpl(wordListFetcher: wordListRepository),
+            wordListBuilder: WordListBuilderImpl(
+                params: WordListParams(shouldAnimateWhenAppear: false),
+                externals: self
+            ),
+            searchModePickerBuilder: SearchModePickerBuilderImpl()
+        )
     }
 
     private func createSearchViewParams() -> SearchViewParams {

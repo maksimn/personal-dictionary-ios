@@ -9,7 +9,7 @@
 protocol LangPickerModel: AnyObject {
 
     /// Начальные данные о выбранном языке.
-    var initData: LangSelectorData? { get set }
+    var data: LangSelectorData? { get set }
 
     /// Модель представления Выбора языка.
     var viewModel: LangPickerViewModel? { get set }

@@ -96,7 +96,7 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
             self.langPickerMVVM?.uiview?.isHidden = state.isLangPickerHidden
 
             if !state.isLangPickerHidden {
-                self.langPickerMVVM?.model?.initData = LangSelectorData(
+                self.langPickerMVVM?.model?.data = LangSelectorData(
                     selectedLang: state.selectedLangType == .source ? state.sourceLang : state.targetLang,
                     selectedLangType: state.selectedLangType
                 )

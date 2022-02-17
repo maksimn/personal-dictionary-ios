@@ -9,9 +9,9 @@
 final class LangPickerModelImpl: LangPickerModel {
 
     /// Начальные данные о выбранном языке.
-    var initData: LangSelectorData? {
+    var data: LangSelectorData? {
         didSet {
-            guard let data = initData else { return }
+            guard let data = data else { return }
             viewModel?.langSelectorData.accept(data)
         }
     }
