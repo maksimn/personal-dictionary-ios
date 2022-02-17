@@ -20,25 +20,50 @@ protocol SearchExternals {
 /// Билдер Фичи "Поиск по словам в словаре".
 final class SearchBuilderImpl: SearchBuilder {
 
-    private let externals: SearchExternals
+    let appConfig: AppConfigs
+
+    let logger: Logger
+
+    let wordListRepository: WordListRepository
 
     /// Инициализатор.
     /// - Parameters:
     ///  - externals: внешние зависимости фичи.
     init(externals: SearchExternals) {
-        self.externals = externals
+        appConfig = externals.appConfig
+        logger = externals.logger
+        wordListRepository = externals.wordListRepository
     }
 
     /// Создать экран Поиска.
     /// - Returns:
     ///  - View controller экрана поиска по словам в словаре.
     func build() -> UIViewController {
-        let dependencies = SearchDependencies(externals: externals)
+        SearchViewController(searchViewParams: createSearchViewParams(),
+                             searchTextInputBuilder: SearchTextInputBuilderImpl(),
+                             searchEngineBuilder: SearchEngineBuilderImpl(wordListFetcher: wordListRepository),
+                             wordListBuilder: WordListBuilderImpl(
+                                 params: WordListParams(shouldAnimateWhenAppear: false),
+                                 externals: self
+                             ),
+                             searchModePickerBuilder: SearchModePickerBuilderImpl())
+    }
 
-        return SearchViewController(searchViewParams: dependencies.searchViewParams,
-                                    searchTextInputBuilder: dependencies.searchTextInputBuilder,
-                                    searchEngineBuilder: dependencies.searchEngineBuilder,
-                                    wordListBuilder: dependencies.wordListBuilder,
-                                    searchModePickerBuilder: dependencies.searchModePickerBuilder)
+    private func createSearchViewParams() -> SearchViewParams {
+        SearchViewParams(
+            emptySearchResultTextParams: TextLabelParams(
+                textColor: .darkGray,
+                font: Theme.data.normalFont,
+                text: Bundle(for: type(of: self)).moduleLocalizedString("No words found")
+            )
+        )
+    }
+}
+
+/// Для передачи внешних зависимостей во вложенную фичу "Список слов".
+extension SearchBuilderImpl: WordListExternals {
+
+    var cudOperations: WordItemCUDOperations {
+        wordListRepository
     }
 }

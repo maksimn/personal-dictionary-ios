@@ -15,26 +15,33 @@ protocol NewWordExternals {
 /// Реализация билдера Фичи "Добавление нового слова" в личный словарь.
 final class NewWordBuilderImpl: NewWordBuilder {
 
-    private let externals: NewWordExternals
+    private let langRepository: LangRepository
 
     /// Инициализатор.
     /// - Parameters:
     ///  - externals: внешние зависимости фичи.
     init(externals: NewWordExternals) {
-        self.externals = externals
+        langRepository = externals.langRepository
     }
 
     /// Создать MVVM-граф фичи
     /// - Returns:
     ///  - MVVM-граф фичи  "Добавление нового слова".
     func build() -> NewWordMVVM {
-        let dependencies = NewWordDependencies(externals: externals)
+        NewWordMVVMImpl(
+            langRepository: langRepository,
+            newWordItemStream: WordItemStreamImpl.instance,
+            viewParams: createViewParams(),
+            langPickerBuilder: LangPickerBuilderImpl(allLangs: langRepository.allLangs)
+        )
+    }
 
-        return NewWordMVVMImpl(
-            langRepository: externals.langRepository,
-            newWordItemStream: dependencies.newWordItemStream,
-            viewParams: dependencies.viewParams,
-            langPickerBuilder: dependencies.langPickerBuilder
+    private func createViewParams() -> NewWordViewParams {
+        let bundle = Bundle(for: type(of: self))
+        return NewWordViewParams(
+            arrowText: bundle.moduleLocalizedString("⇋"),
+            okText: bundle.moduleLocalizedString("OK"),
+            textFieldPlaceholder: bundle.moduleLocalizedString("Enter a new word")
         )
     }
 }

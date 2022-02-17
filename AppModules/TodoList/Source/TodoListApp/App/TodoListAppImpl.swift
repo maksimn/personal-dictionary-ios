@@ -14,7 +14,7 @@ final class TodoListAppImpl: TodoListApp {
         let todoListServiceGraph = TodoListServiceGraphOne(
             todoListCache: MOTodoListCache.instance,
             coreService: URLSessionCoreService(),
-            logger: SimpleLogger(isLoggingEnabled: true),
+            logger: LoggerImpl(isLoggingEnabled: true),
             todoCoder: JSONCoderImpl(),
             notificationCenter: NotificationCenter.default
         )
