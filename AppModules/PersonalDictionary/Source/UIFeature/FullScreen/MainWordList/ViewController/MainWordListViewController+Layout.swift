@@ -18,7 +18,7 @@ extension MainWordListViewController {
         view.addSubview(navToNewWordButton)
         initNewWordButton()
         initRoutingButton()
-        initMyDictionaryLabel()
+        initHeaderView()
     }
 
     private func addWordListChildController() {
@@ -71,16 +71,15 @@ extension MainWordListViewController {
         }
     }
 
-    private func initMyDictionaryLabel() {
-        myDictionaryLabel.textColor = .black
-        myDictionaryLabel.font = UIFont.systemFont(ofSize: 28, weight: .heavy)
-        myDictionaryLabel.numberOfLines = 1
-        myDictionaryLabel.textAlignment = .left
-        myDictionaryLabel.text = params.heading
-        view.addSubview(myDictionaryLabel)
-        myDictionaryLabel.snp.makeConstraints { make -> Void in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(14)
-            make.left.equalTo(view.safeAreaLayoutGuide.snp.left).offset(34)
+    private func initHeaderView() {
+        let headerView = headerBuilder.build()
+
+        view.addSubview(headerView)
+        headerView.snp.makeConstraints { make -> Void in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
+            make.right.equalTo(routingButton.snp.left)
+            make.height.equalTo(50)
         }
     }
 }

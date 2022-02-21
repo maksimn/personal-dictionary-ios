@@ -60,7 +60,7 @@ extension WordItemCell {
     }
 
     private func initFavoriteWordLabel() {
-        favoriteWordLabel.textColor = UIColor(red: 1.00, green: 0.84, blue: 0.00, alpha: 1.00)
+        favoriteWordLabel.textColor = Theme.standard.goldColor
         favoriteWordLabel.font = UIFont.systemFont(ofSize: 22)
         favoriteWordLabel.text = "★"
         contentView.addSubview(favoriteWordLabel)

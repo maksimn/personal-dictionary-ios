@@ -46,13 +46,13 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
             wordListFetcher: createWordListRepository(),
             newWordBuilder: NewWordBuilderImpl(externals: self),
             searchBuilder: SearchBuilderImpl(externals: self),
+            favoriteWordListBuilder: FavoriteWordListBuilderImpl(),
             coreRouter: appConfig.appParams.coreRouter
         )
     }
 
     private func createViewParams() -> MainWordListViewParams {
         MainWordListViewParams(
-            heading: bundle.moduleLocalizedString("My dictionary"),
             navToNewWordImage: UIImage(named: "icon-plus", in: bundle, compatibleWith: nil)!,
             routingButtonTitle: appConfig.appParams.routingButtonTitle,
             visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
