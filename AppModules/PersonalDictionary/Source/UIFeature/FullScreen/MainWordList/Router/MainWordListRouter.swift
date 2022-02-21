@@ -10,7 +10,4 @@ protocol MainWordListRouter {
 
     /// Перейти на экран добавления нового слова.
     func navigateToNewWord()
-
-    /// Перейти на экран поиска по словам в личном словаре.
-    func navigateToSearch()
 }

@@ -30,13 +30,15 @@ final class MainWordListGraphImpl: MainWordListGraph {
          coreRouter: CoreRouter?) {
         let navigationController = UINavigationController()
         let router = MainWordListRouterImpl(navigationController: navigationController,
-                                            newWordBuilder: newWordBuilder,
-                                            searchBuilder: searchBuilder)
+                                            newWordBuilder: newWordBuilder)
+        let navToSearchBuilder = NavToSearchBuilderImpl(navigationController: navigationController,
+                                                        searchBuilder: searchBuilder)
 
         let controller = MainWordListViewController(viewParams: viewParams,
                                                     wordListMVVM: wordListBuilder.build(),
                                                     wordListFetcher: wordListFetcher,
                                                     router: router,
+                                                    navToSearchBuilder: navToSearchBuilder,
                                                     coreRouter: coreRouter)
 
         navigationController.navigationBar.setValue(true, forKey: "hidesShadow")

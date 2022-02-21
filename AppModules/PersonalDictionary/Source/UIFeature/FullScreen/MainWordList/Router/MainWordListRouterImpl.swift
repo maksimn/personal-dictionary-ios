@@ -12,19 +12,15 @@ final class MainWordListRouterImpl: MainWordListRouter {
 
     private let navigationController: UINavigationController
     private let newWordBuilder: NewWordBuilder
-    private let searchBuilder: SearchBuilder
 
     /// Инициализатор.
     /// - Parameters:
     ///  - navigationController: корневой navigation controller приложения.
     ///  - newWordBuilder: билдер фичи "Добавление нового слова" в словарь.
-    ///  - searchBuilder: билдер вложенной фичи "Поиск" по словам в словаре.
     init(navigationController: UINavigationController,
-         newWordBuilder: NewWordBuilder,
-         searchBuilder: SearchBuilder) {
+         newWordBuilder: NewWordBuilder) {
         self.navigationController = navigationController
         self.newWordBuilder = newWordBuilder
-        self.searchBuilder = searchBuilder
     }
 
     /// Перейти на экран добавления нового слова.
@@ -35,12 +31,5 @@ final class MainWordListRouterImpl: MainWordListRouter {
         newWordViewController.modalPresentationStyle = .overFullScreen
 
         navigationController.topViewController?.present(newWordViewController, animated: true, completion: nil)
-    }
-
-    /// Перейти на экран поиска по словам в личном словаре.
-    func navigateToSearch() {
-        let searchWordVC = searchBuilder.build()
-
-        navigationController.pushViewController(searchWordVC, animated: true)
     }
 }
