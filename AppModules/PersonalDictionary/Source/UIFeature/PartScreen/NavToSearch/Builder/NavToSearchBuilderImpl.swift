@@ -5,31 +5,60 @@
 //  Created by Maksim Ivanov on 21.02.2022.
 //
 
+import CoreModule
 import UIKit
+
+enum NavToSearchWidth {
+    case full
+    case smaller
+}
+
+protocol NavToSearchExternals {
+
+    var navigationController: UINavigationController { get }
+
+    var appConfig: AppConfigs { get }
+
+    var logger: Logger { get }
+
+    var wordListRepository: WordListRepository { get }
+}
 
 /// Реализация билдера фичи "Навигация на экран Поиска".
 final class NavToSearchBuilderImpl: NavToSearchBuilder {
 
-    private let navigationController: UINavigationController
-    private let searchBuilder: SearchBuilder
+    let width: NavToSearchWidth
+
+    let navigationController: UINavigationController
+
+    let appConfig: AppConfigs
+
+    let logger: Logger
+
+    let wordListRepository: WordListRepository
 
     /// Инициализатор.
     /// - Parameters:
     ///  - navigationController: корневой navigation controller приложения.
-    ///  - searchBuilder: билдер вложенной фичи "Поиск" по словам в словаре.
-    init(navigationController: UINavigationController,
-         searchBuilder: SearchBuilder) {
-        self.navigationController = navigationController
-        self.searchBuilder = searchBuilder
+    init(width: NavToSearchWidth,
+         externals: NavToSearchExternals) {
+        self.width = width
+        self.navigationController = externals.navigationController
+        self.appConfig = externals.appConfig
+        self.logger = externals.logger
+        self.wordListRepository = externals.wordListRepository
     }
 
     /// Создать фичу.
     /// - Returns: представление фичи.
     func build() -> UIView {
+        let searchBuilder = SearchBuilderImpl(externals: self)
         let router = NavToSearchRouterImpl(navigationController: navigationController,
                                            searchBuilder: searchBuilder)
-        let view = NavToSearchView(router: router)
+        let view = NavToSearchView(width: width, router: router)
 
         return view
     }
 }
+
+extension NavToSearchBuilderImpl: SearchExternals { }

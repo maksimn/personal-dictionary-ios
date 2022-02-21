@@ -6,6 +6,7 @@
 //
 
 import CoreModule
+import UIKit
 
 /// Внешние зависимости фичи "Главный (основной) список слов" Личного словаря.
 protocol MainWordListExternals {
@@ -18,6 +19,8 @@ protocol MainWordListExternals {
 final class MainWordListBuilderImpl: MainWordListBuilder {
 
     private lazy var bundle = Bundle(for: type(of: self))
+
+    let navigationController = UINavigationController()
 
     let appConfig: AppConfigs
 
@@ -41,12 +44,13 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
     func build() -> MainWordListGraph {
         MainWordListGraphImpl(
             viewParams: createViewParams(),
+            navigationController: navigationController,
+            navToSearchBuilder: NavToSearchBuilderImpl(width: .full, externals: self),
+            headerBuilder: MainWordListHeaderBuilderImpl(externals: self),
             wordListBuilder: WordListBuilderImpl(params: WordListParams(shouldAnimateWhenAppear: true),
                                                  externals: self),
             wordListFetcher: createWordListRepository(),
             newWordBuilder: NewWordBuilderImpl(externals: self),
-            searchBuilder: SearchBuilderImpl(externals: self),
-            favoriteWordListBuilder: FavoriteWordListBuilderImpl(),
             coreRouter: appConfig.appParams.coreRouter
         )
     }
@@ -77,8 +81,7 @@ extension MainWordListBuilderImpl: WordListExternals {
     }
 }
 
-/// Для передачи внешних зависимостей в фичу "Поиск по словам Личного словаря".
-extension MainWordListBuilderImpl: SearchExternals {
+extension MainWordListBuilderImpl: NavToSearchExternals {
 
     var wordListRepository: WordListRepository {
         createWordListRepository()
@@ -87,3 +90,5 @@ extension MainWordListBuilderImpl: SearchExternals {
 
 /// Для передачи внешних зависимостей в фичу "Добавление нового слова" в Личный словарь.
 extension MainWordListBuilderImpl: NewWordExternals { }
+
+extension MainWordListBuilderImpl: MainWordListHeaderExternals { }
