@@ -14,6 +14,13 @@ protocol WordListFetcher {
     var wordList: [WordItem] { get }
 }
 
+/// Получение списка избранных слов из хранилища личного словаря.
+protocol FavoriteWordListFetcher {
+
+    /// - Returns: список  избранных слов из личного словаря.
+    var favoriteWordList: [WordItem] { get }
+}
+
 /// Операции create, update, delete со словами в хранилище личного словаря.
 protocol WordItemCUDOperations {
 
@@ -37,6 +44,6 @@ protocol WordItemCUDOperations {
 }
 
 /// Хранилище слов личного словаря.
-protocol WordListRepository: WordListFetcher, WordItemCUDOperations {
+protocol WordListRepository: WordListFetcher, FavoriteWordListFetcher, WordItemCUDOperations {
 
 }

@@ -40,13 +40,39 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
     /// - Returns:
     ///  - View controller экрана.
     func build() -> UIViewController {
-        let bundle = Bundle(for: type(of: self))
         let navToSearchBuilder = NavToSearchBuilderImpl(width: .smaller, externals: self)
+        let wordListBuilder = WordListBuilderImpl(
+            params: WordListParams(shouldAnimateWhenAppear: false),
+            externals: self
+        )
 
         return FavoriteWordListViewController(
-            params: FavoriteWordListViewParams(heading: bundle.moduleLocalizedString("Favorite words")),
-            navToSearchBuilder: navToSearchBuilder
+            params: createViewParams(),
+            navToSearchBuilder: navToSearchBuilder,
+            wordListBuilder: wordListBuilder,
+            favoriteWordListFetcher: wordListRepository,
+            wordItemStream: WordItemStreamImpl.instance
         )
+    }
+
+    private func createViewParams() -> FavoriteWordListViewParams {
+        let bundle = Bundle(for: type(of: self))
+
+        return FavoriteWordListViewParams(
+            heading: bundle.moduleLocalizedString("Favorite words"),
+            textLabelParams: TextLabelParams(
+                textColor: .darkGray,
+                font: Theme.standard.normalFont,
+                text: bundle.moduleLocalizedString("No favorite words")
+            )
+        )
+    }
+}
+
+extension FavoriteWordListBuilderImpl: WordListExternals {
+
+    var cudOperations: WordItemCUDOperations {
+        wordListRepository
     }
 }
 
