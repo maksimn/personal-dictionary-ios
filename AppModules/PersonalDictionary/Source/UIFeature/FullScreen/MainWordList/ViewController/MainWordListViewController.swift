@@ -17,11 +17,11 @@ class MainWordListViewController: UIViewController {
     let wordListFetcher: WordListFetcher
     let router: MainWordListRouter
     let navToSearchBuilder: NavToSearchBuilder
+    let headerBuilder: MainWordListHeaderBuilder
     let coreRouter: CoreRouter?
 
     let navToNewWordButton = UIButton()
     let routingButton = UIButton()
-    let myDictionaryLabel = UILabel()
 
     /// Инициализатор.
     /// - Parameters:
@@ -36,12 +36,14 @@ class MainWordListViewController: UIViewController {
          wordListFetcher: WordListFetcher,
          router: MainWordListRouter,
          navToSearchBuilder: NavToSearchBuilder,
+         headerBuilder: MainWordListHeaderBuilder,
          coreRouter: CoreRouter?) {
         self.params = viewParams
         self.wordListMVVM = wordListMVVM
         self.wordListFetcher = wordListFetcher
         self.router = router
         self.navToSearchBuilder = navToSearchBuilder
+        self.headerBuilder = headerBuilder
         self.coreRouter = coreRouter
         super.init(nibName: nil, bundle: nil)
     }

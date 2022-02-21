@@ -10,9 +10,6 @@ import UIKit
 /// Параметры представления Главного списка слов.
 struct MainWordListViewParams {
 
-    /// Заголовочный текст экрана
-    let heading: String
-
     /// Картинка для кнопки навигации на экран добавления нового слова
     let navToNewWordImage: UIImage
 
