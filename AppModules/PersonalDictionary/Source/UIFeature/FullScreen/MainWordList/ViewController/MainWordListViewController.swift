@@ -16,9 +16,8 @@ class MainWordListViewController: UIViewController {
     let wordListMVVM: WordListMVVM
     let wordListFetcher: WordListFetcher
     let router: MainWordListRouter
+    let navToSearchBuilder: NavToSearchBuilder
     let coreRouter: CoreRouter?
-
-    lazy var navToSearchView = NavToSearchView(onTap: { [weak self] in self?.navigateToSearch() })
 
     let navToNewWordButton = UIButton()
     let routingButton = UIButton()
@@ -30,16 +29,19 @@ class MainWordListViewController: UIViewController {
     ///  - wordListMVVM: MVVM-граф фичи "Список слов".
     ///  - wordListFetcher: источник данных для получения списка слов из хранилища.
     ///  - router: роутер для навигации от Главного списка слов к другим экранам приложения.
+    ///  - navToSearchBuilder: билдер фичи "Навигация на экран Поиска".
     ///  - coreRouter: базовый роутер для навигации к другому Продукту/Приложению в супераппе.
     init(viewParams: MainWordListViewParams,
          wordListMVVM: WordListMVVM,
          wordListFetcher: WordListFetcher,
          router: MainWordListRouter,
+         navToSearchBuilder: NavToSearchBuilder,
          coreRouter: CoreRouter?) {
         self.params = viewParams
         self.wordListMVVM = wordListMVVM
         self.wordListFetcher = wordListFetcher
         self.router = router
+        self.navToSearchBuilder = navToSearchBuilder
         self.coreRouter = coreRouter
         super.init(nibName: nil, bundle: nil)
     }
@@ -62,10 +64,6 @@ class MainWordListViewController: UIViewController {
     @objc
     func navigateToNewWord() {
         router.navigateToNewWord()
-    }
-
-    private func navigateToSearch() {
-        router.navigateToSearch()
     }
 
     private func initWordListModel() {

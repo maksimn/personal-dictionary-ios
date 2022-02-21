@@ -1,8 +1,8 @@
 //
-//  NavToSearchView.swift
+//  NavToSearchViewImpl.swift
 //  PersonalDictionary
 //
-//  Created by Maxim Ivanov on 08.11.2021.
+//  Created by Maksim Ivanov on 21.02.2022.
 //
 
 import UIKit
@@ -13,13 +13,13 @@ final class NavToSearchView: UIView {
     private let searchBar = UISearchBar()
     private let navigateToSearchButton = UIButton()
 
-    private var onTap: (() -> Void)?
+    private let router: NavToSearchRouter
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - onTap: обработчик нажатия на представление.
-    init(onTap: (() -> Void)?) {
-        self.onTap = onTap
+    ///  - router: роутер для навигации на экран Поиска.
+    init(router: NavToSearchRouter) {
+        self.router = router
         let frame = CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.width - 32, height: 44))
         super.init(frame: frame)
         searchBar.isUserInteractionEnabled = false
@@ -36,6 +36,6 @@ final class NavToSearchView: UIView {
 
     @objc
     private func onNavigateToSearchButtonTap() {
-        onTap?()
+        router.navigateToSearch()
     }
 }
