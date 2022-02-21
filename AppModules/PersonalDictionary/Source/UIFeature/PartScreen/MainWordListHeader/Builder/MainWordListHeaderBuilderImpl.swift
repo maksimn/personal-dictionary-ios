@@ -5,27 +5,45 @@
 //  Created by Maksim Ivanov on 21.02.2022.
 //
 
+import CoreModule
 import UIKit
+
+protocol MainWordListHeaderExternals {
+
+    var navigationController: UINavigationController { get }
+
+    var appConfig: AppConfigs { get }
+
+    var logger: Logger { get }
+
+    var wordListRepository: WordListRepository { get }
+}
 
 /// Реализация билдера фичи "Заголовок Главного списка слов".
 final class MainWordListHeaderBuilderImpl: MainWordListHeaderBuilder {
 
-    private let navigationController: UINavigationController
-    private let favoriteWordListBuilder: FavoriteWordListBuilder
+    let navigationController: UINavigationController
+
+    let appConfig: AppConfigs
+
+    let logger: Logger
+
+    let wordListRepository: WordListRepository
 
     /// Инициализатор.
     /// - Parameters:
     ///  - navigationController: корневой navigation controller приложения.
-    ///  - favoriteWordListBuilder: билдер вложенной фичи.
-    init(navigationController: UINavigationController,
-         favoriteWordListBuilder: FavoriteWordListBuilder) {
-        self.navigationController = navigationController
-        self.favoriteWordListBuilder = favoriteWordListBuilder
+    init(externals: MainWordListHeaderExternals) {
+        self.navigationController = externals.navigationController
+        self.appConfig = externals.appConfig
+        self.logger = externals.logger
+        self.wordListRepository = externals.wordListRepository
     }
 
     /// Создать фичу.
     /// - Returns: представление фичи.
     func build() -> UIView {
+        let favoriteWordListBuilder = FavoriteWordListBuilderImpl(externals: self)
         let router = RoutingToFavoriteWordListImpl(navigationController: navigationController,
                                                    favoriteWordListBuilder: favoriteWordListBuilder)
         let bundle = Bundle(for: type(of: self))
@@ -39,3 +57,5 @@ final class MainWordListHeaderBuilderImpl: MainWordListHeaderBuilder {
         return view
     }
 }
+
+extension MainWordListHeaderBuilderImpl: FavoriteWordListExternals { }

@@ -7,12 +7,26 @@
 
 import UIKit
 
+struct FavoriteWordListViewParams {
+
+    let heading: String
+}
+
 /// View controller экрана.
 final class FavoriteWordListViewController: UIViewController {
 
-   init() {
+    let params: FavoriteWordListViewParams
+
+    let navToSearchBuilder: NavToSearchBuilder
+
+    let headingLabel = UILabel()
+
+    init(params: FavoriteWordListViewParams,
+         navToSearchBuilder: NavToSearchBuilder) {
+        self.params = params
+        self.navToSearchBuilder = navToSearchBuilder
         super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = Theme.standard.backgroundColor
+        initViews()
     }
 
     required init?(coder: NSCoder) {

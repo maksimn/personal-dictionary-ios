@@ -11,5 +11,5 @@ import UIKit
 protocol MainWordListGraph {
 
     /// Корневой navigation controller фичи.
-    var navigationController: UINavigationController? { get }
+    var navigationController: UINavigationController { get }
 }

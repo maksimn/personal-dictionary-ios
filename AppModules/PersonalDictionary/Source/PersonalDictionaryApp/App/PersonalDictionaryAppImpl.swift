@@ -19,6 +19,6 @@ final class PersonalDictionaryAppImpl: PersonalDictionaryApp {
     init(configBuilder: ConfigBuilder) {
         let mainWordListBuilder = configBuilder.createMainWordListBuilder()
         let mainWordListGraph = mainWordListBuilder.build()
-        navigationController = mainWordListGraph.navigationController ?? UINavigationController()
+        navigationController = mainWordListGraph.navigationController
     }
 }
