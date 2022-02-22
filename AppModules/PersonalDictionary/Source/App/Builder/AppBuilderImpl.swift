@@ -1,26 +1,30 @@
 //
-//  ConfigBuilderImpl.swift
+//  AppBuilderImpl.swift
 //  PersonalDictionary
 //
-//  Created by Maxim Ivanov on 11.11.2021.
+//  Created by Maxim Ivanov on 05.12.2021.
 //
 
-import CoreModule
+/// Реализация билдера приложения "Личный словарь иностранных слов".
+public final class AppBuilderImpl: AppBuilder {
 
-/// Реализация билдера конфигурации приложения "Личный словарь".
-final class ConfigBuilderImpl: ConfigBuilder {
-
-    private let appParams: PersonalDictionaryAppParams
+    private let appParams: AppParams
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - appParams: внешние параметры приложения "Личный словарь".
-    init(appParams: PersonalDictionaryAppParams) {
+    ///  - appParams: внешние параметры для приложения.
+    public init(appParams: AppParams) {
         self.appParams = appParams
     }
 
+    /// Создать объект данного приложения.
+    /// - Returns: объект приложения.
+    public func build() -> App {
+        AppImpl(config: buildConfig())
+    }
+
     /// Создать конфигурацию приложения.
-    func build() -> AppConfigs {
+    private func buildConfig() -> Config {
         let bundle = Bundle(for: type(of: self))
         let lang1 = Lang(id: Lang.Id(raw: 1), name: bundle.moduleLocalizedString("English"), shortName: "EN")
         let lang2 = Lang(id: Lang.Id(raw: 2), name: bundle.moduleLocalizedString("Russian"), shortName: "RU")
@@ -32,25 +36,12 @@ final class ConfigBuilderImpl: ConfigBuilder {
                                 defaultSourceLang: lang1,
                                 defaultTargetLang: lang2)
 
-        return AppConfigs(
+        return Config(
             appParams: appParams,
             langData: langData,
             ponsApiSecret: "",
             isLoggingEnabled: true
         )
     }
-
-    /// Создать билдер Фичи "Главный/основной список слов".
-    /// - Returns: билдер указанной фичи.
-    func createMainWordListBuilder() -> MainWordListBuilder {
-        MainWordListBuilderImpl(externals: self)
-    }
 }
 
-/// Для передачи внешних зависимостей в чайлд-фичу "Главный список слов".
-extension ConfigBuilderImpl: MainWordListExternals {
-
-    var appConfig: AppConfigs {
-        build()
-    }
-}

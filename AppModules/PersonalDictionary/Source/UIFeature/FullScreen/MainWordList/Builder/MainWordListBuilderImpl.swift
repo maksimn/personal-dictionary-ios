@@ -8,13 +8,6 @@
 import CoreModule
 import UIKit
 
-/// Внешние зависимости фичи "Главный (основной) список слов" Личного словаря.
-protocol MainWordListExternals {
-
-    /// Конфигурация приложения
-    var appConfig: AppConfigs { get }
-}
-
 /// Реализация билдера фичи "Главный (основной) список слов" Личного словаря.
 final class MainWordListBuilderImpl: MainWordListBuilder {
 
@@ -22,7 +15,7 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
 
     let navigationController = UINavigationController()
 
-    let appConfig: AppConfigs
+    let appConfig: Config
 
     var logger: Logger {
         LoggerImpl(isLoggingEnabled: appConfig.isLoggingEnabled)
@@ -33,9 +26,9 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - externals: внешние зависимости фичи.
-    init(externals: MainWordListExternals) {
-        appConfig = externals.appConfig
+    ///  - config:
+    init(config: Config) {
+        appConfig = config
     }
 
     /// Создать граф фичи.

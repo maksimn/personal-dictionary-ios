@@ -1,5 +1,5 @@
 //
-//  PersonalDictionaryAppParams.swift
+//  AppParams.swift
 //  SuperList
 //
 //  Created by Maxim Ivanov on 20.12.2021.
@@ -8,7 +8,7 @@
 import CoreModule
 
 /// Внешние параметры для приложения "Личный словарь иностранных слов".
-public struct PersonalDictionaryAppParams {
+public struct AppParams {
 
     public let coreRouter: CoreRouter?
     public let routingButtonTitle: String

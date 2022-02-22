@@ -12,7 +12,7 @@ protocol FavoriteWordListExternals {
 
     var navigationController: UINavigationController { get }
 
-    var appConfig: AppConfigs { get }
+    var appConfig: Config { get }
 
     var logger: Logger { get }
 
@@ -24,7 +24,7 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
 
     let navigationController: UINavigationController
 
-    let appConfig: AppConfigs
+    let appConfig: Config
 
     let logger: Logger
 

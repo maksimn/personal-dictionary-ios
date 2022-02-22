@@ -13,7 +13,7 @@ protocol MainWordListHeaderExternals {
 
     var navigationController: UINavigationController { get }
 
-    var appConfig: AppConfigs { get }
+    var appConfig: Config { get }
 
     var logger: Logger { get }
 
@@ -25,7 +25,7 @@ final class MainWordListHeaderBuilderImpl: MainWordListHeaderBuilder {
 
     let navigationController: UINavigationController
 
-    let appConfig: AppConfigs
+    let appConfig: Config
 
     let logger: Logger
 

@@ -1,5 +1,5 @@
 //
-//  PersonalDictionaryAppImpl.swift
+//  AppImpl.swift
 //  PersonalDictionary
 //
 //  Created by Maxim Ivanov on 05.12.2021.
@@ -8,16 +8,16 @@
 import UIKit
 
 /// Реализация приложения "Личный словарь иностранных слов".
-final class PersonalDictionaryAppImpl: PersonalDictionaryApp {
+final class AppImpl: App {
 
     /// Получение корневого контроллера приложения
     let navigationController: UINavigationController
 
     /// Инициализатор:
     /// - Parameters:
-    ///  - configBuilder: билдер конфигурации данного приложения.
-    init(configBuilder: ConfigBuilder) {
-        let mainWordListBuilder = configBuilder.createMainWordListBuilder()
+    ///  - config: конфигурация данного приложения.
+    init(config: Config) {
+        let mainWordListBuilder = MainWordListBuilderImpl(config: config)
         let mainWordListGraph = mainWordListBuilder.build()
         navigationController = mainWordListGraph.navigationController
     }

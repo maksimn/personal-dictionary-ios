@@ -1,6 +1,6 @@
 //
-//  SuperListAppImpl.swift
-//  PersonalDictionary
+//  SuperAppImpl.swift
+//  SuperList
 //
 //  Created by Maxim Ivanov on 16.12.2021.
 //
@@ -29,17 +29,17 @@ final class SuperAppImpl: SuperApp {
 
     private func buildPersonalDictionaryAppBuilder(
         todoListAppBuilder: TodoListAppBuilder
-    ) -> PersonalDictionaryAppBuilder {
+    ) -> PersonalDictionary.AppBuilder {
         let routeToTodoListButtonTitle = NSLocalizedString("My todos", comment: "")
         let routingToTodoListAppRouter = RoutingToTodoListAppRouter(
             rootViewController: rootViewController,
             todoListAppBuilder: todoListAppBuilder
         )
-        let personalDictionaryAppParams = PersonalDictionaryAppParams(
+        let personalDictionaryAppParams = PersonalDictionary.AppParams(
             coreRouter: routingToTodoListAppRouter,
             routingButtonTitle: routeToTodoListButtonTitle
         )
 
-        return PersonalDictionaryAppBuilderImpl(appParams: personalDictionaryAppParams)
+        return PersonalDictionary.AppBuilderImpl(appParams: personalDictionaryAppParams)
     }
 }
