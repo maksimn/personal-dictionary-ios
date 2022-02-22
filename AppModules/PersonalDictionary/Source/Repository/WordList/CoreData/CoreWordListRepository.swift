@@ -77,6 +77,24 @@ final class CoreWordListRepository: WordListRepository {
         }
     }
 
+    var favoriteWordList: [WordItem] {
+        let fetchRequest: NSFetchRequest<WordItemMO> = WordItemMO.fetchRequest()
+        let predicate = NSPredicate(format: "isFavorite == true")
+        let sortDescriptor = NSSortDescriptor.init(key: "createdAt", ascending: false)
+
+        fetchRequest.predicate = predicate
+        fetchRequest.sortDescriptors = [sortDescriptor]
+
+        do {
+            let wordItemMOList = try mainContext.fetch(fetchRequest)
+
+            return wordItemMOList.compactMap { $0.convertToWordItem(with: langRepository) }
+        } catch {
+            logger.log(error: error)
+            return []
+        }
+    }
+
     /// Добавить слово в хранилище личного словаря
     /// - Parameters:
     ///  - wordItem: слово для добавления.
