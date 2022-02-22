@@ -5,7 +5,7 @@
 //  Created by Maksim Ivanov on 21.02.2022.
 //
 
-/// Роутер для навигации на экран списка избранных слов.
+/// Реализация роутера для навигации на экран списка избранных слов.
 final class RoutingToFavoriteWordListImpl: RoutingToFavoriteWordList {
 
     private let navigationController: UINavigationController
@@ -21,7 +21,7 @@ final class RoutingToFavoriteWordListImpl: RoutingToFavoriteWordList {
         self.favoriteWordListBuilder = favoriteWordListBuilder
     }
 
-    /// Перейти на экран поиска по словам в личном словаре.
+    /// Перейти на экран списка избранных слов личногр словаря.
     func navigateToFavoriteWordList() {
         let favoriteWordListViewController = favoriteWordListBuilder.build()
 

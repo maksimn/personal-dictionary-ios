@@ -8,14 +8,17 @@
 import RxSwift
 import UIKit
 
+/// Параметры представления списка избранных слов.
 struct FavoriteWordListViewParams {
 
+    /// Текст заголовка
     let heading: String
 
+    /// Параметры текстового элемента
     let textLabelParams: TextLabelParams
 }
 
-/// View controller экрана.
+/// View controller экрана списка избранных слов.
 final class FavoriteWordListViewController: UIViewController {
 
     let params: FavoriteWordListViewParams
@@ -34,6 +37,13 @@ final class FavoriteWordListViewController: UIViewController {
 
     private let disposeBag = DisposeBag()
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - params: параметры представления списка избранных слов.
+    ///  - navToSearchBuilder: билдер вложенной фичи "Навигация на экран Поиска".
+    ///  - wordListBuilder: билдер вложенной фичи "Список слов".
+    ///  - favoriteWordListFetcher: получение списка избранных слов из хранилища.
+    ///  - wordItemStream: поток событий со словами в приложении.
     init(params: FavoriteWordListViewParams,
          navToSearchBuilder: NavToSearchBuilder,
          wordListBuilder: WordListBuilder,

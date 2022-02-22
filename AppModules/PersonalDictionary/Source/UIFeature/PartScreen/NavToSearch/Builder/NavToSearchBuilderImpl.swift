@@ -8,11 +8,13 @@
 import CoreModule
 import UIKit
 
+/// Ширина представления фичи "Навигация на экран Поиска".
 enum NavToSearchWidth {
-    case full
-    case smaller
+    case full /// полная (во всю ширину экрана).
+    case smaller /// меньшая ширина, чем full.
 }
 
+/// Внешние зависимости фичи "Навигация на экран Поиска".
 protocol NavToSearchExternals {
 
     var navigationController: UINavigationController { get }
@@ -39,7 +41,8 @@ final class NavToSearchBuilderImpl: NavToSearchBuilder {
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - navigationController: корневой navigation controller приложения.
+    ///  - width: параметр ширины представления.
+    ///  - externals: внешние зависимости фичи .
     init(width: NavToSearchWidth,
          externals: NavToSearchExternals) {
         self.width = width
@@ -61,4 +64,5 @@ final class NavToSearchBuilderImpl: NavToSearchBuilder {
     }
 }
 
+/// Для передачи внешних зависимостей в фичу "Поиск по словам Личного словаря".
 extension NavToSearchBuilderImpl: SearchExternals { }

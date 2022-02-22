@@ -17,6 +17,9 @@ final class MainWordListGraphImpl: MainWordListGraph {
     /// Инициализатор.
     /// - Parameters:
     ///  - viewParams: параметры представления Главного списка слов.
+    ///  - navigationController: корневой navigation controller приложения.
+    ///  - navToSearchBuilder: билдер вложенной фичи "Навигация на экран Поиска".
+    ///  - headerBuilder: билдер вложенной фичи  "Заголовок главного списка слов".
     ///  - wordListBuilder: билдер вложенной фичи "Список слов".
     ///  - wordListFetcher: источник данных для получения списка слов из хранилища.
     ///  - newWordBuilder: билдер вложенной фичи "Добавление нового слова" в словарь.

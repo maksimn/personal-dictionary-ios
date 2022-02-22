@@ -17,14 +17,13 @@ final class NavToSearchView: UIView {
 
     /// Инициализатор.
     /// - Parameters:
+    ///  - width: параметр ширины представления.
     ///  - router: роутер для навигации на экран Поиска.
     init(width: NavToSearchWidth,
          router: NavToSearchRouter) {
         self.router = router
-        let frame = CGRect(
-            origin: .zero,
-            size: CGSize(width: UIScreen.main.bounds.width - 32 - (width == .full ? 0 : 40), height: 44)
-        )
+        let frame = CGRect(origin: .zero,
+                           size: CGSize(width: UIScreen.main.bounds.width - 32 - (width == .full ? 0 : 40), height: 44))
         super.init(frame: frame)
         searchBar.isUserInteractionEnabled = false
         navigateToSearchButton.addTarget(self, action: #selector(onNavigateToSearchButtonTap), for: .touchUpInside)
