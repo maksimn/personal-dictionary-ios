@@ -7,6 +7,7 @@
 
 import CoreModule
 
+/// Внешние зависимости фичи "Экран списка избранных слов".
 protocol FavoriteWordListExternals {
 
     var navigationController: UINavigationController { get }
@@ -18,7 +19,7 @@ protocol FavoriteWordListExternals {
     var wordListRepository: WordListRepository { get }
 }
 
-/// Билдер Фичи.
+/// Реализация билдера фичи "Экран списка избранных слов".
 final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
 
     let navigationController: UINavigationController
@@ -41,10 +42,8 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
     ///  - View controller экрана.
     func build() -> UIViewController {
         let navToSearchBuilder = NavToSearchBuilderImpl(width: .smaller, externals: self)
-        let wordListBuilder = WordListBuilderImpl(
-            params: WordListParams(shouldAnimateWhenAppear: false),
-            externals: self
-        )
+        let wordListBuilder = WordListBuilderImpl(params: WordListParams(shouldAnimateWhenAppear: false),
+                                                  externals: self)
 
         return FavoriteWordListViewController(
             params: createViewParams(),
@@ -69,6 +68,7 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
     }
 }
 
+/// Для передачи внешних зависимостей в фичу "Список слов"
 extension FavoriteWordListBuilderImpl: WordListExternals {
 
     var cudOperations: WordItemCUDOperations {
@@ -76,4 +76,5 @@ extension FavoriteWordListBuilderImpl: WordListExternals {
     }
 }
 
+/// Для передачи внешних зависимостей в фичу "Навигация на экран Поиска"
 extension FavoriteWordListBuilderImpl: NavToSearchExternals { }

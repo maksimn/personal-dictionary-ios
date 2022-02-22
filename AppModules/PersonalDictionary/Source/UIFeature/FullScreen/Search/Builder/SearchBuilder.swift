@@ -12,6 +12,6 @@ protocol SearchBuilder {
 
     /// Создать экран Поиска.
     /// - Returns:
-    ///   View controller экрана поиска по словам в словаре.
+    ///  - View controller экрана поиска по словам в словаре.
     func build() -> UIViewController
 }

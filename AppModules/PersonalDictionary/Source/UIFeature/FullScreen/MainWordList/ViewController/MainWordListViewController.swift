@@ -30,6 +30,7 @@ class MainWordListViewController: UIViewController {
     ///  - wordListFetcher: источник данных для получения списка слов из хранилища.
     ///  - router: роутер для навигации от Главного списка слов к другим экранам приложения.
     ///  - navToSearchBuilder: билдер фичи "Навигация на экран Поиска".
+    ///  - headerBuilder: билдер фичи  "Заголовок главного списка слов".
     ///  - coreRouter: базовый роутер для навигации к другому Продукту/Приложению в супераппе.
     init(viewParams: MainWordListViewParams,
          wordListMVVM: WordListMVVM,

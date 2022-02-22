@@ -13,7 +13,7 @@ struct MainWordListHeaderViewParams {
     /// Текст заголовка
     let heading: String
 
-    /// Текст  навигационной кнопки
+    /// Текст  навигационной кнопки на экран списка избранных слов.
     let routingButtonTitle: String
 }
 
@@ -24,7 +24,7 @@ final class MainWordListHeaderView: UIView {
     private let router: RoutingToFavoriteWordList
 
     private let routingButton = UIButton()
-    private let myDictionaryLabel = UILabel()
+    private let headingLabel = UILabel()
 
     /// Инициализатор.
     /// - Parameters:
@@ -49,7 +49,7 @@ final class MainWordListHeaderView: UIView {
 
     private func initViews() {
         initRoutingButton()
-        initMyDictionaryLabel()
+        initHeadingLabel()
     }
 
     private func initRoutingButton() {
@@ -67,14 +67,14 @@ final class MainWordListHeaderView: UIView {
         }
     }
 
-    private func initMyDictionaryLabel() {
-        myDictionaryLabel.textColor = .black
-        myDictionaryLabel.font = UIFont.systemFont(ofSize: 28, weight: .heavy)
-        myDictionaryLabel.numberOfLines = 1
-        myDictionaryLabel.textAlignment = .left
-        myDictionaryLabel.text = params.heading
-        addSubview(myDictionaryLabel)
-        myDictionaryLabel.snp.makeConstraints { make -> Void in
+    private func initHeadingLabel() {
+        headingLabel.textColor = .black
+        headingLabel.font = UIFont.systemFont(ofSize: 28, weight: .heavy)
+        headingLabel.numberOfLines = 1
+        headingLabel.textAlignment = .left
+        headingLabel.text = params.heading
+        addSubview(headingLabel)
+        headingLabel.snp.makeConstraints { make -> Void in
             make.top.equalTo(self.snp.top).offset(14)
             make.left.equalTo(self.snp.left).offset(54.5)
         }

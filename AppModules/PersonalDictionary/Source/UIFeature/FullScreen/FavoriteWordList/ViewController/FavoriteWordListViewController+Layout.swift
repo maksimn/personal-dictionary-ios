@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// Лэйаут экрана.
+/// Лэйаут экрана списка избранных слов.
 extension FavoriteWordListViewController {
 
     func initViews() {
@@ -52,7 +52,7 @@ extension FavoriteWordListViewController {
         }
     }
 
-    func addTextLabel(_ params: TextLabelParams) {
+    private func addTextLabel(_ params: TextLabelParams) {
         textLabel = TextLabel(params: params)
         textLabel?.isHidden = true
         view.addSubview(textLabel ?? UIView())

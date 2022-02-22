@@ -7,11 +7,11 @@
 
 import UIKit
 
-/// Билдер Фичи.
+/// Билдер фичи "Экран списка избранных слов".
 protocol FavoriteWordListBuilder {
 
     /// Создать экран.
     /// - Returns:
-    ///   View controller экрана.
+    ///  - View controller экрана.
     func build() -> UIViewController
 }

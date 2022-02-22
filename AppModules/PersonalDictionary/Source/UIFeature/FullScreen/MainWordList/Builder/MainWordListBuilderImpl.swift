@@ -81,6 +81,7 @@ extension MainWordListBuilderImpl: WordListExternals {
     }
 }
 
+/// Для передачи внешних зависимостей в фичу "Навигация на экран Поиска".
 extension MainWordListBuilderImpl: NavToSearchExternals {
 
     var wordListRepository: WordListRepository {
@@ -91,4 +92,5 @@ extension MainWordListBuilderImpl: NavToSearchExternals {
 /// Для передачи внешних зависимостей в фичу "Добавление нового слова" в Личный словарь.
 extension MainWordListBuilderImpl: NewWordExternals { }
 
+/// Для передачи внешних зависимостей в фичу "Заголовок главного списка слов" Личного словаря.
 extension MainWordListBuilderImpl: MainWordListHeaderExternals { }

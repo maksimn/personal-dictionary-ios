@@ -8,6 +8,7 @@
 import CoreModule
 import UIKit
 
+/// Внешние зависимости фичи "Заголовок Главного списка слов".
 protocol MainWordListHeaderExternals {
 
     var navigationController: UINavigationController { get }
@@ -32,7 +33,7 @@ final class MainWordListHeaderBuilderImpl: MainWordListHeaderBuilder {
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - navigationController: корневой navigation controller приложения.
+    ///  - externals: внешние зависимости фичи.
     init(externals: MainWordListHeaderExternals) {
         self.navigationController = externals.navigationController
         self.appConfig = externals.appConfig
@@ -44,8 +45,10 @@ final class MainWordListHeaderBuilderImpl: MainWordListHeaderBuilder {
     /// - Returns: представление фичи.
     func build() -> UIView {
         let favoriteWordListBuilder = FavoriteWordListBuilderImpl(externals: self)
-        let router = RoutingToFavoriteWordListImpl(navigationController: navigationController,
-                                                   favoriteWordListBuilder: favoriteWordListBuilder)
+        let router = RoutingToFavoriteWordListImpl(
+            navigationController: navigationController,
+            favoriteWordListBuilder: favoriteWordListBuilder
+        )
         let bundle = Bundle(for: type(of: self))
         let viewParams = MainWordListHeaderViewParams(
             heading: bundle.moduleLocalizedString("My dictionary"),
@@ -58,4 +61,5 @@ final class MainWordListHeaderBuilderImpl: MainWordListHeaderBuilder {
     }
 }
 
+/// Для передачи зависимостей во вложенную фичу "Экран списка избранных слов Личного словаря".
 extension MainWordListHeaderBuilderImpl: FavoriteWordListExternals { }
