@@ -6,7 +6,7 @@
 //
 
 /// Внешние зависимости фичи "Добавление нового слова" в личный словарь.
-protocol NewWordExternals {
+protocol NewWordDependency {
 
     /// Хранилище с данными о языках в приложении.
     var langRepository: LangRepository { get }
@@ -19,9 +19,9 @@ final class NewWordBuilderImpl: NewWordBuilder {
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - externals: внешние зависимости фичи.
-    init(externals: NewWordExternals) {
-        langRepository = externals.langRepository
+    ///  - dependency: внешние зависимости фичи.
+    init(dependency: NewWordDependency) {
+        langRepository = dependency.langRepository
     }
 
     /// Создать MVVM-граф фичи

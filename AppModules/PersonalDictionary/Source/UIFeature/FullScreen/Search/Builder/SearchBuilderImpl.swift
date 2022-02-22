@@ -8,7 +8,7 @@
 import CoreModule
 
 /// Внешние зависимости фичи "Поиска".
-protocol SearchExternals {
+protocol SearchDependency {
 
     var appConfig: Config { get }
 
@@ -28,11 +28,11 @@ final class SearchBuilderImpl: SearchBuilder {
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - externals: внешние зависимости фичи.
-    init(externals: SearchExternals) {
-        appConfig = externals.appConfig
-        logger = externals.logger
-        wordListRepository = externals.wordListRepository
+    ///  - dependency: внешние зависимости фичи.
+    init(dependency: SearchDependency) {
+        appConfig = dependency.appConfig
+        logger = dependency.logger
+        wordListRepository = dependency.wordListRepository
     }
 
     /// Создать экран Поиска.
@@ -45,7 +45,7 @@ final class SearchBuilderImpl: SearchBuilder {
             searchEngineBuilder: SearchEngineBuilderImpl(wordListFetcher: wordListRepository),
             wordListBuilder: WordListBuilderImpl(
                 params: WordListParams(shouldAnimateWhenAppear: false),
-                externals: self
+                dependency: self
             ),
             searchModePickerBuilder: SearchModePickerBuilderImpl()
         )
@@ -63,7 +63,7 @@ final class SearchBuilderImpl: SearchBuilder {
 }
 
 /// Для передачи внешних зависимостей во вложенную фичу "Список слов".
-extension SearchBuilderImpl: WordListExternals {
+extension SearchBuilderImpl: WordListDependency {
 
     var cudOperations: WordItemCUDOperations {
         wordListRepository
