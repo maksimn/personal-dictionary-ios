@@ -18,7 +18,7 @@ struct WordListParams {
 protocol WordListExternals {
 
     /// Конфигурация приложения.
-    var appConfig: AppConfigs { get }
+    var appConfig: Config { get }
 
     /// Операции create, update, delete со словами в хранилище личного словаря.
     var cudOperations: WordItemCUDOperations { get }

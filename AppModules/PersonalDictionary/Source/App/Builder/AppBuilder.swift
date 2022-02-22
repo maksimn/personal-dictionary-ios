@@ -1,14 +1,14 @@
 //
-//  PersonalDictionaryAppBuilder.swift
+//  AppBuilder.swift
 //  PersonalDictionary
 //
 //  Created by Maxim Ivanov on 05.12.2021.
 //
 
 /// Билдер приложения "Личный словарь иностранных слов".
-public protocol PersonalDictionaryAppBuilder {
+public protocol AppBuilder {
 
     /// Создание объекта данного приложения.
     /// - Returns: объект приложения.
-    func build() -> PersonalDictionaryApp
+    func build() -> App
 }

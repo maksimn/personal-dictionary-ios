@@ -10,7 +10,7 @@ import CoreModule
 /// Внешние зависимости фичи "Поиска".
 protocol SearchExternals {
 
-    var appConfig: AppConfigs { get }
+    var appConfig: Config { get }
 
     var logger: Logger { get }
 
@@ -20,7 +20,7 @@ protocol SearchExternals {
 /// Билдер Фичи "Поиск по словам в словаре".
 final class SearchBuilderImpl: SearchBuilder {
 
-    let appConfig: AppConfigs
+    let appConfig: Config
 
     let logger: Logger
 
