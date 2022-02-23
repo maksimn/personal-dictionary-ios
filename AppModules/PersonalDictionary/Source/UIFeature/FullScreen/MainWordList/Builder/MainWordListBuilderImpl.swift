@@ -78,19 +78,13 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
     }
 }
 
-/// Для передачи внешних зависимостей в фичу "Список слов".
-extension MainWordListBuilderImpl: WordListDependency {
+/// Для передачи зависимостей во вложенные фичи.
+extension MainWordListBuilderImpl: WordListDependency,
+                                   NavToSearchDependency,
+                                   NewWordDependency,
+                                   MainWordListHeaderDependency {
 
     var cudOperations: WordItemCUDOperations {
         wordListRepository
     }
 }
-
-/// Для передачи внешних зависимостей в фичу "Навигация на экран Поиска".
-extension MainWordListBuilderImpl: NavToSearchDependency { }
-
-/// Для передачи внешних зависимостей в фичу "Добавление нового слова" в Личный словарь.
-extension MainWordListBuilderImpl: NewWordDependency { }
-
-/// Для передачи внешних зависимостей в фичу "Заголовок главного списка слов" Личного словаря.
-extension MainWordListBuilderImpl: MainWordListHeaderDependency { }

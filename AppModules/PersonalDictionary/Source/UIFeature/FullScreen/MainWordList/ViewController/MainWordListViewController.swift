@@ -9,7 +9,7 @@ import CoreModule
 import UIKit
 
 /// View controller экрана Главного списка слов.
-class MainWordListViewController: UIViewController {
+final class MainWordListViewController: UIViewController {
 
     let params: MainWordListViewParams
 
@@ -20,7 +20,6 @@ class MainWordListViewController: UIViewController {
     let headerBuilder: MainWordListHeaderBuilder
     let coreRouter: CoreRouter?
 
-    let navToNewWordButton = UIButton()
     let routingButton = UIButton()
 
     /// Инициализатор.

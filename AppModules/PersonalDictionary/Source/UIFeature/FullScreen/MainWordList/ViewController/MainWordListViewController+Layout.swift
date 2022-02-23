@@ -15,8 +15,6 @@ extension MainWordListViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.titleView = navToSearchBuilder.build()
         addWordListChildController()
-        view.addSubview(navToNewWordButton)
-        initNewWordButton()
         initRoutingButton()
         initHeaderView()
     }
@@ -41,21 +39,7 @@ extension MainWordListViewController {
         }
     }
 
-    private func initNewWordButton() {
-        navToNewWordButton.setImage(params.navToNewWordImage, for: .normal)
-        navToNewWordButton.imageView?.contentMode = .scaleAspectFit
-        navToNewWordButton.addTarget(self, action: #selector(navigateToNewWord), for: .touchUpInside)
-        navToNewWordButton.snp.makeConstraints { make -> Void in
-            make.size.equalTo(CGSize(width: 44, height: 44))
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-26)
-            make.centerX.equalTo(view)
-        }
-        if let imageView = navToNewWordButton.imageView {
-            imageView.snp.makeConstraints { make -> Void in
-                make.edges.equalTo(navToNewWordButton)
-            }
-        }
-    }
+    
 
     private func initRoutingButton() {
         routingButton.setTitle(params.routingButtonTitle, for: .normal)

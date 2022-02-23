@@ -20,7 +20,11 @@ public final class AppBuilderImpl: AppBuilder {
     /// Создать объект данного приложения.
     /// - Returns: объект приложения.
     public func build() -> App {
-        AppImpl(config: buildConfig())
+        AppImpl(
+            mainWordListBuilder: MainWordListBuilderImpl(
+                config: buildConfig()
+            )
+        )
     }
 
     /// Создать конфигурацию приложения.
