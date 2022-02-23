@@ -15,16 +15,7 @@ enum NavToSearchWidth {
 }
 
 /// Внешние зависимости фичи "Навигация на экран Поиска".
-protocol NavToSearchExternals {
-
-    var navigationController: UINavigationController { get }
-
-    var appConfig: Config { get }
-
-    var logger: Logger { get }
-
-    var wordListRepository: WordListRepository { get }
-}
+protocol NavToSearchDependency: BaseDependency { }
 
 /// Реализация билдера фичи "Навигация на экран Поиска".
 final class NavToSearchBuilderImpl: NavToSearchBuilder {
@@ -42,20 +33,20 @@ final class NavToSearchBuilderImpl: NavToSearchBuilder {
     /// Инициализатор.
     /// - Parameters:
     ///  - width: параметр ширины представления.
-    ///  - externals: внешние зависимости фичи .
+    ///  - dependency: внешние зависимости фичи .
     init(width: NavToSearchWidth,
-         externals: NavToSearchExternals) {
+         dependency: NavToSearchDependency) {
         self.width = width
-        self.navigationController = externals.navigationController
-        self.appConfig = externals.appConfig
-        self.logger = externals.logger
-        self.wordListRepository = externals.wordListRepository
+        self.navigationController = dependency.navigationController
+        self.appConfig = dependency.appConfig
+        self.logger = dependency.logger
+        self.wordListRepository = dependency.wordListRepository
     }
 
     /// Создать фичу.
     /// - Returns: представление фичи.
     func build() -> UIView {
-        let searchBuilder = SearchBuilderImpl(externals: self)
+        let searchBuilder = SearchBuilderImpl(dependency: self)
         let router = NavToSearchRouterImpl(navigationController: navigationController,
                                            searchBuilder: searchBuilder)
         let view = NavToSearchView(width: width, router: router)
@@ -65,4 +56,4 @@ final class NavToSearchBuilderImpl: NavToSearchBuilder {
 }
 
 /// Для передачи внешних зависимостей в фичу "Поиск по словам Личного словаря".
-extension NavToSearchBuilderImpl: SearchExternals { }
+extension NavToSearchBuilderImpl: SearchDependency { }

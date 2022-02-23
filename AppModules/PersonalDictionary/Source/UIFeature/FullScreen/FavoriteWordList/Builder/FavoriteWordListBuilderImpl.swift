@@ -8,16 +8,7 @@
 import CoreModule
 
 /// Внешние зависимости фичи "Экран списка избранных слов".
-protocol FavoriteWordListExternals {
-
-    var navigationController: UINavigationController { get }
-
-    var appConfig: Config { get }
-
-    var logger: Logger { get }
-
-    var wordListRepository: WordListRepository { get }
-}
+protocol FavoriteWordListDependency: BaseDependency { }
 
 /// Реализация билдера фичи "Экран списка избранных слов".
 final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
@@ -30,20 +21,20 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
 
     let wordListRepository: WordListRepository
 
-    init(externals: FavoriteWordListExternals) {
-        self.navigationController = externals.navigationController
-        self.appConfig = externals.appConfig
-        self.logger = externals.logger
-        self.wordListRepository = externals.wordListRepository
+    init(dependency: FavoriteWordListDependency) {
+        self.navigationController = dependency.navigationController
+        self.appConfig = dependency.appConfig
+        self.logger = dependency.logger
+        self.wordListRepository = dependency.wordListRepository
     }
 
     /// Создать экран.
     /// - Returns:
     ///  - View controller экрана.
     func build() -> UIViewController {
-        let navToSearchBuilder = NavToSearchBuilderImpl(width: .smaller, externals: self)
+        let navToSearchBuilder = NavToSearchBuilderImpl(width: .smaller, dependency: self)
         let wordListBuilder = WordListBuilderImpl(params: WordListParams(shouldAnimateWhenAppear: false),
-                                                  externals: self)
+                                                  dependency: self)
 
         return FavoriteWordListViewController(
             params: createViewParams(),
@@ -69,7 +60,7 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
 }
 
 /// Для передачи внешних зависимостей в фичу "Список слов"
-extension FavoriteWordListBuilderImpl: WordListExternals {
+extension FavoriteWordListBuilderImpl: WordListDependency {
 
     var cudOperations: WordItemCUDOperations {
         wordListRepository
@@ -77,4 +68,4 @@ extension FavoriteWordListBuilderImpl: WordListExternals {
 }
 
 /// Для передачи внешних зависимостей в фичу "Навигация на экран Поиска"
-extension FavoriteWordListBuilderImpl: NavToSearchExternals { }
+extension FavoriteWordListBuilderImpl: NavToSearchDependency { }

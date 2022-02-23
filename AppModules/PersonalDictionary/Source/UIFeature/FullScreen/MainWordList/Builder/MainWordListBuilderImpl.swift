@@ -8,8 +8,20 @@
 import CoreModule
 import UIKit
 
+/// Общий протокол из базовых зависимостей в приложении.
+protocol BaseDependency {
+
+    var navigationController: UINavigationController { get }
+
+    var appConfig: Config { get }
+
+    var logger: Logger { get }
+
+    var wordListRepository: WordListRepository { get }
+}
+
 /// Реализация билдера фичи "Главный (основной) список слов" Личного словаря.
-final class MainWordListBuilderImpl: MainWordListBuilder {
+final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
 
     private lazy var bundle = Bundle(for: type(of: self))
 
@@ -19,6 +31,15 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
 
     var logger: Logger {
         LoggerImpl(isLoggingEnabled: appConfig.isLoggingEnabled)
+    }
+
+    var wordListRepository: WordListRepository {
+        CoreWordListRepository(
+            args: CoreWordListRepositoryArgs(bundle: bundle,
+                                             persistentContainerName: "StorageModel"),
+            langRepository: langRepository,
+            logger: logger
+        )
     }
 
     private(set) lazy var langRepository: LangRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard,
@@ -38,12 +59,12 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
         MainWordListGraphImpl(
             viewParams: createViewParams(),
             navigationController: navigationController,
-            navToSearchBuilder: NavToSearchBuilderImpl(width: .full, externals: self),
-            headerBuilder: MainWordListHeaderBuilderImpl(externals: self),
+            navToSearchBuilder: NavToSearchBuilderImpl(width: .full, dependency: self),
+            headerBuilder: MainWordListHeaderBuilderImpl(dependency: self),
             wordListBuilder: WordListBuilderImpl(params: WordListParams(shouldAnimateWhenAppear: true),
-                                                 externals: self),
-            wordListFetcher: createWordListRepository(),
-            newWordBuilder: NewWordBuilderImpl(externals: self),
+                                                 dependency: self),
+            wordListFetcher: wordListRepository,
+            newWordBuilder: NewWordBuilderImpl(dependency: self),
             coreRouter: appConfig.appParams.coreRouter
         )
     }
@@ -55,35 +76,21 @@ final class MainWordListBuilderImpl: MainWordListBuilder {
             visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
         )
     }
-
-    private func createWordListRepository() -> WordListRepository {
-        CoreWordListRepository(
-            args: CoreWordListRepositoryArgs(bundle: bundle,
-                                             persistentContainerName: "StorageModel"),
-            langRepository: langRepository,
-            logger: logger
-        )
-    }
 }
 
 /// Для передачи внешних зависимостей в фичу "Список слов".
-extension MainWordListBuilderImpl: WordListExternals {
+extension MainWordListBuilderImpl: WordListDependency {
 
     var cudOperations: WordItemCUDOperations {
-        createWordListRepository()
+        wordListRepository
     }
 }
 
 /// Для передачи внешних зависимостей в фичу "Навигация на экран Поиска".
-extension MainWordListBuilderImpl: NavToSearchExternals {
-
-    var wordListRepository: WordListRepository {
-        createWordListRepository()
-    }
-}
+extension MainWordListBuilderImpl: NavToSearchDependency { }
 
 /// Для передачи внешних зависимостей в фичу "Добавление нового слова" в Личный словарь.
-extension MainWordListBuilderImpl: NewWordExternals { }
+extension MainWordListBuilderImpl: NewWordDependency { }
 
 /// Для передачи внешних зависимостей в фичу "Заголовок главного списка слов" Личного словаря.
-extension MainWordListBuilderImpl: MainWordListHeaderExternals { }
+extension MainWordListBuilderImpl: MainWordListHeaderDependency { }

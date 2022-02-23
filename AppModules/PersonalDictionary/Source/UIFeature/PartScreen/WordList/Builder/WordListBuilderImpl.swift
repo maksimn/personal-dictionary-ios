@@ -15,7 +15,7 @@ struct WordListParams {
 }
 
 /// Внешние зависимости фичи "Список слов".
-protocol WordListExternals {
+protocol WordListDependency {
 
     /// Конфигурация приложения.
     var appConfig: Config { get }
@@ -31,16 +31,16 @@ protocol WordListExternals {
 final class WordListBuilderImpl: WordListBuilder {
 
     private let params: WordListParams
-    private let externals: WordListExternals
+    private let dependency: WordListDependency
 
     /// Инициализатор.
     /// - Parameters:
     ///  - params: параметры списка слов.
-    ///  - externals: внешние зависимости.
+    ///  - dependency: внешние зависимости.
     init(params: WordListParams,
-         externals: WordListExternals) {
+         dependency: WordListDependency) {
         self.params = params
-        self.externals = externals
+        self.dependency = dependency
     }
 
     /// Создать MVVM-граф фичи
@@ -48,7 +48,7 @@ final class WordListBuilderImpl: WordListBuilder {
     ///  - MVVM-граф фичи.
     func build() -> WordListMVVM {
         WordListMVVMImpl(
-            cudOperations: externals.cudOperations,
+            cudOperations: dependency.cudOperations,
             translationService: createTranslationService(),
             wordItemStream: WordItemStreamImpl.instance,
             viewParams: createWordListViewParams()
@@ -78,10 +78,10 @@ final class WordListBuilderImpl: WordListBuilder {
         PonsTranslationService(
             apiData: PonsApiData(url: "https://api.pons.com/v1/dictionary",
                                  secretHeaderKey: "X-Secret",
-                                 secret: externals.appConfig.ponsApiSecret),
+                                 secret: dependency.appConfig.ponsApiSecret),
             httpClient: HttpClientImpl(sessionConfiguration: URLSessionConfiguration.default),
             jsonCoder: JSONCoderImpl(),
-            logger: externals.logger
+            logger: dependency.logger
         )
     }
 }
