@@ -6,7 +6,7 @@
 //
 
 /// Роутер для навигации на экран списка избранных слов.
-protocol RoutingToFavoriteWordList {
+protocol NavToFavoriteWordListRouter {
 
     /// Перейти на экран.
     func navigateToFavoriteWordList()

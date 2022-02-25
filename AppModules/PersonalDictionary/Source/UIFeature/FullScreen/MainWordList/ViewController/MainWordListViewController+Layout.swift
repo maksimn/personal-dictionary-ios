@@ -17,6 +17,7 @@ extension MainWordListViewController {
         addWordListChildController()
         initRoutingButton()
         initHeaderView()
+        initHeadingLabel()
     }
 
     private func addWordListChildController() {
@@ -64,6 +65,19 @@ extension MainWordListViewController {
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
             make.right.equalTo(routingButton.snp.left)
             make.height.equalTo(50)
+        }
+    }
+
+    private func initHeadingLabel() {
+        headingLabel.textColor = .black
+        headingLabel.font = UIFont.systemFont(ofSize: 28, weight: .heavy)
+        headingLabel.numberOfLines = 1
+        headingLabel.textAlignment = .left
+        headingLabel.text = params.heading
+        view.addSubview(headingLabel)
+        headingLabel.snp.makeConstraints { make -> Void in
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(14)
+            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left).offset(54.5)
         }
     }
 }

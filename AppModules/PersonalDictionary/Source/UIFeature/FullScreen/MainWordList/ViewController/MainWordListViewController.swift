@@ -17,9 +17,10 @@ final class MainWordListViewController: UIViewController {
     let wordListFetcher: WordListFetcher
     let router: MainWordListRouter
     let navToSearchBuilder: NavToSearchBuilder
-    let headerBuilder: MainWordListHeaderBuilder
+    let headerBuilder: NavToFavoriteWordListBuilder
     let coreRouter: CoreRouter?
 
+    let headingLabel = UILabel()
     let routingButton = UIButton()
 
     /// Инициализатор.
@@ -36,7 +37,7 @@ final class MainWordListViewController: UIViewController {
          wordListFetcher: WordListFetcher,
          router: MainWordListRouter,
          navToSearchBuilder: NavToSearchBuilder,
-         headerBuilder: MainWordListHeaderBuilder,
+         headerBuilder: NavToFavoriteWordListBuilder,
          coreRouter: CoreRouter?) {
         self.params = viewParams
         self.wordListMVVM = wordListMVVM

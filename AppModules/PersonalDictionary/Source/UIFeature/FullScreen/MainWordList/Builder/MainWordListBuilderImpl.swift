@@ -60,7 +60,7 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
             viewParams: createViewParams(),
             navigationController: navigationController,
             navToSearchBuilder: NavToSearchBuilderImpl(width: .full, dependency: self),
-            headerBuilder: MainWordListHeaderBuilderImpl(dependency: self),
+            headerBuilder: NavToFavoriteWordListBuilderImpl(dependency: self),
             wordListBuilder: WordListBuilderImpl(params: WordListParams(shouldAnimateWhenAppear: true),
                                                  dependency: self),
             wordListFetcher: wordListRepository,
@@ -71,7 +71,7 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
 
     private func createViewParams() -> MainWordListViewParams {
         MainWordListViewParams(
-            navToNewWordImage: UIImage(named: "icon-plus", in: bundle, compatibleWith: nil)!,
+            heading: bundle.moduleLocalizedString("My dictionary"),
             routingButtonTitle: appConfig.appParams.routingButtonTitle,
             visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
         )
@@ -82,7 +82,7 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
 extension MainWordListBuilderImpl: WordListDependency,
                                    NavToSearchDependency,
                                    NewWordDependency,
-                                   MainWordListHeaderDependency {
+                                   NavToFavoriteWordListDependency {
 
     var cudOperations: WordItemCUDOperations {
         wordListRepository

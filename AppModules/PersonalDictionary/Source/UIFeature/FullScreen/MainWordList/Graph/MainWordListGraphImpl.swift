@@ -27,7 +27,7 @@ final class MainWordListGraphImpl: MainWordListGraph {
     init(viewParams: MainWordListViewParams,
          navigationController: UINavigationController,
          navToSearchBuilder: NavToSearchBuilder,
-         headerBuilder: MainWordListHeaderBuilder,
+         headerBuilder: NavToFavoriteWordListBuilder,
          wordListBuilder: WordListBuilder,
          wordListFetcher: WordListFetcher,
          newWordBuilder: NewWordBuilder,
