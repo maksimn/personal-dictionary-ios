@@ -15,10 +15,8 @@ final class MainWordListViewController: UIViewController {
 
     let wordListMVVM: WordListMVVM
     let wordListFetcher: WordListFetcher
-    let router: MainWordListRouter
-    let navToSearchBuilder: NavToSearchBuilder
-    let headerBuilder: NavToFavoriteWordListBuilder
     let coreRouter: CoreRouter?
+    let mainNavigatorBuilder: MainNavigatorBuilder
 
     let headingLabel = UILabel()
     let routingButton = UIButton()
@@ -28,24 +26,18 @@ final class MainWordListViewController: UIViewController {
     ///  - viewParams: параметры представления Главного списка слов.
     ///  - wordListMVVM: MVVM-граф фичи "Список слов".
     ///  - wordListFetcher: источник данных для получения списка слов из хранилища.
-    ///  - router: роутер для навигации от Главного списка слов к другим экранам приложения.
-    ///  - navToSearchBuilder: билдер фичи "Навигация на экран Поиска".
-    ///  - headerBuilder: билдер фичи  "Заголовок главного списка слов".
     ///  - coreRouter: базовый роутер для навигации к другому Продукту/Приложению в супераппе.
+    ///  - mainNavigatorBuilder:
     init(viewParams: MainWordListViewParams,
          wordListMVVM: WordListMVVM,
          wordListFetcher: WordListFetcher,
-         router: MainWordListRouter,
-         navToSearchBuilder: NavToSearchBuilder,
-         headerBuilder: NavToFavoriteWordListBuilder,
-         coreRouter: CoreRouter?) {
+         coreRouter: CoreRouter?,
+         mainNavigatorBuilder: MainNavigatorBuilder) {
         self.params = viewParams
         self.wordListMVVM = wordListMVVM
         self.wordListFetcher = wordListFetcher
-        self.router = router
-        self.navToSearchBuilder = navToSearchBuilder
-        self.headerBuilder = headerBuilder
         self.coreRouter = coreRouter
+        self.mainNavigatorBuilder = mainNavigatorBuilder
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -56,17 +48,13 @@ final class MainWordListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
+        _ = mainNavigatorBuilder.build()
         initWordListModel()
     }
 
     @objc
     func onRoutingButtonTap() {
         coreRouter?.navigate()
-    }
-
-    @objc
-    func navigateToNewWord() {
-        router.navigateToNewWord()
     }
 
     private func initWordListModel() {

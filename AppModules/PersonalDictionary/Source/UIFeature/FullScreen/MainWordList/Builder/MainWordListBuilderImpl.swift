@@ -59,12 +59,10 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
         MainWordListGraphImpl(
             viewParams: createViewParams(),
             navigationController: navigationController,
-            navToSearchBuilder: NavToSearchBuilderImpl(width: .full, dependency: self),
-            headerBuilder: NavToFavoriteWordListBuilderImpl(dependency: self),
+            mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: self),
             wordListBuilder: WordListBuilderImpl(params: WordListParams(shouldAnimateWhenAppear: true),
                                                  dependency: self),
             wordListFetcher: wordListRepository,
-            newWordBuilder: NewWordBuilderImpl(dependency: self),
             coreRouter: appConfig.appParams.coreRouter
         )
     }
@@ -80,7 +78,7 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
 
 /// Для передачи зависимостей во вложенные фичи.
 extension MainWordListBuilderImpl: WordListDependency,
-                                   NavToSearchDependency,
+                                   MainNavigatorDependency,
                                    NewWordDependency,
                                    NavToFavoriteWordListDependency {
 

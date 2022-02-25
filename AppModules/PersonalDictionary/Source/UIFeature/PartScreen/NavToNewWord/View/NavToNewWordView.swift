@@ -23,6 +23,7 @@ final class NavToNewWordView: UIView {
         self.navToNewWordImage = navToNewWordImage
         self.router = router
         super.init(frame: .zero)
+        initNewWordButton()
     }
 
     required init?(coder: NSCoder) {
@@ -35,9 +36,13 @@ final class NavToNewWordView: UIView {
     }
 
     private func initNewWordButton() {
+        addSubview(navToNewWordButton)
         navToNewWordButton.setImage(navToNewWordImage, for: .normal)
         navToNewWordButton.imageView?.contentMode = .scaleAspectFit
         navToNewWordButton.addTarget(self, action: #selector(navigateToNewWord), for: .touchUpInside)
+        navToNewWordButton.snp.makeConstraints { make -> Void in
+            make.edges.equalTo(self)
+        }
         if let imageView = navToNewWordButton.imageView {
             imageView.snp.makeConstraints { make -> Void in
                 make.edges.equalTo(navToNewWordButton)
