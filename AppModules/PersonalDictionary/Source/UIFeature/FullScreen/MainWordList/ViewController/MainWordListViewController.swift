@@ -15,28 +15,23 @@ final class MainWordListViewController: UIViewController {
 
     let wordListMVVM: WordListMVVM
     let wordListFetcher: WordListFetcher
-    let coreRouter: CoreRouter?
     let mainNavigator: MainNavigator
 
     let headingLabel = UILabel()
-    let routingButton = UIButton()
 
     /// Инициализатор.
     /// - Parameters:
     ///  - viewParams: параметры представления Главного списка слов.
     ///  - wordListMVVM: MVVM-граф фичи "Список слов".
     ///  - wordListFetcher: источник данных для получения списка слов из хранилища.
-    ///  - coreRouter: базовый роутер для навигации к другому Продукту/Приложению в супераппе.
     ///  - mainNavigatorBuilder:
     init(viewParams: MainWordListViewParams,
          wordListBuilder: WordListBuilder,
          wordListFetcher: WordListFetcher,
-         coreRouter: CoreRouter?,
          mainNavigatorBuilder: MainNavigatorBuilder) {
         self.params = viewParams
         self.wordListMVVM = wordListBuilder.build()
         self.wordListFetcher = wordListFetcher
-        self.coreRouter = coreRouter
         self.mainNavigator = mainNavigatorBuilder.build()
         super.init(nibName: nil, bundle: nil)
     }
@@ -50,11 +45,6 @@ final class MainWordListViewController: UIViewController {
         initViews()
         mainNavigator.addNavigationViews()
         initWordListModel()
-    }
-
-    @objc
-    func onRoutingButtonTap() {
-        coreRouter?.navigate()
     }
 
     private func initWordListModel() {

@@ -38,7 +38,8 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
             navigationController: navigationController,
             navToSearchBuilder: NavToSearchBuilderImpl(width: .full, dependency: self),
             navToFavoriteWordListBuilder: NavToFavoriteWordListBuilderImpl(dependency: self),
-            navToNewWordBuilder: NavToNewWordBuilderImpl(dependency: self)
+            navToNewWordBuilder: NavToNewWordBuilderImpl(dependency: self),
+            navToOtherAppBuilder: NavToOtherAppBuilderImpl(appParams: appConfig.appParams)
         )
     }
 }

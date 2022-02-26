@@ -63,7 +63,6 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
                 dependency: self
             ),
             wordListFetcher: wordListRepository,
-            coreRouter: appConfig.appParams.coreRouter,
             mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: self)
         )
 

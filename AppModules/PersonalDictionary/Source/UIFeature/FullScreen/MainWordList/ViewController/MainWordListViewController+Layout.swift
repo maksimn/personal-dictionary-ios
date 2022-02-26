@@ -13,7 +13,6 @@ extension MainWordListViewController {
     func initViews() {
         view.backgroundColor = Theme.standard.backgroundColor
         addWordListChildController()
-        initRoutingButton()
         initHeadingLabel()
     }
 
@@ -34,20 +33,6 @@ extension MainWordListViewController {
         wordListViewController.didMove(toParent: self)
         wordListViewController.view.snp.makeConstraints { make -> Void in
             make.edges.equalTo(wordListParentView)
-        }
-    }
-
-    private func initRoutingButton() {
-        routingButton.setTitle(params.routingButtonTitle, for: .normal)
-        routingButton.setTitleColor(.darkGray, for: .normal)
-        routingButton.backgroundColor = .clear
-        routingButton.layer.cornerRadius = 8
-        routingButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
-        routingButton.addTarget(self, action: #selector(onRoutingButtonTap), for: .touchUpInside)
-        view.addSubview(routingButton)
-        routingButton.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(21)
-            make.right.equalTo(view.snp.right).offset(-10)
         }
     }
 
