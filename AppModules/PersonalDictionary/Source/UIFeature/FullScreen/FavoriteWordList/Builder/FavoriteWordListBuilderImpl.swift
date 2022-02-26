@@ -17,18 +17,12 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
 
     let appConfig: Config
 
-    let logger: Logger
-
-    let wordListRepository: WordListRepository
-
     /// Инициализатор,
     /// - Parameters:
     ///  - dependency: зависимости фичи.
     init(dependency: FavoriteWordListDependency) {
         self.navigationController = dependency.navigationController
         self.appConfig = dependency.appConfig
-        self.logger = dependency.logger
-        self.wordListRepository = dependency.wordListRepository
     }
 
     /// Создать экран.
@@ -59,6 +53,10 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
                 text: bundle.moduleLocalizedString("No favorite words")
             )
         )
+    }
+
+    private var wordListRepository: WordListRepository {
+        WordListRepositoryGraphImpl(appConfig: appConfig).repository
     }
 }
 

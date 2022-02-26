@@ -8,65 +8,35 @@
 import CoreModule
 import UIKit
 
-/// Общий протокол из базовых зависимостей в приложении.
-protocol BaseDependency {
-
-    var navigationController: UINavigationController { get }
-
-    var appConfig: Config { get }
-
-    var logger: Logger { get }
-
-    var wordListRepository: WordListRepository { get }
-}
+protocol MainWordListDependency: BaseDependency { }
 
 /// Реализация билдера фичи "Главный (основной) список слов" Личного словаря.
 final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
 
     private lazy var bundle = Bundle(for: type(of: self))
 
-    let navigationController = UINavigationController()
+    let navigationController: UINavigationController
 
     let appConfig: Config
 
-    var logger: Logger {
-        LoggerImpl(isLoggingEnabled: appConfig.isLoggingEnabled)
-    }
-
-    var wordListRepository: WordListRepository {
-        CoreWordListRepository(
-            args: CoreWordListRepositoryArgs(bundle: bundle,
-                                             persistentContainerName: "StorageModel"),
-            langRepository: langRepository,
-            logger: logger
-        )
-    }
-
-    private(set) lazy var langRepository: LangRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard,
-                                                                              data: appConfig.langData)
-
     /// Инициализатор.
     /// - Parameters:
-    ///  - config: конфигурация приложения.
-    init(config: Config) {
-        appConfig = config
+    ///  - dependency: зависимости фичи.
+    init(dependency: MainWordListDependency) {
+        appConfig = dependency.appConfig
+        navigationController = dependency.navigationController
     }
 
-    /// Создать объекты фичи.
+    /// Создать экран.
     /// - Returns:
-    ///  - Navigation controller с проинициализированным экраном  "Главного (основного) списка слов".
-    func build() -> UINavigationController {
-        let viewController = MainWordListViewController(
+    ///  - Экран "Главного (основного) списка слов".
+    func build() -> UIViewController {
+        MainWordListViewController(
             viewParams: createViewParams(),
             wordListBuilder: createWordListBuilder(),
             wordListFetcher: wordListRepository,
             mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: self)
         )
-
-        navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
-        navigationController.setViewControllers([viewController], animated: false)
-
-        return navigationController
     }
 
     private func createViewParams() -> MainWordListViewParams {
@@ -81,6 +51,10 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
             params: WordListParams(shouldAnimateWhenAppear: true),
             dependency: self
         )
+    }
+
+    private var wordListRepository: WordListRepository {
+        WordListRepositoryGraphImpl(appConfig: appConfig).repository
     }
 }
 

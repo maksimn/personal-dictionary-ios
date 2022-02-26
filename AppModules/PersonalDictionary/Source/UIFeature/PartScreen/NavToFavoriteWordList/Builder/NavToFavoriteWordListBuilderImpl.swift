@@ -18,18 +18,12 @@ final class NavToFavoriteWordListBuilderImpl: NavToFavoriteWordListBuilder {
 
     let appConfig: Config
 
-    let logger: Logger
-
-    let wordListRepository: WordListRepository
-
     /// Инициализатор.
     /// - Parameters:
     ///  - dependency: внешние зависимости фичи.
     init(dependency: NavToFavoriteWordListDependency) {
         self.navigationController = dependency.navigationController
         self.appConfig = dependency.appConfig
-        self.logger = dependency.logger
-        self.wordListRepository = dependency.wordListRepository
     }
 
     /// Создать фичу.

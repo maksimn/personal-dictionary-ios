@@ -10,8 +10,8 @@ import UIKit
 /// Билдер Фичи "Главный (основной) список слов" Личного словаря.
 protocol MainWordListBuilder {
 
-    /// Создать объекты фичи.
+    /// Создать экран.
     /// - Returns:
-    ///  - Navigation controller с проинициализированным первым экраном  "Главного (основного) списка слов".
-    func build() -> UINavigationController
+    ///  - Экран "Главного (основного) списка слов".
+    func build() -> UIViewController
 }
