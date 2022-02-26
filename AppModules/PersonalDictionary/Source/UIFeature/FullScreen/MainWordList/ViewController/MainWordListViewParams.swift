@@ -13,9 +13,6 @@ struct MainWordListViewParams {
     /// Текст заголовка
     let heading: String
 
-    /// Надпись на кнопке навигации к другому приложению в супераппе
-    let routingButtonTitle: String
-
     /// Максимальное количество видимых элементов (слов) на данном экране
     let visibleItemMaxCount: Int
 }

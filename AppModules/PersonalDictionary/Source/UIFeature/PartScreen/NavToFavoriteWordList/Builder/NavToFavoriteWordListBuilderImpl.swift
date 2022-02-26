@@ -8,10 +8,10 @@
 import CoreModule
 import UIKit
 
-/// Внешние зависимости фичи "Заголовок Главного списка слов".
+/// Внешние зависимости фичи "Элемент навигации на экран списка избранных слов"..
 protocol NavToFavoriteWordListDependency: BaseDependency { }
 
-/// Реализация билдера фичи "Заголовок Главного списка слов".
+/// Реализация билдера фичи ""Элемент навигации на экран списка избранных слов".
 final class NavToFavoriteWordListBuilderImpl: NavToFavoriteWordListBuilder {
 
     let navigationController: UINavigationController

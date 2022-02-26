@@ -22,9 +22,9 @@ final class MainWordListViewController: UIViewController {
     /// Инициализатор.
     /// - Parameters:
     ///  - viewParams: параметры представления Главного списка слов.
-    ///  - wordListMVVM: MVVM-граф фичи "Список слов".
+    ///  - wordListBuilder: билдер вложенной фичи "Список слов".
     ///  - wordListFetcher: источник данных для получения списка слов из хранилища.
-    ///  - mainNavigatorBuilder:
+    ///  - mainNavigatorBuilder: билдер вложенной фичи "Контейнер элементов навигации на Главном экране приложения".
     init(viewParams: MainWordListViewParams,
          wordListBuilder: WordListBuilder,
          wordListFetcher: WordListFetcher,

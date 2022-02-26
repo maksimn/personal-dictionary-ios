@@ -47,21 +47,18 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - config:
+    ///  - config: конфигурация приложения.
     init(config: Config) {
         appConfig = config
     }
 
-    /// Создать граф фичи.
+    /// Создать объекты фичи.
     /// - Returns:
-    ///  - Граф фичи "Главный (основной) список слов".
+    ///  - Navigation controller с проинициализированным экраном  "Главного (основного) списка слов".
     func build() -> UINavigationController {
         let viewController = MainWordListViewController(
             viewParams: createViewParams(),
-            wordListBuilder: WordListBuilderImpl(
-                params: WordListParams(shouldAnimateWhenAppear: true),
-                dependency: self
-            ),
+            wordListBuilder: createWordListBuilder(),
             wordListFetcher: wordListRepository,
             mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: self)
         )
@@ -75,17 +72,20 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
     private func createViewParams() -> MainWordListViewParams {
         MainWordListViewParams(
             heading: bundle.moduleLocalizedString("My dictionary"),
-            routingButtonTitle: appConfig.appParams.routingButtonTitle,
             visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
+        )
+    }
+
+    private func createWordListBuilder() -> WordListBuilder {
+        WordListBuilderImpl(
+            params: WordListParams(shouldAnimateWhenAppear: true),
+            dependency: self
         )
     }
 }
 
 /// Для передачи зависимостей во вложенные фичи.
-extension MainWordListBuilderImpl: WordListDependency,
-                                   MainNavigatorDependency,
-                                   NewWordDependency,
-                                   NavToFavoriteWordListDependency {
+extension MainWordListBuilderImpl: WordListDependency, MainNavigatorDependency {
 
     var cudOperations: WordItemCUDOperations {
         wordListRepository

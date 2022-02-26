@@ -21,6 +21,9 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
 
     let wordListRepository: WordListRepository
 
+    /// Инициализатор,
+    /// - Parameters:
+    ///  - dependency: зависимости фичи.
     init(dependency: FavoriteWordListDependency) {
         self.navigationController = dependency.navigationController
         self.appConfig = dependency.appConfig

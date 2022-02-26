@@ -8,11 +8,13 @@
 import CoreModule
 import UIKit
 
+/// Зависимости фичи.
 protocol MainNavigatorDependency: BaseDependency {
 
     var langRepository: LangRepository { get }
 }
 
+/// Реализация билдера фичи "Контейнер элементов навигации на Главном экране приложения".
 final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
 
     let navigationController: UINavigationController
@@ -25,6 +27,9 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
 
     let langRepository: LangRepository
 
+    /// Инициализатор,
+    /// - Parameters:
+    ///  - dependency: зависимости фичи.
     init(dependency: MainNavigatorDependency) {
         self.navigationController = dependency.navigationController
         self.appConfig = dependency.appConfig
@@ -33,6 +38,8 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
         self.langRepository = dependency.langRepository
     }
 
+    /// Создать контейнер.
+    /// - Returns: объект контейнера.
     func build() -> MainNavigator {
         MainNavigatorImpl(
             navigationController: navigationController,

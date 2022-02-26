@@ -8,7 +8,7 @@
 import CoreModule
 import UIKit
 
-/// Представление для навигации.
+/// Представление фичи "Навигация к другому продукту/приложению в супераппе".
 final class NavToOtherAppView: UIView {
 
     private let appParams: AppParams

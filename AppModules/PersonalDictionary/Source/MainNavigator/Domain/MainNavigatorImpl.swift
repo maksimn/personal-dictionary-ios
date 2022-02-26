@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Реализация контейнера элементов навигации на Главном экране приложения.
 final class MainNavigatorImpl: MainNavigator {
 
     private let navigationController: UINavigationController
@@ -15,6 +16,13 @@ final class MainNavigatorImpl: MainNavigator {
     private let navToNewWordBuilder: NavToNewWordBuilder
     private let navToOtherAppBuilder: NavToOtherAppBuilder
 
+    /// Инициализатор,
+    /// - Parameters:
+    ///  - navigationController: корневой  navigation  сontroller приложения.
+    ///  - navToSearchBuilder: билдер вложенной фичи "Элемент навигации на экран поиска".
+    ///  - navToFavoriteWordListBuilder: билдер вложенной фичи "Элемент навигации на экран списка избранных слов".
+    ///  - navToNewWordBuilder: билдер вложенной фичи "Элемент навигации на экран добавления нового слова в словарь".
+    ///  - navToOtherAppBuilder: билдер вложенной фичи "Элемент навигации к другому продукту/приложению в супераппе".
     init(navigationController: UINavigationController,
          navToSearchBuilder: NavToSearchBuilder,
          navToFavoriteWordListBuilder: NavToFavoriteWordListBuilder,
@@ -27,14 +35,15 @@ final class MainNavigatorImpl: MainNavigator {
         self.navToOtherAppBuilder = navToOtherAppBuilder
     }
 
+    /// Добавить представления элементов навигации на экран.
     func addNavigationViews() {
-        initNavToSearch()
-        initNavToFavoriteWordList()
-        initNavToNewWord()
-        initNavToOtherApp()
+        addNavToSearch()
+        addNavToFavoriteWordList()
+        addNavToNewWord()
+        addNavToOtherApp()
     }
 
-    private func initNavToSearch() {
+    private func addNavToSearch() {
         let navToSearchView = navToSearchBuilder.build()
         let navigationItem = navigationController.topViewController?.navigationItem
 
@@ -42,7 +51,7 @@ final class MainNavigatorImpl: MainNavigator {
         navigationItem?.titleView = navToSearchView
     }
 
-    private func initNavToFavoriteWordList() {
+    private func addNavToFavoriteWordList() {
         guard let view = view else { return }
         let navToFavoriteWordListView = navToFavoriteWordListBuilder.build()
 
@@ -54,7 +63,7 @@ final class MainNavigatorImpl: MainNavigator {
         }
     }
 
-    private func initNavToNewWord() {
+    private func addNavToNewWord() {
         guard let view = view else { return }
         let navView = navToNewWordBuilder.build()
 
@@ -66,7 +75,7 @@ final class MainNavigatorImpl: MainNavigator {
         }
     }
 
-    private func initNavToOtherApp() {
+    private func addNavToOtherApp() {
         guard let view = view else { return }
         let navView = navToOtherAppBuilder.build()
 

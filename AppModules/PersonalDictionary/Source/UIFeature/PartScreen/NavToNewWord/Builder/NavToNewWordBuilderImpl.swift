@@ -8,7 +8,7 @@
 import CoreModule
 import UIKit
 
-/// Внешние зависимости фичи "Навигация".
+/// Внешние зависимости фичи "Навигация на экран добавления нового слова".
 protocol NavToNewWordDependency {
 
     var navigationController: UINavigationController { get }
@@ -16,7 +16,7 @@ protocol NavToNewWordDependency {
     var langRepository: LangRepository { get }
 }
 
-/// Реализация билдера фичи "Навигация".
+/// Реализация билдера фичи "Навигация на экран добавления нового слова".
 final class NavToNewWordBuilderImpl: NavToNewWordBuilder {
 
     let navigationController: UINavigationController
