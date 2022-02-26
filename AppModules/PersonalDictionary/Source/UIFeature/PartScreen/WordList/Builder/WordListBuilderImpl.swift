@@ -22,9 +22,6 @@ protocol WordListDependency {
 
     /// Операции create, update, delete со словами в хранилище личного словаря.
     var cudOperations: WordItemCUDOperations { get }
-
-    /// Логгер
-    var logger: Logger { get }
 }
 
 /// Реализация билдера фичи "Список слов".
@@ -81,7 +78,7 @@ final class WordListBuilderImpl: WordListBuilder {
                                  secret: dependency.appConfig.ponsApiSecret),
             httpClient: HttpClientImpl(sessionConfiguration: URLSessionConfiguration.default),
             jsonCoder: JSONCoderImpl(),
-            logger: dependency.logger
+            logger: LoggerImpl(isLoggingEnabled: dependency.appConfig.isLoggingEnabled)
         )
     }
 }

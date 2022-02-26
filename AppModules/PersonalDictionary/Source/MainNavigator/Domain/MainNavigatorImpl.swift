@@ -87,6 +87,6 @@ final class MainNavigatorImpl: MainNavigator {
     }
 
     private var view: UIView? {
-        navigationController.topViewController?.view
+        navigationController.viewControllers.first?.view
     }
 }

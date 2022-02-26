@@ -7,32 +7,16 @@
 
 import CoreModule
 
-/// Внешние зависимости фичи "Поиска".
-protocol SearchDependency {
-
-    var appConfig: Config { get }
-
-    var logger: Logger { get }
-
-    var wordListRepository: WordListRepository { get }
-}
-
 /// Билдер Фичи "Поиск по словам в словаре".
 final class SearchBuilderImpl: SearchBuilder {
 
     let appConfig: Config
 
-    let logger: Logger
-
-    let wordListRepository: WordListRepository
-
     /// Инициализатор.
     /// - Parameters:
-    ///  - dependency: внешние зависимости фичи.
-    init(dependency: SearchDependency) {
-        appConfig = dependency.appConfig
-        logger = dependency.logger
-        wordListRepository = dependency.wordListRepository
+    ///  - appConfig: конфигурация приложения.
+    init(appConfig: Config) {
+        self.appConfig = appConfig
     }
 
     /// Создать экран Поиска.
@@ -59,6 +43,10 @@ final class SearchBuilderImpl: SearchBuilder {
                 text: Bundle(for: type(of: self)).moduleLocalizedString("No words found")
             )
         )
+    }
+
+    private var wordListRepository: WordListRepository {
+        WordListRepositoryGraphImpl(appConfig: appConfig).repository
     }
 }
 
