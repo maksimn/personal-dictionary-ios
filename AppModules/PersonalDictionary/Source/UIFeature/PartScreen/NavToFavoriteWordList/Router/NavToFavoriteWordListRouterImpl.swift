@@ -6,7 +6,7 @@
 //
 
 /// Реализация роутера для навигации на экран списка избранных слов.
-final class RoutingToFavoriteWordListImpl: RoutingToFavoriteWordList {
+final class NavToFavoriteWordListRouterImpl: NavToFavoriteWordListRouter {
 
     private let navigationController: UINavigationController
     private let favoriteWordListBuilder: FavoriteWordListBuilder

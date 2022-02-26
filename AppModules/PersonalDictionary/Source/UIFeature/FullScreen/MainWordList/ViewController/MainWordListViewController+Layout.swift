@@ -12,13 +12,8 @@ extension MainWordListViewController {
 
     func initViews() {
         view.backgroundColor = Theme.standard.backgroundColor
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        navigationItem.titleView = navToSearchBuilder.build()
         addWordListChildController()
-        view.addSubview(navToNewWordButton)
-        initNewWordButton()
-        initRoutingButton()
-        initHeaderView()
+        initHeadingLabel()
     }
 
     private func addWordListChildController() {
@@ -41,45 +36,16 @@ extension MainWordListViewController {
         }
     }
 
-    private func initNewWordButton() {
-        navToNewWordButton.setImage(params.navToNewWordImage, for: .normal)
-        navToNewWordButton.imageView?.contentMode = .scaleAspectFit
-        navToNewWordButton.addTarget(self, action: #selector(navigateToNewWord), for: .touchUpInside)
-        navToNewWordButton.snp.makeConstraints { make -> Void in
-            make.size.equalTo(CGSize(width: 44, height: 44))
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-26)
-            make.centerX.equalTo(view)
-        }
-        if let imageView = navToNewWordButton.imageView {
-            imageView.snp.makeConstraints { make -> Void in
-                make.edges.equalTo(navToNewWordButton)
-            }
-        }
-    }
-
-    private func initRoutingButton() {
-        routingButton.setTitle(params.routingButtonTitle, for: .normal)
-        routingButton.setTitleColor(.darkGray, for: .normal)
-        routingButton.backgroundColor = .clear
-        routingButton.layer.cornerRadius = 8
-        routingButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
-        routingButton.addTarget(self, action: #selector(onRoutingButtonTap), for: .touchUpInside)
-        view.addSubview(routingButton)
-        routingButton.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(21)
-            make.right.equalTo(view.snp.right).offset(-10)
-        }
-    }
-
-    private func initHeaderView() {
-        let headerView = headerBuilder.build()
-
-        view.addSubview(headerView)
-        headerView.snp.makeConstraints { make -> Void in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
-            make.right.equalTo(routingButton.snp.left)
-            make.height.equalTo(50)
+    private func initHeadingLabel() {
+        headingLabel.textColor = .black
+        headingLabel.font = UIFont.systemFont(ofSize: 28, weight: .heavy)
+        headingLabel.numberOfLines = 1
+        headingLabel.textAlignment = .left
+        headingLabel.text = params.heading
+        view.addSubview(headingLabel)
+        headingLabel.snp.makeConstraints { make -> Void in
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(14)
+            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left).offset(54.5)
         }
     }
 }

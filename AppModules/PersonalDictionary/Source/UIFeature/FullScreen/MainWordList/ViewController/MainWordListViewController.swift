@@ -9,43 +9,30 @@ import CoreModule
 import UIKit
 
 /// View controller экрана Главного списка слов.
-class MainWordListViewController: UIViewController {
+final class MainWordListViewController: UIViewController {
 
     let params: MainWordListViewParams
 
     let wordListMVVM: WordListMVVM
     let wordListFetcher: WordListFetcher
-    let router: MainWordListRouter
-    let navToSearchBuilder: NavToSearchBuilder
-    let headerBuilder: MainWordListHeaderBuilder
-    let coreRouter: CoreRouter?
+    let mainNavigator: MainNavigator
 
-    let navToNewWordButton = UIButton()
-    let routingButton = UIButton()
+    let headingLabel = UILabel()
 
     /// Инициализатор.
     /// - Parameters:
     ///  - viewParams: параметры представления Главного списка слов.
     ///  - wordListMVVM: MVVM-граф фичи "Список слов".
     ///  - wordListFetcher: источник данных для получения списка слов из хранилища.
-    ///  - router: роутер для навигации от Главного списка слов к другим экранам приложения.
-    ///  - navToSearchBuilder: билдер фичи "Навигация на экран Поиска".
-    ///  - headerBuilder: билдер фичи  "Заголовок главного списка слов".
-    ///  - coreRouter: базовый роутер для навигации к другому Продукту/Приложению в супераппе.
+    ///  - mainNavigatorBuilder:
     init(viewParams: MainWordListViewParams,
-         wordListMVVM: WordListMVVM,
+         wordListBuilder: WordListBuilder,
          wordListFetcher: WordListFetcher,
-         router: MainWordListRouter,
-         navToSearchBuilder: NavToSearchBuilder,
-         headerBuilder: MainWordListHeaderBuilder,
-         coreRouter: CoreRouter?) {
+         mainNavigatorBuilder: MainNavigatorBuilder) {
         self.params = viewParams
-        self.wordListMVVM = wordListMVVM
+        self.wordListMVVM = wordListBuilder.build()
         self.wordListFetcher = wordListFetcher
-        self.router = router
-        self.navToSearchBuilder = navToSearchBuilder
-        self.headerBuilder = headerBuilder
-        self.coreRouter = coreRouter
+        self.mainNavigator = mainNavigatorBuilder.build()
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -56,17 +43,8 @@ class MainWordListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
+        mainNavigator.addNavigationViews()
         initWordListModel()
-    }
-
-    @objc
-    func onRoutingButtonTap() {
-        coreRouter?.navigate()
-    }
-
-    @objc
-    func navigateToNewWord() {
-        router.navigateToNewWord()
     }
 
     private func initWordListModel() {

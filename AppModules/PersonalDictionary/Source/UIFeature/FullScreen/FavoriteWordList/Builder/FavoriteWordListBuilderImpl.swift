@@ -59,13 +59,10 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
     }
 }
 
-/// Для передачи внешних зависимостей в фичу "Список слов"
-extension FavoriteWordListBuilderImpl: WordListDependency {
+/// Для передачи внешних зависимостей во вложенные фичи.
+extension FavoriteWordListBuilderImpl: WordListDependency, NavToSearchDependency {
 
     var cudOperations: WordItemCUDOperations {
         wordListRepository
     }
 }
-
-/// Для передачи внешних зависимостей в фичу "Навигация на экран Поиска"
-extension FavoriteWordListBuilderImpl: NavToSearchDependency { }

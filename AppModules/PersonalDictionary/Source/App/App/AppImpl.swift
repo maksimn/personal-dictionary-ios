@@ -15,10 +15,8 @@ final class AppImpl: App {
 
     /// Инициализатор:
     /// - Parameters:
-    ///  - config: конфигурация данного приложения.
-    init(config: Config) {
-        let mainWordListBuilder = MainWordListBuilderImpl(config: config)
-        let mainWordListGraph = mainWordListBuilder.build()
-        navigationController = mainWordListGraph.navigationController
+    ///  - mainWordListBuilder: билдер Главного списка слов (главного экрана приложения).
+    init(mainWordListBuilder: MainWordListBuilder) {
+        navigationController = mainWordListBuilder.build()
     }
 }

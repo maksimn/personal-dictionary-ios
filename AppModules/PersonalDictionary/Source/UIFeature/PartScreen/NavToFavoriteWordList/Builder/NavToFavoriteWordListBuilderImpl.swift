@@ -1,5 +1,5 @@
 //
-//  MainWordListHeaderBuilder.swift
+//  NavToFavoriteWordListBuilder.swift
 //  PersonalDictionary
 //
 //  Created by Maksim Ivanov on 21.02.2022.
@@ -9,10 +9,10 @@ import CoreModule
 import UIKit
 
 /// Внешние зависимости фичи "Заголовок Главного списка слов".
-protocol MainWordListHeaderDependency: BaseDependency { }
+protocol NavToFavoriteWordListDependency: BaseDependency { }
 
 /// Реализация билдера фичи "Заголовок Главного списка слов".
-final class MainWordListHeaderBuilderImpl: MainWordListHeaderBuilder {
+final class NavToFavoriteWordListBuilderImpl: NavToFavoriteWordListBuilder {
 
     let navigationController: UINavigationController
 
@@ -25,7 +25,7 @@ final class MainWordListHeaderBuilderImpl: MainWordListHeaderBuilder {
     /// Инициализатор.
     /// - Parameters:
     ///  - dependency: внешние зависимости фичи.
-    init(dependency: MainWordListHeaderDependency) {
+    init(dependency: NavToFavoriteWordListDependency) {
         self.navigationController = dependency.navigationController
         self.appConfig = dependency.appConfig
         self.logger = dependency.logger
@@ -36,21 +36,18 @@ final class MainWordListHeaderBuilderImpl: MainWordListHeaderBuilder {
     /// - Returns: представление фичи.
     func build() -> UIView {
         let favoriteWordListBuilder = FavoriteWordListBuilderImpl(dependency: self)
-        let router = RoutingToFavoriteWordListImpl(
+        let router = NavToFavoriteWordListRouterImpl(
             navigationController: navigationController,
             favoriteWordListBuilder: favoriteWordListBuilder
         )
-        let bundle = Bundle(for: type(of: self))
-        let viewParams = MainWordListHeaderViewParams(
-            heading: bundle.moduleLocalizedString("My dictionary"),
-            routingButtonTitle: "☆"
+        let view = NavToFavoriteWordListView(
+            routingButtonTitle: "☆",
+            router: router
         )
-        let view = MainWordListHeaderView(params: viewParams,
-                                          router: router)
 
         return view
     }
 }
 
 /// Для передачи зависимостей во вложенную фичу "Экран списка избранных слов Личного словаря".
-extension MainWordListHeaderBuilderImpl: FavoriteWordListDependency { }
+extension NavToFavoriteWordListBuilderImpl: FavoriteWordListDependency { }

@@ -55,42 +55,39 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
     /// Создать граф фичи.
     /// - Returns:
     ///  - Граф фичи "Главный (основной) список слов".
-    func build() -> MainWordListGraph {
-        MainWordListGraphImpl(
+    func build() -> UINavigationController {
+        let viewController = MainWordListViewController(
             viewParams: createViewParams(),
-            navigationController: navigationController,
-            navToSearchBuilder: NavToSearchBuilderImpl(width: .full, dependency: self),
-            headerBuilder: MainWordListHeaderBuilderImpl(dependency: self),
-            wordListBuilder: WordListBuilderImpl(params: WordListParams(shouldAnimateWhenAppear: true),
-                                                 dependency: self),
+            wordListBuilder: WordListBuilderImpl(
+                params: WordListParams(shouldAnimateWhenAppear: true),
+                dependency: self
+            ),
             wordListFetcher: wordListRepository,
-            newWordBuilder: NewWordBuilderImpl(dependency: self),
-            coreRouter: appConfig.appParams.coreRouter
+            mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: self)
         )
+
+        navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
+        navigationController.setViewControllers([viewController], animated: false)
+
+        return navigationController
     }
 
     private func createViewParams() -> MainWordListViewParams {
         MainWordListViewParams(
-            navToNewWordImage: UIImage(named: "icon-plus", in: bundle, compatibleWith: nil)!,
+            heading: bundle.moduleLocalizedString("My dictionary"),
             routingButtonTitle: appConfig.appParams.routingButtonTitle,
             visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
         )
     }
 }
 
-/// Для передачи внешних зависимостей в фичу "Список слов".
-extension MainWordListBuilderImpl: WordListDependency {
+/// Для передачи зависимостей во вложенные фичи.
+extension MainWordListBuilderImpl: WordListDependency,
+                                   MainNavigatorDependency,
+                                   NewWordDependency,
+                                   NavToFavoriteWordListDependency {
 
     var cudOperations: WordItemCUDOperations {
         wordListRepository
     }
 }
-
-/// Для передачи внешних зависимостей в фичу "Навигация на экран Поиска".
-extension MainWordListBuilderImpl: NavToSearchDependency { }
-
-/// Для передачи внешних зависимостей в фичу "Добавление нового слова" в Личный словарь.
-extension MainWordListBuilderImpl: NewWordDependency { }
-
-/// Для передачи внешних зависимостей в фичу "Заголовок главного списка слов" Личного словаря.
-extension MainWordListBuilderImpl: MainWordListHeaderDependency { }

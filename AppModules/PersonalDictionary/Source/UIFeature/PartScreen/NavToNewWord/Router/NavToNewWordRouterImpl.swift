@@ -1,14 +1,12 @@
 //
-//  RouterImpl.swift
+//  NavToSearchRouterImpl.swift
 //  PersonalDictionary
 //
-//  Created by Maxim Ivanov on 11.10.2021.
+//  Created by Maksim Ivanov on 21.02.2022.
 //
 
-import UIKit
-
-/// Реализация роутера для навигации от Главного списка слов к другим экранам приложения.
-final class MainWordListRouterImpl: MainWordListRouter {
+/// Реализация роутера для навигации на экран.
+final class NavToNewWordRouterImpl: NavToNewWordRouter {
 
     private let navigationController: UINavigationController
     private let newWordBuilder: NewWordBuilder
@@ -16,14 +14,14 @@ final class MainWordListRouterImpl: MainWordListRouter {
     /// Инициализатор.
     /// - Parameters:
     ///  - navigationController: корневой navigation controller приложения.
-    ///  - newWordBuilder: билдер фичи "Добавление нового слова" в словарь.
+    ///  - searchBuilder: билдер вложенной фичи "Поиск" по словам в словаре.
     init(navigationController: UINavigationController,
          newWordBuilder: NewWordBuilder) {
         self.navigationController = navigationController
         self.newWordBuilder = newWordBuilder
     }
 
-    /// Перейти на экран добавления нового слова.
+    /// Перейти на экран поиска по словам в личном словаре.
     func navigateToNewWord() {
         let newWordMVVM = newWordBuilder.build()
         guard let newWordViewController = newWordMVVM.viewController else { return }

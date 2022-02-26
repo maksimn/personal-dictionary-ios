@@ -1,5 +1,5 @@
 //
-//  MainWordListHeaderBuilder.swift
+//  NavToFavoriteWordListBuilder.swift
 //  PersonalDictionary
 //
 //  Created by Maksim Ivanov on 21.02.2022.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-/// Билдер фичи "Заголовок Главного списка слов".
-protocol MainWordListHeaderBuilder {
+/// Билдер фичи
+protocol NavToFavoriteWordListBuilder {
 
     /// Создать фичу.
     /// - Returns: представление фичи.
