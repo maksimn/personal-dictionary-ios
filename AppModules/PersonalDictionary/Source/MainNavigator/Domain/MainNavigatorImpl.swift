@@ -9,24 +9,36 @@ import UIKit
 
 final class MainNavigatorImpl: MainNavigator {
 
+     private let navigationController: UINavigationController
+     private let navToSearchBuilder: NavToSearchBuilder
+     private let navToFavoriteWordListBuilder: NavToFavoriteWordListBuilder
+     private let navToNewWordBuilder: NavToNewWordBuilder
+
     init(navigationController: UINavigationController,
          navToSearchBuilder: NavToSearchBuilder,
          navToFavoriteWordListBuilder: NavToFavoriteWordListBuilder,
-         navToNewWordBuilder: NavToNewWordBuilder
-    ) {
+         navToNewWordBuilder: NavToNewWordBuilder) {
+        self.navigationController = navigationController
+        self.navToSearchBuilder = navToSearchBuilder
+        self.navToFavoriteWordListBuilder = navToFavoriteWordListBuilder
+        self.navToNewWordBuilder = navToNewWordBuilder
+    }
+
+    func addNavigationViews() {
+        initNavToSearch()
+        initNavToFavoriteWordList()
+        initNavToNewWord()
+    }
+
+    private func initNavToSearch() {
         let navToSearchView = navToSearchBuilder.build()
         let navigationItem = navigationController.topViewController?.navigationItem
-        let view = navigationController.topViewController?.view
 
         navigationItem?.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem?.titleView = navToSearchView
-
-        initNavToFavoriteWordList(view: view, navToFavoriteWordListBuilder: navToFavoriteWordListBuilder)
-        initNavToNewWord(view: view, navToNewWordBuilder: navToNewWordBuilder)
     }
 
-    private func initNavToFavoriteWordList(view: UIView?,
-                                           navToFavoriteWordListBuilder: NavToFavoriteWordListBuilder) {
+    private func initNavToFavoriteWordList() {
         guard let view = view else { return }
         let navToFavoriteWordListView = navToFavoriteWordListBuilder.build()
 
@@ -38,7 +50,7 @@ final class MainNavigatorImpl: MainNavigator {
         }
     }
 
-    private func initNavToNewWord(view: UIView?, navToNewWordBuilder: NavToNewWordBuilder) {
+    private func initNavToNewWord() {
         guard let view = view else { return }
         let navView = navToNewWordBuilder.build()
 
@@ -48,5 +60,9 @@ final class MainNavigatorImpl: MainNavigator {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-26)
             make.centerX.equalTo(view)
         }
+    }
+
+    private var view: UIView? {
+        navigationController.topViewController?.view
     }
 }

@@ -16,7 +16,7 @@ final class MainWordListViewController: UIViewController {
     let wordListMVVM: WordListMVVM
     let wordListFetcher: WordListFetcher
     let coreRouter: CoreRouter?
-    let mainNavigatorBuilder: MainNavigatorBuilder
+    let mainNavigator: MainNavigator
 
     let headingLabel = UILabel()
     let routingButton = UIButton()
@@ -29,15 +29,15 @@ final class MainWordListViewController: UIViewController {
     ///  - coreRouter: базовый роутер для навигации к другому Продукту/Приложению в супераппе.
     ///  - mainNavigatorBuilder:
     init(viewParams: MainWordListViewParams,
-         wordListMVVM: WordListMVVM,
+         wordListBuilder: WordListBuilder,
          wordListFetcher: WordListFetcher,
          coreRouter: CoreRouter?,
          mainNavigatorBuilder: MainNavigatorBuilder) {
         self.params = viewParams
-        self.wordListMVVM = wordListMVVM
+        self.wordListMVVM = wordListBuilder.build()
         self.wordListFetcher = wordListFetcher
         self.coreRouter = coreRouter
-        self.mainNavigatorBuilder = mainNavigatorBuilder
+        self.mainNavigator = mainNavigatorBuilder.build()
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -48,7 +48,7 @@ final class MainWordListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
-        _ = mainNavigatorBuilder.build()
+        mainNavigator.addNavigationViews()
         initWordListModel()
     }
 

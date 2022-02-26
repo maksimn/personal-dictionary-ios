@@ -55,16 +55,22 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
     /// Создать граф фичи.
     /// - Returns:
     ///  - Граф фичи "Главный (основной) список слов".
-    func build() -> MainWordListGraph {
-        MainWordListGraphImpl(
+    func build() -> UINavigationController {
+        let viewController = MainWordListViewController(
             viewParams: createViewParams(),
-            navigationController: navigationController,
-            mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: self),
-            wordListBuilder: WordListBuilderImpl(params: WordListParams(shouldAnimateWhenAppear: true),
-                                                 dependency: self),
+            wordListBuilder: WordListBuilderImpl(
+                params: WordListParams(shouldAnimateWhenAppear: true),
+                dependency: self
+            ),
             wordListFetcher: wordListRepository,
-            coreRouter: appConfig.appParams.coreRouter
+            coreRouter: appConfig.appParams.coreRouter,
+            mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: self)
         )
+
+        navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
+        navigationController.setViewControllers([viewController], animated: false)
+
+        return navigationController
     }
 
     private func createViewParams() -> MainWordListViewParams {

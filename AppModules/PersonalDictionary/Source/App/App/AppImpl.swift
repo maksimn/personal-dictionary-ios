@@ -17,7 +17,6 @@ final class AppImpl: App {
     /// - Parameters:
     ///  - mainWordListBuilder: билдер Главного списка слов (главного экрана приложения).
     init(mainWordListBuilder: MainWordListBuilder) {
-        let mainWordListGraph = mainWordListBuilder.build()
-        navigationController = mainWordListGraph.navigationController
+        navigationController = mainWordListBuilder.build()
     }
 }

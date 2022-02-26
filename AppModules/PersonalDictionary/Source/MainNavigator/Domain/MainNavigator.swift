@@ -1,8 +1,11 @@
 //
-//  MainNavigator.swift
+//  MainNavigatorImpl.swift
 //  SuperList
 //
 //  Created by Maksim Ivanov on 26.02.2022.
 //
 
-protocol MainNavigator { }
+protocol MainNavigator {
+
+    func addNavigationViews()
+}
