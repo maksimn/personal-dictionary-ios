@@ -8,10 +8,10 @@
 import CoreModule
 import UIKit
 
-/// Реализация билдера фичи "Навигация ".
+/// Реализация билдера фичи "Навигация к другому продукту/приложению в супераппе".
 final class NavToOtherAppBuilderImpl: NavToOtherAppBuilder {
 
-    let appParams: AppParams
+    private let appParams: AppParams
 
     /// Инициализатор.
     /// - Parameters:

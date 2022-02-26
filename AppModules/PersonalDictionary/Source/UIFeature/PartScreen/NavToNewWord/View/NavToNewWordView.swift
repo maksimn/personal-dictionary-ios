@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// Представление для навигации на экран Поиска.
+/// Представление для навигации на экран добавления нового слова в Личный словарь.
 final class NavToNewWordView: UIView {
 
     private let navToNewWordButton = UIButton()
@@ -17,6 +17,7 @@ final class NavToNewWordView: UIView {
 
     /// Инициализатор.
     /// - Parameters:
+    ///  - navToNewWordImage: картинка для представления.
     ///  - router: роутер для навигации на экран.
     init(navToNewWordImage: UIImage,
          router: NavToNewWordRouter) {

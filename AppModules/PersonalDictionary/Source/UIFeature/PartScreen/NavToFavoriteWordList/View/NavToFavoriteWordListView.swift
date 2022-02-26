@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// Представление заголовка главного списка слов.
+/// Представление элемента навигации на экран списка избранных слов.
 final class NavToFavoriteWordListView: UIView {
 
     private let routingButtonTitle: String

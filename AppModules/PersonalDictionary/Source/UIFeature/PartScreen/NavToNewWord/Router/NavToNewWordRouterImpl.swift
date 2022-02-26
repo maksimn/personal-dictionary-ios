@@ -5,7 +5,7 @@
 //  Created by Maksim Ivanov on 21.02.2022.
 //
 
-/// Реализация роутера для навигации на экран.
+/// Реализация роутера для навигации на экран добавления нового слова в Личный словарь.
 final class NavToNewWordRouterImpl: NavToNewWordRouter {
 
     private let navigationController: UINavigationController
