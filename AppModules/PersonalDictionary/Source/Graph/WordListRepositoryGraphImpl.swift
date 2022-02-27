@@ -8,7 +8,7 @@
 import CoreModule
 
 /// DI контейнер хранилища списка слов.
-final class WordListRepositoryGraphImpl {
+final class WordListRepositoryGraphImpl: WordListRepositoryGraph {
 
     /// Хранилище списка слов.
     let repository: WordListRepository

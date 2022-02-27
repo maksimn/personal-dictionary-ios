@@ -7,16 +7,27 @@
 
 import CoreModule
 
+/// Зависимости фичи "Поиск по словам в словаре".
+protocol SearchDependency {
+
+    var appConfig: Config { get }
+
+    var wordListRepositoryGraph: WordListRepositoryGraph { get }
+}
+
 /// Билдер Фичи "Поиск по словам в словаре".
 final class SearchBuilderImpl: SearchBuilder {
 
     let appConfig: Config
 
+    let wordListRepositoryGraph: WordListRepositoryGraph
+
     /// Инициализатор.
     /// - Parameters:
-    ///  - appConfig: конфигурация приложения.
-    init(appConfig: Config) {
-        self.appConfig = appConfig
+    ///  - dependency: зависимости фичи.
+    init(dependency: SearchDependency) {
+        appConfig = dependency.appConfig
+        wordListRepositoryGraph = dependency.wordListRepositoryGraph
     }
 
     /// Создать экран Поиска.
@@ -26,7 +37,7 @@ final class SearchBuilderImpl: SearchBuilder {
         SearchViewController(
             searchViewParams: createSearchViewParams(),
             searchTextInputBuilder: SearchTextInputBuilderImpl(),
-            searchEngineBuilder: SearchEngineBuilderImpl(wordListFetcher: wordListRepository),
+            searchEngineBuilder: SearchEngineBuilderImpl(wordListFetcher: wordListRepositoryGraph.repository),
             wordListBuilder: WordListBuilderImpl(
                 params: WordListParams(shouldAnimateWhenAppear: false),
                 dependency: self
@@ -44,16 +55,12 @@ final class SearchBuilderImpl: SearchBuilder {
             )
         )
     }
-
-    private var wordListRepository: WordListRepository {
-        WordListRepositoryGraphImpl(appConfig: appConfig).repository
-    }
 }
 
 /// Для передачи внешних зависимостей во вложенную фичу "Список слов".
 extension SearchBuilderImpl: WordListDependency {
 
     var cudOperations: WordItemCUDOperations {
-        wordListRepository
+        wordListRepositoryGraph.repository
     }
 }
