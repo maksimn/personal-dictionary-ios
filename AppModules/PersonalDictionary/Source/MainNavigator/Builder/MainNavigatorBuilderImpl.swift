@@ -14,7 +14,7 @@ protocol MainNavigatorDependency: BaseDependency { }
 /// Реализация билдера фичи "Контейнер элементов навигации на Главном экране приложения".
 final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
 
-    let navigationController: UINavigationController
+    private(set) weak var navigationController: UINavigationController?
 
     let appConfig: Config
 

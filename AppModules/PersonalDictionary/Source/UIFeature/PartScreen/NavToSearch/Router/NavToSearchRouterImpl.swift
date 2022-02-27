@@ -8,14 +8,14 @@
 /// Реализация роутера для навигации на экран Поиска.
 final class NavToSearchRouterImpl: NavToSearchRouter {
 
-    private let navigationController: UINavigationController
+    private(set) weak var navigationController: UINavigationController?
     private let searchBuilder: SearchBuilder
 
     /// Инициализатор.
     /// - Parameters:
     ///  - navigationController: корневой navigation controller приложения.
     ///  - searchBuilder: билдер вложенной фичи "Поиск" по словам в словаре.
-    init(navigationController: UINavigationController,
+    init(navigationController: UINavigationController?,
          searchBuilder: SearchBuilder) {
         self.navigationController = navigationController
         self.searchBuilder = searchBuilder
@@ -25,6 +25,6 @@ final class NavToSearchRouterImpl: NavToSearchRouter {
     func navigateToSearch() {
         let searchWordVC = searchBuilder.build()
 
-        navigationController.pushViewController(searchWordVC, animated: true)
+        navigationController?.pushViewController(searchWordVC, animated: true)
     }
 }

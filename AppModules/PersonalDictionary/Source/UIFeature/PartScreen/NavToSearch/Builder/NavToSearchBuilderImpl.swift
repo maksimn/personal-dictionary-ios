@@ -22,7 +22,7 @@ final class NavToSearchBuilderImpl: NavToSearchBuilder {
 
     let width: NavToSearchWidth
 
-    let navigationController: UINavigationController
+    private(set) weak var navigationController: UINavigationController?
 
     let appConfig: Config
 

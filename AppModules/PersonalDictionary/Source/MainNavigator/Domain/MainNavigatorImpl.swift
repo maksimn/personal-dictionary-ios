@@ -10,7 +10,7 @@ import UIKit
 /// Реализация контейнера элементов навигации на Главном экране приложения.
 final class MainNavigatorImpl: MainNavigator {
 
-    private let navigationController: UINavigationController
+    private(set) weak var navigationController: UINavigationController?
     private let navToSearchBuilder: NavToSearchBuilder
     private let navToFavoriteWordListBuilder: NavToFavoriteWordListBuilder
     private let navToNewWordBuilder: NavToNewWordBuilder
@@ -23,7 +23,7 @@ final class MainNavigatorImpl: MainNavigator {
     ///  - navToFavoriteWordListBuilder: билдер вложенной фичи "Элемент навигации на экран списка избранных слов".
     ///  - navToNewWordBuilder: билдер вложенной фичи "Элемент навигации на экран добавления нового слова в словарь".
     ///  - navToOtherAppBuilder: билдер вложенной фичи "Элемент навигации к другому продукту/приложению в супераппе".
-    init(navigationController: UINavigationController,
+    init(navigationController: UINavigationController?,
          navToSearchBuilder: NavToSearchBuilder,
          navToFavoriteWordListBuilder: NavToFavoriteWordListBuilder,
          navToNewWordBuilder: NavToNewWordBuilder,
@@ -45,7 +45,7 @@ final class MainNavigatorImpl: MainNavigator {
 
     private func addNavToSearch() {
         let navToSearchView = navToSearchBuilder.build()
-        let navigationItem = navigationController.topViewController?.navigationItem
+        let navigationItem = navigationController?.viewControllers.first?.navigationItem
 
         navigationItem?.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem?.titleView = navToSearchView
@@ -87,6 +87,6 @@ final class MainNavigatorImpl: MainNavigator {
     }
 
     private var view: UIView? {
-        navigationController.viewControllers.first?.view
+        navigationController?.viewControllers.first?.view
     }
 }

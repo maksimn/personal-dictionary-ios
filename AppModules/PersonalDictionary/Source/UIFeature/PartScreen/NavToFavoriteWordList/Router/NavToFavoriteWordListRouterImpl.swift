@@ -8,14 +8,14 @@
 /// Реализация роутера для навигации на экран списка избранных слов.
 final class NavToFavoriteWordListRouterImpl: NavToFavoriteWordListRouter {
 
-    private let navigationController: UINavigationController
+    private(set) weak var navigationController: UINavigationController?
     private let favoriteWordListBuilder: FavoriteWordListBuilder
 
     /// Инициализатор.
     /// - Parameters:
     ///  - navigationController: корневой navigation controller приложения.
     ///  - favoriteWordListBuilder: билдер вложенной фичи "Списк избранных слов".
-    init(navigationController: UINavigationController,
+    init(navigationController: UINavigationController?,
          favoriteWordListBuilder: FavoriteWordListBuilder) {
         self.navigationController = navigationController
         self.favoriteWordListBuilder = favoriteWordListBuilder
@@ -25,6 +25,6 @@ final class NavToFavoriteWordListRouterImpl: NavToFavoriteWordListRouter {
     func navigateToFavoriteWordList() {
         let favoriteWordListViewController = favoriteWordListBuilder.build()
 
-        navigationController.pushViewController(favoriteWordListViewController, animated: true)
+        navigationController?.pushViewController(favoriteWordListViewController, animated: true)
     }
 }

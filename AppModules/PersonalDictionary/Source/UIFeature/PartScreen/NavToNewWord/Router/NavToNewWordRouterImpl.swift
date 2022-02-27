@@ -8,14 +8,14 @@
 /// Реализация роутера для навигации на экран добавления нового слова в Личный словарь.
 final class NavToNewWordRouterImpl: NavToNewWordRouter {
 
-    private let navigationController: UINavigationController
+    private weak var navigationController: UINavigationController?
     private let newWordBuilder: NewWordBuilder
 
     /// Инициализатор.
     /// - Parameters:
     ///  - navigationController: корневой navigation controller приложения.
     ///  - searchBuilder: билдер вложенной фичи "Поиск" по словам в словаре.
-    init(navigationController: UINavigationController,
+    init(navigationController: UINavigationController?,
          newWordBuilder: NewWordBuilder) {
         self.navigationController = navigationController
         self.newWordBuilder = newWordBuilder
@@ -28,6 +28,6 @@ final class NavToNewWordRouterImpl: NavToNewWordRouter {
 
         newWordViewController.modalPresentationStyle = .overFullScreen
 
-        navigationController.topViewController?.present(newWordViewController, animated: true, completion: nil)
+        navigationController?.topViewController?.present(newWordViewController, animated: true, completion: nil)
     }
 }

@@ -11,5 +11,5 @@ import UIKit
 public protocol App {
 
     /// Получение корневого контроллера приложения
-    var navigationController: UINavigationController { get }
+    var navigationController: UINavigationController? { get }
 }

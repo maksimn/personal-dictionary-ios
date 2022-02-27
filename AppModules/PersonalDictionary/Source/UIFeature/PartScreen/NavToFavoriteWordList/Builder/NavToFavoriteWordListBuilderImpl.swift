@@ -14,7 +14,7 @@ protocol NavToFavoriteWordListDependency: BaseDependency { }
 /// Реализация билдера фичи ""Элемент навигации на экран списка избранных слов".
 final class NavToFavoriteWordListBuilderImpl: NavToFavoriteWordListBuilder {
 
-    let navigationController: UINavigationController
+    private(set) weak var navigationController: UINavigationController?
 
     let appConfig: Config
 
