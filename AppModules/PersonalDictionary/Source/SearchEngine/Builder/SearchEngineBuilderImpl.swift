@@ -8,18 +8,18 @@
 /// Реализация билдера Фичи "Поисковый движок".
 final class SearchEngineBuilderImpl: SearchEngineBuilder {
 
-    private let wordListFetcher: WordListFetcher
+    private let searchableWordList: SearchableWordList
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - wordListFetcher: протокол для получения списка слов для поиска среди них.
-    init(wordListFetcher: WordListFetcher) {
-        self.wordListFetcher = wordListFetcher
+    ///  - searchableWordList: протокол для поиска в списке слов.
+    init(searchableWordList: SearchableWordList) {
+        self.searchableWordList = searchableWordList
     }
 
     /// Создать объект поискового движка.
     /// - Returns: объект поискового движка.
     func build() -> SearchEngine {
-        SearchEngineImpl(wordListFetcher: wordListFetcher)
+        SearchEngineImpl(searchableWordList: searchableWordList)
     }
 }

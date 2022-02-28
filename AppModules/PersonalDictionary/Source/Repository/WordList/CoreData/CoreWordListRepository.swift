@@ -62,37 +62,11 @@ final class CoreWordListRepository: WordListRepository {
 
     /// Список слов из личного словаря.
     var wordList: [WordItem] {
-        let fetchRequest: NSFetchRequest<WordItemMO> = WordItemMO.fetchRequest()
-        let sortDescriptor = NSSortDescriptor.init(key: "createdAt", ascending: false)
-
-        fetchRequest.sortDescriptors = [sortDescriptor]
-
-        do {
-            let wordItemMOList = try mainContext.fetch(fetchRequest)
-
-            return wordItemMOList.compactMap { $0.convertToWordItem(with: langRepository) }
-        } catch {
-            logger.log(error: error)
-            return []
-        }
+        filter(withPredicate: nil)
     }
 
     var favoriteWordList: [WordItem] {
-        let fetchRequest: NSFetchRequest<WordItemMO> = WordItemMO.fetchRequest()
-        let predicate = NSPredicate(format: "isFavorite == true")
-        let sortDescriptor = NSSortDescriptor.init(key: "createdAt", ascending: false)
-
-        fetchRequest.predicate = predicate
-        fetchRequest.sortDescriptors = [sortDescriptor]
-
-        do {
-            let wordItemMOList = try mainContext.fetch(fetchRequest)
-
-            return wordItemMOList.compactMap { $0.convertToWordItem(with: langRepository) }
-        } catch {
-            logger.log(error: error)
-            return []
-        }
+        filter(withPredicate: NSPredicate(format: "isFavorite == true"))
     }
 
     /// Добавить слово в хранилище личного словаря
@@ -106,7 +80,7 @@ final class CoreWordListRepository: WordListRepository {
             backgroundContext?.perform { [weak self] in
                 let wordItemMO = WordItemMO(entity: WordItemMO.entity(), insertInto: backgroundContext)
 
-                wordItemMO.setData(from: wordItem)
+                wordItemMO.set(wordItem)
 
                 do {
                     try backgroundContext?.save()
@@ -144,7 +118,7 @@ final class CoreWordListRepository: WordListRepository {
                     if array.count > 0 {
                         let wordItemMO = array[0]
 
-                        wordItemMO.setData(from: wordItem)
+                        wordItemMO.set(wordItem)
                     }
                     try backgroundContext?.save()
                     DispatchQueue.main.async {
@@ -194,6 +168,39 @@ final class CoreWordListRepository: WordListRepository {
                 }
             }
             return Disposables.create {}
+        }
+    }
+
+    /// Найти слова, содержащие строку.
+    /// - Parameters:
+    ///  - string: строка для поиска.
+    /// - Массив найденных слов.
+    func findWords(contain string: String) -> [WordItem] {
+        filter(withPredicate: NSPredicate(format: "text contains[cd] \"\(string)\""))
+    }
+
+    /// Найти слова, перевод которых содержит строку.
+    /// - Parameters:
+    ///  - string: строка для поиска.
+    /// - Массив найденных слов.
+    func findWords(whereTranslationContains string: String) -> [WordItem] {
+        filter(withPredicate: NSPredicate(format: "translation contains[cd] \"\(string)\""))
+    }
+
+    private func filter(withPredicate predicate: NSPredicate?) -> [WordItem] {
+        let fetchRequest: NSFetchRequest<WordItemMO> = WordItemMO.fetchRequest()
+        let sortDescriptor = NSSortDescriptor.init(key: "createdAt", ascending: false)
+
+        fetchRequest.predicate = predicate
+        fetchRequest.sortDescriptors = [sortDescriptor]
+
+        do {
+            let wordItemMOList = try mainContext.fetch(fetchRequest)
+
+            return wordItemMOList.compactMap { $0.convert(using: langRepository) }
+        } catch {
+            logger.log(error: error)
+            return []
         }
     }
 }

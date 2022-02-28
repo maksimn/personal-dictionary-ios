@@ -43,7 +43,25 @@ protocol WordItemCUDOperations {
     func remove(with wordItemId: WordItem.Id) -> Completable
 }
 
-/// Хранилище слов личного словаря.
-protocol WordListRepository: WordListFetcher, FavoriteWordListFetcher, WordItemCUDOperations {
+/// Протокол для поисковых запросов к хранилищу данных.
+protocol SearchableWordList {
 
+    /// Найти слова, содержащие строку.
+    /// - Parameters:
+    ///  - string: строка для поиска.
+    /// - Массив найденных слов.
+    func findWords(contain string: String) -> [WordItem]
+
+    /// Найти слова, перевод которых содержит строку.
+    /// - Parameters:
+    ///  - string: строка для поиска.
+    /// - Массив найденных слов.
+    func findWords(whereTranslationContains string: String) -> [WordItem]
+}
+
+/// Хранилище слов личного словаря.
+protocol WordListRepository: WordListFetcher,
+                             FavoriteWordListFetcher,
+                             WordItemCUDOperations,
+                             SearchableWordList {
 }
