@@ -5,15 +5,13 @@
 //  Created by Maxim Ivanov on 11.11.2021.
 //
 
-import CoreModule
-
 /// Внешние зависимости фичи "Экран списка избранных слов".
 protocol FavoriteWordListDependency: BaseDependency { }
 
 /// Реализация билдера фичи "Экран списка избранных слов".
 final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
 
-    let navigationController: UINavigationController
+    private(set) weak var navigationController: UINavigationController?
 
     let appConfig: Config
 

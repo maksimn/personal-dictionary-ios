@@ -11,7 +11,7 @@ import UIKit
 protocol BaseDependency {
 
     /// Корневой navigation controller приложения.
-    var navigationController: UINavigationController { get }
+    var navigationController: UINavigationController? { get }
 
     /// Конфигурация приложения.
     var appConfig: Config { get }
@@ -21,44 +21,22 @@ protocol BaseDependency {
 final class AppImpl: App, BaseDependency {
 
     /// Получение корневого контроллера приложения
-    let navigationController = UINavigationController()
+    let navigationController: UINavigationController? = UINavigationController()
 
-    private(set) lazy var appConfig: Config = buildConfig()
-
-    private let appParams: AppParams
+    /// Конфигурация приложения.
+    let appConfig: Config
 
     /// Инициализатор:
     /// - Parameters:
-    ///  - appParams: внешние параметры для приложения.
-    init(appParams: AppParams) {
-        self.appParams = appParams
+    ///  - config: конфигурация приложения.
+    init(config: Config) {
+        self.appConfig = config
 
         let mainWordListBuilder = MainWordListBuilderImpl(dependency: self)
         let mainWordListViewController = mainWordListBuilder.build()
 
-        navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
-        navigationController.setViewControllers([mainWordListViewController], animated: false)
-    }
-
-    /// Создать конфигурацию приложения.
-    private func buildConfig() -> Config {
-        let bundle = Bundle(for: type(of: self))
-        let lang1 = Lang(id: Lang.Id(raw: 1), name: bundle.moduleLocalizedString("English"), shortName: "EN")
-        let lang2 = Lang(id: Lang.Id(raw: 2), name: bundle.moduleLocalizedString("Russian"), shortName: "RU")
-        let lang4 = Lang(id: Lang.Id(raw: 4), name: bundle.moduleLocalizedString("Italian"), shortName: "IT")
-        let lang5 = Lang(id: Lang.Id(raw: 5), name: bundle.moduleLocalizedString("German"), shortName: "DE")
-        let langData = LangData(allLangs: [lang1, lang2, lang4, lang5],
-                                sourceLangKey: "io.github.maksimn.pd.sourceLang",
-                                targetLangKey: "io.github.maksimn.pd.targetLang",
-                                defaultSourceLang: lang1,
-                                defaultTargetLang: lang2)
-
-        return Config(
-            appParams: appParams,
-            langData: langData,
-            ponsApiSecret: "",
-            isLoggingEnabled: true
-        )
+        navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
+        navigationController?.setViewControllers([mainWordListViewController], animated: false)
     }
 }
 

@@ -13,7 +13,7 @@ protocol NavToNewWordDependency: BaseDependency { }
 /// Реализация билдера фичи "Навигация на экран добавления нового слова".
 final class NavToNewWordBuilderImpl: NavToNewWordBuilder {
 
-    let navigationController: UINavigationController
+    private weak var navigationController: UINavigationController?
 
     let appConfig: Config
 

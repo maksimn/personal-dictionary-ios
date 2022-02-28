@@ -15,8 +15,8 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
 
     private lazy var bundle = Bundle(for: type(of: self))
 
-    let navigationController: UINavigationController
-
+    private(set) weak var navigationController: UINavigationController?
+    
     let appConfig: Config
 
     /// Инициализатор.

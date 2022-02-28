@@ -24,7 +24,9 @@ final class SuperAppImpl: SuperApp {
         )
         let personalDictionaryApp = personalDictionaryAppBuilder.build()
 
-        rootViewController.add(childViewController: personalDictionaryApp.navigationController)
+        rootViewController.add(
+            childViewController: personalDictionaryApp.navigationController ?? UINavigationController()
+        )
     }
 
     private func buildPersonalDictionaryAppBuilder(
