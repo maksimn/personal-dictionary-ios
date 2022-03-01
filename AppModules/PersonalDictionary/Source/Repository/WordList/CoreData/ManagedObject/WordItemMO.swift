@@ -43,7 +43,7 @@ class WordItemMO: NSManagedObject {
     /// Задать данные из объекта WordItem
     /// - Parameters:
     ///  - wordItem: данные о слове для его сохранения.
-    func setData(from wordItem: WordItem) {
+    func set(_ wordItem: WordItem) {
         id = wordItem.id.raw
         text = wordItem.text
         translation = wordItem.translation
@@ -58,7 +58,7 @@ class WordItemMO: NSManagedObject {
     ///  - langRepository: хранилище информации о языках.
     /// - Returns:
     ///   объект WordItem с данными о слове.
-    func convertToWordItem(with langRepository: LangRepository) -> WordItem? {
+    func convert(using langRepository: LangRepository) -> WordItem? {
         let langs = langRepository.allLangs
         guard let id = id,
               let text = text,

@@ -13,8 +13,6 @@ protocol MainWordListDependency: BaseDependency { }
 /// Реализация билдера фичи "Главный (основной) список слов" Личного словаря.
 final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
 
-    private lazy var bundle = Bundle(for: type(of: self))
-
     private(set) weak var navigationController: UINavigationController?
     
     let appConfig: Config
@@ -41,7 +39,7 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
 
     private func createViewParams() -> MainWordListViewParams {
         MainWordListViewParams(
-            heading: bundle.moduleLocalizedString("My dictionary"),
+            heading: Bundle(for: type(of: self)).moduleLocalizedString("My dictionary"),
             visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
         )
     }

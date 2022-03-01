@@ -10,13 +10,13 @@ import RxSwift
 /// Реализация поискового движка.
 final class SearchEngineImpl: SearchEngine {
 
-    private let wordListFetcher: WordListFetcher
+    private let searchableWordList: SearchableWordList
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - wordListFetcher: протокол для получения списка слов для поиска среди них.
-    init(wordListFetcher: WordListFetcher) {
-        self.wordListFetcher = wordListFetcher
+    ///  - searchableWordList: протокол для поиска в списке слов.
+    init(searchableWordList: SearchableWordList) {
+        self.searchableWordList = searchableWordList
     }
 
     /// Найти слова, соответствующие параметрам поиска.
@@ -25,7 +25,7 @@ final class SearchEngineImpl: SearchEngine {
     ///  - mode: режим поиска.
     /// - Returns: данные с результатом поиска.
     func findWords(contain string: String, mode: SearchMode) -> Single<SearchResultData> {
-        Single<SearchResultData>.create { observer in
+        Single<SearchResultData>.create { [weak self] observer in
             let string = string.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
 
             if string == "" {
@@ -33,16 +33,12 @@ final class SearchEngineImpl: SearchEngine {
                 return Disposables.create { }
             }
 
-            let filteredWordList = self.wordListFetcher.wordList.filter { item in
-                (mode == .bySourceWord ? item.text : (item.translation ?? ""))
-                    .folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil)
-                    .contains(string)
-            }
+            let filteredWordList = mode == .bySourceWord ?
+                                   self?.searchableWordList.findWords(contain: string) :
+                                   self?.searchableWordList.findWords(whereTranslationContains: string)
 
-            observer(.success(SearchResultData(searchState: .fulfilled, foundWordList: filteredWordList)))
+            observer(.success(SearchResultData(searchState: .fulfilled, foundWordList: filteredWordList ?? [])))
             return Disposables.create { }
         }
-        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-        .observeOn(MainScheduler.instance)
     }
 }

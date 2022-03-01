@@ -37,7 +37,7 @@ final class SearchBuilderImpl: SearchBuilder {
         SearchViewController(
             searchViewParams: createSearchViewParams(),
             searchTextInputBuilder: SearchTextInputBuilderImpl(),
-            searchEngineBuilder: SearchEngineBuilderImpl(wordListFetcher: wordListRepositoryGraph.repository),
+            searchEngineBuilder: SearchEngineBuilderImpl(searchableWordList: wordListRepositoryGraph.repository),
             wordListBuilder: WordListBuilderImpl(
                 params: WordListParams(shouldAnimateWhenAppear: false),
                 dependency: self
