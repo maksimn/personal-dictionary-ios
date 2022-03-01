@@ -725,7 +725,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2FC4CEAF6217F38E5124D73D /* Pods-SuperList-SuperListUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T96KB8H453;
@@ -748,7 +748,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F57BF35E23334997EF5FF9BF /* Pods-SuperList-SuperListUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T96KB8H453;
