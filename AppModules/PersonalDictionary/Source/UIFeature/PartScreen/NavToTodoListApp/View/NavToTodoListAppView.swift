@@ -11,15 +11,19 @@ import UIKit
 /// Представление фичи "Навигация к другому продукту/приложению в супераппе".
 final class NavToOtherAppView: UIView {
 
-    private let appParams: AppParams
+    private let routingButtonTitle: String
+    private let router: CoreRouter
 
     private let routingButton = UIButton()
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - width:
-    init(appParams: AppParams) {
-        self.appParams = appParams
+    ///  - routingButtonTitle: тайтл для навигационной кнопки.
+    ///  - router: роутер для навигации на новый экран.
+    init(routingButtonTitle: String,
+         router: CoreRouter) {
+        self.routingButtonTitle = routingButtonTitle
+        self.router = router
         super.init(frame: .zero)
         initRoutingButton()
     }
@@ -30,11 +34,11 @@ final class NavToOtherAppView: UIView {
 
     @objc
     private func onRoutingButtonTap() {
-        appParams.coreRouter?.navigate()
+        router.navigate()
     }
 
     private func initRoutingButton() {
-        routingButton.setTitle(appParams.routingButtonTitle, for: .normal)
+        routingButton.setTitle(routingButtonTitle, for: .normal)
         routingButton.setTitleColor(.darkGray, for: .normal)
         routingButton.backgroundColor = .clear
         routingButton.layer.cornerRadius = 8

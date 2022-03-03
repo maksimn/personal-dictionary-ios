@@ -9,12 +9,6 @@
 /* Begin PBXBuildFile section */
 		59880C1D276FA668007B4168 /* TestExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59880C1C276FA668007B4168 /* TestExample.swift */; };
 		59880C22276FA67E007B4168 /* UITestExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59880C21276FA67E007B4168 /* UITestExample.swift */; };
-		5998389A276ED32D002D800C /* SuperAppImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59983893276ED32D002D800C /* SuperAppImpl.swift */; };
-		5998389B276ED32D002D800C /* SuperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59983894276ED32D002D800C /* SuperApp.swift */; };
-		5998389C276ED32D002D800C /* SuperAppBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59983896276ED32D002D800C /* SuperAppBuilder.swift */; };
-		5998389D276ED32D002D800C /* SuperAppBuilderImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59983897276ED32D002D800C /* SuperAppBuilderImpl.swift */; };
-		5998389E276ED32D002D800C /* RoutingToTodoListAppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59983899276ED32D002D800C /* RoutingToTodoListAppRouter.swift */; };
-		599838CA276ED631002D800C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 599838CC276ED631002D800C /* Localizable.strings */; };
 		599B2BD1276ED1A3003659DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599B2BD0276ED1A3003659DC /* AppDelegate.swift */; };
 		599B2BD3276ED1A3003659DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599B2BD2276ED1A3003659DC /* SceneDelegate.swift */; };
 		599B2BDA276ED1A4003659DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 599B2BD9276ED1A4003659DC /* Assets.xcassets */; };
@@ -49,12 +43,6 @@
 		5738B0325C8FC9C682D8E34E /* Pods_SuperList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59880C1C276FA668007B4168 /* TestExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestExample.swift; sourceTree = "<group>"; };
 		59880C21276FA67E007B4168 /* UITestExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestExample.swift; sourceTree = "<group>"; };
-		59983893276ED32D002D800C /* SuperAppImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuperAppImpl.swift; sourceTree = "<group>"; };
-		59983894276ED32D002D800C /* SuperApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuperApp.swift; sourceTree = "<group>"; };
-		59983896276ED32D002D800C /* SuperAppBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuperAppBuilder.swift; sourceTree = "<group>"; };
-		59983897276ED32D002D800C /* SuperAppBuilderImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuperAppBuilderImpl.swift; sourceTree = "<group>"; };
-		59983899276ED32D002D800C /* RoutingToTodoListAppRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutingToTodoListAppRouter.swift; sourceTree = "<group>"; };
-		599838D0276ED64B002D800C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		599B2BCD276ED1A3003659DC /* SuperList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		599B2BD0276ED1A3003659DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		599B2BD2276ED1A3003659DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -99,42 +87,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		59983891276ED32D002D800C /* SuperApp */ = {
-			isa = PBXGroup;
-			children = (
-				59983895276ED32D002D800C /* Builder */,
-				59983892276ED32D002D800C /* App */,
-				59983898276ED32D002D800C /* Router */,
-			);
-			path = SuperApp;
-			sourceTree = "<group>";
-		};
-		59983892276ED32D002D800C /* App */ = {
-			isa = PBXGroup;
-			children = (
-				59983894276ED32D002D800C /* SuperApp.swift */,
-				59983893276ED32D002D800C /* SuperAppImpl.swift */,
-			);
-			path = App;
-			sourceTree = "<group>";
-		};
-		59983895276ED32D002D800C /* Builder */ = {
-			isa = PBXGroup;
-			children = (
-				59983896276ED32D002D800C /* SuperAppBuilder.swift */,
-				59983897276ED32D002D800C /* SuperAppBuilderImpl.swift */,
-			);
-			path = Builder;
-			sourceTree = "<group>";
-		};
-		59983898276ED32D002D800C /* Router */ = {
-			isa = PBXGroup;
-			children = (
-				59983899276ED32D002D800C /* RoutingToTodoListAppRouter.swift */,
-			);
-			path = Router;
-			sourceTree = "<group>";
-		};
 		599B2BC4276ED1A3003659DC = {
 			isa = PBXGroup;
 			children = (
@@ -160,13 +112,11 @@
 		599B2BCF276ED1A3003659DC /* SuperList */ = {
 			isa = PBXGroup;
 			children = (
-				59983891276ED32D002D800C /* SuperApp */,
 				599B2BD0276ED1A3003659DC /* AppDelegate.swift */,
 				599B2BD2276ED1A3003659DC /* SceneDelegate.swift */,
 				599B2BD9276ED1A4003659DC /* Assets.xcassets */,
 				599B2BDB276ED1A4003659DC /* LaunchScreen.storyboard */,
 				599B2BDE276ED1A4003659DC /* Info.plist */,
-				599838CC276ED631002D800C /* Localizable.strings */,
 			);
 			path = SuperList;
 			sourceTree = "<group>";
@@ -324,7 +274,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				599B2BDD276ED1A4003659DC /* LaunchScreen.storyboard in Resources */,
-				599838CA276ED631002D800C /* Localizable.strings in Resources */,
 				599B2BDA276ED1A4003659DC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,11 +404,6 @@
 			files = (
 				599B2BD1276ED1A3003659DC /* AppDelegate.swift in Sources */,
 				599B2BD3276ED1A3003659DC /* SceneDelegate.swift in Sources */,
-				5998389B276ED32D002D800C /* SuperApp.swift in Sources */,
-				5998389E276ED32D002D800C /* RoutingToTodoListAppRouter.swift in Sources */,
-				5998389A276ED32D002D800C /* SuperAppImpl.swift in Sources */,
-				5998389C276ED32D002D800C /* SuperAppBuilder.swift in Sources */,
-				5998389D276ED32D002D800C /* SuperAppBuilderImpl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,14 +439,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		599838CC276ED631002D800C /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				599838D0276ED64B002D800C /* ru */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
 		599B2BDB276ED1A4003659DC /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

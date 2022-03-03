@@ -24,6 +24,7 @@ Pod::Spec.new do |spec|
                     "Resources/{*.lproj}/Localizable.strings"]
 
   spec.dependency 'CoreModule'
+  spec.dependency 'TodoList'
   spec.dependency 'RxCocoa', '5.1'
   spec.dependency 'RxSwift', '5.1'
   spec.dependency 'SnapKit', '~> 4.0'

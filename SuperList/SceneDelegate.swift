@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 19.12.2021.
 //
 
+import PersonalDictionary
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -15,11 +16,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        let superAppBuilder = SuperAppBuilderImpl()
-        let superApp = superAppBuilder.build()
+        let personalDictionaryAppBuilder = PersonalDictionary.AppBuilderImpl()
+        let personalDictionaryApp = personalDictionaryAppBuilder.build()
 
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = superApp.rootViewController
+        window?.rootViewController = personalDictionaryApp.navigationController
         window?.makeKeyAndVisible()
     }
 }
