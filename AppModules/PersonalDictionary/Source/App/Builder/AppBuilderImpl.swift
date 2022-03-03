@@ -8,14 +8,8 @@
 /// Реализация билдера приложения "Личный словарь иностранных слов".
 public final class AppBuilderImpl: AppBuilder {
 
-    private let appParams: AppParams
-
     /// Инициализатор.
-    /// - Parameters:
-    ///  - appParams: внешние параметры для приложения.
-    public init(appParams: AppParams) {
-        self.appParams = appParams
-    }
+    public init() { }
 
     /// Создать объект данного приложения.
     /// - Returns: объект приложения.
@@ -37,7 +31,6 @@ public final class AppBuilderImpl: AppBuilder {
                                 defaultTargetLang: lang2)
 
         return Config(
-            appParams: appParams,
             langData: langData,
             ponsApiSecret: "",
             isLoggingEnabled: true

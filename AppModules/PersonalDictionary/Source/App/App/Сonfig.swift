@@ -10,9 +10,6 @@ import UIKit
 /// Параметры конфигурации приложения "Личный словарь иностранных слов".
 struct Config {
 
-    /// Внешние параметры приложения
-    let appParams: AppParams
-
     /// Данные о языках в приложении
     let langData: LangData
 
