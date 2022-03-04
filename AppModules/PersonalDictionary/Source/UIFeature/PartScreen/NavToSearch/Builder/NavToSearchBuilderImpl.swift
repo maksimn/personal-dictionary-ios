@@ -40,20 +40,7 @@ final class NavToSearchBuilderImpl: NavToSearchBuilder {
     /// Создать фичу.
     /// - Returns: представление фичи.
     func build() -> UIView {
-
-        struct SearchDependencyImpl: SearchDependency {
-
-            let appConfig: Config
-
-            let wordListRepositoryGraph: WordListRepositoryGraph
-        }
-
-        let searchBuilder = SearchBuilderImpl(
-            dependency: SearchDependencyImpl(
-                appConfig: appConfig,
-                wordListRepositoryGraph: WordListRepositoryGraphImpl(appConfig: appConfig)
-            )
-        )
+        let searchBuilder = SearchBuilderImpl(appConfig: appConfig)
         let router = NavToSearchRouterImpl(navigationController: navigationController,
                                            searchBuilder: searchBuilder)
         let view = NavToSearchView(width: width, router: router)

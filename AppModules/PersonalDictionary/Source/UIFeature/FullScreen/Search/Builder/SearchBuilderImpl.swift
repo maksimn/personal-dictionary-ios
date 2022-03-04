@@ -5,29 +5,16 @@
 //  Created by Maxim Ivanov on 11.11.2021.
 //
 
-import CoreModule
-
-/// Зависимости фичи "Поиск по словам в словаре".
-protocol SearchDependency {
-
-    var appConfig: Config { get }
-
-    var wordListRepositoryGraph: WordListRepositoryGraph { get }
-}
-
 /// Билдер Фичи "Поиск по словам в словаре".
 final class SearchBuilderImpl: SearchBuilder {
 
-    let appConfig: Config
-
-    let wordListRepositoryGraph: WordListRepositoryGraph
+    private let appConfig: Config
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - dependency: зависимости фичи.
-    init(dependency: SearchDependency) {
-        appConfig = dependency.appConfig
-        wordListRepositoryGraph = dependency.wordListRepositoryGraph
+    ///  - appConfig: зависимости фичи.
+    init(appConfig: Config) {
+        self.appConfig = appConfig
     }
 
     /// Создать экран Поиска.
@@ -37,11 +24,10 @@ final class SearchBuilderImpl: SearchBuilder {
         SearchViewController(
             searchViewParams: createSearchViewParams(),
             searchTextInputBuilder: SearchTextInputBuilderImpl(),
-            searchEngineBuilder: SearchEngineBuilderImpl(searchableWordList: wordListRepositoryGraph.repository),
-            wordListBuilder: WordListBuilderImpl(
-                params: WordListParams(shouldAnimateWhenAppear: false),
-                dependency: self
+            searchEngineBuilder: SearchEngineBuilderImpl(
+                searchableWordList: WordListRepositoryGraphImpl(appConfig: appConfig).repository
             ),
+            wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: false, appConfig: appConfig),
             searchModePickerBuilder: SearchModePickerBuilderImpl()
         )
     }
@@ -54,13 +40,5 @@ final class SearchBuilderImpl: SearchBuilder {
                 text: Bundle(for: type(of: self)).moduleLocalizedString("No words found")
             )
         )
-    }
-}
-
-/// Для передачи внешних зависимостей во вложенную фичу "Список слов".
-extension SearchBuilderImpl: WordListDependency {
-
-    var cudOperations: WordItemCUDOperations {
-        wordListRepositoryGraph.repository
     }
 }

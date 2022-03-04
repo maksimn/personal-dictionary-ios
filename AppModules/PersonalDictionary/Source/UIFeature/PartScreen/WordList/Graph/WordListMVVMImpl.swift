@@ -19,14 +19,14 @@ final class WordListMVVMImpl: WordListMVVM {
 
     /// Инициализатор.
     /// - Parameters:
+    ///  - viewParams: параметры представления фичи.
     ///  - cudOperations: сервис для операций create, update, delete со словами в хранилище личного словаря.
     ///  - translationService: cлужба для выполнения перевода слов на целевой язык.
     ///  - wordItemStream: ModelStream для событий со словами в личном словаре.
-    ///  - viewParams: параметры представления фичи.
-    init(cudOperations: WordItemCUDOperations,
+    init(viewParams: WordListViewParams,
+         cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
-         wordItemStream: WordItemStream,
-         viewParams: WordListViewParams) {
+         wordItemStream: WordItemStream) {
         weak var viewModelLazyWeak: WordListViewModel?
 
         let model = WordListModelImpl(viewModelBlock: { viewModelLazyWeak },

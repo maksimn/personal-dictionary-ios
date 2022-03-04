@@ -28,8 +28,7 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
     ///  - View controller экрана.
     func build() -> UIViewController {
         let navToSearchBuilder = NavToSearchBuilderImpl(width: .smaller, dependency: self)
-        let wordListBuilder = WordListBuilderImpl(params: WordListParams(shouldAnimateWhenAppear: false),
-                                                  dependency: self)
+        let wordListBuilder = WordListBuilderImpl(shouldAnimateWhenAppear: false, appConfig: appConfig)
 
         return FavoriteWordListViewController(
             params: createViewParams(),
@@ -59,9 +58,4 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
 }
 
 /// Для передачи внешних зависимостей во вложенные фичи.
-extension FavoriteWordListBuilderImpl: WordListDependency, NavToSearchDependency {
-
-    var cudOperations: WordItemCUDOperations {
-        wordListRepository
-    }
-}
+extension FavoriteWordListBuilderImpl: NavToSearchDependency { }

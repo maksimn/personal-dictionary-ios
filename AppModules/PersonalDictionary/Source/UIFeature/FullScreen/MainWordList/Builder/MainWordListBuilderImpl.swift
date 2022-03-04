@@ -31,7 +31,7 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
     func build() -> UIViewController {
         MainWordListViewController(
             viewParams: createViewParams(),
-            wordListBuilder: createWordListBuilder(),
+            wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: true, appConfig: appConfig),
             wordListFetcher: wordListRepository,
             mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: self)
         )
@@ -44,22 +44,10 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
         )
     }
 
-    private func createWordListBuilder() -> WordListBuilder {
-        WordListBuilderImpl(
-            params: WordListParams(shouldAnimateWhenAppear: true),
-            dependency: self
-        )
-    }
-
     private var wordListRepository: WordListRepository {
         WordListRepositoryGraphImpl(appConfig: appConfig).repository
     }
 }
 
 /// Для передачи зависимостей во вложенные фичи.
-extension MainWordListBuilderImpl: WordListDependency, MainNavigatorDependency {
-
-    var cudOperations: WordItemCUDOperations {
-        wordListRepository
-    }
-}
+extension MainWordListBuilderImpl: MainNavigatorDependency { }
