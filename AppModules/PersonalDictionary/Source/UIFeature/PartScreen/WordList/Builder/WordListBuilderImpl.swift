@@ -7,37 +7,20 @@
 
 import CoreModule
 
-/// Параметры списка слов, которые можно задать в клиентском коде.
-struct WordListParams {
-
-    /// Запускать ли анимацию при первом появлении данных в таблице.
-    let shouldAnimateWhenAppear: Bool
-}
-
-/// Внешние зависимости фичи "Список слов".
-protocol WordListDependency {
-
-    /// Конфигурация приложения.
-    var appConfig: Config { get }
-
-    /// Операции create, update, delete со словами в хранилище личного словаря.
-    var cudOperations: WordItemCUDOperations { get }
-}
-
 /// Реализация билдера фичи "Список слов".
 final class WordListBuilderImpl: WordListBuilder {
 
-    private let params: WordListParams
-    private let dependency: WordListDependency
+    private let shouldAnimateWhenAppear: Bool
+    private let appConfig: Config
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - params: параметры списка слов.
-    ///  - dependency: внешние зависимости.
-    init(params: WordListParams,
-         dependency: WordListDependency) {
-        self.params = params
-        self.dependency = dependency
+    ///  - shouldAnimateWhenAppear: запускать ли анимацию при первом появлении данных в таблице.
+    ///  - appConfig: конфигурация приложения.
+    init(shouldAnimateWhenAppear: Bool,
+         appConfig: Config) {
+        self.shouldAnimateWhenAppear = shouldAnimateWhenAppear
+        self.appConfig = appConfig
     }
 
     /// Создать MVVM-граф фичи
@@ -45,10 +28,10 @@ final class WordListBuilderImpl: WordListBuilder {
     ///  - MVVM-граф фичи.
     func build() -> WordListMVVM {
         WordListMVVMImpl(
-            cudOperations: dependency.cudOperations,
+            viewParams: createWordListViewParams(),
+            cudOperations: WordListRepositoryGraphImpl(appConfig: appConfig).repository,
             translationService: createTranslationService(),
-            wordItemStream: WordItemStreamImpl.instance,
-            viewParams: createWordListViewParams()
+            wordItemStream: WordItemStreamImpl.instance
         )
     }
 
@@ -59,7 +42,7 @@ final class WordListBuilderImpl: WordListBuilder {
             cellReuseIdentifier: "\(WordItemCell.self)",
             cellCornerRadius: 16,
             delegateParams: WordTableDelegateParams(
-                shouldAnimateWhenAppear: params.shouldAnimateWhenAppear,
+                shouldAnimateWhenAppear: shouldAnimateWhenAppear,
                 cellSlideInDuration: 0.5,
                 cellSlideInDelayFactor: 0.05,
                 deleteActionImage: UIImage(systemName: "trash",
@@ -75,10 +58,10 @@ final class WordListBuilderImpl: WordListBuilder {
         PonsTranslationService(
             apiData: PonsApiData(url: "https://api.pons.com/v1/dictionary",
                                  secretHeaderKey: "X-Secret",
-                                 secret: dependency.appConfig.ponsApiSecret),
+                                 secret: appConfig.ponsApiSecret),
             httpClient: HttpClientImpl(sessionConfiguration: URLSessionConfiguration.default),
             jsonCoder: JSONCoderImpl(),
-            logger: LoggerImpl(isLoggingEnabled: dependency.appConfig.isLoggingEnabled)
+            logger: LoggerImpl(isLoggingEnabled: appConfig.isLoggingEnabled)
         )
     }
 }

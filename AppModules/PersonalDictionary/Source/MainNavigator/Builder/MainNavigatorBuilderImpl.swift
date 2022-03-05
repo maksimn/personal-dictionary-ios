@@ -5,7 +5,6 @@
 //  Created by Maksim Ivanov on 26.02.2022.
 //
 
-import CoreModule
 import UIKit
 
 /// Зависимости фичи.
