@@ -23,7 +23,7 @@ final class NewWordModelImpl: NewWordModel {
     }
 
     private var langRepository: LangRepository
-    private weak var newWordItemStream: NewWordItemStream?
+    private let newWordItemStream: NewWordItemStream
 
     /// Инициализатор.
     /// - Parameters:
@@ -43,7 +43,7 @@ final class NewWordModelImpl: NewWordModel {
 
         guard !wordItem.text.isEmpty else { return }
 
-        newWordItemStream?.sendNewWord(wordItem)
+        newWordItemStream.sendNewWord(wordItem)
     }
 
     /// Сохранить исходный язык.

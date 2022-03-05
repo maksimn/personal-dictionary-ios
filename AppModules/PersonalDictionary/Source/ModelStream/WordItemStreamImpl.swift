@@ -9,7 +9,7 @@ import RxSwift
 import RxCocoa
 
 /// Реализация ModelStream для событий со словами в личном словаре.
-final class WordItemStreamImpl: WordItemStream, NewWordItemStream {
+final class WordItemStreamImpl: WordItemStream {
 
     private let newWordPublishRelay = PublishRelay<WordItem>()
     private let removedWordPublishRelay = PublishRelay<WordItem>()

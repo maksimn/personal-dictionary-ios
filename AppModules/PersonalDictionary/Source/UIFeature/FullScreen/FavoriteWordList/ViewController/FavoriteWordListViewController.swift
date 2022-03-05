@@ -29,7 +29,7 @@ final class FavoriteWordListViewController: UIViewController {
 
     let favoriteWordListFetcher: FavoriteWordListFetcher
 
-    let wordItemStream: WordItemStream
+    let readableWordItemStream: ReadableWordItemStream
 
     let headingLabel = UILabel()
 
@@ -43,17 +43,17 @@ final class FavoriteWordListViewController: UIViewController {
     ///  - navToSearchBuilder: билдер вложенной фичи "Навигация на экран Поиска".
     ///  - wordListBuilder: билдер вложенной фичи "Список слов".
     ///  - favoriteWordListFetcher: получение списка избранных слов из хранилища.
-    ///  - wordItemStream: поток событий со словами в приложении.
+    ///  - readableWordItemStream: поток событий со словами в приложении.
     init(params: FavoriteWordListViewParams,
          navToSearchBuilder: NavToSearchBuilder,
          wordListBuilder: WordListBuilder,
          favoriteWordListFetcher: FavoriteWordListFetcher,
-         wordItemStream: WordItemStream) {
+         readableWordItemStream: ReadableWordItemStream) {
         self.params = params
         self.navToSearchBuilder = navToSearchBuilder
         self.wordListMVVM = wordListBuilder.build()
         self.favoriteWordListFetcher = favoriteWordListFetcher
-        self.wordItemStream = wordItemStream
+        self.readableWordItemStream = readableWordItemStream
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -77,10 +77,10 @@ final class FavoriteWordListViewController: UIViewController {
     }
 
     private func subscribeToWordItemStream() {
-        wordItemStream.removedWordItem
+        readableWordItemStream.removedWordItem
             .subscribe(onNext: { [weak self] _ in self?.fetchData() })
             .disposed(by: disposeBag)
-        wordItemStream.updatedWordItem
+        readableWordItemStream.updatedWordItem
             .subscribe(onNext: { [weak self] _ in self?.fetchData() })
             .disposed(by: disposeBag)
     }

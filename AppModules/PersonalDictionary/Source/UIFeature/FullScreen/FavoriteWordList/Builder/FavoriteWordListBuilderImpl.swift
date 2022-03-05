@@ -35,7 +35,7 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
             navToSearchBuilder: navToSearchBuilder,
             wordListBuilder: wordListBuilder,
             favoriteWordListFetcher: wordListRepository,
-            wordItemStream: WordItemStreamImpl.instance
+            readableWordItemStream: WordItemStreamImpl.instance
         )
     }
 
