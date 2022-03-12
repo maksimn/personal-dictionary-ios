@@ -14,7 +14,7 @@ final class MainNavigatorImpl: MainNavigator {
     private let navToSearchBuilder: NavToSearchBuilder
     private let navToFavoriteWordListBuilder: NavToFavoriteWordListBuilder
     private let navToNewWordBuilder: NavToNewWordBuilder
-    private let navToOtherAppBuilder: NavToOtherAppBuilder
+    private let navToTodoListAppBuilder: NavToTodoListAppBuilder
 
     /// Инициализатор,
     /// - Parameters:
@@ -22,17 +22,17 @@ final class MainNavigatorImpl: MainNavigator {
     ///  - navToSearchBuilder: билдер вложенной фичи "Элемент навигации на экран поиска".
     ///  - navToFavoriteWordListBuilder: билдер вложенной фичи "Элемент навигации на экран списка избранных слов".
     ///  - navToNewWordBuilder: билдер вложенной фичи "Элемент навигации на экран добавления нового слова в словарь".
-    ///  - navToOtherAppBuilder: билдер вложенной фичи "Элемент навигации к другому продукту/приложению в супераппе".
+    ///  - navToTodoListAppBuilder: билдер вложенной фичи "Элемент навигации к приложению TodoList".
     init(navigationController: UINavigationController?,
          navToSearchBuilder: NavToSearchBuilder,
          navToFavoriteWordListBuilder: NavToFavoriteWordListBuilder,
          navToNewWordBuilder: NavToNewWordBuilder,
-         navToOtherAppBuilder: NavToOtherAppBuilder) {
+         navToTodoListAppBuilder: NavToTodoListAppBuilder) {
         self.navigationController = navigationController
         self.navToSearchBuilder = navToSearchBuilder
         self.navToFavoriteWordListBuilder = navToFavoriteWordListBuilder
         self.navToNewWordBuilder = navToNewWordBuilder
-        self.navToOtherAppBuilder = navToOtherAppBuilder
+        self.navToTodoListAppBuilder = navToTodoListAppBuilder
     }
 
     /// Добавить представления элементов навигации на экран.
@@ -77,7 +77,7 @@ final class MainNavigatorImpl: MainNavigator {
 
     private func addNavToOtherApp() {
         guard let view = view else { return }
-        let navView = navToOtherAppBuilder.build()
+        let navView = navToTodoListAppBuilder.build()
 
         view.addSubview(navView)
         navView.snp.makeConstraints { make -> Void in

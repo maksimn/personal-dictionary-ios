@@ -10,7 +10,7 @@ import TodoList
 import UIKit
 
 /// Реализация билдера фичи "Навигация к другому продукту/приложению в супераппе".
-final class NavToOtherAppBuilderImpl: NavToOtherAppBuilder {
+final class NavToTodoListAppBuilderImpl: NavToTodoListAppBuilder {
 
     private weak var rootViewController: UIViewController?
 
