@@ -7,8 +7,8 @@
 
 import UIKit
 
-/// Билдер фичи "Навигация к другому продукту/приложению в супераппе".
-protocol NavToOtherAppBuilder {
+/// Билдер фичи "Навигация к приложению Список дел (TodoList)".
+protocol NavToTodoListAppBuilder {
 
     /// Создать фичу.
     /// - Returns: представление фичи.

@@ -8,6 +8,16 @@
 import SnapKit
 import UIKit
 
+/// Параметры "всплывающего" представления для выбора языка.
+struct LangPickerPopupParams {
+
+    /// Надпись на кнопке "выбрать"
+    let selectButtonTitle: String
+
+    /// Список языков для выбора
+    let langs: [Lang]
+}
+
 /// "Всплывающее" представление для выбора языка.
 final class LangPickerPopup: UIView {
 
@@ -60,13 +70,12 @@ final class LangPickerPopup: UIView {
     // MARK: - Layout
 
     private func initViews() {
-        addSubview(pickerView)
-        addSubview(selectButton)
         initLangPickerView()
         initSelectButton()
     }
 
     private func initLangPickerView() {
+        addSubview(pickerView)
         pickerView.dataSource = langPickerController
         pickerView.delegate = langPickerController
         pickerView.snp.makeConstraints { (make) -> Void in
@@ -75,6 +84,7 @@ final class LangPickerPopup: UIView {
     }
 
     private func initSelectButton() {
+        addSubview(selectButton)
         selectButton.setTitle(params.selectButtonTitle, for: .normal)
         selectButton.setTitleColor(.white, for: .normal)
         selectButton.backgroundColor = .darkGray
