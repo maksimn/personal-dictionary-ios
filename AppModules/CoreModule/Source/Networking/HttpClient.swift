@@ -13,10 +13,10 @@ public struct Http {
     let headers: [String: String]?
     let body: Data?
 
-    public init(urlString: String,
-                method: String,
-                headers: [String: String]?,
-                body: Data?) {
+    public init(urlString: String = "",
+                method: String = "",
+                headers: [String: String]? = nil,
+                body: Data? = nil) {
         self.urlString = urlString
         self.method = method
         self.headers = headers
