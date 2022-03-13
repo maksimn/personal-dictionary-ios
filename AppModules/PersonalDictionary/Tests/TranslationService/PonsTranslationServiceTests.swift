@@ -18,19 +18,6 @@ fileprivate class HttpClientMock: HttpClient {
     }
 }
 
-fileprivate class JsonCoderMock: JsonCoder {
-
-    func parseFromJson<T>(_ data: Data) -> Single<T> where T : Decodable {
-        let ponsResponseDataArray: [PonsResponseData] = []
-
-        return Single.just(ponsResponseDataArray as! T)
-    }
-
-    func convertToJson<T>(_ object: T) -> Single<Data> where T : Encodable {
-        fatalError()
-    }
-}
-
 fileprivate class LoggerMock: Logger {
 
     func networkRequestStart(_ requestName: String) { }
@@ -43,7 +30,22 @@ fileprivate class LoggerMock: Logger {
 final class PonsTranslationServiceTests: XCTestCase {
 
     func test_fetchTranslation__returnsEmptyStringForEmptyWordText() throws {
+
         // Arrange:
+
+        class JsonCoderMock: JsonCoder {
+
+            func parseFromJson<T>(_ data: Data) -> Single<T> where T : Decodable {
+                let ponsResponseDataArray: [PonsResponseData] = []
+
+                return Single.just(ponsResponseDataArray as! T)
+            }
+
+            func convertToJson<T>(_ object: T) -> Single<Data> where T : Encodable {
+                fatalError()
+            }
+        }
+
         let ponsTranslationService = PonsTranslationService(
             apiData: PonsApiData(url: "", secretHeaderKey: "", secret: ""),
             httpClient: HttpClientMock(),
@@ -60,5 +62,58 @@ final class PonsTranslationServiceTests: XCTestCase {
         let result = try single.toBlocking().first()
 
         XCTAssertEqual(result, "")
+    }
+
+    func test_fetchTranslation__returnsTranslationForWord() throws {
+
+        // Arrange:
+
+        class JsonCoderMock: JsonCoder {
+
+            func parseFromJson<T>(_ data: Data) -> Single<T> where T : Decodable {
+                let ponsResponseDataArray: [PonsResponseData] = [
+                    PonsResponseData(
+                        hits: [
+                            PonsResponseDataHit(
+                                roms: [
+                                    PonsResponseDataHitsRom(
+                                        arabs: [
+                                            PonsResponseDataHitsRomsArab(
+                                                translations: [
+                                                    PonsResponseDataHitsRomsArabsTranslation(target: "translation")
+                                                ]
+                                            )
+                                        ]
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                ]
+
+                return Single.just(ponsResponseDataArray as! T)
+            }
+
+            func convertToJson<T>(_ object: T) -> Single<Data> where T : Encodable {
+                fatalError()
+            }
+        }
+
+        let ponsTranslationService = PonsTranslationService(
+            apiData: PonsApiData(url: "", secretHeaderKey: "", secret: ""),
+            httpClient: HttpClientMock(),
+            jsonCoder: JsonCoderMock(),
+            logger: LoggerMock()
+        )
+        let lang = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
+        let word = WordItem(text: "word", sourceLang: lang, targetLang: lang)
+
+        // Act:
+        let single = ponsTranslationService.fetchTranslation(for: word)
+
+        // Assert:
+        let result = try single.toBlocking().first()
+
+        XCTAssertEqual(result, "translation")
     }
 }
