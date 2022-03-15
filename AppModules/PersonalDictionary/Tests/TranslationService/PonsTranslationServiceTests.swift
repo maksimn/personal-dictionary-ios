@@ -25,7 +25,7 @@ final class PonsTranslationServiceTests: XCTestCase {
         return mockHttpClient
     }
 
-    func test_fetchTranslation__returnsEmptyStringForEmptyWordText() throws {
+    func test_fetchTranslation__returnsEmptyStringForEmptyWordTextWhenNetworkAlive() throws {
         // Arrange:
         let mockJsonCoder = MockJsonCoder()
         let ponsTranslationService = PonsTranslationService(
@@ -51,7 +51,7 @@ final class PonsTranslationServiceTests: XCTestCase {
         XCTAssertEqual(result, "")
     }
 
-    func test_fetchTranslation__returnsTranslationForWord() throws {
+    func test_fetchTranslation__returnsTranslationForWordWhenNetworkAlive() throws {
         // Arrange:
         let mockJsonCoder = MockJsonCoder()
         let ponsTranslationService = PonsTranslationService(
@@ -93,5 +93,35 @@ final class PonsTranslationServiceTests: XCTestCase {
         let result = try single.toBlocking().first()
 
         XCTAssertEqual(result, "translation")
+    }
+
+    func test_fetchTranslation__returnsErrorWhenNoNetworkConnection() throws {
+        // Arrange:
+        enum HttpError: Error { case unavailable }
+
+        let mockHttpClientError = MockHttpClient()
+
+        stub(mockHttpClientError) { stub in
+            when(stub.send(Http()))
+                .thenReturn(Single<Data>.create { observer in
+                    observer(.error(HttpError.unavailable))
+                    return Disposables.create { }
+                })
+        }
+
+        let ponsTranslationService = PonsTranslationService(
+            apiData: PonsApiData(url: "", secretHeaderKey: "", secret: ""),
+            httpClient: mockHttpClientError,
+            jsonCoder: JsonCoderStub(),
+            logger: LoggerStub()
+        )
+        let lang = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
+        let word = WordItem(text: "word", sourceLang: lang, targetLang: lang)
+
+        // Act:
+        let single = ponsTranslationService.fetchTranslation(for: word)
+
+        // Assert:
+        XCTAssertThrowsError(try single.toBlocking().first())
     }
 }
