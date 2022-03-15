@@ -5,7 +5,6 @@
 //  Created by Maxim Ivanov on 10.11.2021.
 //
 
-import CoreModule
 import UIKit
 
 protocol MainWordListDependency: BaseDependency { }
@@ -32,7 +31,7 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
         MainWordListViewController(
             viewParams: createViewParams(),
             wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: true, appConfig: appConfig),
-            wordListFetcher: wordListRepository,
+            wordListFetcher: WordListRepositoryGraphImpl(appConfig: appConfig).repository,
             mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: self)
         )
     }
@@ -42,10 +41,6 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
             heading: Bundle(for: type(of: self)).moduleLocalizedString("My dictionary"),
             visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
         )
-    }
-
-    private var wordListRepository: WordListRepository {
-        WordListRepositoryGraphImpl(appConfig: appConfig).repository
     }
 }
 
