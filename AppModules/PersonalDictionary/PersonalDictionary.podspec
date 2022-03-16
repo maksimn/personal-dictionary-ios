@@ -21,6 +21,7 @@ Pod::Spec.new do |spec|
 
   spec.resources = ["Resources/{*.xcassets}", 
                     "Resources/StorageModel.xcdatamodeld",
+                    "Resources/TestStorageModel.xcdatamodeld",
                     "Resources/{*.lproj}/Localizable.strings"]
 
   spec.dependency 'CoreModule'
