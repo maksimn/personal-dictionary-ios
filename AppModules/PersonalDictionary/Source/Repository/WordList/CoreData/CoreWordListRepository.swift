@@ -187,6 +187,14 @@ final class CoreWordListRepository: WordListRepository {
         filter(withPredicate: NSPredicate(format: "translation contains[cd] \"\(string)\""))
     }
 
+    /// Delete all objects of WordItem entity.
+    func removeAllWordItems() throws {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "WordItemMO")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+        try persistentContainer.persistentStoreCoordinator.execute(deleteRequest, with: mainContext)
+    }
+
     private func filter(withPredicate predicate: NSPredicate?) -> [WordItem] {
         let fetchRequest: NSFetchRequest<WordItemMO> = WordItemMO.fetchRequest()
         let sortDescriptor = NSSortDescriptor.init(key: "createdAt", ascending: false)
