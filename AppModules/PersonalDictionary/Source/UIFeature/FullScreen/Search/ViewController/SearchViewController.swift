@@ -8,6 +8,13 @@
 import RxSwift
 import UIKit
 
+/// Параметры представления поиска.
+struct SearchViewParams {
+
+    /// Параметры текстового сообщения о пустом результате поиска.
+    let searchResultTextParams: TextLabelParams
+}
+
 /// View controller экрана поиска по словам в словаре.
 final class SearchViewController: UIViewController, SearchTextInputListener, SearchModePickerListener {
 
@@ -21,20 +28,20 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
     /// - Parameters:
     ///  - searchViewParams: параметры представления поиска.
     ///  - searchTextInputBuilder: билдер вложенной фичи "Элемент ввода текста для поиска"
-    ///  - searchEngineBuilder: билдер вложенной фичи "Поисковый Движок"
-    ///  - wordListBuilder: билдер вложенной фичи "Список слов".
     ///  - searchModePickerBuilder: билдер вложенной фичи "Выбор режима поиска"
-    init(searchViewParams: SearchViewParams,
+    ///  - wordListBuilder: билдер вложенной фичи "Список слов".
+    ///  - searchEngineBuilder: билдер вложенной фичи "Поисковый Движок"
+    init(viewParams: SearchViewParams,
          searchTextInputBuilder: SearchTextInputBuilder,
-         searchEngineBuilder: SearchEngineBuilder,
+         searchModePickerBuilder: SearchModePickerBuilder,
          wordListBuilder: WordListBuilder,
-         searchModePickerBuilder: SearchModePickerBuilder) {
+         searchEngineBuilder: SearchEngineBuilder) {
         searchEngine = searchEngineBuilder.build()
         wordListMVVM = wordListBuilder.build()
         super.init(nibName: nil, bundle: nil)
         addFeature(searchTextInputBuilder)
         addWordListViewController()
-        addSearchResultTextLabel(searchViewParams.emptySearchResultTextParams)
+        addSearchResultTextLabel(viewParams.searchResultTextParams)
         addFeature(searchModePickerBuilder)
         view.backgroundColor = Theme.standard.backgroundColor
     }

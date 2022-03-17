@@ -22,19 +22,17 @@ final class SearchBuilderImpl: SearchBuilder {
     ///  - View controller экрана поиска по словам в словаре.
     func build() -> UIViewController {
         SearchViewController(
-            searchViewParams: createSearchViewParams(),
+            viewParams: searchViewParams,
             searchTextInputBuilder: SearchTextInputBuilderImpl(),
-            searchEngineBuilder: SearchEngineBuilderImpl(
-                searchableWordList: WordListRepositoryGraphImpl(appConfig: appConfig).repository
-            ),
+            searchModePickerBuilder: SearchModePickerBuilderImpl(),
             wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: false, appConfig: appConfig),
-            searchModePickerBuilder: SearchModePickerBuilderImpl()
+            searchEngineBuilder: SearchEngineBuilderImpl(appConfig: appConfig)
         )
     }
 
-    private func createSearchViewParams() -> SearchViewParams {
+    private var searchViewParams: SearchViewParams {
         SearchViewParams(
-            emptySearchResultTextParams: TextLabelParams(
+            searchResultTextParams: TextLabelParams(
                 textColor: .darkGray,
                 font: Theme.standard.normalFont,
                 text: Bundle(for: type(of: self)).moduleLocalizedString("No words found")
