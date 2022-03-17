@@ -34,7 +34,7 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
             params: createViewParams(),
             navToSearchBuilder: navToSearchBuilder,
             wordListBuilder: wordListBuilder,
-            favoriteWordListFetcher: wordListRepository,
+            favoriteWordListFetcher: WordListRepositoryGraphImpl(appConfig: appConfig).repository,
             readableWordItemStream: WordItemStreamImpl.instance
         )
     }
@@ -50,10 +50,6 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
                 text: bundle.moduleLocalizedString("No favorite words")
             )
         )
-    }
-
-    private var wordListRepository: WordListRepository {
-        WordListRepositoryGraphImpl(appConfig: appConfig).repository
     }
 }
 
