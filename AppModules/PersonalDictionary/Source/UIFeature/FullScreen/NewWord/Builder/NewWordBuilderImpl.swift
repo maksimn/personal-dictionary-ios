@@ -17,20 +17,43 @@ final class NewWordBuilderImpl: NewWordBuilder {
         self.langRepository = langRepository
     }
 
-    /// Создать MVVM-граф фичи
+    /// Создать экран фичи
     /// - Returns:
-    ///  - MVVM-граф фичи  "Добавление нового слова".
-    func build() -> NewWordMVVM {
-        NewWordMVVMImpl(
+    ///  - экран фичи  "Добавление нового слова".
+    func build() -> UIViewController {
+        let initState = NewWordState(
+            text: "",
+            sourceLang: langRepository.sourceLang,
+            targetLang: langRepository.targetLang,
+            selectedLangType: .source,
+            isLangPickerHidden: true
+        )
+
+        weak var viewModelLazy: NewWordViewModel?
+
+        let model = NewWordModelImpl(
+            viewModelBlock: { viewModelLazy },
             langRepository: langRepository,
-            newWordItemStream: WordItemStreamImpl.instance,
-            viewParams: createViewParams(),
+            newWordItemStream: WordItemStreamImpl.instance
+        )
+        let viewModel = NewWordViewModelImpl(
+            model: model,
+            initState: initState
+        )
+        let view = NewWordViewController(
+            params: viewParams,
+            viewModel: viewModel,
             langPickerBuilder: LangPickerBuilderImpl(allLangs: langRepository.allLangs)
         )
+
+        viewModelLazy = viewModel
+
+        return view
     }
 
-    private func createViewParams() -> NewWordViewParams {
+    private var viewParams: NewWordViewParams {
         let bundle = Bundle(for: type(of: self))
+
         return NewWordViewParams(
             arrowText: bundle.moduleLocalizedString("⇋"),
             okText: bundle.moduleLocalizedString("OK"),

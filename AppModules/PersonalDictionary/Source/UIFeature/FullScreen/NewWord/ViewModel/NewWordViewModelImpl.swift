@@ -13,13 +13,15 @@ final class NewWordViewModelImpl: NewWordViewModel {
     private let model: NewWordModel
 
     /// Данные модели представления
-    let state = BehaviorRelay<NewWordModelState?>(value: nil)
+    let state: BehaviorRelay<NewWordState>
 
     /// Инициализатор.
     /// - Parameters:
     ///  - model: модель фичи "Добавление нового слова"
-    init(model: NewWordModel) {
+    init(model: NewWordModel,
+         initState: NewWordState) {
         self.model = model
+        state = BehaviorRelay<NewWordState>(value: initState)
     }
 
     /// Отправить событие добавления нового слова в словарь
@@ -33,7 +35,7 @@ final class NewWordViewModelImpl: NewWordViewModel {
     func update(text: String) {
         var state = state.value
 
-        state?.text = text
+        state.text = text
         self.state.accept(state)
     }
 
@@ -44,25 +46,25 @@ final class NewWordViewModelImpl: NewWordViewModel {
         var state = state.value
         
         if data.selectedLangType == .source {
-            state?.sourceLang = data.selectedLang
+            state.sourceLang = data.selectedLang
             model.save(sourceLang: data.selectedLang)
         } else {
-            state?.targetLang = data.selectedLang
+            state.targetLang = data.selectedLang
             model.save(targetLang: data.selectedLang)
         }
 
-        state?.isLangPickerHidden = true
+        state.isLangPickerHidden = true
         self.state.accept(state)
     }
 
     /// Показать представление для выбора языка.
     /// - Parameters:
     ///  - selectedLangType: тип выбранного языка (исходный / целевой).
-    func showLangPickerView(selectedLangType: SelectedLangType) {
+    func presentLangPickerView(selectedLangType: SelectedLangType) {
         var state = state.value
 
-        state?.selectedLangType = selectedLangType
-        state?.isLangPickerHidden = false
+        state.selectedLangType = selectedLangType
+        state.isLangPickerHidden = false
         self.state.accept(state)
     }
 }
