@@ -70,12 +70,12 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
 
     @objc
     func onSourceLangLabelTap() {
-        viewModel.showLangPickerView(selectedLangType: .source)
+        viewModel.presentLangPickerView(selectedLangType: .source)
     }
 
     @objc
     func onTargetLangLabelTap() {
-        viewModel.showLangPickerView(selectedLangType: .target)
+        viewModel.presentLangPickerView(selectedLangType: .target)
     }
 
     @objc
@@ -87,8 +87,7 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
 
     private func bindToViewModel() {
         viewModel.state.subscribe(onNext: { [weak self] state in
-            guard let self = self,
-                  let state = state else { return }
+            guard let self = self else { return }
 
             self.textField.text = state.text
             self.sourceLangLabel.text = state.sourceLang.name

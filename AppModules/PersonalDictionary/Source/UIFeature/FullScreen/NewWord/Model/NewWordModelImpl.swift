@@ -8,34 +8,30 @@
 /// Реализация модели "Добавления нового слова" в личный словарь.
 final class NewWordModelImpl: NewWordModel {
 
-    /// View model "Добавления нового слова" в личный словарь.
-    weak var viewModel: NewWordViewModel? {
-        didSet {
-            let initState = NewWordModelState(
-                text: "",
-                sourceLang: langRepository.sourceLang,
-                targetLang: langRepository.targetLang,
-                selectedLangType: .source,
-                isLangPickerHidden: true
-            )
-            viewModel?.state.accept(initState)
-        }
-    }
-
+    private let viewModelBlock: () -> NewWordViewModel?
+    private weak var viewModel: NewWordViewModel?
     private var langRepository: LangRepository
     private let newWordItemStream: NewWordItemStream
 
     /// Инициализатор.
     /// - Parameters:
+    ///  - viewModelBlock: замыкание для инициализации ссылки на модель представления.
     ///  - langRepository: хранилище с данными о языках в приложении.
     ///  - newWordItemStream: поток для отправки событий добавления нового слова в словарь
-    init(_ langRepository: LangRepository, _ newWordItemStream: NewWordItemStream) {
+    init(viewModelBlock: @escaping () -> NewWordViewModel?,
+         langRepository: LangRepository,
+         newWordItemStream: NewWordItemStream) {
+        self.viewModelBlock = viewModelBlock
         self.langRepository = langRepository
         self.newWordItemStream = newWordItemStream
     }
 
     /// Отправить событие добавления нового слова в словарь
     func sendNewWord() {
+        if viewModel == nil {
+            viewModel = viewModelBlock()
+        }
+
         guard let state = viewModel?.state.value else { return }
         let wordItem = WordItem(text: state.text.trimmingCharacters(in: .whitespacesAndNewlines),
                                 sourceLang: state.sourceLang,
