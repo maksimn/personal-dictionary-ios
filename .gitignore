@@ -67,4 +67,4 @@ fastlane/test_output
 
 iOSInjectionProject/
 
-AppModules/PersonalDictionary/Tests/GeneratedMocks.swift
+AppModulesDev/PersonalDictionaryDev/PersonalDictionaryDevTests/GeneratedMocks.swift

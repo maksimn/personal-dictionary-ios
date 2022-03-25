@@ -1,11 +1,9 @@
 //
-//  PDGlobalSettings.swift
+//  Config.swift
 //  PersonalDictionary
 //
 //  Created by Maxim Ivanov on 10.10.2021.
 //
-
-import UIKit
 
 /// Параметры конфигурации приложения "Личный словарь иностранных слов".
 struct Config {
