@@ -1,24 +1,22 @@
 platform :ios, '14.0'
 
-target 'SuperList' do
+target 'PersonalDictionaryDev' do
   use_frameworks!
 
   pod 'SwiftLint'
 
   pod 'CoreModule',
-    :path => './AppModules/CoreModule'
+    :path => '../../AppModules/CoreModule'
   pod 'PersonalDictionary',
-    :path => './AppModules/PersonalDictionary'
+    :path => '../../AppModules/PersonalDictionary'
   pod 'TodoList',
-    :path => './AppModules/TodoList',
-    :testspecs => ['TodoListTests']
+    :path => '../../AppModules/TodoList'
 
-  target 'SuperListTests' do
+  target 'PersonalDictionaryDevTests' do
     inherit! :search_paths
 
-  end
-
-  target 'SuperListUITests' do
+    pod 'Cuckoo'
+    pod 'RxBlocking', '5.1'
 
   end
 

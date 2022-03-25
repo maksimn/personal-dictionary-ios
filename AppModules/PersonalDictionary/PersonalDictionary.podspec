@@ -21,7 +21,6 @@ Pod::Spec.new do |spec|
 
   spec.resources = ["Resources/{*.xcassets}", 
                     "Resources/StorageModel.xcdatamodeld",
-                    "Resources/TestStorageModel.xcdatamodeld",
                     "Resources/{*.lproj}/Localizable.strings"]
 
   spec.dependency 'CoreModule'
@@ -29,11 +28,5 @@ Pod::Spec.new do |spec|
   spec.dependency 'RxCocoa', '5.1'
   spec.dependency 'RxSwift', '5.1'
   spec.dependency 'SnapKit', '~> 4.0'
-
-  spec.test_spec 'PersonalDictionaryTests' do |test_spec|
-    test_spec.source_files = 'Tests/**/*'
-    test_spec.dependency 'Cuckoo'
-    test_spec.dependency 'RxBlocking', '5.1'
-  end
 
 end
