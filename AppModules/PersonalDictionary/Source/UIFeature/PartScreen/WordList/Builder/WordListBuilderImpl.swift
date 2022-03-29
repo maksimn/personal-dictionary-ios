@@ -29,7 +29,7 @@ final class WordListBuilderImpl: WordListBuilder {
     func build() -> WordListMVVM {
         WordListMVVMImpl(
             viewParams: createWordListViewParams(),
-            cudOperations: WordListRepositoryGraphImpl(appConfig: appConfig).repository,
+            cudOperations: CoreWordListRepository(appConfig: appConfig),
             translationService: createTranslationService(),
             wordItemStream: WordItemStreamImpl.instance
         )

@@ -54,10 +54,31 @@ final class CoreWordListRepository: WordListRepository {
     ///  - args: аргументы хранилища списка слов.
     ///  - langRepository: хранилище данных о языках.
     ///  - logger: логгер.
-    init(args: CoreWordListRepositoryArgs, langRepository: LangRepository, logger: Logger) {
+    init(args: CoreWordListRepositoryArgs,
+         langRepository: LangRepository,
+         logger: Logger) {
         self.args = args
         self.langRepository = langRepository
         self.logger = logger
+    }
+
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - appConfig: конфигурация приложения.
+    convenience init(appConfig: Config) {
+        let bundle = Bundle(for: type(of: self))
+        let langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard,
+                                                data: appConfig.langData)
+        let logger = LoggerImpl(isLoggingEnabled: appConfig.isLoggingEnabled)
+
+        self.init(
+            args: CoreWordListRepositoryArgs(
+                bundle: bundle,
+                persistentContainerName: "StorageModel"
+            ),
+            langRepository: langRepository,
+            logger: logger
+        )
     }
 
     /// Список слов из личного словаря.

@@ -31,7 +31,7 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
         MainWordListViewController(
             viewParams: createViewParams(),
             wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: true, appConfig: appConfig),
-            wordListFetcher: WordListRepositoryGraphImpl(appConfig: appConfig).repository,
+            wordListFetcher: CoreWordListRepository(appConfig: appConfig),
             mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: self)
         )
     }

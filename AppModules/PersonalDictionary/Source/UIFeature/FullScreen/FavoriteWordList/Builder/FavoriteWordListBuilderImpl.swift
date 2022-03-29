@@ -34,7 +34,7 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
             params: createViewParams(),
             navToSearchBuilder: navToSearchBuilder,
             wordListBuilder: wordListBuilder,
-            favoriteWordListFetcher: WordListRepositoryGraphImpl(appConfig: appConfig).repository,
+            favoriteWordListFetcher: CoreWordListRepository(appConfig: appConfig),
             readableWordItemStream: WordItemStreamImpl.instance
         )
     }
