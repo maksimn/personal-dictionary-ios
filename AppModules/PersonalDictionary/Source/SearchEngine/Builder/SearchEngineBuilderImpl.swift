@@ -20,6 +20,6 @@ final class SearchEngineBuilderImpl: SearchEngineBuilder {
     /// Создать объект поискового движка.
     /// - Returns: объект поискового движка.
     func build() -> SearchEngine {
-        SearchEngineImpl(searchableWordList: WordListRepositoryGraphImpl(appConfig: appConfig).repository)
+        SearchEngineImpl(searchableWordList: CoreWordListRepository(appConfig: appConfig))
     }
 }
