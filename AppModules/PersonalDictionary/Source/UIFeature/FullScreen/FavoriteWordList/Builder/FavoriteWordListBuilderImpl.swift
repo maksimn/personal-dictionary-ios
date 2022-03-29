@@ -45,8 +45,8 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
         return FavoriteWordListViewParams(
             heading: bundle.moduleLocalizedString("Favorite words"),
             textLabelParams: TextLabelParams(
-                textColor: .darkGray,
-                font: Theme.standard.normalFont,
+                textColor: Theme.instance.secondaryTextColor,
+                font: Theme.instance.normalFont,
                 text: bundle.moduleLocalizedString("No favorite words")
             )
         )

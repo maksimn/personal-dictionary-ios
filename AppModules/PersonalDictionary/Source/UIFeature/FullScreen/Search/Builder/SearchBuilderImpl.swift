@@ -33,8 +33,8 @@ final class SearchBuilderImpl: SearchBuilder {
     private var searchViewParams: SearchViewParams {
         SearchViewParams(
             searchResultTextParams: TextLabelParams(
-                textColor: .darkGray,
-                font: Theme.standard.normalFont,
+                textColor: Theme.instance.secondaryTextColor,
+                font: Theme.instance.normalFont,
                 text: Bundle(for: type(of: self)).moduleLocalizedString("No words found")
             )
         )

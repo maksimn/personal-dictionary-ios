@@ -66,18 +66,14 @@ final class CoreWordListRepository: WordListRepository {
     /// - Parameters:
     ///  - appConfig: конфигурация приложения.
     convenience init(appConfig: Config) {
-        let bundle = Bundle(for: type(of: self))
-        let langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard,
-                                                data: appConfig.langData)
-        let logger = LoggerImpl(isLoggingEnabled: appConfig.isLoggingEnabled)
-
         self.init(
             args: CoreWordListRepositoryArgs(
-                bundle: bundle,
+                bundle: Bundle(for: type(of: self)),
                 persistentContainerName: "StorageModel"
             ),
-            langRepository: langRepository,
-            logger: logger
+            langRepository: LangRepositoryImpl(userDefaults: UserDefaults.standard,
+                                               data: appConfig.langData),
+            logger: LoggerImpl(isLoggingEnabled: appConfig.isLoggingEnabled)
         )
     }
 

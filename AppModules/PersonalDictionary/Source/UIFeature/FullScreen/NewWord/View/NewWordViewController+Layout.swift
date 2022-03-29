@@ -40,7 +40,7 @@ extension NewWordViewController {
 
     private func initContentView() {
         contentView.layer.cornerRadius = 16
-        contentView.backgroundColor = Theme.standard.backgroundColor
+        contentView.backgroundColor = Theme.instance.backgroundColor
         contentView.snp.makeConstraints { (make) -> Void in
             make.centerY.equalTo(view)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-12)
@@ -51,8 +51,8 @@ extension NewWordViewController {
 
     private func initSourceLangLabel() {
         sourceLangLabel.isUserInteractionEnabled = true
-        sourceLangLabel.textColor = .black
-        sourceLangLabel.font = Theme.standard.normalFont
+        sourceLangLabel.textColor = Theme.instance.textColor
+        sourceLangLabel.font = Theme.instance.normalFont
         sourceLangLabel.numberOfLines = 1
         sourceLangLabel.textAlignment = .right
         sourceLangLabel.snp.makeConstraints { make -> Void in
@@ -70,8 +70,8 @@ extension NewWordViewController {
 
     private func initTargetLangLabel() {
         targetLangLabel.isUserInteractionEnabled = true
-        targetLangLabel.textColor = .black
-        targetLangLabel.font = Theme.standard.normalFont
+        targetLangLabel.textColor = Theme.instance.textColor
+        targetLangLabel.font = Theme.instance.normalFont
         targetLangLabel.numberOfLines = 1
         targetLangLabel.snp.makeConstraints { make -> Void in
             make.top.equalTo(contentView).offset(12)
@@ -88,8 +88,8 @@ extension NewWordViewController {
 
     private func initArrowLabel() {
         arrowLabel.isUserInteractionEnabled = false
-        arrowLabel.textColor = .black
-        arrowLabel.font = Theme.standard.normalFont
+        arrowLabel.textColor = Theme.instance.textColor
+        arrowLabel.font = Theme.instance.normalFont
         arrowLabel.numberOfLines = 1
         arrowLabel.textAlignment = .center
         arrowLabel.text = params.arrowText
@@ -102,7 +102,6 @@ extension NewWordViewController {
     private func initTextField() {
         textField.placeholder = params.textFieldPlaceholder
         textField.borderStyle = UITextField.BorderStyle.roundedRect
-        textField.backgroundColor = UIColor.white
         textField.textColor = .black
         textField.snp.makeConstraints { make -> Void in
             make.edges.equalTo(contentView).inset(UIEdgeInsets(top: 62, left: 12, bottom: 74, right: 12))
