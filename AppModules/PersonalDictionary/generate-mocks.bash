@@ -3,8 +3,8 @@ OUTPUT_FILE="./PersonalDictionaryDevTests/GeneratedMocks.swift"
 echo "Generated Mocks File = ${OUTPUT_FILE}"
 
 # Define input directory. Change "${PROJECT_DIR}/${PROJECT_NAME}" to your project's root source folder, if it's not the default name.
-CORE_MODULE_INPUT_DIR="../../AppModules/CoreModule/Source"
-INPUT_DIR="../../AppModules/PersonalDictionary/Source"
+CORE_MODULE_INPUT_DIR="../CoreModule/Source"
+INPUT_DIR="./Source"
 echo "Mocks Input Directory = ${INPUT_DIR}"
 echo "CoreModule Mocks Input Directory = ${CORE_MODULE_INPUT_DIR}"
 
