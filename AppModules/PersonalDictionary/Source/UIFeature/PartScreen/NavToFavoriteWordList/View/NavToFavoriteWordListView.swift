@@ -38,7 +38,7 @@ final class NavToFavoriteWordListView: UIView {
 
     private func initRoutingButton() {
         routingButton.setTitle(routingButtonTitle, for: .normal)
-        routingButton.setTitleColor(Theme.standard.goldColor, for: .normal)
+        routingButton.setTitleColor(Theme.instance.goldColor, for: .normal)
         routingButton.titleLabel?.font = UIFont.systemFont(ofSize: 26)
         routingButton.backgroundColor = .clear
         routingButton.layer.cornerRadius = 8

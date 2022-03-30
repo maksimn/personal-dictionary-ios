@@ -11,9 +11,9 @@ import UIKit
 extension WordListViewController {
 
     func initViews() {
-        view.backgroundColor = Theme.standard.backgroundColor
+        view.backgroundColor = Theme.instance.backgroundColor
         view.addSubview(tableView)
-        tableView.backgroundColor = Theme.standard.backgroundColor
+        tableView.backgroundColor = Theme.instance.backgroundColor
         tableView.layer.cornerRadius = params.cellCornerRadius
         tableView.rowHeight = params.itemHeight
         tableView.register(params.cellClass, forCellReuseIdentifier: params.cellReuseIdentifier)
