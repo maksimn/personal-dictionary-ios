@@ -8,12 +8,12 @@
 /// Билдер Фичи "Поиск по словам в словаре".
 final class SearchBuilderImpl: SearchBuilder {
 
-    private let appConfig: Config
+    private let appConfig: AppConfig
 
     /// Инициализатор.
     /// - Parameters:
     ///  - appConfig: зависимости фичи.
-    init(appConfig: Config) {
+    init(appConfig: AppConfig) {
         self.appConfig = appConfig
     }
 
@@ -23,8 +23,8 @@ final class SearchBuilderImpl: SearchBuilder {
     func build() -> UIViewController {
         SearchViewController(
             viewParams: searchViewParams,
-            searchTextInputBuilder: SearchTextInputBuilderImpl(),
-            searchModePickerBuilder: SearchModePickerBuilderImpl(),
+            searchTextInputBuilder: SearchTextInputBuilderImpl(bundle: appConfig.bundle),
+            searchModePickerBuilder: SearchModePickerBuilderImpl(bundle: appConfig.bundle),
             wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: false, appConfig: appConfig),
             searchEngineBuilder: SearchEngineBuilderImpl(appConfig: appConfig)
         )
@@ -33,9 +33,9 @@ final class SearchBuilderImpl: SearchBuilder {
     private var searchViewParams: SearchViewParams {
         SearchViewParams(
             searchResultTextParams: TextLabelParams(
-                textColor: Theme.instance.secondaryTextColor,
-                font: Theme.instance.normalFont,
-                text: Bundle(for: type(of: self)).moduleLocalizedString("No words found")
+                textColor: Theme.data.secondaryTextColor,
+                font: Theme.data.normalFont,
+                text: appConfig.bundle.moduleLocalizedString("No words found")
             )
         )
     }

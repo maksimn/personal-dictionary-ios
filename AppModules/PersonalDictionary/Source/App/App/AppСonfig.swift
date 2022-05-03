@@ -6,7 +6,10 @@
 //
 
 /// Параметры конфигурации приложения "Личный словарь иностранных слов".
-struct Config {
+struct AppConfig {
+
+    /// Бандл приложения
+    let bundle: Bundle
 
     /// Данные о языках в приложении
     let langData: LangData

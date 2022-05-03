@@ -39,7 +39,7 @@ final class NavToOtherAppView: UIView {
 
     private func initRoutingButton() {
         routingButton.setTitle(routingButtonTitle, for: .normal)
-        routingButton.setTitleColor(Theme.instance.secondaryTextColor, for: .normal)
+        routingButton.setTitleColor(Theme.data.secondaryTextColor, for: .normal)
         routingButton.backgroundColor = .clear
         routingButton.layer.cornerRadius = 8
         routingButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)

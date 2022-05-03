@@ -5,6 +5,24 @@
 //  Created by Maxim Ivanov on 05.12.2021.
 //
 
+/// Общий протокол из базовых зависимостей в приложении.
+protocol BaseDependency {
+
+    /// Корневой navigation controller приложения.
+    var navigationController: UINavigationController? { get }
+
+    /// Конфигурация приложения.
+    var appConfig: AppConfig { get }
+}
+
+/// Зависимости вложенной фичи "Главный список слов".
+private struct MainWordListDependencyImpl: MainWordListDependency {
+
+    let navigationController: UINavigationController?
+
+    let appConfig: AppConfig
+}
+
 /// Реализация билдера приложения "Личный словарь иностранных слов".
 public final class AppBuilderImpl: AppBuilder {
 
@@ -14,11 +32,19 @@ public final class AppBuilderImpl: AppBuilder {
     /// Создать объект данного приложения.
     /// - Returns: объект приложения.
     public func build() -> App {
-        AppImpl(config: buildConfig())
+        let mainWordListDependency = MainWordListDependencyImpl(
+            navigationController: UINavigationController(),
+            appConfig: buildConfig()
+        )
+
+        return AppImpl(
+            navigationController: mainWordListDependency.navigationController,
+            mainWordListBuilder: MainWordListBuilderImpl(dependency: mainWordListDependency)
+        )
     }
 
     /// Создать конфигурацию приложения.
-    private func buildConfig() -> Config {
+    private func buildConfig() -> AppConfig {
         let bundle = Bundle(for: type(of: self))
         let lang1 = Lang(id: Lang.Id(raw: 1), name: bundle.moduleLocalizedString("English"), shortName: "EN")
         let lang2 = Lang(id: Lang.Id(raw: 2), name: bundle.moduleLocalizedString("Russian"), shortName: "RU")
@@ -30,7 +56,8 @@ public final class AppBuilderImpl: AppBuilder {
                                 defaultSourceLang: lang1,
                                 defaultTargetLang: lang2)
 
-        return Config(
+        return AppConfig(
+            bundle: bundle,
             langData: langData,
             ponsApiSecret: "",
             isLoggingEnabled: true

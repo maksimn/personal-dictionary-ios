@@ -68,7 +68,7 @@ final class SearchModePickerViewImpl: UIView {
     }
 
     private func initSearchByLabel() {
-        searchByLabel.textColor = Theme.instance.secondaryTextColor
+        searchByLabel.textColor = Theme.data.secondaryTextColor
         searchByLabel.font = UIFont.systemFont(ofSize: 16)
         searchByLabel.numberOfLines = 1
         searchByLabel.textAlignment = .center

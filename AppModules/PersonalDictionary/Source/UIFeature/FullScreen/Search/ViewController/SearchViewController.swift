@@ -43,7 +43,7 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
         addWordListViewController()
         addSearchResultTextLabel(viewParams.searchResultTextParams)
         addFeature(searchModePickerBuilder)
-        view.backgroundColor = Theme.instance.backgroundColor
+        view.backgroundColor = Theme.data.backgroundColor
     }
 
     required init?(coder: NSCoder) {

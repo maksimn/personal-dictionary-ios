@@ -15,7 +15,7 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
 
     private(set) weak var navigationController: UINavigationController?
 
-    let appConfig: Config
+    let appConfig: AppConfig
 
     /// Инициализатор,
     /// - Parameters:
@@ -33,7 +33,10 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
             navToSearchBuilder: NavToSearchBuilderImpl(width: .full, dependency: self),
             navToFavoriteWordListBuilder: NavToFavoriteWordListBuilderImpl(dependency: self),
             navToNewWordBuilder: NavToNewWordBuilderImpl(dependency: self),
-            navToTodoListAppBuilder: NavToTodoListAppBuilderImpl(rootViewController: navigationController)
+            navToTodoListAppBuilder: NavToTodoListAppBuilderImpl(
+                rootViewController: navigationController,
+                bundle: appConfig.bundle
+            )
         )
     }
 }

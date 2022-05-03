@@ -13,7 +13,7 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
 
     private(set) weak var navigationController: UINavigationController?
 
-    let appConfig: Config
+    let appConfig: AppConfig
 
     /// Инициализатор,
     /// - Parameters:
@@ -40,14 +40,12 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
     }
 
     private func createViewParams() -> FavoriteWordListViewParams {
-        let bundle = Bundle(for: type(of: self))
-
-        return FavoriteWordListViewParams(
-            heading: bundle.moduleLocalizedString("Favorite words"),
+        FavoriteWordListViewParams(
+            heading: appConfig.bundle.moduleLocalizedString("Favorite words"),
             textLabelParams: TextLabelParams(
-                textColor: Theme.instance.secondaryTextColor,
-                font: Theme.instance.normalFont,
-                text: bundle.moduleLocalizedString("No favorite words")
+                textColor: Theme.data.secondaryTextColor,
+                font: Theme.data.normalFont,
+                text: appConfig.bundle.moduleLocalizedString("No favorite words")
             )
         )
     }

@@ -8,12 +8,16 @@
 /// Реализация билдера Фичи "Выбор языка".
 final class LangPickerBuilderImpl: LangPickerBuilder {
 
+    private let bundle: Bundle
     private let allLangs: [Lang]
 
     /// Инициализатор.
     /// - Parameters:
+    ///  - bundle: бандл приложения.
     ///  - allLangs: список всех доступных языков.
-    init(allLangs: [Lang]) {
+    init(bundle: Bundle,
+         allLangs: [Lang]) {
+        self.bundle = bundle
         self.allLangs = allLangs
     }
 
@@ -23,7 +27,7 @@ final class LangPickerBuilderImpl: LangPickerBuilder {
     func build() -> LangPickerMVVM {
         LangPickerMVVMImpl(
             viewParams: LangPickerViewParams(
-                selectButtonTitle: Bundle(for: type(of: self)).moduleLocalizedString("Select"),
+                selectButtonTitle: bundle.moduleLocalizedString("Select"),
                 langs: allLangs
             )
         )

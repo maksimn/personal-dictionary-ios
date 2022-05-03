@@ -14,7 +14,7 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
 
     private(set) weak var navigationController: UINavigationController?
     
-    let appConfig: Config
+    let appConfig: AppConfig
 
     /// Инициализатор.
     /// - Parameters:
@@ -38,7 +38,7 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
 
     private func createViewParams() -> MainWordListViewParams {
         MainWordListViewParams(
-            heading: Bundle(for: type(of: self)).moduleLocalizedString("My dictionary"),
+            heading: appConfig.bundle.moduleLocalizedString("My dictionary"),
             visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
         )
     }

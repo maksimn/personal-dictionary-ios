@@ -8,12 +8,16 @@
 /// Реализация билдера Фичи "Добавление нового слова" в личный словарь.
 final class NewWordBuilderImpl: NewWordBuilder {
 
+    private let bundle: Bundle
     private let langRepository: LangRepository
 
     /// Инициализатор.
     /// - Parameters:
+    ///  - bundle: бандл приложения.
     ///  - langRepository: репозиторий данных о языках в приложении.
-    init(langRepository: LangRepository) {
+    init(bundle: Bundle,
+         langRepository: LangRepository) {
+        self.bundle = bundle
         self.langRepository = langRepository
     }
 
@@ -43,7 +47,10 @@ final class NewWordBuilderImpl: NewWordBuilder {
         let view = NewWordViewController(
             params: viewParams,
             viewModel: viewModel,
-            langPickerBuilder: LangPickerBuilderImpl(allLangs: langRepository.allLangs)
+            langPickerBuilder: LangPickerBuilderImpl(
+                bundle: bundle,
+                allLangs: langRepository.allLangs
+            )
         )
 
         viewModelLazy = viewModel
@@ -52,9 +59,7 @@ final class NewWordBuilderImpl: NewWordBuilder {
     }
 
     private var viewParams: NewWordViewParams {
-        let bundle = Bundle(for: type(of: self))
-
-        return NewWordViewParams(
+        NewWordViewParams(
             arrowText: bundle.moduleLocalizedString("⇋"),
             okText: bundle.moduleLocalizedString("OK"),
             textFieldPlaceholder: bundle.moduleLocalizedString("Enter a new word")
