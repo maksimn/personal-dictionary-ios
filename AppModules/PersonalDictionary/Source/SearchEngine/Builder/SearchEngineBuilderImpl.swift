@@ -8,12 +8,12 @@
 /// Реализация билдера Фичи "Поисковый движок".
 final class SearchEngineBuilderImpl: SearchEngineBuilder {
 
-    private let appConfig: Config
+    private let appConfig: AppConfig
 
     /// Инициализатор.
     /// - Parameters:
     ///  - appConfig: конфигурация приложения.
-    init(appConfig: Config) {
+    init(appConfig: AppConfig) {
         self.appConfig = appConfig
     }
 

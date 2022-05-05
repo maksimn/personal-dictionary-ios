@@ -15,7 +15,7 @@ final class NavToNewWordBuilderImpl: NavToNewWordBuilder {
 
     private weak var navigationController: UINavigationController?
 
-    let appConfig: Config
+    let appConfig: AppConfig
 
     /// Инициализатор.
     /// - Parameters:
@@ -28,12 +28,18 @@ final class NavToNewWordBuilderImpl: NavToNewWordBuilder {
     /// Создать фичу.
     /// - Returns: представление фичи.
     func build() -> UIView {
-        let bundle = Bundle(for: type(of: self))
-        let newWordBuilder = NewWordBuilderImpl(langRepository: langRepository)
-        let router = NavToNewWordRouterImpl(navigationController: navigationController,
-                                            newWordBuilder: newWordBuilder)
-        let view = NavToNewWordView(navToNewWordImage: UIImage(named: "icon-plus", in: bundle, compatibleWith: nil)!,
-                                    router: router)
+        let newWordBuilder = NewWordBuilderImpl(
+            bundle: appConfig.bundle,
+            langRepository: langRepository
+        )
+        let router = NavToNewWordRouterImpl(
+            navigationController: navigationController,
+            newWordBuilder: newWordBuilder
+        )
+        let view = NavToNewWordView(
+            navToNewWordImage: UIImage(named: "icon-plus", in: appConfig.bundle, compatibleWith: nil)!,
+            router: router
+        )
 
         return view
     }

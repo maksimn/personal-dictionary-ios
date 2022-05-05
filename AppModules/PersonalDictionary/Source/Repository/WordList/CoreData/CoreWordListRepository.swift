@@ -65,10 +65,10 @@ final class CoreWordListRepository: WordListRepository {
     /// Инициализатор.
     /// - Parameters:
     ///  - appConfig: конфигурация приложения.
-    convenience init(appConfig: Config) {
+    convenience init(appConfig: AppConfig) {
         self.init(
             args: CoreWordListRepositoryArgs(
-                bundle: Bundle(for: type(of: self)),
+                bundle: appConfig.bundle,
                 persistentContainerName: "StorageModel"
             ),
             langRepository: LangRepositoryImpl(userDefaults: UserDefaults.standard,

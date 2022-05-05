@@ -7,37 +7,23 @@
 
 import UIKit
 
-/// Общий протокол из базовых зависимостей в приложении.
-protocol BaseDependency {
-
-    /// Корневой navigation controller приложения.
-    var navigationController: UINavigationController? { get }
-
-    /// Конфигурация приложения.
-    var appConfig: Config { get }
-}
-
 /// Реализация приложения "Личный словарь иностранных слов".
-final class AppImpl: App, BaseDependency {
+final class AppImpl: App {
 
     /// Получение корневого контроллера приложения
-    let navigationController: UINavigationController? = UINavigationController()
-
-    /// Конфигурация приложения.
-    let appConfig: Config
+    private(set) var navigationController: UINavigationController?
 
     /// Инициализатор:
     /// - Parameters:
-    ///  - config: конфигурация приложения.
-    init(config: Config) {
-        self.appConfig = config
-
-        let mainWordListBuilder = MainWordListBuilderImpl(dependency: self)
+    ///  - navigationController: корневой navigation controller приложения.
+    ///  - mainWordListBuilder: билдер вложенной фичи "Главный список слов".
+    init(navigationController: UINavigationController?,
+         mainWordListBuilder: MainWordListBuilder) {
         let mainWordListViewController = mainWordListBuilder.build()
 
         navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
         navigationController?.setViewControllers([mainWordListViewController], animated: false)
+
+        self.navigationController = navigationController
     }
 }
-
-extension AppImpl: MainWordListDependency { }

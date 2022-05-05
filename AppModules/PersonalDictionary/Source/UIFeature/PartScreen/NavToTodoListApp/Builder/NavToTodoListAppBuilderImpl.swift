@@ -13,9 +13,12 @@ import UIKit
 final class NavToTodoListAppBuilderImpl: NavToTodoListAppBuilder {
 
     private weak var rootViewController: UIViewController?
+    private let bundle: Bundle
 
-    init(rootViewController: UIViewController?) {
+    init(rootViewController: UIViewController?,
+         bundle: Bundle) {
         self.rootViewController = rootViewController
+        self.bundle = bundle
     }
 
     /// Создать фичу.
@@ -27,7 +30,7 @@ final class NavToTodoListAppBuilderImpl: NavToTodoListAppBuilder {
         )
 
         return NavToOtherAppView(
-            routingButtonTitle: Bundle(for: type(of: self)).moduleLocalizedString("My todos"),
+            routingButtonTitle: bundle.moduleLocalizedString("My todos"),
             router: router
         )
     }

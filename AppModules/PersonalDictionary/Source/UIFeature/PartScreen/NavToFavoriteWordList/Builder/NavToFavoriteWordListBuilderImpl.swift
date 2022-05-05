@@ -16,7 +16,7 @@ final class NavToFavoriteWordListBuilderImpl: NavToFavoriteWordListBuilder {
 
     private(set) weak var navigationController: UINavigationController?
 
-    let appConfig: Config
+    let appConfig: AppConfig
 
     /// Инициализатор.
     /// - Parameters:

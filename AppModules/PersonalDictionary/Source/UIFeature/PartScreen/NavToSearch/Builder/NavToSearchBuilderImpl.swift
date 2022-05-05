@@ -24,7 +24,7 @@ final class NavToSearchBuilderImpl: NavToSearchBuilder {
 
     private(set) weak var navigationController: UINavigationController?
 
-    let appConfig: Config
+    let appConfig: AppConfig
 
     /// Инициализатор.
     /// - Parameters:

@@ -11,14 +11,14 @@ import CoreModule
 final class WordListBuilderImpl: WordListBuilder {
 
     private let shouldAnimateWhenAppear: Bool
-    private let appConfig: Config
+    private let appConfig: AppConfig
 
     /// Инициализатор.
     /// - Parameters:
     ///  - shouldAnimateWhenAppear: запускать ли анимацию при первом появлении данных в таблице.
     ///  - appConfig: конфигурация приложения.
     init(shouldAnimateWhenAppear: Bool,
-         appConfig: Config) {
+         appConfig: AppConfig) {
         self.shouldAnimateWhenAppear = shouldAnimateWhenAppear
         self.appConfig = appConfig
     }

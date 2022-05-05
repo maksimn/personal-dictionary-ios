@@ -43,16 +43,24 @@ struct Theme {
         self.normalFont = normalFont
     }
 
-    static let instance = Theme(
-        backgroundColor: UIColor(light: UIColor(red: 0.97, green: 0.97, blue: 0.95, alpha: 1.0),
-                                 dark: .black),
+    static let data = Theme(
+        backgroundColor: UIColor(
+            light: UIColor(red: 0.97, green: 0.97, blue: 0.95, alpha: 1.0),
+            dark: .black
+        ),
         goldColor: UIColor(red: 1.00, green: 0.84, blue: 0.00, alpha: 1.00),
-        wordCellColor: UIColor(light: .white,
-                               dark: UIColor(red: 0.13, green: 0.13, blue: 0.13, alpha: 1.00)),
-        textColor: UIColor(light: .black,
-                           dark: .white),
-        secondaryTextColor: UIColor(light: .darkGray,
-                                    dark: .lightGray),
+        wordCellColor: UIColor(
+            light: .white,
+            dark: UIColor(red: 0.13, green: 0.13, blue: 0.13, alpha: 1.00)
+        ),
+        textColor: UIColor(
+            light: .black,
+            dark: .white
+        ),
+        secondaryTextColor: UIColor(
+            light: .darkGray,
+            dark: .lightGray
+        ),
         normalFont: UIFont.systemFont(ofSize: 17)
     )
 }

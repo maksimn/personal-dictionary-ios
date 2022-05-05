@@ -11,7 +11,7 @@ import UIKit
 extension MainWordListViewController {
 
     func initViews() {
-        view.backgroundColor = Theme.instance.backgroundColor
+        view.backgroundColor = Theme.data.backgroundColor
         addWordListChildController()
         initHeadingLabel()
     }
@@ -37,7 +37,7 @@ extension MainWordListViewController {
     }
 
     private func initHeadingLabel() {
-        headingLabel.textColor = Theme.instance.textColor
+        headingLabel.textColor = Theme.data.textColor
         headingLabel.font = UIFont.systemFont(ofSize: 28, weight: .heavy)
         headingLabel.numberOfLines = 1
         headingLabel.textAlignment = .left
