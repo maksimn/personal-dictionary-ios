@@ -36,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0CF923BA282EC040002F2B67 /* SuperList.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SuperList.entitlements; sourceTree = "<group>"; };
 		0D4B4E6BC0396BF9B7A34CB2 /* Pods_SuperList_SuperListUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperList_SuperListUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FC4CEAF6217F38E5124D73D /* Pods-SuperList-SuperListUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperList-SuperListUITests.debug.xcconfig"; path = "Target Support Files/Pods-SuperList-SuperListUITests/Pods-SuperList-SuperListUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		3CD071BE46EB88AE719088EA /* Pods_SuperListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,6 +113,7 @@
 		599B2BCF276ED1A3003659DC /* SuperList */ = {
 			isa = PBXGroup;
 			children = (
+				0CF923BA282EC040002F2B67 /* SuperList.entitlements */,
 				599B2BD0276ED1A3003659DC /* AppDelegate.swift */,
 				599B2BD2276ED1A3003659DC /* SceneDelegate.swift */,
 				599B2BD9276ED1A4003659DC /* Assets.xcassets */,
@@ -574,6 +576,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SuperList/SuperList.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T96KB8H453;
 				INFOPLIST_FILE = SuperList/Info.plist;
@@ -594,6 +597,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SuperList/SuperList.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T96KB8H453;
 				INFOPLIST_FILE = SuperList/Info.plist;

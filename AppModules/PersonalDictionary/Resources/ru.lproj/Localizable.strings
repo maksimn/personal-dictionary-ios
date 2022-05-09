@@ -6,8 +6,10 @@
   
 */
 
+"Advice" = "Совет";
 "English" = "Английский";
 "Russian" = "Русский";
+"It's time to add a new word to the dictionary." = "Добавьте новое слово в личный словарь.";
 "Italian" = "Итальянский";
 "German" = "Немецкий";
 "OK" = "OK";

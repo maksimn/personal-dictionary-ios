@@ -23,6 +23,14 @@ private struct MainWordListDependencyImpl: MainWordListDependency {
     let appConfig: AppConfig
 }
 
+/// Зависимости вложенной фичи "".
+private struct PushNotificationDependencyImpl: PushNotificationDependency {
+
+    let navigationController: UINavigationController?
+
+    let appConfig: AppConfig
+}
+
 /// Реализация билдера приложения "Личный словарь иностранных слов".
 public final class AppBuilderImpl: AppBuilder {
 
@@ -32,14 +40,23 @@ public final class AppBuilderImpl: AppBuilder {
     /// Создать объект данного приложения.
     /// - Returns: объект приложения.
     public func build() -> App {
-        let mainWordListDependency = MainWordListDependencyImpl(
-            navigationController: UINavigationController(),
-            appConfig: buildConfig()
-        )
+        let navigationController = UINavigationController()
+        let appConfig = buildConfig()
 
         return AppImpl(
-            navigationController: mainWordListDependency.navigationController,
-            mainWordListBuilder: MainWordListBuilderImpl(dependency: mainWordListDependency)
+            navigationController: navigationController,
+            mainWordListBuilder: MainWordListBuilderImpl(
+                dependency: MainWordListDependencyImpl(
+                    navigationController: navigationController,
+                    appConfig: appConfig
+                )
+            ),
+            pushNotificationBuilder: PushNotificationBuilderImpl(
+                dependency: PushNotificationDependencyImpl(
+                    navigationController: navigationController,
+                    appConfig: appConfig
+                )
+            )
         )
     }
 

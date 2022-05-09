@@ -33,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C4EB709282BD09D00A72289 /* PersonalDictionaryDev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PersonalDictionaryDev.entitlements; sourceTree = "<group>"; };
 		0CB69D7227EDCD6E00970B50 /* DataTypes+Cuckoo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataTypes+Cuckoo.swift"; sourceTree = "<group>"; };
 		0CB69D7527EDCD6E00970B50 /* CoreWordListRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreWordListRepositoryTests.swift; sourceTree = "<group>"; };
 		0CB69D7727EDCD6E00970B50 /* LangRepositoryImplTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LangRepositoryImplTests.swift; sourceTree = "<group>"; };
@@ -148,6 +149,7 @@
 		0CBF5D6A27EDBF9E00F07448 /* PersonalDictionaryDev */ = {
 			isa = PBXGroup;
 			children = (
+				0C4EB709282BD09D00A72289 /* PersonalDictionaryDev.entitlements */,
 				0CBF5D6B27EDBF9F00F07448 /* AppDelegate.swift */,
 				0CBF5D6D27EDBF9F00F07448 /* SceneDelegate.swift */,
 				0CBF5D7427EDBFA200F07448 /* Assets.xcassets */,
@@ -538,6 +540,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PersonalDictionaryDev/PersonalDictionaryDev.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T96KB8H453;
@@ -566,6 +569,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PersonalDictionaryDev/PersonalDictionaryDev.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T96KB8H453;
