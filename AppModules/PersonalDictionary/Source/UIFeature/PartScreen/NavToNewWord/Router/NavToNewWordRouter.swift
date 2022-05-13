@@ -9,5 +9,5 @@
 protocol NavToNewWordRouter {
 
     /// Перейти на экран.
-    func navigateToNewWord()
+    func navigate()
 }

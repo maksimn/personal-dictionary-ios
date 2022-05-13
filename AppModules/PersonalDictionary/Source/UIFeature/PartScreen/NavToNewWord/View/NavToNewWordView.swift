@@ -33,7 +33,7 @@ final class NavToNewWordView: UIView {
 
     @objc
     private func navigateToNewWord() {
-        router.navigateToNewWord()
+        router.navigate()
     }
 
     private func initNewWordButton() {

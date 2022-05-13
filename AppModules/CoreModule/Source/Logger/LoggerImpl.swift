@@ -13,6 +13,12 @@ public final class LoggerImpl: Logger {
         self.isLoggingEnabled = isLoggingEnabled
     }
 
+    public func log(message: String) {
+        guard isLoggingEnabled else { return }
+
+        print("\n******************\n\(message)\n******************\n")
+    }
+
     public func networkRequestStart(_ requestName: String) {
         guard isLoggingEnabled else { return }
 

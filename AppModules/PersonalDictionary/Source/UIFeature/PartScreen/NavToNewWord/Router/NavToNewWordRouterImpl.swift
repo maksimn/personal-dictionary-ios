@@ -22,7 +22,7 @@ final class NavToNewWordRouterImpl: NavToNewWordRouter {
     }
 
     /// Перейти на экран поиска по словам в личном словаре.
-    func navigateToNewWord() {
+    func navigate() {
         let newWordViewController = newWordBuilder.build()
 
         newWordViewController.modalPresentationStyle = .overFullScreen

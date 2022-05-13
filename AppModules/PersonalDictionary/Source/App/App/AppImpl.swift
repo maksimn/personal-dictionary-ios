@@ -13,17 +13,22 @@ final class AppImpl: App {
     /// Получение корневого контроллера приложения
     private(set) var navigationController: UINavigationController?
 
+    private(set) var pushNotificationService: PushNotificationService
+
     /// Инициализатор:
     /// - Parameters:
     ///  - navigationController: корневой navigation controller приложения.
     ///  - mainWordListBuilder: билдер вложенной фичи "Главный список слов".
     init(navigationController: UINavigationController?,
-         mainWordListBuilder: MainWordListBuilder) {
+         mainWordListBuilder: MainWordListBuilder,
+         pushNotificationBuilder: PushNotificationBuilder) {
         let mainWordListViewController = mainWordListBuilder.build()
 
         navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
         navigationController?.setViewControllers([mainWordListViewController], animated: false)
 
         self.navigationController = navigationController
+
+        pushNotificationService = pushNotificationBuilder.build()
     }
 }
