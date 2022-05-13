@@ -5,39 +5,46 @@
 //  Created by Maxim Ivanov on 11.05.2022.
 //
 
-import UserNotifications
 import CoreModule
+import UIKit
+import UserNotifications
 
+/// Зависимости фичи "Пуш-уведомления в приложении".
 protocol PushNotificationDependency: BaseDependency { }
 
+/// Реализация билдера фичи "Пуш-уведомления в приложении".
 final class PushNotificationBuilderImpl: PushNotificationBuilder {
 
     private let appConfig: AppConfig
     private weak var navigationController: UINavigationController?
 
+    /// Инициализатор.
+    /// - Parameters:
+    ///  - dependency: зависимости фичи.
     init(dependency: PushNotificationDependency) {
         appConfig = dependency.appConfig
         navigationController = dependency.navigationController
     }
 
+    /// Метод билдера.
+    /// - Returns:
+    ///  -  объект службы для работы с пуш-уведомлениями.
     func build() -> PushNotificationService {
-        let langRepository = LangRepositoryImpl(
-            userDefaults: UserDefaults.standard,
-            data: appConfig.langData
-        )
-        let newWordBuilder = NewWordBuilderImpl(
-            bundle: appConfig.bundle,
-            langRepository: langRepository
-        )
+        let bundle = appConfig.bundle
+        let langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard, data: appConfig.langData)
 
         return PushNotificationServiceImpl(
             userNotificationCenter: UNUserNotificationCenter.current(),
-            datetimeCalculator: NextHHMMDatetimeCalculator(),
+            application: UIApplication.shared,
+            pnTimeCalculator: PNTimeCalculatorImpl(hh: 19, mm: 30, calendar: Calendar.current),
+            pnContent: PNContentImpl(
+                title: bundle.moduleLocalizedString("Advice"),
+                body: bundle.moduleLocalizedString("It's time to add a new word to the dictionary.")
+            ),
             navToNewWordRouter: NavToNewWordRouterImpl(
                 navigationController: navigationController,
-                newWordBuilder: newWordBuilder
+                newWordBuilder: NewWordBuilderImpl(bundle: bundle, langRepository: langRepository)
             ),
-            bundle: appConfig.bundle,
             logger: LoggerImpl(isLoggingEnabled: appConfig.isLoggingEnabled)
         )
     }

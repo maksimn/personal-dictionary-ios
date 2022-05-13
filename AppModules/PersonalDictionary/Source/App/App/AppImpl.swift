@@ -13,12 +13,14 @@ final class AppImpl: App {
     /// Получение корневого контроллера приложения
     private(set) var navigationController: UINavigationController?
 
+    /// Служба для работы с пуш-уведомлениями.
     private(set) var pushNotificationService: PushNotificationService
 
     /// Инициализатор:
     /// - Parameters:
     ///  - navigationController: корневой navigation controller приложения.
     ///  - mainWordListBuilder: билдер вложенной фичи "Главный список слов".
+    ///  - pushNotificationBuilder: билдер вложенной фичи "Пуш-уведомления в приложении".
     init(navigationController: UINavigationController?,
          mainWordListBuilder: MainWordListBuilder,
          pushNotificationBuilder: PushNotificationBuilder) {

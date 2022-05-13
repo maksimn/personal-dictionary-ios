@@ -23,7 +23,7 @@ private struct MainWordListDependencyImpl: MainWordListDependency {
     let appConfig: AppConfig
 }
 
-/// Зависимости вложенной фичи "".
+/// Зависимости вложенной фичи "Пуш-уведомления".
 private struct PushNotificationDependencyImpl: PushNotificationDependency {
 
     let navigationController: UINavigationController?
