@@ -6,60 +6,43 @@
 //
 
 import CoreModule
+import UIKit
 import UserNotifications
 
+/// Реализация службы для работы с пуш-уведомлениями.
 final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUserNotificationCenterDelegate {
 
     private let userNotificationCenter: UNUserNotificationCenter
-    private let datetimeCalculator: DatetimeCalculator
+    private let application: UIApplication
+    private let pnTimeCalculator: PNTimeCalculator
+    private let pnContent: PNContent
     private let navToNewWordRouter: NavToNewWordRouter
-    private let bundle: Bundle
     private let logger: Logger
 
     init(userNotificationCenter: UNUserNotificationCenter,
-         datetimeCalculator: DatetimeCalculator,
+         application: UIApplication,
+         pnTimeCalculator: PNTimeCalculator,
+         pnContent: PNContent,
          navToNewWordRouter: NavToNewWordRouter,
-         bundle: Bundle,
          logger: Logger) {
         self.userNotificationCenter = userNotificationCenter
-        self.datetimeCalculator = datetimeCalculator
+        self.application = application
+        self.pnTimeCalculator = pnTimeCalculator
+        self.pnContent = pnContent
         self.navToNewWordRouter = navToNewWordRouter
-        self.bundle = bundle
         self.logger = logger
         super.init()
         requestAuthorization()
     }
 
-    private func requestAuthorization() {
-        userNotificationCenter.delegate = self
-        userNotificationCenter.requestAuthorization(
-            options: [.alert, .sound, .badge],
-            completionHandler: { [weak self] granted, error in
-                if !granted, let error = error {
-                    self?.logger.log(error: error)
-                } else {
-                    self?.logger.log(message: "PushNotificationService requestAuthorization SUCCESS.")
-                }
-            }
-        )
-    }
-
+    /// Поставить показ уведомления в расписание.
+    /// Метод должен быть вызван в момент, когда приложение уходит с экрана (становится неактивным).
     public func schedule() {
-        let notificationContent = UNMutableNotificationContent()
-
-        notificationContent.title = bundle.moduleLocalizedString("Advice")
-        notificationContent.body = bundle.moduleLocalizedString("It's time to add a new word to the dictionary.")
-        notificationContent.sound = .default
-
-        let triggerDate = Calendar.current.dateComponents(
-            Set([.year, .month, .day, .hour, .minute, .second]),
-            from: datetimeCalculator.calculate()
-        )
         let notificationRequest = UNNotificationRequest(
             identifier: "PersonalDictionaryNotificationId",
-            content: notificationContent,
+            content: pnContent.get,
             trigger: UNCalendarNotificationTrigger(
-                dateMatching: triggerDate,
+                dateMatching: pnTimeCalculator.calculate(forDate: Date()),
                 repeats: false
             )
         )
@@ -73,10 +56,12 @@ final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUs
         })
     }
 
+    // MARK: - UNUserNotificationCenterDelegate
+
     func userNotificationCenter(_ center: UNUserNotificationCenter,
             willPresent notification: UNNotification,
             withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        if UIApplication.shared.applicationState == .background {
+        if application.applicationState == .background {
             completionHandler([.banner, .sound, .badge])
         }
     }
@@ -86,5 +71,21 @@ final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUs
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         navToNewWordRouter.navigate()
         completionHandler()
+    }
+
+    // MARK: - Private
+
+    private func requestAuthorization() {
+        userNotificationCenter.delegate = self
+        userNotificationCenter.requestAuthorization(
+            options: [.alert, .sound, .badge],
+            completionHandler: { [weak self] granted, error in
+                if !granted, let error = error {
+                    self?.logger.log(error: error)
+                } else {
+                    self?.logger.log(message: "PushNotificationService requestAuthorization SUCCESS.")
+                }
+            }
+        )
     }
 }
