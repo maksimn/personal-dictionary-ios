@@ -15,16 +15,8 @@ protocol BaseDependency {
     var appConfig: AppConfig { get }
 }
 
-/// Зависимости вложенной фичи "Главный список слов".
-private struct MainWordListDependencyImpl: MainWordListDependency {
-
-    let navigationController: UINavigationController?
-
-    let appConfig: AppConfig
-}
-
-/// Зависимости вложенной фичи "Пуш-уведомления".
-private struct PushNotificationDependencyImpl: PushNotificationDependency {
+/// Зависимости вложенных фич "Главный список слов", "Пуш-уведомления".
+private struct BaseDependencyImpl: MainWordListDependency, PushNotificationDependency {
 
     let navigationController: UINavigationController?
 
@@ -40,23 +32,15 @@ public final class AppBuilderImpl: AppBuilder {
     /// Создать объект данного приложения.
     /// - Returns: объект приложения.
     public func build() -> App {
-        let navigationController = UINavigationController()
-        let appConfig = buildConfig()
+        let baseDependency = BaseDependencyImpl(
+            navigationController: UINavigationController(),
+            appConfig: buildConfig()
+        )
 
         return AppImpl(
-            navigationController: navigationController,
-            mainWordListBuilder: MainWordListBuilderImpl(
-                dependency: MainWordListDependencyImpl(
-                    navigationController: navigationController,
-                    appConfig: appConfig
-                )
-            ),
-            pushNotificationBuilder: PushNotificationBuilderImpl(
-                dependency: PushNotificationDependencyImpl(
-                    navigationController: navigationController,
-                    appConfig: appConfig
-                )
-            )
+            navigationController: baseDependency.navigationController,
+            mainWordListBuilder: MainWordListBuilderImpl(dependency: baseDependency),
+            pushNotificationBuilder: PushNotificationBuilderImpl(dependency: baseDependency)
         )
     }
 
@@ -77,7 +61,8 @@ public final class AppBuilderImpl: AppBuilder {
             bundle: bundle,
             langData: langData,
             ponsApiSecret: "",
-            isLoggingEnabled: true
+            isLoggingEnabled: true,
+            everydayPNTime: EverydayPNTime(hh: 19, mm: 30)
         )
     }
 }

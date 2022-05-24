@@ -1,5 +1,5 @@
 //
-//  PNTimeCalculatorImpl.swift
+//  EverydayPNTimeCalculator.swift
 //  PersonalDictionary
 //
 //  Created by Maxim Ivanov on 13.05.2022.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-/// Реализация типа для вычисления времени возникновения пуш-уведомления.
-final class PNTimeCalculatorImpl: PNTimeCalculator {
+/// Реализация типа для вычисления времени возникновения ежедневного пуш-уведомления.
+final class EverydayPNTimeCalculator: PNTimeCalculator {
 
     private let hh: Int
     private let mm: Int
