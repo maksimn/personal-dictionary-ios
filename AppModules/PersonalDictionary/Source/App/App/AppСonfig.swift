@@ -19,4 +19,17 @@ struct AppConfig {
 
     /// Флаг вкл/выкл логирование в приложении
     let isLoggingEnabled: Bool
+
+    /// Время ежедневного пуш-уведомления
+    let everydayPNTime: EverydayPNTime
+}
+
+/// Время ежедневного пуш-уведомления
+struct EverydayPNTime {
+
+    /// Час
+    let hh: Int
+
+    /// Минуты
+    let mm: Int
 }

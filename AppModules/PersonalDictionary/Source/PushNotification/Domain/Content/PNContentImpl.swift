@@ -10,26 +10,20 @@ import UserNotifications
 /// Контент для пуш-уведомления.
 final class PNContentImpl: PNContent {
 
-    private let title: String
-    private let body: String
+    private let notificationContent = UNMutableNotificationContent()
 
     /// Инициализатор.
     /// - Parameters:
     ///  - title: заголовок уведомления.
     ///  - body: тело уведомления.
     init(title: String, body: String) {
-        self.title = title
-        self.body = body
+        notificationContent.title = title
+        notificationContent.body = body
+        notificationContent.sound = .default
     }
 
     /// Получить объект контента для системного пуш-уведомления.
     var get: UNNotificationContent {
-        let notificationContent = UNMutableNotificationContent()
-
-        notificationContent.title = title
-        notificationContent.body = body
-        notificationContent.sound = .default
-
-        return notificationContent
+        notificationContent
     }
 }

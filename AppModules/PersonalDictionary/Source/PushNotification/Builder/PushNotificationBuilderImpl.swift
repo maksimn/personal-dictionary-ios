@@ -32,11 +32,16 @@ final class PushNotificationBuilderImpl: PushNotificationBuilder {
     func build() -> PushNotificationService {
         let bundle = appConfig.bundle
         let langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard, data: appConfig.langData)
+        let everydayPNTime = appConfig.everydayPNTime
 
         return PushNotificationServiceImpl(
             userNotificationCenter: UNUserNotificationCenter.current(),
             application: UIApplication.shared,
-            pnTimeCalculator: PNTimeCalculatorImpl(hh: 19, mm: 30, calendar: Calendar.current),
+            pnTimeCalculator: EverydayPNTimeCalculator(
+                hh: everydayPNTime.hh,
+                mm: everydayPNTime.mm,
+                calendar: Calendar.current
+            ),
             pnContent: PNContentImpl(
                 title: bundle.moduleLocalizedString("Advice"),
                 body: bundle.moduleLocalizedString("It's time to add a new word to the dictionary.")
