@@ -68,6 +68,10 @@ class MOTodoListCache: TodoListCache {
         }
     }
 
+    var completedItemCount: Int {
+        todoList.filter({ $0.isCompleted }).count
+    }
+
     var tombstones: [Tombstone] {
         let fetchRequest: NSFetchRequest<TombstoneMO> = TombstoneMO.fetchRequest()
 
