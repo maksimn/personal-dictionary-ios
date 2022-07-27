@@ -91,9 +91,7 @@ class TodoListPresenterOne: TodoListPresenter {
     }
 
     private func viewUpdateToggleAndCompletedItemCounter() {
-        let completedTodoCount = model.completedTodoCount
-        view.updateCompletedTodoCountView(completedTodoCount)
-        view.setToggleColor(completedTodoCount == 0)
+        view.setToggleColor(model.isCompletedItemsEmpty)
         view.setToggleTitle(for: model.areCompletedTodosVisible)
     }
 }

@@ -16,3 +16,5 @@ protocol DeletedTodoItemSubscriber {
 
     var deletedTodoItem: Observable<TodoItem> { get }
 }
+
+protocol DeletedTodoItemStream: DeletedTodoItemPublisher, DeletedTodoItemSubscriber { }

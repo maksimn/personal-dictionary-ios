@@ -15,6 +15,7 @@ class TodoListServiceOne: TodoListService {
     private let logger: Logger
     private let networking: NetworkingService
     private let сounter: HttpRequestCounter
+    private let completedItemCountPublisher: CompletedItemCountPublisher
 
     private static let minDelay: Double = 2
     private static let maxDelay: Double = 120
@@ -25,11 +26,14 @@ class TodoListServiceOne: TodoListService {
     init(cache: TodoListCache,
          logger: Logger,
          networking: NetworkingService,
-         сounter: HttpRequestCounter) {
+         сounter: HttpRequestCounter,
+         completedItemCountPublisher: CompletedItemCountPublisher
+    ) {
         self.cache = cache
         self.logger = logger
         self.networking = networking
         self.сounter = сounter
+        self.completedItemCountPublisher = completedItemCountPublisher
     }
 
     var cachedTodoList: [TodoItem] {
@@ -38,6 +42,10 @@ class TodoListServiceOne: TodoListService {
 
     var httpRequestCounter: HttpRequestCounter {
         сounter
+    }
+
+    var isCompletedItemsEmpty: Bool {
+        cache.completedItemCount == 0
     }
 
     func fetchRemoteTodoList(_ completion: @escaping (Error?) -> Void) {
@@ -146,8 +154,9 @@ class TodoListServiceOne: TodoListService {
 
                 }
                 self?.currentDelay = TodoListServiceOne.minDelay
-                self?.cache.replaceWith(todoList) { error in
+                self?.cache.replaceWith(todoList) { [weak self] error in
                     NotificationCenter.default.post(name: .mergeTodoListWithRemoteSuccess, object: nil)
+                    self?.completedItemCountPublisher.send(count: self?.cache.completedItemCount ?? 0)
                     completion(error)
                 }
             } catch {

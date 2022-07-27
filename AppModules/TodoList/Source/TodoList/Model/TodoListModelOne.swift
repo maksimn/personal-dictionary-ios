@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 20.06.2021.
 //
 
+import RxSwift
 import UIKit
 
 // Technical debt.
@@ -23,12 +24,23 @@ class TodoListModelOne: TodoListModel {
 
     private(set) var areCompletedTodosVisible: Bool
 
-    init(_ service: TodoListService? = nil,
-         allTodoList: [TodoItem] = [],
-         areCompletedTodosVisible: Bool = false) {
+    private let disposeBag = DisposeBag()
+
+    private let updatedTodoItemStream: UpdatedTodoItemStream?
+    private let deletedTodoItemStream: DeletedTodoItemStream?
+
+    init(
+        service: TodoListService? = nil,
+        allTodoList: [TodoItem] = [],
+        areCompletedTodosVisible: Bool = false,
+        updatedTodoItemStream: UpdatedTodoItemStream?,
+        deletedTodoItemStream: DeletedTodoItemStream?
+    ) {
         self.service = service
         self.allTodoList = allTodoList
         self.areCompletedTodosVisible = areCompletedTodosVisible
+        self.updatedTodoItemStream = updatedTodoItemStream
+        self.deletedTodoItemStream = deletedTodoItemStream
         self.addNotificationObservers()
     }
 
@@ -60,6 +72,7 @@ class TodoListModelOne: TodoListModel {
 
     func remove(_ todoItem: TodoItem, _ position: Int) {
         removeInMemory(todoItem, position)
+        deletedTodoItemStream?.send(todoItem)
         service?.removeRemote(todoItem) { _ in
 
         }
@@ -77,26 +90,11 @@ class TodoListModelOne: TodoListModel {
         presenter?.viewAddNewTodoItem()
     }
 
-    func updateInMemory(_ todoItem: TodoItem) {
-        if let index = allTodoList.firstIndex(where: { $0.id == todoItem.id}) {
-            allTodoList[index] = todoItem
-            let todoList = self.todoList
-            if let position = todoList.firstIndex(where: { $0.id == todoItem.id}) {
-                self.presenter?.viewUpdateTodoItemAt(position)
-            }
-        }
-    }
-
-    func removeInMemory(_ todoItem: TodoItem, _ position: Int) {
-        if let index = allTodoList.firstIndex(where: { $0.id == todoItem.id }) {
-            allTodoList.remove(at: index)
-            self.presenter?.viewRemoveTodoItemAt(position)
-        }
-    }
-
     func toggleCompletionForTodoAt(_ position: Int) {
         let item = todoList[position]
         let newItem = item.update(isCompleted: !item.isCompleted)
+
+        updatedTodoItemStream?.send(UpdatedTodoItemData(newValue: newItem, oldValue: item))
 
         if let index = allTodoList.firstIndex(where: { $0.id == item.id }) {
             allTodoList[index] = newItem
@@ -127,5 +125,61 @@ class TodoListModelOne: TodoListModel {
         } else {
             presenter?.viewHideCompletedTodos()
         }
+    }
+
+    var isCompletedItemsEmpty: Bool {
+        service?.isCompletedItemsEmpty ?? true
+    }
+
+    private func onUpdate(data: UpdatedTodoItemData) {
+        updateInMemory(data.newValue)
+    }
+
+    private func onDeleted(todoItem: TodoItem) {
+        if let position = todoList.firstIndex(where: { $0.id == todoItem.id }) {
+            removeInMemory(todoItem, position)
+        }
+    }
+
+    private func updateInMemory(_ todoItem: TodoItem) {
+        if let index = allTodoList.firstIndex(where: { $0.id == todoItem.id}) {
+            allTodoList[index] = todoItem
+            let todoList = self.todoList
+            if let position = todoList.firstIndex(where: { $0.id == todoItem.id}) {
+                self.presenter?.viewUpdateTodoItemAt(position)
+            }
+        }
+    }
+
+    private func removeInMemory(_ todoItem: TodoItem, _ position: Int) {
+        if let index = allTodoList.firstIndex(where: { $0.id == todoItem.id }) {
+            allTodoList.remove(at: index)
+            self.presenter?.viewRemoveTodoItemAt(position)
+        }
+    }
+
+    private func addNotificationObservers() {
+        let ncd = NotificationCenter.default
+
+        ncd.addObserver(self, selector: #selector(onCreateTodoItemEvent), name: .createTodoItem, object: nil)
+        ncd.addObserver(self, selector: #selector(onMergeTodoListSuccess), name: .mergeTodoListWithRemoteSuccess,
+                        object: nil)
+        updatedTodoItemStream?.updatedTodoItemData
+            .subscribe(onNext: { [weak self] in self?.onUpdate(data: $0) })
+            .disposed(by: disposeBag)
+        deletedTodoItemStream?.deletedTodoItem
+            .subscribe(onNext: { [weak self] in self?.onDeleted(todoItem: $0) })
+            .disposed(by: disposeBag)
+    }
+
+    @objc func onCreateTodoItemEvent(_ notification: Notification) {
+        if let todoItem = notification.userInfo?[Notification.Name.createTodoItem] as? TodoItem {
+            addInMemory(todoItem)
+        }
+    }
+
+    @objc func onMergeTodoListSuccess(_ notification: Notification) {
+        loadTodoListFromCache()
+        presenter?.viewUpdate()
     }
 }

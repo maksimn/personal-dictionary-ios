@@ -14,7 +14,6 @@ class TodoListViewOne: UIViewController {
     var presenter: TodoListPresenter?
 
     let completedTodoVisibilityToggle = UIButton()
-    let completedTodoCountLabel = UILabel()
     let tableView = UITableView()
     let newTodoItemButton = UIButton()
     var tableViewBottomConstraint: NSLayoutConstraint?
@@ -30,11 +29,15 @@ class TodoListViewOne: UIViewController {
 
     let networkIndicatorBuilder: NetworkIndicatorBuilder
 
-    init(networkIndicatorBuilder: NetworkIndicatorBuilder) {
+    init(
+        networkIndicatorBuilder: NetworkIndicatorBuilder,
+        completedItemCounterBuilder: CompletedItemCounterBuilder
+    ) {
         self.networkIndicatorBuilder = networkIndicatorBuilder
         super.init(nibName: nil, bundle: nil)
         navigationItem.title = Strings.myTodos
         initViews()
+        addFeature(completedItemCounterBuilder)
         initKeyboardEventsHandle()
     }
 
@@ -46,6 +49,14 @@ class TodoListViewOne: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.sizeToFit()
         presenter?.loadTodoList()
+    }
+
+    private func addFeature(_ completedItemCounterBuilder: CompletedItemCounterBuilder) {
+        let completedItemCounterView = completedItemCounterBuilder.build()
+
+        view.addSubview(completedItemCounterView)
+        completedItemCounterView.constraints((view.safeAreaLayoutGuide.topAnchor, 16), 20,
+                                             (view.safeAreaLayoutGuide.leadingAnchor, 32), (nil, 0))
     }
 }
 
@@ -80,10 +91,6 @@ extension TodoListViewOne: TodoListView {
             presenter?.viewUpdateDataInList()
             self.tableView.deleteRows(at: indexPaths, with: .automatic)
         }, completion: nil)
-    }
-
-    func updateCompletedTodoCountView(_ count: Int) {
-        completedTodoCountLabel.text = "\(Strings.completed) \(count)"
     }
 
     func setToggleColor(_ isCompletedTodoListEmpty: Bool) {

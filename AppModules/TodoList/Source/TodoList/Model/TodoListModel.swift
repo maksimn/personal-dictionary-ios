@@ -13,7 +13,7 @@ protocol TodoListModel {
 
     var todoList: [TodoItem] { get }
 
-    var completedTodoCount: Int { get }
+    var isCompletedItemsEmpty: Bool { get }
 
     var areCompletedTodosVisible: Bool { get }
 

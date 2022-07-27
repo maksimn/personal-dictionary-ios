@@ -19,8 +19,9 @@ final class CompletedItemCounterBuilderImp: CompletedItemCounterBuilder {
                 viewModelLazy
             },
             initialCount: initialCount,
-            updatedTodoItemSubscriber: UpdatedTodoItemStreamImp(),
-            deletedTodoItemSubscriber: DeletedTodoItemStreamImp()
+            completedItemCountSubscriber: CompletedItemCountStream.instance,
+            updatedTodoItemSubscriber: UpdatedTodoItemStreamImp.instance,
+            deletedTodoItemSubscriber: DeletedTodoItemStreamImp.instance
         )
         let viewModel = CompletedItemCounterViewModelImp(model: model)
         let view = CompletedItemCounterView(

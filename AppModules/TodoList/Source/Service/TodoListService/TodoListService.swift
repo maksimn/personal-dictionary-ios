@@ -11,6 +11,8 @@ protocol TodoListService {
 
     var httpRequestCounter: HttpRequestCounter { get }
 
+    var isCompletedItemsEmpty: Bool { get }
+
     func fetchRemoteTodoList(_ completion: @escaping (Error?) -> Void)
 
     func createRemote(_ todoItem: TodoItem, _ completion: @escaping (Error?) -> Void)

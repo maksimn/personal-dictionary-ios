@@ -28,11 +28,15 @@ final class CompletedItemCounterModelImp: CompletedItemCounterModel {
     init(
         viewModelClosure: @escaping () -> CompletedItemCounterViewModel?,
         initialCount: Int,
+        completedItemCountSubscriber: CompletedItemCountSubscriber,
         updatedTodoItemSubscriber: UpdatedTodoItemSubscriber,
         deletedTodoItemSubscriber: DeletedTodoItemSubscriber
     ) {
         self.viewModelClosure = viewModelClosure
         count = initialCount
+        completedItemCountSubscriber.count
+            .subscribe(onNext: { [weak self] count in self?.count = count })
+            .disposed(by: disposeBag)
         updatedTodoItemSubscriber.updatedTodoItemData
             .subscribe(onNext: { [weak self] in self?.onUpdate(data: $0) })
             .disposed(by: disposeBag)

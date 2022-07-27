@@ -24,10 +24,19 @@ final class TodoEditorInteractorImpl: TodoEditorInteractor {
     private var mode: TodoEditorMode
 
     private let service: TodoListService
+    private let updatedTodoItemPublisher: UpdatedTodoItemPublisher?
+    private let deletedTodoItemPublisher: DeletedTodoItemPublisher?
 
-    init(_ todoItem: TodoItem?, _ service: TodoListService) {
+    init(
+        todoItem: TodoItem?,
+        service: TodoListService,
+        updatedTodoItemPublisher: UpdatedTodoItemPublisher?,
+        deletedTodoItemPublisher: DeletedTodoItemPublisher?
+    ) {
         self.service = service
         self.todoItem = todoItem
+        self.deletedTodoItemPublisher = deletedTodoItemPublisher
+        self.updatedTodoItemPublisher = updatedTodoItemPublisher
         mode = todoItem == nil ? .creatingNew : .editingExisting
     }
 
@@ -43,8 +52,7 @@ final class TodoEditorInteractorImpl: TodoEditorInteractor {
         guard let todoItem = todoItem else { return }
         self.mode = .creatingNew
         self.todoItem = nil
-        NotificationCenter.default.post(name: .removeTodoItem, object: self,
-                                        userInfo: [Notification.Name.removeTodoItem: todoItem])
+        deletedTodoItemPublisher?.send(todoItem)
         service.removeRemote(todoItem) { _ in
 
         }
@@ -68,8 +76,7 @@ final class TodoEditorInteractorImpl: TodoEditorInteractor {
 
         self.todoItem = updatedTodoItem
         self.mode = .editingExisting
-        NotificationCenter.default.post(name: .updateTodoItem, object: self,
-                                        userInfo: [Notification.Name.updateTodoItem: updatedTodoItem])
+        updatedTodoItemPublisher?.send(UpdatedTodoItemData(newValue: updatedTodoItem, oldValue: todoItem))
         service.updateRemote(updatedTodoItem) { _ in
 
         }
