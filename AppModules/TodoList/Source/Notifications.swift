@@ -10,8 +10,6 @@ import Foundation
 extension Notification.Name {
 
     static let createTodoItem = Notification.Name("createTodoItem")
-    static let updateTodoItem = Notification.Name("updateTodoItem")
-    static let removeTodoItem = Notification.Name("removeTodoItem")
 
     static let mergeTodoListWithRemoteSuccess = Notification.Name("mergeTodoListWithRemoteSuccess")
 

@@ -13,7 +13,6 @@ extension TodoListViewOne {
         view.backgroundColor = Colors.backgroundLightColor
         addSubviews()
         initCompletedTodoVisibilityToggle()
-        initCompletedTodoCountLabel()
         initTableView()
         initNewTodoItemButton()
         setConstraints()
@@ -30,15 +29,12 @@ extension TodoListViewOne {
     func addSubviews() {
         view.addSubview(tableView)
         view.addSubview(completedTodoVisibilityToggle)
-        view.addSubview(completedTodoCountLabel)
         view.addSubview(newTodoItemButton)
     }
 
     func setConstraints() {
         completedTodoVisibilityToggle.constraints((view.safeAreaLayoutGuide.topAnchor, 16), 20, (nil, 0),
                                                   (view.safeAreaLayoutGuide.trailingAnchor, -32))
-        completedTodoCountLabel.constraints((view.safeAreaLayoutGuide.topAnchor, 16), 20,
-                                            (view.safeAreaLayoutGuide.leadingAnchor, 32), (nil, 0))
         tableViewBottomConstraint = tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
                                                                       constant: 0)
         NSLayoutConstraint.activate([
@@ -71,13 +67,6 @@ extension TodoListViewOne {
         completedTodoVisibilityToggle.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         completedTodoVisibilityToggle.setTitle(Strings.show, for: .normal)
         completedTodoVisibilityToggle.setTitleColor(.systemGray, for: .normal)
-    }
-
-    func initCompletedTodoCountLabel() {
-        completedTodoCountLabel.textColor = .gray
-        completedTodoCountLabel.font = UIFont.systemFont(ofSize: 16)
-        completedTodoCountLabel.numberOfLines = 1
-        completedTodoCountLabel.isUserInteractionEnabled = false
     }
 
     func initTableView() {

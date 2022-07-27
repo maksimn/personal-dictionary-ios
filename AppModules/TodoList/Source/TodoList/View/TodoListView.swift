@@ -25,8 +25,6 @@ protocol TodoListView: AnyObject {
 
     func hideCompletedTodos()
 
-    func updateCompletedTodoCountView(_ count: Int)
-
     func addNewRowToList()
 
     func updateRowAt(_ position: Int)

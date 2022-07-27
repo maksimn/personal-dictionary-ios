@@ -22,10 +22,12 @@ final class TodoListServiceGraphOne: TodoListServiceGraph {
 
         todoListCache.setLogger(logger)
 
-        service = TodoListServiceOne(cache: todoListCache,
-                                     logger: logger,
-                                     networking: networkingService,
-                                     сounter: httpRequestCounter)
-
+        service = TodoListServiceOne(
+            cache: todoListCache,
+            logger: logger,
+            networking: networkingService,
+            сounter: httpRequestCounter,
+            completedItemCountPublisher: CompletedItemCountStream.instance
+        )
     }
 }

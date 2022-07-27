@@ -14,7 +14,12 @@ final class TodoEditorVIPERImpl: TodoEditorVIPER {
          service: TodoListService,
          viewParams: TodoEditorViewParams,
          networkIndicatorBuilder: NetworkIndicatorBuilder) {
-        var interactor: TodoEditorInteractor = TodoEditorInteractorImpl(todoItem, service)
+        var interactor: TodoEditorInteractor = TodoEditorInteractorImpl(
+            todoItem: todoItem,
+            service: service,
+            updatedTodoItemPublisher: UpdatedTodoItemStreamImp.instance,
+            deletedTodoItemPublisher: DeletedTodoItemStreamImp.instance
+        )
         view = TodoEditorViewController(params: viewParams,
                                         networkIndicatorBuilder: networkIndicatorBuilder)
         let presenter = TodoEditorPresenterImpl(model: interactor, view: view)

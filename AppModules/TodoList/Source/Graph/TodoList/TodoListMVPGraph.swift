@@ -22,8 +22,15 @@ final class TodoListMVPGraph: TodoListMVP {
         let todoEditorBuilder = TodoEditorBuilderImpl(service: service,
                                                       appViewParams: appViewParams)
 
-        view = TodoListViewOne(networkIndicatorBuilder: networkIndicatorBuilder)
-        var model: TodoListModel = TodoListModelOne(service)
+        view = TodoListViewOne(
+            networkIndicatorBuilder: networkIndicatorBuilder,
+            completedItemCounterBuilder: CompletedItemCounterBuilderImp()
+        )
+        var model: TodoListModel = TodoListModelOne(
+            service: service,
+            updatedTodoItemStream: UpdatedTodoItemStreamImp.instance,
+            deletedTodoItemStream: DeletedTodoItemStreamImp.instance
+        )
         let presenter: TodoListPresenter = TodoListPresenterOne(model: model,
                                                                 view: view,
                                                                 todoEditorBuilder: todoEditorBuilder)

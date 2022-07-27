@@ -21,3 +21,5 @@ protocol UpdatedTodoItemSubscriber {
 
     var updatedTodoItemData: Observable<UpdatedTodoItemData> { get }
 }
+
+protocol UpdatedTodoItemStream: UpdatedTodoItemPublisher, UpdatedTodoItemSubscriber { }
