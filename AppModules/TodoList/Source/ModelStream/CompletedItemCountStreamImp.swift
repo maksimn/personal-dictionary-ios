@@ -8,13 +8,13 @@
 import RxCocoa
 import RxSwift
 
-final class CompletedItemCountStream: CompletedItemCountPublisher, CompletedItemCountSubscriber {
+final class CompletedItemCountStreamImp: CompletedItemCountStream {
 
     private let publishRelay = PublishRelay<Int>()
 
     private init() {}
 
-    static let instance = CompletedItemCountStream()
+    static let instance = CompletedItemCountStreamImp()
 
     func send(count: Int){
         publishRelay.accept(count)

@@ -23,18 +23,21 @@ final class CompletedItemCounterModelImp: CompletedItemCounterModel {
 
     private weak var viewModel: CompletedItemCounterViewModel?
 
+    private let completedItemCountStream: CompletedItemCountStream
+
     private let disposeBag = DisposeBag()
 
     init(
         viewModelClosure: @escaping () -> CompletedItemCounterViewModel?,
         initialCount: Int,
-        completedItemCountSubscriber: CompletedItemCountSubscriber,
+        completedItemCountStream: CompletedItemCountStream,
         updatedTodoItemSubscriber: UpdatedTodoItemSubscriber,
         deletedTodoItemSubscriber: DeletedTodoItemSubscriber
     ) {
         self.viewModelClosure = viewModelClosure
         count = initialCount
-        completedItemCountSubscriber.count
+        self.completedItemCountStream = completedItemCountStream
+        completedItemCountStream.count
             .subscribe(onNext: { [weak self] count in self?.count = count })
             .disposed(by: disposeBag)
         updatedTodoItemSubscriber.updatedTodoItemData
@@ -48,14 +51,17 @@ final class CompletedItemCounterModelImp: CompletedItemCounterModel {
     private func onUpdate(data: UpdatedTodoItemData) {
         if !data.oldValue.isCompleted && data.newValue.isCompleted {
             count += 1
+            completedItemCountStream.send(count: count)
         } else if count > 0 && data.oldValue.isCompleted && !data.newValue.isCompleted {
             count -= 1
+            completedItemCountStream.send(count: count)
         }
     }
 
     private func onDeleted(todoItem: TodoItem) {
         if count > 0 && todoItem.isCompleted {
             count -= 1
+            completedItemCountStream.send(count: count)
         }
     }
 }
