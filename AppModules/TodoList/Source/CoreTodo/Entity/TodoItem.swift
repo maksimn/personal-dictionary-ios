@@ -13,12 +13,12 @@ enum TodoItemPriority: String, Codable {
     case low
 }
 
-struct TodoItem: Equatable, Codable {
+struct TodoItem: Equatable, Codable, Hashable {
 
     let id: String
     let text: String
     let priority: TodoItemPriority
-    let deadline: Date?
+    var deadline: Date?
     let isCompleted: Bool
     let createdAt: Int
     let updatedAt: Int
@@ -45,14 +45,13 @@ struct TodoItem: Equatable, Codable {
 
     func update(text: String? = nil,
                        priority: TodoItemPriority? = nil,
-                       deadline: Date? = nil,
                        isCompleted: Bool? = nil,
                        updatedAt: Int = Date().integer,
                        isDirty: Bool? = nil) -> TodoItem {
         TodoItem(id: self.id,
                  text: text ?? self.text,
                  priority: priority ?? self.priority,
-                 deadline: deadline ?? self.deadline,
+                 deadline: self.deadline,
                  isCompleted: isCompleted ?? self.isCompleted,
                  createdAt: self.createdAt,
                  updatedAt: updatedAt,
@@ -68,5 +67,9 @@ struct TodoItem: Equatable, Codable {
             lhs.createdAt == rhs.createdAt &&
             lhs.updatedAt == rhs.updatedAt &&
             lhs.isDirty == rhs.isDirty
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

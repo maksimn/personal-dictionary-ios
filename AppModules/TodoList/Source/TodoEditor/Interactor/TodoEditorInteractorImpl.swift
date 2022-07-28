@@ -72,8 +72,9 @@ final class TodoEditorInteractorImpl: TodoEditorInteractor {
     private func updateTodoItem(_ data: TodoEditorUserInput) {
         guard let todoItem = todoItem else { return }
 
-        let updatedTodoItem = todoItem.update(text: data.text, priority: data.priority, deadline: data.deadline)
+        var updatedTodoItem = todoItem.update(text: data.text, priority: data.priority)
 
+        updatedTodoItem.deadline = data.deadline
         self.todoItem = updatedTodoItem
         self.mode = .editingExisting
         updatedTodoItemPublisher?.send(UpdatedTodoItemData(newValue: updatedTodoItem, oldValue: todoItem))
