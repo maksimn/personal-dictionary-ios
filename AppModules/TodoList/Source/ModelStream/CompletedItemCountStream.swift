@@ -16,3 +16,5 @@ protocol CompletedItemCountSubscriber {
 
     var count: Observable<Int> { get }
 }
+
+protocol CompletedItemCountStream: CompletedItemCountPublisher, CompletedItemCountSubscriber { }

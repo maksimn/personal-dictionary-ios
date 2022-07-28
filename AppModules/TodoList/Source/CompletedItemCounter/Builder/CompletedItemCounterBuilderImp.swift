@@ -15,11 +15,9 @@ final class CompletedItemCounterBuilderImp: CompletedItemCounterBuilder {
         weak var viewModelLazy: CompletedItemCounterViewModel?
 
         let model = CompletedItemCounterModelImp(
-            viewModelClosure: {
-                viewModelLazy
-            },
+            viewModelClosure: { viewModelLazy },
             initialCount: initialCount,
-            completedItemCountSubscriber: CompletedItemCountStream.instance,
+            completedItemCountStream: CompletedItemCountStreamImp.instance,
             updatedTodoItemSubscriber: UpdatedTodoItemStreamImp.instance,
             deletedTodoItemSubscriber: DeletedTodoItemStreamImp.instance
         )
