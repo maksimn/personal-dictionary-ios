@@ -39,7 +39,7 @@ final class ItemListModelImp: ItemListModel {
         let item = items[position]
         let newItem = item.update(isCompleted: !item.isCompleted)
 
-        delegate?.shouldUpdate(data: UpdatedTodoItemData(newValue: newItem, oldValue: item))
+        delegate?.shouldUpdate(data: UpdatedTodoItemData(newValue: newItem, oldValue: item), index: position)
     }
 
     func remove(at position: Int) {
@@ -47,6 +47,6 @@ final class ItemListModelImp: ItemListModel {
 
         let item = items[position]
 
-        delegate?.shouldDelete(todoItem: item)
+        delegate?.shouldDelete(todoItem: item, index: position)
     }
 }

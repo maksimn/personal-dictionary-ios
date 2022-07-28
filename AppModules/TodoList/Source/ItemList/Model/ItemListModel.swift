@@ -9,9 +9,9 @@ protocol ItemListDelegate: AnyObject {
 
     func shouldCreate(todoItem: TodoItem)
 
-    func shouldUpdate(data: UpdatedTodoItemData)
+    func shouldUpdate(data: UpdatedTodoItemData, index: Int)
 
-    func shouldDelete(todoItem: TodoItem)
+    func shouldDelete(todoItem: TodoItem, index: Int)
 }
 
 protocol ItemListModel: AnyObject {

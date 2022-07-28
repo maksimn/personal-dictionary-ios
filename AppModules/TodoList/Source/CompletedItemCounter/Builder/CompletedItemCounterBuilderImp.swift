@@ -9,28 +9,7 @@ import UIKit
 
 final class CompletedItemCounterBuilderImp: CompletedItemCounterBuilder {
 
-    func build() -> UIView {
-        let initialCount = MOTodoListCache.instance.completedItemCount
-        let text = "Выполнено — "
-        weak var viewModelLazy: CompletedItemCounterViewModel?
-
-        let model = CompletedItemCounterModelImp(
-            viewModelClosure: {
-                viewModelLazy
-            },
-            initialCount: initialCount,
-            completedItemCountSubscriber: CompletedItemCountStream.instance,
-            updatedTodoItemSubscriber: UpdatedTodoItemStreamImp.instance,
-            deletedTodoItemSubscriber: DeletedTodoItemStreamImp.instance
-        )
-        let viewModel = CompletedItemCounterViewModelImp(model: model)
-        let view = CompletedItemCounterView(
-            viewModel: viewModel,
-            text: text
-        )
-
-        viewModelLazy = viewModel
-
-        return view
+    func build() -> CompletedItemCounterGraph {
+        CompletedItemCounterGraphImp()
     }
 }

@@ -65,7 +65,7 @@ enum WebAPI {
 
 enum BearerToken {
     static let key = "Authorization"
-    static let value = "Bearer LTQzMTQwMzg4MjU0MzEwMjgwMjE"
+    static let value = ""
 }
 
 enum RequestType {

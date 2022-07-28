@@ -27,7 +27,7 @@ final class TodoListServiceGraphOne: TodoListServiceGraph {
             logger: logger,
             networking: networkingService,
             сounter: httpRequestCounter,
-            completedItemCountPublisher: CompletedItemCountStream.instance
+            mergeItemsWithRemotePublisher: MergeItemsWithRemoteStreamImp.instance
         )
     }
 }
