@@ -13,10 +13,6 @@ protocol TodoListModel {
 
     var todoList: [TodoItem] { get }
 
-    var isCompletedItemsEmpty: Bool { get }
-
-    var areCompletedTodosVisible: Bool { get }
-
     func loadTodoListFromCache()
 
     func loadTodoListFromRemote(_ completion: @escaping (Error?) -> Void)

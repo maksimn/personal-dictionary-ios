@@ -127,10 +127,6 @@ class TodoListModelOne: TodoListModel {
         }
     }
 
-    var isCompletedItemsEmpty: Bool {
-        service?.isCompletedItemsEmpty ?? true
-    }
-
     private func onUpdate(data: UpdatedTodoItemData) {
         updateInMemory(data.newValue)
     }

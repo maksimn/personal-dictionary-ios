@@ -30,7 +30,6 @@ class TodoListPresenterOne: TodoListPresenter {
     func viewUpdate() {
         viewUpdateDataInList()
         view.reloadList()
-        viewUpdateToggleAndCompletedItemCounter()
     }
 
     func viewUpdateDataInList() {
@@ -43,12 +42,10 @@ class TodoListPresenterOne: TodoListPresenter {
 
     func viewUpdateTodoItemAt(_ position: Int) {
         view.updateRowAt(position)
-        viewUpdateToggleAndCompletedItemCounter()
     }
 
     func viewRemoveTodoItemAt(_ position: Int) {
         view.removeRowAt(position)
-        viewUpdateToggleAndCompletedItemCounter()
     }
 
     func viewExpandCompletedTodos() {
@@ -88,10 +85,5 @@ class TodoListPresenterOne: TodoListPresenter {
         let navigationController = UINavigationController(rootViewController: todoEditorViewController)
 
         view.viewController?.present(navigationController, animated: true, completion: nil)
-    }
-
-    private func viewUpdateToggleAndCompletedItemCounter() {
-        view.setToggleColor(model.isCompletedItemsEmpty)
-        view.setToggleTitle(for: model.areCompletedTodosVisible)
     }
 }
