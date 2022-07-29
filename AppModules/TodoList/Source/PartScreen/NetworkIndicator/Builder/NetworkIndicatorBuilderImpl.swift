@@ -5,15 +5,19 @@
 //  Created by Maxim Ivanov on 01.01.2022.
 //
 
+import CoreModule
+
 final class NetworkIndicatorBuilderImpl: NetworkIndicatorBuilder {
 
-    private let httpRequestCounter: HttpRequestCounter?
-
-    init(httpRequestCounter: HttpRequestCounter?) {
-        self.httpRequestCounter = httpRequestCounter
-    }
-
     func build() -> NetworkIndicatorVIPER {
-        NetworkIndicatorVIPERImpl(httpRequestCounter: httpRequestCounter)
+        NetworkIndicatorVIPERImpl(
+            httpRequestCounter: TodoListServiceGraphOne(
+                todoListCache: MOTodoListCache.instance,
+                coreService: URLSessionCoreService(),
+                logger: LoggerImpl(isLoggingEnabled: true),
+                todoCoder: JSONCoderImpl(),
+                notificationCenter: NotificationCenter.default
+            ).service.httpRequestCounter
+        )
     }
 }

@@ -13,24 +13,23 @@ import UIKit
 final class RoutingToTodoListAppRouter: CoreRouter {
 
     private let rootViewController: UIViewController
-    private let todoListAppBuilder: TodoListAppBuilder
+    private let todoListAppBuilder: TodoList.MainBuilder
 
     /// - Parameters:
     ///   - rootViewController: view контроллер экрана, с которого начинается переход к приложению "Список дел" (TodoList).
     ///   - todoListAppBuilder: билдер приложения TodoList ("Список дел").
     init(rootViewController: UIViewController,
-         todoListAppBuilder: TodoListAppBuilder) {
+         todoListAppBuilder: TodoList.MainBuilder) {
         self.rootViewController = rootViewController
         self.todoListAppBuilder = todoListAppBuilder
     }
 
     /// Перейти к приложению "Список дел" (TodoList).
     func navigate() {
-        let todoListApp = todoListAppBuilder.build()
-        let todoListViewController = todoListApp.navigationController
+        let todoListNavigationController = todoListAppBuilder.build()
 
-        todoListViewController.modalPresentationStyle = .fullScreen
+        todoListNavigationController.modalPresentationStyle = .fullScreen
 
-        rootViewController.present(todoListViewController, animated: true, completion: nil)
+        rootViewController.present(todoListNavigationController, animated: true, completion: nil)
     }
 }

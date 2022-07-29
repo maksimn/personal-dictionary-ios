@@ -15,7 +15,7 @@ final class TodoListMVPGraph: TodoListMVP {
     init(_ service: TodoListService) {
         self.service = service
 
-        let networkIndicatorBuilder = NetworkIndicatorBuilderImpl(httpRequestCounter: service.httpRequestCounter)
+        let networkIndicatorBuilder = NetworkIndicatorBuilderImpl()
         let todoEditorBuilder = TodoEditorBuilderImpl()
 
         view = TodoListViewOne(
