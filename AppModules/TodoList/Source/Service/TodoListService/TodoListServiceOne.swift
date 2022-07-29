@@ -155,7 +155,6 @@ class TodoListServiceOne: TodoListService {
                 }
                 self?.currentDelay = TodoListServiceOne.minDelay
                 self?.cache.replaceWith(todoList) { [weak self] error in
-                    NotificationCenter.default.post(name: .mergeTodoListWithRemoteSuccess, object: nil)
                     self?.mergeItemsWithRemotePublisher.notify()
                     completion(error)
                 }

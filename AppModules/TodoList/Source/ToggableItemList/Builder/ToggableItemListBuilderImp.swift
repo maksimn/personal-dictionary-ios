@@ -15,6 +15,12 @@ protocol TodoItemCUDSubscriber: CreatedTodoItemSubscriber,
 
 final class ToggableItemListBuilderImp: ToggableItemListBuilder {
 
+    private weak var navigationController: UINavigationController?
+
+    init(navigationController: UINavigationController?) {
+        self.navigationController = navigationController
+    }
+
     func build() -> ToggableItemListGraph {
         ToggableItemListGraphImp(
             service: TodoListServiceGraphOne(
@@ -24,7 +30,8 @@ final class ToggableItemListBuilderImp: ToggableItemListBuilder {
                 todoCoder: JSONCoderImpl(),
                 notificationCenter: NotificationCenter.default
             ).service,
-            cudSubscriber: TodoItemCUDSubscriberImp()
+            cudSubscriber: TodoItemCUDSubscriberImp(),
+            navigationController: navigationController
         )
     }
 

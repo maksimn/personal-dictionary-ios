@@ -37,7 +37,9 @@ final class ToggableItemListView: UIView {
         viewModel.state.subscribe(onNext: { [weak self] state in
             guard let self = self else { return }
 
-            self.itemListGraph.model?.items = state.items
+            self.itemListGraph.model?.items = state.areCompletedTodosVisible ?
+                                              state.items :
+                                              state.items.filter { !$0.isCompleted }
             self.completedItemCounterGraph.model?.count = state.completedItemCount
             self.updateCompletedTodoVisibilityToggle(state: state)
         }).disposed(by: disposeBag)

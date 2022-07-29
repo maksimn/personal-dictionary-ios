@@ -20,18 +20,15 @@ final class ToggableItemListModelImp: ToggableItemListModel, ItemListDelegate {
     }
     private let service: TodoListService
     private let cudSubscriber: TodoItemCUDSubscriber
-    private var allItems: [TodoItem]
     private let viewModelBlock: () -> ToggableItemListViewModel?
     private weak var viewModel: ToggableItemListViewModel?
     private let disposeBag = DisposeBag()
 
     init(initialState: ToggableItemListState,
-         allItems: [TodoItem] = [],
          service: TodoListService,
          cudSubscriber: TodoItemCUDSubscriber,
          viewModelBlock: @escaping () -> ToggableItemListViewModel?) {
         self.state = initialState
-        self.allItems = allItems
         self.service = service
         self.cudSubscriber = cudSubscriber
         self.viewModelBlock = viewModelBlock
@@ -51,11 +48,9 @@ final class ToggableItemListModelImp: ToggableItemListModel, ItemListDelegate {
         }
 
         state.areCompletedTodosVisible = !state.areCompletedTodosVisible
-        state.items = state.areCompletedTodosVisible ? allItems : allItems.filter { !$0.isCompleted }
     }
 
     func shouldCreate(todoItem: TodoItem) {
-        allItems.append(todoItem)
         state.items.append(todoItem)
         service.createRemote(todoItem) { _ in
 
@@ -63,10 +58,8 @@ final class ToggableItemListModelImp: ToggableItemListModel, ItemListDelegate {
     }
 
     func shouldUpdate(data: UpdatedTodoItemData, index: Int) {
-        if state.areCompletedTodosVisible {
+        if index > -1 && index < state.items.count {
             state.items[index] = data.newValue
-        } else if index > -1 && index < state.items.count {
-            state.items.remove(at: index)
         }
 
         if !data.oldValue.isCompleted && data.newValue.isCompleted {
@@ -118,8 +111,7 @@ final class ToggableItemListModelImp: ToggableItemListModel, ItemListDelegate {
     }
 
     private func setState() {
-        allItems = service.cachedTodoList
-        state.items = state.areCompletedTodosVisible ? allItems : allItems.filter { !$0.isCompleted }
-        state.completedItemCount = allItems.filter { $0.isCompleted }.count
+        state.items = service.cachedTodoList
+        state.completedItemCount = state.items.filter { $0.isCompleted }.count
     }
 }
