@@ -24,7 +24,10 @@ final class NavToItemEditorRouterImp: NavToItemEditorRouter {
         let todoEditorViewController = todoEditorGraph.viewController
 
         todoEditorViewController.modalPresentationStyle = .overFullScreen
+        todoEditorViewController.navigationItem.largeTitleDisplayMode = .never
 
-        navigationController?.topViewController?.present(todoEditorViewController, animated: true, completion: nil)
+        let otherNavigationController = UINavigationController(rootViewController: todoEditorViewController)
+
+        navigationController?.topViewController?.present(otherNavigationController, animated: true, completion: nil)
     }
 }

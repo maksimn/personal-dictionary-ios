@@ -26,14 +26,6 @@ final class TodoEditorDependencies {
                 cancel: "Отменить"
             )
         )
-        networkIndicatorBuilder = NetworkIndicatorBuilderImpl(
-            httpRequestCounter: TodoListServiceGraphOne(
-                todoListCache: MOTodoListCache.instance,
-                coreService: URLSessionCoreService(),
-                logger: LoggerImpl(isLoggingEnabled: true),
-                todoCoder: JSONCoderImpl(),
-                notificationCenter: NotificationCenter.default
-            ).service.httpRequestCounter
-        )
+        networkIndicatorBuilder = NetworkIndicatorBuilderImpl()
     }
 }

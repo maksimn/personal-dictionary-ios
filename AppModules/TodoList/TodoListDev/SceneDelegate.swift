@@ -16,11 +16,10 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        let appBuilder = TodoListAppBuilderImpl()
-        let app = appBuilder.build()
+        let mainBuilder = MainBuilderImp()
 
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = app.navigationController
+        window?.rootViewController = mainBuilder.build()
         window?.makeKeyAndVisible()
     }
 }
