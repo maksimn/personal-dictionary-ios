@@ -5,13 +5,14 @@
 //  Created by Maxim Ivanov on 03.01.2022.
 //
 
+import CoreModule
+
 final class TodoEditorDependencies {
 
     let viewParams: TodoEditorViewParams
     let networkIndicatorBuilder: NetworkIndicatorBuilder
 
-    init(service: TodoListService,
-         appViewParams: AppViewParams) {
+    init(appViewParams: AppViewParams) {
         viewParams = TodoEditorViewParams(
             backgroundLightColor: appViewParams.backgroundLightColor,
             prioritySegmentedControlItems: [appViewParams.lowPriorityMark, "нет", appViewParams.highPriorityMark],
@@ -25,6 +26,14 @@ final class TodoEditorDependencies {
                 cancel: "Отменить"
             )
         )
-        networkIndicatorBuilder = NetworkIndicatorBuilderImpl(httpRequestCounter: service.httpRequestCounter)
+        networkIndicatorBuilder = NetworkIndicatorBuilderImpl(
+            httpRequestCounter: TodoListServiceGraphOne(
+                todoListCache: MOTodoListCache.instance,
+                coreService: URLSessionCoreService(),
+                logger: LoggerImpl(isLoggingEnabled: true),
+                todoCoder: JSONCoderImpl(),
+                notificationCenter: NotificationCenter.default
+            ).service.httpRequestCounter
+        )
     }
 }
