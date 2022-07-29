@@ -23,18 +23,16 @@ final class TodoEditorInteractorImpl: TodoEditorInteractor {
     private(set) var todoItem: TodoItem?
     private var mode: TodoEditorMode
 
-    private let service: TodoListService
-    private let updatedTodoItemPublisher: UpdatedTodoItemPublisher?
-    private let deletedTodoItemPublisher: DeletedTodoItemPublisher?
+    private let createdTodoItemPublisher: CreatedTodoItemPublisher
+    private let updatedTodoItemPublisher: UpdatedTodoItemPublisher
+    private let deletedTodoItemPublisher: DeletedTodoItemPublisher
 
-    init(
-        todoItem: TodoItem?,
-        service: TodoListService,
-        updatedTodoItemPublisher: UpdatedTodoItemPublisher?,
-        deletedTodoItemPublisher: DeletedTodoItemPublisher?
-    ) {
-        self.service = service
+    init(todoItem: TodoItem?,
+         createdTodoItemPublisher: CreatedTodoItemPublisher,
+         updatedTodoItemPublisher: UpdatedTodoItemPublisher,
+         deletedTodoItemPublisher: DeletedTodoItemPublisher) {
         self.todoItem = todoItem
+        self.createdTodoItemPublisher = createdTodoItemPublisher
         self.deletedTodoItemPublisher = deletedTodoItemPublisher
         self.updatedTodoItemPublisher = updatedTodoItemPublisher
         mode = todoItem == nil ? .creatingNew : .editingExisting
@@ -52,21 +50,14 @@ final class TodoEditorInteractorImpl: TodoEditorInteractor {
         guard let todoItem = todoItem else { return }
         self.mode = .creatingNew
         self.todoItem = nil
-        deletedTodoItemPublisher?.send(todoItem)
-        service.removeRemote(todoItem) { _ in
-
-        }
+        deletedTodoItemPublisher.send(todoItem)
     }
 
     private func createTodoItem(_ data: TodoEditorUserInput) {
         let newTodoItem = TodoItem(text: data.text, priority: data.priority, deadline: data.deadline)
         self.todoItem = newTodoItem
         self.mode = .editingExisting
-        NotificationCenter.default.post(name: .createTodoItem, object: self,
-                                        userInfo: [Notification.Name.createTodoItem: newTodoItem])
-        service.createRemote(newTodoItem) { _ in
-
-        }
+        createdTodoItemPublisher.send(newTodoItem)
     }
 
     private func updateTodoItem(_ data: TodoEditorUserInput) {
@@ -77,9 +68,6 @@ final class TodoEditorInteractorImpl: TodoEditorInteractor {
         updatedTodoItem.deadline = data.deadline
         self.todoItem = updatedTodoItem
         self.mode = .editingExisting
-        updatedTodoItemPublisher?.send(UpdatedTodoItemData(newValue: updatedTodoItem, oldValue: todoItem))
-        service.updateRemote(updatedTodoItem) { _ in
-
-        }
+        updatedTodoItemPublisher.send(UpdatedTodoItemData(newValue: updatedTodoItem, oldValue: todoItem))
     }
 }

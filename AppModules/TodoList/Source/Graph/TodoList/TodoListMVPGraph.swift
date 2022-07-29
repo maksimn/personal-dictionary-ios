@@ -16,11 +16,7 @@ final class TodoListMVPGraph: TodoListMVP {
         self.service = service
 
         let networkIndicatorBuilder = NetworkIndicatorBuilderImpl(httpRequestCounter: service.httpRequestCounter)
-        let appViewParams = AppViewParams(backgroundLightColor: Colors.backgroundLightColor,
-                                          highPriorityMark: Images.highPriorityMark,
-                                          lowPriorityMark: Images.lowPriorityMark)
-        let todoEditorBuilder = TodoEditorBuilderImpl(service: service,
-                                                      appViewParams: appViewParams)
+        let todoEditorBuilder = TodoEditorBuilderImpl()
 
         view = TodoListViewOne(
             networkIndicatorBuilder: networkIndicatorBuilder,

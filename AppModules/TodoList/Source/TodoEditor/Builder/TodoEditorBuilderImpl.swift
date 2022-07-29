@@ -7,20 +7,16 @@
 
 final class TodoEditorBuilderImpl: TodoEditorBuilder {
 
-    private let service: TodoListService
-    private let appViewParams: AppViewParams
-
-    init(service: TodoListService,
-         appViewParams: AppViewParams) {
-        self.service = service
-        self.appViewParams = appViewParams
-    }
-
     func build(initTodoItem: TodoItem?) -> TodoEditorVIPER {
-        let dependencies = TodoEditorDependencies(service: service, appViewParams: appViewParams)
+        let dependencies = TodoEditorDependencies(
+            appViewParams: AppViewParams(
+                backgroundLightColor: Colors.backgroundLightColor,
+                highPriorityMark: Images.highPriorityMark,
+                lowPriorityMark: Images.lowPriorityMark
+            )
+        )
 
         return TodoEditorVIPERImpl(todoItem: initTodoItem,
-                                   service: service,
                                    viewParams: dependencies.viewParams,
                                    networkIndicatorBuilder: dependencies.networkIndicatorBuilder)
     }

@@ -11,12 +11,11 @@ final class TodoEditorVIPERImpl: TodoEditorVIPER {
     private let view: TodoEditorViewController
 
     init(todoItem: TodoItem?,
-         service: TodoListService,
          viewParams: TodoEditorViewParams,
          networkIndicatorBuilder: NetworkIndicatorBuilder) {
         var interactor: TodoEditorInteractor = TodoEditorInteractorImpl(
             todoItem: todoItem,
-            service: service,
+            createdTodoItemPublisher: CreatedTodoItemStreamImp.instance,
             updatedTodoItemPublisher: UpdatedTodoItemStreamImp.instance,
             deletedTodoItemPublisher: DeletedTodoItemStreamImp.instance
         )
