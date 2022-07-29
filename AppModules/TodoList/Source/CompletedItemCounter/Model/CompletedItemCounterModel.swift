@@ -5,7 +5,7 @@
 //  Created by Maksim Ivanov on 27.07.2022.
 //
 
-protocol CompletedItemCounterModel {
+protocol CompletedItemCounterModel: AnyObject {
 
-    var count: Int { get }
+    var count: Int { get set }
 }

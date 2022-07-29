@@ -9,7 +9,7 @@ import RxSwift
 
 final class CompletedItemCounterModelImp: CompletedItemCounterModel {
 
-    private(set) var count: Int {
+    var count: Int {
         didSet {
             if viewModel == nil {
                viewModel = viewModelClosure()
@@ -25,37 +25,9 @@ final class CompletedItemCounterModelImp: CompletedItemCounterModel {
 
     private let disposeBag = DisposeBag()
 
-    init(
-        viewModelClosure: @escaping () -> CompletedItemCounterViewModel?,
-        initialCount: Int,
-        completedItemCountSubscriber: CompletedItemCountSubscriber,
-        updatedTodoItemSubscriber: UpdatedTodoItemSubscriber,
-        deletedTodoItemSubscriber: DeletedTodoItemSubscriber
-    ) {
+    init(viewModelClosure: @escaping () -> CompletedItemCounterViewModel?,
+         initialCount: Int) {
         self.viewModelClosure = viewModelClosure
         count = initialCount
-        completedItemCountSubscriber.count
-            .subscribe(onNext: { [weak self] count in self?.count = count })
-            .disposed(by: disposeBag)
-        updatedTodoItemSubscriber.updatedTodoItemData
-            .subscribe(onNext: { [weak self] in self?.onUpdate(data: $0) })
-            .disposed(by: disposeBag)
-        deletedTodoItemSubscriber.deletedTodoItem
-            .subscribe(onNext: { [weak self] in self?.onDeleted(todoItem: $0) })
-            .disposed(by: disposeBag)
-    }
-
-    private func onUpdate(data: UpdatedTodoItemData) {
-        if !data.oldValue.isCompleted && data.newValue.isCompleted {
-            count += 1
-        } else if count > 0 && data.oldValue.isCompleted && !data.newValue.isCompleted {
-            count -= 1
-        }
-    }
-
-    private func onDeleted(todoItem: TodoItem) {
-        if count > 0 && todoItem.isCompleted {
-            count -= 1
-        }
     }
 }

@@ -52,11 +52,11 @@ class TodoListViewOne: UIViewController {
     }
 
     private func addFeature(_ completedItemCounterBuilder: CompletedItemCounterBuilder) {
-        let completedItemCounterView = completedItemCounterBuilder.build()
+        let completedItemCounterGraph = completedItemCounterBuilder.build()
 
-        view.addSubview(completedItemCounterView)
-        completedItemCounterView.constraints((view.safeAreaLayoutGuide.topAnchor, 16), 20,
-                                             (view.safeAreaLayoutGuide.leadingAnchor, 32), (nil, 0))
+        view.addSubview(completedItemCounterGraph.view)
+        completedItemCounterGraph.view.constraints((view.safeAreaLayoutGuide.topAnchor, 16), 20,
+                                                   (view.safeAreaLayoutGuide.leadingAnchor, 32), (nil, 0))
     }
 }
 

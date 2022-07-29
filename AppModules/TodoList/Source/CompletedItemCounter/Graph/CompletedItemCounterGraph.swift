@@ -7,7 +7,9 @@
 
 import UIKit
 
-protocol CompletedItemCounterBuilder {
+protocol CompletedItemCounterGraph {
 
-    func build() -> CompletedItemCounterGraph
+    var view: UIView { get }
+
+    var model: CompletedItemCounterModel? { get }
 }
