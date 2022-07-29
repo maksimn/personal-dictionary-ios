@@ -8,12 +8,21 @@
 final class ItemListBuilderImp: ItemListBuilder {
 
     private weak var delegate: ItemListDelegate?
+    private weak var navigationController: UINavigationController?
 
-    init(delegate: ItemListDelegate?) {
+    init(delegate: ItemListDelegate?,
+         navigationController: UINavigationController?) {
         self.delegate = delegate
+        self.navigationController = navigationController
     }
 
     func build() -> ItemListGraph {
-        ItemListGraphImp(delegate: delegate)
+        ItemListGraphImp(
+            delegate: delegate,
+            itemEditorRouter: NavToItemEditorRouterImp(
+                navigationController: navigationController,
+                todoEditorBuilder: TodoEditorBuilderImpl()
+            )
+        )
     }
 }

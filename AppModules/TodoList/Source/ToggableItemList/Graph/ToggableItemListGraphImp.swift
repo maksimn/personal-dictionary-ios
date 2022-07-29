@@ -16,7 +16,8 @@ final class ToggableItemListGraphImp: ToggableItemListGraph {
     private(set) weak var model: ToggableItemListModel?
 
     init(service: TodoListService,
-         cudSubscriber: TodoItemCUDSubscriber) {
+         cudSubscriber: TodoItemCUDSubscriber,
+         navigationController: UINavigationController?) {
         weak var viewModelLazy: ToggableItemListViewModel?
 
         let model = ToggableItemListModelImp(
@@ -32,7 +33,10 @@ final class ToggableItemListGraphImp: ToggableItemListGraph {
         let viewModel = ToggableItemListViewModelImp(model: model)
         view = ToggableItemListView(
             viewModel: viewModel,
-            itemListBuilder: ItemListBuilderImp(delegate: model),
+            itemListBuilder: ItemListBuilderImp(
+                delegate: model,
+                navigationController: navigationController
+            ),
             completedItemCounterBuilder: CompletedItemCounterBuilderImp()
         )
 

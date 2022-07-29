@@ -13,7 +13,8 @@ final class ItemListGraphImp: ItemListGraph {
 
     var view: UIView
 
-    init(delegate: ItemListDelegate?) {
+    init(delegate: ItemListDelegate?,
+         itemEditorRouter: NavToItemEditorRouter) {
         weak var viewModelLazy: ItemListViewModel?
 
         let model = ItemListModelImp(
@@ -21,7 +22,10 @@ final class ItemListGraphImp: ItemListGraph {
             viewModelBlock: { viewModelLazy }
         )
         let viewModel = ItemListViewModelImp(model: model)
-        view = ItemListView(viewModel: viewModel)
+        view = ItemListView(
+            viewModel: viewModel,
+            itemEditorRouter: itemEditorRouter
+        )
 
         viewModelLazy = viewModel
         self.model = model

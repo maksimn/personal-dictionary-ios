@@ -14,7 +14,7 @@ public final class MainBuilderImp: MainBuilder {
     public func build() -> UINavigationController {
         let navigationController = UINavigationController()
         let mainViewController = MainViewController(
-            toggableItemListBuilder: ToggableItemListBuilderImp(),
+            toggableItemListBuilder: ToggableItemListBuilderImp(navigationController: navigationController),
             navToItemEditorBuilder: NavToItemEditorBuilderImp(navigationController: navigationController),
             networkIndicatorBuilder: NetworkIndicatorBuilderImpl()
         )

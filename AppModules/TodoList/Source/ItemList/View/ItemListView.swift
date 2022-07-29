@@ -12,14 +12,18 @@ final class ItemListView: UIView {
 
     private let viewModel: ItemListViewModel
 
+    private let itemEditorRouter: NavToItemEditorRouter
+
     private let tableView = UITableView()
 
     private let tableController = TodoTableController()
 
     private let disposeBag = DisposeBag()
 
-    init(viewModel: ItemListViewModel) {
+    init(viewModel: ItemListViewModel,
+         itemEditorRouter: NavToItemEditorRouter) {
         self.viewModel = viewModel
+        self.itemEditorRouter = itemEditorRouter
         super.init(frame: .zero)
         initViews()
         subscribeToViewModel()
@@ -52,7 +56,11 @@ final class ItemListView: UIView {
     }
 
     private func onDidSelectAt(_ position: Int) {
+        guard position > -1 && position < tableController.todoList.count else { return }
 
+        let todoItem = tableController.todoList[position]
+
+        itemEditorRouter.navigate(with: todoItem)
     }
 
     private func initViews() {
