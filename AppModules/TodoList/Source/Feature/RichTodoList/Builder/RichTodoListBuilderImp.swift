@@ -20,13 +20,31 @@ final class RichTodoListBuilderImp: RichTodoListBuilder {
     }
 
     func build() -> RichTodoListGraph {
-        RichTodoListGraphImp(
-            service: TodoListServiceGraphOne(
-                todoListCache: MOTodoListCache.instance,
-                coreService: URLSessionCoreService(),
-                logger: LoggerImpl(isLoggingEnabled: true),
-                todoCoder: JSONCoderImpl()
-            ).service,
+        let token = ""
+        let logger = LoggerImpl(isLoggingEnabled: true)
+        let networkingService = DefaultNetworkingService(
+            urlString: "https://d5dps3h13rv6902lp5c8.apigw.yandexcloud.net",
+            headers: [
+                "Authorization": token,
+                "Content-Type": "application/json"
+            ],
+            coreService: URLSessionCoreService(),
+            todoCoder: JSONCoderImpl()
+        )
+        let httpRequestCounter = HttpRequestCounterOne(
+            httpRequestCounterPublisher: HttpRequestCounterStreamImp.instance
+        )
+        let service = TodoListServiceOne(
+            isRemotingEnabled: !token.isEmpty,
+            cache: MOTodoListCache(logger: logger),
+            logger: logger,
+            networking: networkingService,
+            сounter: httpRequestCounter,
+            mergeItemsWithRemotePublisher: MergeItemsWithRemoteStreamImp.instance
+        )
+
+        return RichTodoListGraphImp(
+            service: service,
             cudSubscriber: TodoItemCUDSubscriberImp(),
             navigationController: navigationController
         )

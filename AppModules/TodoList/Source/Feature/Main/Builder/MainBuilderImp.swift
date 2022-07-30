@@ -14,6 +14,7 @@ public final class MainBuilderImp: MainBuilder {
     public func build() -> UINavigationController {
         let navigationController = UINavigationController()
         let mainViewController = MainViewController(
+            mainTitle: "Мои дела",
             richTodoListBuilder: RichTodoListBuilderImp(navigationController: navigationController),
             navToEditorBuilder: NavToEditorBuilderImp(navigationController: navigationController),
             networkIndicatorBuilder: NetworkIndicatorBuilderImpl()

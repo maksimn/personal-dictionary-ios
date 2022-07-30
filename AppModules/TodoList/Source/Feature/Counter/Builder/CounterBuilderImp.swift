@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import CoreModule
 
 final class CounterBuilderImp: CounterBuilder {
 
     func build() -> CounterGraph {
-        CounterGraphImp()
+        CounterGraphImp(
+            initialCount: MOTodoListCache(logger: LoggerImpl(isLoggingEnabled: true)).completedItemCount
+        )
     }
 }

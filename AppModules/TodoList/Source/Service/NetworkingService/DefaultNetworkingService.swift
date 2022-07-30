@@ -11,30 +11,36 @@ import RxSwift
 
 class DefaultNetworkingService: NetworkingService {
 
+    private let urlString: String
+    private let headers: [String: String]
     private let coreService: CoreService
     private let todoCoder: JsonCoder
-    private let jsonHeaders = [BearerToken.key: BearerToken.value, "Content-Type": "application/json"]
 
     private let disposeBag = DisposeBag()
 
-    init(_ coreService: CoreService, _ todoCoder: JsonCoder) {
+    init(urlString: String,
+         headers: [String: String],
+         coreService: CoreService,
+         todoCoder: JsonCoder) {
+        self.urlString = urlString
+        self.headers = headers
         self.coreService = coreService
         self.todoCoder = todoCoder
     }
 
     func fetchTodoList(_ completion: @escaping (TodoListResult) -> Void) {
-        coreService.set(urlString: "\(WebAPI.baseUrl)/tasks/",
+        coreService.set(urlString: "\(urlString)/tasks/",
                         httpMethod: "GET",
-                        headers: [BearerToken.key: BearerToken.value])
+                        headers: headers)
         coreService.send(nil) { [weak self] result in
             self?.todoListRequestHandler(result, completion)
         }
     }
 
     func createTodoItem(_ todoItemDTO: TodoItemDTO, _ completion: @escaping (TodoItemResult) -> Void) {
-        coreService.set(urlString: "\(WebAPI.baseUrl)/tasks/",
+        coreService.set(urlString: "\(urlString)/tasks/",
                         httpMethod: "POST",
-                        headers: jsonHeaders)
+                        headers: headers)
         todoCoder.convertToJson(todoItemDTO)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
             .observeOn(MainScheduler.instance)
@@ -52,9 +58,9 @@ class DefaultNetworkingService: NetworkingService {
     }
 
     func updateTodoItem(_ todoItemDTO: TodoItemDTO, _ completion: @escaping (TodoItemResult) -> Void) {
-        coreService.set(urlString: "\(WebAPI.baseUrl)/tasks/\(todoItemDTO.id)",
+        coreService.set(urlString: "\(urlString)/tasks/\(todoItemDTO.id)",
                         httpMethod: "PUT",
-                        headers: jsonHeaders)
+                        headers: headers)
         todoCoder.convertToJson(todoItemDTO)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
             .observeOn(MainScheduler.instance)
@@ -72,18 +78,18 @@ class DefaultNetworkingService: NetworkingService {
     }
 
     func deleteTodoItem(_ id: String, _ completion: @escaping (TodoItemResult) -> Void) {
-        coreService.set(urlString: "\(WebAPI.baseUrl)/tasks/\(id)",
+        coreService.set(urlString: "\(urlString)/tasks/\(id)",
                         httpMethod: "DELETE",
-                        headers: [BearerToken.key: BearerToken.value])
+                        headers: headers)
         coreService.send(nil) { [weak self] result in
             self?.todoItemRequestHandler(result, completion)
         }
     }
 
     func mergeTodoList(_ requestData: MergeTodoListRequestData, _ completion: @escaping (TodoListResult) -> Void) {
-        coreService.set(urlString: "\(WebAPI.baseUrl)/tasks/",
+        coreService.set(urlString: "\(urlString)/tasks/",
                         httpMethod: "PUT",
-                        headers: jsonHeaders)
+                        headers: headers)
         todoCoder.convertToJson(requestData)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
             .observeOn(MainScheduler.instance)

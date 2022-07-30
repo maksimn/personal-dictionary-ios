@@ -66,12 +66,12 @@ final class ItemListView: UIView {
     private func initViews() {
         addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = Colors.backgroundLightColor
+        tableView.backgroundColor = Theme.data.backgroundColor
         tableView.layer.cornerRadius = 16
         tableView.register(TodoItemCell.self, forCellReuseIdentifier: "\(TodoItemCell.self)")
         tableView.register(NewTodoItemCell.self, forCellReuseIdentifier: "\(NewTodoItemCell.self)")
         tableView.dataSource = tableController
-        tableView.backgroundColor = Colors.backgroundLightColor
+        tableView.backgroundColor = Theme.data.backgroundColor
         tableView.delegate = tableController
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))

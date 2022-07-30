@@ -31,6 +31,4 @@ protocol TodoListCache {
     func clearTombstones(_ completion: @escaping (Error?) -> Void)
 
     func replaceWith(_ todoList: [TodoItem], _ completion: @escaping (Error?) -> Void)
-
-    func setLogger(_ logger: Logger)
 }

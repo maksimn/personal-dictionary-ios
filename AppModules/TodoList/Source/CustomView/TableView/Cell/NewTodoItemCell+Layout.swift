@@ -37,7 +37,7 @@ extension NewTodoItemCell {
         placeholderLabel.textColor = .gray
         placeholderLabel.font = UIFont.systemFont(ofSize: 17)
         placeholderLabel.numberOfLines = 0
-        placeholderLabel.text = Strings.newTodo
+        placeholderLabel.text = "Новое"
         contentView.addSubview(placeholderLabel)
         placeholderLabel.constraints((topAnchor, 17), 24, (leadingAnchor, 40), (trailingAnchor, -20))
         placeholderLabel.isUserInteractionEnabled = false

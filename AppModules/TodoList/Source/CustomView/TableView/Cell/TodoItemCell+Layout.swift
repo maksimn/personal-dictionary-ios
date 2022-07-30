@@ -30,13 +30,13 @@ extension TodoItemCell {
         contentView.addSubview(completenessImageView)
         contentView.addSubview(priorityImageView)
 
-        rightArrowImageView.image = Images.rightArrowMark
+        rightArrowImageView.image = Theme.image.rightArrowMark
         contentView.addSubview(rightArrowImageView)
 
-        deadlineImageView.image = Images.smallCalendarIcon
+        deadlineImageView.image = Theme.image.smallCalendarIcon
         contentView.addSubview(deadlineImageView)
 
-        deadlineLabel.textColor = Colors.labelLightTextColor
+        deadlineLabel.textColor = Theme.data.lightTextColor
         deadlineLabel.font = UIFont.systemFont(ofSize: 15)
         addSubview(deadlineLabel)
     }

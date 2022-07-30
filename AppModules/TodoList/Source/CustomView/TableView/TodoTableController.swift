@@ -68,27 +68,27 @@ class TodoTableController: NSObject, UITableViewDataSource, UITableViewDelegate 
 
     func tableView(_ tableView: UITableView,
                    leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let completionAction = UIContextualAction(style: .normal, title: Strings.empty,
+        let completionAction = UIContextualAction(style: .normal, title: "",
                                              handler: { (_, _, success: (Bool) -> Void) in
                                                 self.onTodoCompletionTap?(indexPath.row)
                                                 success(true)
                                              })
-        completionAction.image = Images.completedTodoMarkInverse
-        completionAction.backgroundColor = Colors.darkGreen
+        completionAction.image = Theme.image.completedTodoMarkInverse
+        completionAction.backgroundColor = Theme.data.darkGreen
 
         return UISwipeActionsConfiguration(actions: [completionAction])
      }
 
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .normal, title: Strings.empty,
+        let deleteAction = UIContextualAction(style: .normal, title: "",
                                               handler: { (_, _, success: (Bool) -> Void) in
                                                 self.onDeleteTap?(indexPath.row)
                                                 success(true)
                                               })
 
-        deleteAction.image = Images.trashImage
-        deleteAction.backgroundColor = Colors.darkRed
+        deleteAction.image = Theme.image.trashImage
+        deleteAction.backgroundColor = Theme.data.darkRed
 
         return UISwipeActionsConfiguration(actions: [deleteAction])
      }
