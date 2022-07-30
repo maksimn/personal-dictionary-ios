@@ -33,6 +33,10 @@ final class RichTodoListGraphImp: RichTodoListGraph {
         let viewModel = RichTodoListViewModelImp(model: model)
         view = RichTodoListView(
             viewModel: viewModel,
+            params: RichTodoListViewParams(
+                show: "Показать",
+                hide: "Скрыть"
+            ),
             itemListBuilder: ItemListBuilderImp(
                 delegate: model,
                 navigationController: navigationController

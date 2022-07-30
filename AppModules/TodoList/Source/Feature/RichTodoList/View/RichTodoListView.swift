@@ -8,7 +8,14 @@
 import RxSwift
 import UIKit
 
+struct RichTodoListViewParams {
+    let show: String
+    let hide: String
+}
+
 final class RichTodoListView: UIView {
+
+    let params: RichTodoListViewParams
 
     let itemListGraph: ItemListGraph
     let counterGraph: CounterGraph
@@ -19,9 +26,11 @@ final class RichTodoListView: UIView {
     private let viewModel: RichTodoListViewModel
 
     init(viewModel: RichTodoListViewModel,
+         params: RichTodoListViewParams,
          itemListBuilder: ItemListBuilder,
          counterBuilder: CounterBuilder) {
         self.viewModel = viewModel
+        self.params = params
         self.itemListGraph = itemListBuilder.build()
         self.counterGraph = counterBuilder.build()
         super.init(frame: .zero)
@@ -51,7 +60,7 @@ final class RichTodoListView: UIView {
     }
 
     private func updateCompletedTodoVisibilityToggle(state: RichTodoListState) {
-        completedTodoVisibilityToggle.setTitle(state.areCompletedTodosVisible ? Strings.hide : Strings.show,
+        completedTodoVisibilityToggle.setTitle(state.areCompletedTodosVisible ? params.hide : params.show,
                                                for: .normal)
         completedTodoVisibilityToggle.setTitleColor(state.completedItemCount == 0 ? .systemGray : .systemBlue,
                                                     for: .normal)

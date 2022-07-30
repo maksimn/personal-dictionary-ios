@@ -14,12 +14,13 @@ final class MainViewController: UIViewController {
 
     let routingButton = UIButton()
 
-    init(richTodoListBuilder: RichTodoListBuilder,
+    init(mainTitle: String,
+         richTodoListBuilder: RichTodoListBuilder,
          navToEditorBuilder: NavToEditorBuilder,
          networkIndicatorBuilder: NetworkIndicatorBuilder) {
         self.richTodoListBuilder = richTodoListBuilder
         super.init(nibName: nil, bundle: nil)
-        navigationItem.title = Strings.myTodos
+        navigationItem.title = mainTitle
         view.backgroundColor = UIColor(red: 1.00, green: 0.80, blue: 1.00, alpha: 1.00)
         layout(richTodoListView: richTodoListGraph.view)
         layout(navToEditorBuilder)

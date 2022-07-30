@@ -13,8 +13,7 @@ final class CounterGraphImp: CounterGraph {
 
     private(set) weak var model: CounterModel?
 
-    init() {
-        let initialCount = MOTodoListCache.instance.completedItemCount
+    init(initialCount: Int) {
         let text = "Выполнено — "
         weak var viewModelLazy: CounterViewModel?
 

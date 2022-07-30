@@ -31,8 +31,7 @@ extension MainViewController {
     }
 
     func layout(_ networkIndicatorBuilder: NetworkIndicatorBuilder) {
-        let networkIndicatorVIPER = networkIndicatorBuilder.build()
-        let networkIndicatorView = networkIndicatorVIPER.uiview
+        let networkIndicatorView = networkIndicatorBuilder.build()
 
         view.addSubview(networkIndicatorView)
         networkIndicatorView.snp.makeConstraints { make -> Void in

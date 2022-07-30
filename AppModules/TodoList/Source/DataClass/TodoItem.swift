@@ -13,7 +13,7 @@ enum TodoItemPriority: String, Codable {
     case low
 }
 
-struct TodoItem: Equatable, Codable, Hashable {
+struct TodoItem: Equatable, Codable {
 
     let id: String
     let text: String
@@ -25,13 +25,13 @@ struct TodoItem: Equatable, Codable, Hashable {
     let isDirty: Bool
 
     init(id: String = UUID().uuidString,
-                text: String,
-                priority: TodoItemPriority = .normal,
-                deadline: Date? = nil,
-                isCompleted: Bool = false,
-                createdAt: Int? = nil,
-                updatedAt: Int? = nil,
-                isDirty: Bool = false) {
+         text: String,
+         priority: TodoItemPriority = .normal,
+         deadline: Date? = nil,
+         isCompleted: Bool = false,
+         createdAt: Int? = nil,
+         updatedAt: Int? = nil,
+         isDirty: Bool = false) {
         self.id = id
         self.text = text
         self.priority = priority
@@ -67,9 +67,5 @@ struct TodoItem: Equatable, Codable, Hashable {
             lhs.createdAt == rhs.createdAt &&
             lhs.updatedAt == rhs.updatedAt &&
             lhs.isDirty == rhs.isDirty
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
     }
 }

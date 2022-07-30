@@ -13,9 +13,7 @@ import Foundation
 // The code needs to be refactored.
 class MOTodoListCache: TodoListCache {
 
-    static let instance = MOTodoListCache()
-
-    private var logger: Logger?
+    private let logger: Logger
 
     private var mainContext: NSManagedObjectContext {
         persistentContainer.viewContext
@@ -37,13 +35,15 @@ class MOTodoListCache: TodoListCache {
             container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
 
             if let error = error {
-                self.logger?.log(error: error)
+                self.logger.log(error: error)
             }
         })
         return container
     }()
 
-    private init() { }
+    init(logger: Logger) {
+        self.logger = logger
+    }
 
     var isDirty: Bool {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: TombstoneMO.name)
@@ -63,7 +63,7 @@ class MOTodoListCache: TodoListCache {
 
             return todoItemMOList.map { $0.todoItem }
         } catch {
-            logger?.log(error: error)
+            logger.log(error: error)
             return []
         }
     }
@@ -82,7 +82,7 @@ class MOTodoListCache: TodoListCache {
                 Tombstone(itemId: tombstoneMO.itemId ?? "", deletedAt: tombstoneMO.deletedAt ?? Date())
             }
         } catch {
-            logger?.log(error: error)
+            logger.log(error: error)
             return []
         }
     }
@@ -101,7 +101,7 @@ class MOTodoListCache: TodoListCache {
                     completion(nil)
                 }
             } catch {
-                self?.logger?.log(error: error)
+                self?.logger.log(error: error)
                 DispatchQueue.main.async {
                     completion(error)
                 }
@@ -130,7 +130,7 @@ class MOTodoListCache: TodoListCache {
                     completion(nil)
                 }
             } catch {
-                self?.logger?.log(error: error)
+                self?.logger.log(error: error)
                 DispatchQueue.main.async {
                     completion(error)
                 }
@@ -159,7 +159,7 @@ class MOTodoListCache: TodoListCache {
                     completion(nil)
                 }
             } catch {
-                self?.logger?.log(error: error)
+                self?.logger.log(error: error)
                 DispatchQueue.main.async {
                     completion(error)
                 }
@@ -182,7 +182,7 @@ class MOTodoListCache: TodoListCache {
                     completion(nil)
                 }
             } catch {
-                self?.logger?.log(error: error)
+                self?.logger.log(error: error)
                 DispatchQueue.main.async {
                     completion(error)
                 }
@@ -203,7 +203,7 @@ class MOTodoListCache: TodoListCache {
                     completion(nil)
                 }
             } catch {
-                self?.logger?.log(error: error)
+                self?.logger.log(error: error)
                 DispatchQueue.main.async {
                     completion(error)
                 }
@@ -230,15 +230,11 @@ class MOTodoListCache: TodoListCache {
                     completion(nil)
                 }
             } catch let error as NSError {
-                self?.logger?.log(error: error)
+                self?.logger.log(error: error)
                 DispatchQueue.main.async {
                     completion(error)
                 }
             }
         }
-    }
-
-    func setLogger(_ logger: Logger) {
-        self.logger = logger
     }
 }

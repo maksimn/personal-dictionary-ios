@@ -34,11 +34,11 @@ extension NewTodoItemCell: UITextViewDelegate {
         placeholderLabel.isHidden = text.count > 0
 
         if let enteredCharacter = text.last,
-            enteredCharacter == Characters.lineBreak {
+            enteredCharacter == "\n" {
             textView.resignFirstResponder()
             onNewTodoItemTextEnter?(text.trimmingCharacters(in: .whitespacesAndNewlines))
             placeholderLabel.isHidden = false
-            textView.text = Strings.empty
+            textView.text = ""
         }
     }
 }

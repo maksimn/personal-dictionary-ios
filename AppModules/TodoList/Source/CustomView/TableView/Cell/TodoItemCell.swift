@@ -39,10 +39,10 @@ class TodoItemCell: UITableViewCell {
         switch priority {
         case .high:
             priorityImageView.isHidden = false
-            return Images.highPriorityMark
+            return Theme.image.highPriorityMark
         case .low:
             priorityImageView.isHidden = false
-            return Images.lowPriorityMark
+            return Theme.image.lowPriorityMark
         default:
             priorityImageView.isHidden = true
             return nil
@@ -51,11 +51,11 @@ class TodoItemCell: UITableViewCell {
 
     private func completenessImage(for todoItem: TodoItem) -> UIImage? {
         if todoItem.isCompleted {
-            return Images.completedTodoMark
+            return Theme.image.completedTodoMark
         } else if todoItem.priority == .high {
-            return Images.highPriorityTodoMark
+            return Theme.image.highPriorityTodoMark
         } else {
-            return Images.incompletedTodoMark
+            return Theme.image.incompletedTodoMark
         }
     }
 
@@ -65,6 +65,6 @@ class TodoItemCell: UITableViewCell {
         let attrString = NSAttributedString(string: todoItem.text, attributes: attributes)
 
         todoTextlabel.attributedText = attrString
-        todoTextlabel.textColor = todoItem.isCompleted ? Colors.labelLightTextColor : .black
+        todoTextlabel.textColor = todoItem.isCompleted ? Theme.data.lightTextColor : .black
     }
 }

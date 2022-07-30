@@ -8,6 +8,12 @@
 import CoreModule
 import Foundation
 
+private let getTodoList = "GET TODOLIST"
+private let createTodoItem = "CREATE TODO ITEM"
+private let updateTodoItem = "UPDATE TODO ITEM"
+private let deleteTodoItem = "DELETE TODO ITEM"
+private let mergeTodoList = "MERGE TODOLIST"
+
 /// Общая логика отправки и обработки сетевых запросов создания, обновления и удаления todo item'a.
 class TodoListServiceOne: TodoListService {
 
@@ -24,7 +30,7 @@ class TodoListServiceOne: TodoListService {
     private static let jitter: Double = 0.05
     private var currentDelay: Double = 2
 
-    init(isRemotingEnabled: Bool = !BearerToken.value.isEmpty,
+    init(isRemotingEnabled: Bool,
          cache: TodoListCache,
          logger: Logger,
          networking: NetworkingService,
@@ -42,10 +48,6 @@ class TodoListServiceOne: TodoListService {
         cache.todoList
     }
 
-    var httpRequestCounter: HttpRequestCounter {
-        сounter
-    }
-
     func fetchRemoteTodoList(_ completion: @escaping (Error?) -> Void) {
         guard isRemotingEnabled else {
             return completion(TodoListServiceError.remotingDisabled)
@@ -54,12 +56,12 @@ class TodoListServiceOne: TodoListService {
         if cache.isDirty {
             mergeWithRemote(completion)
         } else {
-            logger.networkRequestStart(RequestType.getTodoList)
+            logger.networkRequestStart(getTodoList)
             сounter.increment()
             networking.fetchTodoList { [weak self] result in
                 self?.сounter.decrement()
                 do {
-                    self?.logger.networkRequestSuccess(RequestType.getTodoList)
+                    self?.logger.networkRequestSuccess(getTodoList)
 
                     let fetchedTodoList = try result.get().map { $0.map() }
                     let mergedTodoList = self?.cachedTodoList.mergeWith(fetchedTodoList) ?? []
@@ -91,7 +93,7 @@ class TodoListServiceOne: TodoListService {
             return
         }
 
-        logger.networkRequestStart(RequestType.createTodoItem)
+        logger.networkRequestStart(createTodoItem)
         сounter.increment()
         cache.insert(todoItem.update(isDirty: true)) { [weak self] _ in
             self?.networking.createTodoItem(TodoItemDTO.map(todoItem)) { [weak self] result in
@@ -100,7 +102,7 @@ class TodoListServiceOne: TodoListService {
                 do {
                     _ = try result.get()
 
-                    self?.logger.networkRequestSuccess(RequestType.createTodoItem)
+                    self?.logger.networkRequestSuccess(createTodoItem)
                     self?.cache.update(todoItem.update(isDirty: false)) { _ in
                         completion(nil)
                     }
@@ -129,7 +131,7 @@ class TodoListServiceOne: TodoListService {
             return
         }
 
-        logger.networkRequestStart(RequestType.updateTodoItem)
+        logger.networkRequestStart(updateTodoItem)
         сounter.increment()
         cache.update(todoItem.update(isDirty: true)) { [weak self] _ in
             self?.networking.updateTodoItem(TodoItemDTO.map(todoItem)) { [weak self] result in
@@ -137,7 +139,7 @@ class TodoListServiceOne: TodoListService {
                 do {
                     _ = try result.get()
 
-                    self?.logger.networkRequestSuccess(RequestType.updateTodoItem)
+                    self?.logger.networkRequestSuccess(updateTodoItem)
                     self?.cache.update(todoItem.update(isDirty: false)) { _ in
                         completion(nil)
                     }
@@ -176,14 +178,14 @@ class TodoListServiceOne: TodoListService {
         let dirtyItems = cache.todoList.filter { $0.isDirty }.map { TodoItemDTO.map($0) }
         let requestData = MergeTodoListRequestData(deleted: deleted, other: dirtyItems)
 
-        logger.networkRequestStart(RequestType.mergeTodoList)
+        logger.networkRequestStart(mergeTodoList)
         сounter.increment()
         networking.mergeTodoList(requestData) { [weak self] result in
             self?.сounter.decrement()
             do {
                 var todoList = try result.get().map({ $0.map() })
                 todoList.sortByCreateAt()
-                self?.logger.networkRequestSuccess(RequestType.mergeTodoList)
+                self?.logger.networkRequestSuccess(mergeTodoList)
                 self?.cache.clearTombstones { _ in
 
                 }
@@ -207,7 +209,7 @@ class TodoListServiceOne: TodoListService {
                 self?.mergeWithRemote(completion)
             }
         } else {
-            logger.networkRequestStart(RequestType.deleteTodoItem)
+            logger.networkRequestStart(deleteTodoItem)
             сounter.increment()
             cache.insert(tombstone: tombstone) { [weak self] _ in
                 self?.networking.deleteTodoItem(todoItem.id) { [weak self] result in
@@ -215,7 +217,7 @@ class TodoListServiceOne: TodoListService {
                     do {
                         _ = try result.get()
 
-                        self?.logger.networkRequestSuccess(RequestType.deleteTodoItem)
+                        self?.logger.networkRequestSuccess(deleteTodoItem)
                         self?.cache.clearTombstones { _ in
                             completion(nil)
                         }

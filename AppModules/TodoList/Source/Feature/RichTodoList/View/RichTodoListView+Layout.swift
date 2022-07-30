@@ -21,7 +21,7 @@ extension RichTodoListView {
                                                 for: .touchUpInside)
         completedTodoVisibilityToggle.backgroundColor = .clear
         completedTodoVisibilityToggle.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        completedTodoVisibilityToggle.setTitle(Strings.show, for: .normal)
+        completedTodoVisibilityToggle.setTitle(params.show, for: .normal)
         completedTodoVisibilityToggle.setTitleColor(.systemGray, for: .normal)
         completedTodoVisibilityToggle.constraints((topAnchor, 16), 20, (nil, 0), (trailingAnchor, -32))
     }

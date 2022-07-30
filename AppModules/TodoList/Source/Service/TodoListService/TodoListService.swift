@@ -9,8 +9,6 @@ protocol TodoListService {
 
     var cachedTodoList: [TodoItem] { get }
 
-    var httpRequestCounter: HttpRequestCounter { get }
-
     func fetchRemoteTodoList(_ completion: @escaping (Error?) -> Void)
 
     func createRemote(_ todoItem: TodoItem, _ completion: @escaping (Error?) -> Void)

@@ -9,8 +9,8 @@ final class EditorBuilderImpl: EditorBuilder {
 
     func build(initTodoItem: TodoItem?) -> UIViewController {
         let viewParams = EditorViewParams(
-            backgroundLightColor: Colors.backgroundLightColor,
-            prioritySegmentedControlItems: [Images.lowPriorityMark, "нет", Images.highPriorityMark],
+            backgroundLightColor: Theme.data.backgroundColor,
+            prioritySegmentedControlItems: [Theme.image.lowPriorityMark, "нет", Theme.image.highPriorityMark],
             newTodoPlaceholder: "Что надо сделать?",
             priority: "Важность",
             shouldBeDoneBefore: "Сделать до",
