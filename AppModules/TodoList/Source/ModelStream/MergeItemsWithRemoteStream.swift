@@ -18,9 +18,7 @@ protocol MergeItemsWithRemoteSubscriber {
     var mergeSuccess: Observable<Void> { get }
 }
 
-protocol MergeItemsWithRemoteStream: MergeItemsWithRemotePublisher, MergeItemsWithRemoteSubscriber { }
-
-final class MergeItemsWithRemoteStreamImp: MergeItemsWithRemoteStream {
+final class MergeItemsWithRemoteStreamImp: MergeItemsWithRemotePublisher, MergeItemsWithRemoteSubscriber {
 
     private let publishRelay = PublishRelay<Void>()
 

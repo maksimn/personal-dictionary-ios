@@ -18,9 +18,7 @@ protocol CreatedTodoItemSubscriber {
     var todoItem: Observable<TodoItem> { get }
 }
 
-protocol CreatedTodoItemStream: CreatedTodoItemPublisher, CreatedTodoItemSubscriber { }
-
-final class CreatedTodoItemStreamImp: CreatedTodoItemStream {
+final class CreatedTodoItemStreamImp: CreatedTodoItemPublisher, CreatedTodoItemSubscriber {
 
     private let publishRelay = PublishRelay<TodoItem>()
 

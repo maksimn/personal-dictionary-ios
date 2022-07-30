@@ -1,5 +1,5 @@
 //
-//  StubsTodoEditorPresenterOne.swift
+//  StubsEditorPresenterOne.swift
 //  ToDoListTests
 //
 //  Created by Maxim Ivanov on 21.07.2021.
@@ -7,7 +7,7 @@
 
 @testable import TodoList
 
-class TodoEditorViewStub: TodoEditorView {
+class EditorViewStub: EditorView {
     func setRemoveButton(enabled: Bool) {
         
     }
@@ -39,7 +39,7 @@ class TodoEditorViewStub: TodoEditorView {
     var isDeadlineDatePickerVisible: Bool = false
 
 
-    var presenter: TodoEditorPresenter?
+    var presenter: EditorPresenter?
 
     func set(todoItem: TodoItem?) { }
 

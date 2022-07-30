@@ -7,22 +7,22 @@
 
 import UIKit
 
-struct TodoEditorNavBarParams {
+struct EditorNavBarParams {
     let save: String
     let todo: String
     let cancel: String
 }
 
-class TodoEditorNavBar {
+class EditorNavBar {
 
     var onSaveButtonTap: (() -> Void)?
     var onCancelButtonTap: (() -> Void)?
 
-    private let params: TodoEditorNavBarParams
+    private let params: EditorNavBarParams
     private lazy var saveBarButtonItem = UIBarButtonItem(title: params.save, style: .plain,
                                                          target: self, action: #selector(saveButtonTap))
 
-    init(params: TodoEditorNavBarParams,
+    init(params: EditorNavBarParams,
          _ navigationItem: UINavigationItem,
          _ networkIndicatorBuilder: NetworkIndicatorBuilder) {
         self.params = params
