@@ -15,8 +15,7 @@ final class NetworkIndicatorBuilderImpl: NetworkIndicatorBuilder {
                 todoListCache: MOTodoListCache.instance,
                 coreService: URLSessionCoreService(),
                 logger: LoggerImpl(isLoggingEnabled: true),
-                todoCoder: JSONCoderImpl(),
-                notificationCenter: NotificationCenter.default
+                todoCoder: JSONCoderImpl()
             ).service.httpRequestCounter
         )
     }

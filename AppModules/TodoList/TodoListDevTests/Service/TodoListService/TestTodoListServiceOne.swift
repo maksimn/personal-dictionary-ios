@@ -14,7 +14,8 @@ class TestTodoListServiceOne: XCTestCase {
     func testFetchRemoteTodoList__whenCacheIsCleanAndNetworkIsAvailable() throws {
         // Arrange:
         let networkingServiceMock = NetworkingServiceMock()
-        let todoListService = TodoListServiceOne(cache: TodoListCacheStub(),
+        let todoListService = TodoListServiceOne(isRemotingEnabled: true,
+                                                 cache: TodoListCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
                                                  сounter: HttpRequestCounterStub(),
@@ -35,7 +36,8 @@ class TestTodoListServiceOne: XCTestCase {
         // Arrange:
         let todoItem = TodoItem(text: "a")
         let networkingServiceMock = NetworkingServiceMock()
-        let todoListService = TodoListServiceOne(cache: TodoListCacheStub(),
+        let todoListService = TodoListServiceOne(isRemotingEnabled: true,
+                                                 cache: TodoListCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
                                                  сounter: HttpRequestCounterStub(),
@@ -56,7 +58,8 @@ class TestTodoListServiceOne: XCTestCase {
         // Arrange:
         let todoItem = TodoItem(text: "a")
         let networkingServiceMock = NetworkingServiceMock()
-        let todoListService = TodoListServiceOne(cache: TodoListCacheStub(),
+        let todoListService = TodoListServiceOne(isRemotingEnabled: true,
+                                                 cache: TodoListCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
                                                  сounter: HttpRequestCounterStub(),
@@ -77,7 +80,8 @@ class TestTodoListServiceOne: XCTestCase {
         // Arrange:
         let todoItem = TodoItem(text: "a")
         let networkingServiceMock = NetworkingServiceMock()
-        let todoListService = TodoListServiceOne(cache: TodoListCacheStub(),
+        let todoListService = TodoListServiceOne(isRemotingEnabled: true,
+                                                 cache: TodoListCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
                                                  сounter: HttpRequestCounterStub(),
@@ -97,7 +101,8 @@ class TestTodoListServiceOne: XCTestCase {
     func testMergeWithRemote__whenCacheIsCleanAndNetworkIsAvailable() throws {
         // Arrange:
         let networkingServiceMock = NetworkingServiceMock()
-        let todoListService = TodoListServiceOne(cache: TodoListCacheStub(),
+        let todoListService = TodoListServiceOne(isRemotingEnabled: true,
+                                                 cache: TodoListCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
                                                  сounter: HttpRequestCounterStub(),

@@ -25,8 +25,7 @@ final class RichTodoListBuilderImp: RichTodoListBuilder {
                 todoListCache: MOTodoListCache.instance,
                 coreService: URLSessionCoreService(),
                 logger: LoggerImpl(isLoggingEnabled: true),
-                todoCoder: JSONCoderImpl(),
-                notificationCenter: NotificationCenter.default
+                todoCoder: JSONCoderImpl()
             ).service,
             cudSubscriber: TodoItemCUDSubscriberImp(),
             navigationController: navigationController

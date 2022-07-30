@@ -5,35 +5,35 @@
 //  Created by Maxim Ivanov on 01.01.2022.
 //
 
+import RxSwift
+
 final class NetworkIndicatorInteractorImpl: NetworkIndicatorInteractor {
 
     weak var presenter: NetworkIndicatorPresenter?
 
-    private let httpRequestCounter: HttpRequestCounter?
+    private let httpRequestCounter: HttpRequestCounter
+    private let httpRequestCounterSubscriber: HttpRequestCounterSubscriber
+    private let disposeBag = DisposeBag()
 
-    init(httpRequestCounter: HttpRequestCounter?) {
+    init(httpRequestCounter: HttpRequestCounter,
+         httpRequestCounterSubscriber: HttpRequestCounterSubscriber) {
         self.httpRequestCounter = httpRequestCounter
+        self.httpRequestCounterSubscriber = httpRequestCounterSubscriber
         self.addNotificationObservers()
     }
 
     var areRequestsPending: Bool {
-        httpRequestCounter?.areRequestsPending ?? false
+        httpRequestCounter.areRequestsPending
     }
 
     func addNotificationObservers() {
-        let ncd = NotificationCenter.default
-
-        ncd.addObserver(self, selector: #selector(onHttpRequestCounterIncrement),
-                        name: .httpRequestCounterIncrement, object: nil)
-        ncd.addObserver(self, selector: #selector(onHttpRequestCounterDecrement),
-                        name: .httpRequestCounterDecrement, object: nil)
-    }
-
-    @objc func onHttpRequestCounterIncrement(_ notification: Notification) {
-        presenter?.viewUpdateActivityIndicator()
-    }
-
-    @objc func onHttpRequestCounterDecrement(_ notification: Notification) {
-        presenter?.viewUpdateActivityIndicator()
+        httpRequestCounterSubscriber.counterIncrement
+            .subscribe(onNext: { [weak self] _ in
+                self?.presenter?.viewUpdateActivityIndicator()
+            }).disposed(by: disposeBag)
+        httpRequestCounterSubscriber.counterDecrement
+            .subscribe(onNext: { [weak self] _ in
+                self?.presenter?.viewUpdateActivityIndicator()
+            }).disposed(by: disposeBag)
     }
 }

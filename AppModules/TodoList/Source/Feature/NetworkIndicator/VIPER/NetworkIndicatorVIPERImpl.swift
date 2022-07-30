@@ -9,10 +9,13 @@ final class NetworkIndicatorVIPERImpl: NetworkIndicatorVIPER {
 
     private let view: NetworkIndicatorViewImpl
 
-    init(httpRequestCounter: HttpRequestCounter?) {
+    init(httpRequestCounter: HttpRequestCounter) {
         view = NetworkIndicatorViewImpl()
 
-        let interactor = NetworkIndicatorInteractorImpl(httpRequestCounter: httpRequestCounter)
+        let interactor = NetworkIndicatorInteractorImpl(
+            httpRequestCounter: httpRequestCounter,
+            httpRequestCounterSubscriber: HttpRequestCounterStreamImp.instance
+        )
         let presenter = NetworkIndicatorPresenterImpl(view: view, interactor: interactor)
 
         view.presenter = presenter

@@ -9,23 +9,23 @@ import UIKit
 
 class HttpRequestCounterOne: HttpRequestCounter {
 
-    private let notificationCenter: NotificationCenter?
-
     private static var count = 0
 
-    init(_ notificationCenter: NotificationCenter?) {
-        self.notificationCenter = notificationCenter
+    private let httpRequestCounterPublisher: HttpRequestCounterPublisher
+
+    init(httpRequestCounterPublisher: HttpRequestCounterPublisher) {
+        self.httpRequestCounterPublisher = httpRequestCounterPublisher
     }
 
     func increment() {
         HttpRequestCounterOne.count += 1
-        notificationCenter?.post(name: .httpRequestCounterIncrement, object: nil)
+        httpRequestCounterPublisher.notifyOnRequestCounterIncrement()
     }
 
     func decrement() {
         if HttpRequestCounterOne.count > 0 {
             HttpRequestCounterOne.count -= 1
-            notificationCenter?.post(name: .httpRequestCounterDecrement, object: nil)
+            httpRequestCounterPublisher.notifyOnRequestCounterDecrement()
         }
     }
 
