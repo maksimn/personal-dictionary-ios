@@ -9,6 +9,7 @@ import CoreModule
 @testable import TodoList
 
 class TodoListCacheStub: TodoListCache {
+    var completedItemCount: Int = 0
 
     var isDirty: Bool = false
 

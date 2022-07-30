@@ -41,3 +41,7 @@ class NetworkingServiceMock: NetworkingService {
         completion(.success([]))
     }
 }
+
+class MergeItemsWithRemotePublisherMock: MergeItemsWithRemotePublisher {
+    func notify() { }
+}

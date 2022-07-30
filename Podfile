@@ -10,8 +10,7 @@ target 'SuperList' do
   pod 'PersonalDictionary',
     :path => './AppModules/PersonalDictionary'
   pod 'TodoList',
-    :path => './AppModules/TodoList',
-    :testspecs => ['TodoListTests']
+    :path => './AppModules/TodoList'
 
   target 'SuperListTests' do
     inherit! :search_paths
