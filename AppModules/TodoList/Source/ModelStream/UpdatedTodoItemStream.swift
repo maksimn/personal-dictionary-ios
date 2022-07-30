@@ -5,6 +5,7 @@
 //  Created by Maksim Ivanov on 27.07.2022.
 //
 
+import RxCocoa
 import RxSwift
 
 struct UpdatedTodoItemData {
@@ -22,4 +23,19 @@ protocol UpdatedTodoItemSubscriber {
     var updatedTodoItemData: Observable<UpdatedTodoItemData> { get }
 }
 
-protocol UpdatedTodoItemStream: UpdatedTodoItemPublisher, UpdatedTodoItemSubscriber { }
+final class UpdatedTodoItemStreamImp: UpdatedTodoItemPublisher, UpdatedTodoItemSubscriber {
+
+    private let publishRelay = PublishRelay<UpdatedTodoItemData>()
+
+    private init() {}
+
+    static let instance = UpdatedTodoItemStreamImp()
+
+    func send(_ data: UpdatedTodoItemData) {
+        publishRelay.accept(data)
+    }
+
+    var updatedTodoItemData: Observable<UpdatedTodoItemData> {
+        publishRelay.asObservable()
+    }
+}

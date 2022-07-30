@@ -7,28 +7,28 @@
 
 @testable import TodoList
 
-final class NilTodoItemTodoEditorModelMock: TodoEditorInteractor {
-    func save(_ data: TodoEditorUserInput) {
+final class NilTodoItemEditorModelMock: EditorInteractor {
+    func save(_ data: EditorUserInput) {
 
     }
 
 
-    var presenter: TodoEditorPresenter?
+    var presenter: EditorPresenter?
 
     var todoItem: TodoItem? {
         nil
     }
 
-    var mode: TodoEditorMode { .creatingNew }
+    var mode: EditorMode { .creatingNew }
 
     func removeTodoItem() { }
 
     func dispose() { }
 }
 
-final class TodoEditorModelMock: TodoEditorInteractor {
+final class EditorModelMock: EditorInteractor {
 
-    func save(_ data: TodoEditorUserInput) {
+    func save(_ data: EditorUserInput) {
     }
 
 
@@ -42,7 +42,7 @@ final class TodoEditorModelMock: TodoEditorInteractor {
         item
     }
 
-    var presenter: TodoEditorPresenter?
+    var presenter: EditorPresenter?
 
     func removeTodoItem() { }
 
