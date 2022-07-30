@@ -11,6 +11,7 @@ import Foundation
 /// Общая логика отправки и обработки сетевых запросов создания, обновления и удаления todo item'a.
 class TodoListServiceOne: TodoListService {
 
+    private let isRemotingEnabled: Bool
     private let cache: TodoListCache
     private let logger: Logger
     private let networking: NetworkingService
@@ -23,12 +24,13 @@ class TodoListServiceOne: TodoListService {
     private static let jitter: Double = 0.05
     private var currentDelay: Double = 2
 
-    init(cache: TodoListCache,
+    init(isRemotingEnabled: Bool = !BearerToken.value.isEmpty,
+         cache: TodoListCache,
          logger: Logger,
          networking: NetworkingService,
          сounter: HttpRequestCounter,
-         mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisher
-    ) {
+         mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisher) {
+        self.isRemotingEnabled = isRemotingEnabled
         self.cache = cache
         self.logger = logger
         self.networking = networking
@@ -44,11 +46,11 @@ class TodoListServiceOne: TodoListService {
         сounter
     }
 
-    var isCompletedItemsEmpty: Bool {
-        cache.completedItemCount == 0
-    }
-
     func fetchRemoteTodoList(_ completion: @escaping (Error?) -> Void) {
+        guard isRemotingEnabled else {
+            return completion(TodoListServiceError.remotingDisabled)
+        }
+
         if cache.isDirty {
             mergeWithRemote(completion)
         } else {
@@ -73,6 +75,14 @@ class TodoListServiceOne: TodoListService {
     }
 
     func createRemote(_ todoItem: TodoItem, _ completion: @escaping (Error?) -> Void) {
+        guard isRemotingEnabled else {
+            cache.insert(todoItem.update(isDirty: true)) { _ in
+                completion(TodoListServiceError.remotingDisabled)
+            }
+
+            return
+        }
+
         if cache.isDirty {
             cache.insert(todoItem.update(isDirty: true)) { [weak self] _ in
                 self?.mergeWithRemote(completion)
@@ -103,6 +113,14 @@ class TodoListServiceOne: TodoListService {
     }
 
     func updateRemote(_ todoItem: TodoItem, _ completion: @escaping (Error?) -> Void) {
+        guard isRemotingEnabled else {
+            cache.update(todoItem.update(isDirty: true)) { _ in
+                completion(TodoListServiceError.remotingDisabled)
+            }
+
+            return
+        }
+
         if cache.isDirty {
             cache.update(todoItem.update(isDirty: true)) { [weak self] _ in
                 self?.mergeWithRemote(completion)
@@ -132,12 +150,28 @@ class TodoListServiceOne: TodoListService {
     }
 
     func removeRemote(_ todoItem: TodoItem, _ completion: @escaping (Error?) -> Void) {
+        guard isRemotingEnabled else {
+            cache.delete(todoItem) { [weak self] _ in
+                let tombstone = Tombstone(itemId: todoItem.id, deletedAt: Date())
+
+                self?.cache.insert(tombstone: tombstone) { _ in
+                    completion(TodoListServiceError.remotingDisabled)
+                }
+            }
+
+            return
+        }
+
         cache.delete(todoItem) { [weak self] _ in
             self?.removeRemoteRequest(todoItem, completion)
         }
     }
 
     func mergeWithRemote(_ completion: @escaping (Error?) -> Void) {
+        guard isRemotingEnabled else {
+            return completion(TodoListServiceError.remotingDisabled)
+        }
+
         let deleted = Array(Set(cache.tombstones.map { $0.itemId }))
         let dirtyItems = cache.todoList.filter { $0.isDirty }.map { TodoItemDTO.map($0) }
         let requestData = MergeTodoListRequestData(deleted: deleted, other: dirtyItems)
@@ -223,5 +257,9 @@ class TodoListServiceOne: TodoListService {
         let next = delay + delay * TodoListServiceOne.jitter * Double.random(in: -1.0...1.0)
 
         return next
+    }
+
+    enum TodoListServiceError: Error {
+        case remotingDisabled
     }
 }
