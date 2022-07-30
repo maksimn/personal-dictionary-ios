@@ -25,8 +25,4 @@ Pod::Spec.new do |spec|
   spec.dependency 'CoreModule'
   spec.dependency 'SnapKit', '~> 4.0'
 
-  spec.test_spec 'TodoListTests' do |test_spec|
-    test_spec.source_files = 'Tests/**/*'
-  end
-
 end

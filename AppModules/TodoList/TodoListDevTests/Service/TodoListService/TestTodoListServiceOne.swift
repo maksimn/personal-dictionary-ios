@@ -17,7 +17,8 @@ class TestTodoListServiceOne: XCTestCase {
         let todoListService = TodoListServiceOne(cache: TodoListCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
-                                                 сounter: HttpRequestCounterStub())
+                                                 сounter: HttpRequestCounterStub(),
+                                                 mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisherMock())
         let exp = expectation(description: "fetchRemoteTodoList")
 
         // Act:
@@ -37,7 +38,8 @@ class TestTodoListServiceOne: XCTestCase {
         let todoListService = TodoListServiceOne(cache: TodoListCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
-                                                 сounter: HttpRequestCounterStub())
+                                                 сounter: HttpRequestCounterStub(),
+                                                 mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisherMock())
         let exp = expectation(description: "createRemote")
 
         // Act:
@@ -57,7 +59,8 @@ class TestTodoListServiceOne: XCTestCase {
         let todoListService = TodoListServiceOne(cache: TodoListCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
-                                                 сounter: HttpRequestCounterStub())
+                                                 сounter: HttpRequestCounterStub(),
+                                                 mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisherMock())
         let exp = expectation(description: "updateRemote")
 
         // Act:
@@ -77,7 +80,8 @@ class TestTodoListServiceOne: XCTestCase {
         let todoListService = TodoListServiceOne(cache: TodoListCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
-                                                 сounter: HttpRequestCounterStub())
+                                                 сounter: HttpRequestCounterStub(),
+                                                 mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisherMock())
         let exp = expectation(description: "removeRemote")
 
         // Act:
@@ -96,7 +100,8 @@ class TestTodoListServiceOne: XCTestCase {
         let todoListService = TodoListServiceOne(cache: TodoListCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
-                                                 сounter: HttpRequestCounterStub())
+                                                 сounter: HttpRequestCounterStub(),
+                                                 mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisherMock())
         let exp = expectation(description: "mergeWithRemote")
 
         // Act:

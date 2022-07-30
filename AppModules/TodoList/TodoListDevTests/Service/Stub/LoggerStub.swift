@@ -16,6 +16,8 @@ class LoggerStub: Logger {
     func networkRequestSuccess(_ type: String) {
     }
 
+    func log(message: String) { }
+
     func log(error: Error) {
     }
 }
