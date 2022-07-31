@@ -37,7 +37,7 @@ final class RichTodoListModelImp: RichTodoListModel, ItemListDelegate {
 
     func load() {
         setState()
-        service.fetchRemoteTodoList { [weak self] _ in
+        service.fetchRemoteItems { [weak self] _ in
             self?.setState()
         }
     }
@@ -106,7 +106,7 @@ final class RichTodoListModelImp: RichTodoListModel, ItemListDelegate {
     }
 
     private func setState() {
-        state.items = service.cachedTodoList
+        state.items = service.items
         state.completedItemCount = state.items.filter { $0.isCompleted }.count
     }
 }

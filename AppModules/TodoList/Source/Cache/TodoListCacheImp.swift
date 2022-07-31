@@ -9,39 +9,22 @@ import CoreData
 import CoreModule
 import Foundation
 
-// Technical debt.
-// The code needs to be refactored.
-class MOTodoListCache: TodoListCache {
+class TodoListCacheImp: TodoListCache {
 
+    private let container: TodoListPersistentContainer
     private let logger: Logger
 
     private var mainContext: NSManagedObjectContext {
-        persistentContainer.viewContext
+        container.persistentContainer.viewContext
     }
 
-    private lazy var persistentContainer: NSPersistentContainer = {
-        let bundle = Bundle(for: type(of: self))
-        let persistentContainerName = "TodoList"
+    private var persistentContainer: NSPersistentContainer {
+        container.persistentContainer
+    }
 
-        guard let modelURL = bundle.url(forResource: persistentContainerName, withExtension: "momd"),
-              let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL) else {
-            return NSPersistentContainer()
-        }
-
-        let container = NSPersistentContainer(name: persistentContainerName,
-                                              managedObjectModel: managedObjectModel)
-
-        container.loadPersistentStores(completionHandler: { (_, error) in
-            container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
-
-            if let error = error {
-                self.logger.log(error: error)
-            }
-        })
-        return container
-    }()
-
-    init(logger: Logger) {
+    init(container: TodoListPersistentContainer,
+         logger: Logger) {
+        self.container = container
         self.logger = logger
     }
 
@@ -49,10 +32,10 @@ class MOTodoListCache: TodoListCache {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: TombstoneMO.name)
         let tombstoneCount: Int = (try? mainContext.count(for: fetchRequest)) ?? 0
 
-        return todoList.filter { $0.isDirty }.count > 0 || tombstoneCount > 0
+        return items.filter { $0.isDirty }.count > 0 || tombstoneCount > 0
     }
 
-    var todoList: [TodoItem] {
+    var items: [TodoItem] {
         let fetchRequest: NSFetchRequest<TodoItemMO> = TodoItemMO.fetchRequest()
         let sortDescriptor = NSSortDescriptor.init(key: "createdAt", ascending: true)
 
@@ -69,22 +52,7 @@ class MOTodoListCache: TodoListCache {
     }
 
     var completedItemCount: Int {
-        todoList.filter({ $0.isCompleted }).count
-    }
-
-    var tombstones: [Tombstone] {
-        let fetchRequest: NSFetchRequest<TombstoneMO> = TombstoneMO.fetchRequest()
-
-        do {
-            let tombstoneMOList = try mainContext.fetch(fetchRequest)
-
-            return tombstoneMOList.map { tombstoneMO in
-                Tombstone(itemId: tombstoneMO.itemId ?? "", deletedAt: tombstoneMO.deletedAt ?? Date())
-            }
-        } catch {
-            logger.log(error: error)
-            return []
-        }
+        items.filter({ $0.isCompleted }).count
     }
 
     func insert(_ todoItem: TodoItem, _ completion: @escaping (Error?) -> Void) {
@@ -93,7 +61,7 @@ class MOTodoListCache: TodoListCache {
         backgroundContext.perform { [weak self] in
             let todoItemMO = TodoItemMO(entity: TodoItemMO.entity(), insertInto: backgroundContext)
 
-            todoItemMO.setDataFrom(todoItem)
+            todoItemMO.set(todoItem)
 
             do {
                 try backgroundContext.save()
@@ -123,7 +91,7 @@ class MOTodoListCache: TodoListCache {
                 if array.count > 0 {
                     let todoItemMO = array[0]
 
-                    todoItemMO.setDataFrom(todoItem)
+                    todoItemMO.set(todoItem)
                 }
                 try backgroundContext.save()
                 DispatchQueue.main.async {
@@ -167,50 +135,6 @@ class MOTodoListCache: TodoListCache {
         }
     }
 
-    func insert(tombstone: Tombstone, _ completion: @escaping (Error?) -> Void) {
-        let backgroundContext = persistentContainer.newBackgroundContext()
-
-        backgroundContext.perform { [weak self] in
-            let tombstoneMO = TombstoneMO(entity: TombstoneMO.entity(), insertInto: backgroundContext)
-
-            tombstoneMO.itemId = tombstone.itemId
-            tombstoneMO.deletedAt = tombstone.deletedAt
-
-            do {
-                try backgroundContext.save()
-                DispatchQueue.main.async {
-                    completion(nil)
-                }
-            } catch {
-                self?.logger.log(error: error)
-                DispatchQueue.main.async {
-                    completion(error)
-                }
-            }
-        }
-    }
-
-    func clearTombstones(_ completion: @escaping (Error?) -> Void) {
-        let backgroundContext = persistentContainer.newBackgroundContext()
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: TombstoneMO.name)
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-
-        backgroundContext.perform { [weak self] in
-            do {
-                try backgroundContext.execute(deleteRequest)
-                try backgroundContext.save()
-                DispatchQueue.main.async {
-                    completion(nil)
-                }
-            } catch {
-                self?.logger.log(error: error)
-                DispatchQueue.main.async {
-                    completion(error)
-                }
-            }
-        }
-    }
-
     func replaceWith(_ todoList: [TodoItem], _ completion: @escaping (Error?) -> Void) {
         let backgroundContext = persistentContainer.newBackgroundContext()
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: TodoItemMO.name)
@@ -222,7 +146,7 @@ class MOTodoListCache: TodoListCache {
                 todoList.forEach { todoItem in
                     if let todoItemMO = NSEntityDescription.insertNewObject(forEntityName: TodoItemMO.name,
                                                                             into: backgroundContext) as? TodoItemMO {
-                        todoItemMO.setDataFrom(todoItem)
+                        todoItemMO.set(todoItem)
                     }
                 }
                 try backgroundContext.save()

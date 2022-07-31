@@ -16,6 +16,7 @@ class TestTodoListServiceOne: XCTestCase {
         let networkingServiceMock = NetworkingServiceMock()
         let todoListService = TodoListServiceOne(isRemotingEnabled: true,
                                                  cache: TodoListCacheStub(),
+                                                 deadItemsCache: DeadItemsCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
                                                  сounter: HttpRequestCounterStub(),
@@ -23,7 +24,7 @@ class TestTodoListServiceOne: XCTestCase {
         let exp = expectation(description: "fetchRemoteTodoList")
 
         // Act:
-        todoListService.fetchRemoteTodoList { _ in
+        todoListService.fetchRemoteItems { _ in
             exp.fulfill()
         }
         waitForExpectations(timeout: 0.001)
@@ -38,6 +39,7 @@ class TestTodoListServiceOne: XCTestCase {
         let networkingServiceMock = NetworkingServiceMock()
         let todoListService = TodoListServiceOne(isRemotingEnabled: true,
                                                  cache: TodoListCacheStub(),
+                                                 deadItemsCache: DeadItemsCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
                                                  сounter: HttpRequestCounterStub(),
@@ -60,6 +62,7 @@ class TestTodoListServiceOne: XCTestCase {
         let networkingServiceMock = NetworkingServiceMock()
         let todoListService = TodoListServiceOne(isRemotingEnabled: true,
                                                  cache: TodoListCacheStub(),
+                                                 deadItemsCache: DeadItemsCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
                                                  сounter: HttpRequestCounterStub(),
@@ -82,6 +85,7 @@ class TestTodoListServiceOne: XCTestCase {
         let networkingServiceMock = NetworkingServiceMock()
         let todoListService = TodoListServiceOne(isRemotingEnabled: true,
                                                  cache: TodoListCacheStub(),
+                                                 deadItemsCache: DeadItemsCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
                                                  сounter: HttpRequestCounterStub(),
@@ -103,6 +107,7 @@ class TestTodoListServiceOne: XCTestCase {
         let networkingServiceMock = NetworkingServiceMock()
         let todoListService = TodoListServiceOne(isRemotingEnabled: true,
                                                  cache: TodoListCacheStub(),
+                                                 deadItemsCache: DeadItemsCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
                                                  сounter: HttpRequestCounterStub(),

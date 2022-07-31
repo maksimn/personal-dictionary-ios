@@ -13,9 +13,7 @@ class TodoListCacheStub: TodoListCache {
 
     var isDirty: Bool = false
 
-    var todoList: [TodoItem] = []
-
-    var tombstones: [Tombstone] = []
+    var items: [TodoItem] = []
 
     func insert(_ todoItem: TodoItem, _ completion: @escaping (Error?) -> Void) {
         completion(nil)
@@ -29,18 +27,21 @@ class TodoListCacheStub: TodoListCache {
         completion(nil)
     }
 
-    func insert(tombstone: Tombstone, _ completion: @escaping (Error?) -> Void) {
-        completion(nil)
-    }
-
-    func clearTombstones(_ completion: @escaping (Error?) -> Void) {
-        completion(nil)
-    }
-
     func replaceWith(_ todoList: [TodoItem], _ completion: @escaping (Error?) -> Void) {
         completion(nil)
     }
 
-    func setLogger(_ logger: Logger) {
+}
+
+class DeadItemsCacheStub: DeadItemsCache {
+
+    var tombstones: [Tombstone] = []
+
+    func insert(tombstone: Tombstone, _ completion: @escaping (Error?) -> Void) {
+        completion(nil)
+    }
+    
+    func clearTombstones(_ completion: @escaping (Error?) -> Void) {
+        completion(nil)
     }
 }

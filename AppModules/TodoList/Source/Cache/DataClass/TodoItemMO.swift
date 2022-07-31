@@ -5,30 +5,29 @@
 //  Created by Maxim Ivanov on 06.07.2021.
 //
 
-import Foundation
 import CoreData
 
 @objc(TodoItemMO)
-public class TodoItemMO: NSManagedObject {
+class TodoItemMO: NSManagedObject {
 
-    @NSManaged public var createdAt: Date?
-    @NSManaged public var deadline: Date?
-    @NSManaged public var id: String?
-    @NSManaged public var isCompleted: Bool
-    @NSManaged public var isDirty: Bool
-    @NSManaged public var priority: String?
-    @NSManaged public var text: String?
-    @NSManaged public var updatedAt: Date?
+    @NSManaged var createdAt: Date?
+    @NSManaged var deadline: Date?
+    @NSManaged var id: String?
+    @NSManaged var isCompleted: Bool
+    @NSManaged var isDirty: Bool
+    @NSManaged var priority: String?
+    @NSManaged var text: String?
+    @NSManaged var updatedAt: Date?
 
     static var name: String {
         "TodoItemMO"
     }
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<TodoItemMO> {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<TodoItemMO> {
         return NSFetchRequest<TodoItemMO>(entityName: TodoItemMO.name)
     }
 
-    func setDataFrom(_ todoItem: TodoItem) {
+    func set(_ todoItem: TodoItem) {
         self.id = todoItem.id
         self.text = todoItem.text
         self.priority = TodoItemDTO.mapPriority(todoItem.priority)

@@ -5,30 +5,19 @@
 //  Created by Maxim Ivanov on 08.07.2021.
 //
 
-import CoreModule
-
-// Technical debt.
-// The code needs to be refactored.
-// Decompose to TodoListCache, DeadTodoItemsCache.
 protocol TodoListCache {
 
     var isDirty: Bool { get }
 
-    var todoList: [TodoItem] { get }
+    var items: [TodoItem] { get }
 
     var completedItemCount: Int { get }
-
-    var tombstones: [Tombstone] { get }
 
     func insert(_ todoItem: TodoItem, _ completion: @escaping (Error?) -> Void)
 
     func update(_ todoItem: TodoItem, _ completion: @escaping (Error?) -> Void)
 
     func delete(_ todoItem: TodoItem, _ completion: @escaping (Error?) -> Void)
-
-    func insert(tombstone: Tombstone, _ completion: @escaping (Error?) -> Void)
-
-    func clearTombstones(_ completion: @escaping (Error?) -> Void)
 
     func replaceWith(_ todoList: [TodoItem], _ completion: @escaping (Error?) -> Void)
 }
