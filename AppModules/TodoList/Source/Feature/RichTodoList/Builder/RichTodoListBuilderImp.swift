@@ -34,9 +34,17 @@ final class RichTodoListBuilderImp: RichTodoListBuilder {
         let httpRequestCounter = HttpRequestCounterOne(
             httpRequestCounterPublisher: HttpRequestCounterStreamImp.instance
         )
+        let persistentContainer = TodoListPersistentContainer(logger: logger)
         let service = TodoListServiceOne(
             isRemotingEnabled: !token.isEmpty,
-            cache: MOTodoListCache(logger: logger),
+            cache: TodoListCacheImp(
+                container: persistentContainer,
+                logger: logger
+            ),
+            deadItemsCache: DeadItemsCacheImp(
+                container: persistentContainer,
+                logger: logger
+            ),
             logger: logger,
             networking: networkingService,
             сounter: httpRequestCounter,

@@ -19,6 +19,7 @@ class TodoListServiceOne: TodoListService {
 
     private let isRemotingEnabled: Bool
     private let cache: TodoListCache
+    private let deadItemsCache: DeadItemsCache
     private let logger: Logger
     private let networking: NetworkingService
     private let сounter: HttpRequestCounter
@@ -32,23 +33,25 @@ class TodoListServiceOne: TodoListService {
 
     init(isRemotingEnabled: Bool,
          cache: TodoListCache,
+         deadItemsCache: DeadItemsCache,
          logger: Logger,
          networking: NetworkingService,
          сounter: HttpRequestCounter,
          mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisher) {
         self.isRemotingEnabled = isRemotingEnabled
         self.cache = cache
+        self.deadItemsCache = deadItemsCache
         self.logger = logger
         self.networking = networking
         self.сounter = сounter
         self.mergeItemsWithRemotePublisher = mergeItemsWithRemotePublisher
     }
 
-    var cachedTodoList: [TodoItem] {
-        cache.todoList
+    var items: [TodoItem] {
+        cache.items
     }
 
-    func fetchRemoteTodoList(_ completion: @escaping (Error?) -> Void) {
+    func fetchRemoteItems(_ completion: @escaping (Error?) -> Void) {
         guard isRemotingEnabled else {
             return completion(TodoListServiceError.remotingDisabled)
         }
@@ -64,7 +67,7 @@ class TodoListServiceOne: TodoListService {
                     self?.logger.networkRequestSuccess(getTodoList)
 
                     let fetchedTodoList = try result.get().map { $0.map() }
-                    let mergedTodoList = self?.cachedTodoList.mergeWith(fetchedTodoList) ?? []
+                    let mergedTodoList = self?.items.mergeWith(fetchedTodoList) ?? []
                     self?.cache.replaceWith(mergedTodoList) { error in
                         completion(error)
                     }
@@ -156,7 +159,7 @@ class TodoListServiceOne: TodoListService {
             cache.delete(todoItem) { [weak self] _ in
                 let tombstone = Tombstone(itemId: todoItem.id, deletedAt: Date())
 
-                self?.cache.insert(tombstone: tombstone) { _ in
+                self?.deadItemsCache.insert(tombstone: tombstone) { _ in
                     completion(TodoListServiceError.remotingDisabled)
                 }
             }
@@ -174,8 +177,8 @@ class TodoListServiceOne: TodoListService {
             return completion(TodoListServiceError.remotingDisabled)
         }
 
-        let deleted = Array(Set(cache.tombstones.map { $0.itemId }))
-        let dirtyItems = cache.todoList.filter { $0.isDirty }.map { TodoItemDTO.map($0) }
+        let deleted = Array(Set(deadItemsCache.tombstones.map { $0.itemId }))
+        let dirtyItems = cache.items.filter { $0.isDirty }.map { TodoItemDTO.map($0) }
         let requestData = MergeTodoListRequestData(deleted: deleted, other: dirtyItems)
 
         logger.networkRequestStart(mergeTodoList)
@@ -186,7 +189,7 @@ class TodoListServiceOne: TodoListService {
                 var todoList = try result.get().map({ $0.map() })
                 todoList.sortByCreateAt()
                 self?.logger.networkRequestSuccess(mergeTodoList)
-                self?.cache.clearTombstones { _ in
+                self?.deadItemsCache.clearTombstones { _ in
 
                 }
                 self?.currentDelay = TodoListServiceOne.minDelay
@@ -205,20 +208,20 @@ class TodoListServiceOne: TodoListService {
         let tombstone = Tombstone(itemId: todoItem.id, deletedAt: Date())
 
         if cache.isDirty {
-            cache.insert(tombstone: tombstone) { [weak self] _ in
+            deadItemsCache.insert(tombstone: tombstone) { [weak self] _ in
                 self?.mergeWithRemote(completion)
             }
         } else {
             logger.networkRequestStart(deleteTodoItem)
             сounter.increment()
-            cache.insert(tombstone: tombstone) { [weak self] _ in
+            deadItemsCache.insert(tombstone: tombstone) { [weak self] _ in
                 self?.networking.deleteTodoItem(todoItem.id) { [weak self] result in
                     self?.сounter.decrement()
                     do {
                         _ = try result.get()
 
                         self?.logger.networkRequestSuccess(deleteTodoItem)
-                        self?.cache.clearTombstones { _ in
+                        self?.deadItemsCache.clearTombstones { _ in
                             completion(nil)
                         }
                     } catch {

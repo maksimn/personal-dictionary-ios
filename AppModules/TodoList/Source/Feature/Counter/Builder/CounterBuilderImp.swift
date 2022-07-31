@@ -11,8 +11,12 @@ import CoreModule
 final class CounterBuilderImp: CounterBuilder {
 
     func build() -> CounterGraph {
-        CounterGraphImp(
-            initialCount: MOTodoListCache(logger: LoggerImpl(isLoggingEnabled: true)).completedItemCount
+        let logger = LoggerImpl(isLoggingEnabled: true)
+        let todoListCache = TodoListCacheImp(
+            container: TodoListPersistentContainer(logger: logger),
+            logger: logger
         )
+
+        return CounterGraphImp(initialCount: todoListCache.completedItemCount)
     }
 }
