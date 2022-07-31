@@ -16,7 +16,7 @@ final class ItemListView: UIView {
 
     private let tableView = UITableView()
 
-    private let tableController = TodoTableController()
+    private lazy var tableController = TodoTableController(tableView: tableView)
 
     private let disposeBag = DisposeBag()
 
@@ -36,8 +36,7 @@ final class ItemListView: UIView {
     private func subscribeToViewModel() {
         viewModel.items
             .subscribe(onNext: { [weak self] items in
-                self?.tableController.todoList = items
-                self?.tableView.reloadData()
+                self?.tableController.update(items)
             }).disposed(by: disposeBag)
     }
 
@@ -56,9 +55,9 @@ final class ItemListView: UIView {
     }
 
     private func onDidSelectAt(_ position: Int) {
-        guard position > -1 && position < tableController.todoList.count else { return }
+        guard position > -1 && position < tableController.items.count else { return }
 
-        let todoItem = tableController.todoList[position]
+        let todoItem = tableController.items[position]
 
         navToEditorRouter.navigate(with: todoItem)
     }
