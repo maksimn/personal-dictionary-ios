@@ -9,12 +9,14 @@ import UIKit
 
 class TodoItemCell: UITableViewCell {
 
-    let todoTextlabel = UILabel()
+    let textlabel = UILabel()
     let completenessImageView = UIImageView()
     let rightArrowImageView = UIImageView()
     let priorityImageView = UIImageView()
     let deadlineImageView = UIImageView()
     let deadlineLabel = UILabel()
+
+    var todoItem: TodoItem?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -26,13 +28,14 @@ class TodoItemCell: UITableViewCell {
     }
 
     func set(todoItem: TodoItem) {
+        self.todoItem = todoItem
         setText(from: todoItem)
         priorityImageView.image = image(for: todoItem.priority)
-        setLayout(isPriorityNormal: todoItem.priority == .normal)
         deadlineImageView.isHidden = todoItem.deadline == nil
         deadlineLabel.isHidden = deadlineImageView.isHidden
         deadlineLabel.text = todoItem.deadline?.formattedDate
         completenessImageView.image = completenessImage(for: todoItem)
+        setLayout()
     }
 
     private func image(for priority: TodoItemPriority) -> UIImage? {
@@ -62,9 +65,8 @@ class TodoItemCell: UITableViewCell {
     private func setText(from todoItem: TodoItem) {
         let attributes = todoItem.isCompleted ?
             [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue] : nil
-        let attrString = NSAttributedString(string: todoItem.text, attributes: attributes)
 
-        todoTextlabel.attributedText = attrString
-        todoTextlabel.textColor = todoItem.isCompleted ? Theme.data.lightTextColor : .black
+        textlabel.attributedText = NSAttributedString(string: todoItem.text, attributes: attributes)
+        textlabel.textColor = todoItem.isCompleted ? Theme.data.lightTextColor : .black
     }
 }
