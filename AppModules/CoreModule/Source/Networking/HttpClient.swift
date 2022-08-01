@@ -8,10 +8,10 @@
 import RxSwift
 
 public struct Http {
-    let urlString: String
-    let method: String
-    let headers: [String: String]?
-    let body: Data?
+    public let urlString: String
+    public let method: String
+    public let headers: [String: String]?
+    public let body: Data?
 
     public init(urlString: String = "",
                 method: String = "",
