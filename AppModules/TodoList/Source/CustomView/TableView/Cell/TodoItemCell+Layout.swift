@@ -45,7 +45,7 @@ extension TodoItemCell {
         super.layoutSubviews()
         let priorityImageWidth: CGFloat = todoItem?.priority == .normal ? 0 : TodoItemCell.priorityImageMargin
         let textLabelLeftMargin = TodoItemCell.fulfillmentMarginLeft + TodoItemCell.fulfillmentWidth +
-            priorityImageWidth + TodoItemCell.textMarginLeft
+            priorityImageWidth + TodoItemCell.textMarginLeft + 2.5
 
         textlabel.preferredMaxLayoutWidth = frame.width - (textLabelLeftMargin + TodoItemCell.textMarginRight)
         textlabel.frame = CGRect(origin: CGPoint(x: textLabelLeftMargin, y: 17),

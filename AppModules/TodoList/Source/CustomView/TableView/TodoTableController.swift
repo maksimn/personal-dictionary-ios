@@ -76,7 +76,29 @@ class TodoTableController: NSObject, UITableViewDataSource, UITableViewDelegate 
     }
 
     private func isDeleteItem(_ items: [TodoItem], _ prev: [TodoItem]) -> Bool {
-        prev.count == items.count + 1
+        if prev.count == items.count + 1 {
+            var i = 0, j = 0, counter = 0
+
+            while i < items.count {
+                if items[i] == prev[j] {
+                    i += 1
+                    j += 1
+                } else {
+                    j += 1
+                    counter += 1
+
+                    if counter > 1 {
+                        return false
+                    }
+                }
+            }
+
+            if counter == 1 {
+                return true
+            }
+        }
+
+        return false
     }
 
     private func isExpandCompletedItems(_ items: [TodoItem], _ prev: [TodoItem]) -> Bool {
