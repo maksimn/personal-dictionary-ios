@@ -10,40 +10,35 @@ import RxSwift
 
 protocol HttpRequestCounterPublisher {
 
-    func notifyOnRequestCounterIncrement()
+    func increment()
 
-    func notifyOnRequestCounterDecrement()
+    func decrement()
 }
 
 protocol HttpRequestCounterSubscriber {
 
-    var counterIncrement: Observable<Void> { get }
-
-    var counterDecrement: Observable<Void> { get }
+    var count: Observable<Int> { get }
 }
 
 final class HttpRequestCounterStreamImp: HttpRequestCounterPublisher, HttpRequestCounterSubscriber {
 
-    private let counterIncrementRublishRelay = PublishRelay<Void>()
-    private let counterDecrementRublishRelay = PublishRelay<Void>()
+    private let behaviorRelay = BehaviorRelay<Int>(value: 0)
 
     private init() {}
 
     static let instance = HttpRequestCounterStreamImp()
 
-    func notifyOnRequestCounterIncrement() {
-        counterIncrementRublishRelay.accept(Void())
+    func increment() {
+        behaviorRelay.accept(behaviorRelay.value + 1)
     }
 
-    func notifyOnRequestCounterDecrement() {
-        counterDecrementRublishRelay.accept(Void())
+    func decrement() {
+        if behaviorRelay.value > 0 {
+            behaviorRelay.accept(behaviorRelay.value - 1)
+        }
     }
 
-    var counterIncrement: Observable<Void> {
-        counterIncrementRublishRelay.asObservable()
-    }
-
-    var counterDecrement: Observable<Void> {
-        counterDecrementRublishRelay.asObservable()
+    var count: Observable<Int> {
+        behaviorRelay.asObservable()
     }
 }

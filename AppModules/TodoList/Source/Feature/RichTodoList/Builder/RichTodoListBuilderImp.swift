@@ -31,9 +31,6 @@ final class RichTodoListBuilderImp: RichTodoListBuilder {
             coreService: URLSessionCoreService(),
             todoCoder: JSONCoderImpl()
         )
-        let httpRequestCounter = HttpRequestCounterOne(
-            httpRequestCounterPublisher: HttpRequestCounterStreamImp.instance
-        )
         let persistentContainer = TodoListPersistentContainer(logger: logger)
         let service = TodoListServiceOne(
             isRemotingEnabled: !token.isEmpty,
@@ -47,7 +44,7 @@ final class RichTodoListBuilderImp: RichTodoListBuilder {
             ),
             logger: logger,
             networking: networkingService,
-            сounter: httpRequestCounter,
+            httpRequestCounterPublisher: HttpRequestCounterStreamImp.instance,
             mergeItemsWithRemotePublisher: MergeItemsWithRemoteStreamImp.instance
         )
 

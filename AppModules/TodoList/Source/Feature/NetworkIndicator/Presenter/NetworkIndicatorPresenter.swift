@@ -7,5 +7,5 @@
 
 protocol NetworkIndicatorPresenter: AnyObject {
 
-    func viewUpdateActivityIndicator()
+    func updateActivityIndicator(visible: Bool)
 }

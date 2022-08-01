@@ -22,7 +22,7 @@ class TodoListServiceOne: TodoListService {
     private let deadItemsCache: DeadItemsCache
     private let logger: Logger
     private let networking: NetworkingService
-    private let сounter: HttpRequestCounter
+    private let httpRequestCounterPublisher: HttpRequestCounterPublisher
     private let mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisher
 
     private static let minDelay: Double = 2
@@ -36,14 +36,14 @@ class TodoListServiceOne: TodoListService {
          deadItemsCache: DeadItemsCache,
          logger: Logger,
          networking: NetworkingService,
-         сounter: HttpRequestCounter,
+         httpRequestCounterPublisher: HttpRequestCounterPublisher,
          mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisher) {
         self.isRemotingEnabled = isRemotingEnabled
         self.cache = cache
         self.deadItemsCache = deadItemsCache
         self.logger = logger
         self.networking = networking
-        self.сounter = сounter
+        self.httpRequestCounterPublisher = httpRequestCounterPublisher
         self.mergeItemsWithRemotePublisher = mergeItemsWithRemotePublisher
     }
 
@@ -60,9 +60,9 @@ class TodoListServiceOne: TodoListService {
             mergeWithRemote(completion)
         } else {
             logger.networkRequestStart(getTodoList)
-            сounter.increment()
+            httpRequestCounterPublisher.increment()
             networking.fetchTodoList { [weak self] result in
-                self?.сounter.decrement()
+                self?.httpRequestCounterPublisher.decrement()
                 do {
                     self?.logger.networkRequestSuccess(getTodoList)
 
@@ -97,10 +97,10 @@ class TodoListServiceOne: TodoListService {
         }
 
         logger.networkRequestStart(createTodoItem)
-        сounter.increment()
+        httpRequestCounterPublisher.increment()
         cache.insert(todoItem.update(isDirty: true)) { [weak self] _ in
             self?.networking.createTodoItem(TodoItemDTO.map(todoItem)) { [weak self] result in
-                self?.сounter.decrement()
+                self?.httpRequestCounterPublisher.decrement()
 
                 do {
                     _ = try result.get()
@@ -135,10 +135,10 @@ class TodoListServiceOne: TodoListService {
         }
 
         logger.networkRequestStart(updateTodoItem)
-        сounter.increment()
+        httpRequestCounterPublisher.increment()
         cache.update(todoItem.update(isDirty: true)) { [weak self] _ in
             self?.networking.updateTodoItem(TodoItemDTO.map(todoItem)) { [weak self] result in
-                self?.сounter.decrement()
+                self?.httpRequestCounterPublisher.decrement()
                 do {
                     _ = try result.get()
 
@@ -182,9 +182,9 @@ class TodoListServiceOne: TodoListService {
         let requestData = MergeTodoListRequestData(deleted: deleted, other: dirtyItems)
 
         logger.networkRequestStart(mergeTodoList)
-        сounter.increment()
+        httpRequestCounterPublisher.increment()
         networking.mergeTodoList(requestData) { [weak self] result in
-            self?.сounter.decrement()
+            self?.httpRequestCounterPublisher.decrement()
             do {
                 var todoList = try result.get().map({ $0.map() })
                 todoList.sortByCreateAt()
@@ -213,10 +213,10 @@ class TodoListServiceOne: TodoListService {
             }
         } else {
             logger.networkRequestStart(deleteTodoItem)
-            сounter.increment()
+            httpRequestCounterPublisher.increment()
             deadItemsCache.insert(tombstone: tombstone) { [weak self] _ in
                 self?.networking.deleteTodoItem(todoItem.id) { [weak self] result in
-                    self?.сounter.decrement()
+                    self?.httpRequestCounterPublisher.decrement()
                     do {
                         _ = try result.get()
 

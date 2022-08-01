@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0C14B1A82894ECE500370130 /* TodoItemCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C14B1902894ECE500370130 /* TodoItemCellTests.swift */; };
 		0C14B1AA2894ECE500370130 /* NetworkingServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C14B1952894ECE500370130 /* NetworkingServiceMock.swift */; };
 		0C14B1AB2894ECE500370130 /* HttpRequestCounterStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C14B1972894ECE500370130 /* HttpRequestCounterStub.swift */; };
 		0C14B1AC2894ECE500370130 /* LoggerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C14B1982894ECE500370130 /* LoggerStub.swift */; };
@@ -37,7 +36,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0C14B1902894ECE500370130 /* TodoItemCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoItemCellTests.swift; sourceTree = "<group>"; };
 		0C14B1952894ECE500370130 /* NetworkingServiceMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingServiceMock.swift; sourceTree = "<group>"; };
 		0C14B1972894ECE500370130 /* HttpRequestCounterStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequestCounterStub.swift; sourceTree = "<group>"; };
 		0C14B1982894ECE500370130 /* LoggerStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggerStub.swift; sourceTree = "<group>"; };
@@ -86,30 +84,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0C14B18D2894ECE500370130 /* TodoList */ = {
-			isa = PBXGroup;
-			children = (
-				0C14B18E2894ECE500370130 /* TableView */,
-			);
-			path = TodoList;
-			sourceTree = "<group>";
-		};
-		0C14B18E2894ECE500370130 /* TableView */ = {
-			isa = PBXGroup;
-			children = (
-				0C14B18F2894ECE500370130 /* Cell */,
-			);
-			path = TableView;
-			sourceTree = "<group>";
-		};
-		0C14B18F2894ECE500370130 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				0C14B1902894ECE500370130 /* TodoItemCellTests.swift */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
 		0C14B1932894ECE500370130 /* Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -243,7 +217,6 @@
 				0C14B1932894ECE500370130 /* Service */,
 				0C14B19C2894ECE500370130 /* TestSource */,
 				0C14B1A12894ECE500370130 /* TodoEditor */,
-				0C14B18D2894ECE500370130 /* TodoList */,
 			);
 			path = TodoListDevTests;
 			sourceTree = "<group>";
@@ -447,7 +420,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C14B1A82894ECE500370130 /* TodoItemCellTests.swift in Sources */,
 				0C14B1AD2894ECE500370130 /* TodoListCacheStub.swift in Sources */,
 				0C14B1AC2894ECE500370130 /* LoggerStub.swift in Sources */,
 				0C14B1AB2894ECE500370130 /* HttpRequestCounterStub.swift in Sources */,

@@ -16,7 +16,7 @@ final class NetworkIndicatorPresenterImpl: NetworkIndicatorPresenter {
         self.interactor = interactor
     }
 
-    func viewUpdateActivityIndicator() {
-        view?.set(visible: interactor.areRequestsPending)
+    func updateActivityIndicator(visible: Bool) {
+        view?.set(visible: visible)
     }
 }

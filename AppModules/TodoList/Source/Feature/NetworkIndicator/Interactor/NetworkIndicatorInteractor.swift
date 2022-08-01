@@ -9,5 +9,5 @@ protocol NetworkIndicatorInteractor {
 
     var presenter: NetworkIndicatorPresenter? { get set }
 
-    var areRequestsPending: Bool { get }
+    func subscribe() 
 }
