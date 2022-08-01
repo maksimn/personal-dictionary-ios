@@ -20,6 +20,8 @@ class TodoTableController: NSObject, UITableViewDataSource, UITableViewDelegate 
 
     private weak var tableView: UITableView?
 
+    private let hCell = TodoItemCell(frame: .zero)
+
     init(tableView: UITableView) {
         self.tableView = tableView
     }
@@ -127,10 +129,10 @@ class TodoTableController: NSObject, UITableViewDataSource, UITableViewDelegate 
             return NewTodoItemCell.cellHeight
         }
 
-        let todoItem = items[indexPath.row]
+        hCell.set(todoItem: items[indexPath.row])
+        hCell.layoutSubviews()
 
-        return TodoItemCell.height(for: todoItem.text, cellWidth: UIScreen.main.bounds.width,
-                                   priority: todoItem.priority, showDeadline: todoItem.deadline != nil)
+        return hCell.intrinsicContentSize.height
     }
 
     func tableView(_ tableView: UITableView,

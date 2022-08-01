@@ -14,18 +14,18 @@ extension TodoItemCell {
     static var textMarginLeft: CGFloat { 12 }
     static var textMarginRight: CGFloat { 35 }
     static var priorityImageWidth: CGFloat { 10 }
-    static var priorityImageVisibleMargin: CGFloat { 16 }
+    static var priorityImageMargin: CGFloat { 16 }
     static var deadlineHeight: CGFloat { 18.5 }
     static var font: UIFont { UIFont.systemFont(ofSize: CGFloat(17), weight: .regular) }
 
     func initViews() {
         selectionStyle = .none
         backgroundColor = .white
-        todoTextlabel.textColor = .black
-        todoTextlabel.font = TodoItemCell.font
-        todoTextlabel.backgroundColor = .clear
-        todoTextlabel.numberOfLines = 3
-        contentView.addSubview(todoTextlabel)
+        textlabel.textColor = .black
+        textlabel.font = TodoItemCell.font
+        textlabel.backgroundColor = .clear
+        textlabel.numberOfLines = 3
+        contentView.addSubview(textlabel)
 
         contentView.addSubview(completenessImageView)
         contentView.addSubview(priorityImageView)
@@ -41,15 +41,23 @@ extension TodoItemCell {
         addSubview(deadlineLabel)
     }
 
-    static func height(for text: String, cellWidth: CGFloat, priority: TodoItemPriority,
-                       showDeadline: Bool) -> CGFloat {
-        let lineHeight: CGFloat = 20.28711
-        let numLines = countNumberOfLines(for: text, cellWidth: cellWidth, priority: priority)
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let priorityImageWidth: CGFloat = todoItem?.priority == .normal ? 0 : TodoItemCell.priorityImageMargin
+        let textLabelLeftMargin = TodoItemCell.fulfillmentMarginLeft + TodoItemCell.fulfillmentWidth +
+            priorityImageWidth + TodoItemCell.textMarginLeft
 
-        return lineHeight * CGFloat(numLines) + 32 + (showDeadline ? TodoItemCell.deadlineHeight : 0)
+        textlabel.preferredMaxLayoutWidth = frame.width - (textLabelLeftMargin + TodoItemCell.textMarginRight)
+        textlabel.frame = CGRect(origin: CGPoint(x: textLabelLeftMargin, y: 17),
+                                 size: textlabel.intrinsicContentSize)
     }
 
-    func setLayout(isPriorityNormal: Bool) {
+    override var intrinsicContentSize: CGSize {
+        CGSize(width: frame.width,
+               height: textlabel.frame.height + 34 + (todoItem?.deadline != nil ? TodoItemCell.deadlineHeight : 0))
+    }
+
+    func setLayout() {
         completenessImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             completenessImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -63,18 +71,8 @@ extension TodoItemCell {
         NSLayoutConstraint.activate([
             priorityImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             priorityImageView.heightAnchor.constraint(equalToConstant: 16),
-            priorityImageView.widthAnchor.constraint(equalToConstant: isPriorityNormal ? 0 :
-                                                                                       TodoItemCell.priorityImageWidth),
+            priorityImageView.widthAnchor.constraint(equalToConstant: TodoItemCell.priorityImageWidth),
             priorityImageView.leadingAnchor.constraint(equalTo: completenessImageView.trailingAnchor, constant: 12)
-        ])
-
-        todoTextlabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            todoTextlabel.topAnchor.constraint(equalTo: topAnchor, constant: 17),
-            todoTextlabel.leadingAnchor.constraint(equalTo: completenessImageView.trailingAnchor,
-                constant: isPriorityNormal ? TodoItemCell.textMarginLeft :
-                                             TodoItemCell.textMarginLeft + TodoItemCell.priorityImageVisibleMargin),
-            todoTextlabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -TodoItemCell.textMarginRight)
         ])
 
         rightArrowImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -87,35 +85,17 @@ extension TodoItemCell {
 
         deadlineImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            deadlineImageView.leadingAnchor.constraint(equalTo: todoTextlabel.leadingAnchor, constant: 0),
+            deadlineImageView.leadingAnchor.constraint(equalTo: textlabel.leadingAnchor),
             deadlineImageView.widthAnchor.constraint(equalToConstant: 13),
             deadlineImageView.heightAnchor.constraint(equalToConstant: 12),
-            deadlineImageView.topAnchor.constraint(equalTo: todoTextlabel.bottomAnchor, constant: 6)
+            deadlineImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
         ])
 
         deadlineLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             deadlineLabel.leadingAnchor.constraint(equalTo: deadlineImageView.trailingAnchor, constant: 5),
             deadlineLabel.topAnchor.constraint(equalTo: deadlineImageView.topAnchor, constant: -2.5),
-            deadlineLabel.heightAnchor.constraint(equalToConstant: 18)
+            deadlineLabel.heightAnchor.constraint(equalToConstant: TodoItemCell.deadlineHeight)
         ])
-    }
-
-    static func countNumberOfLines(for text: String, cellWidth: CGFloat, priority: TodoItemPriority) -> Int {
-        let maxNumLines = 3
-        let paragraphs = text.components(separatedBy: "\n").prefix(maxNumLines)
-        let delta: CGFloat = 40
-        let marginWhenPriorityImageVisible: CGFloat = priority == .normal ? 0 : TodoItemCell.priorityImageVisibleMargin
-        let labelWidth: CGFloat = cellWidth - (TodoItemCell.fulfillmentMarginLeft + TodoItemCell.fulfillmentWidth +
-            marginWhenPriorityImageVisible + TodoItemCell.textMarginLeft + TodoItemCell.textMarginRight) - delta
-        let paragraphLines: [Int] = paragraphs.map { Int(ceil(widthOfText($0, font) / labelWidth)) }
-        let numLines = paragraphLines.reduce(0, +)
-        let result = min(maxNumLines, numLines)
-
-        return result > 0 ? result : 1
-    }
-
-    private static func widthOfText(_ text: String, _ font: UIFont) -> CGFloat {
-        (text as NSString).size(withAttributes: [NSAttributedString.Key.font: font]).width
     }
 }
