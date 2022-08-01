@@ -11,9 +11,6 @@ final class NetworkIndicatorBuilderImpl: NetworkIndicatorBuilder {
         let view = NetworkIndicatorViewImpl()
 
         let interactor = NetworkIndicatorInteractorImpl(
-            httpRequestCounter: HttpRequestCounterOne(
-                httpRequestCounterPublisher: HttpRequestCounterStreamImp.instance
-            ),
             httpRequestCounterSubscriber: HttpRequestCounterStreamImp.instance
         )
         let presenter = NetworkIndicatorPresenterImpl(view: view, interactor: interactor)
@@ -21,7 +18,7 @@ final class NetworkIndicatorBuilderImpl: NetworkIndicatorBuilder {
         view.presenter = presenter
         interactor.presenter = presenter
 
-        presenter.viewUpdateActivityIndicator()
+        interactor.subscribe()
 
         return view
     }

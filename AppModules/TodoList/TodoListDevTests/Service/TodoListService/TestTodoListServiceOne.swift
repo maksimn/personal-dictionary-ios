@@ -19,7 +19,7 @@ class TestTodoListServiceOne: XCTestCase {
                                                  deadItemsCache: DeadItemsCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
-                                                 сounter: HttpRequestCounterStub(),
+                                                 httpRequestCounterPublisher: HttpRequestCounterPublisherStub(),
                                                  mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisherMock())
         let exp = expectation(description: "fetchRemoteTodoList")
 
@@ -42,7 +42,7 @@ class TestTodoListServiceOne: XCTestCase {
                                                  deadItemsCache: DeadItemsCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
-                                                 сounter: HttpRequestCounterStub(),
+                                                 httpRequestCounterPublisher: HttpRequestCounterPublisherStub(),
                                                  mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisherMock())
         let exp = expectation(description: "createRemote")
 
@@ -65,7 +65,7 @@ class TestTodoListServiceOne: XCTestCase {
                                                  deadItemsCache: DeadItemsCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
-                                                 сounter: HttpRequestCounterStub(),
+                                                 httpRequestCounterPublisher: HttpRequestCounterPublisherStub(),
                                                  mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisherMock())
         let exp = expectation(description: "updateRemote")
 
@@ -88,7 +88,7 @@ class TestTodoListServiceOne: XCTestCase {
                                                  deadItemsCache: DeadItemsCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
-                                                 сounter: HttpRequestCounterStub(),
+                                                 httpRequestCounterPublisher: HttpRequestCounterPublisherStub(),
                                                  mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisherMock())
         let exp = expectation(description: "removeRemote")
 
@@ -110,7 +110,7 @@ class TestTodoListServiceOne: XCTestCase {
                                                  deadItemsCache: DeadItemsCacheStub(),
                                                  logger: LoggerStub(),
                                                  networking: networkingServiceMock,
-                                                 сounter: HttpRequestCounterStub(),
+                                                 httpRequestCounterPublisher: HttpRequestCounterPublisherStub(),
                                                  mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisherMock())
         let exp = expectation(description: "mergeWithRemote")
 

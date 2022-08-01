@@ -7,11 +7,9 @@
 
 @testable import TodoList
 
-class HttpRequestCounterStub: HttpRequestCounter {
-
+class HttpRequestCounterPublisherStub: HttpRequestCounterPublisher {
     func increment() { }
 
     func decrement() { }
-
-    var areRequestsPending: Bool = false
 }
+
