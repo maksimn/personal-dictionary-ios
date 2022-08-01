@@ -16,7 +16,29 @@ final class ItemListView: UIView {
 
     private let tableView = UITableView()
 
-    private lazy var tableController = TodoTableController(tableView: tableView)
+    lazy var datasource = UITableViewDiffableDataSource<Int, TodoItem>(tableView: tableView) { [weak self]
+        tableView, indexPath, item in
+        if item.isTerminal {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(NewTodoItemCell.self)",
+                                                           for: indexPath) as? NewTodoItemCell else {
+                return UITableViewCell()
+            }
+            cell.onNewTodoItemTextEnter = self?.onNewTodoItemTextEnter
+
+            return cell
+        }
+
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(TodoItemCell.self)",
+                                                       for: indexPath) as? TodoItemCell else {
+            return UITableViewCell()
+        }
+
+        cell.set(todoItem: item)
+
+        return cell
+    }
+
+    private let tableController = TodoTableController()
 
     private let disposeBag = DisposeBag()
 
@@ -36,7 +58,16 @@ final class ItemListView: UIView {
     private func subscribeToViewModel() {
         viewModel.items
             .subscribe(onNext: { [weak self] items in
-                self?.tableController.update(items)
+                self?.tableController.items = items
+
+                var items = items
+                var snapshot = NSDiffableDataSourceSnapshot<Int, TodoItem>()
+
+                items.append(TodoItem(isTerminal: true))
+                snapshot.appendSections([0])
+                snapshot.appendItems(items, toSection: 0)
+
+                self?.datasource.apply(snapshot)
             }).disposed(by: disposeBag)
     }
 
@@ -69,7 +100,7 @@ final class ItemListView: UIView {
         tableView.layer.cornerRadius = 16
         tableView.register(TodoItemCell.self, forCellReuseIdentifier: "\(TodoItemCell.self)")
         tableView.register(NewTodoItemCell.self, forCellReuseIdentifier: "\(NewTodoItemCell.self)")
-        tableView.dataSource = tableController
+        tableView.dataSource = datasource
         tableView.backgroundColor = Theme.data.backgroundColor
         tableView.delegate = tableController
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
@@ -78,7 +109,6 @@ final class ItemListView: UIView {
             make.edges.equalTo(self)
         }
         tableView.keyboardDismissMode = .onDrag
-        tableController.onNewTodoItemTextEnter = self.onNewTodoItemTextEnter
         tableController.onDeleteTap = self.onDeleteTap
         tableController.onTodoCompletionTap = self.onTodoCompletionTap
         tableController.onDidSelectAt = self.onDidSelectAt
