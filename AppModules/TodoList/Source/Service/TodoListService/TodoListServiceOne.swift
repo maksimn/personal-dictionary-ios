@@ -7,6 +7,7 @@
 
 import CoreModule
 import Foundation
+import RxSwift
 
 private let getTodoList = "GET TODOLIST"
 private let createTodoItem = "CREATE TODO ITEM"
@@ -30,6 +31,8 @@ class TodoListServiceOne: TodoListService {
     private static let factor: Double = 1.5
     private static let jitter: Double = 0.05
     private var currentDelay: Double = 2
+
+    private let disposeBag = DisposeBag()
 
     init(isRemotingEnabled: Bool,
          cache: TodoListCache,
@@ -59,23 +62,25 @@ class TodoListServiceOne: TodoListService {
         if cache.isDirty {
             mergeWithRemote(completion)
         } else {
-            logger.networkRequestStart(getTodoList)
-            httpRequestCounterPublisher.increment()
-            networking.fetchTodoList { [weak self] result in
-                self?.httpRequestCounterPublisher.decrement()
-                do {
-                    self?.logger.networkRequestSuccess(getTodoList)
+            requestWillStart(getTodoList)
+            networking.fetchTodoList()
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+                .observeOn(MainScheduler.instance)
+                .subscribe(
+                    onSuccess: { [weak self] fetchedItems in
+                        self?.requestDidEnd(getTodoList)
 
-                    let fetchedTodoList = try result.get().map { $0.map() }
-                    let mergedTodoList = self?.items.mergeWith(fetchedTodoList) ?? []
-                    self?.cache.replaceWith(mergedTodoList) { error in
+                        let mergedItems = self?.items.mergeWith(fetchedItems) ?? []
+
+                        self?.cache.replaceWith(mergedItems) { error in
+                            completion(error)
+                        }
+                    },
+                    onError: { [weak self] error in
+                        self?.requestDidEnd(getTodoList, withError: error)
                         completion(error)
                     }
-                } catch {
-                    self?.logger.log(error: error)
-                    completion(error)
-                }
-            }
+                ).disposed(by: disposeBag)
         }
     }
 
@@ -96,24 +101,22 @@ class TodoListServiceOne: TodoListService {
             return
         }
 
-        logger.networkRequestStart(createTodoItem)
-        httpRequestCounterPublisher.increment()
+        requestWillStart(createTodoItem)
         cache.insert(todoItem.update(isDirty: true)) { [weak self] _ in
-            self?.networking.createTodoItem(TodoItemDTO.map(todoItem)) { [weak self] result in
-                self?.httpRequestCounterPublisher.decrement()
-
-                do {
-                    _ = try result.get()
-
-                    self?.logger.networkRequestSuccess(createTodoItem)
-                    self?.cache.update(todoItem.update(isDirty: false)) { _ in
-                        completion(nil)
+            self?.networking.createTodoItem(todoItem)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+                .observeOn(MainScheduler.instance)
+                .subscribe(
+                    onSuccess: { [weak self] item in
+                        self?.requestDidEnd(createTodoItem)
+                        self?.cache.update(todoItem.update(isDirty: false)) { _ in
+                            completion(nil)
+                        }
+                    },
+                    onError: { [weak self] error in
+                        self?.handleItemRequestError(error, todoItem, requestName: createTodoItem, completion)
                     }
-                } catch {
-                    self?.logger.log(error: error)
-                    self?.handleNetworkRequestError(item: todoItem, deleted: false, completion)
-                }
-            }
+                ).disposed(by: self?.disposeBag ?? DisposeBag())
         }
     }
 
@@ -134,23 +137,22 @@ class TodoListServiceOne: TodoListService {
             return
         }
 
-        logger.networkRequestStart(updateTodoItem)
-        httpRequestCounterPublisher.increment()
+        requestWillStart(updateTodoItem)
         cache.update(todoItem.update(isDirty: true)) { [weak self] _ in
-            self?.networking.updateTodoItem(TodoItemDTO.map(todoItem)) { [weak self] result in
-                self?.httpRequestCounterPublisher.decrement()
-                do {
-                    _ = try result.get()
-
-                    self?.logger.networkRequestSuccess(updateTodoItem)
-                    self?.cache.update(todoItem.update(isDirty: false)) { _ in
-                        completion(nil)
+            self?.networking.updateTodoItem(todoItem)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+                .observeOn(MainScheduler.instance)
+                .subscribe(
+                    onSuccess: { [weak self] item in
+                        self?.requestDidEnd(updateTodoItem)
+                        self?.cache.update(todoItem.update(isDirty: false)) { _ in
+                            completion(nil)
+                        }
+                    },
+                    onError: { [weak self] error in
+                        self?.handleItemRequestError(error, todoItem, requestName: updateTodoItem, completion)
                     }
-                } catch {
-                    self?.logger.log(error: error)
-                    self?.handleNetworkRequestError(item: todoItem, deleted: false, completion)
-                }
-            }
+                ).disposed(by: self?.disposeBag ?? DisposeBag())
         }
     }
 
@@ -168,7 +170,31 @@ class TodoListServiceOne: TodoListService {
         }
 
         cache.delete(todoItem) { [weak self] _ in
-            self?.removeRemoteRequest(todoItem, completion)
+            let tombstone = Tombstone(itemId: todoItem.id, deletedAt: Date())
+
+            if self?.cache.isDirty ?? false {
+                self?.deadItemsCache.insert(tombstone: tombstone) { [weak self] _ in
+                    self?.mergeWithRemote(completion)
+                }
+            } else {
+                self?.requestWillStart(deleteTodoItem)
+                self?.deadItemsCache.insert(tombstone: tombstone) { [weak self] _ in
+                    self?.networking.deleteTodoItem(todoItem.id)
+                        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+                        .observeOn(MainScheduler.instance)
+                        .subscribe(
+                            onSuccess: { [weak self] item in
+                                self?.requestDidEnd(deleteTodoItem)
+                                self?.deadItemsCache.clearTombstones { _ in
+                                    completion(nil)
+                                }
+                            },
+                            onError: { [weak self] error in
+                                self?.handleItemRequestError(error, todoItem, requestName: deleteTodoItem, completion)
+                            }
+                        ).disposed(by: self?.disposeBag ?? DisposeBag())
+                }
+            }
         }
     }
 
@@ -181,60 +207,32 @@ class TodoListServiceOne: TodoListService {
         let dirtyItems = cache.items.filter { $0.isDirty }.map { TodoItemDTO.map($0) }
         let requestData = MergeTodoListRequestData(deleted: deleted, other: dirtyItems)
 
-        logger.networkRequestStart(mergeTodoList)
-        httpRequestCounterPublisher.increment()
-        networking.mergeTodoList(requestData) { [weak self] result in
-            self?.httpRequestCounterPublisher.decrement()
-            do {
-                var todoList = try result.get().map({ $0.map() })
-                todoList.sortByCreateAt()
-                self?.logger.networkRequestSuccess(mergeTodoList)
-                self?.deadItemsCache.clearTombstones { _ in
-
-                }
-                self?.currentDelay = TodoListServiceOne.minDelay
-                self?.cache.replaceWith(todoList) { [weak self] error in
-                    self?.mergeItemsWithRemotePublisher.notify()
-                    completion(error)
-                }
-            } catch {
-                self?.logger.log(error: error)
-                self?.retryMergeRequestAfterDelay(completion)
-            }
-        }
-    }
-
-    private func removeRemoteRequest(_ todoItem: TodoItem, _ completion: @escaping (Error?) -> Void) {
-        let tombstone = Tombstone(itemId: todoItem.id, deletedAt: Date())
-
-        if cache.isDirty {
-            deadItemsCache.insert(tombstone: tombstone) { [weak self] _ in
-                self?.mergeWithRemote(completion)
-            }
-        } else {
-            logger.networkRequestStart(deleteTodoItem)
-            httpRequestCounterPublisher.increment()
-            deadItemsCache.insert(tombstone: tombstone) { [weak self] _ in
-                self?.networking.deleteTodoItem(todoItem.id) { [weak self] result in
-                    self?.httpRequestCounterPublisher.decrement()
-                    do {
-                        _ = try result.get()
-
-                        self?.logger.networkRequestSuccess(deleteTodoItem)
-                        self?.deadItemsCache.clearTombstones { _ in
-                            completion(nil)
-                        }
-                    } catch {
-                        self?.logger.log(error: error)
-                        self?.handleNetworkRequestError(item: todoItem, deleted: true, completion)
+        requestWillStart(mergeTodoList)
+        networking.mergeTodoList(requestData)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+            .observeOn(MainScheduler.instance)
+            .subscribe(
+                onSuccess: { [weak self] items in
+                    self?.requestDidEnd(mergeTodoList)
+                    self?.deadItemsCache.clearTombstones { _ in }
+                    self?.currentDelay = TodoListServiceOne.minDelay
+                    self?.cache.replaceWith(items) { [weak self] error in
+                        self?.mergeItemsWithRemotePublisher.notify()
+                        completion(error)
                     }
+                },
+                onError: { [weak self] error in
+                    self?.requestDidEnd(deleteTodoItem, withError: error)
+                    self?.retryMergeRequestAfterDelay(completion)
                 }
-            }
-        }
+            ).disposed(by: disposeBag)
     }
 
-    private func handleNetworkRequestError(item: TodoItem, deleted: Bool, _ completion: @escaping (Error?) -> Void) {
-        if !deleted {
+    private func handleItemRequestError(_ error: Error, _ item: TodoItem, requestName: String,
+                                        _ completion: @escaping (Error?) -> Void) {
+        requestDidEnd(requestName, withError: error)
+
+        if requestName != deleteTodoItem {
             cache.update(item.update(isDirty: true)) { [weak self] _ in
                 self?.retryMergeRequestAfterDelay(completion)
             }
@@ -252,8 +250,24 @@ class TodoListServiceOne: TodoListService {
         let seconds: Int = Int(delay)
         let milliseconds: Int = Int((delay - Double(seconds)) * Double(1000))
         let deadlineTime = DispatchTime.now() + .seconds(seconds) + .milliseconds(milliseconds)
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            self.mergeWithRemote(completion)
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) { [weak self] in
+            self?.mergeWithRemote(completion)
+        }
+    }
+
+    private func requestWillStart(_ requestName: String) {
+        logger.log(message: "\n\(requestName) NETWORK REQUEST START\n")
+        httpRequestCounterPublisher.increment()
+    }
+
+    private func requestDidEnd(_ requestName: String, withError error: Error? = nil) {
+        httpRequestCounterPublisher.decrement()
+
+        if let error = error {
+            logger.log(message: "\n\(requestName) NETWORK REQUEST ERROR\n")
+            logger.log(error: error)
+        } else {
+            logger.log(message: "\n\(requestName) NETWORK REQUEST SUCCESS\n")
         }
     }
 
