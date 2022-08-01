@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 21.07.2021.
 //
 
+import RxSwift
 @testable import TodoList
 
 class NetworkingServiceMock: NetworkingService {
@@ -15,30 +16,34 @@ class NetworkingServiceMock: NetworkingService {
     var deleteTodoItemCallCounter = 0
     var mergeTodoListCallCounter = 0
 
-    func fetchTodoList(_ completion: @escaping (TodoListResult) -> Void) {
+    func fetchTodoList() -> Single<[TodoItem]> {
         fetchTodoListCallCounter += 1
-        completion(.success([]))
+
+        return Single.just([])
     }
 
-    func createTodoItem(_ todoItemDTO: TodoItemDTO, _ completion: @escaping (TodoItemResult) -> Void) {
+    func createTodoItem(_ todoItem: TodoItem) -> Single<TodoItem> {
         createTodoItemCallCounter += 1
-        completion(.success(todoItemDTO))
+
+        return Single.just(TodoItem())
     }
 
-    func updateTodoItem(_ todoItemDTO: TodoItemDTO, _ completion: @escaping (TodoItemResult) -> Void) {
+    func updateTodoItem(_ todoItem: TodoItem) -> Single<TodoItem> {
         updateTodoItemCallCounter += 1
-        completion(.success(todoItemDTO))
+
+        return Single.just(TodoItem())
     }
 
-    func deleteTodoItem(_ id: String, _ completion: @escaping (TodoItemResult) -> Void) {
+    func deleteTodoItem(_ id: String) -> Single<TodoItem> {
         deleteTodoItemCallCounter += 1
-        completion(.success(TodoItemDTO(id: "", text: "", importance: "", done: false, deadline: nil, createdAt: 0,
-                                        updatedAt: 0)))
+
+        return Single.just(TodoItem())
     }
 
-    func mergeTodoList(_ requestData: MergeTodoListRequestData, _ completion: @escaping (TodoListResult) -> Void) {
+    func mergeTodoList(_ requestData: MergeTodoListRequestData) -> Single<[TodoItem]> {
         mergeTodoListCallCounter += 1
-        completion(.success([]))
+
+        return Single.just([])
     }
 }
 

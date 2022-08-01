@@ -25,7 +25,7 @@ struct TodoItem: Equatable, Codable {
     let isDirty: Bool
 
     init(id: String = UUID().uuidString,
-         text: String,
+         text: String = "",
          priority: TodoItemPriority = .normal,
          deadline: Date? = nil,
          isCompleted: Bool = false,

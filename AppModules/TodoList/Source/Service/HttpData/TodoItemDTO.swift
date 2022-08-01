@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct TodoItemDTO: Codable {
+protocol DTO: Codable { }
+
+extension Array: DTO where Element == TodoItemDTO { }
+
+struct TodoItemDTO: DTO {
 
     let id: String
     let text: String

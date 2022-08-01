@@ -9,7 +9,7 @@ import CoreModule
 import Foundation
 import RxSwift
 
-class DefaultNetworkingService: NetworkingService {
+class NetworkingServiceImp: NetworkingService {
 
     private let urlString: String
     private let headers: [String: String]
@@ -28,85 +28,79 @@ class DefaultNetworkingService: NetworkingService {
         self.todoCoder = todoCoder
     }
 
-    func fetchTodoList(_ completion: @escaping (TodoListResult) -> Void) {
+    func fetchTodoList() -> Single<[TodoItem]> {
         send(
             Http(
                 urlString: "\(urlString)/tasks/",
                 method: "GET",
                 headers: headers
-            ),
-            completion
-        )
+            )
+        ).map { (dtoItems: [TodoItemDTO]) in
+            dtoItems.map { $0.map() }
+        }
     }
 
-    func createTodoItem(_ todoItemDTO: TodoItemDTO, _ completion: @escaping (TodoItemResult) -> Void) {
+    func createTodoItem(_ todoItem: TodoItem) -> Single<TodoItem> {
         send(
             Http(
                 urlString: "\(urlString)/tasks/",
                 method: "POST",
                 headers: headers
             ),
-            todoItemDTO,
-            completion
-        )
+            dto: TodoItemDTO.map(todoItem)
+        ).map { (dto: TodoItemDTO) in
+            dto.map()
+        }
     }
 
-    func updateTodoItem(_ todoItemDTO: TodoItemDTO, _ completion: @escaping (TodoItemResult) -> Void) {
+    func updateTodoItem(_ todoItem: TodoItem) -> Single<TodoItem> {
         send(
             Http(
-                urlString: "\(urlString)/tasks/\(todoItemDTO.id)",
+                urlString: "\(urlString)/tasks/\(todoItem.id)",
                 method: "PUT",
                 headers: headers
             ),
-            todoItemDTO,
-            completion
-        )
+            dto: TodoItemDTO.map(todoItem)
+        ).map { (dto: TodoItemDTO) in
+            dto.map()
+        }
     }
 
-    func deleteTodoItem(_ id: String, _ completion: @escaping (TodoItemResult) -> Void) {
+    func deleteTodoItem(_ id: String) -> Single<TodoItem> {
         send(
             Http(
                 urlString: "\(urlString)/tasks/\(id)",
                 method: "DELETE",
                 headers: headers
-            ),
-            completion
-        )
+            )
+        ).map { (dto: TodoItemDTO) in
+            dto.map()
+        }
     }
 
-    func mergeTodoList(_ requestData: MergeTodoListRequestData, _ completion: @escaping (TodoListResult) -> Void) {
+    func mergeTodoList(_ requestData: MergeTodoListRequestData) -> Single<[TodoItem]> {
         send(
             Http(
                 urlString: "\(urlString)/tasks/",
                 method: "PUT",
                 headers: headers
             ),
-            requestData,
-            completion
-        )
+            dto: requestData
+        ).map { (dtoItems: [TodoItemDTO]) in
+            dtoItems.map { $0.map() }
+        }
     }
 
-    private func send<T: Decodable>(_ http: Http, _ completion: @escaping (Result<T, Error>) -> Void) {
+    private func send<OutputDTO: DTO>(_ http: Http) -> Single<OutputDTO> {
         httpClient.send(http)
-            .map { [weak self] data -> Single<T> in
+            .map { [weak self] data -> Single<OutputDTO> in
                 self?.todoCoder.parseFromJson(data) ?? .error(DefaultNetworkingService.error)
             }
             .asObservable().concat().asSingle()
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-            .observeOn(MainScheduler.instance)
-            .subscribe(
-                onSuccess:  { result in
-                    completion(.success(result))
-                },
-                onError: { error in
-                    completion(.failure(error))
-                }
-            ).disposed(by: disposeBag)
     }
 
-    private func send<T: Decodable, Body: Encodable>(_ http: Http, _ body: Body,
-        _ completion: @escaping (Result<T, Error>) -> Void) {
-        todoCoder.convertToJson(body)
+    private func send<InputDTO: Encodable, OutputDTO: DTO>(_ http: Http, dto: InputDTO) -> Single<OutputDTO> {
+        todoCoder.convertToJson(dto)
             .map { [weak self] data -> Single<Data> in
                 self?.httpClient.send(
                     Http(
@@ -118,20 +112,10 @@ class DefaultNetworkingService: NetworkingService {
                 ) ?? .error(DefaultNetworkingService.error)
             }
             .asObservable().concat().asSingle()
-            .map { [weak self] data -> Single<T> in
+            .map { [weak self] data -> Single<OutputDTO> in
                 self?.todoCoder.parseFromJson(data) ?? .error(DefaultNetworkingService.error)
             }
             .asObservable().concat().asSingle()
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-            .observeOn(MainScheduler.instance)
-            .subscribe(
-                onSuccess:  { result in
-                    completion(.success(result))
-                },
-                onError: { error in
-                    completion(.failure(error))
-                }
-            ).disposed(by: disposeBag)
     }
 
     enum DefaultNetworkingService: Error {
