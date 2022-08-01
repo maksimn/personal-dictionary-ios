@@ -52,9 +52,8 @@ extension TodoItemCell {
                                  size: textlabel.intrinsicContentSize)
     }
 
-    override var intrinsicContentSize: CGSize {
-        CGSize(width: frame.width,
-               height: textlabel.frame.height + 34 + (todoItem?.deadline != nil ? TodoItemCell.deadlineHeight : 0))
+    var computedHeight: CGFloat {
+        textlabel.frame.height + 34 + (todoItem?.deadline != nil ? TodoItemCell.deadlineHeight : 0)
     }
 
     func setLayout() {

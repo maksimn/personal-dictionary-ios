@@ -132,7 +132,7 @@ class TodoTableController: NSObject, UITableViewDataSource, UITableViewDelegate 
         hCell.set(todoItem: items[indexPath.row])
         hCell.layoutSubviews()
 
-        return hCell.intrinsicContentSize.height
+        return hCell.computedHeight
     }
 
     func tableView(_ tableView: UITableView,
