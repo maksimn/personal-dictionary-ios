@@ -6,7 +6,6 @@
 //
 
 import CoreModule
-import Foundation
 import RxSwift
 
 class NetworkingServiceImp: NetworkingService {
@@ -15,8 +14,6 @@ class NetworkingServiceImp: NetworkingService {
     private let headers: [String: String]
     private let httpClient: HttpClient
     private let todoCoder: JsonCoder
-
-    private let disposeBag = DisposeBag()
 
     init(urlString: String,
          headers: [String: String],
@@ -36,7 +33,7 @@ class NetworkingServiceImp: NetworkingService {
                 headers: headers
             )
         ).map { (dtoItems: [TodoItemDTO]) in
-            dtoItems.map { $0.map() }
+            dtoItems.map { TodoItem($0) }
         }
     }
 
@@ -47,9 +44,9 @@ class NetworkingServiceImp: NetworkingService {
                 method: "POST",
                 headers: headers
             ),
-            dto: TodoItemDTO.map(todoItem)
-        ).map { (dto: TodoItemDTO) in
-            dto.map()
+            dto: TodoItemDTO(todoItem)
+        ).map {
+            TodoItem($0)
         }
     }
 
@@ -60,9 +57,9 @@ class NetworkingServiceImp: NetworkingService {
                 method: "PUT",
                 headers: headers
             ),
-            dto: TodoItemDTO.map(todoItem)
-        ).map { (dto: TodoItemDTO) in
-            dto.map()
+            dto: TodoItemDTO(todoItem)
+        ).map {
+            TodoItem($0)
         }
     }
 
@@ -73,8 +70,8 @@ class NetworkingServiceImp: NetworkingService {
                 method: "DELETE",
                 headers: headers
             )
-        ).map { (dto: TodoItemDTO) in
-            dto.map()
+        ).map {
+            TodoItem($0)
         }
     }
 
@@ -87,7 +84,7 @@ class NetworkingServiceImp: NetworkingService {
             ),
             dto: requestData
         ).map { (dtoItems: [TodoItemDTO]) in
-            dtoItems.map { $0.map() }
+            dtoItems.map { TodoItem($0) }
         }
     }
 

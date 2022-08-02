@@ -11,7 +11,7 @@ public final class MainBuilderImp: MainBuilder {
 
     public init() { }
 
-    public func build() -> UINavigationController {
+    public func build() -> UIViewController {
         let navigationController = UINavigationController()
         let mainViewController = MainViewController(
             mainTitle: "Мои дела",

@@ -13,7 +13,7 @@ enum TodoItemPriority: String, Codable {
     case low
 }
 
-struct TodoItem: Equatable, Codable {
+struct TodoItem: Equatable, Codable, Hashable {
 
     let id: String
     let text: String
@@ -43,6 +43,18 @@ struct TodoItem: Equatable, Codable {
         self.updatedAt = updatedAt ?? now.integer
     }
 
+    init(isTerminal: Bool) {
+        if isTerminal {
+            self.init(createdAt: Int.min)
+        } else {
+            self.init()
+        }
+    }
+
+    var isTerminal: Bool {
+        createdAt == Int.min
+    }
+
     func update(text: String? = nil,
                        priority: TodoItemPriority? = nil,
                        isCompleted: Bool? = nil,
@@ -67,5 +79,9 @@ struct TodoItem: Equatable, Codable {
             lhs.createdAt == rhs.createdAt &&
             lhs.updatedAt == rhs.updatedAt &&
             lhs.isDirty == rhs.isDirty
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

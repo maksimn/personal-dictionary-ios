@@ -6,7 +6,6 @@
 //
 
 import CoreModule
-import Foundation
 import RxSwift
 
 private let getTodoList = "GET TODOLIST"
@@ -204,7 +203,7 @@ class TodoListServiceOne: TodoListService {
         }
 
         let deleted = Array(Set(deadItemsCache.tombstones.map { $0.itemId }))
-        let dirtyItems = cache.items.filter { $0.isDirty }.map { TodoItemDTO.map($0) }
+        let dirtyItems = cache.items.filter { $0.isDirty }.map { TodoItemDTO($0) }
         let requestData = MergeTodoListRequestData(deleted: deleted, other: dirtyItems)
 
         requestWillStart(mergeTodoList)

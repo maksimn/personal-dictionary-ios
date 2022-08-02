@@ -9,5 +9,5 @@ import UIKit
 
 public protocol MainBuilder {
 
-    func build() -> UINavigationController
+    func build() -> UIViewController
 }
