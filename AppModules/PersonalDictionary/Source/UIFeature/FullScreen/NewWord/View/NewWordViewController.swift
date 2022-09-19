@@ -11,10 +11,11 @@ import UIKit
 /// View Controller экрана добавления нового слова в личный словарь.
 final class NewWordViewController: UIViewController, LangPickerListener, UITextFieldDelegate {
 
-    /// View model "Добавления нового слова" в личный словарь.
+    let params: NewWordViewParams
+
     private let viewModel: NewWordViewModel
 
-    let params: NewWordViewParams
+    var langPickerGraph: LangPickerGraph? // Child Feature
 
     let contentView = UIView()
     let sourceLangLabel = UILabel()
@@ -22,8 +23,6 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
     let arrowLabel = UILabel()
     let okButton = UIButton()
     let textField = UITextField()
-
-    private var langPickerMVVM: LangPickerMVVM? // Child Feature
 
     private let disposeBag = DisposeBag()
 
@@ -38,9 +37,8 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
         self.params = params
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        langPickerMVVM = langPickerBuilder.build()
         initViews()
-        addChildFeature(langPickerMVVM: langPickerMVVM)
+        add(langPickerBuilder)
         bindToViewModel()
     }
 
@@ -62,20 +60,20 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
 
     // MARK: - LangPickerListener
 
-    func onLangSelected(_ data: LangSelectorData) {
-        viewModel.update(data: data)
+    func onLangPickerStateChanged(_ state: LangPickerState) {
+        viewModel.update(langPickerState: state)
     }
 
     // MARK: - User Action Handlers
 
     @objc
     func onSourceLangLabelTap() {
-        viewModel.presentLangPickerView(selectedLangType: .source)
+        viewModel.presentLangPicker(langType: .source)
     }
 
     @objc
     func onTargetLangLabelTap() {
-        viewModel.presentLangPickerView(selectedLangType: .target)
+        viewModel.presentLangPicker(langType: .target)
     }
 
     @objc
@@ -87,20 +85,16 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
 
     private func bindToViewModel() {
         viewModel.state.subscribe(onNext: { [weak self] state in
-            guard let self = self else { return }
-
-            self.textField.text = state.text
-            self.sourceLangLabel.text = state.sourceLang.name
-            self.targetLangLabel.text = state.targetLang.name
-            self.langPickerMVVM?.uiview?.isHidden = state.isLangPickerHidden
-
-            if !state.isLangPickerHidden {
-                self.langPickerMVVM?.model?.data = LangSelectorData(
-                    selectedLang: state.selectedLangType == .source ? state.sourceLang : state.targetLang,
-                    selectedLangType: state.selectedLangType
-                )
-            }
+            self?.set(state: state)
         }).disposed(by: disposeBag)
+    }
+
+    private func set(state: NewWordState) {
+        textField.text = state.text
+        sourceLangLabel.text = state.sourceLang.name
+        targetLangLabel.text = state.targetLang.name
+        langPickerGraph?.uiview.isHidden = state.isLangPickerHidden
+        langPickerGraph?.model?.state = state.langPickerState
     }
 
     private func sendNewWordEventAndDismiss() {

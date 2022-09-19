@@ -5,24 +5,29 @@
 //  Created by Maxim Ivanov on 09.11.2021.
 //
 
+/// Данные о выбранном языке
+struct LangPickerState {
+
+    /// Выбранный язык
+    let lang: Lang
+
+    /// Тип выбранного языка
+    let langType: LangType
+}
+
 /// Модель выбора языка.
 protocol LangPickerModel: AnyObject {
 
-    /// Начальные данные о выбранном языке.
-    var data: LangSelectorData? { get set }
-
-    /// Модель представления Выбора языка.
-    var viewModel: LangPickerViewModel? { get set }
+    /// Данные о выбранном языке.
+    var state: LangPickerState? { get set }
 
     /// Делегат события выбора языка.
     var listener: LangPickerListener? { get set }
+
+    func update(selectedLang: Lang)
 }
 
-/// Делегат события выбора языка.
 protocol LangPickerListener: AnyObject {
 
-    /// Обработчик события выбора языка.
-    /// - Parameters:
-    ///  - data: данные о выбранном языке.
-    func onLangSelected(_ data: LangSelectorData)
+    func onLangPickerStateChanged(_ state: LangPickerState)
 }

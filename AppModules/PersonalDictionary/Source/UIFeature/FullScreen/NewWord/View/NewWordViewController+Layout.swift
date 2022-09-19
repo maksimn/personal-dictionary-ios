@@ -23,14 +23,17 @@ extension NewWordViewController {
     }
 
     /// Добавление вложенной фичи "Выбор языка".
-    func addChildFeature(langPickerMVVM: LangPickerMVVM?) {
-        guard let langPickerView = langPickerMVVM?.uiview else { return }
+    func add(_ langPickerBuilder: LangPickerBuilder) {
+        langPickerGraph = langPickerBuilder.build()
+
+        guard let langPickerView = langPickerGraph?.uiview else { return }
+
         view.addSubview(langPickerView)
         langPickerView.snp.makeConstraints { make -> Void in
             make.edges.equalTo(contentView)
         }
-        langPickerView.isHidden = true
-        langPickerMVVM?.model?.listener = self
+
+        langPickerGraph?.model?.listener = self
     }
 
     private func addSubviews() {

@@ -11,5 +11,5 @@ protocol LangPickerBuilder {
     /// Создать MVVM-граф фичи.
     /// - Returns:
     ///  - Граф фичи "Выбор языка".
-    func build() -> LangPickerMVVM
+    func build() -> LangPickerGraph
 }
