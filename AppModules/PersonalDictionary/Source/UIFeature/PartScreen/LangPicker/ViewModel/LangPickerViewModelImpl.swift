@@ -10,6 +10,9 @@ import RxCocoa
 /// Реализация модели представления Выбора языка.
 final class LangPickerViewModelImpl: LangPickerViewModel {
 
+    /// Данные модели представления.
+    let state = BehaviorRelay<LangPickerState?>(value: nil)
+
     private let model: LangPickerModel
 
     /// Инициализатор.
@@ -19,13 +22,7 @@ final class LangPickerViewModelImpl: LangPickerViewModel {
         self.model = model
     }
 
-    /// Данные модели представления.
-    let langSelectorData = BehaviorRelay<LangSelectorData?>(value: nil)
-
-    /// Оповестить о выбранном языке.
-    /// - Parameters:
-    ///  - data: данные о выбранном языке.
-    func notifyAboutSelectedLang(_ data: LangSelectorData) {
-        model.listener?.onLangSelected(data)
+    func update(selectedLang: Lang) {
+        model.update(selectedLang: selectedLang)
     }
 }

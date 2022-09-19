@@ -11,10 +11,7 @@ import RxCocoa
 protocol LangPickerViewModel: AnyObject {
 
     /// Данные модели представления.
-    var langSelectorData: BehaviorRelay<LangSelectorData?> { get }
+    var state: BehaviorRelay<LangPickerState?> { get }
 
-    /// Оповестить о выбранном языке.
-    /// - Parameters:
-    ///  - data: данные о выбранном языке.
-    func notifyAboutSelectedLang(_ data: LangSelectorData)
+    func update(selectedLang: Lang)
 }

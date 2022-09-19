@@ -7,10 +7,10 @@
 
 import UIKit
 
-final class LangPickerMVVMImpl: LangPickerMVVM {
+final class LangPickerGraphImpl: LangPickerGraph {
 
     /// Представление выбора языка
-    private(set) var uiview: UIView?
+    private(set) var uiview: UIView
 
     /// Модель для выбора языка
     weak var model: LangPickerModel?
@@ -18,12 +18,14 @@ final class LangPickerMVVMImpl: LangPickerMVVM {
     /// Инициализатор.
     /// - Parameters:
     ///  - viewParams: параметры представления выбора языка.
-    init(viewParams: LangPickerViewParams) {
-        let model = LangPickerModelImpl()
+    init(viewParams: LangPickerPopupParams) {
+        weak var viewModelLazy: LangPickerViewModel?
+
+        let model = LangPickerModelImpl(viewModelBlock: { viewModelLazy })
         let viewModel = LangPickerViewModelImpl(model: model)
         let view = LangPickerViewImpl(params: viewParams, viewModel: viewModel)
 
-        model.viewModel = viewModel
+        viewModelLazy = viewModel
 
         uiview = view
         self.model = model

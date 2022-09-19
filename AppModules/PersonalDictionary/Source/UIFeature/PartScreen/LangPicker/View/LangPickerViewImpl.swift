@@ -8,29 +8,30 @@
 import RxSwift
 import UIKit
 
-typealias LangPickerViewParams = LangPickerPopupParams
-
 final class LangPickerViewImpl: UIView {
 
+    private let params: LangPickerPopupParams
     private let viewModel: LangPickerViewModel
     private let disposeBag = DisposeBag()
 
-    private var langPickerPopup: LangPickerPopup?
-    private var selectedLangType: SelectedLangType?
+    private lazy var langPickerPopup = LangPickerPopup(
+        params: params,
+        onSelectLang: { [weak self] lang in
+            self?.viewModel.update(selectedLang: lang)
+        }
+    )
 
     /// Инициализатор.
     /// - Parameters:
     ///  - params: параметры представления выбора языка.
     ///  - viewModel: модель представления.
-    init(params: LangPickerViewParams, viewModel: LangPickerViewModel) {
+    init(params: LangPickerPopupParams,
+         viewModel: LangPickerViewModel) {
+        self.params = params
         self.viewModel = viewModel
         super.init(frame: .zero)
-        langPickerPopup = LangPickerPopup(params: params,
-                                          onSelectLang: { [weak self] lang in
-                                            self?.onSelectLang(lang)
-                                          })
-        addSubview(langPickerPopup ?? UIView())
-        langPickerPopup?.snp.makeConstraints { make -> Void in
+        addSubview(langPickerPopup)
+        langPickerPopup.snp.makeConstraints { make -> Void in
             make.edges.equalTo(self)
         }
         bindToViewModel()
@@ -41,17 +42,10 @@ final class LangPickerViewImpl: UIView {
     }
 
     private func bindToViewModel() {
-        viewModel.langSelectorData.subscribe(onNext: { [weak self] langSelectorData in
-            guard let langSelectorData = langSelectorData else { return }
-            self?.selectedLangType = langSelectorData.selectedLangType
-            self?.langPickerPopup?.selectLang(langSelectorData.selectedLang)
+        viewModel.state.subscribe(onNext: { [weak self] state in
+            guard let state = state else { return }
+            
+            self?.langPickerPopup.selectLang(state.lang)
         }).disposed(by: disposeBag)
-    }
-
-    private func onSelectLang(_ lang: Lang) {
-        isHidden = true
-        guard let selectedLangType = selectedLangType else { return }
-
-        viewModel.notifyAboutSelectedLang(LangSelectorData(selectedLang: lang, selectedLangType: selectedLangType))
     }
 }

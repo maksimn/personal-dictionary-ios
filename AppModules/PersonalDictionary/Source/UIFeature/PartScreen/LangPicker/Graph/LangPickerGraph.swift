@@ -7,11 +7,11 @@
 
 import UIKit
 
-/// MVVM-граф фичи "Выбор языка".
-protocol LangPickerMVVM {
+/// Граф фичи "Выбор языка".
+protocol LangPickerGraph {
 
     /// Представление выбора языка
-    var uiview: UIView? { get }
+    var uiview: UIView { get }
 
     /// Модель для выбора языка
     var model: LangPickerModel? { get }
