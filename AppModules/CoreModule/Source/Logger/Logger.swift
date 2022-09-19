@@ -9,9 +9,5 @@ public protocol Logger {
 
     func log(message: String)
 
-    func networkRequestStart(_ requestName: String)
-
-    func networkRequestSuccess(_ requestName: String)
-
     func log(error: Error)
 }
