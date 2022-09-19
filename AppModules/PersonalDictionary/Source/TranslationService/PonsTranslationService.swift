@@ -21,6 +21,8 @@ struct PonsApiData {
     let secret: String
 }
 
+private let fetchTranslationRequestName = "PONS FETCH TRANSLATION"
+
 /// Служба для получения перевода слова из PONS Online Dictionary API,
 final class PonsTranslationService: TranslationService {
 
@@ -28,8 +30,6 @@ final class PonsTranslationService: TranslationService {
     private let jsonCoder: JsonCoder
     private let apiData: PonsApiData
     private let logger: Logger
-
-    private let fetchTranslationRequestName = "PONS FETCH TRANSLATION"
 
     /// Инициализатор.
     /// - Parameters:
@@ -54,7 +54,7 @@ final class PonsTranslationService: TranslationService {
         let qParam = "q=\(wordItem.text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
         let lParam = "l=\(shortSourceLang)\(wordItem.targetLang.shortName.lowercased())"
 
-        logger.networkRequestStart(fetchTranslationRequestName)
+        logger.log(message: "\(fetchTranslationRequestName) NETWORK REQUEST START")
         return httpClient
             .send(Http(urlString: apiData.url + "?" + lParam + "&" + qParam,
                        method: "GET",
@@ -65,8 +65,8 @@ final class PonsTranslationService: TranslationService {
             }
             .asObservable().concat().asSingle()
             .map { [weak self] ponsResponseArray in
-                guard let self = self else { return "" }
-                self.logger.networkRequestSuccess(self.fetchTranslationRequestName)
+                self?.logger.log(message: "\(fetchTranslationRequestName) NETWORK REQUEST SUCCESS")
+
                 return ponsResponseArray.first?.translation ?? ""
             }
     }
