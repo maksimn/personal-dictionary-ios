@@ -9,22 +9,21 @@
 struct LangPickerState {
 
     /// Выбранный язык
-    let lang: Lang
+    var lang: Lang
 
     /// Тип выбранного языка
-    let langType: LangType
+    var langType: LangType
+
+    /// Скрыто ли представление для выбора языка
+    var isHidden: Bool
 }
 
 /// Модель выбора языка.
 protocol LangPickerModel: AnyObject {
 
-    /// Данные о выбранном языке.
-    var state: LangPickerState? { get set }
-
-    /// Делегат события выбора языка.
     var listener: LangPickerListener? { get set }
 
-    func update(selectedLang: Lang)
+    func set(state: LangPickerState)
 }
 
 protocol LangPickerListener: AnyObject {

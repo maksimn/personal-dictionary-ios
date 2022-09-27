@@ -22,20 +22,6 @@ extension NewWordViewController {
         initOkButton()
     }
 
-    /// Добавление вложенной фичи "Выбор языка".
-    func add(_ langPickerBuilder: LangPickerBuilder) {
-        langPickerGraph = langPickerBuilder.build()
-
-        guard let langPickerView = langPickerGraph?.uiview else { return }
-
-        view.addSubview(langPickerView)
-        langPickerView.snp.makeConstraints { make -> Void in
-            make.edges.equalTo(contentView)
-        }
-
-        langPickerGraph?.model?.listener = self
-    }
-
     private func addSubviews() {
         [contentView, sourceLangLabel, targetLangLabel, arrowLabel, textField, okButton]
             .forEach { view.addSubview($0) }

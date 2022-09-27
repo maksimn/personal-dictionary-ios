@@ -25,12 +25,16 @@ final class NewWordBuilderImpl: NewWordBuilder {
     /// - Returns:
     ///  - экран фичи  "Добавление нового слова".
     func build() -> UIViewController {
-        let initState = NewWordState(
+        let initialSourceLang = langRepository.sourceLang
+        let initialState = NewWordState(
             text: "",
-            sourceLang: langRepository.sourceLang,
+            sourceLang: initialSourceLang,
             targetLang: langRepository.targetLang,
-            selectedLangType: .source,
-            isLangPickerHidden: true
+            langPickerState: LangPickerState(
+                lang: initialSourceLang,
+                langType: .source,
+                isHidden: true
+            )
         )
 
         weak var viewModelLazy: NewWordViewModel?
@@ -42,7 +46,7 @@ final class NewWordBuilderImpl: NewWordBuilder {
         )
         let viewModel = NewWordViewModelImpl(
             model: model,
-            initState: initState
+            initState: initialState
         )
         let view = NewWordViewController(
             params: viewParams,

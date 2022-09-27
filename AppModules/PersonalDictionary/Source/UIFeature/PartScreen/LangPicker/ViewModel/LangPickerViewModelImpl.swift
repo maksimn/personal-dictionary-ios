@@ -22,7 +22,13 @@ final class LangPickerViewModelImpl: LangPickerViewModel {
         self.model = model
     }
 
-    func update(selectedLang: Lang) {
-        model.update(selectedLang: selectedLang)
+    func onLangSelected(_ lang: Lang) {
+        guard let oldState = state.value else { return }
+        var newState = oldState
+
+        newState.lang = lang
+        newState.isHidden = true
+
+        model.listener?.onLangPickerStateChanged(newState)
     }
 }

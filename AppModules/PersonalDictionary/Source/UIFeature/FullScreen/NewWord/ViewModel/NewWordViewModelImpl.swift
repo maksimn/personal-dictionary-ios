@@ -40,7 +40,7 @@ final class NewWordViewModelImpl: NewWordViewModel {
     }
 
     /// Обновить данные об исходном / целевом языке для слова в модели
-    func update(langPickerState: LangPickerState) {
+    func updateStateWith(langPickerState: LangPickerState) {
         var state = state.value
         
         if langPickerState.langType == .source {
@@ -51,7 +51,8 @@ final class NewWordViewModelImpl: NewWordViewModel {
             model.save(targetLang: langPickerState.lang)
         }
 
-        state.isLangPickerHidden = true
+        state.langPickerState = langPickerState
+
         self.state.accept(state)
     }
 
@@ -60,9 +61,14 @@ final class NewWordViewModelImpl: NewWordViewModel {
     ///  - langType: тип выбранного языка (исходный / целевой).
     func presentLangPicker(langType: LangType) {
         var state = state.value
+        let langPickerState = LangPickerState(
+            lang: langType == .source ? state.sourceLang : state.targetLang,
+            langType: langType,
+            isHidden: false
+        )
 
-        state.selectedLangType = langType
-        state.isLangPickerHidden = false
+        state.langPickerState = langPickerState
+
         self.state.accept(state)
     }
 }
