@@ -26,8 +26,8 @@ final class LangPickerBuilderImpl: LangPickerBuilder {
     ///  - Граф фичи "Выбор языка".
     func build() -> LangPickerGraph {
         LangPickerGraphImpl(
-            viewParams: LangPickerPopupParams(
-                selectButtonTitle: bundle.moduleLocalizedString("Select"),
+            viewParams: LangPickerParams(
+                title: bundle.moduleLocalizedString("Select"),
                 langs: allLangs
             )
         )

@@ -13,12 +13,12 @@ final class LangPickerGraphImpl: LangPickerGraph {
     private(set) var uiview: UIView
 
     /// Модель для выбора языка
-    weak var model: LangPickerModel?
+    private(set) weak var model: LangPickerModel?
 
     /// Инициализатор.
     /// - Parameters:
     ///  - viewParams: параметры представления выбора языка.
-    init(viewParams: LangPickerPopupParams) {
+    init(viewParams: LangPickerParams) {
         weak var viewModelLazy: LangPickerViewModel?
 
         let model = LangPickerModelImpl(viewModelBlock: { viewModelLazy })

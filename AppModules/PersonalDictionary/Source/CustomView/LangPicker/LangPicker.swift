@@ -9,40 +9,33 @@ import SnapKit
 import UIKit
 
 /// Параметры "всплывающего" представления для выбора языка.
-struct LangPickerPopupParams {
+struct LangPickerParams {
 
     /// Надпись на кнопке "выбрать"
-    let selectButtonTitle: String
+    let title: String
 
     /// Список языков для выбора
     let langs: [Lang]
 }
 
-/// "Всплывающее" представление для выбора языка.
-final class LangPickerPopup: UIView {
+/// Элемент для выбора языка.
+final class LangPicker: UIView {
 
     private let pickerView = UIPickerView()
-
     private let selectButton = UIButton()
-
-    private let params: LangPickerPopupParams
-
-    private let langPickerController: LangPickerController
-
-    private let onSelectLang: ((Lang) -> Void)?
+    private let params: LangPickerParams
+    private let onSelect: ((Lang) -> Void)?
+    private lazy var langPickerController = LangPickerController(langs: params.langs)
 
     /// Инициализатор.
     /// - Parameters:
     ///  - params: параметры представления;
     ///  - onSelectLang: callback, который вызывается при нажатии кнопки "Выбрать" на попапе.
-    init(params: LangPickerPopupParams,
-         onSelectLang: ((Lang) -> Void)?) {
+    init(params: LangPickerParams,
+         onSelect: ((Lang) -> Void)?) {
         self.params = params
-        self.langPickerController = LangPickerController(langs: params.langs)
-        self.onSelectLang = onSelectLang
+        self.onSelect = onSelect
         super.init(frame: .zero)
-        self.backgroundColor = Theme.data.backgroundColor
-        layer.cornerRadius = 16
         initViews()
     }
 
@@ -50,10 +43,10 @@ final class LangPickerPopup: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    /// Выделить выбранный язык в представлении попапа.
+    /// Выделить выбранный язык в представлении.
     /// - Parameters:
     ///  - lang: выбранный язык.
-    func selectLang(_ lang: Lang) {
+    func select(_ lang: Lang) {
         guard let row = langPickerController.langs.firstIndex(where: { $0.id == lang.id }) else { return }
 
         pickerView.selectRow(row, inComponent: 0, animated: false)
@@ -64,12 +57,14 @@ final class LangPickerPopup: UIView {
         let row = pickerView.selectedRow(inComponent: 0)
         let lang = langPickerController.langs[row]
 
-        onSelectLang?(lang)
+        onSelect?(lang)
     }
 
     // MARK: - Layout
 
     private func initViews() {
+        backgroundColor = Theme.data.backgroundColor
+        layer.cornerRadius = 16
         initLangPickerView()
         initSelectButton()
     }
@@ -85,7 +80,7 @@ final class LangPickerPopup: UIView {
 
     private func initSelectButton() {
         addSubview(selectButton)
-        selectButton.setTitle(params.selectButtonTitle, for: .normal)
+        selectButton.setTitle(params.title, for: .normal)
         selectButton.setTitleColor(.white, for: .normal)
         selectButton.backgroundColor = .darkGray
         selectButton.layer.cornerRadius = 8

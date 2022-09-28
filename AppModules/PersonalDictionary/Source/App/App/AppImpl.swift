@@ -11,7 +11,7 @@ import UIKit
 final class AppImpl: App {
 
     /// Получение корневого контроллера приложения
-    private(set) var navigationController: UINavigationController?
+    private(set) var rootViewController: UIViewController?
 
     /// Служба для работы с пуш-уведомлениями.
     private(set) var pushNotificationService: PushNotificationService
@@ -29,8 +29,7 @@ final class AppImpl: App {
         navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
         navigationController?.setViewControllers([mainWordListViewController], animated: false)
 
-        self.navigationController = navigationController
-
+        rootViewController = navigationController
         pushNotificationService = pushNotificationBuilder.build()
     }
 }

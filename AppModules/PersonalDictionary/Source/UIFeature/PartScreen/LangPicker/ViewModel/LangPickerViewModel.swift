@@ -13,5 +13,5 @@ protocol LangPickerViewModel: AnyObject {
     /// Данные модели представления.
     var state: BehaviorRelay<LangPickerState?> { get }
 
-    func onLangSelected(_ lang: Lang)
+    func onSelect(_ lang: Lang)
 }

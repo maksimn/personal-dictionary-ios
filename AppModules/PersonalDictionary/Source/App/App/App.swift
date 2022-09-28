@@ -11,7 +11,7 @@ import UIKit
 public protocol App {
 
     /// Получение корневого контроллера приложения
-    var navigationController: UINavigationController? { get }
+    var rootViewController: UIViewController? { get }
 
     /// Служба для работы с пуш-уведомлениями.
     var pushNotificationService: PushNotificationService { get }
