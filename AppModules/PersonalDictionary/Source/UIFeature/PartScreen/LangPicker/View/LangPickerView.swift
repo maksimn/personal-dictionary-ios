@@ -8,7 +8,7 @@
 import RxSwift
 import UIKit
 
-final class LangPickerViewImpl: UIView {
+final class LangPickerView: UIView {
 
     private let params: LangPickerPopupParams
     private let viewModel: LangPickerViewModel
@@ -17,7 +17,7 @@ final class LangPickerViewImpl: UIView {
     private lazy var langPickerPopup = LangPickerPopup(
         params: params,
         onSelectLang: { [weak self] lang in
-            self?.viewModel.update(selectedLang: lang)
+            self?.viewModel.onLangSelected(lang)
         }
     )
 
@@ -30,15 +30,19 @@ final class LangPickerViewImpl: UIView {
         self.params = params
         self.viewModel = viewModel
         super.init(frame: .zero)
-        addSubview(langPickerPopup)
-        langPickerPopup.snp.makeConstraints { make -> Void in
-            make.edges.equalTo(self)
-        }
+        initView()
         bindToViewModel()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func initView() {
+        addSubview(langPickerPopup)
+        langPickerPopup.snp.makeConstraints { make -> Void in
+            make.edges.equalTo(self)
+        }
     }
 
     private func bindToViewModel() {

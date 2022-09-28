@@ -12,15 +12,7 @@ struct NewWordState {
     var text: String
     var sourceLang: Lang
     var targetLang: Lang
-    var selectedLangType: LangType
-    var isLangPickerHidden: Bool
-
-    var langPickerState: LangPickerState {
-        LangPickerState(
-            lang: selectedLangType == .source ? sourceLang : targetLang,
-            langType: selectedLangType
-        )
-    }
+    var langPickerState: LangPickerState
 }
 
 /// Модель представления для экрана добавления нового слова в личный словарь.
@@ -35,7 +27,7 @@ protocol NewWordViewModel: AnyObject {
     func update(text: String)
 
     /// Обновить данные об исходном / целевом языке для слова в модели
-    func update(langPickerState: LangPickerState)
+    func updateStateWith(langPickerState: LangPickerState)
 
     /// Показать представление для выбора языка.
     /// - Parameters:

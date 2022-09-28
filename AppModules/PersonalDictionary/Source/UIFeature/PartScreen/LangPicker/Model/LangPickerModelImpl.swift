@@ -8,17 +8,6 @@
 /// Реализация модели выбора языка.
 final class LangPickerModelImpl: LangPickerModel {
 
-    /// Данные о выбранном языке.
-    var state: LangPickerState? {
-        didSet {
-            if viewModel == nil {
-                viewModel = viewModelBlock()
-            }
-            viewModel?.state.accept(state)
-        }
-    }
-
-    /// Делегат события выбора языка.
     weak var listener: LangPickerListener?
 
     private let viewModelBlock: () -> LangPickerViewModel?
@@ -28,14 +17,11 @@ final class LangPickerModelImpl: LangPickerModel {
         self.viewModelBlock = viewModelBlock
     }
 
-    func update(selectedLang: Lang) {
-        guard let oldState = state else { return }
-        let newState = LangPickerState(
-            lang: selectedLang,
-            langType: oldState.langType
-        )
+    func set(state: LangPickerState) {
+        if viewModel == nil {
+            viewModel = viewModelBlock()
+        }
 
-        state = newState
-        listener?.onLangPickerStateChanged(newState)
+        viewModel?.state.accept(state)
     }
 }

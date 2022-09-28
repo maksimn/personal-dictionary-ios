@@ -15,7 +15,7 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
 
     private let viewModel: NewWordViewModel
 
-    var langPickerGraph: LangPickerGraph? // Child Feature
+    private var langPickerGraph: LangPickerGraph? // Child Feature
 
     let contentView = UIView()
     let sourceLangLabel = UILabel()
@@ -38,7 +38,7 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         initViews()
-        add(langPickerBuilder)
+        addLangPicker(langPickerBuilder)
         bindToViewModel()
     }
 
@@ -58,12 +58,6 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
         return true
     }
 
-    // MARK: - LangPickerListener
-
-    func onLangPickerStateChanged(_ state: LangPickerState) {
-        viewModel.update(langPickerState: state)
-    }
-
     // MARK: - User Action Handlers
 
     @objc
@@ -81,7 +75,26 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
         sendNewWordEventAndDismiss()
     }
 
+    // MARK: - LangPickerListener
+
+    func onLangPickerStateChanged(_ state: LangPickerState) {
+        viewModel.updateStateWith(langPickerState: state)
+    }
+
     // MARK: - Private
+
+    private func addLangPicker(_ langPickerBuilder: LangPickerBuilder) {
+        langPickerGraph = langPickerBuilder.build()
+
+        guard let langPickerView = langPickerGraph?.uiview else { return }
+
+        view.addSubview(langPickerView)
+        langPickerView.snp.makeConstraints { make -> Void in
+            make.edges.equalTo(contentView)
+        }
+
+        langPickerGraph?.model?.listener = self
+    }
 
     private func bindToViewModel() {
         viewModel.state.subscribe(onNext: { [weak self] state in
@@ -93,8 +106,8 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
         textField.text = state.text
         sourceLangLabel.text = state.sourceLang.name
         targetLangLabel.text = state.targetLang.name
-        langPickerGraph?.uiview.isHidden = state.isLangPickerHidden
-        langPickerGraph?.model?.state = state.langPickerState
+        langPickerGraph?.uiview.isHidden = state.langPickerState.isHidden
+        langPickerGraph?.model?.set(state: state.langPickerState)
     }
 
     private func sendNewWordEventAndDismiss() {
