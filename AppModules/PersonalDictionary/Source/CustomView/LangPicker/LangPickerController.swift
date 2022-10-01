@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// Источник данных для представления для выбора языка.
+/// Источник данных для элемента выбора языка.
 final class LangPickerController: NSObject, UIPickerViewDataSource, UIPickerViewDelegate {
 
     /// Список языков

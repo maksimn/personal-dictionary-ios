@@ -10,14 +10,14 @@ import UIKit
 
 final class LangPickerView: UIView {
 
-    private let params: LangPickerPopupParams
+    private let params: LangPickerParams
     private let viewModel: LangPickerViewModel
     private let disposeBag = DisposeBag()
 
-    private lazy var langPickerPopup = LangPickerPopup(
+    private lazy var langPicker = LangPicker(
         params: params,
-        onSelectLang: { [weak self] lang in
-            self?.viewModel.onLangSelected(lang)
+        onSelect: { [weak self] lang in
+            self?.viewModel.onSelect(lang)
         }
     )
 
@@ -25,7 +25,7 @@ final class LangPickerView: UIView {
     /// - Parameters:
     ///  - params: параметры представления выбора языка.
     ///  - viewModel: модель представления.
-    init(params: LangPickerPopupParams,
+    init(params: LangPickerParams,
          viewModel: LangPickerViewModel) {
         self.params = params
         self.viewModel = viewModel
@@ -39,8 +39,8 @@ final class LangPickerView: UIView {
     }
 
     private func initView() {
-        addSubview(langPickerPopup)
-        langPickerPopup.snp.makeConstraints { make -> Void in
+        addSubview(langPicker)
+        langPicker.snp.makeConstraints { make -> Void in
             make.edges.equalTo(self)
         }
     }
@@ -49,7 +49,7 @@ final class LangPickerView: UIView {
         viewModel.state.subscribe(onNext: { [weak self] state in
             guard let state = state else { return }
             
-            self?.langPickerPopup.selectLang(state.lang)
+            self?.langPicker.select(state.lang)
         }).disposed(by: disposeBag)
     }
 }

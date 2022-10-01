@@ -51,18 +51,20 @@ public final class AppBuilderImpl: AppBuilder {
         let lang2 = Lang(id: Lang.Id(raw: 2), name: bundle.moduleLocalizedString("Russian"), shortName: "RU")
         let lang4 = Lang(id: Lang.Id(raw: 4), name: bundle.moduleLocalizedString("Italian"), shortName: "IT")
         let lang5 = Lang(id: Lang.Id(raw: 5), name: bundle.moduleLocalizedString("German"), shortName: "DE")
-        let langData = LangData(allLangs: [lang1, lang2, lang4, lang5],
-                                sourceLangKey: "io.github.maksimn.pd.sourceLang",
-                                targetLangKey: "io.github.maksimn.pd.targetLang",
-                                defaultSourceLang: lang1,
-                                defaultTargetLang: lang2)
+        let langData = LangData(
+            allLangs: [lang1, lang2, lang4, lang5],
+            sourceLangKey: "io.github.maksimn.pd.sourceLang",
+            targetLangKey: "io.github.maksimn.pd.targetLang",
+            defaultSourceLang: lang1,
+            defaultTargetLang: lang2
+        )
 
         return AppConfig(
             bundle: bundle,
             langData: langData,
             ponsApiSecret: "",
             isLoggingEnabled: true,
-            everydayPNTime: EverydayPNTime(hh: 19, mm: 30)
+            everydayPNTime: AppConfig.EverydayPNTime(hh: 19, mm: 30)
         )
     }
 }

@@ -22,14 +22,14 @@ struct AppConfig {
 
     /// Время ежедневного пуш-уведомления
     let everydayPNTime: EverydayPNTime
-}
 
-/// Время ежедневного пуш-уведомления
-struct EverydayPNTime {
+    /// Время ежедневного пуш-уведомления
+    struct EverydayPNTime {
 
-    /// Час
-    let hh: Int
+        /// Час
+        let hh: Int
 
-    /// Минуты
-    let mm: Int
+        /// Минуты
+        let mm: Int
+    }
 }

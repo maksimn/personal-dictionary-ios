@@ -9,12 +9,19 @@ import UIKit
 
 protocol MainWordListDependency: BaseDependency { }
 
-/// Реализация билдера фичи "Главный (основной) список слов" Личного словаря.
-final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
+private struct MainWordListDependencyImpl: MainWordListDependency, MainNavigatorDependency {
 
-    private(set) weak var navigationController: UINavigationController?
-    
+    let navigationController: UINavigationController?
+
     let appConfig: AppConfig
+}
+
+/// Реализация билдера фичи "Главный (основной) список слов" Личного словаря.
+final class MainWordListBuilderImpl: MainWordListBuilder {
+
+    private weak var navigationController: UINavigationController?
+    
+    private let appConfig: AppConfig
 
     /// Инициализатор.
     /// - Parameters:
@@ -28,21 +35,23 @@ final class MainWordListBuilderImpl: MainWordListBuilder, BaseDependency {
     /// - Returns:
     ///  - Экран "Главного (основного) списка слов".
     func build() -> UIViewController {
-        MainWordListViewController(
-            viewParams: createViewParams(),
+        let mainWordListDependency = MainWordListDependencyImpl(
+            navigationController: navigationController,
+            appConfig: appConfig
+        )
+
+        return MainWordListViewController(
+            viewParams: viewParams,
             wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: true, appConfig: appConfig),
             wordListFetcher: CoreWordListRepository(appConfig: appConfig),
-            mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: self)
+            mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: mainWordListDependency)
         )
     }
 
-    private func createViewParams() -> MainWordListViewParams {
+    private var viewParams: MainWordListViewParams {
         MainWordListViewParams(
             heading: appConfig.bundle.moduleLocalizedString("My dictionary"),
             visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
         )
     }
 }
-
-/// Для передачи зависимостей во вложенные фичи.
-extension MainWordListBuilderImpl: MainNavigatorDependency { }

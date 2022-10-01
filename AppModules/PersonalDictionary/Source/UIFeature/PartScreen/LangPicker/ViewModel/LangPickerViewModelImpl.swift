@@ -22,7 +22,7 @@ final class LangPickerViewModelImpl: LangPickerViewModel {
         self.model = model
     }
 
-    func onLangSelected(_ lang: Lang) {
+    func onSelect(_ lang: Lang) {
         guard let oldState = state.value else { return }
         var newState = oldState
 
