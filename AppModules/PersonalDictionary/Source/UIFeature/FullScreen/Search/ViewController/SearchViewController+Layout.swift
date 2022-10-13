@@ -37,11 +37,15 @@ extension SearchViewController {
         }
     }
 
-    func addSearchResultTextLabel(_ params: TextLabelParams) {
-        searchResultTextLabel = TextLabel(params: params)
-        searchResultTextLabel?.isHidden = true
-        view.addSubview(searchResultTextLabel ?? UIView())
-        searchResultTextLabel?.snp.makeConstraints { make -> Void in
+    func initCenterLabel() {
+        centerLabel.textColor = Theme.data.secondaryTextColor
+        centerLabel.font = Theme.data.normalFont
+        centerLabel.numberOfLines = 1
+        centerLabel.textAlignment = .center
+        centerLabel.text = noResultFoundText
+        centerLabel.isHidden = true
+        view.addSubview(centerLabel)
+        centerLabel.snp.makeConstraints { make -> Void in
             make.centerY.equalTo(view).offset(-20)
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)

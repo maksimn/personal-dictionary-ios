@@ -40,13 +40,11 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
     }
 
     private func createViewParams() -> FavoriteWordListViewParams {
-        FavoriteWordListViewParams(
-            heading: appConfig.bundle.moduleLocalizedString("Favorite words"),
-            textLabelParams: TextLabelParams(
-                textColor: Theme.data.secondaryTextColor,
-                font: Theme.data.normalFont,
-                text: appConfig.bundle.moduleLocalizedString("No favorite words")
-            )
+        let bundle = appConfig.bundle
+
+        return FavoriteWordListViewParams(
+            heading: bundle.moduleLocalizedString("Favorite words"),
+            noFavoriteWordsText: bundle.moduleLocalizedString("No favorite words")
         )
     }
 }
