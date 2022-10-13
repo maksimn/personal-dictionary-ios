@@ -40,10 +40,15 @@ final class MainWordListViewController: UIViewController {
         fatalError("init?(coder: NSCoder) are not implemented.")
     }
 
+    override func loadView() {
+        view = UIView()
+
+        initViews()
+        mainNavigator.appendTo(rootView: view)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        initViews()
-        mainNavigator.addNavigationViews()
         initWordListModel()
     }
 

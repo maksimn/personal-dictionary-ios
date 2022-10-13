@@ -35,12 +35,12 @@ final class MainNavigatorImpl: MainNavigator {
         self.navToTodoListAppBuilder = navToTodoListAppBuilder
     }
 
-    /// Добавить представления элементов навигации на экран.
-    func addNavigationViews() {
+    /// Добавить представления элементов навигации.
+    func appendTo(rootView: UIView) {
         addNavToSearch()
-        addNavToFavoriteWordList()
-        addNavToNewWord()
-        addNavToOtherApp()
+        addNavToFavoriteWordList(rootView)
+        addNavToNewWord(rootView)
+        addNavToOtherApp(rootView)
     }
 
     private func addNavToSearch() {
@@ -51,42 +51,35 @@ final class MainNavigatorImpl: MainNavigator {
         navigationItem?.titleView = navToSearchView
     }
 
-    private func addNavToFavoriteWordList() {
-        guard let view = view else { return }
+    private func addNavToFavoriteWordList(_ rootView: UIView) {
         let navToFavoriteWordListView = navToFavoriteWordListBuilder.build()
 
-        view.addSubview(navToFavoriteWordListView)
+        rootView.addSubview(navToFavoriteWordListView)
         navToFavoriteWordListView.snp.makeConstraints { make -> Void in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
+            make.top.equalTo(rootView.safeAreaLayoutGuide.snp.top)
+            make.left.equalTo(rootView.safeAreaLayoutGuide.snp.left)
             make.size.equalTo(CGSize(width: 60, height: 50))
         }
     }
 
-    private func addNavToNewWord() {
-        guard let view = view else { return }
+    private func addNavToNewWord(_ rootView: UIView) {
         let navView = navToNewWordBuilder.build()
 
-        view.addSubview(navView)
+        rootView.addSubview(navView)
         navView.snp.makeConstraints { make -> Void in
             make.size.equalTo(CGSize(width: 44, height: 44))
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-26)
-            make.centerX.equalTo(view)
+            make.bottom.equalTo(rootView.safeAreaLayoutGuide.snp.bottom).offset(-26)
+            make.centerX.equalTo(rootView)
         }
     }
 
-    private func addNavToOtherApp() {
-        guard let view = view else { return }
+    private func addNavToOtherApp(_ rootView: UIView) {
         let navView = navToTodoListAppBuilder.build()
 
-        view.addSubview(navView)
+        rootView.addSubview(navView)
         navView.snp.makeConstraints { make -> Void in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(21)
-            make.right.equalTo(view.snp.right).offset(-10)
+            make.top.equalTo(rootView.safeAreaLayoutGuide.snp.top).offset(21)
+            make.right.equalTo(rootView.snp.right).offset(-10)
         }
-    }
-
-    private var view: UIView? {
-        navigationController?.viewControllers.first?.view
     }
 }
