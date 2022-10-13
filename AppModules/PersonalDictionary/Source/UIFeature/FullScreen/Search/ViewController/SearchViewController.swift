@@ -8,40 +8,37 @@
 import RxSwift
 import UIKit
 
-/// Параметры представления поиска.
-struct SearchViewParams {
-
-    /// Параметры текстового сообщения о пустом результате поиска.
-    let searchResultTextParams: TextLabelParams
-}
-
 /// View controller экрана поиска по словам в словаре.
 final class SearchViewController: UIViewController, SearchTextInputListener, SearchModePickerListener {
 
     let searchEngine: SearchEngine
     let wordListMVVM: WordListMVVM
     var searchTextInputMVVM: SearchTextInputMVVM?
-    var searchResultTextLabel: TextLabel?
     var searchModePickerMVVM: SearchModePickerMVVM?
+    let noResultFoundText: String
+    let centerLabel = UILabel()
+
+    private let disposeBag = DisposeBag()
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - searchViewParams: параметры представления поиска.
+    ///  - noResultFoundText: текст "ничего не найдено" в результате поиска.
     ///  - searchTextInputBuilder: билдер вложенной фичи "Элемент ввода текста для поиска"
     ///  - searchModePickerBuilder: билдер вложенной фичи "Выбор режима поиска"
     ///  - wordListBuilder: билдер вложенной фичи "Список слов".
     ///  - searchEngineBuilder: билдер вложенной фичи "Поисковый Движок"
-    init(viewParams: SearchViewParams,
+    init(noResultFoundText: String,
          searchTextInputBuilder: SearchTextInputBuilder,
          searchModePickerBuilder: SearchModePickerBuilder,
          wordListBuilder: WordListBuilder,
          searchEngineBuilder: SearchEngineBuilder) {
+        self.noResultFoundText = noResultFoundText
         searchEngine = searchEngineBuilder.build()
         wordListMVVM = wordListBuilder.build()
         super.init(nibName: nil, bundle: nil)
         addFeature(searchTextInputBuilder)
         addWordListViewController()
-        addSearchResultTextLabel(viewParams.searchResultTextParams)
+        initCenterLabel()
         addFeature(searchModePickerBuilder)
         view.backgroundColor = Theme.data.backgroundColor
     }
@@ -78,9 +75,7 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
     private func showSearchResult(data: SearchResultData) {
         guard let wordListModel = self.wordListMVVM.model else { return }
 
-        searchResultTextLabel?.isHidden = !(data.searchState == .fulfilled && data.foundWordList.count == 0)
+        centerLabel.isHidden = !(data.searchState == .fulfilled && data.foundWordList.count == 0)
         wordListModel.wordList = data.foundWordList
     }
-
-    private let disposeBag = DisposeBag()
 }

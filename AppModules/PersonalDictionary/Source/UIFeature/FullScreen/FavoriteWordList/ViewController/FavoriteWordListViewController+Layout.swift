@@ -16,7 +16,7 @@ extension FavoriteWordListViewController {
         navigationItem.titleView = navToSearchBuilder.build()
         initHeadingLabel()
         addWordListChildController()
-        addTextLabel(params.textLabelParams)
+        initCenterLabel()
     }
 
     private func initHeadingLabel() {
@@ -52,11 +52,15 @@ extension FavoriteWordListViewController {
         }
     }
 
-    private func addTextLabel(_ params: TextLabelParams) {
-        textLabel = TextLabel(params: params)
-        textLabel?.isHidden = true
-        view.addSubview(textLabel ?? UIView())
-        textLabel?.snp.makeConstraints { make -> Void in
+    private func initCenterLabel() {
+        centerLabel.textColor = Theme.data.secondaryTextColor
+        centerLabel.font = Theme.data.normalFont
+        centerLabel.numberOfLines = 1
+        centerLabel.textAlignment = .center
+        centerLabel.text = params.noFavoriteWordsText
+        centerLabel.isHidden = true
+        view.addSubview(centerLabel)
+        centerLabel.snp.makeConstraints { make -> Void in
             make.centerY.equalTo(view).offset(-20)
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)

@@ -14,8 +14,8 @@ struct FavoriteWordListViewParams {
     /// Текст заголовка
     let heading: String
 
-    /// Параметры текстового элемента
-    let textLabelParams: TextLabelParams
+    /// Текст "нет избранных слов"
+    let noFavoriteWordsText: String
 }
 
 /// View controller экрана списка избранных слов.
@@ -33,7 +33,7 @@ final class FavoriteWordListViewController: UIViewController {
 
     let headingLabel = UILabel()
 
-    var textLabel: TextLabel?
+    let centerLabel = UILabel()
 
     private let disposeBag = DisposeBag()
 
@@ -55,6 +55,7 @@ final class FavoriteWordListViewController: UIViewController {
         self.favoriteWordListFetcher = favoriteWordListFetcher
         self.readableWordItemStream = readableWordItemStream
         super.init(nibName: nil, bundle: nil)
+        initViews()
     }
 
     required init?(coder: NSCoder) {
@@ -63,7 +64,6 @@ final class FavoriteWordListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        initViews()
         fetchData()
         subscribeToWordItemStream()
     }
@@ -73,7 +73,7 @@ final class FavoriteWordListViewController: UIViewController {
         guard let wordListModel = wordListMVVM.model else { return }
 
         wordListModel.wordList = wordList
-        textLabel?.isHidden = !wordList.isEmpty
+        centerLabel.isHidden = !wordList.isEmpty
     }
 
     private func subscribeToWordItemStream() {
