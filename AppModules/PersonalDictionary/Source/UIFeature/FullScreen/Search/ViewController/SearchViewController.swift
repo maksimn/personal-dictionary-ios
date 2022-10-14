@@ -11,16 +11,16 @@ import UIKit
 /// View controller экрана поиска по словам в словаре.
 final class SearchViewController: UIViewController, SearchTextInputListener, SearchModePickerListener {
 
-    let searchEngine: SearchEngine
-    let wordListMVVM: WordListMVVM
-    var searchTextInputMVVM: SearchTextInputMVVM?
-    var searchModePickerMVVM: SearchModePickerMVVM?
     let noResultFoundText: String
+    let searchTextInputMVVM: SearchTextInputMVVM
+    let searchModePickerMVVM: SearchModePickerMVVM
+    let wordListMVVM: WordListMVVM
+    let searchEngine: SearchEngine
+
     let centerLabel = UILabel()
 
     private let disposeBag = DisposeBag()
 
-    /// Инициализатор.
     /// - Parameters:
     ///  - noResultFoundText: текст "ничего не найдено" в результате поиска.
     ///  - searchTextInputBuilder: билдер вложенной фичи "Элемент ввода текста для поиска"
@@ -33,14 +33,12 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
          wordListBuilder: WordListBuilder,
          searchEngineBuilder: SearchEngineBuilder) {
         self.noResultFoundText = noResultFoundText
-        searchEngine = searchEngineBuilder.build()
+        searchTextInputMVVM = searchTextInputBuilder.build()
+        searchModePickerMVVM = searchModePickerBuilder.build()
         wordListMVVM = wordListBuilder.build()
+        searchEngine = searchEngineBuilder.build()
         super.init(nibName: nil, bundle: nil)
-        addFeature(searchTextInputBuilder)
-        addWordListViewController()
-        initCenterLabel()
-        addFeature(searchModePickerBuilder)
-        view.backgroundColor = Theme.data.backgroundColor
+        initViews()
     }
 
     required init?(coder: NSCoder) {
@@ -50,14 +48,14 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
     // MARK: - SearchTextInputListener
 
     func onSearchTextChanged(_ searchText: String) {
-        guard let searchMode = searchModePickerMVVM?.model?.searchMode else { return }
+        guard let searchMode = searchModePickerMVVM.model?.searchMode else { return }
         performSearch(for: searchText, mode: searchMode)
     }
 
     // MARK: - SearchModePickerListener
 
     func onSearchModeChanged(_ searchMode: SearchMode) {
-        guard let searchText = searchTextInputMVVM?.model?.searchText else { return }
+        guard let searchText = searchTextInputMVVM.model?.searchText else { return }
         performSearch(for: searchText, mode: searchMode)
     }
 
@@ -66,8 +64,9 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
     private func performSearch(for searchText: String, mode: SearchMode) {
         searchEngine.findWords(contain: searchText, mode: mode)
             .subscribe(
-                onSuccess: { self.showSearchResult(data: $0) },
-                onError: nil
+                onSuccess: { [weak self] in
+                    self?.showSearchResult(data: $0)
+                }
             )
             .disposed(by: disposeBag)
     }

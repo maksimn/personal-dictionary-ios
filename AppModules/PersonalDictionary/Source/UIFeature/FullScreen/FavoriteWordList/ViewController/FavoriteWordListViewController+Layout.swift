@@ -13,7 +13,7 @@ extension FavoriteWordListViewController {
     func initViews() {
         view.backgroundColor = Theme.data.backgroundColor
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        navigationItem.titleView = navToSearchBuilder.build()
+        navigationItem.titleView = navToSearchView
         initHeadingLabel()
         addWordListChildController()
         initCenterLabel()
@@ -58,7 +58,6 @@ extension FavoriteWordListViewController {
         centerLabel.numberOfLines = 1
         centerLabel.textAlignment = .center
         centerLabel.text = params.noFavoriteWordsText
-        centerLabel.isHidden = true
         view.addSubview(centerLabel)
         centerLabel.snp.makeConstraints { make -> Void in
             make.centerY.equalTo(view).offset(-20)

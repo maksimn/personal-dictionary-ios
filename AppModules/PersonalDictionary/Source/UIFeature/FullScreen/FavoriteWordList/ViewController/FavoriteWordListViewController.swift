@@ -8,28 +8,18 @@
 import RxSwift
 import UIKit
 
-/// Параметры представления списка избранных слов.
-struct FavoriteWordListViewParams {
-
-    /// Текст заголовка
-    let heading: String
-
-    /// Текст "нет избранных слов"
-    let noFavoriteWordsText: String
-}
-
 /// View controller экрана списка избранных слов.
 final class FavoriteWordListViewController: UIViewController {
 
     let params: FavoriteWordListViewParams
 
-    let navToSearchBuilder: NavToSearchBuilder
+    let navToSearchView: UIView
 
     let wordListMVVM: WordListMVVM
 
     let favoriteWordListFetcher: FavoriteWordListFetcher
 
-    let readableWordItemStream: ReadableWordItemStream
+    let wordItemStream: ReadableWordItemStream
 
     let headingLabel = UILabel()
 
@@ -37,38 +27,41 @@ final class FavoriteWordListViewController: UIViewController {
 
     private let disposeBag = DisposeBag()
 
-    /// Инициализатор.
     /// - Parameters:
     ///  - params: параметры представления списка избранных слов.
     ///  - navToSearchBuilder: билдер вложенной фичи "Навигация на экран Поиска".
     ///  - wordListBuilder: билдер вложенной фичи "Список слов".
     ///  - favoriteWordListFetcher: получение списка избранных слов из хранилища.
-    ///  - readableWordItemStream: поток событий со словами в приложении.
+    ///  - wordItemStream: поток событий со словами в приложении.
     init(params: FavoriteWordListViewParams,
          navToSearchBuilder: NavToSearchBuilder,
          wordListBuilder: WordListBuilder,
          favoriteWordListFetcher: FavoriteWordListFetcher,
-         readableWordItemStream: ReadableWordItemStream) {
+         wordItemStream: ReadableWordItemStream) {
         self.params = params
-        self.navToSearchBuilder = navToSearchBuilder
-        self.wordListMVVM = wordListBuilder.build()
+        navToSearchView = navToSearchBuilder.build()
+        wordListMVVM = wordListBuilder.build()
         self.favoriteWordListFetcher = favoriteWordListFetcher
-        self.readableWordItemStream = readableWordItemStream
+        self.wordItemStream = wordItemStream
         super.init(nibName: nil, bundle: nil)
         initViews()
+        subscribeToWordItemStream()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchData()
-        subscribeToWordItemStream()
+        updateFavoriteWordList()
     }
 
-    private func fetchData() {
+    // MARK: - Private
+
+    private func updateFavoriteWordList() {
         let wordList = favoriteWordListFetcher.favoriteWordList
         guard let wordListModel = wordListMVVM.model else { return }
 
@@ -77,11 +70,11 @@ final class FavoriteWordListViewController: UIViewController {
     }
 
     private func subscribeToWordItemStream() {
-        readableWordItemStream.removedWordItem
-            .subscribe(onNext: { [weak self] _ in self?.fetchData() })
+        wordItemStream.removedWordItem
+            .subscribe(onNext: { [weak self] _ in self?.updateFavoriteWordList() })
             .disposed(by: disposeBag)
-        readableWordItemStream.updatedWordItem
-            .subscribe(onNext: { [weak self] _ in self?.fetchData() })
+        wordItemStream.updatedWordItem
+            .subscribe(onNext: { [weak self] _ in self?.updateFavoriteWordList() })
             .disposed(by: disposeBag)
     }
 }
