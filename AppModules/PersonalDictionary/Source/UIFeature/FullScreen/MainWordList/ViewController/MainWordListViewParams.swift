@@ -5,8 +5,6 @@
 //  Created by Maxim Ivanov on 09.11.2021.
 //
 
-import UIKit
-
 /// Параметры представления Главного списка слов.
 struct MainWordListViewParams {
 

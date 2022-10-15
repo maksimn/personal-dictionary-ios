@@ -8,46 +8,50 @@
 /// Внешние зависимости фичи "Экран списка избранных слов".
 protocol FavoriteWordListDependency: BaseDependency { }
 
+private struct NavToSearchDependencyImpl: NavToSearchDependency {
+
+    let navigationController: UINavigationController?
+
+    let appConfig: AppConfig
+}
+
 /// Реализация билдера фичи "Экран списка избранных слов".
 final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
 
-    private(set) weak var navigationController: UINavigationController?
+    private weak var navigationController: UINavigationController?
 
-    let appConfig: AppConfig
+    private let appConfig: AppConfig
 
     /// Инициализатор,
     /// - Parameters:
     ///  - dependency: зависимости фичи.
     init(dependency: FavoriteWordListDependency) {
-        self.navigationController = dependency.navigationController
-        self.appConfig = dependency.appConfig
+        navigationController = dependency.navigationController
+        appConfig = dependency.appConfig
     }
 
     /// Создать экран.
     /// - Returns:
     ///  - View controller экрана.
     func build() -> UIViewController {
-        let navToSearchBuilder = NavToSearchBuilderImpl(width: .smaller, dependency: self)
-        let wordListBuilder = WordListBuilderImpl(shouldAnimateWhenAppear: false, appConfig: appConfig)
-
-        return FavoriteWordListViewController(
-            params: createViewParams(),
-            navToSearchBuilder: navToSearchBuilder,
-            wordListBuilder: wordListBuilder,
-            favoriteWordListFetcher: CoreWordListRepository(appConfig: appConfig),
-            readableWordItemStream: WordItemStreamImpl.instance
+        let navToSearchDependency = NavToSearchDependencyImpl(
+            navigationController: navigationController,
+            appConfig: appConfig
         )
-    }
-
-    private func createViewParams() -> FavoriteWordListViewParams {
+        let navToSearchBuilder = NavToSearchBuilderImpl(width: .smaller, dependency: navToSearchDependency)
+        let wordListBuilder = WordListBuilderImpl(shouldAnimateWhenAppear: false, appConfig: appConfig)
         let bundle = appConfig.bundle
-
-        return FavoriteWordListViewParams(
+        let viewParams = FavoriteWordListViewParams(
             heading: bundle.moduleLocalizedString("Favorite words"),
             noFavoriteWordsText: bundle.moduleLocalizedString("No favorite words")
         )
+
+        return FavoriteWordListViewController(
+            params: viewParams,
+            navToSearchBuilder: navToSearchBuilder,
+            wordListBuilder: wordListBuilder,
+            favoriteWordListFetcher: CoreWordListRepository(appConfig: appConfig),
+            wordItemStream: WordItemStreamImpl.instance
+        )
     }
 }
-
-/// Для передачи внешних зависимостей во вложенные фичи.
-extension FavoriteWordListBuilderImpl: NavToSearchDependency { }

@@ -10,13 +10,20 @@ import UIKit
 /// Лэйаут экрана поиска по словам в словаре.
 extension SearchViewController {
 
-    func addFeature(_ searchTextInputBuilder: SearchTextInputBuilder) {
-        searchTextInputMVVM = searchTextInputBuilder.build()
-        searchTextInputMVVM?.model?.listener = self
-        navigationItem.titleView = searchTextInputMVVM?.searchBar
+    func initViews() {
+        view.backgroundColor = Theme.data.backgroundColor
+        initSearchTextInput()
+        initSearchModePicker()
+        initWordList()
+        initCenterLabel()
     }
 
-    func addWordListViewController() {
+    private func initSearchTextInput() {
+        searchTextInputMVVM.model?.listener = self
+        navigationItem.titleView = searchTextInputMVVM.searchBar
+    }
+
+    private func initWordList() {
         let wordListViewController = wordListMVVM.viewController
         let wordListParentView = UIView()
 
@@ -37,7 +44,7 @@ extension SearchViewController {
         }
     }
 
-    func initCenterLabel() {
+    private func initCenterLabel() {
         centerLabel.textColor = Theme.data.secondaryTextColor
         centerLabel.font = Theme.data.normalFont
         centerLabel.numberOfLines = 1
@@ -52,11 +59,10 @@ extension SearchViewController {
         }
     }
 
-    func addFeature(_ searchModePickerBuilder: SearchModePickerBuilder) {
-        searchModePickerMVVM = searchModePickerBuilder.build()
-        searchModePickerMVVM?.model?.listener = self
+    private func initSearchModePicker() {
+        searchModePickerMVVM.model?.listener = self
 
-        guard let searchModePickerView = searchModePickerMVVM?.uiview else { return }
+        let searchModePickerView = searchModePickerMVVM.uiview
         view.addSubview(searchModePickerView)
         searchModePickerView.snp.makeConstraints { make -> Void in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
