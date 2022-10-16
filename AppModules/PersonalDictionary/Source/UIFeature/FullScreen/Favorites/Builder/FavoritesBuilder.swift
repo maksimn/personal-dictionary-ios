@@ -7,8 +7,8 @@
 
 import UIKit
 
-/// Билдер фичи "Экран списка избранных слов".
-protocol FavoriteWordListBuilder {
+/// Билдер фичи "Избранное".
+protocol FavoritesBuilder {
 
     /// Создать экран.
     /// - Returns:

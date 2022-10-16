@@ -12,7 +12,7 @@ final class MainNavigatorImpl: MainNavigator {
 
     private(set) weak var navigationController: UINavigationController?
     private let navToSearchBuilder: NavToSearchBuilder
-    private let navToFavoriteWordListBuilder: NavToFavoriteWordListBuilder
+    private let navToFavoriteWordListBuilder: NavToFavoritesBuilder
     private let navToNewWordBuilder: NavToNewWordBuilder
     private let navToTodoListAppBuilder: NavToTodoListAppBuilder
 
@@ -20,12 +20,12 @@ final class MainNavigatorImpl: MainNavigator {
     /// - Parameters:
     ///  - navigationController: корневой  navigation  сontroller приложения.
     ///  - navToSearchBuilder: билдер вложенной фичи "Элемент навигации на экран поиска".
-    ///  - navToFavoriteWordListBuilder: билдер вложенной фичи "Элемент навигации на экран списка избранных слов".
+    ///  - navToFavoritesBuilder: билдер вложенной фичи "Элемент навигации на экран списка избранных слов".
     ///  - navToNewWordBuilder: билдер вложенной фичи "Элемент навигации на экран добавления нового слова в словарь".
     ///  - navToTodoListAppBuilder: билдер вложенной фичи "Элемент навигации к приложению TodoList".
     init(navigationController: UINavigationController?,
          navToSearchBuilder: NavToSearchBuilder,
-         navToFavoriteWordListBuilder: NavToFavoriteWordListBuilder,
+         navToFavoriteWordListBuilder: NavToFavoritesBuilder,
          navToNewWordBuilder: NavToNewWordBuilder,
          navToTodoListAppBuilder: NavToTodoListAppBuilder) {
         self.navigationController = navigationController
@@ -38,7 +38,7 @@ final class MainNavigatorImpl: MainNavigator {
     /// Добавить представления элементов навигации.
     func appendTo(rootView: UIView) {
         addNavToSearch()
-        addNavToFavoriteWordList(rootView)
+        addNavToFavorites(rootView)
         addNavToNewWord(rootView)
         addNavToOtherApp(rootView)
     }
@@ -51,7 +51,7 @@ final class MainNavigatorImpl: MainNavigator {
         navigationItem?.titleView = navToSearchView
     }
 
-    private func addNavToFavoriteWordList(_ rootView: UIView) {
+    private func addNavToFavorites(_ rootView: UIView) {
         let navToFavoriteWordListView = navToFavoriteWordListBuilder.build()
 
         rootView.addSubview(navToFavoriteWordListView)

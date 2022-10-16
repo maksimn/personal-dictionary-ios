@@ -1,28 +1,29 @@
 //
-//  NavToFavoriteWordListView.swift
+//  NavToFavoritesView.swift
 //  PersonalDictionary
 //
 //  Created by Maksim Ivanov on 21.02.2022.
 //
 
+import CoreModule
 import UIKit
 
-/// Представление элемента навигации на экран списка избранных слов.
-final class NavToFavoriteWordListView: UIView {
+/// Представление элемента навигации на экран Избранного
+final class NavToFavoritesView: UIView {
 
     private let routingButtonTitle: String
-    private let router: NavToFavoriteWordListRouter
+    private let navToFavoritesRouter: CoreRouter
 
     private let routingButton = UIButton()
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - routingButtonTitle: текст  навигационной кнопки на экран списка избранных слов..
-    ///  - router: роутер для навигации на экран списка избранных слов.
+    ///  - routingButtonTitle: текст  навигационной кнопки на экран списка избранных слов.
+    ///  - navToFavoritesRouter: роутер для навигации на экран Избранного.
     init(routingButtonTitle: String,
-         router: NavToFavoriteWordListRouter) {
+         navToFavoritesRouter: CoreRouter) {
         self.routingButtonTitle = routingButtonTitle
-        self.router = router
+        self.navToFavoritesRouter = navToFavoritesRouter
         super.init(frame: .zero)
         initRoutingButton()
     }
@@ -33,7 +34,7 @@ final class NavToFavoriteWordListView: UIView {
 
     @objc
     private func onRoutingButtonTap() {
-        router.navigateToFavoriteWordList()
+        navToFavoritesRouter.navigate()
     }
 
     private func initRoutingButton() {

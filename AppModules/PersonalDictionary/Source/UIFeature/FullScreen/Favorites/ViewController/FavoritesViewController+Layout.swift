@@ -7,15 +7,15 @@
 
 import UIKit
 
-/// Лэйаут экрана списка избранных слов.
-extension FavoriteWordListViewController {
+/// Лэйаут экрана Избранного.
+extension FavoritesViewController {
 
     func initViews() {
         view.backgroundColor = Theme.data.backgroundColor
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.titleView = navToSearchView
         initHeadingLabel()
-        addWordListChildController()
+        addFavoriteWordListController()
         initCenterLabel()
     }
 
@@ -32,8 +32,8 @@ extension FavoriteWordListViewController {
         }
     }
 
-    private func addWordListChildController() {
-        let wordListViewController = wordListMVVM.viewController
+    private func addFavoriteWordListController() {
+        let favoriteWordListViewController = favoriteWordListGraph.viewController
         let wordListParentView = UIView()
 
         view.addSubview(wordListParentView)
@@ -44,10 +44,10 @@ extension FavoriteWordListViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
 
-        wordListParentView.addSubview(wordListViewController.view)
-        addChild(wordListViewController)
-        wordListViewController.didMove(toParent: self)
-        wordListViewController.view.snp.makeConstraints { make -> Void in
+        wordListParentView.addSubview(favoriteWordListViewController.view)
+        addChild(favoriteWordListViewController)
+        favoriteWordListViewController.didMove(toParent: self)
+        favoriteWordListViewController.view.snp.makeConstraints { make -> Void in
             make.edges.equalTo(wordListParentView)
         }
     }
