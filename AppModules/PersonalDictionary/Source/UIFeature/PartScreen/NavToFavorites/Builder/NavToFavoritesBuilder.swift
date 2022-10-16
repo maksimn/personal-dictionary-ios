@@ -7,8 +7,8 @@
 
 import UIKit
 
-/// Билдер фичи "Элемент навигации на экран списка избранных слов".
-protocol NavToFavoriteWordListBuilder {
+/// Билдер фичи "Элемент навигации на экран Избранного".
+protocol NavToFavoritesBuilder {
 
     /// Создать фичу.
     /// - Returns: представление фичи.

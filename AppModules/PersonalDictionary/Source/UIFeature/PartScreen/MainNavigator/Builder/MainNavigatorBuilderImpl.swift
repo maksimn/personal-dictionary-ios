@@ -12,7 +12,7 @@ protocol MainNavigatorDependency: BaseDependency { }
 
 private struct MainNavigatorDependencyImpl: MainNavigatorDependency,
                                             NavToSearchDependency,
-                                            NavToFavoriteWordListDependency,
+                                            NavToFavoritesDependency,
                                             NavToNewWordDependency {
 
     let navigationController: UINavigationController?
@@ -43,7 +43,7 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
         return MainNavigatorImpl(
             navigationController: dependency.navigationController,
             navToSearchBuilder: NavToSearchBuilderImpl(width: .full, dependency: dependency),
-            navToFavoriteWordListBuilder: NavToFavoriteWordListBuilderImpl(dependency: dependency),
+            navToFavoriteWordListBuilder: NavToFavoritesBuilderImpl(dependency: dependency),
             navToNewWordBuilder: NavToNewWordBuilderImpl(dependency: dependency),
             navToTodoListAppBuilder: NavToTodoListAppBuilderImpl(
                 rootViewController: dependency.navigationController,

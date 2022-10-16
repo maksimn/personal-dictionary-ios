@@ -5,8 +5,7 @@
 //  Created by Maxim Ivanov on 11.11.2021.
 //
 
-/// Внешние зависимости фичи "Экран списка избранных слов".
-protocol FavoriteWordListDependency: BaseDependency { }
+protocol FavoritesDependency: BaseDependency {}
 
 private struct NavToSearchDependencyImpl: NavToSearchDependency {
 
@@ -15,8 +14,8 @@ private struct NavToSearchDependencyImpl: NavToSearchDependency {
     let appConfig: AppConfig
 }
 
-/// Реализация билдера фичи "Экран списка избранных слов".
-final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
+/// Реализация билдера фичи "Избранное".
+final class FavoritesBuilderImpl: FavoritesBuilder {
 
     private weak var navigationController: UINavigationController?
 
@@ -25,7 +24,7 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
     /// Инициализатор,
     /// - Parameters:
     ///  - dependency: зависимости фичи.
-    init(dependency: FavoriteWordListDependency) {
+    init(dependency: FavoritesDependency) {
         navigationController = dependency.navigationController
         appConfig = dependency.appConfig
     }
@@ -39,19 +38,16 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
             appConfig: appConfig
         )
         let navToSearchBuilder = NavToSearchBuilderImpl(width: .smaller, dependency: navToSearchDependency)
-        let wordListBuilder = WordListBuilderImpl(shouldAnimateWhenAppear: false, appConfig: appConfig)
         let bundle = appConfig.bundle
-        let viewParams = FavoriteWordListViewParams(
+        let viewParams = FavoritesViewParams(
             heading: bundle.moduleLocalizedString("Favorite words"),
             noFavoriteWordsText: bundle.moduleLocalizedString("No favorite words")
         )
 
-        return FavoriteWordListViewController(
+        return FavoritesViewController(
             params: viewParams,
             navToSearchBuilder: navToSearchBuilder,
-            wordListBuilder: wordListBuilder,
-            favoriteWordListFetcher: CoreWordListRepository(appConfig: appConfig),
-            wordItemStream: WordItemStreamImpl.instance
+            favoriteWordListBuilder: FavoriteWordListBuilderImpl(appConfig: appConfig)
         )
     }
 }
