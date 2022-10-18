@@ -32,39 +32,16 @@ public final class AppBuilderImpl: AppBuilder {
     /// Создать объект данного приложения.
     /// - Returns: объект приложения.
     public func build() -> App {
+        let appConfigFactory = DevAppConfigFactory()
         let baseDependency = BaseDependencyImpl(
             navigationController: UINavigationController(),
-            appConfig: buildConfig()
+            appConfig: appConfigFactory.create()
         )
 
         return AppImpl(
             navigationController: baseDependency.navigationController,
             mainWordListBuilder: MainWordListBuilderImpl(dependency: baseDependency),
             pushNotificationBuilder: PushNotificationBuilderImpl(dependency: baseDependency)
-        )
-    }
-
-    /// Создать конфигурацию приложения.
-    private func buildConfig() -> AppConfig {
-        let bundle = Bundle(for: type(of: self))
-        let lang1 = Lang(id: Lang.Id(raw: 1), name: bundle.moduleLocalizedString("English"), shortName: "EN")
-        let lang2 = Lang(id: Lang.Id(raw: 2), name: bundle.moduleLocalizedString("Russian"), shortName: "RU")
-        let lang4 = Lang(id: Lang.Id(raw: 4), name: bundle.moduleLocalizedString("Italian"), shortName: "IT")
-        let lang5 = Lang(id: Lang.Id(raw: 5), name: bundle.moduleLocalizedString("German"), shortName: "DE")
-        let langData = LangData(
-            allLangs: [lang1, lang2, lang4, lang5],
-            sourceLangKey: "io.github.maksimn.pd.sourceLang",
-            targetLangKey: "io.github.maksimn.pd.targetLang",
-            defaultSourceLang: lang1,
-            defaultTargetLang: lang2
-        )
-
-        return AppConfig(
-            bundle: bundle,
-            langData: langData,
-            ponsApiSecret: "",
-            isLoggingEnabled: true,
-            everydayPNTime: AppConfig.EverydayPNTime(hh: 19, mm: 30)
         )
     }
 }
