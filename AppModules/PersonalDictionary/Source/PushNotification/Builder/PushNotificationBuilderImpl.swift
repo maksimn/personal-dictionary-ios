@@ -9,28 +9,21 @@ import CoreModule
 import UIKit
 import UserNotifications
 
-/// Зависимости фичи "Пуш-уведомления в приложении".
-protocol PushNotificationDependency: BaseDependency { }
-
 /// Реализация билдера фичи "Пуш-уведомления в приложении".
 final class PushNotificationBuilderImpl: PushNotificationBuilder {
 
-    private let appConfig: AppConfig
-    private weak var navigationController: UINavigationController?
+    private weak var dependency: AppDependency?
 
-    /// Инициализатор.
-    /// - Parameters:
-    ///  - dependency: зависимости фичи.
-    init(dependency: PushNotificationDependency) {
-        appConfig = dependency.appConfig
-        navigationController = dependency.navigationController
+    init(dependency: AppDependency) {
+        self.dependency = dependency
     }
 
     /// Метод билдера.
     /// - Returns:
     ///  -  объект службы для работы с пуш-уведомлениями.
     func build() -> PushNotificationService {
-        let bundle = appConfig.bundle
+        guard let appConfig = dependency?.appConfig,
+              let bundle = dependency?.bundle else { return EmptyService() }
         let langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard, data: appConfig.langData)
         let everydayPNTime = appConfig.everydayPNTime
 
@@ -47,10 +40,15 @@ final class PushNotificationBuilderImpl: PushNotificationBuilder {
                 body: bundle.moduleLocalizedString("It's time to add a new word to the dictionary.")
             ),
             navToNewWordRouter: NavToNewWordRouterImpl(
-                navigationController: navigationController,
+                navigationController: dependency?.navigationController,
                 newWordBuilder: NewWordBuilderImpl(bundle: bundle, langRepository: langRepository)
             ),
             logger: LoggerImpl(isLoggingEnabled: appConfig.isLoggingEnabled)
         )
     }
+}
+
+private struct EmptyService: PushNotificationService {
+
+    func schedule() { }
 }

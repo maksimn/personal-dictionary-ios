@@ -5,43 +5,59 @@
 //  Created by Maxim Ivanov on 05.12.2021.
 //
 
-/// Общий протокол из базовых зависимостей в приложении.
-protocol BaseDependency {
+import UIKit
 
-    /// Корневой navigation controller приложения.
+protocol AppDependency: AnyObject {
+
     var navigationController: UINavigationController? { get }
 
-    /// Конфигурация приложения.
     var appConfig: AppConfig { get }
+    
+    var bundle: Bundle { get }
 }
 
-/// Зависимости вложенных фич "Главный список слов", "Пуш-уведомления".
-private struct BaseDependencyImpl: MainWordListDependency, PushNotificationDependency {
+class AppDependencyImpl: AppDependency {
 
-    let navigationController: UINavigationController?
+    private(set) weak var navigationController: UINavigationController?
 
     let appConfig: AppConfig
+
+    let bundle: Bundle
+
+    init(
+        navigationController: UINavigationController?,
+        appConfig: AppConfig,
+        bundle: Bundle
+    ) {
+        self.navigationController = navigationController
+        self.appConfig = appConfig
+        self.bundle = bundle
+    }
 }
 
 /// Реализация билдера приложения "Личный словарь иностранных слов".
 public final class AppBuilderImpl: AppBuilder {
 
-    /// Инициализатор.
     public init() { }
 
     /// Создать объект данного приложения.
     /// - Returns: объект приложения.
     public func build() -> App {
-        let appConfigFactory = DevAppConfigFactory()
-        let baseDependency = BaseDependencyImpl(
-            navigationController: UINavigationController(),
-            appConfig: appConfigFactory.create()
+        let bundle = Bundle(for: type(of: self))
+        let appConfigFactory = DevAppConfigFactory(bundle: bundle)
+        let navigationController = UINavigationController()
+        let appConfig = appConfigFactory.create()
+        let dependency = AppDependencyImpl(
+            navigationController: navigationController,
+            appConfig: appConfig,
+            bundle: bundle
         )
 
         return AppImpl(
-            navigationController: baseDependency.navigationController,
-            mainWordListBuilder: MainWordListBuilderImpl(dependency: baseDependency),
-            pushNotificationBuilder: PushNotificationBuilderImpl(dependency: baseDependency)
+            dependency: dependency,
+            navigationController: navigationController,
+            mainWordListBuilder: MainWordListBuilderImpl(dependency: dependency),
+            pushNotificationBuilder: PushNotificationBuilderImpl(dependency: dependency)
         )
     }
 }

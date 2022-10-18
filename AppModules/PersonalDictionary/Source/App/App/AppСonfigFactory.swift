@@ -12,8 +12,13 @@ protocol AppConfigFactory {
 
 final class DevAppConfigFactory: AppConfigFactory {
 
+    private let bundle: Bundle
+
+    init(bundle: Bundle) {
+        self.bundle = bundle
+    }
+
     func create() -> AppConfig {
-        let bundle = Bundle(for: type(of: self))
         let lang1 = Lang(id: Lang.Id(raw: 1), name: bundle.moduleLocalizedString("English"), shortName: "EN")
         let lang2 = Lang(id: Lang.Id(raw: 2), name: bundle.moduleLocalizedString("Russian"), shortName: "RU")
         let lang4 = Lang(id: Lang.Id(raw: 4), name: bundle.moduleLocalizedString("Italian"), shortName: "IT")
@@ -27,7 +32,6 @@ final class DevAppConfigFactory: AppConfigFactory {
         )
 
         return AppConfig(
-            bundle: bundle,
             langData: langData,
             ponsApiSecret: "",
             isLoggingEnabled: true,

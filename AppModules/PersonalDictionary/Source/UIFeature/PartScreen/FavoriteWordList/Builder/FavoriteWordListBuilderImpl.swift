@@ -9,17 +9,22 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
 
     private let appConfig: AppConfig
 
-    init(appConfig: AppConfig) {
+    private let bundle: Bundle
+
+    init(appConfig: AppConfig,
+         bundle: Bundle) {
         self.appConfig = appConfig
+        self.bundle = bundle
     }
 
     func build() -> FavoriteWordListGraph {
         FavoriteWordListGraphImpl(
             wordListBuilder: WordListBuilderImpl(
                 shouldAnimateWhenAppear: false,
-                appConfig: appConfig
+                appConfig: appConfig,
+                bundle: bundle
             ),
-            favoriteWordListFetcher: CoreWordListRepository(appConfig: appConfig),
+            favoriteWordListFetcher: CoreWordListRepository(appConfig: appConfig, bundle: bundle),
             wordItemStream: WordItemStreamImpl.instance
         )
     }

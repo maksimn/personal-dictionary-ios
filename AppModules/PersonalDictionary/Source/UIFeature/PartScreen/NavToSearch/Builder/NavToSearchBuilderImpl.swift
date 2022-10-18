@@ -14,35 +14,31 @@ enum NavToSearchWidth {
     case smaller /// меньшая ширина, чем full.
 }
 
-/// Внешние зависимости фичи "Навигация на экран Поиска".
-protocol NavToSearchDependency: BaseDependency { }
-
 /// Реализация билдера фичи "Навигация на экран Поиска".
 final class NavToSearchBuilderImpl: NavToSearchBuilder {
 
-    let width: NavToSearchWidth
+    private let width: NavToSearchWidth
 
-    private(set) weak var navigationController: UINavigationController?
+    private weak var dependency: AppDependency?
 
-    let appConfig: AppConfig
-
-    /// Инициализатор.
-    /// - Parameters:
-    ///  - width: параметр ширины представления.
-    ///  - dependency: внешние зависимости фичи .
     init(width: NavToSearchWidth,
-         dependency: NavToSearchDependency) {
+         dependency: AppDependency) {
         self.width = width
-        self.navigationController = dependency.navigationController
-        self.appConfig = dependency.appConfig
+        self.dependency = dependency
     }
 
     /// Создать фичу.
     /// - Returns: представление фичи.
     func build() -> UIView {
-        let searchBuilder = SearchBuilderImpl(appConfig: appConfig)
-        let router = NavToSearchRouterImpl(navigationController: navigationController,
-                                           searchBuilder: searchBuilder)
+        guard let dependency = dependency else { return UIView() }
+        let searchBuilder = SearchBuilderImpl(
+            appConfig: dependency.appConfig,
+            bundle: dependency.bundle
+        )
+        let router = NavToSearchRouterImpl(
+            navigationController: dependency.navigationController,
+            searchBuilder: searchBuilder
+        )
         let view = NavToSearchView(width: width, router: router)
 
         return view

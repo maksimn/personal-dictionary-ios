@@ -7,30 +7,22 @@
 
 import UIKit
 
-/// Внешние зависимости фичи "Элемент навигации на экран Избранного".
-protocol NavToFavoritesDependency: BaseDependency { }
-
 /// Реализация билдера фичи ""Элемент навигации на экран Избранного".
 final class NavToFavoritesBuilderImpl: NavToFavoritesBuilder {
 
-    private(set) weak var navigationController: UINavigationController?
+    private weak var dependency: AppDependency?
 
-    let appConfig: AppConfig
-
-    /// Инициализатор.
-    /// - Parameters:
-    ///  - dependency: внешние зависимости фичи.
-    init(dependency: NavToFavoritesDependency) {
-        self.navigationController = dependency.navigationController
-        self.appConfig = dependency.appConfig
+    init(dependency: AppDependency) {
+        self.dependency = dependency
     }
 
     /// Создать фичу.
     /// - Returns: представление фичи.
     func build() -> UIView {
-        let favoritesBuilder = FavoritesBuilderImpl(dependency: self)
+        guard let dependency = dependency else { return UIView() }
+        let favoritesBuilder = FavoritesBuilderImpl(dependency: dependency)
         let router = NavToFavoritesRouterImpl(
-            navigationController: navigationController,
+            navigationController: dependency.navigationController,
             favoritesBuilder: favoritesBuilder
         )
         let view = NavToFavoritesView(
@@ -41,6 +33,3 @@ final class NavToFavoritesBuilderImpl: NavToFavoritesBuilder {
         return view
     }
 }
-
-/// Для передачи зависимостей во вложенную фичу "Экран Избранного".
-extension NavToFavoritesBuilderImpl: FavoritesDependency { }
