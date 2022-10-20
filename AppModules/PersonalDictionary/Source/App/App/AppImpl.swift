@@ -24,11 +24,10 @@ final class AppImpl: App {
     ///  - mainWordListBuilder: билдер вложенной фичи "Главный список слов".
     ///  - pushNotificationBuilder: билдер вложенной фичи "Пуш-уведомления в приложении".
     init(dependency: AppDependency,
-         navigationController: UINavigationController?,
          mainWordListBuilder: MainWordListBuilder,
          pushNotificationBuilder: PushNotificationBuilder) {
         self.dependency = dependency
-
+        let navigationController = dependency.navigationController
         let mainWordListViewController = mainWordListBuilder.build()
 
         navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
