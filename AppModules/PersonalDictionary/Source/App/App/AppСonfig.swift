@@ -29,4 +29,6 @@ struct AppConfig {
         /// Минуты
         let mm: Int
     }
+
+    enum Variant { case development, production }
 }
