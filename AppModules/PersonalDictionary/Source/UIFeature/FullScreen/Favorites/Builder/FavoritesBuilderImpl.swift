@@ -5,40 +5,26 @@
 //  Created by Maxim Ivanov on 11.11.2021.
 //
 
-protocol FavoritesDependency: BaseDependency {}
-
-private struct NavToSearchDependencyImpl: NavToSearchDependency {
-
-    let navigationController: UINavigationController?
-
-    let appConfig: AppConfig
-}
-
 /// Реализация билдера фичи "Избранное".
 final class FavoritesBuilderImpl: FavoritesBuilder {
 
-    private weak var navigationController: UINavigationController?
+    private weak var dependency: AppDependency?
 
-    private let appConfig: AppConfig
-
-    /// Инициализатор,
-    /// - Parameters:
-    ///  - dependency: зависимости фичи.
-    init(dependency: FavoritesDependency) {
-        navigationController = dependency.navigationController
-        appConfig = dependency.appConfig
+    init(dependency: AppDependency) {
+        self.dependency = dependency
     }
 
     /// Создать экран.
     /// - Returns:
     ///  - View controller экрана.
     func build() -> UIViewController {
-        let navToSearchDependency = NavToSearchDependencyImpl(
-            navigationController: navigationController,
-            appConfig: appConfig
+        guard let dependency = dependency else { return UIViewController() }
+        let appConfig = dependency.appConfig
+        let bundle = dependency.bundle
+        let navToSearchBuilder = NavToSearchBuilderImpl(
+            width: .smaller,
+            dependency: dependency
         )
-        let navToSearchBuilder = NavToSearchBuilderImpl(width: .smaller, dependency: navToSearchDependency)
-        let bundle = appConfig.bundle
         let viewParams = FavoritesViewParams(
             heading: bundle.moduleLocalizedString("Favorite words"),
             noFavoriteWordsText: bundle.moduleLocalizedString("No favorite words")
@@ -47,7 +33,7 @@ final class FavoritesBuilderImpl: FavoritesBuilder {
         return FavoritesViewController(
             params: viewParams,
             navToSearchBuilder: navToSearchBuilder,
-            favoriteWordListBuilder: FavoriteWordListBuilderImpl(appConfig: appConfig)
+            favoriteWordListBuilder: FavoriteWordListBuilderImpl(appConfig: appConfig, bundle: bundle)
         )
     }
 }

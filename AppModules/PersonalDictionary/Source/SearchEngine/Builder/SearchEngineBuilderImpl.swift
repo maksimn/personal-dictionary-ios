@@ -9,17 +9,20 @@
 final class SearchEngineBuilderImpl: SearchEngineBuilder {
 
     private let appConfig: AppConfig
+    private let bundle: Bundle
 
     /// Инициализатор.
     /// - Parameters:
     ///  - appConfig: конфигурация приложения.
-    init(appConfig: AppConfig) {
+    init(appConfig: AppConfig,
+         bundle: Bundle) {
         self.appConfig = appConfig
+        self.bundle = bundle
     }
 
     /// Создать объект поискового движка.
     /// - Returns: объект поискового движка.
     func build() -> SearchEngine {
-        SearchEngineImpl(searchableWordList: CoreWordListRepository(appConfig: appConfig))
+        SearchEngineImpl(searchableWordList: CoreWordListRepository(appConfig: appConfig, bundle: bundle))
     }
 }

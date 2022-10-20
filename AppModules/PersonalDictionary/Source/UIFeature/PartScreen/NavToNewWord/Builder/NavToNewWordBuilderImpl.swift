@@ -5,46 +5,38 @@
 //  Created by Maksim Ivanov on 21.02.2022.
 //
 
-import CoreModule
 import UIKit
-
-protocol NavToNewWordDependency: BaseDependency { }
 
 /// Реализация билдера фичи "Навигация на экран добавления нового слова".
 final class NavToNewWordBuilderImpl: NavToNewWordBuilder {
 
-    private weak var navigationController: UINavigationController?
+    private weak var dependency: AppDependency?
 
-    let appConfig: AppConfig
-
-    /// Инициализатор.
-    /// - Parameters:
-    ///  - dependency: внешние зависимости фичи .
-    init(dependency: NavToNewWordDependency) {
-        self.navigationController = dependency.navigationController
-        self.appConfig = dependency.appConfig
+    init(dependency: AppDependency) {
+        self.dependency = dependency
     }
 
     /// Создать фичу.
     /// - Returns: представление фичи.
     func build() -> UIView {
+        guard let dependency = dependency else { return UIView() }
+        let langRepository = LangRepositoryImpl(
+            userDefaults: UserDefaults.standard,
+            data: dependency.appConfig.langData
+        )
         let newWordBuilder = NewWordBuilderImpl(
-            bundle: appConfig.bundle,
+            bundle: dependency.bundle,
             langRepository: langRepository
         )
         let router = NavToNewWordRouterImpl(
-            navigationController: navigationController,
+            navigationController: dependency.navigationController,
             newWordBuilder: newWordBuilder
         )
         let view = NavToNewWordView(
-            navToNewWordImage: UIImage(named: "icon-plus", in: appConfig.bundle, compatibleWith: nil)!,
+            navToNewWordImage: UIImage(named: "icon-plus", in: dependency.bundle, compatibleWith: nil)!,
             router: router
         )
 
         return view
-    }
-
-    private var langRepository: LangRepository {
-        LangRepositoryImpl(userDefaults: UserDefaults.standard, data: appConfig.langData)
     }
 }

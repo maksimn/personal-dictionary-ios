@@ -5,40 +5,19 @@
 //  Created by Maksim Ivanov on 26.02.2022.
 //
 
-import UIKit
-
-/// Зависимости фичи.
-protocol MainNavigatorDependency: BaseDependency { }
-
-private struct MainNavigatorDependencyImpl: MainNavigatorDependency,
-                                            NavToSearchDependency,
-                                            NavToFavoritesDependency,
-                                            NavToNewWordDependency {
-
-    let navigationController: UINavigationController?
-
-    let appConfig: AppConfig
-}
-
 /// Реализация билдера фичи "Контейнер элементов навигации на Главном экране приложения".
 final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
 
-    private let dependency: MainNavigatorDependency
+    private weak var dependency: AppDependency?
 
-    /// Инициализатор,
-    /// - Parameters:
-    ///  - dependency: зависимости фичи.
-    init(dependency: MainNavigatorDependency) {
+    init(dependency: AppDependency) {
         self.dependency = dependency
     }
 
     /// Создать контейнер.
     /// - Returns: объект контейнера.
     func build() -> MainNavigator {
-        let dependency = MainNavigatorDependencyImpl(
-            navigationController: dependency.navigationController,
-            appConfig: dependency.appConfig
-        )
+        guard let dependency = dependency else { return Empty() }
 
         return MainNavigatorImpl(
             navigationController: dependency.navigationController,
@@ -47,8 +26,13 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
             navToNewWordBuilder: NavToNewWordBuilderImpl(dependency: dependency),
             navToTodoListAppBuilder: NavToTodoListAppBuilderImpl(
                 rootViewController: dependency.navigationController,
-                bundle: dependency.appConfig.bundle
+                bundle: dependency.bundle
             )
         )
     }
+}
+
+private struct Empty: MainNavigator {
+
+    func appendTo(rootView: UIView) { }
 }

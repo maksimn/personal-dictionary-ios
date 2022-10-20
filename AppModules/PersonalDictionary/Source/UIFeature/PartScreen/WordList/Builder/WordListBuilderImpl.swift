@@ -12,15 +12,18 @@ final class WordListBuilderImpl: WordListBuilder {
 
     private let shouldAnimateWhenAppear: Bool
     private let appConfig: AppConfig
+    private let bundle: Bundle
 
     /// Инициализатор.
     /// - Parameters:
     ///  - shouldAnimateWhenAppear: запускать ли анимацию при первом появлении данных в таблице.
     ///  - appConfig: конфигурация приложения.
     init(shouldAnimateWhenAppear: Bool,
-         appConfig: AppConfig) {
+         appConfig: AppConfig,
+         bundle: Bundle) {
         self.shouldAnimateWhenAppear = shouldAnimateWhenAppear
         self.appConfig = appConfig
+        self.bundle = bundle
     }
 
     /// Создать MVVM-граф фичи
@@ -29,7 +32,7 @@ final class WordListBuilderImpl: WordListBuilder {
     func build() -> WordListMVVM {
         WordListMVVMImpl(
             viewParams: createWordListViewParams(),
-            cudOperations: CoreWordListRepository(appConfig: appConfig),
+            cudOperations: CoreWordListRepository(appConfig: appConfig, bundle: bundle),
             translationService: createTranslationService(),
             wordItemStream: WordItemStreamImpl.instance
         )

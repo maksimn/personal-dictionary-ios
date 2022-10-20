@@ -10,11 +10,15 @@ final class SearchBuilderImpl: SearchBuilder {
 
     private let appConfig: AppConfig
 
+    private let bundle: Bundle
+
     /// Инициализатор.
     /// - Parameters:
     ///  - appConfig: зависимости фичи.
-    init(appConfig: AppConfig) {
+    init(appConfig: AppConfig,
+         bundle: Bundle) {
         self.appConfig = appConfig
+        self.bundle = bundle
     }
 
     /// Создать экран Поиска.
@@ -22,11 +26,15 @@ final class SearchBuilderImpl: SearchBuilder {
     ///  - View controller экрана поиска по словам в словаре.
     func build() -> UIViewController {
         SearchViewController(
-            noResultFoundText: appConfig.bundle.moduleLocalizedString("No words found"),
-            searchTextInputBuilder: SearchTextInputBuilderImpl(bundle: appConfig.bundle),
-            searchModePickerBuilder: SearchModePickerBuilderImpl(bundle: appConfig.bundle),
-            wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: false, appConfig: appConfig),
-            searchEngineBuilder: SearchEngineBuilderImpl(appConfig: appConfig)
+            noResultFoundText: bundle.moduleLocalizedString("No words found"),
+            searchTextInputBuilder: SearchTextInputBuilderImpl(bundle: bundle),
+            searchModePickerBuilder: SearchModePickerBuilderImpl(bundle: bundle),
+            wordListBuilder: WordListBuilderImpl(
+                shouldAnimateWhenAppear: false,
+                appConfig: appConfig,
+                bundle: bundle
+            ),
+            searchEngineBuilder: SearchEngineBuilderImpl(appConfig: appConfig, bundle: bundle)
         )
     }
 }
