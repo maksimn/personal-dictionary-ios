@@ -44,7 +44,7 @@ public final class AppBuilderImpl: AppBuilder {
     /// - Returns: объект приложения.
     public func build() -> App {
         let bundle = Bundle(for: type(of: self))
-        let appConfigFactory = AppConfigFactory(variant: .development, bundle: bundle)
+        let appConfigFactory = AppConfigFactory(bundle: bundle)
         let navigationController = UINavigationController()
         let appConfig = appConfigFactory.create()
         let dependency = AppDependencyImpl(

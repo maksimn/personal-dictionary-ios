@@ -7,12 +7,9 @@
 
 struct AppConfigFactory {
 
-    private let variant: AppConfig.Variant
     private let bundle: Bundle
 
-    init(variant: AppConfig.Variant,
-         bundle: Bundle) {
-        self.variant = variant
+    init(bundle: Bundle) {
         self.bundle = bundle
     }
 
@@ -23,6 +20,14 @@ struct AppConfigFactory {
         case .production:
             return createAppConfig(isLoggingEnabled: false)
         }
+    }
+
+    private var variant: AppConfig.Variant {
+        #if DEBUG
+        return .development
+        #else
+        return .production
+        #endif
     }
 
     private func createAppConfig(isLoggingEnabled: Bool) -> AppConfig {
