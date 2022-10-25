@@ -10,7 +10,7 @@ import UIKit
 /// View controller экрана Избранного.
 final class FavoritesViewController: UIViewController {
 
-    let params: FavoritesViewParams
+    let heading: String
 
     let navToSearchView: UIView
 
@@ -18,16 +18,14 @@ final class FavoritesViewController: UIViewController {
 
     let headingLabel = UILabel()
 
-    let centerLabel = UILabel()
-
     /// - Parameters:
-    ///  - params: параметры представления списка избранных слов.
+    ///  - heading: текст заголовка экрана.
     ///  - navToSearchBuilder: билдер вложенной фичи "Навигация на экран Поиска".
     ///  - favoriteWordListBuilder: билдер вложенной фичи "Список избранных слов".
-    init(params: FavoritesViewParams,
+    init(heading: String,
          navToSearchBuilder: NavToSearchBuilder,
          favoriteWordListBuilder: FavoriteWordListBuilder) {
-        self.params = params
+        self.heading = heading
         navToSearchView = navToSearchBuilder.build()
         favoriteWordListGraph = favoriteWordListBuilder.build()
         super.init(nibName: nil, bundle: nil)
@@ -40,16 +38,6 @@ final class FavoritesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        update()
-    }
-
-    private func update() {
-        guard let favoriteWordListModel = favoriteWordListGraph.model else {
-            centerLabel.isHidden = false
-            return
-        }
-
-        favoriteWordListModel.update()
-        centerLabel.isHidden = !(favoriteWordListModel.isEmpty)
+        favoriteWordListGraph.model?.update()
     }
 }

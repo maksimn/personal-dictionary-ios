@@ -25,13 +25,9 @@ final class FavoritesBuilderImpl: FavoritesBuilder {
             width: .smaller,
             dependency: dependency
         )
-        let viewParams = FavoritesViewParams(
-            heading: bundle.moduleLocalizedString("Favorite words"),
-            noFavoriteWordsText: bundle.moduleLocalizedString("No favorite words")
-        )
 
         return FavoritesViewController(
-            params: viewParams,
+            heading: bundle.moduleLocalizedString("Favorite words"),
             navToSearchBuilder: navToSearchBuilder,
             favoriteWordListBuilder: FavoriteWordListBuilderImpl(appConfig: appConfig, bundle: bundle)
         )

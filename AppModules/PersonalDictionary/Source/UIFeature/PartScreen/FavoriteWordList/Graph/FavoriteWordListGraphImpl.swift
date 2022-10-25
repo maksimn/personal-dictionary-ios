@@ -18,7 +18,8 @@ final class FavoriteWordListGraphImpl: FavoriteWordListGraph {
 
     init(wordListBuilder: WordListBuilder,
          favoriteWordListFetcher: FavoriteWordListFetcher,
-         wordItemStream: ReadableWordItemStream) {
+         wordItemStream: ReadableWordItemStream,
+         noFavoriteWordsText: String) {
         weak var viewModelLazy: FavoriteWordListViewModel?
 
         let model = FavoriteWordListModelImpl(
@@ -29,7 +30,8 @@ final class FavoriteWordListGraphImpl: FavoriteWordListGraph {
         let viewModel = FavoriteWordListViewModelImpl(model: model)
         let view = FavoriteWordListView(
             viewModel: viewModel,
-            wordListBuilder: wordListBuilder
+            wordListBuilder: wordListBuilder,
+            noFavoriteWordsText: noFavoriteWordsText
         )
 
         viewModelLazy = viewModel

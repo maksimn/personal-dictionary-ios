@@ -15,14 +15,20 @@ final class FavoriteWordListView: UIViewController {
 
     private let wordListMVVM: WordListMVVM
 
+    private let noFavoriteWordsText: String
+
+    private let centerLabel = UILabel()
+
     private let disposeBag = DisposeBag()
 
     init(
         viewModel: FavoriteWordListViewModel,
-        wordListBuilder: WordListBuilder
+        wordListBuilder: WordListBuilder,
+        noFavoriteWordsText: String
     ) {
         self.viewModel = viewModel
         self.wordListMVVM = wordListBuilder.build()
+        self.noFavoriteWordsText = noFavoriteWordsText
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -35,7 +41,7 @@ final class FavoriteWordListView: UIViewController {
     override func loadView() {
         view = UIView()
 
-        addWordListChildController()
+        initViews()
     }
 
     override func viewDidLoad() {
@@ -44,6 +50,18 @@ final class FavoriteWordListView: UIViewController {
     }
 
     // MARK: - Private
+
+    private func subscribeToViewModel() {
+        viewModel.favoriteWordList.subscribe(onNext: { [weak self] wordList in
+            self?.wordListMVVM.model?.wordList = wordList
+            self?.centerLabel.isHidden = !wordList.isEmpty
+        }).disposed(by: disposeBag)
+    }
+
+    private func initViews() {
+        addWordListChildController()
+        initCenterLabel()
+    }
 
     private func addWordListChildController() {
         let wordListViewController = wordListMVVM.viewController
@@ -56,9 +74,17 @@ final class FavoriteWordListView: UIViewController {
         }
     }
 
-    private func subscribeToViewModel() {
-        viewModel.favoriteWordList.subscribe(onNext: { [weak self] wordList in
-            self?.wordListMVVM.model?.wordList = wordList
-        }).disposed(by: disposeBag)
+    private func initCenterLabel() {
+        centerLabel.textColor = Theme.data.secondaryTextColor
+        centerLabel.font = Theme.data.normalFont
+        centerLabel.numberOfLines = 1
+        centerLabel.textAlignment = .center
+        centerLabel.text = noFavoriteWordsText
+        view.addSubview(centerLabel)
+        centerLabel.snp.makeConstraints { make -> Void in
+            make.centerY.equalTo(view).offset(-20)
+            make.left.equalTo(view.snp.left)
+            make.right.equalTo(view.snp.right)
+        }
     }
 }
