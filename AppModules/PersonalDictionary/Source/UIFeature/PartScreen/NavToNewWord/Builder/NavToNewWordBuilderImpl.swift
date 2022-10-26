@@ -8,7 +8,7 @@
 import UIKit
 
 /// Реализация билдера фичи "Навигация на экран добавления нового слова".
-final class NavToNewWordBuilderImpl: NavToNewWordBuilder {
+final class NavToNewWordBuilderImpl: ViewBuilder {
 
     private weak var dependency: AppDependency?
 

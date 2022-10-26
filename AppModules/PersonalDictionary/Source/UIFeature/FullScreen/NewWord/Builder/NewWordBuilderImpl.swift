@@ -6,7 +6,7 @@
 //
 
 /// Реализация билдера Фичи "Добавление нового слова" в личный словарь.
-final class NewWordBuilderImpl: NewWordBuilder {
+final class NewWordBuilderImpl: ViewControllerBuilder {
 
     private let bundle: Bundle
     private let langRepository: LangRepository

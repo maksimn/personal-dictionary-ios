@@ -6,7 +6,7 @@
 //
 
 /// Билдер Фичи "Поиск по словам в словаре".
-final class SearchBuilderImpl: SearchBuilder {
+final class SearchBuilderImpl: ViewControllerBuilder {
 
     private let appConfig: AppConfig
 

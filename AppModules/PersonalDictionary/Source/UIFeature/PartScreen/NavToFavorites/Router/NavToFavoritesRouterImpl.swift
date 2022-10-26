@@ -11,14 +11,14 @@ import CoreModule
 final class NavToFavoritesRouterImpl: CoreRouter {
 
     private(set) weak var navigationController: UINavigationController?
-    private let favoritesBuilder: FavoritesBuilder
+    private let favoritesBuilder: ViewControllerBuilder
 
     /// Инициализатор.
     /// - Parameters:
     ///  - navigationController: корневой navigation controller приложения.
-    ///  - favoritesBuilder: билдер вложенной фичи "Избранное".
+    ///  - favoritesBuilder: билдер фичи "Избранное".
     init(navigationController: UINavigationController?,
-         favoritesBuilder: FavoritesBuilder) {
+         favoritesBuilder: ViewControllerBuilder) {
         self.navigationController = navigationController
         self.favoritesBuilder = favoritesBuilder
     }

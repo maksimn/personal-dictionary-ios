@@ -8,7 +8,7 @@
 import UIKit
 
 /// Реализация билдера фичи "Главный (основной) список слов" Личного словаря.
-final class MainWordListBuilderImpl: MainWordListBuilder {
+final class MainWordListBuilderImpl: ViewControllerBuilder {
 
     private weak var dependency: AppDependency?
 

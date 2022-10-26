@@ -24,7 +24,7 @@ final class AppImpl: App {
     ///  - mainWordListBuilder: билдер вложенной фичи "Главный список слов".
     ///  - pushNotificationBuilder: билдер вложенной фичи "Пуш-уведомления в приложении".
     init(dependency: AppDependency,
-         mainWordListBuilder: MainWordListBuilder,
+         mainWordListBuilder: ViewControllerBuilder,
          pushNotificationBuilder: PushNotificationBuilder) {
         self.dependency = dependency
         let navigationController = dependency.navigationController

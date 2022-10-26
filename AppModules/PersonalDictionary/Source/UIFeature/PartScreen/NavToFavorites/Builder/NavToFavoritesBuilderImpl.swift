@@ -8,7 +8,7 @@
 import UIKit
 
 /// Реализация билдера фичи ""Элемент навигации на экран Избранного".
-final class NavToFavoritesBuilderImpl: NavToFavoritesBuilder {
+final class NavToFavoritesBuilderImpl: ViewBuilder {
 
     private weak var dependency: AppDependency?
 

@@ -9,14 +9,14 @@
 final class NavToSearchRouterImpl: NavToSearchRouter {
 
     private(set) weak var navigationController: UINavigationController?
-    private let searchBuilder: SearchBuilder
+    private let searchBuilder: ViewControllerBuilder
 
     /// Инициализатор.
     /// - Parameters:
     ///  - navigationController: корневой navigation controller приложения.
     ///  - searchBuilder: билдер вложенной фичи "Поиск" по словам в словаре.
     init(navigationController: UINavigationController?,
-         searchBuilder: SearchBuilder) {
+         searchBuilder: ViewControllerBuilder) {
         self.navigationController = navigationController
         self.searchBuilder = searchBuilder
     }

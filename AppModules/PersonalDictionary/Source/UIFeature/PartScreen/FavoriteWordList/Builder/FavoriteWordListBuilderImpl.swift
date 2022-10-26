@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
+final class FavoriteWordListBuilderImpl: ViewControllerBuilder {
 
     private let appConfig: AppConfig
 

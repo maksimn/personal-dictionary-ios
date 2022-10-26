@@ -6,7 +6,7 @@
 //
 
 /// Реализация билдера фичи "Избранное".
-final class FavoritesBuilderImpl: FavoritesBuilder {
+final class FavoritesBuilderImpl: ViewControllerBuilder {
 
     private weak var dependency: AppDependency?
 

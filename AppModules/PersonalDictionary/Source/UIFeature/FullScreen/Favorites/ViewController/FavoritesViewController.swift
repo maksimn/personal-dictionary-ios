@@ -10,8 +10,6 @@ import UIKit
 /// View controller экрана Избранного.
 final class FavoritesViewController: UIViewController {
 
-    let heading: String
-
     let headingLabel = UILabel()
 
     let navToSearchView: UIView
@@ -23,9 +21,9 @@ final class FavoritesViewController: UIViewController {
     ///  - navToSearchBuilder: билдер вложенной фичи "Навигация на экран Поиска".
     ///  - favoriteWordListBuilder: билдер вложенной фичи "Список избранных слов".
     init(heading: String,
-         navToSearchBuilder: NavToSearchBuilder,
-         favoriteWordListBuilder: FavoriteWordListBuilder) {
-        self.heading = heading
+         navToSearchBuilder: ViewBuilder,
+         favoriteWordListBuilder: ViewControllerBuilder) {
+        headingLabel.text = heading
         navToSearchView = navToSearchBuilder.build()
         favoriteWordListViewController = favoriteWordListBuilder.build()
         super.init(nibName: nil, bundle: nil)
