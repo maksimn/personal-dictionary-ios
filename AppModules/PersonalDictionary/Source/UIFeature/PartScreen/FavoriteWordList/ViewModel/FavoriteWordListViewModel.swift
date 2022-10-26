@@ -11,4 +11,6 @@ import RxCocoa
 protocol FavoriteWordListViewModel: AnyObject {
 
     var favoriteWordList: BehaviorRelay<[WordItem]> { get }
+
+    func update()
 }

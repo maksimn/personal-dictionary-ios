@@ -29,12 +29,6 @@ final class FavoriteWordListModelImpl: FavoriteWordListModel {
         subscribeToWordItemStream()
     }
 
-    var isEmpty: Bool {
-        initViewModelIfNeeded()
-
-        return viewModel?.favoriteWordList.value.isEmpty ?? true
-    }
-
     func update() {
         let wordList = favoriteWordListFetcher.favoriteWordList
 

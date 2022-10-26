@@ -5,11 +5,10 @@
 //  Created by Maxim Ivanov on 10.11.2021.
 //
 
+import UIKit
+
 /// Билдер фичи "Список избранных слов".
 protocol FavoriteWordListBuilder {
 
-    /// Создать граф фичи
-    /// - Returns:
-    ///  - граф фичи.
-    func build() -> FavoriteWordListGraph
+    func build() -> UIViewController
 }

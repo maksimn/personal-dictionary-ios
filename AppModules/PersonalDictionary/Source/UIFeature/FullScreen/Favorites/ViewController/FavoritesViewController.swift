@@ -12,11 +12,11 @@ final class FavoritesViewController: UIViewController {
 
     let heading: String
 
+    let headingLabel = UILabel()
+
     let navToSearchView: UIView
 
-    let favoriteWordListGraph: FavoriteWordListGraph
-
-    let headingLabel = UILabel()
+    let favoriteWordListViewController: UIViewController
 
     /// - Parameters:
     ///  - heading: текст заголовка экрана.
@@ -27,17 +27,12 @@ final class FavoritesViewController: UIViewController {
          favoriteWordListBuilder: FavoriteWordListBuilder) {
         self.heading = heading
         navToSearchView = navToSearchBuilder.build()
-        favoriteWordListGraph = favoriteWordListBuilder.build()
+        favoriteWordListViewController = favoriteWordListBuilder.build()
         super.init(nibName: nil, bundle: nil)
         initViews()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        favoriteWordListGraph.model?.update()
     }
 }
