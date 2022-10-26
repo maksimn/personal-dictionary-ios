@@ -17,4 +17,8 @@ final class FavoriteWordListViewModelImpl: FavoriteWordListViewModel {
     init(model: FavoriteWordListModel) {
         self.model = model
     }
+
+    func update() {
+        model.update()
+    }
 }

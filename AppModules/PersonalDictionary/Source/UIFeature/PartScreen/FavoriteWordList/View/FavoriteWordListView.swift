@@ -42,11 +42,12 @@ final class FavoriteWordListView: UIViewController {
         view = UIView()
 
         initViews()
+        subscribeToViewModel()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        subscribeToViewModel()
+        viewModel.update()
     }
 
     // MARK: - Private

@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 10.11.2021.
 //
 
+import UIKit
+
 final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
 
     private let appConfig: AppConfig
@@ -17,16 +19,27 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
         self.bundle = bundle
     }
 
-    func build() -> FavoriteWordListGraph {
-        FavoriteWordListGraphImpl(
+    func build() -> UIViewController {
+        weak var viewModelLazy: FavoriteWordListViewModel?
+
+        let model = FavoriteWordListModelImpl(
+            viewModelBlock: { viewModelLazy },
+            favoriteWordListFetcher: CoreWordListRepository(appConfig: appConfig, bundle: bundle),
+            wordItemStream: WordItemStreamImpl.instance
+        )
+        let viewModel = FavoriteWordListViewModelImpl(model: model)
+        let view = FavoriteWordListView(
+            viewModel: viewModel,
             wordListBuilder: WordListBuilderImpl(
                 shouldAnimateWhenAppear: false,
                 appConfig: appConfig,
                 bundle: bundle
             ),
-            favoriteWordListFetcher: CoreWordListRepository(appConfig: appConfig, bundle: bundle),
-            wordItemStream: WordItemStreamImpl.instance,
             noFavoriteWordsText: bundle.moduleLocalizedString("No favorite words")
         )
+
+        viewModelLazy = viewModel
+
+        return view
     }
 }

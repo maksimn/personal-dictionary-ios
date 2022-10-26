@@ -32,7 +32,6 @@ extension FavoritesViewController {
     }
 
     private func addFavoriteWordListController() {
-        let favoriteWordListViewController = favoriteWordListGraph.viewController
         let wordListParentView = UIView()
 
         view.addSubview(wordListParentView)
