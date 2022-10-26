@@ -25,7 +25,8 @@ final class FavoriteWordListBuilderImpl: FavoriteWordListBuilder {
                 bundle: bundle
             ),
             favoriteWordListFetcher: CoreWordListRepository(appConfig: appConfig, bundle: bundle),
-            wordItemStream: WordItemStreamImpl.instance
+            wordItemStream: WordItemStreamImpl.instance,
+            noFavoriteWordsText: bundle.moduleLocalizedString("No favorite words")
         )
     }
 }
