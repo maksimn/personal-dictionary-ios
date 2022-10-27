@@ -9,14 +9,14 @@
 final class NavToNewWordRouterImpl: NavToNewWordRouter {
 
     private weak var navigationController: UINavigationController?
-    private let newWordBuilder: NewWordBuilder
+    private let newWordBuilder: ViewControllerBuilder
 
     /// Инициализатор.
     /// - Parameters:
     ///  - navigationController: корневой navigation controller приложения.
     ///  - searchBuilder: билдер вложенной фичи "Поиск" по словам в словаре.
     init(navigationController: UINavigationController?,
-         newWordBuilder: NewWordBuilder) {
+         newWordBuilder: ViewControllerBuilder) {
         self.navigationController = navigationController
         self.newWordBuilder = newWordBuilder
     }

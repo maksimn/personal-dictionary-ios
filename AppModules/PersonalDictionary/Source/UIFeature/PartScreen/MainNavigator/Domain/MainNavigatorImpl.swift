@@ -11,10 +11,10 @@ import UIKit
 final class MainNavigatorImpl: MainNavigator {
 
     private(set) weak var navigationController: UINavigationController?
-    private let navToSearchBuilder: NavToSearchBuilder
-    private let navToFavoriteWordListBuilder: NavToFavoritesBuilder
-    private let navToNewWordBuilder: NavToNewWordBuilder
-    private let navToTodoListAppBuilder: NavToTodoListAppBuilder
+    private let navToSearchBuilder: ViewBuilder
+    private let navToFavoriteWordListBuilder: ViewBuilder
+    private let navToNewWordBuilder: ViewBuilder
+    private let navToTodoListAppBuilder: ViewBuilder
 
     /// Инициализатор,
     /// - Parameters:
@@ -24,10 +24,10 @@ final class MainNavigatorImpl: MainNavigator {
     ///  - navToNewWordBuilder: билдер вложенной фичи "Элемент навигации на экран добавления нового слова в словарь".
     ///  - navToTodoListAppBuilder: билдер вложенной фичи "Элемент навигации к приложению TodoList".
     init(navigationController: UINavigationController?,
-         navToSearchBuilder: NavToSearchBuilder,
-         navToFavoriteWordListBuilder: NavToFavoritesBuilder,
-         navToNewWordBuilder: NavToNewWordBuilder,
-         navToTodoListAppBuilder: NavToTodoListAppBuilder) {
+         navToSearchBuilder: ViewBuilder,
+         navToFavoriteWordListBuilder: ViewBuilder,
+         navToNewWordBuilder: ViewBuilder,
+         navToTodoListAppBuilder: ViewBuilder) {
         self.navigationController = navigationController
         self.navToSearchBuilder = navToSearchBuilder
         self.navToFavoriteWordListBuilder = navToFavoriteWordListBuilder

@@ -23,7 +23,6 @@ extension FavoritesViewController {
         headingLabel.font = UIFont.systemFont(ofSize: 28, weight: .heavy)
         headingLabel.numberOfLines = 1
         headingLabel.textAlignment = .left
-        headingLabel.text = heading
         view.addSubview(headingLabel)
         headingLabel.snp.makeConstraints { make -> Void in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(14)

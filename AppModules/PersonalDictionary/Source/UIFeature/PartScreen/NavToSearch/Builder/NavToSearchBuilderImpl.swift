@@ -15,7 +15,7 @@ enum NavToSearchWidth {
 }
 
 /// Реализация билдера фичи "Навигация на экран Поиска".
-final class NavToSearchBuilderImpl: NavToSearchBuilder {
+final class NavToSearchBuilderImpl: ViewBuilder {
 
     private let width: NavToSearchWidth
 
