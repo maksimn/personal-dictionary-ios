@@ -27,11 +27,7 @@ final class MainWordListBuilderImpl: ViewControllerBuilder {
                 heading: dependency.bundle.moduleLocalizedString("My dictionary"),
                 visibleItemMaxCount: Int(ceil(UIScreen.main.bounds.height / WordItemCell.height))
             ),
-            wordListBuilder: WordListBuilderImpl(
-                shouldAnimateWhenAppear: true,
-                appConfig: dependency.appConfig,
-                bundle: dependency.bundle
-            ),
+            wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: true, dependency: dependency),
             wordListFetcher: CoreWordListRepository(appConfig: dependency.appConfig, bundle: dependency.bundle),
             mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: dependency)
         )
