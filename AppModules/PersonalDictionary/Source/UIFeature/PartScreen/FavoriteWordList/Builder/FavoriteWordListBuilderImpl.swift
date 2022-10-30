@@ -9,32 +9,26 @@ import UIKit
 
 final class FavoriteWordListBuilderImpl: ViewControllerBuilder {
 
-    private let appConfig: AppConfig
+    private weak var dependency: RootDependency?
 
-    private let bundle: Bundle
-
-    init(appConfig: AppConfig,
-         bundle: Bundle) {
-        self.appConfig = appConfig
-        self.bundle = bundle
+    init(dependency: RootDependency) {
+        self.dependency = dependency
     }
 
     func build() -> UIViewController {
+        guard let dependency = dependency else { return UIViewController() }
+        let bundle = dependency.bundle
         weak var viewModelLazy: FavoriteWordListViewModel?
 
         let model = FavoriteWordListModelImpl(
             viewModelBlock: { viewModelLazy },
-            favoriteWordListFetcher: CoreWordListRepository(appConfig: appConfig, bundle: bundle),
+            favoriteWordListFetcher: CoreWordListRepository(appConfig: dependency.appConfig, bundle: bundle),
             wordItemStream: WordItemStreamImpl.instance
         )
         let viewModel = FavoriteWordListViewModelImpl(model: model)
         let view = FavoriteWordListView(
             viewModel: viewModel,
-            wordListBuilder: WordListBuilderImpl(
-                shouldAnimateWhenAppear: false,
-                appConfig: appConfig,
-                bundle: bundle
-            ),
+            wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: false, dependency: dependency),
             noFavoriteWordsText: bundle.moduleLocalizedString("No favorite words")
         )
 

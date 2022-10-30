@@ -26,17 +26,17 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
     ///  - searchTextInputBuilder: билдер вложенной фичи "Элемент ввода текста для поиска"
     ///  - searchModePickerBuilder: билдер вложенной фичи "Выбор режима поиска"
     ///  - wordListBuilder: билдер вложенной фичи "Список слов".
-    ///  - searchEngineBuilder: билдер вложенной фичи "Поисковый Движок"
+    ///  - searchEngine: поисковый движок.
     init(noResultFoundText: String,
          searchTextInputBuilder: SearchTextInputBuilder,
          searchModePickerBuilder: SearchModePickerBuilder,
          wordListBuilder: WordListBuilder,
-         searchEngineBuilder: SearchEngineBuilder) {
+         searchEngine: SearchEngine) {
         self.noResultFoundText = noResultFoundText
         searchTextInputMVVM = searchTextInputBuilder.build()
         searchModePickerMVVM = searchModePickerBuilder.build()
         wordListMVVM = wordListBuilder.build()
-        searchEngine = searchEngineBuilder.build()
+        self.searchEngine = searchEngine
         super.init(nibName: nil, bundle: nil)
         initViews()
     }

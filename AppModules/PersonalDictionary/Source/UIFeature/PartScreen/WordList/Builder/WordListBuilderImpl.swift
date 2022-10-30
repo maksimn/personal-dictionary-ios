@@ -11,19 +11,15 @@ import CoreModule
 final class WordListBuilderImpl: WordListBuilder {
 
     private let shouldAnimateWhenAppear: Bool
-    private let appConfig: AppConfig
-    private let bundle: Bundle
+    private let dependency: RootDependency
 
     /// Инициализатор.
     /// - Parameters:
     ///  - shouldAnimateWhenAppear: запускать ли анимацию при первом появлении данных в таблице.
-    ///  - appConfig: конфигурация приложения.
     init(shouldAnimateWhenAppear: Bool,
-         appConfig: AppConfig,
-         bundle: Bundle) {
+         dependency: RootDependency) {
         self.shouldAnimateWhenAppear = shouldAnimateWhenAppear
-        self.appConfig = appConfig
-        self.bundle = bundle
+        self.dependency = dependency
     }
 
     /// Создать MVVM-граф фичи
@@ -32,7 +28,7 @@ final class WordListBuilderImpl: WordListBuilder {
     func build() -> WordListMVVM {
         WordListMVVMImpl(
             viewParams: createWordListViewParams(),
-            cudOperations: CoreWordListRepository(appConfig: appConfig, bundle: bundle),
+            cudOperations: CoreWordListRepository(appConfig: dependency.appConfig, bundle: dependency.bundle),
             translationService: createTranslationService(),
             wordItemStream: WordItemStreamImpl.instance
         )
@@ -61,10 +57,10 @@ final class WordListBuilderImpl: WordListBuilder {
         PonsTranslationService(
             apiData: PonsApiData(url: "https://api.pons.com/v1/dictionary",
                                  secretHeaderKey: "X-Secret",
-                                 secret: appConfig.ponsApiSecret),
+                                 secret: dependency.appConfig.ponsApiSecret),
             httpClient: HttpClientImpl(sessionConfiguration: URLSessionConfiguration.default),
             jsonCoder: JSONCoderImpl(),
-            logger: LoggerImpl(isLoggingEnabled: appConfig.isLoggingEnabled)
+            logger: LoggerImpl(isLoggingEnabled: dependency.appConfig.isLoggingEnabled)
         )
     }
 }

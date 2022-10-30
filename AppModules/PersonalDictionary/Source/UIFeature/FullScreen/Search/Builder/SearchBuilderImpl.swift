@@ -8,33 +8,26 @@
 /// Билдер Фичи "Поиск по словам в словаре".
 final class SearchBuilderImpl: ViewControllerBuilder {
 
-    private let appConfig: AppConfig
+    private weak var dependency: RootDependency?
 
-    private let bundle: Bundle
-
-    /// Инициализатор.
-    /// - Parameters:
-    ///  - appConfig: зависимости фичи.
-    init(appConfig: AppConfig,
-         bundle: Bundle) {
-        self.appConfig = appConfig
-        self.bundle = bundle
+    init(dependency: RootDependency?) {
+        self.dependency = dependency
     }
 
     /// Создать экран Поиска.
     /// - Returns:
     ///  - View controller экрана поиска по словам в словаре.
     func build() -> UIViewController {
-        SearchViewController(
-            noResultFoundText: bundle.moduleLocalizedString("No words found"),
-            searchTextInputBuilder: SearchTextInputBuilderImpl(bundle: bundle),
-            searchModePickerBuilder: SearchModePickerBuilderImpl(bundle: bundle),
-            wordListBuilder: WordListBuilderImpl(
-                shouldAnimateWhenAppear: false,
-                appConfig: appConfig,
-                bundle: bundle
-            ),
-            searchEngineBuilder: SearchEngineBuilderImpl(appConfig: appConfig, bundle: bundle)
+        guard let dependency = dependency else { return UIViewController() }
+
+        return SearchViewController(
+            noResultFoundText: dependency.bundle.moduleLocalizedString("No words found"),
+            searchTextInputBuilder: SearchTextInputBuilderImpl(bundle: dependency.bundle),
+            searchModePickerBuilder: SearchModePickerBuilderImpl(bundle: dependency.bundle),
+            wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: false, dependency: dependency),
+            searchEngine: SearchEngineImpl(
+                searchableWordList: CoreWordListRepository(appConfig: dependency.appConfig, bundle: dependency.bundle)
+            )
         )
     }
 }

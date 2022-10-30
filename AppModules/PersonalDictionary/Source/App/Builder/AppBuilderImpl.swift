@@ -7,13 +7,16 @@
 
 import UIKit
 
-protocol AppDependency: AnyObject {
-
-    var navigationController: UINavigationController? { get }
+protocol RootDependency: AnyObject {
 
     var appConfig: AppConfig { get }
-    
+
     var bundle: Bundle { get }
+}
+
+protocol AppDependency: RootDependency {
+
+    var navigationController: UINavigationController? { get }
 }
 
 class AppDependencyImpl: AppDependency {
