@@ -13,7 +13,7 @@ final class MainWordListViewController: UIViewController {
 
     let params: MainWordListViewParams
 
-    let wordListMVVM: WordListMVVM
+    let wordListGraph: WordListGraph
     let wordListFetcher: WordListFetcher
     let mainNavigator: MainNavigator
 
@@ -30,7 +30,7 @@ final class MainWordListViewController: UIViewController {
          wordListFetcher: WordListFetcher,
          mainNavigatorBuilder: MainNavigatorBuilder) {
         self.params = viewParams
-        self.wordListMVVM = wordListBuilder.build()
+        self.wordListGraph = wordListBuilder.build()
         self.wordListFetcher = wordListFetcher
         self.mainNavigator = mainNavigatorBuilder.build()
         super.init(nibName: nil, bundle: nil)
@@ -54,7 +54,7 @@ final class MainWordListViewController: UIViewController {
 
     private func initWordListModel() {
         let wordList = wordListFetcher.wordList
-        guard let wordListModel = wordListMVVM.model else { return }
+        guard let wordListModel = wordListGraph.model else { return }
 
         wordListModel.wordList = wordList
         wordListModel.requestTranslationsIfNeededWithin(startPosition: 0,

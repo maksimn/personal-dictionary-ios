@@ -24,7 +24,7 @@ extension SearchViewController {
     }
 
     private func initWordList() {
-        let wordListViewController = wordListMVVM.viewController
+        let wordListViewController = wordListGraph.viewController
         let wordListParentView = UIView()
 
         view.addSubview(wordListParentView)

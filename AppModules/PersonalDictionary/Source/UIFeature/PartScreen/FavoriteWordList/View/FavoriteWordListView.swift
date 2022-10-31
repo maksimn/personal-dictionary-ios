@@ -13,7 +13,7 @@ final class FavoriteWordListView: UIViewController {
 
     private let viewModel: FavoriteWordListViewModel
 
-    private let wordListMVVM: WordListMVVM
+    private let wordListGraph: WordListGraph
 
     private let noFavoriteWordsText: String
 
@@ -27,7 +27,7 @@ final class FavoriteWordListView: UIViewController {
         noFavoriteWordsText: String
     ) {
         self.viewModel = viewModel
-        self.wordListMVVM = wordListBuilder.build()
+        self.wordListGraph = wordListBuilder.build()
         self.noFavoriteWordsText = noFavoriteWordsText
         super.init(nibName: nil, bundle: nil)
     }
@@ -54,7 +54,7 @@ final class FavoriteWordListView: UIViewController {
 
     private func subscribeToViewModel() {
         viewModel.favoriteWordList.subscribe(onNext: { [weak self] wordList in
-            self?.wordListMVVM.model?.wordList = wordList
+            self?.wordListGraph.model?.wordList = wordList
             self?.centerLabel.isHidden = !wordList.isEmpty
         }).disposed(by: disposeBag)
     }
@@ -65,7 +65,7 @@ final class FavoriteWordListView: UIViewController {
     }
 
     private func addWordListChildController() {
-        let wordListViewController = wordListMVVM.viewController
+        let wordListViewController = wordListGraph.viewController
 
         view.addSubview(wordListViewController.view)
         addChild(wordListViewController)

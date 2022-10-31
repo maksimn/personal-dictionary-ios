@@ -14,7 +14,7 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
     let noResultFoundText: String
     let searchTextInputMVVM: SearchTextInputMVVM
     let searchModePickerMVVM: SearchModePickerMVVM
-    let wordListMVVM: WordListMVVM
+    let wordListGraph: WordListGraph
     let searchEngine: SearchEngine
 
     let centerLabel = UILabel()
@@ -35,7 +35,7 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
         self.noResultFoundText = noResultFoundText
         searchTextInputMVVM = searchTextInputBuilder.build()
         searchModePickerMVVM = searchModePickerBuilder.build()
-        wordListMVVM = wordListBuilder.build()
+        wordListGraph = wordListBuilder.build()
         self.searchEngine = searchEngine
         super.init(nibName: nil, bundle: nil)
         initViews()
@@ -72,7 +72,7 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
     }
 
     private func showSearchResult(data: SearchResultData) {
-        guard let wordListModel = self.wordListMVVM.model else { return }
+        guard let wordListModel = self.wordListGraph.model else { return }
 
         centerLabel.isHidden = !(data.searchState == .fulfilled && data.foundWordList.count == 0)
         wordListModel.wordList = data.foundWordList
