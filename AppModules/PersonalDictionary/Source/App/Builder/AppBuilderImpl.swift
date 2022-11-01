@@ -19,7 +19,7 @@ protocol AppDependency: RootDependency {
     var navigationController: UINavigationController? { get }
 }
 
-class AppDependencyImpl: AppDependency {
+private final class AppDependencyImpl: AppDependency {
 
     private(set) weak var navigationController: UINavigationController?
 

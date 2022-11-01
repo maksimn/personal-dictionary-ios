@@ -10,6 +10,6 @@ protocol WordListBuilder {
 
     /// Создать MVVM-граф фичи
     /// - Returns:
-    ///  - MVVM-граф фичи.
-    func build() -> WordListMVVM
+    ///  - граф фичи.
+    func build() -> WordListGraph
 }

@@ -1,5 +1,5 @@
 //
-//  WordListMVVMImpl.swift
+//  WordListGraphImpl.swift
 //  PersonalDictionary
 //
 //  Created by Maxim Ivanov on 05.10.2021.
@@ -8,8 +8,8 @@
 import CoreModule
 import UIKit
 
-/// Реализация MVVM-графа фичи "Список слов".
-final class WordListMVVMImpl: WordListMVVM {
+/// Реализация графа фичи "Список слов".
+final class WordListGraphImpl: WordListGraph {
 
     /// View controller для показа экрана/части экрана со списком слов
     private(set) var viewController: UIViewController
@@ -27,17 +27,21 @@ final class WordListMVVMImpl: WordListMVVM {
          cudOperations: WordItemCUDOperations,
          translationService: TranslationService,
          wordItemStream: WordItemStream) {
-        weak var viewModelLazyWeak: WordListViewModel?
+        weak var viewModelLazy: WordListViewModel?
 
-        let model = WordListModelImpl(viewModelBlock: { viewModelLazyWeak },
-                                      cudOperations: cudOperations,
-                                      translationService: translationService,
-                                      wordItemStream: wordItemStream)
+        let model = WordListModelImpl(
+            viewModelBlock: { viewModelLazy },
+            cudOperations: cudOperations,
+            translationService: translationService,
+            wordItemStream: wordItemStream
+        )
         let viewModel = WordListViewModelImpl(model: model)
-        let view = WordListViewController(viewModel: viewModel,
-                                          params: viewParams)
+        let view = WordListViewController(
+            viewModel: viewModel,
+            params: viewParams
+        )
 
-        viewModelLazyWeak = viewModel
+        viewModelLazy = viewModel
 
         viewController = view
         self.model = model

@@ -17,7 +17,7 @@ extension MainWordListViewController {
     }
 
     private func addWordListChildController() {
-        let wordListViewController = wordListMVVM.viewController
+        let wordListViewController = wordListGraph.viewController
         let wordListParentView = UIView()
 
         view.addSubview(wordListParentView)
