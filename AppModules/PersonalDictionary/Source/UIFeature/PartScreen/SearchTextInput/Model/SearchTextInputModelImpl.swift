@@ -10,25 +10,32 @@ import RxSwift
 /// Реализация модели элемента ввода поискового текста.
 final class SearchTextInputModelImpl: SearchTextInputModel {
 
-    /// Модель представления элемента ввода поискового текста.
-    weak var viewModel: SearchTextInputViewModel? {
-        didSet {
-            subsсribeToViewModel()
-        }
-    }
+    // MARK: - Public props
 
-    /// Делегат фичи
     weak var listener: SearchTextInputListener?
 
-    /// Поисковый текст
     private(set) var searchText: String = ""
+
+    // MARK: - Private props
+
+    private let viewModelBlock: () -> SearchTextInputViewModel?
+    private weak var viewModel: SearchTextInputViewModel?
 
     private let disposeBag = DisposeBag()
 
-    private func subsсribeToViewModel() {
-        viewModel?.searchText.asObservable().subscribe(onNext: { [weak self] text in
-            self?.searchText = text
-            self?.listener?.onSearchTextChanged(text)
-        }).disposed(by: disposeBag)
+    init(viewModelBlock: @escaping () -> SearchTextInputViewModel?) {
+        self.viewModelBlock = viewModelBlock
+    }
+
+    /// Костыль.
+    /// Необходимо вызвать в инициализаторе графа фичи, чтобы изменения данных во view были синхронизированы с моделью.
+    func bindMVVM() {
+        if viewModel == nil {
+            viewModel = viewModelBlock()
+            viewModel?.searchText.subscribe(onNext: { [weak self] text in
+                self?.searchText = text
+                self?.listener?.onSearchTextChanged(text)
+            }).disposed(by: disposeBag)
+        }
     }
 }

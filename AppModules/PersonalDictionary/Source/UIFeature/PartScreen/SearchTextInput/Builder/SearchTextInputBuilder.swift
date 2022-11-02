@@ -8,8 +8,8 @@
 /// Билдер фичи "Элемент ввода поискового текста".
 protocol SearchTextInputBuilder {
 
-    /// Создать MVVM-граф фичи
+    /// Создать граф фичи
     /// - Returns:
-    ///  - MVVM-граф фичи.
-    func build() -> SearchTextInputMVVM
+    ///  - граф фичи.
+    func build() -> SearchTextInputGraph
 }

@@ -7,9 +7,11 @@
 
 import RxCocoa
 
+typealias BindableString = BehaviorRelay<String>
+
 /// Модель представления элемента ввода поискового текста.
 protocol SearchTextInputViewModel: AnyObject {
 
     /// Поисковый текст для представления
-    var searchText: BehaviorRelay<String> { get }
+    var searchText: BindableString { get }
 }

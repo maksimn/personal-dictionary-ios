@@ -8,9 +8,6 @@
 /// Модель элемента ввода поискового текста.
 protocol SearchTextInputModel: AnyObject {
 
-    /// Модель представления элемента ввода поискового текста.
-    var viewModel: SearchTextInputViewModel? { get set }
-
     /// Делегат фичи
     var listener: SearchTextInputListener? { get set }
 

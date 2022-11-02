@@ -22,7 +22,7 @@ final class WordListBuilderImpl: WordListBuilder {
         self.dependency = dependency
     }
 
-    /// Создать MVVM-граф фичи
+    /// Создать граф фичи
     /// - Returns:
     ///  - граф фичи.
     func build() -> WordListGraph {
