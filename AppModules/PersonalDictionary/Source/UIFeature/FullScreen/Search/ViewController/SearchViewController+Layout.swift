@@ -60,9 +60,9 @@ extension SearchViewController {
     }
 
     private func initSearchModePicker() {
-        searchModePickerMVVM.model?.listener = self
+        searchModePickerGraph.model?.listener = self
 
-        let searchModePickerView = searchModePickerMVVM.uiview
+        let searchModePickerView = searchModePickerGraph.uiview
         view.addSubview(searchModePickerView)
         searchModePickerView.snp.makeConstraints { make -> Void in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)

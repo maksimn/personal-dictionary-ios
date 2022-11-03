@@ -19,14 +19,11 @@ final class SearchTextInputGraphImpl: SearchTextInputGraph {
     /// - Parameters:
     ///  - viewParams: параметры представления.
     init(viewParams: SearchTextInputViewParams) {
-        weak var viewModelLazy: SearchTextInputViewModel?
-
-        let model = SearchTextInputModelImpl(viewModelBlock: { viewModelLazy })
+        let model = SearchTextInputModelImpl()
         let viewModel = SearchTextInputViewModelImpl(model: model)
         view = SearchTextInputView(params: viewParams, viewModel: viewModel)
 
-        viewModelLazy = viewModel
-        model.bindMVVM()
+        model.viewModel = viewModel
         
         self.model = model
     }

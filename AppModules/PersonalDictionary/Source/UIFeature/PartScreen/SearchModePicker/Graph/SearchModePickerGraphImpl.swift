@@ -8,13 +8,13 @@
 import UIKit
 
 /// Реализация MVVM-графа фичи "Выбор режима поиска" по словам из словаря.
-final class SearchModePickerMVVMImpl: SearchModePickerMVVM {
+final class SearchModePickerGraphImpl: SearchModePickerGraph {
 
     /// Представление выбора режима поиска.
-    private(set) var uiview: UIView
+    let uiview: UIView
 
     /// Модель выбора режима поиска.
-    weak var model: SearchModePickerModel?
+    private(set) weak var model: SearchModePickerModel?
 
     /// Инициализатор.
     /// - Parameters:
@@ -22,14 +22,13 @@ final class SearchModePickerMVVMImpl: SearchModePickerMVVM {
     ///  - viewParams: параметры представления.
     init(searchMode: SearchMode,
          viewParams: SearchModePickerViewParams) {
-        let model = SearchModePickerModelImpl(searchMode: searchMode)
-        let viewModel = SearchModePickerViewModelImpl(model: model)
-        let view = SearchModePickerViewImpl(params: viewParams, viewModel: viewModel)
+        let model = SearchModePickerModelImpl()
+        let viewModel = SearchModePickerViewModelImpl(model: model, searchMode: searchMode)
+        let view = SearchModePickerView(params: viewParams, viewModel: viewModel)
 
         model.viewModel = viewModel
-        viewModel.searchMode.accept(searchMode)
 
-        self.model = model
         uiview = view
+        self.model = model
     }
 }

@@ -13,7 +13,7 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
 
     let noResultFoundText: String
     let searchTextInputGraph: SearchTextInputGraph
-    let searchModePickerMVVM: SearchModePickerMVVM
+    let searchModePickerGraph: SearchModePickerGraph
     let wordListGraph: WordListGraph
     let searchEngine: SearchEngine
 
@@ -34,7 +34,7 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
          searchEngine: SearchEngine) {
         self.noResultFoundText = noResultFoundText
         searchTextInputGraph = searchTextInputBuilder.build()
-        searchModePickerMVVM = searchModePickerBuilder.build()
+        searchModePickerGraph = searchModePickerBuilder.build()
         wordListGraph = wordListBuilder.build()
         self.searchEngine = searchEngine
         super.init(nibName: nil, bundle: nil)
@@ -48,7 +48,7 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
     // MARK: - SearchTextInputListener
 
     func onSearchTextChanged(_ searchText: String) {
-        guard let searchMode = searchModePickerMVVM.model?.searchMode else { return }
+        guard let searchMode = searchModePickerGraph.model?.searchMode else { return }
         performSearch(for: searchText, mode: searchMode)
     }
 

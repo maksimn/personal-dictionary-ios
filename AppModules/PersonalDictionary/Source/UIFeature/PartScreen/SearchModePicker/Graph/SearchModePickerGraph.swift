@@ -7,8 +7,8 @@
 
 import UIKit
 
-/// MVVM-граф фичи "Выбор режима поиска" по словам из словаря.
-protocol SearchModePickerMVVM {
+/// Граф фичи "Выбор режима поиска" по словам из словаря.
+protocol SearchModePickerGraph {
 
     /// Представление фичи.
     var uiview: UIView { get }
