@@ -17,15 +17,15 @@ final class SearchTextInputBuilderImpl: SearchTextInputBuilder {
         self.bundle = bundle
     }
 
-    /// Создать MVVM-граф фичи
+    /// Создать граф фичи
     /// - Returns:
-    ///  - MVVM-граф фичи.
-    func build() -> SearchTextInputMVVM {
+    ///  - граф фичи.
+    func build() -> SearchTextInputGraph {
         let viewParams = SearchTextInputViewParams(
             placeholder: bundle.moduleLocalizedString("Enter a word for searching"),
             size: CGSize(width: UIScreen.main.bounds.width - 72, height: 44)
         )
 
-        return SearchTextInputMVVMImpl(viewParams: viewParams)
+        return SearchTextInputGraphImpl(viewParams: viewParams)
     }
 }

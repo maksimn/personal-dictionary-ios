@@ -7,11 +7,11 @@
 
 import UIKit
 
-/// MVVM-граф фичи "Элемент ввода поискового текста".
-protocol SearchTextInputMVVM {
+/// Граф фичи "Элемент ввода поискового текста".
+protocol SearchTextInputGraph {
 
     /// Представление фичи.
-    var searchBar: UIView { get }
+    var uiview: UIView { get }
 
     /// Модель фичи.
     var model: SearchTextInputModel? { get }

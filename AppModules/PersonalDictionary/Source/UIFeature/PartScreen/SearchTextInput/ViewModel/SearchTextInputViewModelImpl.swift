@@ -20,5 +20,5 @@ final class SearchTextInputViewModelImpl: SearchTextInputViewModel {
     }
 
     /// Поисковый текст для представления
-    let searchText = BehaviorRelay<String>(value: "")
+    let searchText = BindableString(value: "")
 }

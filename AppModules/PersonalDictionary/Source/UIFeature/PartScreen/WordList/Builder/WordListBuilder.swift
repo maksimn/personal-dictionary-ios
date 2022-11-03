@@ -8,7 +8,7 @@
 /// Билдер фичи "Список слов".
 protocol WordListBuilder {
 
-    /// Создать MVVM-граф фичи
+    /// Создать граф фичи
     /// - Returns:
     ///  - граф фичи.
     func build() -> WordListGraph

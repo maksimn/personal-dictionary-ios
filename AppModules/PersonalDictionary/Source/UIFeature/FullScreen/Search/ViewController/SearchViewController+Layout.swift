@@ -19,8 +19,8 @@ extension SearchViewController {
     }
 
     private func initSearchTextInput() {
-        searchTextInputMVVM.model?.listener = self
-        navigationItem.titleView = searchTextInputMVVM.searchBar
+        searchTextInputGraph.model?.listener = self
+        navigationItem.titleView = searchTextInputGraph.uiview
     }
 
     private func initWordList() {
