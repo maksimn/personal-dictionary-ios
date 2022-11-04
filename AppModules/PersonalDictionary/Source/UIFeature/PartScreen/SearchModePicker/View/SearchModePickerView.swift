@@ -9,21 +9,19 @@ import RxSwift
 import UIKit
 
 /// Реализация представления для выбора режима поиска.
-final class SearchModePickerViewImpl: UIView {
+final class SearchModePickerView: UIView {
 
-    /// Модель представления выбора режима поиска.
+    private let params: SearchModePickerViewParams
     private let viewModel: SearchModePickerViewModel
 
     private let searchByLabel = UILabel()
     private var searchBySegmentedControl: UISegmentedControl?
-
-    private let params: SearchModePickerViewParams
-
     private let disposeBag = DisposeBag()
 
     /// Инициализатор.
     /// - Parameters:
     ///  - params: параметры представления.
+    ///  - viewModel: Модель представления выбора режима поиска.
     init(params: SearchModePickerViewParams,
          viewModel: SearchModePickerViewModel) {
         self.params = params
@@ -35,6 +33,17 @@ final class SearchModePickerViewImpl: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func bindToViewModel() {
+        viewModel.searchMode.subscribe(onNext: { [weak self] searchMode in
+            switch searchMode {
+            case .bySourceWord:
+                self?.searchBySegmentedControl?.selectedSegmentIndex = 0
+            case .byTranslation:
+                self?.searchBySegmentedControl?.selectedSegmentIndex = 1
+            }
+        }).disposed(by: disposeBag)
     }
 
     @objc
@@ -54,17 +63,6 @@ final class SearchModePickerViewImpl: UIView {
     private func initViews() {
         initSearchByLabel()
         initSearchBySegmentedControl()
-    }
-
-    private func bindToViewModel() {
-        viewModel.searchMode.subscribe(onNext: { [weak self] searchMode in
-            switch searchMode {
-            case .bySourceWord:
-                self?.searchBySegmentedControl?.selectedSegmentIndex = 0
-            case .byTranslation:
-                self?.searchBySegmentedControl?.selectedSegmentIndex = 1
-            }
-        }).disposed(by: disposeBag)
     }
 
     private func initSearchByLabel() {

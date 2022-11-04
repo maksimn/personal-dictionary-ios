@@ -19,10 +19,10 @@ final class SearchModePickerBuilderImpl: SearchModePickerBuilder {
         self.bundle = bundle
     }
 
-    /// Создать MVVM-граф фичи
+    /// Создать граф фичи
     /// - Returns:
-    ///  - MVVM-граф фичи.
-    func build() -> SearchModePickerMVVM {
+    ///  - граф фичи.
+    func build() -> SearchModePickerGraph {
         let initialSearchMode: SearchMode = .bySourceWord
         let viewParams = SearchModePickerViewParams(
             searchByLabelText: bundle.moduleLocalizedString("Search by:"),
@@ -30,7 +30,7 @@ final class SearchModePickerBuilderImpl: SearchModePickerBuilder {
             translationText: bundle.moduleLocalizedString("translation")
         )
 
-        return SearchModePickerMVVMImpl(
+        return SearchModePickerGraphImpl(
             searchMode: initialSearchMode,
             viewParams: viewParams
         )

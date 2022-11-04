@@ -7,9 +7,11 @@
 
 import RxCocoa
 
+typealias BindableSearchMode = BehaviorRelay<SearchMode>
+
 /// Модель представления выбора режима поиска.
 protocol SearchModePickerViewModel: AnyObject {
 
     /// Режим поиска (данные модели представления).
-    var searchMode: BehaviorRelay<SearchMode> { get }
+    var searchMode: BindableSearchMode { get }
 }

@@ -14,9 +14,6 @@ enum SearchMode {
 /// Модель выбора режима поиска.
 protocol SearchModePickerModel: AnyObject {
 
-    /// Модель представления выбора режима поиска.
-    var viewModel: SearchModePickerViewModel? { get set }
-
     /// Делегат фичи "Выбор режима поиска".
     var listener: SearchModePickerListener? { get set }
 
