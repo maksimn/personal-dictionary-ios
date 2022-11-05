@@ -30,11 +30,11 @@ final class WordListBuilderImpl: WordListBuilder {
             return Empty()
         }
         let viewParams = WordListViewParams(
-            itemHeight: WordItemCell.height,
-            cellClass: WordItemCell.self,
-            cellReuseIdentifier: "\(WordItemCell.self)",
+            itemHeight: WordTableViewCell.height,
+            cellClass: WordTableViewCell.self,
+            cellReuseIdentifier: "\(WordTableViewCell.self)",
             cellCornerRadius: 16,
-            delegateParams: WordTableDelegateParams(
+            delegateParams: WordTableViewDelegateParams(
                 shouldAnimateWhenAppear: shouldAnimateWhenAppear,
                 cellSlideInDuration: 0.5,
                 cellSlideInDelayFactor: 0.05,
@@ -60,9 +60,9 @@ final class WordListBuilderImpl: WordListBuilder {
 
         return WordListGraphImpl(
             viewParams: viewParams,
-            cudOperations: CoreWordListRepository(appConfig: dependency.appConfig, bundle: dependency.bundle),
+            cudOperations: WordListRepositoryImpl(appConfig: dependency.appConfig, bundle: dependency.bundle),
             translationService: translationService,
-            wordItemStream: WordItemStreamImpl.instance
+            wordStream: WordStreamImpl.instance
         )
     }
 

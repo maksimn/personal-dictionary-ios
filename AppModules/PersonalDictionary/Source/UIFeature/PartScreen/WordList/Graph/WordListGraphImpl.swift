@@ -22,18 +22,18 @@ final class WordListGraphImpl: WordListGraph {
     ///  - viewParams: параметры представления фичи.
     ///  - cudOperations: сервис для операций create, update, delete со словами в хранилище личного словаря.
     ///  - translationService: cлужба для выполнения перевода слов на целевой язык.
-    ///  - wordItemStream: ModelStream для событий со словами в личном словаре.
+    ///  - wordStream: ModelStream для событий со словами в личном словаре.
     init(viewParams: WordListViewParams,
-         cudOperations: WordItemCUDOperations,
+         cudOperations: WordCUDOperations,
          translationService: TranslationService,
-         wordItemStream: WordItemStream) {
+         wordStream: WordStream) {
         weak var viewModelLazy: WordListViewModel?
 
         let model = WordListModelImpl(
             viewModelBlock: { viewModelLazy },
             cudOperations: cudOperations,
             translationService: translationService,
-            wordItemStream: wordItemStream
+            wordStream: wordStream
         )
         let viewModel = WordListViewModelImpl(model: model)
         let view = WordListViewController(

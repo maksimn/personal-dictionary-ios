@@ -11,7 +11,7 @@ import RxCocoa
 protocol WordListViewModel: AnyObject {
 
     /// Данные модели представления.
-    var wordList: BehaviorRelay<[WordItem]> { get }
+    var wordList: BehaviorRelay<[Word]> { get }
 
     /// Удалить слово из модели по заданному индексу из списка
     /// - Parameters:
@@ -21,7 +21,7 @@ protocol WordListViewModel: AnyObject {
     /// Переключить значение флага "избранности" (isFavorite) для слова по заданному индексу из списка
     /// - Parameters:
     ///  - position: позиция (индекс) слова в списке.
-    func toggleWordItemIsFavorite(at position: Int)
+    func toggleWordIsFavorite(at position: Int)
 
     /// Запросить перевод для слов в списке, расположенных в заданном интервале индексов.
     /// - Parameters:

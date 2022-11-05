@@ -22,8 +22,8 @@ final class FavoriteWordListBuilderImpl: ViewControllerBuilder {
 
         let model = FavoriteWordListModelImpl(
             viewModelBlock: { viewModelLazy },
-            favoriteWordListFetcher: CoreWordListRepository(appConfig: dependency.appConfig, bundle: bundle),
-            wordItemStream: WordItemStreamImpl.instance
+            favoriteWordListFetcher: WordListRepositoryImpl(appConfig: dependency.appConfig, bundle: bundle),
+            wordStream: WordStreamImpl.instance
         )
         let viewModel = FavoriteWordListViewModelImpl(model: model)
         let view = FavoriteWordListView(

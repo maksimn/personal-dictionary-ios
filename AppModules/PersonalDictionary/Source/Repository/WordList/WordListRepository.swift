@@ -11,36 +11,36 @@ import RxSwift
 protocol WordListFetcher {
 
     /// - Returns: список слов из личного словаря.
-    var wordList: [WordItem] { get }
+    var wordList: [Word] { get }
 }
 
 /// Получение списка избранных слов из хранилища личного словаря.
 protocol FavoriteWordListFetcher {
 
     /// - Returns: список  избранных слов из личного словаря.
-    var favoriteWordList: [WordItem] { get }
+    var favoriteWordList: [Word] { get }
 }
 
 /// Операции create, update, delete со словами в хранилище личного словаря.
-protocol WordItemCUDOperations {
+protocol WordCUDOperations {
 
     /// Добавить слово в хранилище личного словаря
     /// - Parameters:
-    ///  - wordItem: слово для добавления.
+    ///  - word: слово для добавления.
     /// - Returns: Rx completable для обработки завершения операции добавления слова в хранилище.
-    func add(_ wordItem: WordItem) -> Completable
+    func add(_ word: Word) -> Completable
 
     /// Обновить слово в хранилище личного словаря
     /// - Parameters:
-    ///  - wordItem: обновленное слово.
+    ///  - word: обновленное слово.
     /// - Returns: Rx completable для обработки завершения операции обновления слова в хранилище.
-    func update(_ wordItem: WordItem) -> Completable
+    func update(_ word: Word) -> Completable
 
     /// Удалить слово из хранилища личного словаря
     /// - Parameters:
-    ///  - wordItemId: идентификатор слова для его удаления из хранилища.
+    ///  - wordId: идентификатор слова для его удаления из хранилища.
     /// - Returns: Rx completable для обработки завершения операции удаления слова из хранилища.
-    func remove(with wordItemId: WordItem.Id) -> Completable
+    func remove(with wordId: Word.Id) -> Completable
 }
 
 /// Протокол для поисковых запросов к хранилищу данных.
@@ -50,18 +50,18 @@ protocol SearchableWordList {
     /// - Parameters:
     ///  - string: строка для поиска.
     /// - Массив найденных слов.
-    func findWords(contain string: String) -> [WordItem]
+    func findWords(contain string: String) -> [Word]
 
     /// Найти слова, перевод которых содержит строку.
     /// - Parameters:
     ///  - string: строка для поиска.
     /// - Массив найденных слов.
-    func findWords(whereTranslationContains string: String) -> [WordItem]
+    func findWords(whereTranslationContains string: String) -> [Word]
 }
 
 /// Хранилище слов личного словаря.
 protocol WordListRepository: WordListFetcher,
                              FavoriteWordListFetcher,
-                             WordItemCUDOperations,
+                             WordCUDOperations,
                              SearchableWordList {
 }

@@ -18,5 +18,5 @@ struct SearchResultData {
     let searchState: SearchState
 
     /// Список найденных слов
-    let foundWordList: [WordItem]
+    let foundWordList: [Word]
 }

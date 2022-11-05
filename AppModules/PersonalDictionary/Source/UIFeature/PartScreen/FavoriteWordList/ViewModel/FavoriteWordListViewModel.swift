@@ -10,7 +10,7 @@ import RxCocoa
 /// Модель представления списка избранных слов.
 protocol FavoriteWordListViewModel: AnyObject {
 
-    var favoriteWordList: BehaviorRelay<[WordItem]> { get }
+    var favoriteWordList: BehaviorRelay<[Word]> { get }
 
     func update()
 }

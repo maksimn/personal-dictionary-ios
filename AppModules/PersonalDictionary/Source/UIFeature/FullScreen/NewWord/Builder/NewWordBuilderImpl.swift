@@ -42,7 +42,7 @@ final class NewWordBuilderImpl: ViewControllerBuilder {
         let model = NewWordModelImpl(
             viewModelBlock: { viewModelLazy },
             langRepository: langRepository,
-            newWordItemStream: WordItemStreamImpl.instance
+            newWordStream: WordStreamImpl.instance
         )
         let viewModel = NewWordViewModelImpl(
             model: model,

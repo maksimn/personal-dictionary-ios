@@ -46,20 +46,24 @@ final class PonsTranslationService: TranslationService {
 
     /// Извлечь перевод слова.
     /// - Parameters:
-    ///  - wordItem: данные о слове для его перевода.
+    ///  - word: данные о слове для его перевода.
     /// - Returns:
     ///  - Rx Single, в который завернута строка с переводом заданного слова.
-    func fetchTranslation(for wordItem: WordItem) -> Single<String> {
-        let shortSourceLang = wordItem.sourceLang.shortName.lowercased()
-        let qParam = "q=\(wordItem.text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
-        let lParam = "l=\(shortSourceLang)\(wordItem.targetLang.shortName.lowercased())"
+    func fetchTranslation(for word: Word) -> Single<String> {
+        let shortSourceLang = word.sourceLang.shortName.lowercased()
+        let qParam = "q=\(word.text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+        let lParam = "l=\(shortSourceLang)\(word.targetLang.shortName.lowercased())"
 
         logger.log(message: "\(fetchTranslationRequestName) NETWORK REQUEST START")
         return httpClient
-            .send(Http(urlString: apiData.url + "?" + lParam + "&" + qParam,
-                       method: "GET",
-                       headers: [apiData.secretHeaderKey: apiData.secret],
-                       body: nil))
+            .send(
+                Http(
+                    urlString: apiData.url + "?" + lParam + "&" + qParam,
+                    method: "GET",
+                    headers: [apiData.secretHeaderKey: apiData.secret],
+                    body: nil
+                )
+            )
             .map { [weak self] data -> Single<[PonsResponseData]> in
                 self?.jsonCoder.parseFromJson(data) ?? Single.just([])
             }

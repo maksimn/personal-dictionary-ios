@@ -26,7 +26,7 @@ final class SearchBuilderImpl: ViewControllerBuilder {
             searchModePickerBuilder: SearchModePickerBuilderImpl(bundle: dependency.bundle),
             wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: false, dependency: dependency),
             searchEngine: SearchEngineImpl(
-                searchableWordList: CoreWordListRepository(appConfig: dependency.appConfig, bundle: dependency.bundle)
+                searchableWordList: WordListRepositoryImpl(appConfig: dependency.appConfig, bundle: dependency.bundle)
             )
         )
     }
