@@ -15,7 +15,7 @@ extension SearchViewController {
         initSearchTextInput()
         initSearchModePicker()
         initWordList()
-        initCenterLabel()
+        layoutCenterLabel()
     }
 
     private func initSearchTextInput() {
@@ -44,12 +44,7 @@ extension SearchViewController {
         }
     }
 
-    private func initCenterLabel() {
-        centerLabel.textColor = Theme.data.secondaryTextColor
-        centerLabel.font = Theme.data.normalFont
-        centerLabel.numberOfLines = 1
-        centerLabel.textAlignment = .center
-        centerLabel.text = noResultFoundText
+    private func layoutCenterLabel() {
         centerLabel.isHidden = true
         view.addSubview(centerLabel)
         centerLabel.snp.makeConstraints { make -> Void in

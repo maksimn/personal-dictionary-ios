@@ -11,13 +11,12 @@ import UIKit
 /// View controller экрана поиска по словам в словаре.
 final class SearchViewController: UIViewController, SearchTextInputListener, SearchModePickerListener {
 
-    let noResultFoundText: String
     let searchTextInputGraph: SearchTextInputGraph
     let searchModePickerGraph: SearchModePickerGraph
     let wordListGraph: WordListGraph
     let searchEngine: SearchEngine
 
-    let centerLabel = UILabel()
+    let centerLabel: UILabel
 
     private let disposeBag = DisposeBag()
 
@@ -32,7 +31,7 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
          searchModePickerBuilder: SearchModePickerBuilder,
          wordListBuilder: WordListBuilder,
          searchEngine: SearchEngine) {
-        self.noResultFoundText = noResultFoundText
+        centerLabel = SecondaryText(noResultFoundText)
         searchTextInputGraph = searchTextInputBuilder.build()
         searchModePickerGraph = searchModePickerBuilder.build()
         wordListGraph = wordListBuilder.build()

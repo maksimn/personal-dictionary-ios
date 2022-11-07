@@ -13,7 +13,7 @@ extension MainWordListViewController {
     func initViews() {
         view.backgroundColor = Theme.data.backgroundColor
         addWordListChildController()
-        initHeadingLabel()
+        layoutHeading()
     }
 
     private func addWordListChildController() {
@@ -36,14 +36,9 @@ extension MainWordListViewController {
         }
     }
 
-    private func initHeadingLabel() {
-        headingLabel.textColor = Theme.data.textColor
-        headingLabel.font = UIFont.systemFont(ofSize: 28, weight: .heavy)
-        headingLabel.numberOfLines = 1
-        headingLabel.textAlignment = .left
-        headingLabel.text = params.heading
-        view.addSubview(headingLabel)
-        headingLabel.snp.makeConstraints { make -> Void in
+    private func layoutHeading() {
+        view.addSubview(heading)
+        heading.snp.makeConstraints { make -> Void in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(14)
             make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left).offset(54.5)
         }
