@@ -23,5 +23,5 @@ struct WordListViewParams {
     let cellCornerRadius: CGFloat
 
     /// Параметры делегата таблицы
-    let delegateParams: WordTableDelegateParams
+    let delegateParams: WordTableViewDelegateParams
 }

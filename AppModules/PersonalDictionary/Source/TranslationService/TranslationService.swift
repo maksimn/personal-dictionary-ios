@@ -15,5 +15,5 @@ protocol TranslationService {
     ///  - wordItem: данные о слове для его перевода.
     /// - Returns:
     ///  - Rx Single, в который завернута строка с переводом заданного слова.
-    func fetchTranslation(for wordItem: WordItem) -> Single<String>
+    func fetchTranslation(for wordItem: Word) -> Single<String>
 }

@@ -10,7 +10,7 @@ import RxCocoa
 /// Реализация модели представления списка избранных слов.
 final class FavoriteWordListViewModelImpl: FavoriteWordListViewModel {
 
-    let favoriteWordList = BehaviorRelay<[WordItem]>(value: [])
+    let favoriteWordList = BehaviorRelay<[Word]>(value: [])
 
     private let model: FavoriteWordListModel
 

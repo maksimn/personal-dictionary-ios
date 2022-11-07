@@ -16,14 +16,14 @@ final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUs
     private let application: UIApplication
     private let pnTimeCalculator: PNTimeCalculator
     private let pnContent: PNContent
-    private let navToNewWordRouter: NavToNewWordRouter
+    private let navToNewWordRouter: CoreRouter
     private let logger: Logger
 
     init(userNotificationCenter: UNUserNotificationCenter,
          application: UIApplication,
          pnTimeCalculator: PNTimeCalculator,
          pnContent: PNContent,
-         navToNewWordRouter: NavToNewWordRouter,
+         navToNewWordRouter: CoreRouter,
          logger: Logger) {
         self.userNotificationCenter = userNotificationCenter
         self.application = application

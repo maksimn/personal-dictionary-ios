@@ -10,7 +10,7 @@ import RxSwift
 final class FavoriteWordListModelImpl: FavoriteWordListModel {
 
     private let favoriteWordListFetcher: FavoriteWordListFetcher
-    private let wordItemStream: ReadableWordItemStream
+    private let wordStream: ReadableWordStream
 
     private var viewModelBlock: () -> FavoriteWordListViewModel?
     private weak var viewModel: FavoriteWordListViewModel?
@@ -20,13 +20,13 @@ final class FavoriteWordListModelImpl: FavoriteWordListModel {
     init(
         viewModelBlock: @escaping () -> FavoriteWordListViewModel?,
         favoriteWordListFetcher: FavoriteWordListFetcher,
-        wordItemStream: ReadableWordItemStream
+        wordStream: ReadableWordStream
     ) {
         self.viewModelBlock = viewModelBlock
         self.favoriteWordListFetcher = favoriteWordListFetcher
-        self.wordItemStream = wordItemStream
+        self.wordStream = wordStream
 
-        subscribeToWordItemStream()
+        subscribeToWordStream()
     }
 
     func update() {
@@ -36,8 +36,8 @@ final class FavoriteWordListModelImpl: FavoriteWordListModel {
         viewModel?.favoriteWordList.accept(wordList)
     }
 
-    private func subscribeToWordItemStream() {
-        wordItemStream.updatedWordItem
+    private func subscribeToWordStream() {
+        wordStream.updatedWord
             .subscribe(onNext: { [weak self] _ in self?.update() })
             .disposed(by: disposeBag)
     }

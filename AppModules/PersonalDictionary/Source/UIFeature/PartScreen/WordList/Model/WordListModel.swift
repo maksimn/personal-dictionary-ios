@@ -9,7 +9,7 @@
 protocol WordListModel: AnyObject {
 
     /// Стейт модели списка слов.
-    var wordList: [WordItem] { get set }
+    var wordList: [Word] { get set }
 
     /// Удалить слово по заданному индексу из списка
     /// - Parameters:
@@ -19,7 +19,7 @@ protocol WordListModel: AnyObject {
     /// Переключить значение флага "избранности" (isFavorite) для слова по заданному индексу из списка
     /// - Parameters:
     ///  - position: позиция (индекс) слова в списке.
-    func toggleWordItemIsFavorite(at position: Int)
+    func toggleWordIsFavorite(at position: Int)
 
     /// Запросить перевод для слов в списке, расположенных в заданном интервале индексов.
     /// - Parameters:

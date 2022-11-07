@@ -17,19 +17,19 @@ final class WordListViewController: UIViewController {
 
     let tableView = UITableView()
 
-    lazy var datasource = UITableViewDiffableDataSource<Int, WordItem>(tableView: tableView) {
-        tableView, indexPath, item in
+    lazy var datasource = UITableViewDiffableDataSource<Int, Word>(tableView: tableView) {
+        tableView, indexPath, word in
         guard let cell = tableView.dequeueReusableCell(withIdentifier: self.params.cellReuseIdentifier,
-                                                       for: indexPath) as? WordItemCell else {
+                                                       for: indexPath) as? WordTableViewCell else {
             return UITableViewCell()
         }
 
-        cell.set(wordItem: item)
+        cell.set(word: word)
 
         return cell
     }
 
-    lazy var tableActions = WordTableDelegate(
+    lazy var tableActions = WordTableViewDelegate(
         params: params.delegateParams,
         onScrollFinish: { [weak self] in
             self?.onTableViewScrollFinish()
@@ -64,7 +64,7 @@ final class WordListViewController: UIViewController {
     private func subscribeToViewModel() {
         viewModel.wordList
             .subscribe(onNext: { [weak self] wordList in
-                var snapshot = NSDiffableDataSourceSnapshot<Int, WordItem>()
+                var snapshot = NSDiffableDataSourceSnapshot<Int, Word>()
 
                 snapshot.appendSections([0])
                 snapshot.appendItems(wordList, toSection: 0)
@@ -80,7 +80,7 @@ final class WordListViewController: UIViewController {
     }
 
     private func onFavoriteTap(_ position: Int) {
-        viewModel.toggleWordItemIsFavorite(at: position)
+        viewModel.toggleWordIsFavorite(at: position)
     }
 
     private func onTableViewScrollFinish() {

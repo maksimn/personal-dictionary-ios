@@ -11,19 +11,19 @@ final class NewWordModelImpl: NewWordModel {
     private let viewModelBlock: () -> NewWordViewModel?
     private weak var viewModel: NewWordViewModel?
     private var langRepository: LangRepository
-    private let newWordItemStream: NewWordItemStream
+    private let newWordStream: NewWordStream
 
     /// Инициализатор.
     /// - Parameters:
     ///  - viewModelBlock: замыкание для инициализации ссылки на модель представления.
     ///  - langRepository: хранилище с данными о языках в приложении.
-    ///  - newWordItemStream: поток для отправки событий добавления нового слова в словарь
+    ///  - newWordStream: поток для отправки событий добавления нового слова в словарь
     init(viewModelBlock: @escaping () -> NewWordViewModel?,
          langRepository: LangRepository,
-         newWordItemStream: NewWordItemStream) {
+         newWordStream: NewWordStream) {
         self.viewModelBlock = viewModelBlock
         self.langRepository = langRepository
-        self.newWordItemStream = newWordItemStream
+        self.newWordStream = newWordStream
     }
 
     /// Отправить событие добавления нового слова в словарь
@@ -33,13 +33,15 @@ final class NewWordModelImpl: NewWordModel {
         }
 
         guard let state = viewModel?.state.value else { return }
-        let wordItem = WordItem(text: state.text.trimmingCharacters(in: .whitespacesAndNewlines),
-                                sourceLang: state.sourceLang,
-                                targetLang: state.targetLang)
+        let word = Word(
+            text: state.text.trimmingCharacters(in: .whitespacesAndNewlines),
+            sourceLang: state.sourceLang,
+            targetLang: state.targetLang
+        )
 
-        guard !wordItem.text.isEmpty else { return }
+        guard !word.text.isEmpty else { return }
 
-        newWordItemStream.sendNewWord(wordItem)
+        newWordStream.sendNewWord(word)
     }
 
     /// Сохранить исходный язык.

@@ -39,7 +39,7 @@ final class PushNotificationBuilderImpl: PushNotificationBuilder {
                 title: bundle.moduleLocalizedString("Advice"),
                 body: bundle.moduleLocalizedString("It's time to add a new word to the dictionary.")
             ),
-            navToNewWordRouter: NavToNewWordRouterImpl(
+            navToNewWordRouter: NavToNewWordRouter(
                 navigationController: dependency?.navigationController,
                 newWordBuilder: NewWordBuilderImpl(bundle: bundle, langRepository: langRepository)
             ),

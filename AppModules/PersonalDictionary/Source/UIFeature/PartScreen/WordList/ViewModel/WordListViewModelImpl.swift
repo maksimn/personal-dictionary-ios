@@ -20,7 +20,7 @@ final class WordListViewModelImpl: WordListViewModel {
     }
 
     /// Данные модели представления.
-    let wordList = BehaviorRelay<[WordItem]>(value: [])
+    let wordList = BehaviorRelay<[Word]>(value: [])
 
     /// Удалить слово из модели по заданному индексу из списка
     /// - Parameters:
@@ -40,7 +40,7 @@ final class WordListViewModelImpl: WordListViewModel {
     /// Переключить значение флага "избранности" (isFavorite) для слова по заданному индексу из списка
     /// - Parameters:
     ///  - position: позиция (индекс) слова в списке.
-    func toggleWordItemIsFavorite(at position: Int) {
-        model.toggleWordItemIsFavorite(at: position)
+    func toggleWordIsFavorite(at position: Int) {
+        model.toggleWordIsFavorite(at: position)
     }
 }
