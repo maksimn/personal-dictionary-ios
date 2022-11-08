@@ -17,7 +17,7 @@ final class MainWordListViewController: UIViewController {
     let wordListFetcher: WordListFetcher
     let mainNavigator: MainNavigator
 
-    let headingLabel = UILabel()
+    lazy var heading = Heading(params.heading)
 
     /// Инициализатор.
     /// - Parameters:

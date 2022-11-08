@@ -14,17 +14,13 @@ extension FavoritesViewController {
         view.backgroundColor = Theme.data.backgroundColor
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.titleView = navToSearchView
-        initHeadingLabel()
+        layoutHeading()
         addFavoriteWordListController()
     }
 
-    private func initHeadingLabel() {
-        headingLabel.textColor = Theme.data.textColor
-        headingLabel.font = UIFont.systemFont(ofSize: 28, weight: .heavy)
-        headingLabel.numberOfLines = 1
-        headingLabel.textAlignment = .left
-        view.addSubview(headingLabel)
-        headingLabel.snp.makeConstraints { make -> Void in
+    private func layoutHeading() {
+        view.addSubview(heading)
+        heading.snp.makeConstraints { make -> Void in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(14)
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left).offset(34.5)
         }

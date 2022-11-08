@@ -15,9 +15,7 @@ final class FavoriteWordListView: UIViewController {
 
     private let wordListGraph: WordListGraph
 
-    private let noFavoriteWordsText: String
-
-    private let centerLabel = UILabel()
+    private let centerLabel: UILabel
 
     private let disposeBag = DisposeBag()
 
@@ -28,7 +26,7 @@ final class FavoriteWordListView: UIViewController {
     ) {
         self.viewModel = viewModel
         self.wordListGraph = wordListBuilder.build()
-        self.noFavoriteWordsText = noFavoriteWordsText
+        centerLabel = SecondaryText(noFavoriteWordsText)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -76,11 +74,6 @@ final class FavoriteWordListView: UIViewController {
     }
 
     private func initCenterLabel() {
-        centerLabel.textColor = Theme.data.secondaryTextColor
-        centerLabel.font = Theme.data.normalFont
-        centerLabel.numberOfLines = 1
-        centerLabel.textAlignment = .center
-        centerLabel.text = noFavoriteWordsText
         view.addSubview(centerLabel)
         centerLabel.snp.makeConstraints { make -> Void in
             make.centerY.equalTo(view).offset(-20)

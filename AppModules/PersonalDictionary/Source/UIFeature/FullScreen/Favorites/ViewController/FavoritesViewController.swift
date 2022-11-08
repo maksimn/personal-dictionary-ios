@@ -10,20 +10,20 @@ import UIKit
 /// View controller экрана Избранного.
 final class FavoritesViewController: UIViewController {
 
-    let headingLabel = UILabel()
+    let heading: UILabel
 
     let navToSearchView: UIView
 
     let favoriteWordListViewController: UIViewController
 
     /// - Parameters:
-    ///  - heading: текст заголовка экрана.
+    ///  - headingText: текст заголовка экрана.
     ///  - navToSearchBuilder: билдер вложенной фичи "Навигация на экран Поиска".
     ///  - favoriteWordListBuilder: билдер вложенной фичи "Список избранных слов".
-    init(heading: String,
+    init(headingText: String,
          navToSearchBuilder: ViewBuilder,
          favoriteWordListBuilder: ViewControllerBuilder) {
-        headingLabel.text = heading
+        self.heading = Heading(headingText)
         navToSearchView = navToSearchBuilder.build()
         favoriteWordListViewController = favoriteWordListBuilder.build()
         super.init(nibName: nil, bundle: nil)
