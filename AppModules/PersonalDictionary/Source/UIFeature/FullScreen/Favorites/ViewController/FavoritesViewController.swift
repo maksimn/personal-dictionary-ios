@@ -10,11 +10,11 @@ import UIKit
 /// View controller экрана Избранного.
 final class FavoritesViewController: UIViewController {
 
-    let heading: UILabel
+    private let heading: UILabel
 
-    let navToSearchView: UIView
+    private let navToSearchView: UIView
 
-    let favoriteWordListViewController: UIViewController
+    private let favoriteWordListViewController: UIViewController
 
     /// - Parameters:
     ///  - headingText: текст заголовка экрана.
@@ -32,5 +32,21 @@ final class FavoritesViewController: UIViewController {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func initViews() {
+        view.backgroundColor = Theme.data.backgroundColor
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.titleView = navToSearchView
+        layoutHeading()
+        layout(wordListViewController: favoriteWordListViewController)
+    }
+
+    private func layoutHeading() {
+        view.addSubview(heading)
+        heading.snp.makeConstraints { make -> Void in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(14)
+            make.left.equalTo(view.safeAreaLayoutGuide.snp.left).offset(34.5)
+        }
     }
 }
