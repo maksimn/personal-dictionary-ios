@@ -5,19 +5,28 @@
 //  Created by Maxim Ivanov on 07.11.2021.
 //
 
-import CoreModule
 import UIKit
+
+/// Параметры представления Главного списка слов.
+struct MainWordListViewParams {
+
+    /// Текст заголовка
+    let heading: String
+
+    /// Максимальное количество видимых элементов (слов) на данном экране
+    let visibleItemMaxCount: Int
+}
 
 /// View controller экрана Главного списка слов.
 final class MainWordListViewController: UIViewController {
 
-    let params: MainWordListViewParams
+    private let params: MainWordListViewParams
 
-    let wordListGraph: WordListGraph
-    let wordListFetcher: WordListFetcher
-    let mainNavigator: MainNavigator
+    private let wordListGraph: WordListGraph
+    private let wordListFetcher: WordListFetcher
+    private let mainNavigator: MainNavigator
 
-    lazy var heading = Heading(params.heading)
+    private lazy var heading = Heading(params.heading)
 
     /// Инициализатор.
     /// - Parameters:
@@ -40,6 +49,8 @@ final class MainWordListViewController: UIViewController {
         fatalError("init?(coder: NSCoder) are not implemented.")
     }
 
+    // MARK: - Lifecycle
+
     override func loadView() {
         view = UIView()
 
@@ -52,6 +63,8 @@ final class MainWordListViewController: UIViewController {
         initWordListModel()
     }
 
+    // MARK: - Private
+
     private func initWordListModel() {
         let wordList = wordListFetcher.wordList
         guard let wordListModel = wordListGraph.model else { return }
@@ -59,5 +72,19 @@ final class MainWordListViewController: UIViewController {
         wordListModel.wordList = wordList
         wordListModel.requestTranslationsIfNeededWithin(startPosition: 0,
                                                         endPosition: params.visibleItemMaxCount + 1)
+    }
+
+    private func initViews() {
+        view.backgroundColor = Theme.data.backgroundColor
+        layoutHeading()
+        layout(wordListViewController: wordListGraph.viewController)
+    }
+
+    private func layoutHeading() {
+        view.addSubview(heading)
+        heading.snp.makeConstraints { make -> Void in
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(14)
+            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left).offset(54.5)
+        }
     }
 }

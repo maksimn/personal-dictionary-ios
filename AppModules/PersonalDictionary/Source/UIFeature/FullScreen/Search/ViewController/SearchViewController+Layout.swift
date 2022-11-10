@@ -14,34 +14,13 @@ extension SearchViewController {
         view.backgroundColor = Theme.data.backgroundColor
         initSearchTextInput()
         initSearchModePicker()
-        initWordList()
+        layout(wordListViewController: wordListGraph.viewController, topOffset: 50)
         layoutCenterLabel()
     }
 
     private func initSearchTextInput() {
         searchTextInputGraph.model?.listener = self
         navigationItem.titleView = searchTextInputGraph.uiview
-    }
-
-    private func initWordList() {
-        let wordListViewController = wordListGraph.viewController
-        let wordListParentView = UIView()
-
-        view.addSubview(wordListParentView)
-        wordListParentView.snp.makeConstraints { make -> Void in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(50)
-            make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
-            make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-        }
-
-        let child = wordListViewController
-        wordListParentView.addSubview(child.view)
-        addChild(child)
-        child.didMove(toParent: self)
-        wordListViewController.view.snp.makeConstraints { make -> Void in
-            make.edges.equalTo(wordListParentView)
-        }
     }
 
     private func layoutCenterLabel() {
