@@ -5,7 +5,6 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-import CoreModule
 import UIKit
 
 /// Реализация графа фичи "Список слов".

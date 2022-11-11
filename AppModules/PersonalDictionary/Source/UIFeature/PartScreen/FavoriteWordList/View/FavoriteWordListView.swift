@@ -58,19 +58,8 @@ final class FavoriteWordListView: UIViewController {
     }
 
     private func initViews() {
-        addWordListChildController()
+        layout(wordListViewController: wordListGraph.viewController)
         initCenterLabel()
-    }
-
-    private func addWordListChildController() {
-        let wordListViewController = wordListGraph.viewController
-
-        view.addSubview(wordListViewController.view)
-        addChild(wordListViewController)
-        wordListViewController.didMove(toParent: self)
-        wordListViewController.view.snp.makeConstraints { make -> Void in
-            make.edges.equalTo(view)
-        }
     }
 
     private func initCenterLabel() {

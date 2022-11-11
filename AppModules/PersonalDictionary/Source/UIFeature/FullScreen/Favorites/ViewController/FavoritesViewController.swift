@@ -39,7 +39,7 @@ final class FavoritesViewController: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.titleView = navToSearchView
         layoutHeading()
-        layout(wordListViewController: favoriteWordListViewController)
+        layout(wordListViewController: favoriteWordListViewController, topOffset: 46)
     }
 
     private func layoutHeading() {
