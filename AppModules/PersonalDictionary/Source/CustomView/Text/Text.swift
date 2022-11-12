@@ -26,6 +26,7 @@ func SecondaryText(_ text: String) -> UILabel {
     label.font = Theme.data.normalFont
     label.numberOfLines = 0
     label.textAlignment = .center
+    label.text = text
 
     return label
 }

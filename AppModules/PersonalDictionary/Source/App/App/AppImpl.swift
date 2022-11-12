@@ -21,17 +21,17 @@ final class AppImpl: App {
     /// Инициализатор:
     /// - Parameters:
     ///  - navigationController: корневой navigation controller приложения.
-    ///  - mainWordListBuilder: билдер вложенной фичи "Главный список слов".
+    ///  - mainScreenBuilder: билдер вложенной фичи "Главный экран приложения".
     ///  - pushNotificationBuilder: билдер вложенной фичи "Пуш-уведомления в приложении".
     init(dependency: AppDependency,
-         mainWordListBuilder: ViewControllerBuilder,
+         mainScreenBuilder: ViewControllerBuilder,
          pushNotificationBuilder: PushNotificationBuilder) {
         self.dependency = dependency
         let navigationController = dependency.navigationController
-        let mainWordListViewController = mainWordListBuilder.build()
+        let mainScreen = mainScreenBuilder.build()
 
         navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
-        navigationController?.setViewControllers([mainWordListViewController], animated: false)
+        navigationController?.setViewControllers([mainScreen], animated: false)
 
         rootViewController = navigationController
         pushNotificationService = pushNotificationBuilder.build()

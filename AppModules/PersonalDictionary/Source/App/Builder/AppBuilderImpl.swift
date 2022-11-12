@@ -58,7 +58,7 @@ public final class AppBuilderImpl: AppBuilder {
 
         return AppImpl(
             dependency: dependency,
-            mainWordListBuilder: MainWordListBuilderImpl(dependency: dependency),
+            mainScreenBuilder: MainScreenBuilder(dependency: dependency),
             pushNotificationBuilder: PushNotificationBuilderImpl(dependency: dependency)
         )
     }
