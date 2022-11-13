@@ -12,3 +12,5 @@ typealias BindableString = BehaviorRelay<String>
 typealias BindableSearchMode = BehaviorRelay<SearchMode>
 
 typealias BindableWordList = BehaviorRelay<[Word]>
+
+typealias BindableSearchResult = BehaviorRelay<SearchResultData>

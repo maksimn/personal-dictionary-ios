@@ -5,37 +5,24 @@
 //  Created by Maxim Ivanov on 12.11.2021.
 //
 
-import RxSwift
 import UIKit
 
 /// View controller экрана поиска по словам в словаре.
 final class SearchViewController: UIViewController, SearchTextInputListener, SearchModePickerListener {
 
-    let searchTextInputGraph: SearchTextInputGraph
-    let searchModePickerGraph: SearchModePickerGraph
-    let wordListGraph: WordListGraph
-    let searchEngine: SearchEngine
-
-    let centerLabel: UILabel
-
-    private let disposeBag = DisposeBag()
+    private let searchTextInputGraph: SearchTextInputGraph
+    private let searchModePickerGraph: SearchModePickerGraph
+    private let searchWordListGraph: SearchWordListGraph
 
     /// - Parameters:
-    ///  - noResultFoundText: текст "ничего не найдено" в результате поиска.
     ///  - searchTextInputBuilder: билдер вложенной фичи "Элемент ввода текста для поиска"
-    ///  - searchModePickerBuilder: билдер вложенной фичи "Выбор режима поиска"
-    ///  - wordListBuilder: билдер вложенной фичи "Список слов".
-    ///  - searchEngine: поисковый движок.
-    init(noResultFoundText: String,
-         searchTextInputBuilder: SearchTextInputBuilder,
+    ///  - searchModePickerBuilder: билдер вложенной фичи "Выбор режима поиска".
+    init(searchTextInputBuilder: SearchTextInputBuilder,
          searchModePickerBuilder: SearchModePickerBuilder,
-         wordListBuilder: WordListBuilder,
-         searchEngine: SearchEngine) {
-        centerLabel = SecondaryText(noResultFoundText)
+         searchWordListBuilder: SearchWordListBuilder) {
         searchTextInputGraph = searchTextInputBuilder.build()
         searchModePickerGraph = searchModePickerBuilder.build()
-        wordListGraph = wordListBuilder.build()
-        self.searchEngine = searchEngine
+        searchWordListGraph = searchWordListBuilder.build()
         super.init(nibName: nil, bundle: nil)
         initViews()
     }
@@ -61,19 +48,33 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
     // MARK: - Private
 
     private func performSearch(for searchText: String, mode: SearchMode) {
-        searchEngine.findWords(contain: searchText, mode: mode)
-            .subscribe(
-                onSuccess: { [weak self] in
-                    self?.showSearchResult(data: $0)
-                }
-            )
-            .disposed(by: disposeBag)
+        searchWordListGraph.model?.performSearch(for: searchText, mode: mode)
     }
 
-    private func showSearchResult(data: SearchResultData) {
-        guard let wordListModel = self.wordListGraph.model else { return }
+    // MARK: - View and Layout
 
-        centerLabel.isHidden = !(data.searchState == .fulfilled && data.foundWordList.count == 0)
-        wordListModel.wordList = data.foundWordList
+    private func initViews() {
+        view.backgroundColor = Theme.data.backgroundColor
+        initSearchTextInput()
+        initSearchModePicker()
+        layout(wordListViewController: searchWordListGraph.viewController, topOffset: 50)
+    }
+
+    private func initSearchTextInput() {
+        searchTextInputGraph.model?.listener = self
+        navigationItem.titleView = searchTextInputGraph.uiview
+    }
+
+    private func initSearchModePicker() {
+        searchModePickerGraph.model?.listener = self
+
+        let searchModePickerView = searchModePickerGraph.uiview
+        view.addSubview(searchModePickerView)
+        searchModePickerView.snp.makeConstraints { make -> Void in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
+            make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
+            make.height.equalTo(50)
+        }
     }
 }
