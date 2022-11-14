@@ -31,7 +31,7 @@ final class NavToSearchBuilderImpl: ViewBuilder {
     /// - Returns: представление фичи.
     func build() -> UIView {
         guard let dependency = dependency else { return UIView() }
-        let searchBuilder = SearchBuilderImpl(dependency: dependency)
+        let searchBuilder = SearchBuilder(dependency: dependency)
         let router = NavToSearchRouterImpl(
             navigationController: dependency.navigationController,
             searchBuilder: searchBuilder

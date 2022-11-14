@@ -6,7 +6,7 @@
 //
 
 /// Билдер Фичи "Поиск по словам в словаре".
-final class SearchBuilderImpl: ViewControllerBuilder {
+final class SearchBuilder: ViewControllerBuilder {
 
     private weak var dependency: RootDependency?
 
@@ -21,13 +21,9 @@ final class SearchBuilderImpl: ViewControllerBuilder {
         guard let dependency = dependency else { return UIViewController() }
 
         return SearchViewController(
-            noResultFoundText: dependency.bundle.moduleLocalizedString("No words found"),
             searchTextInputBuilder: SearchTextInputBuilderImpl(bundle: dependency.bundle),
             searchModePickerBuilder: SearchModePickerBuilderImpl(bundle: dependency.bundle),
-            wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: false, dependency: dependency),
-            searchEngine: SearchEngineImpl(
-                searchableWordList: WordListRepositoryImpl(appConfig: dependency.appConfig, bundle: dependency.bundle)
-            )
+            searchWordListBuilder: SearchWordListBuilderImpl(dependency: dependency)
         )
     }
 }
