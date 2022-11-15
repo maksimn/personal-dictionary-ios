@@ -10,11 +10,9 @@ import UIKit
 /// View controller Главного экрана.
 final class MainScreen: UIViewController {
 
-    private let mainWordListViewController: UIViewController
-
-    private let mainNavigator: MainNavigator
-
     private let heading: UILabel
+    private let mainWordListViewController: UIViewController
+    private let mainNavigator: MainNavigator
 
     /// Инициализатор.
     /// - Parameters:
@@ -39,7 +37,6 @@ final class MainScreen: UIViewController {
         view = UIView()
 
         initViews()
-        mainNavigator.appendTo(rootView: view)
     }
 
     // MARK: - Private
@@ -48,6 +45,7 @@ final class MainScreen: UIViewController {
         view.backgroundColor = Theme.data.backgroundColor
         layoutHeading()
         layout(wordListViewController: mainWordListViewController, topOffset: 46)
+        mainNavigator.appendTo(rootView: view)
     }
 
     private func layoutHeading() {

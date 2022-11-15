@@ -5,32 +5,34 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-import RxSwift
-
 final class SearchWordListModelImpl: SearchWordListModel {
 
     private let viewModelBlock: () -> SearchWordListViewModel?
     private weak var viewModel: SearchWordListViewModel?
 
-    private let searchEngine: SearchEngine
-
-    private let disposeBag = DisposeBag()
+    private let searchableWordList: SearchableWordList
 
     init(viewModelBlock: @escaping () -> SearchWordListViewModel?,
-         searchEngine: SearchEngine) {
+         searchableWordList: SearchableWordList) {
         self.viewModelBlock = viewModelBlock
-        self.searchEngine = searchEngine
+        self.searchableWordList = searchableWordList
     }
 
     func performSearch(for searchText: String, mode: SearchMode) {
-        searchEngine.findWords(contain: searchText, mode: mode)
-            .subscribe(
-                onSuccess: { [weak self] data in
-                    self?.initViewModelIfNeeded()
-                    self?.viewModel?.searchResult.accept(data)
-                }
-            )
-            .disposed(by: disposeBag)
+        let string = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+
+        initViewModelIfNeeded()
+
+        if string.isEmpty {
+            viewModel?.searchResult.accept(SearchResultData(searchState: .initial, foundWordList: []))
+            return
+        }
+
+        let filteredWordList = mode == .bySourceWord ?
+            searchableWordList.findWords(contain: string) :
+            searchableWordList.findWords(whereTranslationContains: string)
+
+        viewModel?.searchResult.accept(SearchResultData(searchState: .fulfilled, foundWordList: filteredWordList))
     }
 
     private func initViewModelIfNeeded() {

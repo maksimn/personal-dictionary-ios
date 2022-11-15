@@ -22,7 +22,7 @@ final class SearchWordListGraphImpl: SearchWordListGraph {
 
         let model = SearchWordListModelImpl(
             viewModelBlock: { viewModelLazy },
-            searchEngine: SearchEngineImpl(searchableWordList: searchableWordList)
+            searchableWordList: searchableWordList
         )
         let viewModel = SearchWordListViewModelImpl(
             initialData: SearchResultData(searchState: .initial, foundWordList: []),
