@@ -5,8 +5,6 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-import RxRelay
-
 /// Реализация модели представления списка слов.
 final class WordListViewModelImpl: WordListViewModel {
 
@@ -20,7 +18,7 @@ final class WordListViewModelImpl: WordListViewModel {
     }
 
     /// Данные модели представления.
-    let wordList = BehaviorRelay<[Word]>(value: [])
+    let wordList = BindableWordList(value: [])
 
     /// Удалить слово из модели по заданному индексу из списка
     /// - Parameters:

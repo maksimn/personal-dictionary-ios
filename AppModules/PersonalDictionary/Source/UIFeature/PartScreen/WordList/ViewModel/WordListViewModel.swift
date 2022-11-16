@@ -5,13 +5,11 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-import RxCocoa
-
 /// Модель представления списка слов.
 protocol WordListViewModel: AnyObject {
 
     /// Данные модели представления.
-    var wordList: BehaviorRelay<[Word]> { get }
+    var wordList: BindableWordList { get }
 
     /// Удалить слово из модели по заданному индексу из списка
     /// - Parameters:
