@@ -255,7 +255,7 @@ class TodoListServiceOne: TodoListService {
     }
 
     private func requestWillStart(_ requestName: String) {
-        logger.log(message: "\n\(requestName) NETWORK REQUEST START\n")
+        logger.log("\n\(requestName) NETWORK REQUEST START\n", .debug)
         httpRequestCounterPublisher.increment()
     }
 
@@ -263,10 +263,9 @@ class TodoListServiceOne: TodoListService {
         httpRequestCounterPublisher.decrement()
 
         if let error = error {
-            logger.log(message: "\n\(requestName) NETWORK REQUEST ERROR\n")
-            logger.log(error: error)
+            logger.log("\n\(requestName) NETWORK REQUEST ERROR\n\("\(error)")\n", .error)
         } else {
-            logger.log(message: "\n\(requestName) NETWORK REQUEST SUCCESS\n")
+            logger.log("\n\(requestName) NETWORK REQUEST SUCCESS\n", .debug)
         }
     }
 
