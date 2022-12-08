@@ -5,25 +5,26 @@
 //  Created by Maxim Ivanov on 07.10.2021.
 //
 
+import os
+
+typealias LoggerApi = os.Logger
+
 public final class LoggerImpl: Logger {
 
     private let isLoggingEnabled: Bool
+    private let loggerApi: LoggerApi
 
-    public init(isLoggingEnabled: Bool) {
+    public init(
+        isLoggingEnabled: Bool,
+        category: String
+    ) {
         self.isLoggingEnabled = isLoggingEnabled
+        loggerApi = LoggerApi(subsystem: "General", category: category)
     }
 
-    public func log(message: String) {
+    public func log(_ message: String, _ level: OSLogType) {
         guard isLoggingEnabled else { return }
 
-        print("\n******************\n\(message)\n******************\n")
-    }
-
-    public func log(error: Error) {
-        guard isLoggingEnabled else { return }
-
-        print("\n!*!*!*!*!*!*!*!*!*!\nError happened during the app execution:")
-        print(error)
-        print("!*!*!*!*!*!*!*!*!*!\n")
+        loggerApi.log(level: level, "\(message)")
     }
 }

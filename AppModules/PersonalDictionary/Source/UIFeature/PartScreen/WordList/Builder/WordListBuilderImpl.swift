@@ -55,7 +55,10 @@ final class WordListBuilderImpl: WordListBuilder {
             ),
             httpClient: HttpClientImpl(sessionConfiguration: URLSessionConfiguration.default),
             jsonCoder: JSONCoderImpl(),
-            logger: LoggerImpl(isLoggingEnabled: dependency.appConfig.isLoggingEnabled)
+            logger: LoggerImpl(
+                isLoggingEnabled: dependency.appConfig.isLoggingEnabled,
+                category: "PersonalDictionary.WordList"
+            )
         )
 
         return WordListGraphImpl(

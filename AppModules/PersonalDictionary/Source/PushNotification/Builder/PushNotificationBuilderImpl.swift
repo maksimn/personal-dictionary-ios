@@ -43,7 +43,10 @@ final class PushNotificationBuilderImpl: PushNotificationBuilder {
                 navigationController: dependency?.navigationController,
                 newWordBuilder: NewWordBuilderImpl(bundle: bundle, langRepository: langRepository)
             ),
-            logger: LoggerImpl(isLoggingEnabled: appConfig.isLoggingEnabled)
+            logger: LoggerImpl(
+                isLoggingEnabled: appConfig.isLoggingEnabled,
+                category: "PersonalDictionary.PushNotification"
+            )
         )
     }
 }

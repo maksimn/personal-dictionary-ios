@@ -8,9 +8,7 @@
 extension UIViewController {
 
     func layout(wordListViewController: UIViewController, topOffset: CGFloat = 0) {
-        view.addSubview(wordListViewController.view)
-        addChild(wordListViewController)
-        wordListViewController.didMove(toParent: self)
+        add(childViewController: wordListViewController)
 
         if topOffset == 0 {
             wordListViewController.view.snp.makeConstraints { make -> Void in

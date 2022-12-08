@@ -39,7 +39,7 @@ final class WordListRepositoryImpl: WordListRepository {
             container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
 
             if let error = error {
-                self.logger.log(error: error)
+                self.logger.log("\(error)", .error)
             }
         })
         return container
@@ -75,7 +75,10 @@ final class WordListRepositoryImpl: WordListRepository {
                 userDefaults: UserDefaults.standard,
                 data: appConfig.langData
             ),
-            logger: LoggerImpl(isLoggingEnabled: appConfig.isLoggingEnabled)
+            logger: LoggerImpl(
+                isLoggingEnabled: appConfig.isLoggingEnabled,
+                category: "PersonalDictionary.WordListRepository"
+            )
         )
     }
 
@@ -107,7 +110,7 @@ final class WordListRepositoryImpl: WordListRepository {
                         completable(.completed)
                     }
                 } catch {
-                    self?.logger.log(error: error)
+                    self?.logger.log("\(error)", .error)
                     DispatchQueue.main.async {
                         completable(.error(error))
                     }
@@ -144,7 +147,7 @@ final class WordListRepositoryImpl: WordListRepository {
                         completable(.completed)
                     }
                 } catch {
-                    self?.logger.log(error: error)
+                    self?.logger.log("\(error)", .error)
                     DispatchQueue.main.async {
                         completable(.error(error))
                     }
@@ -180,7 +183,7 @@ final class WordListRepositoryImpl: WordListRepository {
                         completable(.completed)
                     }
                 } catch {
-                    self?.logger.log(error: error)
+                    self?.logger.log("\(error)", .error)
                     DispatchQueue.main.async {
                         completable(.error(error))
                     }
@@ -226,7 +229,7 @@ final class WordListRepositoryImpl: WordListRepository {
 
             return wordMOList.compactMap { $0.convert(using: langRepository) }
         } catch {
-            logger.log(error: error)
+            logger.log("\(error)", .error)
             return []
         }
     }

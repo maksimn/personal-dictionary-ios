@@ -54,7 +54,8 @@ final class PonsTranslationService: TranslationService {
         let qParam = "q=\(word.text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
         let lParam = "l=\(shortSourceLang)\(word.targetLang.shortName.lowercased())"
 
-        logger.log(message: "\(fetchTranslationRequestName) NETWORK REQUEST START")
+        logger.log("\(fetchTranslationRequestName) NETWORK REQUEST START", .debug)
+
         return httpClient
             .send(
                 Http(
@@ -69,7 +70,7 @@ final class PonsTranslationService: TranslationService {
             }
             .asObservable().concat().asSingle()
             .map { [weak self] ponsResponseArray in
-                self?.logger.log(message: "\(fetchTranslationRequestName) NETWORK REQUEST SUCCESS")
+                self?.logger.log("\(fetchTranslationRequestName) NETWORK REQUEST SUCCESS", .debug)
 
                 return ponsResponseArray.first?.translation ?? ""
             }
