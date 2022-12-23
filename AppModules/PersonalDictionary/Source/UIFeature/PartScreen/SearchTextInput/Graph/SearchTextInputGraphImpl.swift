@@ -13,19 +13,16 @@ final class SearchTextInputGraphImpl: SearchTextInputGraph {
     private let view: SearchTextInputView
 
     /// Модель фичи.
-    private(set) weak var model: SearchTextInputModel?
+    private(set) weak var viewModel: SearchTextInputViewModel?
 
     /// Инициализатор.
     /// - Parameters:
     ///  - viewParams: параметры представления.
     init(viewParams: SearchTextInputViewParams) {
-        let model = SearchTextInputModelImpl()
-        let viewModel = SearchTextInputViewModelImpl(model: model)
+        let viewModel = SearchTextInputViewModelImpl()
         view = SearchTextInputView(params: viewParams, viewModel: viewModel)
-
-        model.viewModel = viewModel
         
-        self.model = model
+        self.viewModel = viewModel
     }
 
     /// Представление фичи.

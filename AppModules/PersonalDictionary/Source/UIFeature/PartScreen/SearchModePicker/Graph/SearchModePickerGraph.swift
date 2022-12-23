@@ -13,6 +13,6 @@ protocol SearchModePickerGraph {
     /// Представление фичи.
     var uiview: UIView { get }
 
-    /// Модель фичи.
-    var model: SearchModePickerModel? { get }
+    /// Модель представления фичи.
+    var viewModel: SearchModePickerViewModel? { get }
 }
