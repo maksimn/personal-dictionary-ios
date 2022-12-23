@@ -14,5 +14,5 @@ protocol SearchTextInputGraph {
     var uiview: UIView { get }
 
     /// Модель фичи.
-    var model: SearchTextInputModel? { get }
+    var viewModel: SearchTextInputViewModel? { get }
 }

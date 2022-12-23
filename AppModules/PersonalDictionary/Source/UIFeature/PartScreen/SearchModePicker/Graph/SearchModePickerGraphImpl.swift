@@ -13,8 +13,8 @@ final class SearchModePickerGraphImpl: SearchModePickerGraph {
     /// Представление выбора режима поиска.
     let uiview: UIView
 
-    /// Модель выбора режима поиска.
-    private(set) weak var model: SearchModePickerModel?
+    /// Модель представления выбора режима поиска.
+    private(set) weak var viewModel: SearchModePickerViewModel?
 
     /// Инициализатор.
     /// - Parameters:
@@ -22,13 +22,10 @@ final class SearchModePickerGraphImpl: SearchModePickerGraph {
     ///  - viewParams: параметры представления.
     init(searchMode: SearchMode,
          viewParams: SearchModePickerViewParams) {
-        let model = SearchModePickerModelImpl()
-        let viewModel = SearchModePickerViewModelImpl(model: model, searchMode: searchMode)
+        let viewModel = SearchModePickerViewModelImpl(searchMode: searchMode)
         let view = SearchModePickerView(params: viewParams, viewModel: viewModel)
 
-        model.viewModel = viewModel
-
         uiview = view
-        self.model = model
+        self.viewModel = viewModel
     }
 }

@@ -5,14 +5,17 @@
 //  Created by Maxim Ivanov on 12.11.2021.
 //
 
+import RxSwift
 import UIKit
 
 /// View controller экрана поиска по словам в словаре.
-final class SearchViewController: UIViewController, SearchTextInputListener, SearchModePickerListener {
+final class SearchViewController: UIViewController {
 
     private let searchTextInputGraph: SearchTextInputGraph
     private let searchModePickerGraph: SearchModePickerGraph
     private let searchWordListGraph: SearchWordListGraph
+
+    private let disposeBag = DisposeBag()
 
     /// - Parameters:
     ///  - searchTextInputBuilder: билдер вложенной фичи "Элемент ввода текста для поиска"
@@ -31,21 +34,17 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - SearchTextInputListener
-
-    func onSearchTextChanged(_ searchText: String) {
-        guard let searchMode = searchModePickerGraph.model?.searchMode else { return }
-        performSearch(for: searchText, mode: searchMode)
-    }
-
-    // MARK: - SearchModePickerListener
-
-    func onSearchModeChanged(_ searchMode: SearchMode) {
-        guard let searchText = searchTextInputGraph.model?.searchText else { return }
-        performSearch(for: searchText, mode: searchMode)
-    }
-
     // MARK: - Private
+
+    private func onSearchTextChanged(_ searchText: String) {
+        guard let searchMode = searchModePickerGraph.viewModel?.searchMode.value else { return }
+        performSearch(for: searchText, mode: searchMode)
+    }
+
+    private func onSearchModeChanged(_ searchMode: SearchMode) {
+        guard let searchText = searchTextInputGraph.viewModel?.searchText.value else { return }
+        performSearch(for: searchText, mode: searchMode)
+    }
 
     private func performSearch(for searchText: String, mode: SearchMode) {
         searchWordListGraph.model?.performSearch(for: searchText, mode: mode)
@@ -61,12 +60,16 @@ final class SearchViewController: UIViewController, SearchTextInputListener, Sea
     }
 
     private func initSearchTextInput() {
-        searchTextInputGraph.model?.listener = self
         navigationItem.titleView = searchTextInputGraph.uiview
+        searchTextInputGraph.viewModel?.searchText.subscribe(onNext: { [weak self] text in
+            self?.onSearchTextChanged(text)
+        }).disposed(by: disposeBag)
     }
 
     private func initSearchModePicker() {
-        searchModePickerGraph.model?.listener = self
+        searchModePickerGraph.viewModel?.searchMode.subscribe(onNext: { [weak self] searchMode in
+            self?.onSearchModeChanged(searchMode)
+        }).disposed(by: disposeBag)
 
         let searchModePickerView = searchModePickerGraph.uiview
         view.addSubview(searchModePickerView)
