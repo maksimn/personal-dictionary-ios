@@ -6,6 +6,6 @@
 //
 
 /// Реализация модели представления элемента ввода поискового текста.
-final class SearchInputInteractorImpl: SearchInputInteractor {
+final class SearchInputModelImpl: SearchInputModel {
 
 }

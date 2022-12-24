@@ -12,4 +12,6 @@ protocol SearchInputGraph {
     var navBarView: UIView { get }
 
     var view: UIView { get }
+
+    var model: SearchInputModel { get }
 }

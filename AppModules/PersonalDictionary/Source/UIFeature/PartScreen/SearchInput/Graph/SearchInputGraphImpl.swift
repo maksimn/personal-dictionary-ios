@@ -13,6 +13,8 @@ final class SearchInputGraphImpl: SearchInputGraph {
 
     let view: UIView
 
+    let model: SearchInputModel
+
     init(
         searchTextInputBuilder: SearchTextInputBuilder,
         searchModePickerBuilder: SearchModePickerBuilder
@@ -20,7 +22,13 @@ final class SearchInputGraphImpl: SearchInputGraph {
         let searchTextInputGraph = searchTextInputBuilder.build()
         let searchModePickerGraph = searchModePickerBuilder.build()
 
+        let searchInputModel = SearchInputModelImpl()
+
+        searchTextInputGraph.viewModel.listener = searchInputModel
+        searchModePickerGraph.viewModel.listener = searchInputModel
+
         navBarView = searchTextInputGraph.uiview
         view = searchModePickerGraph.uiview
+        model = searchInputModel
     }
 }
