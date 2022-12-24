@@ -19,14 +19,10 @@ final class FavoritesBuilderImpl: ViewControllerBuilder {
     ///  - View controller экрана.
     func build() -> UIViewController {
         guard let dependency = dependency else { return UIViewController() }
-        let bundle = dependency.bundle
-        let navToSearchBuilder = NavToSearchBuilderImpl(
-            width: .smaller,
-            dependency: dependency
-        )
+        let navToSearchBuilder = NavToSearchBuilderImpl(width: .smaller, dependency: dependency)
 
         return FavoritesViewController(
-            headingText: bundle.moduleLocalizedString("Favorite words"),
+            headingText: dependency.bundle.moduleLocalizedString("Favorite words"),
             navToSearchBuilder: navToSearchBuilder,
             favoriteWordListBuilder: FavoriteWordListBuilderImpl(dependency: dependency)
         )

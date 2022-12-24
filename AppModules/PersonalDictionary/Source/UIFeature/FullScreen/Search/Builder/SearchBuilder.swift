@@ -19,11 +19,29 @@ final class SearchBuilder: ViewControllerBuilder {
     ///  - View controller экрана поиска по словам в словаре.
     func build() -> UIViewController {
         guard let dependency = dependency else { return UIViewController() }
+        let searchTextInputBuilder = SearchTextInputBuilderImpl(bundle: dependency.bundle)
+        let searchModePickerBuilder = SearchModePickerBuilderImpl(bundle: dependency.bundle)
+        let searchWordListBuilder = SearchWordListBuilderImpl(dependency: dependency)
+
+        let searchTextInputGraph = searchTextInputBuilder.build()
+        let searchModePickerGraph = searchModePickerBuilder.build()
+        let searchWordListGraph = searchWordListBuilder.build()
+
+        _ = searchTextInputGraph.viewModel?.searchText.subscribe(onNext: { searchText in
+            guard let searchMode = searchModePickerGraph.viewModel?.searchMode.value else { return }
+
+            searchWordListGraph.model?.performSearch(for: searchText, mode: searchMode)
+        })
+        _ = searchModePickerGraph.viewModel?.searchMode.subscribe(onNext: { searchMode in
+            guard let searchText = searchTextInputGraph.viewModel?.searchText.value else { return }
+
+            searchWordListGraph.model?.performSearch(for: searchText, mode: searchMode)
+        })
 
         return SearchViewController(
-            searchTextInputBuilder: SearchTextInputBuilderImpl(bundle: dependency.bundle),
-            searchModePickerBuilder: SearchModePickerBuilderImpl(bundle: dependency.bundle),
-            searchWordListBuilder: SearchWordListBuilderImpl(dependency: dependency)
+            searchTextInputView: searchTextInputGraph.uiview,
+            searchModePickerView: searchModePickerGraph.uiview,
+            searchWordListViewController: searchWordListGraph.viewController
         )
     }
 }
