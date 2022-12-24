@@ -9,4 +9,7 @@ import UIKit
 
 protocol SearchInputGraph {
 
+    var navBarView: UIView { get }
+
+    var view: UIView { get }
 }

@@ -21,6 +21,9 @@ final class SearchInputBuilderImpl: SearchInputBuilder {
     /// - Returns:
     ///  - граф фичи.
     func build() -> SearchInputGraph {
-        SearchInputGraphImpl()
+        SearchInputGraphImpl(
+            searchTextInputBuilder: SearchTextInputBuilderImpl(bundle: bundle),
+            searchModePickerBuilder: SearchModePickerBuilderImpl(bundle: bundle)
+        )
     }
 }
