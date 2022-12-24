@@ -25,6 +25,8 @@ final class SearchBuilder: ViewControllerBuilder {
         let searchInputGraph = searchInputBuilder.build()
         let searchWordListGraph = searchWordListBuilder.build()
 
+        searchInputGraph.model.listener = searchWordListGraph.model
+
         return SearchViewController(
             searchTextInputView: searchInputGraph.navBarView,
             searchModePickerView: searchInputGraph.view,

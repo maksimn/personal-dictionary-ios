@@ -5,7 +5,7 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-final class SearchWordListModelImpl: SearchWordListModel {
+final class SearchWordListModelImpl: SearchWordListModel, SearchInputListener {
 
     private let viewModelBlock: () -> SearchWordListViewModel?
     private weak var viewModel: SearchWordListViewModel?
@@ -18,7 +18,11 @@ final class SearchWordListModelImpl: SearchWordListModel {
         self.searchableWordList = searchableWordList
     }
 
-    func performSearch(for searchText: String, mode: SearchMode) {
+    func onSeachInputChanged(_ data: SearchInputData) {
+        performSearch(for: data.text, mode: data.mode)
+    }
+
+    private func performSearch(for searchText: String, mode: SearchMode) {
         let string = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
 
         initViewModelIfNeeded()

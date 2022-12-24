@@ -11,6 +11,8 @@ final class SearchModePickerViewModelImpl: SearchModePickerViewModel {
     /// Режим поиска (данные модели представления).
     let searchMode: BindableSearchMode
 
+    weak var listener: SearchModePickerListener?
+
     init(searchMode: SearchMode) {
         self.searchMode = BindableSearchMode(value: searchMode)
     }

@@ -24,8 +24,8 @@ final class SearchInputGraphImpl: SearchInputGraph {
 
         let searchInputModel = SearchInputModelImpl()
 
-        searchTextInputGraph.viewModel.listener = searchInputModel
-        searchModePickerGraph.viewModel.listener = searchInputModel
+        searchTextInputGraph.viewModel?.listener = searchInputModel
+        searchModePickerGraph.viewModel?.listener = searchInputModel
 
         navBarView = searchTextInputGraph.uiview
         view = searchModePickerGraph.uiview

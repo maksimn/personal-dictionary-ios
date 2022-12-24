@@ -10,4 +10,6 @@ final class SearchTextInputViewModelImpl: SearchTextInputViewModel {
 
     /// Поисковый текст для представления
     let searchText = BindableString(value: "")
+
+    weak var listener: SearchTextInputListener?
 }

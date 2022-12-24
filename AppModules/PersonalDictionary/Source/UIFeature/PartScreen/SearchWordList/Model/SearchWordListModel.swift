@@ -21,7 +21,4 @@ struct SearchResultData {
     let foundWordList: [Word]
 }
 
-protocol SearchWordListModel: AnyObject {
-
-    func performSearch(for searchText: String, mode: SearchMode)
-}
+protocol SearchWordListModel: SearchInputListener { }
