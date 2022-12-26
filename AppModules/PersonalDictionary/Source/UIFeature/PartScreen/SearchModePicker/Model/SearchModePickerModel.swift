@@ -11,9 +11,8 @@ enum SearchMode {
     case byTranslation /* по переводу слова */
 }
 
-/// Модель представления выбора режима поиска.
-protocol SearchModePickerViewModel: AnyObject {
+/// Модель выбора режима поиска.
+protocol SearchModePickerModel {
 
-    /// Режим поиска (данные модели представления).
-    var searchMode: BindableSearchMode { get }
+    func set(searchMode: SearchMode)
 }

@@ -21,9 +21,9 @@ final class SearchBuilder: ViewControllerBuilder {
         guard let dependency = dependency else { return UIViewController() }
 
         return SearchViewController(
-            searchTextInputBuilder: SearchTextInputBuilderImpl(bundle: dependency.bundle),
-            searchModePickerBuilder: SearchModePickerBuilderImpl(bundle: dependency.bundle),
-            searchWordListBuilder: SearchWordListBuilderImpl(dependency: dependency)
+            searchTextInputBuilder: SearchTextInputBuilder(bundle: dependency.bundle),
+            searchModePickerBuilder: SearchModePickerBuilder(bundle: dependency.bundle),
+            searchWordListBuilder: SearchWordListBuilder(dependency: dependency)
         )
     }
 }

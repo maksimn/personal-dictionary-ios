@@ -9,10 +9,9 @@ final class SearchWordListViewModelImpl: SearchWordListViewModel {
 
     let searchResult: BindableSearchResult
 
-    private let model: SearchWordListModel
+    private let model: Model
 
-    init(initialData: SearchResultData,
-         model: SearchWordListModel) {
+    init(initialData: SearchResultData, model: Model) {
         searchResult = BindableSearchResult(value: initialData)
         self.model = model
     }
