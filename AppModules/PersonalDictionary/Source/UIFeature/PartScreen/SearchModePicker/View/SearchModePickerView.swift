@@ -12,49 +12,36 @@ import UIKit
 final class SearchModePickerView: UIView {
 
     private let params: SearchModePickerViewParams
-    private let viewModel: SearchModePickerViewModel
+    private let model: SearchModePickerModel
 
     private let searchByLabel = UILabel()
-    private var searchBySegmentedControl: UISegmentedControl?
+    private lazy var searchBySegmentedControl = UISegmentedControl(
+        items: [params.sourceWordText, params.translationText]
+    )
+
     private let disposeBag = DisposeBag()
 
     /// Инициализатор.
     /// - Parameters:
     ///  - params: параметры представления.
-    ///  - viewModel: Модель представления выбора режима поиска.
     init(params: SearchModePickerViewParams,
-         viewModel: SearchModePickerViewModel) {
+         model: SearchModePickerModel) {
         self.params = params
-        self.viewModel = viewModel
+        self.model = model
         super.init(frame: .zero)
         initViews()
-        bindToViewModel()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func bindToViewModel() {
-        viewModel.searchMode.subscribe(onNext: { [weak self] searchMode in
-            switch searchMode {
-            case .bySourceWord:
-                self?.searchBySegmentedControl?.selectedSegmentIndex = 0
-            case .byTranslation:
-                self?.searchBySegmentedControl?.selectedSegmentIndex = 1
-            }
-        }).disposed(by: disposeBag)
-    }
-
-    @objc
-    private func onSearchByValueChanged() {
-        guard let selectedIndex = searchBySegmentedControl?.selectedSegmentIndex else { return }
-
-        switch selectedIndex {
+    private func onSearchByValueChanged(_ value: Int) {
+        switch value {
         case 0:
-            viewModel.searchMode.accept(.bySourceWord)
+            model.set(searchMode: .bySourceWord)
         case 1:
-            viewModel.searchMode.accept(.byTranslation)
+            model.set(searchMode: .byTranslation)
         default:
             break
         }
@@ -79,11 +66,12 @@ final class SearchModePickerView: UIView {
     }
 
     private func initSearchBySegmentedControl() {
-        searchBySegmentedControl = UISegmentedControl(items: [params.sourceWordText, params.translationText])
-        searchBySegmentedControl?.selectedSegmentIndex = 0
-        searchBySegmentedControl?.addTarget(self, action: #selector(onSearchByValueChanged), for: .valueChanged)
-        addSubview(searchBySegmentedControl ?? UIView())
-        searchBySegmentedControl?.snp.makeConstraints { make -> Void in
+        searchBySegmentedControl.selectedSegmentIndex = 0
+        searchBySegmentedControl.rx.value.subscribe(onNext: { [weak self] value in
+            self?.onSearchByValueChanged(value)
+        }).disposed(by: disposeBag)
+        addSubview(searchBySegmentedControl)
+        searchBySegmentedControl.snp.makeConstraints { make -> Void in
             make.top.equalTo(self.snp.top).offset(10.5)
             make.right.equalTo(self.snp.right).offset(-22)
         }
