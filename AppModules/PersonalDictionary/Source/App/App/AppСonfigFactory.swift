@@ -34,7 +34,6 @@ struct AppConfigFactory {
         AppConfig(
             langData: createLangData(),
             ponsApiSecret: "",
-            isLoggingEnabled: isLoggingEnabled,
             everydayPNTime: AppConfig.EverydayPNTime(hh: 19, mm: 30)
         )
     }

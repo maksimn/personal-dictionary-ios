@@ -14,9 +14,6 @@ struct AppConfig {
     /// Ключ для запросов к Pons API для выполнения перевода слов
     let ponsApiSecret: String
 
-    /// Флаг вкл/выкл логирование в приложении
-    let isLoggingEnabled: Bool
-
     /// Время ежедневного пуш-уведомления
     let everydayPNTime: EverydayPNTime
 
