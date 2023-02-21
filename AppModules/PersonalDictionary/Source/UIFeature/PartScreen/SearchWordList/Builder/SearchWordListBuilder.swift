@@ -19,7 +19,7 @@ final class SearchWordListBuilder: ViewControllerBuilder {
 
         let wordListBuilder = WordListBuilderImpl(shouldAnimateWhenAppear: false, dependency: dependency)
         let searchableWordList = WordListRepositoryImpl(appConfig: dependency.appConfig, bundle: dependency.bundle)
-        let noResultFoundText = dependency.bundle.moduleLocalizedString("No words found")
+        let noResultFoundText = dependency.bundle.moduleLocalizedString("MLS_NO_WORDS_FOUND")
 
         weak var viewModelLazy: SearchWordListViewModel?
 

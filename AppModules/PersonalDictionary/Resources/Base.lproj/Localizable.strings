@@ -5,3 +5,22 @@
   Created by Maxim Ivanov on 05.10.2021.
   
 */
+
+"MLS_ADD_NEW_WORD_SUGGESTION" = "It's time to add a new word to the dictionary.";
+"MLS_ADVICE" = "Advice";
+"MLS_ENGLISH" = "English";
+"MLS_ENTER_NEW_WORD" = "Enter a new word";
+"MLS_FAVORITE_WORDS" = "Favorite words";
+"MLS_GERMAN" = "German";
+"MLS_ITALIAN" = "Italian";
+"MLS_MY_DICTIONARY" = "My dictionary";
+"MLS_MY_TODOS" = "My todos";
+"MLS_NO_FAVORITE_WORDS" = "No favorite words";
+"MLS_NO_WORDS_FOUND" = "No words found";
+"MLS_OK" = "OK";
+"MLS_RUSSIAN" = "Russian";
+"MLS_SEARCH_BY" = "Search by:";
+"MLS_SEARCH_TEXT_PLACEHOLDER" = "Enter a word for searching";
+"MLS_SELECT" = "Select";
+"MLS_SOURCE_WORD" = "source word";
+"MLS_TRANSLATION" = "translation";

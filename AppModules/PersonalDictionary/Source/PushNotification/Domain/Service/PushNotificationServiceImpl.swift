@@ -9,26 +9,41 @@ import CoreModule
 import UIKit
 import UserNotifications
 
+struct PushNotificationData {
+    let title: String
+    let body: String
+}
+
 /// Реализация службы для работы с пуш-уведомлениями.
 final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUserNotificationCenterDelegate {
 
     private let userNotificationCenter: UNUserNotificationCenter
     private let application: UIApplication
     private let pnTimeCalculator: PNTimeCalculator
-    private let pnContent: PNContent
+    private let pushNotificationData: PushNotificationData
     private let navToNewWordRouter: CoreRouter
     private let logger: Logger
+
+    private lazy var content = {
+        let notificationContent = UNMutableNotificationContent()
+
+        notificationContent.title = pushNotificationData.title
+        notificationContent.body = pushNotificationData.body
+        notificationContent.sound = .default
+
+        return notificationContent
+    }()
 
     init(userNotificationCenter: UNUserNotificationCenter,
          application: UIApplication,
          pnTimeCalculator: PNTimeCalculator,
-         pnContent: PNContent,
+         pushNotificationData: PushNotificationData,
          navToNewWordRouter: CoreRouter,
          logger: Logger) {
         self.userNotificationCenter = userNotificationCenter
         self.application = application
         self.pnTimeCalculator = pnTimeCalculator
-        self.pnContent = pnContent
+        self.pushNotificationData = pushNotificationData
         self.navToNewWordRouter = navToNewWordRouter
         self.logger = logger
         super.init()
@@ -40,10 +55,10 @@ final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUs
     public func schedule() {
         let notificationRequest = UNNotificationRequest(
             identifier: "PersonalDictionaryNotificationId",
-            content: pnContent.get,
+            content: content,
             trigger: UNCalendarNotificationTrigger(
                 dateMatching: pnTimeCalculator.calculate(forDate: Date()),
-                repeats: false
+                repeats: true
             )
         )
 

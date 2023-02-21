@@ -23,7 +23,7 @@ final class MainScreenBuilder: ViewControllerBuilder {
         guard let dependency = dependency else { return UIViewController() }
 
         return MainScreen(
-            heading: dependency.bundle.moduleLocalizedString("My dictionary"),
+            heading: dependency.bundle.moduleLocalizedString("MLS_MY_DICTIONARY"),
             mainWordListBuilder: MainWordListBuilder(dependency: dependency),
             mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: dependency)
         )

@@ -26,9 +26,7 @@ final class WordListBuilderImpl: WordListBuilder {
     /// - Returns:
     ///  - граф фичи.
     func build() -> WordListGraph {
-        guard let dependency = dependency else {
-            return Empty()
-        }
+        guard let dependency = dependency else { return Empty() }
         let viewParams = WordListViewParams(
             itemHeight: WordTableViewCell.height,
             cellClass: WordTableViewCell.self,
@@ -48,13 +46,8 @@ final class WordListBuilderImpl: WordListBuilder {
             )
         )
         let translationService = PonsTranslationService(
-            apiData: PonsApiData(
-                url: "https://api.pons.com/v1/dictionary",
-                secretHeaderKey: "X-Secret",
-                secret: dependency.appConfig.ponsApiSecret
-            ),
+            secret: dependency.appConfig.ponsApiSecret,
             httpClient: HttpClientImpl(sessionConfiguration: URLSessionConfiguration.default),
-            jsonCoder: JSONCoderImpl(),
             logger: LoggerImpl(category: "PersonalDictionary.WordList")
         )
 
