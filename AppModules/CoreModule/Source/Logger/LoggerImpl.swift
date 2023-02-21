@@ -11,20 +11,13 @@ typealias LoggerApi = os.Logger
 
 public final class LoggerImpl: Logger {
 
-    private let isLoggingEnabled: Bool
     private let loggerApi: LoggerApi
 
-    public init(
-        isLoggingEnabled: Bool,
-        category: String
-    ) {
-        self.isLoggingEnabled = isLoggingEnabled
+    public init(category: String) {
         loggerApi = LoggerApi(subsystem: "General", category: category)
     }
 
     public func log(_ message: String, _ level: OSLogType) {
-        guard isLoggingEnabled else { return }
-
         loggerApi.log(level: level, "\(message)")
     }
 }

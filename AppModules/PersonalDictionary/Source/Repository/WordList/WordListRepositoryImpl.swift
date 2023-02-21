@@ -75,10 +75,7 @@ final class WordListRepositoryImpl: WordListRepository {
                 userDefaults: UserDefaults.standard,
                 data: appConfig.langData
             ),
-            logger: LoggerImpl(
-                isLoggingEnabled: appConfig.isLoggingEnabled,
-                category: "PersonalDictionary.WordListRepository"
-            )
+            logger: LoggerImpl(category: "PersonalDictionary.WordListRepository")
         )
     }
 
