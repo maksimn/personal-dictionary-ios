@@ -8,7 +8,7 @@
 /// Реализация билдера фичи "Избранное".
 final class FavoritesBuilderImpl: ViewControllerBuilder {
 
-    private weak var dependency: AppDependency?
+    private let dependency: AppDependency
 
     init(dependency: AppDependency) {
         self.dependency = dependency
@@ -18,7 +18,6 @@ final class FavoritesBuilderImpl: ViewControllerBuilder {
     /// - Returns:
     ///  - View controller экрана.
     func build() -> UIViewController {
-        guard let dependency = dependency else { return UIViewController() }
         let bundle = dependency.bundle
         let navToSearchBuilder = NavToSearchBuilderImpl(
             width: .smaller,

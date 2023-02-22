@@ -10,7 +10,7 @@ import UIKit
 /// Реализация билдера фичи "Главный (основной) список слов" Личного словаря.
 final class MainWordListBuilder: ViewControllerBuilder {
 
-    private weak var dependency: RootDependency?
+    private let dependency: RootDependency
 
     init(dependency: RootDependency) {
         self.dependency = dependency
@@ -20,8 +20,6 @@ final class MainWordListBuilder: ViewControllerBuilder {
     /// - Returns:
     ///  - Экран "Главного (основного) списка слов".
     func build() -> UIViewController {
-        guard let dependency = dependency else { return UIViewController() }
-
         let wordListFetcher = WordListRepositoryImpl(appConfig: dependency.appConfig, bundle: dependency.bundle)
         let viewModel = MainWordListViewModelImpl(wordListFetcher: wordListFetcher)
         let view = MainWordListViewController(

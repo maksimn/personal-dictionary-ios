@@ -8,15 +8,13 @@
 /// Реализация билдера фичи "Поиск по списку слов".
 final class SearchWordListBuilder: ViewControllerBuilder {
 
-    private weak var dependency: RootDependency?
+    private let dependency: RootDependency
 
     init(dependency: RootDependency) {
         self.dependency = dependency
     }
 
     func build() -> UIViewController {
-        guard let dependency = dependency else { return UIViewController() }
-
         let wordListBuilder = WordListBuilderImpl(shouldAnimateWhenAppear: false, dependency: dependency)
         let searchableWordList = WordListRepositoryImpl(appConfig: dependency.appConfig, bundle: dependency.bundle)
         let noResultFoundText = dependency.bundle.moduleLocalizedString("MLS_NO_WORDS_FOUND")

@@ -9,14 +9,13 @@ import UIKit
 
 final class FavoriteWordListBuilderImpl: ViewControllerBuilder {
 
-    private weak var dependency: RootDependency?
+    private let dependency: RootDependency
 
     init(dependency: RootDependency) {
         self.dependency = dependency
     }
 
     func build() -> UIViewController {
-        guard let dependency = dependency else { return UIViewController() }
         let bundle = dependency.bundle
         weak var viewModelLazy: FavoriteWordListViewModel?
 

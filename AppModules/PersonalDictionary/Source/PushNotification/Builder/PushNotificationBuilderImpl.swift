@@ -12,7 +12,7 @@ import UserNotifications
 /// Реализация билдера фичи "Пуш-уведомления в приложении".
 final class PushNotificationBuilderImpl: PushNotificationBuilder {
 
-    private weak var dependency: AppDependency?
+    private let dependency: AppDependency
 
     init(dependency: AppDependency) {
         self.dependency = dependency
@@ -22,10 +22,8 @@ final class PushNotificationBuilderImpl: PushNotificationBuilder {
     /// - Returns:
     ///  -  объект службы для работы с пуш-уведомлениями.
     func build() -> PushNotificationService {
-        guard let appConfig = dependency?.appConfig,
-              let bundle = dependency?.bundle else {
-            return EmptyService()
-        }
+        let appConfig = dependency.appConfig
+        let bundle = dependency.bundle
 
         return PushNotificationServiceImpl(
             userNotificationCenter: UNUserNotificationCenter.current(),
@@ -59,12 +57,8 @@ final class PushNotificationBuilderImpl: PushNotificationBuilder {
         let newWordBuilder = NewWordBuilderImpl(bundle: bundle, langRepository: langRepository)
 
         return NavToNewWordRouter(
-            navigationController: dependency?.navigationController,
+            navigationController: dependency.navigationController,
             newWordBuilder: newWordBuilder
         )
-    }
-
-    private struct EmptyService: PushNotificationService {
-        func schedule() { }
     }
 }

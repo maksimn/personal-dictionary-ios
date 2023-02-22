@@ -12,9 +12,11 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-    private let appBuilder = PersonalDictionary.AppBuilderImpl()
+    private lazy var app = {
+        let appBuilder = PersonalDictionary.AppBuilderImpl()
 
-    private(set) lazy var app = appBuilder.build()
+        return appBuilder.build()
+    }()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
