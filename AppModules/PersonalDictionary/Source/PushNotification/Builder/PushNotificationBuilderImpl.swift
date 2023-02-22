@@ -23,32 +23,48 @@ final class PushNotificationBuilderImpl: PushNotificationBuilder {
     ///  -  объект службы для работы с пуш-уведомлениями.
     func build() -> PushNotificationService {
         guard let appConfig = dependency?.appConfig,
-              let bundle = dependency?.bundle else { return EmptyService() }
-        let langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard, data: appConfig.langData)
-        let everydayPNTime = appConfig.everydayPNTime
+              let bundle = dependency?.bundle else {
+            return EmptyService()
+        }
 
         return PushNotificationServiceImpl(
             userNotificationCenter: UNUserNotificationCenter.current(),
             application: UIApplication.shared,
-            pnTimeCalculator: EverydayPNTimeCalculator(
-                hh: everydayPNTime.hh,
-                mm: everydayPNTime.mm,
-                calendar: Calendar.current
-            ),
-            pnContent: PNContentImpl(
-                title: bundle.moduleLocalizedString("Advice"),
-                body: bundle.moduleLocalizedString("It's time to add a new word to the dictionary.")
-            ),
-            navToNewWordRouter: NavToNewWordRouter(
-                navigationController: dependency?.navigationController,
-                newWordBuilder: NewWordBuilderImpl(bundle: bundle, langRepository: langRepository)
-            ),
+            pnTimeCalculator: pnTimeCalculator(appConfig),
+            pushNotificationData: pushNotificationData(bundle),
+            navToNewWordRouter: router(bundle, appConfig),
             logger: LoggerImpl(category: "PersonalDictionary.PushNotification")
         )
     }
-}
 
-private struct EmptyService: PushNotificationService {
+    private func pnTimeCalculator(_ appConfig: AppConfig) -> PNTimeCalculator {
+        let everydayPNTime = appConfig.everydayPNTime
 
-    func schedule() { }
+        return EverydayPNTimeCalculator(
+            hh: everydayPNTime.hh,
+            mm: everydayPNTime.mm,
+            calendar: Calendar.current
+        )
+    }
+
+    private func pushNotificationData(_ bundle: Bundle) -> PushNotificationData {
+        let pnTitle = bundle.moduleLocalizedString("MLS_ADVICE")
+        let pnBody = bundle.moduleLocalizedString("MLS_ADD_NEW_WORD_SUGGESTION")
+
+        return PushNotificationData(title: pnTitle, body: pnBody)
+    }
+
+    private func router(_ bundle: Bundle, _ appConfig: AppConfig) -> NavToNewWordRouter {
+        let langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard, data: appConfig.langData)
+        let newWordBuilder = NewWordBuilderImpl(bundle: bundle, langRepository: langRepository)
+
+        return NavToNewWordRouter(
+            navigationController: dependency?.navigationController,
+            newWordBuilder: newWordBuilder
+        )
+    }
+
+    private struct EmptyService: PushNotificationService {
+        func schedule() { }
+    }
 }

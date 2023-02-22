@@ -29,7 +29,7 @@ final class FavoriteWordListBuilderImpl: ViewControllerBuilder {
         let view = FavoriteWordListView(
             viewModel: viewModel,
             wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: false, dependency: dependency),
-            noFavoriteWordsText: bundle.moduleLocalizedString("No favorite words")
+            noFavoriteWordsText: bundle.moduleLocalizedString("MLS_NO_FAVORITE_WORDS")
         )
 
         viewModelLazy = viewModel

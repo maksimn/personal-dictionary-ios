@@ -26,7 +26,7 @@ final class FavoritesBuilderImpl: ViewControllerBuilder {
         )
 
         return FavoritesViewController(
-            headingText: bundle.moduleLocalizedString("Favorite words"),
+            headingText: bundle.moduleLocalizedString("MLS_FAVORITE_WORDS"),
             navToSearchBuilder: navToSearchBuilder,
             favoriteWordListBuilder: FavoriteWordListBuilderImpl(dependency: dependency)
         )

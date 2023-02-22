@@ -6,23 +6,21 @@
   
 */
 
-"Advice" = "Совет";
-"English" = "Английский";
-"Russian" = "Русский";
-"It's time to add a new word to the dictionary." = "Добавьте новое слово в личный словарь.";
-"Italian" = "Итальянский";
-"German" = "Немецкий";
-"OK" = "OK";
-"⇋" = "⇋";
-"Select" = "Выбрать";
-"Enter a new word" = "Впишите новое слово";
-
-"Enter a word for searching" = "Введите слово для поиска";
-"Favorite words" = "Избранные слова";
-"My dictionary" = "Мой словарь";
-"My todos" = "Мои дела";
-"No favorite words" = "Нет избранных слов";
-"No words found" = "Ничего не найдено";
-"Search by:" = "Поиск по:";
-"source word" = "слову";
-"translation" = "переводу";
+"MLS_ADD_NEW_WORD_SUGGESTION" = "Добавьте новое слово в личный словарь.";
+"MLS_ADVICE" = "Совет";
+"MLS_ENGLISH" = "Английский";
+"MLS_ENTER_NEW_WORD" = "Впишите новое слово";
+"MLS_FAVORITE_WORDS" = "Избранные слова";
+"MLS_GERMAN" = "Немецкий";
+"MLS_ITALIAN" = "Итальянский";
+"MLS_MY_DICTIONARY" = "Мой словарь";
+"MLS_MY_TODOS" = "Мои дела";
+"MLS_NO_FAVORITE_WORDS" = "Нет избранных слов";
+"MLS_NO_WORDS_FOUND" = "Ничего не найдено";
+"MLS_OK" = "OK";
+"MLS_RUSSIAN" = "Русский";
+"MLS_SEARCH_BY" = "Поиск по:";
+"MLS_SEARCH_TEXT_PLACEHOLDER" = "Введите слово для поиска";
+"MLS_SELECT" = "Выбрать";
+"MLS_SOURCE_WORD" = "слову";
+"MLS_TRANSLATION" = "переводу";

@@ -64,9 +64,9 @@ final class NewWordBuilderImpl: ViewControllerBuilder {
 
     private var viewParams: NewWordViewParams {
         NewWordViewParams(
-            arrowText: bundle.moduleLocalizedString("⇋"),
-            okText: bundle.moduleLocalizedString("OK"),
-            textFieldPlaceholder: bundle.moduleLocalizedString("Enter a new word")
+            arrowText: "⇋",
+            okText: bundle.moduleLocalizedString("MLS_OK"),
+            textFieldPlaceholder: bundle.moduleLocalizedString("MLS_ENTER_NEW_WORD")
         )
     }
 }
