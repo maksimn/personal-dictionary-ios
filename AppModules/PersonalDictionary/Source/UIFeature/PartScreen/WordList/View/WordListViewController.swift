@@ -14,6 +14,7 @@ final class WordListViewController: UIViewController {
     private let viewModel: WordListViewModel
 
     let params: WordListViewParams
+    let theme: Theme
 
     let tableView = UITableView()
 
@@ -24,7 +25,7 @@ final class WordListViewController: UIViewController {
             return UITableViewCell()
         }
 
-        cell.set(word: word)
+        cell.set(word: word, self.theme)
 
         return cell
     }
@@ -49,9 +50,11 @@ final class WordListViewController: UIViewController {
     ///  - viewModel: модель представления.
     ///  - params: параметры представления.
     init(viewModel: WordListViewModel,
-         params: WordListViewParams) {
+         params: WordListViewParams,
+         theme: Theme) {
         self.viewModel = viewModel
         self.params = params
+        self.theme = theme
         super.init(nibName: nil, bundle: nil)
         initViews()
         subscribeToViewModel()

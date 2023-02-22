@@ -16,16 +16,20 @@ final class FavoritesViewController: UIViewController {
 
     private let favoriteWordListViewController: UIViewController
 
+    private let theme: Theme
+
     /// - Parameters:
     ///  - headingText: текст заголовка экрана.
     ///  - navToSearchBuilder: билдер вложенной фичи "Навигация на экран Поиска".
     ///  - favoriteWordListBuilder: билдер вложенной фичи "Список избранных слов".
     init(headingText: String,
          navToSearchBuilder: ViewBuilder,
-         favoriteWordListBuilder: ViewControllerBuilder) {
-        self.heading = Heading(headingText)
+         favoriteWordListBuilder: ViewControllerBuilder,
+         theme: Theme) {
+        self.heading = Heading(headingText, theme)
         navToSearchView = navToSearchBuilder.build()
         favoriteWordListViewController = favoriteWordListBuilder.build()
+        self.theme = theme
         super.init(nibName: nil, bundle: nil)
         initViews()
     }
@@ -35,7 +39,7 @@ final class FavoritesViewController: UIViewController {
     }
 
     private func initViews() {
-        view.backgroundColor = Theme.data.backgroundColor
+        view.backgroundColor = theme.backgroundColor
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.titleView = navToSearchView
         layoutHeading()

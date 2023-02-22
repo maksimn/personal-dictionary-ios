@@ -37,7 +37,8 @@ final class WordListGraphImpl: WordListGraph {
         let viewModel = WordListViewModelImpl(model: model)
         let view = WordListViewController(
             viewModel: viewModel,
-            params: viewParams
+            params: viewParams,
+            theme: Theme.data
         )
 
         viewModelLazy = viewModel

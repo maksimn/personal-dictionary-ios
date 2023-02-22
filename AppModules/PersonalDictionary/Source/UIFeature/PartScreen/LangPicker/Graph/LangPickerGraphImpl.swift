@@ -23,7 +23,7 @@ final class LangPickerGraphImpl: LangPickerGraph {
 
         let model = LangPickerModelImpl(viewModelBlock: { viewModelLazy })
         let viewModel = LangPickerViewModelImpl(model: model)
-        let view = LangPickerView(params: viewParams, viewModel: viewModel)
+        let view = LangPickerView(params: viewParams, viewModel: viewModel, theme: Theme.data)
 
         viewModelLazy = viewModel
 

@@ -26,7 +26,8 @@ final class NavToFavoritesBuilder: ViewBuilder {
         )
         let view = NavToFavoritesView(
             routingButtonTitle: "☆",
-            navToFavoritesRouter: router
+            navToFavoritesRouter: router,
+            theme: Theme.data
         )
 
         return view

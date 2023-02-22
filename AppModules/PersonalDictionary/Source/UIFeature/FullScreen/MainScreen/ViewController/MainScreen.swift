@@ -13,6 +13,7 @@ final class MainScreen: UIViewController {
     private let heading: UILabel
     private let mainWordListViewController: UIViewController
     private let mainNavigator: MainNavigator
+    private let theme: Theme
 
     /// Инициализатор.
     /// - Parameters:
@@ -20,10 +21,12 @@ final class MainScreen: UIViewController {
     ///  - mainNavigatorBuilder: билдер вложенной фичи "Контейнер элементов навигации на Главном экране приложения".
     init(heading: String,
          mainWordListBuilder: MainWordListBuilder,
-         mainNavigatorBuilder: MainNavigatorBuilder) {
-        self.heading = Heading(heading)
+         mainNavigatorBuilder: MainNavigatorBuilder,
+         theme: Theme) {
+        self.heading = Heading(heading, theme)
         self.mainWordListViewController = mainWordListBuilder.build()
         self.mainNavigator = mainNavigatorBuilder.build()
+        self.theme = theme
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -42,7 +45,7 @@ final class MainScreen: UIViewController {
     // MARK: - Private
 
     private func initViews() {
-        view.backgroundColor = Theme.data.backgroundColor
+        view.backgroundColor = theme.backgroundColor
         layoutHeading()
         layout(wordListViewController: mainWordListViewController, topOffset: 46)
         mainNavigator.appendTo(rootView: view)

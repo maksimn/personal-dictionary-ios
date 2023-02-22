@@ -25,11 +25,12 @@ final class SearchModePickerView: UIView {
     /// - Parameters:
     ///  - params: параметры представления.
     init(params: SearchModePickerViewParams,
-         model: SearchModePickerModel) {
+         model: SearchModePickerModel,
+         theme: Theme) {
         self.params = params
         self.model = model
         super.init(frame: .zero)
-        initViews()
+        initViews(theme)
     }
 
     required init?(coder: NSCoder) {
@@ -47,13 +48,13 @@ final class SearchModePickerView: UIView {
         }
     }
 
-    private func initViews() {
-        initSearchByLabel()
+    private func initViews(_ theme: Theme) {
+        initSearchByLabel(theme)
         initSearchBySegmentedControl()
     }
 
-    private func initSearchByLabel() {
-        searchByLabel.textColor = Theme.data.secondaryTextColor
+    private func initSearchByLabel(_ theme: Theme) {
+        searchByLabel.textColor = theme.secondaryTextColor
         searchByLabel.font = UIFont.systemFont(ofSize: 16)
         searchByLabel.numberOfLines = 1
         searchByLabel.textAlignment = .center

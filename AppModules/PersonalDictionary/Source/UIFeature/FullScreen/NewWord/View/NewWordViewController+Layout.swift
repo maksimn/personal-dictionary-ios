@@ -29,7 +29,7 @@ extension NewWordViewController {
 
     private func initContentView() {
         contentView.layer.cornerRadius = 16
-        contentView.backgroundColor = Theme.data.backgroundColor
+        contentView.backgroundColor = theme.backgroundColor
         contentView.snp.makeConstraints { (make) -> Void in
             make.centerY.equalTo(view)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-12)
@@ -40,8 +40,8 @@ extension NewWordViewController {
 
     private func initSourceLangLabel() {
         sourceLangLabel.isUserInteractionEnabled = true
-        sourceLangLabel.textColor = Theme.data.textColor
-        sourceLangLabel.font = Theme.data.normalFont
+        sourceLangLabel.textColor = theme.textColor
+        sourceLangLabel.font = theme.normalFont
         sourceLangLabel.numberOfLines = 1
         sourceLangLabel.textAlignment = .right
         sourceLangLabel.snp.makeConstraints { make -> Void in
@@ -59,8 +59,8 @@ extension NewWordViewController {
 
     private func initTargetLangLabel() {
         targetLangLabel.isUserInteractionEnabled = true
-        targetLangLabel.textColor = Theme.data.textColor
-        targetLangLabel.font = Theme.data.normalFont
+        targetLangLabel.textColor = theme.textColor
+        targetLangLabel.font = theme.normalFont
         targetLangLabel.numberOfLines = 1
         targetLangLabel.snp.makeConstraints { make -> Void in
             make.top.equalTo(contentView).offset(12)
@@ -77,8 +77,8 @@ extension NewWordViewController {
 
     private func initArrowLabel() {
         arrowLabel.isUserInteractionEnabled = false
-        arrowLabel.textColor = Theme.data.textColor
-        arrowLabel.font = Theme.data.normalFont
+        arrowLabel.textColor = theme.textColor
+        arrowLabel.font = theme.normalFont
         arrowLabel.numberOfLines = 1
         arrowLabel.textAlignment = .center
         arrowLabel.text = params.arrowText

@@ -23,7 +23,8 @@ final class MainScreenBuilder: ViewControllerBuilder {
         MainScreen(
             heading: dependency.bundle.moduleLocalizedString("MLS_MY_DICTIONARY"),
             mainWordListBuilder: MainWordListBuilder(dependency: dependency),
-            mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: dependency)
+            mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: dependency),
+            theme: Theme.data
         )
     }
 }

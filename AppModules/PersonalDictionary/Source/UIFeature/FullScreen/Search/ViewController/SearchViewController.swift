@@ -13,16 +13,19 @@ final class SearchViewController: UIViewController {
     private let searchTextInputView: UIView
     private let searchModePickerView: UIView
     private let searchWordListViewController: UIViewController
+    private let theme: Theme
 
     /// - Parameters:
     ///  - searchTextInputBuilder: билдер вложенной фичи "Элемент ввода текста для поиска"
     ///  - searchModePickerBuilder: билдер вложенной фичи "Выбор режима поиска".
     init(searchTextInputBuilder: ViewBuilder,
          searchModePickerBuilder: ViewBuilder,
-         searchWordListBuilder: ViewControllerBuilder) {
+         searchWordListBuilder: ViewControllerBuilder,
+         theme: Theme) {
         searchTextInputView = searchTextInputBuilder.build()
         searchModePickerView = searchModePickerBuilder.build()
         searchWordListViewController = searchWordListBuilder.build()
+        self.theme = theme
         super.init(nibName: nil, bundle: nil)
         initViews()
     }
@@ -34,7 +37,7 @@ final class SearchViewController: UIViewController {
     // MARK: - View and Layout
 
     private func initViews() {
-        view.backgroundColor = Theme.data.backgroundColor
+        view.backgroundColor = theme.backgroundColor
         navigationItem.titleView = searchTextInputView
         initSearchModePicker()
         layout(wordListViewController: searchWordListViewController, topOffset: 50)

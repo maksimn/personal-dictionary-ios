@@ -16,12 +16,12 @@ protocol RootDependency {
 
 protocol AppDependency: RootDependency {
 
-    var navigationController: UINavigationController? { get }
+    var navigationController: UINavigationController { get }
 }
 
 struct AppDependencyImpl: AppDependency {
 
-    let navigationController: UINavigationController?
+    let navigationController: UINavigationController
 
     let appConfig: AppConfig
 

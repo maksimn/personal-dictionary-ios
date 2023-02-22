@@ -12,6 +12,7 @@ import UIKit
 final class NewWordViewController: UIViewController, LangPickerListener, UITextFieldDelegate {
 
     let params: NewWordViewParams
+    let theme: Theme
 
     private let viewModel: NewWordViewModel
 
@@ -33,8 +34,10 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
     ///  - langPickerBuilder: билдер вложенной фичи "Выбор языка"
     init(params: NewWordViewParams,
          viewModel: NewWordViewModel,
-         langPickerBuilder: LangPickerBuilder) {
+         langPickerBuilder: LangPickerBuilder,
+         theme: Theme) {
         self.params = params
+        self.theme = theme
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         initViews()

@@ -21,7 +21,8 @@ final class SearchBuilder: ViewControllerBuilder {
         SearchViewController(
             searchTextInputBuilder: SearchTextInputBuilder(bundle: dependency.bundle),
             searchModePickerBuilder: SearchModePickerBuilder(bundle: dependency.bundle),
-            searchWordListBuilder: SearchWordListBuilder(dependency: dependency)
+            searchWordListBuilder: SearchWordListBuilder(dependency: dependency),
+            theme: Theme.data
         )
     }
 }

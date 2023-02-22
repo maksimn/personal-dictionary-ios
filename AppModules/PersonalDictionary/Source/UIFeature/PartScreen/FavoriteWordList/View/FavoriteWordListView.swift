@@ -22,11 +22,12 @@ final class FavoriteWordListView: UIViewController {
     init(
         viewModel: FavoriteWordListViewModel,
         wordListBuilder: WordListBuilder,
-        noFavoriteWordsText: String
+        noFavoriteWordsText: String,
+        theme: Theme
     ) {
         self.viewModel = viewModel
         self.wordListGraph = wordListBuilder.build()
-        centerLabel = SecondaryText(noFavoriteWordsText)
+        centerLabel = SecondaryText(noFavoriteWordsText, theme)
         super.init(nibName: nil, bundle: nil)
     }
     
