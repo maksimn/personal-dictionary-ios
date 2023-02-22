@@ -11,7 +11,7 @@ import CoreModule
 final class WordListBuilderImpl: WordListBuilder {
 
     private let shouldAnimateWhenAppear: Bool
-    private weak var dependency: RootDependency?
+    private let dependency: RootDependency
 
     /// Инициализатор.
     /// - Parameters:
@@ -26,7 +26,6 @@ final class WordListBuilderImpl: WordListBuilder {
     /// - Returns:
     ///  - граф фичи.
     func build() -> WordListGraph {
-        guard let dependency = dependency else { return Empty() }
         let viewParams = WordListViewParams(
             itemHeight: WordTableViewCell.height,
             cellClass: WordTableViewCell.self,
@@ -57,12 +56,5 @@ final class WordListBuilderImpl: WordListBuilder {
             translationService: translationService,
             wordStream: WordStreamImpl.instance
         )
-    }
-
-    private class Empty: WordListGraph {
-
-        let viewController = UIViewController()
-
-        var model: WordListModel?
     }
 }

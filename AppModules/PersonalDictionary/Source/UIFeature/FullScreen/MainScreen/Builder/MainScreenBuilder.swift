@@ -10,7 +10,7 @@ import UIKit
 /// Реализация билдера фичи "Главный экран приложения" Личного словаря.
 final class MainScreenBuilder: ViewControllerBuilder {
 
-    private weak var dependency: AppDependency?
+    private let dependency: AppDependency
 
     init(dependency: AppDependency) {
         self.dependency = dependency
@@ -20,9 +20,7 @@ final class MainScreenBuilder: ViewControllerBuilder {
     /// - Returns:
     ///  - Главный экран приложения.
     func build() -> UIViewController {
-        guard let dependency = dependency else { return UIViewController() }
-
-        return MainScreen(
+        MainScreen(
             heading: dependency.bundle.moduleLocalizedString("MLS_MY_DICTIONARY"),
             mainWordListBuilder: MainWordListBuilder(dependency: dependency),
             mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: dependency)

@@ -8,7 +8,7 @@
 /// Реализация билдера фичи "Контейнер элементов навигации на Главном экране приложения".
 final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
 
-    private weak var dependency: AppDependency?
+    private let dependency: AppDependency
 
     init(dependency: AppDependency) {
         self.dependency = dependency
@@ -17,9 +17,7 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
     /// Создать контейнер.
     /// - Returns: объект контейнера.
     func build() -> MainNavigator {
-        guard let dependency = dependency else { return Empty() }
-
-        return MainNavigatorImpl(
+        MainNavigatorImpl(
             navigationController: dependency.navigationController,
             navToSearchBuilder: NavToSearchBuilderImpl(width: .full, dependency: dependency),
             navToFavoriteWordListBuilder: NavToFavoritesBuilder(dependency: dependency),
@@ -30,9 +28,4 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
             )
         )
     }
-}
-
-private struct Empty: MainNavigator {
-
-    func appendTo(rootView: UIView) { }
 }

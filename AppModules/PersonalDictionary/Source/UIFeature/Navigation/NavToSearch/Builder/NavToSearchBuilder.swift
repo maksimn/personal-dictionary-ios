@@ -19,7 +19,7 @@ final class NavToSearchBuilderImpl: ViewBuilder {
 
     private let width: NavToSearchWidth
 
-    private weak var dependency: AppDependency?
+    private let dependency: AppDependency
 
     init(width: NavToSearchWidth,
          dependency: AppDependency) {
@@ -30,7 +30,6 @@ final class NavToSearchBuilderImpl: ViewBuilder {
     /// Создать фичу.
     /// - Returns: представление фичи.
     func build() -> UIView {
-        guard let dependency = dependency else { return UIView() }
         let searchBuilder = SearchBuilder(dependency: dependency)
         let router = NavToSearchRouterImpl(
             navigationController: dependency.navigationController,

@@ -7,59 +7,49 @@
 
 import UIKit
 
-protocol RootDependency: AnyObject {
-
-    var appConfig: AppConfig { get }
-
-    var bundle: Bundle { get }
-}
-
-protocol AppDependency: RootDependency {
-
-    var navigationController: UINavigationController? { get }
-}
-
-private final class AppDependencyImpl: AppDependency {
-
-    private(set) weak var navigationController: UINavigationController?
-
-    let appConfig: AppConfig
-
-    let bundle: Bundle
-
-    init(
-        navigationController: UINavigationController?,
-        appConfig: AppConfig,
-        bundle: Bundle
-    ) {
-        self.navigationController = navigationController
-        self.appConfig = appConfig
-        self.bundle = bundle
-    }
-}
-
 /// Реализация билдера приложения "Личный словарь иностранных слов".
 public final class AppBuilderImpl: AppBuilder {
 
     public init() { }
 
+    private lazy var dependency: AppDependency = appDependency()
+
     /// Создать объект данного приложения.
     /// - Returns: объект приложения.
     public func build() -> App {
+        return AppImpl(
+            rootViewController: rootViewController(dependency),
+            pushNotificationService: pushNotificationService(dependency)
+        )
+    }
+
+    private func appDependency() -> AppDependency {
         let bundle = Bundle(for: type(of: self))
         let appConfigFactory = AppConfigFactory(bundle: bundle)
         let navigationController = UINavigationController()
         let appConfig = appConfigFactory.create()
-        let dependency = AppDependencyImpl(
+
+        return AppDependencyImpl(
             navigationController: navigationController,
             appConfig: appConfig,
             bundle: bundle
         )
+    }
 
-        return AppImpl(
-            dependency: dependency,
-            mainScreenBuilder: MainScreenBuilder(dependency: dependency),
-            pushNotificationBuilder: PushNotificationBuilderImpl(dependency: dependency)
-        )
+    private func rootViewController(_ dependency: AppDependency) -> UIViewController {
+        guard let navigationController = dependency.navigationController else { return UIViewController() }
+        let mainScreenBuilder = MainScreenBuilder(dependency: dependency)
+        let mainScreen = mainScreenBuilder.build()
+
+        navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
+        navigationController.setViewControllers([mainScreen], animated: false)
+
+        return navigationController
+    }
+
+    private func pushNotificationService(_ dependency: AppDependency) -> PushNotificationService {
+        let pushNotificationBuilder = PushNotificationBuilderImpl(dependency: dependency)
+
+        return pushNotificationBuilder.build()
     }
 }

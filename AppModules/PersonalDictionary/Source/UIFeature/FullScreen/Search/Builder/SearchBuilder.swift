@@ -8,9 +8,9 @@
 /// Билдер Фичи "Поиск по словам в словаре".
 final class SearchBuilder: ViewControllerBuilder {
 
-    private weak var dependency: RootDependency?
+    private let dependency: RootDependency
 
-    init(dependency: RootDependency?) {
+    init(dependency: RootDependency) {
         self.dependency = dependency
     }
 
@@ -18,9 +18,7 @@ final class SearchBuilder: ViewControllerBuilder {
     /// - Returns:
     ///  - View controller экрана поиска по словам в словаре.
     func build() -> UIViewController {
-        guard let dependency = dependency else { return UIViewController() }
-
-        return SearchViewController(
+        SearchViewController(
             searchTextInputBuilder: SearchTextInputBuilder(bundle: dependency.bundle),
             searchModePickerBuilder: SearchModePickerBuilder(bundle: dependency.bundle),
             searchWordListBuilder: SearchWordListBuilder(dependency: dependency)
