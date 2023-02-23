@@ -54,7 +54,8 @@ final class NewWordBuilderImpl: ViewControllerBuilder {
             langPickerBuilder: LangPickerBuilderImpl(
                 bundle: bundle,
                 allLangs: langRepository.allLangs
-            )
+            ),
+            theme: Theme.data
         )
 
         viewModelLazy = viewModel

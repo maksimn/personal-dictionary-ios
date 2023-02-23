@@ -34,7 +34,8 @@ final class SearchWordListBuilder: ViewControllerBuilder {
         let view = SearchWordListViewController(
             viewModel: viewModel,
             wordListBuilder: wordListBuilder,
-            noResultFoundText: noResultFoundText
+            noResultFoundText: noResultFoundText,
+            theme: Theme.data
         )
 
         viewModelLazy = viewModel

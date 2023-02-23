@@ -21,11 +21,12 @@ final class NavToFavoritesView: UIView {
     ///  - routingButtonTitle: текст  навигационной кнопки на экран списка избранных слов.
     ///  - navToFavoritesRouter: роутер для навигации на экран Избранного.
     init(routingButtonTitle: String,
-         navToFavoritesRouter: CoreRouter) {
+         navToFavoritesRouter: CoreRouter,
+         theme: Theme) {
         self.routingButtonTitle = routingButtonTitle
         self.navToFavoritesRouter = navToFavoritesRouter
         super.init(frame: .zero)
-        initRoutingButton()
+        initRoutingButton(theme)
     }
 
     required init?(coder: NSCoder) {
@@ -37,9 +38,9 @@ final class NavToFavoritesView: UIView {
         navToFavoritesRouter.navigate()
     }
 
-    private func initRoutingButton() {
+    private func initRoutingButton(_ theme: Theme) {
         routingButton.setTitle(routingButtonTitle, for: .normal)
-        routingButton.setTitleColor(Theme.data.goldColor, for: .normal)
+        routingButton.setTitleColor(theme.goldColor, for: .normal)
         routingButton.titleLabel?.font = UIFont.systemFont(ofSize: 26)
         routingButton.backgroundColor = .clear
         routingButton.layer.cornerRadius = 8

@@ -25,11 +25,12 @@ final class SearchWordListViewController: UIViewController {
     init(
         viewModel: SearchWordListViewModel,
         wordListBuilder: WordListBuilder,
-        noResultFoundText: String
+        noResultFoundText: String,
+        theme: Theme
     ) {
         self.viewModel = viewModel
         self.wordListGraph = wordListBuilder.build()
-        centerLabel = SecondaryText(noResultFoundText)
+        centerLabel = SecondaryText(noResultFoundText, theme)
         super.init(nibName: nil, bundle: nil)
     }
 

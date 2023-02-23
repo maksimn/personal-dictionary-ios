@@ -7,10 +7,10 @@
 
 import UIKit
 
-func Heading(_ text: String) -> UILabel {
+func Heading(_ text: String, _ theme: Theme) -> UILabel {
     let headingLabel = UILabel()
 
-    headingLabel.textColor = Theme.data.textColor
+    headingLabel.textColor = theme.textColor
     headingLabel.font = UIFont.systemFont(ofSize: 28, weight: .heavy)
     headingLabel.numberOfLines = 1
     headingLabel.textAlignment = .left
@@ -19,11 +19,11 @@ func Heading(_ text: String) -> UILabel {
     return headingLabel
 }
 
-func SecondaryText(_ text: String) -> UILabel {
+func SecondaryText(_ text: String, _ theme: Theme) -> UILabel {
     let label = UILabel()
 
-    label.textColor = Theme.data.secondaryTextColor
-    label.font = Theme.data.normalFont
+    label.textColor = theme.secondaryTextColor
+    label.font = theme.normalFont
     label.numberOfLines = 0
     label.textAlignment = .center
     label.text = text

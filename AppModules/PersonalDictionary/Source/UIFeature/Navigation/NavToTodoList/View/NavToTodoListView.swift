@@ -21,11 +21,12 @@ final class NavToTodoListView: UIView {
     ///  - routingButtonTitle: тайтл для навигационной кнопки.
     ///  - router: роутер для навигации на новый экран.
     init(routingButtonTitle: String,
-         router: CoreRouter) {
+         router: CoreRouter,
+         theme: Theme) {
         self.routingButtonTitle = routingButtonTitle
         self.router = router
         super.init(frame: .zero)
-        initRoutingButton()
+        initRoutingButton(theme)
     }
 
     required init?(coder: NSCoder) {
@@ -37,9 +38,9 @@ final class NavToTodoListView: UIView {
         router.navigate()
     }
 
-    private func initRoutingButton() {
+    private func initRoutingButton(_ theme: Theme) {
         routingButton.setTitle(routingButtonTitle, for: .normal)
-        routingButton.setTitleColor(Theme.data.secondaryTextColor, for: .normal)
+        routingButton.setTitleColor(theme.secondaryTextColor, for: .normal)
         routingButton.backgroundColor = .clear
         routingButton.layer.cornerRadius = 8
         routingButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)

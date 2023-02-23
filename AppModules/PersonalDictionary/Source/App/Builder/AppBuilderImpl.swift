@@ -12,11 +12,11 @@ public final class AppBuilderImpl: AppBuilder {
 
     public init() { }
 
-    private lazy var dependency: AppDependency = appDependency()
-
     /// Создать объект данного приложения.
     /// - Returns: объект приложения.
     public func build() -> App {
+        let dependency = appDependency()
+
         return AppImpl(
             rootViewController: rootViewController(dependency),
             pushNotificationService: pushNotificationService(dependency)
@@ -37,7 +37,7 @@ public final class AppBuilderImpl: AppBuilder {
     }
 
     private func rootViewController(_ dependency: AppDependency) -> UIViewController {
-        guard let navigationController = dependency.navigationController else { return UIViewController() }
+        let navigationController = dependency.navigationController
         let mainScreenBuilder = MainScreenBuilder(dependency: dependency)
         let mainScreen = mainScreenBuilder.build()
 

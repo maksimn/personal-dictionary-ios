@@ -26,14 +26,17 @@ final class LangPicker: UIView {
     private let params: LangPickerParams
     private let onSelect: ((Lang) -> Void)?
     private lazy var langPickerController = LangPickerController(langs: params.langs)
+    private let theme: Theme
 
     /// Инициализатор.
     /// - Parameters:
     ///  - params: параметры представления;
     ///  - onSelectLang: callback, который вызывается при нажатии кнопки "Выбрать" на попапе.
     init(params: LangPickerParams,
+         theme: Theme,
          onSelect: ((Lang) -> Void)?) {
         self.params = params
+        self.theme = theme
         self.onSelect = onSelect
         super.init(frame: .zero)
         initViews()
@@ -63,7 +66,7 @@ final class LangPicker: UIView {
     // MARK: - Layout
 
     private func initViews() {
-        backgroundColor = Theme.data.backgroundColor
+        backgroundColor = theme.backgroundColor
         layer.cornerRadius = 16
         initLangPickerView()
         initSelectButton()

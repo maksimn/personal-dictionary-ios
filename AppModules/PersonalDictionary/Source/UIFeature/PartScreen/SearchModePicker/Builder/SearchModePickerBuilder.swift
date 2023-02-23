@@ -24,7 +24,11 @@ final class SearchModePickerBuilder: ViewBuilder {
             translationText: bundle.moduleLocalizedString("MLS_TRANSLATION")
         )
         let model = SearchModePickerModelImpl(searchModeStream: SearchModeStreamImpl.instance)
-        let view = SearchModePickerView(params: viewParams, model: model)
+        let view = SearchModePickerView(
+            params: viewParams,
+            model: model,
+            theme: Theme.data
+        )
 
         return view
     }

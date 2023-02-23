@@ -20,7 +20,6 @@ extension WordTableViewCell {
         self.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner,
                                     .layerMinXMinYCorner, .layerMaxXMinYCorner]
         selectionStyle = .none
-        backgroundColor = Theme.data.wordCellColor
         initWordLabel()
         initSourceLangLabel()
         initTargetLangLabel()
@@ -32,35 +31,30 @@ extension WordTableViewCell {
     }
 
     private func initWordLabel() {
-        wordlabel.textColor = Theme.data.textColor
         wordlabel.font = UIFont.boldSystemFont(ofSize: 20)
         wordlabel.numberOfLines = 1
         contentView.addSubview(wordlabel)
     }
 
     private func initTranslationLabel() {
-        translationLabel.textColor = Theme.data.textColor
         translationLabel.font = UIFont.systemFont(ofSize: 17)
         translationLabel.numberOfLines = 1
         contentView.addSubview(translationLabel)
     }
 
     private func initSourceLangLabel() {
-        sourceLangLabel.textColor = Theme.data.secondaryTextColor
         sourceLangLabel.font = UIFont.boldSystemFont(ofSize: 12)
         sourceLangLabel.numberOfLines = 1
         contentView.addSubview(sourceLangLabel)
     }
 
     private func initTargetLangLabel() {
-        targetLangLabel.textColor = Theme.data.secondaryTextColor
         targetLangLabel.font = UIFont.boldSystemFont(ofSize: 12)
         targetLangLabel.numberOfLines = 1
         contentView.addSubview(targetLangLabel)
     }
 
     private func initFavoriteWordLabel() {
-        favoriteWordLabel.textColor = Theme.data.goldColor
         favoriteWordLabel.font = UIFont.systemFont(ofSize: 22)
         favoriteWordLabel.text = "★"
         contentView.addSubview(favoriteWordLabel)

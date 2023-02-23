@@ -29,11 +29,17 @@ final class WordTableViewCell: UITableViewCell {
     /// Задать данные для отображения в представлении.
     /// - Parameters:
     ///  - word: данные о слове из словаря.
-    func set(word: Word) {
+    func set(word: Word, _ theme: Theme) {
         wordlabel.text = word.text
         translationLabel.text = word.translation
         sourceLangLabel.text = word.sourceLang.shortName
         targetLangLabel.text = word.targetLang.shortName
         favoriteWordLabel.isHidden = !word.isFavorite
+        backgroundColor = theme.wordCellColor
+        wordlabel.textColor = theme.textColor
+        translationLabel.textColor = theme.textColor
+        sourceLangLabel.textColor = theme.secondaryTextColor
+        targetLangLabel.textColor = theme.secondaryTextColor
+        favoriteWordLabel.textColor = theme.goldColor
     }
 }

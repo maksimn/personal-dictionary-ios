@@ -20,7 +20,7 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
         MainNavigatorImpl(
             navigationController: dependency.navigationController,
             navToSearchBuilder: NavToSearchBuilderImpl(width: .full, dependency: dependency),
-            navToFavoriteWordListBuilder: NavToFavoritesBuilder(dependency: dependency),
+            navToFavoritesBuilder: NavToFavoritesBuilder(dependency: dependency),
             navToNewWordBuilder: NavToNewWordBuilder(dependency: dependency),
             navToTodoListBuilder: NavToTodoListBuilder(
                 rootViewController: dependency.navigationController,

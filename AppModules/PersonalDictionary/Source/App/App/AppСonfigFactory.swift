@@ -14,23 +14,6 @@ struct AppConfigFactory {
     }
 
     func create() -> AppConfig {
-        switch variant {
-        case .development:
-            return createAppConfig(isLoggingEnabled: true)
-        case .production:
-            return createAppConfig(isLoggingEnabled: false)
-        }
-    }
-
-    private var variant: AppConfig.Variant {
-        #if DEBUG
-        return .development
-        #else
-        return .production
-        #endif
-    }
-
-    private func createAppConfig(isLoggingEnabled: Bool) -> AppConfig {
         AppConfig(
             langData: createLangData(),
             ponsApiSecret: "",
