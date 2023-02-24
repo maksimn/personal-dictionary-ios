@@ -22,21 +22,18 @@ final class PushNotificationBuilderImpl: PushNotificationBuilder {
     /// - Returns:
     ///  -  объект службы для работы с пуш-уведомлениями.
     func build() -> PushNotificationService {
-        let appConfig = dependency.appConfig
-        let bundle = dependency.bundle
-
-        return PushNotificationServiceImpl(
+        PushNotificationServiceImpl(
             userNotificationCenter: UNUserNotificationCenter.current(),
             application: UIApplication.shared,
-            pnTimeCalculator: pnTimeCalculator(appConfig),
-            pushNotificationData: pushNotificationData(bundle),
-            navToNewWordRouter: router(bundle, appConfig),
+            pnTimeCalculator: pnTimeCalculator(),
+            pushNotificationData: pushNotificationData(),
+            navToNewWordRouter: navToNewWordRouter(),
             logger: LoggerImpl(category: "PersonalDictionary.PushNotification")
         )
     }
 
-    private func pnTimeCalculator(_ appConfig: AppConfig) -> PNTimeCalculator {
-        let everydayPNTime = appConfig.everydayPNTime
+    private func pnTimeCalculator() -> PNTimeCalculator {
+        let everydayPNTime = dependency.appConfig.everydayPNTime
 
         return EverydayPNTimeCalculator(
             hh: everydayPNTime.hh,
@@ -45,14 +42,17 @@ final class PushNotificationBuilderImpl: PushNotificationBuilder {
         )
     }
 
-    private func pushNotificationData(_ bundle: Bundle) -> PushNotificationData {
-        let pnTitle = bundle.moduleLocalizedString("MLS_ADVICE")
-        let pnBody = bundle.moduleLocalizedString("MLS_ADD_NEW_WORD_SUGGESTION")
+    private func pushNotificationData() -> PushNotificationData {
+        let bundle = dependency.bundle
+        let pnTitle = bundle.moduleLocalizedString("LS_ADVICE")
+        let pnBody = bundle.moduleLocalizedString("LS_ADD_NEW_WORD_SUGGESTION")
 
         return PushNotificationData(title: pnTitle, body: pnBody)
     }
 
-    private func router(_ bundle: Bundle, _ appConfig: AppConfig) -> NavToNewWordRouter {
+    private func navToNewWordRouter() -> NavToNewWordRouter {
+        let appConfig = dependency.appConfig
+        let bundle = dependency.bundle
         let langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard, data: appConfig.langData)
         let newWordBuilder = NewWordBuilderImpl(bundle: bundle, langRepository: langRepository)
 

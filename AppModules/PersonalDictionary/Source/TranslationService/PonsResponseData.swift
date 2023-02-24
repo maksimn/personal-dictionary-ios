@@ -17,7 +17,7 @@ extension PonsResponseData {
 
     /// Получение запрошенного перевод слова
     /// - Returns:
-    ///   перевод слова на целевой язык.
+    ///  - перевод слова на целевой язык.
     var translation: String? {
         guard let str = hits.first?.roms.first?.arabs.first?.translations.first?.target else { return nil }
 

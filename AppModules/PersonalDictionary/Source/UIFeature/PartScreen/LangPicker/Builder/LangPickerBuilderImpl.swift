@@ -27,7 +27,7 @@ final class LangPickerBuilderImpl: LangPickerBuilder {
     func build() -> LangPickerGraph {
         LangPickerGraphImpl(
             viewParams: LangPickerParams(
-                title: bundle.moduleLocalizedString("MLS_SELECT"),
+                title: bundle.moduleLocalizedString("LS_SELECT"),
                 langs: allLangs
             )
         )

@@ -19,9 +19,9 @@ final class SearchModePickerBuilder: ViewBuilder {
 
     func build() -> UIView {
         let viewParams = SearchModePickerViewParams(
-            searchByLabelText: bundle.moduleLocalizedString("MLS_SEARCH_BY"),
-            sourceWordText: bundle.moduleLocalizedString("MLS_SOURCE_WORD"),
-            translationText: bundle.moduleLocalizedString("MLS_TRANSLATION")
+            searchByLabelText: bundle.moduleLocalizedString("LS_SEARCH_BY"),
+            sourceWordText: bundle.moduleLocalizedString("LS_SOURCE_WORD"),
+            translationText: bundle.moduleLocalizedString("LS_TRANSLATION")
         )
         let model = SearchModePickerModelImpl(searchModeStream: SearchModeStreamImpl.instance)
         let view = SearchModePickerView(
