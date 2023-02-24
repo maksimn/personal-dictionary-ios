@@ -207,7 +207,7 @@ final class WordListRepositoryImpl: WordListRepository {
     }
 
     /// Delete all objects of WordItem entity.
-    func removeAllWordItems() throws {
+    func removeAllWords() throws {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "WordMO")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
 
