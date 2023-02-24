@@ -6,21 +6,21 @@
   
 */
 
-"MLS_ADD_NEW_WORD_SUGGESTION" = "Добавьте новое слово в личный словарь.";
-"MLS_ADVICE" = "Совет";
-"MLS_ENGLISH" = "Английский";
-"MLS_ENTER_NEW_WORD" = "Впишите новое слово";
-"MLS_FAVORITE_WORDS" = "Избранные слова";
-"MLS_GERMAN" = "Немецкий";
-"MLS_ITALIAN" = "Итальянский";
-"MLS_MY_DICTIONARY" = "Мой словарь";
-"MLS_MY_TODOS" = "Мои дела";
-"MLS_NO_FAVORITE_WORDS" = "Нет избранных слов";
-"MLS_NO_WORDS_FOUND" = "Ничего не найдено";
-"MLS_OK" = "OK";
-"MLS_RUSSIAN" = "Русский";
-"MLS_SEARCH_BY" = "Поиск по:";
-"MLS_SEARCH_TEXT_PLACEHOLDER" = "Введите слово для поиска";
-"MLS_SELECT" = "Выбрать";
-"MLS_SOURCE_WORD" = "слову";
-"MLS_TRANSLATION" = "переводу";
+"LS_ADD_NEW_WORD_SUGGESTION" = "Добавьте новое слово в личный словарь.";
+"LS_ADVICE" = "Совет";
+"LS_ENGLISH" = "Английский";
+"LS_ENTER_NEW_WORD" = "Впишите новое слово";
+"LS_FAVORITE_WORDS" = "Избранные слова";
+"LS_GERMAN" = "Немецкий";
+"LS_ITALIAN" = "Итальянский";
+"LS_MY_DICTIONARY" = "Мой словарь";
+"LS_MY_TODOS" = "Мои дела";
+"LS_NO_FAVORITE_WORDS" = "Нет избранных слов";
+"LS_NO_WORDS_FOUND" = "Ничего не найдено";
+"LS_OK" = "OK";
+"LS_RUSSIAN" = "Русский";
+"LS_SEARCH_BY" = "Поиск по:";
+"LS_SEARCH_TEXT_PLACEHOLDER" = "Введите слово для поиска";
+"LS_SELECT" = "Выбрать";
+"LS_SOURCE_WORD" = "слову";
+"LS_TRANSLATION" = "переводу";

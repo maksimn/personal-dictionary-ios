@@ -25,18 +25,6 @@ final class NewWordBuilderImpl: ViewControllerBuilder {
     /// - Returns:
     ///  - экран фичи  "Добавление нового слова".
     func build() -> UIViewController {
-        let initialSourceLang = langRepository.sourceLang
-        let initialState = NewWordState(
-            text: "",
-            sourceLang: initialSourceLang,
-            targetLang: langRepository.targetLang,
-            langPickerState: LangPickerState(
-                lang: initialSourceLang,
-                langType: .source,
-                isHidden: true
-            )
-        )
-
         weak var viewModelLazy: NewWordViewModel?
 
         let model = NewWordModelImpl(
@@ -46,15 +34,12 @@ final class NewWordBuilderImpl: ViewControllerBuilder {
         )
         let viewModel = NewWordViewModelImpl(
             model: model,
-            initState: initialState
+            initState: initialState()
         )
         let view = NewWordViewController(
-            params: viewParams,
+            params: viewParams(),
             viewModel: viewModel,
-            langPickerBuilder: LangPickerBuilderImpl(
-                bundle: bundle,
-                allLangs: langRepository.allLangs
-            ),
+            langPickerBuilder: langPickerBuilder(),
             theme: Theme.data
         )
 
@@ -63,11 +48,35 @@ final class NewWordBuilderImpl: ViewControllerBuilder {
         return view
     }
 
-    private var viewParams: NewWordViewParams {
+    private func viewParams() -> NewWordViewParams {
         NewWordViewParams(
             arrowText: "⇋",
-            okText: bundle.moduleLocalizedString("MLS_OK"),
-            textFieldPlaceholder: bundle.moduleLocalizedString("MLS_ENTER_NEW_WORD")
+            okText: bundle.moduleLocalizedString("LS_OK"),
+            textFieldPlaceholder: bundle.moduleLocalizedString("LS_ENTER_NEW_WORD")
+        )
+    }
+
+    private func initialState() -> NewWordState {
+        NewWordState(
+            text: "",
+            sourceLang: langRepository.sourceLang,
+            targetLang: langRepository.targetLang,
+            langPickerState: initialLangPickerState()
+        )
+    }
+
+    private func langPickerBuilder() -> LangPickerBuilder {
+        LangPickerBuilderImpl(
+            bundle: bundle,
+            allLangs: langRepository.allLangs
+        )
+    }
+
+    private func initialLangPickerState() -> LangPickerState {
+        LangPickerState(
+            lang: langRepository.sourceLang,
+            langType: .source,
+            isHidden: true
         )
     }
 }

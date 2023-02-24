@@ -30,7 +30,7 @@ final class NavToTodoListBuilder: ViewBuilder {
         )
 
         return NavToTodoListView(
-            routingButtonTitle: bundle.moduleLocalizedString("MLS_MY_TODOS"),
+            routingButtonTitle: bundle.moduleLocalizedString("LS_MY_TODOS"),
             router: router,
             theme: Theme.data
         )
