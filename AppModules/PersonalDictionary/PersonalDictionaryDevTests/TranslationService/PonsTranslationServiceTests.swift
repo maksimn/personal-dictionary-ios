@@ -1,12 +1,10 @@
 //
-//  PonsTranslationService.swift
-//  PersonalDictionary
+//  PonsTranslationServiceTests.swift
+//  PersonalDictionaryDevTests
 //
-//  Created by Maxim Ivanov on 09.10.2021.
+//  Created by Maksim Ivanov on 24.02.2023.
 //
 
-import CoreModule
-import Cuckoo
 import RxSwift
 import RxBlocking
 import XCTest
@@ -14,77 +12,36 @@ import XCTest
 
 final class PonsTranslationServiceTests: XCTestCase {
 
-    private var mockHttpClient: HttpClient {
-        let mockHttpClient = MockHttpClient()
-
-        stub(mockHttpClient) { stub in
-            when(stub.send(Http()))
-                .thenReturn(Single.just(Data()))
-        }
-
-        return mockHttpClient
-    }
-
-    func test_fetchTranslation__returnsEmptyStringForEmptyWordTextWhenNetworkAlive() throws {
+    func test_fetchTranslation__returnsCorrectTranslation() throws {
         // Arrange:
-        let mockJsonCoder = MockJsonCoder()
-        let ponsTranslationService = PonsTranslationService(
-            apiData: PonsApiData(url: "", secretHeaderKey: "", secret: ""),
-            httpClient: mockHttpClient,
-            jsonCoder: mockJsonCoder,
-            logger: LoggerStub()
-        )
-        let lang = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
-        let word = WordItem(text: "", sourceLang: lang, targetLang: lang)
-
-        stub(mockJsonCoder) { stub in
-            when(stub.parseFromJson(Data()))
-                .thenReturn(Single.just([] as [PonsResponseData]))
-        }
-
-        // Act:
-        let single = ponsTranslationService.fetchTranslation(for: word)
-
-        // Assert:
-        let result = try single.toBlocking().first()
-
-        XCTAssertEqual(result, "")
-    }
-
-    func test_fetchTranslation__returnsTranslationForWordWhenNetworkAlive() throws {
-        // Arrange:
-        let mockJsonCoder = MockJsonCoder()
-        let ponsTranslationService = PonsTranslationService(
-            apiData: PonsApiData(url: "", secretHeaderKey: "", secret: ""),
-            httpClient: mockHttpClient,
-            jsonCoder: mockJsonCoder,
-            logger: LoggerStub()
-        )
-        let lang = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
-        let word = WordItem(text: "word", sourceLang: lang, targetLang: lang)
-
-        stub(mockJsonCoder) { stub in
-            when(stub.parseFromJson(Data()))
-                .thenReturn(Single.just([
-                    PonsResponseData(
-                        hits: [
-                            PonsResponseDataHit(
-                                roms: [
-                                    PonsResponseDataHitsRom(
-                                        arabs: [
-                                            PonsResponseDataHitsRomsArab(
-                                                translations: [
-                                                    PonsResponseDataHitsRomsArabsTranslation(target: "translation")
-                                                ]
-                                            )
+        let ponsArray = [
+            PonsResponseData(
+                hits: [
+                    PonsResponseDataHit(
+                        roms: [
+                            PonsResponseDataHitsRom(
+                                arabs: [
+                                    PonsResponseDataHitsRomsArab(
+                                        translations: [
+                                            PonsResponseDataHitsRomsArabsTranslation(target: "translation")
                                         ]
                                     )
                                 ]
                             )
                         ]
                     )
-                ]))
-        }
+                ]
+            )
+        ]
+        let data = try JSONEncoder().encode(ponsArray)
+        let mockHttpClient = MockHttpClient(returnValue: Single.just(data))
+        let ponsTranslationService = PonsTranslationService(
+            secret: "",
+            httpClient: mockHttpClient,
+            logger: LoggerStub()
+        )
+        let lang = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
+        let word = Word(text: "word", sourceLang: lang, targetLang: lang)
 
         // Act:
         let single = ponsTranslationService.fetchTranslation(for: word)
@@ -95,28 +52,22 @@ final class PonsTranslationServiceTests: XCTestCase {
         XCTAssertEqual(result, "translation")
     }
 
-    func test_fetchTranslation__returnsErrorWhenNoNetworkConnection() throws {
+    func test_fetchTranslation__returnsErrorWhenHttpRequestFails() throws {
         // Arrange:
         enum HttpError: Error { case unavailable }
 
-        let mockHttpClientError = MockHttpClient()
-
-        stub(mockHttpClientError) { stub in
-            when(stub.send(Http()))
-                .thenReturn(Single<Data>.create { observer in
-                    observer(.error(HttpError.unavailable))
-                    return Disposables.create { }
-                })
-        }
+        let mockHttpClientError = MockHttpClient(returnValue: Single<Data>.create { observer in
+            observer(.error(HttpError.unavailable))
+            return Disposables.create { }
+        })
 
         let ponsTranslationService = PonsTranslationService(
-            apiData: PonsApiData(url: "", secretHeaderKey: "", secret: ""),
+            secret: "",
             httpClient: mockHttpClientError,
-            jsonCoder: JsonCoderStub(),
             logger: LoggerStub()
         )
         let lang = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
-        let word = WordItem(text: "word", sourceLang: lang, targetLang: lang)
+        let word = Word(text: "word", sourceLang: lang, targetLang: lang)
 
         // Act:
         let single = ponsTranslationService.fetchTranslation(for: word)

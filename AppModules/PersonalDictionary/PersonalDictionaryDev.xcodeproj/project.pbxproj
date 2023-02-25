@@ -7,18 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0CB0FCBB283018D700619D58 /* PNTimeCalculatorImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB0FCBA283018D700619D58 /* PNTimeCalculatorImplTests.swift */; };
+		0CB0FCBB283018D700619D58 /* EverydayPNTimeCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB0FCBA283018D700619D58 /* EverydayPNTimeCalculatorTests.swift */; };
 		0CB69D7E27EDCD6E00970B50 /* DataTypes+Cuckoo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB69D7227EDCD6E00970B50 /* DataTypes+Cuckoo.swift */; };
-		0CB69D7F27EDCD6E00970B50 /* CoreWordListRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB69D7527EDCD6E00970B50 /* CoreWordListRepositoryTests.swift */; };
 		0CB69D8027EDCD6E00970B50 /* LangRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB69D7727EDCD6E00970B50 /* LangRepositoryImplTests.swift */; };
-		0CB69D8127EDCD6E00970B50 /* SearchEngineImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB69D7A27EDCD6E00970B50 /* SearchEngineImplTests.swift */; };
-		0CB69D8227EDCD6E00970B50 /* PonsTranslationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB69D7C27EDCD6E00970B50 /* PonsTranslationServiceTests.swift */; };
 		0CB69D8327EDCD6E00970B50 /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB69D7D27EDCD6E00970B50 /* GeneratedMocks.swift */; };
 		0CB69D8927EDD00400970B50 /* TestStorageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0CB69D8727EDD00400970B50 /* TestStorageModel.xcdatamodeld */; };
 		0CBF5D6C27EDBF9F00F07448 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF5D6B27EDBF9F00F07448 /* AppDelegate.swift */; };
 		0CBF5D6E27EDBF9F00F07448 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF5D6D27EDBF9F00F07448 /* SceneDelegate.swift */; };
 		0CBF5D7527EDBFA200F07448 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CBF5D7427EDBFA200F07448 /* Assets.xcassets */; };
 		0CBF5D7827EDBFA200F07448 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CBF5D7627EDBFA200F07448 /* LaunchScreen.storyboard */; };
+		0CCCA4B229A90D97005E6D4A /* WordListRepositoryImpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCCA4B129A90D97005E6D4A /* WordListRepositoryImpTests.swift */; };
+		0CCCA4B429A90EB0005E6D4A /* ManualMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCCA4B329A90EB0005E6D4A /* ManualMocks.swift */; };
+		0CCCA4B729A91B77005E6D4A /* PonsTranslationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCCA4B629A91B77005E6D4A /* PonsTranslationServiceTests.swift */; };
 		17E886E5476B560DB46F67D8 /* Pods_PersonalDictionaryDevTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56A536076EF32260F90F8049 /* Pods_PersonalDictionaryDevTests.framework */; };
 		5F1B8229AA47298001E3020E /* Pods_PersonalDictionaryDev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45B7098B685578C684866279 /* Pods_PersonalDictionaryDev.framework */; };
 /* End PBXBuildFile section */
@@ -35,12 +35,9 @@
 
 /* Begin PBXFileReference section */
 		0C4EB709282BD09D00A72289 /* PersonalDictionaryDev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PersonalDictionaryDev.entitlements; sourceTree = "<group>"; };
-		0CB0FCBA283018D700619D58 /* PNTimeCalculatorImplTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNTimeCalculatorImplTests.swift; sourceTree = "<group>"; };
+		0CB0FCBA283018D700619D58 /* EverydayPNTimeCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EverydayPNTimeCalculatorTests.swift; sourceTree = "<group>"; };
 		0CB69D7227EDCD6E00970B50 /* DataTypes+Cuckoo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataTypes+Cuckoo.swift"; sourceTree = "<group>"; };
-		0CB69D7527EDCD6E00970B50 /* CoreWordListRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreWordListRepositoryTests.swift; sourceTree = "<group>"; };
 		0CB69D7727EDCD6E00970B50 /* LangRepositoryImplTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LangRepositoryImplTests.swift; sourceTree = "<group>"; };
-		0CB69D7A27EDCD6E00970B50 /* SearchEngineImplTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchEngineImplTests.swift; sourceTree = "<group>"; };
-		0CB69D7C27EDCD6E00970B50 /* PonsTranslationServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PonsTranslationServiceTests.swift; sourceTree = "<group>"; };
 		0CB69D7D27EDCD6E00970B50 /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
 		0CB69D8827EDD00400970B50 /* TestStorageModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TestStorageModel.xcdatamodel; sourceTree = "<group>"; };
 		0CBF5D6827EDBF9E00F07448 /* PersonalDictionaryDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PersonalDictionaryDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,6 +47,9 @@
 		0CBF5D7727EDBFA200F07448 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0CBF5D7927EDBFA200F07448 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0CBF5D7E27EDBFA300F07448 /* PersonalDictionaryDevTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PersonalDictionaryDevTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0CCCA4B129A90D97005E6D4A /* WordListRepositoryImpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListRepositoryImpTests.swift; sourceTree = "<group>"; };
+		0CCCA4B329A90EB0005E6D4A /* ManualMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualMocks.swift; sourceTree = "<group>"; };
+		0CCCA4B629A91B77005E6D4A /* PonsTranslationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PonsTranslationServiceTests.swift; sourceTree = "<group>"; };
 		2884B2C2F456D4C0EB2117F9 /* Pods-PersonalDictionaryDevTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionaryDevTests.release.xcconfig"; path = "Target Support Files/Pods-PersonalDictionaryDevTests/Pods-PersonalDictionaryDevTests.release.xcconfig"; sourceTree = "<group>"; };
 		2A1641141DF5498DC0DE2B55 /* Pods-PersonalDictionaryDev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionaryDev.release.xcconfig"; path = "Target Support Files/Pods-PersonalDictionaryDev/Pods-PersonalDictionaryDev.release.xcconfig"; sourceTree = "<group>"; };
 		2A4ECD8F824F217DCE501DC0 /* Pods-PersonalDictionaryDev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonalDictionaryDev.debug.xcconfig"; path = "Target Support Files/Pods-PersonalDictionaryDev/Pods-PersonalDictionaryDev.debug.xcconfig"; sourceTree = "<group>"; };
@@ -97,7 +97,7 @@
 		0CB0FCB9283018B400619D58 /* PNTimeCalculator */ = {
 			isa = PBXGroup;
 			children = (
-				0CB0FCBA283018D700619D58 /* PNTimeCalculatorImplTests.swift */,
+				0CB0FCBA283018D700619D58 /* EverydayPNTimeCalculatorTests.swift */,
 			);
 			path = PNTimeCalculator;
 			sourceTree = "<group>";
@@ -106,18 +106,10 @@
 			isa = PBXGroup;
 			children = (
 				0CB69D8727EDD00400970B50 /* TestStorageModel.xcdatamodeld */,
-				0CB69D7427EDCD6E00970B50 /* WordList */,
 				0CB69D7627EDCD6E00970B50 /* Lang */,
+				0CCCA4B029A90D76005E6D4A /* WordList */,
 			);
 			path = Repository;
-			sourceTree = "<group>";
-		};
-		0CB69D7427EDCD6E00970B50 /* WordList */ = {
-			isa = PBXGroup;
-			children = (
-				0CB69D7527EDCD6E00970B50 /* CoreWordListRepositoryTests.swift */,
-			);
-			path = WordList;
 			sourceTree = "<group>";
 		};
 		0CB69D7627EDCD6E00970B50 /* Lang */ = {
@@ -126,30 +118,6 @@
 				0CB69D7727EDCD6E00970B50 /* LangRepositoryImplTests.swift */,
 			);
 			path = Lang;
-			sourceTree = "<group>";
-		};
-		0CB69D7827EDCD6E00970B50 /* SearchEngine */ = {
-			isa = PBXGroup;
-			children = (
-				0CB69D7927EDCD6E00970B50 /* Domain */,
-			);
-			path = SearchEngine;
-			sourceTree = "<group>";
-		};
-		0CB69D7927EDCD6E00970B50 /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-				0CB69D7A27EDCD6E00970B50 /* SearchEngineImplTests.swift */,
-			);
-			path = Domain;
-			sourceTree = "<group>";
-		};
-		0CB69D7B27EDCD6E00970B50 /* TranslationService */ = {
-			isa = PBXGroup;
-			children = (
-				0CB69D7C27EDCD6E00970B50 /* PonsTranslationServiceTests.swift */,
-			);
-			path = TranslationService;
 			sourceTree = "<group>";
 		};
 		0CBF5D5F27EDBF9E00F07448 = {
@@ -190,12 +158,28 @@
 			children = (
 				0CB69D7227EDCD6E00970B50 /* DataTypes+Cuckoo.swift */,
 				0CB69D7D27EDCD6E00970B50 /* GeneratedMocks.swift */,
+				0CCCA4B329A90EB0005E6D4A /* ManualMocks.swift */,
 				0CB0FCB72830188F00619D58 /* PushNotification */,
 				0CB69D7327EDCD6E00970B50 /* Repository */,
-				0CB69D7827EDCD6E00970B50 /* SearchEngine */,
-				0CB69D7B27EDCD6E00970B50 /* TranslationService */,
+				0CCCA4B529A91B5E005E6D4A /* TranslationService */,
 			);
 			path = PersonalDictionaryDevTests;
+			sourceTree = "<group>";
+		};
+		0CCCA4B029A90D76005E6D4A /* WordList */ = {
+			isa = PBXGroup;
+			children = (
+				0CCCA4B129A90D97005E6D4A /* WordListRepositoryImpTests.swift */,
+			);
+			path = WordList;
+			sourceTree = "<group>";
+		};
+		0CCCA4B529A91B5E005E6D4A /* TranslationService */ = {
+			isa = PBXGroup;
+			children = (
+				0CCCA4B629A91B77005E6D4A /* PonsTranslationServiceTests.swift */,
+			);
+			path = TranslationService;
 			sourceTree = "<group>";
 		};
 		562676D1B7EE2898119CF383 /* Frameworks */ = {
@@ -413,14 +397,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0CB69D7F27EDCD6E00970B50 /* CoreWordListRepositoryTests.swift in Sources */,
+				0CCCA4B229A90D97005E6D4A /* WordListRepositoryImpTests.swift in Sources */,
 				0CB69D8327EDCD6E00970B50 /* GeneratedMocks.swift in Sources */,
 				0CB69D8027EDCD6E00970B50 /* LangRepositoryImplTests.swift in Sources */,
 				0CB69D7E27EDCD6E00970B50 /* DataTypes+Cuckoo.swift in Sources */,
-				0CB69D8227EDCD6E00970B50 /* PonsTranslationServiceTests.swift in Sources */,
 				0CB69D8927EDD00400970B50 /* TestStorageModel.xcdatamodeld in Sources */,
-				0CB0FCBB283018D700619D58 /* PNTimeCalculatorImplTests.swift in Sources */,
-				0CB69D8127EDCD6E00970B50 /* SearchEngineImplTests.swift in Sources */,
+				0CCCA4B729A91B77005E6D4A /* PonsTranslationServiceTests.swift in Sources */,
+				0CB0FCBB283018D700619D58 /* EverydayPNTimeCalculatorTests.swift in Sources */,
+				0CCCA4B429A90EB0005E6D4A /* ManualMocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
