@@ -2,9 +2,6 @@ PODS:
   - CoreModule (0.1.0):
     - RxCocoa (= 5.1)
     - RxSwift (= 5.1)
-  - Cuckoo (1.6.0):
-    - Cuckoo/Swift (= 1.6.0)
-  - Cuckoo/Swift (1.6.0)
   - PersonalDictionary (0.1.0):
     - CoreModule
     - RxCocoa (= 5.1)
@@ -27,7 +24,6 @@ PODS:
 
 DEPENDENCIES:
   - CoreModule (from `../../AppModules/CoreModule`)
-  - Cuckoo
   - PersonalDictionary (from `../../AppModules/PersonalDictionary`)
   - RxBlocking (= 5.1)
   - SwiftLint
@@ -35,7 +31,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Cuckoo
     - RxBlocking
     - RxCocoa
     - RxRelay
@@ -53,7 +48,6 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CoreModule: 95a0784ca0b9f49a973a1680872219c96cfe8856
-  Cuckoo: 4da01933dfcc88b23a3bb3ac95314d35c93e7c3d
   PersonalDictionary: ea6f97be3e4dac882e6066bb1ac9044c2cb1fad4
   RxBlocking: 5ef131267220f92ef68531dd6afeaf407cd6b41a
   RxCocoa: 13d2a4d7546a34b8ececae8c281e4ea1dbb94f2b
@@ -63,6 +57,6 @@ SPEC CHECKSUMS:
   SwiftLint: aaa29a9f649316095a9079595cb60906bd899353
   TodoList: c624e460f54189fe88ca25f26090d2a35c04e1b2
 
-PODFILE CHECKSUM: a9831cd5dd7634c89404e46ac3d58a71b128057b
+PODFILE CHECKSUM: 2711dead6d34b207144bf916ba0e3de4ca18059a
 
 COCOAPODS: 1.11.2
