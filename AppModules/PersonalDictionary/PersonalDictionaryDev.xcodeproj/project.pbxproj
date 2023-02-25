@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0CB0FCBB283018D700619D58 /* EverydayPNTimeCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB0FCBA283018D700619D58 /* EverydayPNTimeCalculatorTests.swift */; };
-		0CB69D7E27EDCD6E00970B50 /* DataTypes+Cuckoo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB69D7227EDCD6E00970B50 /* DataTypes+Cuckoo.swift */; };
 		0CB69D8027EDCD6E00970B50 /* LangRepositoryImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB69D7727EDCD6E00970B50 /* LangRepositoryImplTests.swift */; };
-		0CB69D8327EDCD6E00970B50 /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB69D7D27EDCD6E00970B50 /* GeneratedMocks.swift */; };
 		0CB69D8927EDD00400970B50 /* TestStorageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0CB69D8727EDD00400970B50 /* TestStorageModel.xcdatamodeld */; };
 		0CBF5D6C27EDBF9F00F07448 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF5D6B27EDBF9F00F07448 /* AppDelegate.swift */; };
 		0CBF5D6E27EDBF9F00F07448 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF5D6D27EDBF9F00F07448 /* SceneDelegate.swift */; };
@@ -36,9 +34,7 @@
 /* Begin PBXFileReference section */
 		0C4EB709282BD09D00A72289 /* PersonalDictionaryDev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PersonalDictionaryDev.entitlements; sourceTree = "<group>"; };
 		0CB0FCBA283018D700619D58 /* EverydayPNTimeCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EverydayPNTimeCalculatorTests.swift; sourceTree = "<group>"; };
-		0CB69D7227EDCD6E00970B50 /* DataTypes+Cuckoo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataTypes+Cuckoo.swift"; sourceTree = "<group>"; };
 		0CB69D7727EDCD6E00970B50 /* LangRepositoryImplTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LangRepositoryImplTests.swift; sourceTree = "<group>"; };
-		0CB69D7D27EDCD6E00970B50 /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
 		0CB69D8827EDD00400970B50 /* TestStorageModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TestStorageModel.xcdatamodel; sourceTree = "<group>"; };
 		0CBF5D6827EDBF9E00F07448 /* PersonalDictionaryDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PersonalDictionaryDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CBF5D6B27EDBF9F00F07448 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -156,8 +152,6 @@
 		0CBF5D8127EDBFA300F07448 /* PersonalDictionaryDevTests */ = {
 			isa = PBXGroup;
 			children = (
-				0CB69D7227EDCD6E00970B50 /* DataTypes+Cuckoo.swift */,
-				0CB69D7D27EDCD6E00970B50 /* GeneratedMocks.swift */,
 				0CCCA4B329A90EB0005E6D4A /* ManualMocks.swift */,
 				0CB0FCB72830188F00619D58 /* PushNotification */,
 				0CB69D7327EDCD6E00970B50 /* Repository */,
@@ -398,9 +392,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CCCA4B229A90D97005E6D4A /* WordListRepositoryImpTests.swift in Sources */,
-				0CB69D8327EDCD6E00970B50 /* GeneratedMocks.swift in Sources */,
 				0CB69D8027EDCD6E00970B50 /* LangRepositoryImplTests.swift in Sources */,
-				0CB69D7E27EDCD6E00970B50 /* DataTypes+Cuckoo.swift in Sources */,
 				0CB69D8927EDD00400970B50 /* TestStorageModel.xcdatamodeld in Sources */,
 				0CCCA4B729A91B77005E6D4A /* PonsTranslationServiceTests.swift in Sources */,
 				0CB0FCBB283018D700619D58 /* EverydayPNTimeCalculatorTests.swift in Sources */,

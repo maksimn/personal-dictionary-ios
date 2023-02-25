@@ -5,7 +5,6 @@
 //  Created by Maksim Ivanov on 24.02.2023.
 //
 
-import Cuckoo
 import RxBlocking
 import XCTest
 @testable import PersonalDictionary
@@ -28,16 +27,7 @@ class WordListRepositoryImpTests: XCTestCase {
         )
     }()
 
-    lazy var mockLangRepository = {
-        let mockLangRepository = MockLangRepository()
-
-        stub(mockLangRepository) { stub in
-            when(stub.allLangs.get)
-                .thenReturn([langOne, langTwo])
-        }
-
-        return mockLangRepository
-    }()
+    lazy var mockLangRepository = MockLangRepository(allLangsValue: [langOne, langTwo])
 
     override func tearDownWithError() throws {
         try wordListRepository.removeAllWords()
