@@ -10,5 +10,5 @@ protocol FavoriteWordListViewModel: AnyObject {
 
     var favoriteWordList: BindableWordList { get }
 
-    func update()
+    func fetchFavoriteWordList()
 }
