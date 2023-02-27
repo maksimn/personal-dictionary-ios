@@ -9,7 +9,7 @@ import RxSwift
 import UIKit
 
 /// Реализация представления списка избранных слов.
-final class FavoriteWordListView: UIViewController {
+final class FavoriteWordListViewController: UIViewController {
 
     private let viewModel: FavoriteWordListViewModel
 
@@ -22,12 +22,12 @@ final class FavoriteWordListView: UIViewController {
     init(
         viewModel: FavoriteWordListViewModel,
         wordListBuilder: WordListBuilder,
-        noFavoriteWordsText: String,
+        labelText: String,
         theme: Theme
     ) {
         self.viewModel = viewModel
         self.wordListGraph = wordListBuilder.build()
-        centerLabel = SecondaryText(noFavoriteWordsText, theme)
+        centerLabel = SecondaryText(labelText, theme)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -41,22 +41,22 @@ final class FavoriteWordListView: UIViewController {
         view = UIView()
 
         initViews()
-        subscribeToViewModel()
+        bindToViewModel()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.update()
+        viewModel.fetchFavoriteWordList()
     }
 
-    // MARK: - Private
-
-    private func subscribeToViewModel() {
+    private func bindToViewModel() {
         viewModel.favoriteWordList.subscribe(onNext: { [weak self] wordList in
             self?.wordListGraph.model?.wordList = wordList
             self?.centerLabel.isHidden = !wordList.isEmpty
         }).disposed(by: disposeBag)
     }
+
+    // MARK: - Layout
 
     private func initViews() {
         layout(wordListViewController: wordListGraph.viewController)

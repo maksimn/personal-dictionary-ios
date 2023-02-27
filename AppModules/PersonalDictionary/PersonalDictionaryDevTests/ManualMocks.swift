@@ -44,3 +44,31 @@ class MockLangRepository: LangRepository {
 
     lazy var targetLang: Lang = defaultLang
 }
+
+class MockFavoriteWordListFetcher: FavoriteWordListFetcher {
+
+    let returnValue: [Word]
+
+    init(returnValue: [Word]) {
+        self.returnValue = returnValue
+    }
+
+    var favoriteWordList: [Word] {
+        returnValue
+    }
+}
+
+class MockReadableWordStream: ReadableWordStream {
+
+    var newWord: Observable<Word> {
+        Observable<Word>.empty()
+    }
+
+    var removedWord: Observable<Word> {
+        Observable<Word>.empty()
+    }
+
+    var updatedWord: Observable<Word> {
+        Observable<Word>.empty()
+    }
+}
