@@ -29,4 +29,10 @@ Pod::Spec.new do |spec|
   spec.dependency 'RxSwift', '5.1'
   spec.dependency 'SnapKit', '~> 4.0'
 
+  spec.test_spec 'Tests' do |test_spec|
+    test_spec.source_files = 'Tests/**/*'
+    test_spec.resources = ["TestsResources/TestStorageModel.xcdatamodeld"]
+    test_spec.dependency 'RxBlocking', '5.1'
+  end  
+
 end

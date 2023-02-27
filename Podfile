@@ -8,7 +8,8 @@ target 'SuperList' do
   pod 'CoreModule',
     :path => './AppModules/CoreModule'
   pod 'PersonalDictionary',
-    :path => './AppModules/PersonalDictionary'
+    :path => './AppModules/PersonalDictionary',
+    :testspecs => ['Tests'] 
   pod 'TodoList',
     :path => './AppModules/TodoList'
 
