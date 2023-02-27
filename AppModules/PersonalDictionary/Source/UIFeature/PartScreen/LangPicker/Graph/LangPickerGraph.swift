@@ -13,6 +13,6 @@ protocol LangPickerGraph {
     /// Представление выбора языка
     var uiview: UIView { get }
 
-    /// Модель для выбора языка
-    var model: LangPickerModel? { get }
+    /// Модель представления выбора языка
+    var viewmodel: LangPickerViewModel { get }
 }

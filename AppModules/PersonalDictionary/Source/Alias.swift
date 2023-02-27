@@ -10,3 +10,5 @@ import RxCocoa
 typealias BindableWordList = BehaviorRelay<[Word]>
 
 typealias BindableSearchResult = BehaviorRelay<SearchResultData>
+
+typealias BindableLangPickerState = BehaviorRelay<LangPickerState?>

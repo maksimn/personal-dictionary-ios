@@ -45,6 +45,19 @@ class MockLangRepository: LangRepository {
     lazy var targetLang: Lang = defaultLang
 }
 
+class MockWordListFetcher: WordListFetcher {
+
+    let returnValue: [Word]
+
+    init(returnValue: [Word]) {
+        self.returnValue = returnValue
+    }
+
+    var wordList: [Word] {
+        returnValue
+    }
+}
+
 class MockFavoriteWordListFetcher: FavoriteWordListFetcher {
 
     let returnValue: [Word]
@@ -70,5 +83,18 @@ class MockReadableWordStream: ReadableWordStream {
 
     var updatedWord: Observable<Word> {
         Observable<Word>.empty()
+    }
+}
+
+class MockLangPickerListener: LangPickerListener {
+
+    let callback: () -> Void
+
+    init(_ callback: @escaping () -> Void) {
+        self.callback = callback
+    }
+
+    func onLangPickerStateChanged(_ state: LangPickerState) {
+        callback()
     }
 }
