@@ -96,7 +96,7 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
             make.edges.equalTo(contentView)
         }
 
-        langPickerGraph?.model?.listener = self
+        langPickerGraph?.viewmodel.listener = self
     }
 
     private func bindToViewModel() {
@@ -109,8 +109,7 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
         textField.text = state.text
         sourceLangLabel.text = state.sourceLang.name
         targetLangLabel.text = state.targetLang.name
-        langPickerGraph?.uiview.isHidden = state.langPickerState.isHidden
-        langPickerGraph?.model?.set(state: state.langPickerState)
+        langPickerGraph?.viewmodel.state.accept(state.langPickerState)
     }
 
     private func sendNewWordEventAndDismiss() {

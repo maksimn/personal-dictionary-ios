@@ -52,7 +52,8 @@ final class LangPickerView: UIView {
     private func bindToViewModel() {
         viewModel.state.subscribe(onNext: { [weak self] state in
             guard let state = state else { return }
-            
+
+            self?.isHidden = state.isHidden
             self?.langPicker.select(state.lang)
         }).disposed(by: disposeBag)
     }

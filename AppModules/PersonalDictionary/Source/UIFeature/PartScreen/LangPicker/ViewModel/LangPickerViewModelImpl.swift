@@ -5,22 +5,13 @@
 //  Created by Maxim Ivanov on 09.11.2021.
 //
 
-import RxCocoa
-
 /// Реализация модели представления Выбора языка.
 final class LangPickerViewModelImpl: LangPickerViewModel {
 
     /// Данные модели представления.
-    let state = BehaviorRelay<LangPickerState?>(value: nil)
+    let state = BindableLangPickerState(value: nil)
 
-    private let model: LangPickerModel
-
-    /// Инициализатор.
-    /// - Parameters:
-    ///  - model: модель фичи "Выбор языка"
-    init(model: LangPickerModel) {
-        self.model = model
-    }
+    weak var listener: LangPickerListener?
 
     func onSelect(_ lang: Lang) {
         guard let oldState = state.value else { return }
@@ -29,6 +20,6 @@ final class LangPickerViewModelImpl: LangPickerViewModel {
         newState.lang = lang
         newState.isHidden = true
 
-        model.listener?.onLangPickerStateChanged(newState)
+        listener?.onLangPickerStateChanged(newState)
     }
 }

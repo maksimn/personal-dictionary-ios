@@ -5,13 +5,31 @@
 //  Created by Maxim Ivanov on 09.11.2021.
 //
 
-import RxCocoa
+/// Данные о выбранном языке
+struct LangPickerState {
+
+    /// Выбранный язык
+    var lang: Lang
+
+    /// Тип выбранного языка
+    var langType: LangType
+
+    /// Скрыто ли представление для выбора языка
+    var isHidden: Bool
+}
+
+protocol LangPickerListener: AnyObject {
+
+    func onLangPickerStateChanged(_ state: LangPickerState)
+}
 
 /// Модель представления Выбора языка.
 protocol LangPickerViewModel: AnyObject {
 
     /// Данные модели представления.
-    var state: BehaviorRelay<LangPickerState?> { get }
+    var state: BindableLangPickerState { get }
+
+    var listener: LangPickerListener? { get set }
 
     func onSelect(_ lang: Lang)
 }
