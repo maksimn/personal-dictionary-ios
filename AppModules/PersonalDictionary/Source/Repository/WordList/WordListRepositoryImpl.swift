@@ -39,14 +39,14 @@ final class WordListRepositoryImpl: WordListRepository {
             container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
 
             if let error = error {
-                self.logger.log("\(error)", .error)
+                self.logger.log("\(error)")
             }
         })
         return container
     }()
 
     private let langRepository: LangRepository
-    private let logger: Logger
+    private let logger: SLogger
     private let args: WordListRepositoryArgs
 
     /// Инициализатор.
@@ -56,7 +56,7 @@ final class WordListRepositoryImpl: WordListRepository {
     ///  - logger: логгер.
     init(args: WordListRepositoryArgs,
          langRepository: LangRepository,
-         logger: Logger) {
+         logger: SLogger) {
         self.args = args
         self.langRepository = langRepository
         self.logger = logger
@@ -75,7 +75,7 @@ final class WordListRepositoryImpl: WordListRepository {
                 userDefaults: UserDefaults.standard,
                 data: appConfig.langData
             ),
-            logger: LoggerImpl(category: "PersonalDictionary.WordListRepository")
+            logger: SLoggerImp(category: "PersonalDictionary.WordListRepository")
         )
     }
 
@@ -96,7 +96,7 @@ final class WordListRepositoryImpl: WordListRepository {
         return Completable.create { [weak self] completable in
             let backgroundContext = self?.persistentContainer.newBackgroundContext()
 
-            backgroundContext?.perform { [weak self] in
+            backgroundContext?.perform {
                 let wordMO = WordMO(entity: WordMO.entity(), insertInto: backgroundContext)
 
                 wordMO.set(word)
@@ -107,7 +107,6 @@ final class WordListRepositoryImpl: WordListRepository {
                         completable(.completed)
                     }
                 } catch {
-                    self?.logger.log("\(error)", .error)
                     DispatchQueue.main.async {
                         completable(.error(error))
                     }
@@ -130,7 +129,7 @@ final class WordListRepositoryImpl: WordListRepository {
 
             fetchRequest.predicate = predicate
 
-            backgroundContext?.perform { [weak self] in
+            backgroundContext?.perform {
                 do {
                     let array = try backgroundContext?.fetch(fetchRequest) ?? []
 
@@ -144,7 +143,6 @@ final class WordListRepositoryImpl: WordListRepository {
                         completable(.completed)
                     }
                 } catch {
-                    self?.logger.log("\(error)", .error)
                     DispatchQueue.main.async {
                         completable(.error(error))
                     }
@@ -166,7 +164,7 @@ final class WordListRepositoryImpl: WordListRepository {
 
             fetchRequest.predicate = predicate
 
-            backgroundContext?.perform { [weak self] in
+            backgroundContext?.perform {
                 do {
                     let array = try backgroundContext?.fetch(fetchRequest) ?? []
 
@@ -180,7 +178,6 @@ final class WordListRepositoryImpl: WordListRepository {
                         completable(.completed)
                     }
                 } catch {
-                    self?.logger.log("\(error)", .error)
                     DispatchQueue.main.async {
                         completable(.error(error))
                     }
@@ -226,7 +223,7 @@ final class WordListRepositoryImpl: WordListRepository {
 
             return wordMOList.compactMap { $0.convert(using: langRepository) }
         } catch {
-            logger.log("\(error)", .error)
+            logger.log("\(error)")
             return []
         }
     }

@@ -20,7 +20,7 @@ class TodoListServiceOne: TodoListService {
     private let isRemotingEnabled: Bool
     private let cache: TodoListCache
     private let deadItemsCache: DeadItemsCache
-    private let logger: Logger
+    private let logger: SLogger
     private let networking: NetworkingService
     private let httpRequestCounterPublisher: HttpRequestCounterPublisher
     private let mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisher
@@ -36,7 +36,7 @@ class TodoListServiceOne: TodoListService {
     init(isRemotingEnabled: Bool,
          cache: TodoListCache,
          deadItemsCache: DeadItemsCache,
-         logger: Logger,
+         logger: SLogger,
          networking: NetworkingService,
          httpRequestCounterPublisher: HttpRequestCounterPublisher,
          mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisher) {
@@ -255,7 +255,7 @@ class TodoListServiceOne: TodoListService {
     }
 
     private func requestWillStart(_ requestName: String) {
-        logger.log("\n\(requestName) NETWORK REQUEST START\n", .debug)
+        logger.log("\n\(requestName) NETWORK REQUEST START\n")
         httpRequestCounterPublisher.increment()
     }
 
@@ -263,9 +263,9 @@ class TodoListServiceOne: TodoListService {
         httpRequestCounterPublisher.decrement()
 
         if let error = error {
-            logger.log("\n\(requestName) NETWORK REQUEST ERROR\n\("\(error)")\n", .error)
+            logger.log("\n\(requestName) NETWORK REQUEST ERROR\n\("\(error)")\n")
         } else {
-            logger.log("\n\(requestName) NETWORK REQUEST SUCCESS\n", .debug)
+            logger.log("\n\(requestName) NETWORK REQUEST SUCCESS\n")
         }
     }
 

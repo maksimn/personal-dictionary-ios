@@ -12,7 +12,7 @@ import Foundation
 class TodoListCacheImp: TodoListCache {
 
     private let container: TodoListPersistentContainer
-    private let logger: Logger
+    private let logger: SLogger
 
     private var mainContext: NSManagedObjectContext {
         container.persistentContainer.viewContext
@@ -23,7 +23,7 @@ class TodoListCacheImp: TodoListCache {
     }
 
     init(container: TodoListPersistentContainer,
-         logger: Logger) {
+         logger: SLogger) {
         self.container = container
         self.logger = logger
     }
@@ -46,7 +46,7 @@ class TodoListCacheImp: TodoListCache {
 
             return todoItemMOList.map { $0.todoItem }
         } catch {
-            logger.log("\(error)", .error)
+            logger.log("\(error)")
             return []
         }
     }
@@ -69,7 +69,7 @@ class TodoListCacheImp: TodoListCache {
                     completion(nil)
                 }
             } catch {
-                self?.logger.log("\(error)", .error)
+                self?.logger.log("\(error)")
                 DispatchQueue.main.async {
                     completion(error)
                 }
@@ -98,7 +98,7 @@ class TodoListCacheImp: TodoListCache {
                     completion(nil)
                 }
             } catch {
-                self?.logger.log("\(error)", .error)
+                self?.logger.log("\(error)")
                 DispatchQueue.main.async {
                     completion(error)
                 }
@@ -127,7 +127,7 @@ class TodoListCacheImp: TodoListCache {
                     completion(nil)
                 }
             } catch {
-                self?.logger.log("\(error)", .error)
+                self?.logger.log("\(error)")
                 DispatchQueue.main.async {
                     completion(error)
                 }
@@ -154,7 +154,7 @@ class TodoListCacheImp: TodoListCache {
                     completion(nil)
                 }
             } catch let error as NSError {
-                self?.logger.log("\(error)", .error)
+                self?.logger.log("\(error)")
                 DispatchQueue.main.async {
                     completion(error)
                 }

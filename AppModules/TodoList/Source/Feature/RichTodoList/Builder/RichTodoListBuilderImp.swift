@@ -21,7 +21,7 @@ final class RichTodoListBuilderImp: RichTodoListBuilder {
 
     func build() -> RichTodoListGraph {
         let token = ""
-        let logger = LoggerImpl(category: "TodoList.RichTodoList")
+        let logger = SLoggerImp(category: "TodoList.RichTodoList")
         let networkingService = NetworkingServiceImp(
             urlString: "https://d5dps3h13rv6902lp5c8.apigw.yandexcloud.net",
             headers: [

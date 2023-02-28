@@ -5,13 +5,12 @@
 //  Created by Maksim Ivanov on 24.02.2023.
 //
 
-import os
 import CoreModule
 import RxSwift
 @testable import PersonalDictionary
 
-class LoggerStub: CoreModule.Logger {
-    func log(_ message: String, _ level: OSLogType) { }
+class LoggerStub: SLogger {
+    func log(_ message: String) { }
 }
 
 class MockHttpClient: HttpClient {
