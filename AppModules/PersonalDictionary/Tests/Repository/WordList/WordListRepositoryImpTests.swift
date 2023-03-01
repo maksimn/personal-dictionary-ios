@@ -23,7 +23,7 @@ class WordListRepositoryImpTests: XCTestCase {
     lazy var repositoryArgs = {
         WordListRepositoryArgs(
             bundle: Bundle(for: type(of: self)),
-            persistentContainerName: "TestStorageModel"
+            persistentContainerName: "StorageModel"
         )
     }()
 

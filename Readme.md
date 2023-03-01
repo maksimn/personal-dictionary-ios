@@ -148,6 +148,8 @@ protocol FeatureListener: AnyObject {
 
 3) Использовать Unidirectional Data Flow (ReSwift). Позволяет обойтись без делегатов, без Rx и без NotificationCenter.
 
+---
+
 ### Логирование
 
 Что нужно логировать?
