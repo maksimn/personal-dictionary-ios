@@ -10,9 +10,9 @@ import CoreModule
 
 final class TodoListPersistentContainer {
 
-    private let logger: Logger
+    private let logger: SLogger
 
-    init(logger: Logger) {
+    init(logger: SLogger) {
         self.logger = logger
     }
 
@@ -32,7 +32,7 @@ final class TodoListPersistentContainer {
             container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
 
             if let error = error {
-                self.logger.log("\(error)", .error)
+                self.logger.log("\(error)")
             }
         })
         return container

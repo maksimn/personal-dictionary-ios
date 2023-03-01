@@ -22,7 +22,7 @@ final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUs
     private let pnTimeCalculator: PNTimeCalculator
     private let pushNotificationData: PushNotificationData
     private let navToNewWordRouter: CoreRouter
-    private let logger: Logger
+    private let logger: SLogger
 
     private lazy var content = {
         let notificationContent = UNMutableNotificationContent()
@@ -39,7 +39,7 @@ final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUs
          pnTimeCalculator: PNTimeCalculator,
          pushNotificationData: PushNotificationData,
          navToNewWordRouter: CoreRouter,
-         logger: Logger) {
+         logger: SLogger) {
         self.userNotificationCenter = userNotificationCenter
         self.application = application
         self.pnTimeCalculator = pnTimeCalculator
@@ -64,9 +64,9 @@ final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUs
 
         userNotificationCenter.add(notificationRequest, withCompletionHandler: { [weak self] error in
             if let error = error {
-                self?.logger.log("\(error)", .error)
+                self?.logger.log("\(error)")
             } else {
-                self?.logger.log("PushNotificationService schedule SUCCESS.", .debug)
+                self?.logger.log("PushNotificationService schedule SUCCESS.")
             }
         })
     }
@@ -96,9 +96,9 @@ final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUs
             options: [.alert, .sound, .badge],
             completionHandler: { [weak self] granted, error in
                 if !granted, let error = error {
-                    self?.logger.log("\(error)", .error)
+                    self?.logger.log("\(error)")
                 } else {
-                    self?.logger.log("PushNotificationService requestAuthorization SUCCESS.", .debug)
+                    self?.logger.log("PushNotificationService requestAuthorization SUCCESS.")
                 }
             }
         )

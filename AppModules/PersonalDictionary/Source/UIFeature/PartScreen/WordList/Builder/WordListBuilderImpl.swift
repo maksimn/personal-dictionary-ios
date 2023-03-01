@@ -48,7 +48,7 @@ final class WordListBuilderImpl: WordListBuilder {
         let translationService = PonsTranslationService(
             secret: dependency.appConfig.ponsApiSecret,
             httpClient: HttpClientImpl(sessionConfiguration: URLSessionConfiguration.default),
-            logger: LoggerImpl(category: "PersonalDictionary.WordList")
+            logger: SLoggerImp(category: "PersonalDictionary.WordList")
         )
 
         return WordListGraphImpl(

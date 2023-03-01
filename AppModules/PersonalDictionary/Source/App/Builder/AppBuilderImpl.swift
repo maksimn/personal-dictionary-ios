@@ -17,7 +17,7 @@ public final class AppBuilderImpl: AppBuilder {
     public func build() -> App {
         let dependency = appDependency()
 
-        return AppImpl(
+        return App(
             rootViewController: rootViewController(dependency),
             pushNotificationService: pushNotificationService(dependency)
         )
@@ -26,12 +26,10 @@ public final class AppBuilderImpl: AppBuilder {
     private func appDependency() -> AppDependency {
         let bundle = Bundle(for: type(of: self))
         let appConfigFactory = AppConfigFactory(bundle: bundle)
-        let navigationController = UINavigationController()
-        let appConfig = appConfigFactory.create()
 
         return AppDependencyImpl(
-            navigationController: navigationController,
-            appConfig: appConfig,
+            navigationController: UINavigationController(),
+            appConfig: appConfigFactory.create(),
             bundle: bundle
         )
     }

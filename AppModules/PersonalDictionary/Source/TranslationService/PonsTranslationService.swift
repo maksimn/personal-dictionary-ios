@@ -13,7 +13,7 @@ final class PonsTranslationService: TranslationService {
 
     private let httpClient: HttpClient
     private let secret: String
-    private let logger: Logger
+    private let logger: SLogger
 
     private let apiUrl = "https://api.pons.com/v1/dictionary"
 
@@ -22,7 +22,7 @@ final class PonsTranslationService: TranslationService {
     ///  - secret: секрет для обращения к онлайновому PONS API.
     ///  - httpClient: базовая служба для сетевых запросов по протоколу HTTP.
     ///  - logger: логгер.
-    init(secret: String, httpClient: HttpClient, logger: Logger) {
+    init(secret: String, httpClient: HttpClient, logger: SLogger) {
         self.secret = secret
         self.httpClient = httpClient
         self.logger = logger
@@ -43,7 +43,7 @@ final class PonsTranslationService: TranslationService {
             URLQueryItem(name: "l", value: sourceLang + targetLang)
         ]
 
-        logger.log("PONS FETCH TRANSLATION START", .debug)
+        logger.log("PONS FETCH TRANSLATION START")
 
         return httpClient
             .send(
@@ -56,7 +56,7 @@ final class PonsTranslationService: TranslationService {
             .map { [weak self] data in
                 let ponsArray = try JSONDecoder().decode([PonsResponseData].self, from: data)
 
-                self?.logger.log("PONS FETCH TRANSLATION SUCCESS", .debug)
+                self?.logger.log("PONS FETCH TRANSLATION SUCCESS")
 
                 return ponsArray.first?.translation ?? ""
             }

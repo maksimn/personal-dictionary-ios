@@ -11,7 +11,7 @@ import CoreModule
 final class DeadItemsCacheImp: DeadItemsCache {
 
     private let container: TodoListPersistentContainer
-    private let logger: Logger
+    private let logger: SLogger
 
     private var mainContext: NSManagedObjectContext {
         container.persistentContainer.viewContext
@@ -22,7 +22,7 @@ final class DeadItemsCacheImp: DeadItemsCache {
     }
 
     init(container: TodoListPersistentContainer,
-         logger: Logger) {
+         logger: SLogger) {
         self.container = container
         self.logger = logger
     }
@@ -37,7 +37,7 @@ final class DeadItemsCacheImp: DeadItemsCache {
                 Tombstone(itemId: tombstoneMO.itemId ?? "", deletedAt: tombstoneMO.deletedAt ?? Date())
             }
         } catch {
-            logger.log("\(error)", .error)
+            logger.log("\(error)")
             return []
         }
     }
@@ -57,7 +57,7 @@ final class DeadItemsCacheImp: DeadItemsCache {
                     completion(nil)
                 }
             } catch {
-                self?.logger.log("\(error)", .error)
+                self?.logger.log("\(error)")
                 DispatchQueue.main.async {
                     completion(error)
                 }
@@ -78,7 +78,7 @@ final class DeadItemsCacheImp: DeadItemsCache {
                     completion(nil)
                 }
             } catch {
-                self?.logger.log("\(error)", .error)
+                self?.logger.log("\(error)")
                 DispatchQueue.main.async {
                     completion(error)
                 }

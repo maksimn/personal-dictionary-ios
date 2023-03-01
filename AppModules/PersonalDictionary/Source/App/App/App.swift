@@ -7,12 +7,12 @@
 
 import UIKit
 
-/// Приложение "Личный словарь иностранных слов".
-public protocol App {
+/// Корневой объект приложения "Личный словарь иностранных слов".
+public struct App {
 
-    /// Получение корневого контроллера приложения
-    var rootViewController: UIViewController { get }
+    /// Корневой контроллер приложения
+    public let rootViewController: UIViewController
 
     /// Служба для работы с пуш-уведомлениями.
-    var pushNotificationService: PushNotificationService { get }
+    public let pushNotificationService: PushNotificationService
 }
