@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 12.11.2021.
 //
 
+import CoreModule
+
 /// Реализация билдера фичи "Элемент ввода поискового текста".
 final class SearchTextInputBuilder: ViewBuilder {
 
@@ -18,13 +20,27 @@ final class SearchTextInputBuilder: ViewBuilder {
     }
 
     func build() -> UIView {
-        let viewParams = SearchTextInputViewParams(
-            placeholder: bundle.moduleLocalizedString("Enter a word for searching"),
-            size: CGSize(width: UIScreen.main.bounds.width - 72, height: 44)
+        let viewModel = SearchTextInputViewModelImpl(
+            searchTextStream: SearchTextStreamImpl.instance,
+            logger: logger()
         )
-        let model = SearchTextInputModelImpl(searchTextStream: SearchTextStreamImpl.instance)
-        let view = SearchTextInputView(params: viewParams, model: model)
+        let view = SearchTextInputView(
+            params: viewParams(),
+            viewModel: viewModel,
+            logger: logger()
+        )
 
         return view
+    }
+
+    private func logger() -> SLogger {
+        SLoggerImp(category: "PersonalDictionary.SearchTextInput")
+    }
+
+    private func viewParams() -> SearchTextInputParams {
+        let placeholder = bundle.moduleLocalizedString("LS_SEARCH_TEXT_PLACEHOLDER")
+        let size = CGSize(width: UIScreen.main.bounds.width - 72, height: 44)
+
+        return SearchTextInputParams(placeholder: placeholder, size: size)
     }
 }

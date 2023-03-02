@@ -135,3 +135,12 @@ class MockNewWordModel: NewWordModel {
 
     func save(targetLang: Lang) { }
 }
+
+class MockMutableSearchTextStream: MutableSearchTextStream {
+
+    var mockMethod: (() -> Void)?
+
+    func send(_ searchText: String) {
+        mockMethod?()
+    }
+}

@@ -6,7 +6,7 @@
 //
 
 /// Модель элемента ввода поискового текста.
-protocol SearchTextInputModel {
+protocol SearchTextInputViewModel {
 
-    func set(searchText: String)
+    var searchText: BindableString { get }
 }
