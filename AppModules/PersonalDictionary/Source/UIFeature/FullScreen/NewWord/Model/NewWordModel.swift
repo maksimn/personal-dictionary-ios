@@ -9,7 +9,7 @@
 protocol NewWordModel {
 
     /// Отправить событие добавления нового слова в словарь
-    func sendNewWord()
+    func sendNewWord(_ word: Word)
 
     /// Сохранить исходный язык.
     func save(sourceLang: Lang)

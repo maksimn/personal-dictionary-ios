@@ -23,7 +23,7 @@ final class NavToNewWordBuilder: ViewBuilder {
             userDefaults: UserDefaults.standard,
             data: dependency.appConfig.langData
         )
-        let newWordBuilder = NewWordBuilderImpl(
+        let newWordBuilder = NewWordBuilder(
             bundle: dependency.bundle,
             langRepository: langRepository
         )

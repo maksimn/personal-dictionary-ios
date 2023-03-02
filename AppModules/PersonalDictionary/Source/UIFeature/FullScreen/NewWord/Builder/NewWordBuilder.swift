@@ -5,8 +5,10 @@
 //  Created by Maxim Ivanov on 10.11.2021.
 //
 
+import CoreModule
+
 /// Реализация билдера Фичи "Добавление нового слова" в личный словарь.
-final class NewWordBuilderImpl: ViewControllerBuilder {
+final class NewWordBuilder: ViewControllerBuilder {
 
     private let bundle: Bundle
     private let langRepository: LangRepository
@@ -25,12 +27,10 @@ final class NewWordBuilderImpl: ViewControllerBuilder {
     /// - Returns:
     ///  - экран фичи  "Добавление нового слова".
     func build() -> UIViewController {
-        weak var viewModelLazy: NewWordViewModel?
-
         let model = NewWordModelImpl(
-            viewModelBlock: { viewModelLazy },
             langRepository: langRepository,
-            newWordStream: WordStreamImpl.instance
+            newWordStream: WordStreamImpl.instance,
+            logger: SLoggerImp(category: "PersonalDictionary.NewWord")
         )
         let viewModel = NewWordViewModelImpl(
             model: model,
@@ -42,8 +42,6 @@ final class NewWordBuilderImpl: ViewControllerBuilder {
             langPickerBuilder: langPickerBuilder(),
             theme: Theme.data
         )
-
-        viewModelLazy = viewModel
 
         return view
     }

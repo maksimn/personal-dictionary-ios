@@ -54,7 +54,7 @@ final class PushNotificationBuilderImpl: PushNotificationBuilder {
         let appConfig = dependency.appConfig
         let bundle = dependency.bundle
         let langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard, data: appConfig.langData)
-        let newWordBuilder = NewWordBuilderImpl(bundle: bundle, langRepository: langRepository)
+        let newWordBuilder = NewWordBuilder(bundle: bundle, langRepository: langRepository)
 
         return NavToNewWordRouter(
             navigationController: dependency.navigationController,

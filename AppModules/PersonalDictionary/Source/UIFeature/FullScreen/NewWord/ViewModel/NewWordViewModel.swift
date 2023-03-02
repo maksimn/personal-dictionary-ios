@@ -5,8 +5,6 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
-import RxCocoa
-
 /// Данные модели "Добавления нового слова" в личный словарь.
 struct NewWordState {
     var text: String
@@ -19,7 +17,7 @@ struct NewWordState {
 protocol NewWordViewModel: AnyObject {
 
     /// Данные модели представления
-    var state: BehaviorRelay<NewWordState> { get }
+    var state: BindableNewWordState { get }
 
     /// Обновить написание слова в модели
     /// - Parameters:
