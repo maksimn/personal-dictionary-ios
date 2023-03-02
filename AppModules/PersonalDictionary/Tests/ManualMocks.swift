@@ -30,6 +30,8 @@ class MockLangRepository: LangRepository {
 
     let allLangsValue: [Lang]
     let defaultLang = Lang(id: .init(raw: 0), name: "", shortName: "")
+    var mockSetSourceLang: (() -> Void)?
+    var mockSetTargetLang: (() -> Void)?
 
     init(allLangsValue: [Lang]) {
         self.allLangsValue = allLangsValue
@@ -39,9 +41,23 @@ class MockLangRepository: LangRepository {
         allLangsValue
     }
 
-    lazy var sourceLang: Lang = defaultLang
+    var sourceLang: Lang {
+        get {
+            defaultLang
+        }
+        set {
+            mockSetSourceLang?()
+        }
+    }
 
-    lazy var targetLang: Lang = defaultLang
+    var targetLang: Lang {
+        get {
+            defaultLang
+        }
+        set {
+            mockSetTargetLang?()
+        }
+    }
 }
 
 class MockWordListFetcher: WordListFetcher {
@@ -96,4 +112,26 @@ class MockLangPickerListener: LangPickerListener {
     func onLangPickerStateChanged(_ state: LangPickerState) {
         callback()
     }
+}
+
+class MockNewWordStream: NewWordStream {
+
+    var methodMock: (() -> Void)?
+
+    func sendNewWord(_ word: Word) {
+        methodMock?()
+    }
+}
+
+class MockNewWordModel: NewWordModel {
+
+    var mockSendNewWord: (() -> Void)?
+
+    func sendNewWord(_ word: Word) {
+        mockSendNewWord?()
+    }
+
+    func save(sourceLang: Lang) { }
+
+    func save(targetLang: Lang) { }
 }

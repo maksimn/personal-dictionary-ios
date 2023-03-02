@@ -5,15 +5,13 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
-import RxCocoa
-
 /// Реализация модели представления для экрана добавления нового слова в личный словарь.
 final class NewWordViewModelImpl: NewWordViewModel {
 
     private let model: NewWordModel
 
     /// Данные модели представления
-    let state: BehaviorRelay<NewWordState>
+    let state: BindableNewWordState
 
     /// Инициализатор.
     /// - Parameters:
@@ -21,12 +19,21 @@ final class NewWordViewModelImpl: NewWordViewModel {
     init(model: NewWordModel,
          initState: NewWordState) {
         self.model = model
-        state = BehaviorRelay<NewWordState>(value: initState)
+        state = BindableNewWordState(value: initState)
     }
 
     /// Отправить событие добавления нового слова в словарь
     func sendNewWord() {
-        model.sendNewWord()
+        let state = state.value
+        let word = Word(
+            text: state.text.trimmingCharacters(in: .whitespacesAndNewlines),
+            sourceLang: state.sourceLang,
+            targetLang: state.targetLang
+        )
+
+        guard !word.text.isEmpty else { return }
+
+        model.sendNewWord(word)
     }
 
     /// Обновить написание слова в модели

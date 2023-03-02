@@ -6,7 +6,7 @@
 //
 
 /// Данные о выбранном языке
-struct LangPickerState {
+struct LangPickerState: Equatable {
 
     /// Выбранный язык
     var lang: Lang
