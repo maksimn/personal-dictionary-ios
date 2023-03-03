@@ -7,6 +7,8 @@
 
 import RxCocoa
 
+typealias BindableString = BehaviorRelay<String>
+
 typealias BindableWordList = BehaviorRelay<[Word]>
 
 typealias BindableSearchResult = BehaviorRelay<SearchResultData>
