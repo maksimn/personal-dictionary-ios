@@ -15,31 +15,45 @@ final class SearchWordListBuilder: ViewControllerBuilder {
     }
 
     func build() -> UIViewController {
-        let wordListBuilder = WordListBuilderImpl(shouldAnimateWhenAppear: false, dependency: dependency)
-        let searchableWordList = WordListRepositoryImpl(appConfig: dependency.appConfig, bundle: dependency.bundle)
-        let noResultFoundText = dependency.bundle.moduleLocalizedString("LS_NO_WORDS_FOUND")
-
-        weak var viewModelLazy: SearchWordListViewModel?
-
-        let model = SearchWordListModelImpl(
-            viewModelBlock: { viewModelLazy },
-            searchableWordList: searchableWordList,
+        let model = SearchWordListModelImpl(searchableWordList: searchableWordList())
+        let viewModel = SearchWordListViewModelImpl(
+            initialData: initialData(),
+            model: model,
             searchTextStream: SearchTextStreamImpl.instance,
             searchModeStream: SearchModeStreamImpl.instance
         )
-        let viewModel = SearchWordListViewModelImpl(
-            initialData: SearchResultData(searchState: .initial, foundWordList: []),
-            model: model
-        )
         let view = SearchWordListViewController(
             viewModel: viewModel,
-            wordListBuilder: wordListBuilder,
-            noResultFoundText: noResultFoundText,
+            wordListBuilder: wordListBuilder(),
+            labelText: labelText(),
             theme: Theme.data
         )
 
-        viewModelLazy = viewModel
-
         return view
+    }
+
+    private func initialData() -> SearchResultData {
+        SearchResultData(
+            searchState: .initial,
+            foundWordList: []
+        )
+    }
+
+    private func wordListBuilder() -> WordListBuilder {
+        WordListBuilderImpl(
+            shouldAnimateWhenAppear: false,
+            dependency: dependency
+        )
+    }
+
+    private func labelText() -> String {
+        dependency.bundle.moduleLocalizedString("LS_NO_WORDS_FOUND")
+    }
+
+    private func searchableWordList() -> SearchableWordList {
+        WordListRepositoryImpl(
+            appConfig: dependency.appConfig,
+            bundle: dependency.bundle
+        )
     }
 }

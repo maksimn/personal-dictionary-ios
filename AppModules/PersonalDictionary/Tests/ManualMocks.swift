@@ -144,3 +144,34 @@ class MockMutableSearchTextStream: MutableSearchTextStream {
         mockMethod?()
     }
 }
+
+class MockSearchableWordList: SearchableWordList {
+
+    var mockFindWordsResult: [Word]?
+    var mockFindWordsWhereTranslationContainsResult: [Word]?
+
+    func findWords(contain string: String) -> [Word] {
+        mockFindWordsResult!
+    }
+
+    func findWords(whereTranslationContains string: String) -> [Word] {
+        mockFindWordsWhereTranslationContainsResult!
+    }
+}
+
+class MockSearchWordListModel: SearchWordListModel {
+
+    var mockSearchResult: SearchResultData?
+
+    func performSearch(for searchText: String, mode: SearchMode) -> SearchResultData {
+        mockSearchResult!
+    }
+}
+
+class MockSearchTextStream: SearchTextStream {
+    var searchText: Observable<String> { Observable<String>.empty() }
+}
+
+class MockSearchModeStream: SearchModeStream {
+    var searchMode: Observable<SearchMode> { Observable<SearchMode>.empty() }
+}

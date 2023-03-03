@@ -21,16 +21,16 @@ final class SearchWordListViewController: UIViewController {
     /// - Parameters:
     ///  - viewModel: модель представления.
     ///  - wordListBuilder: билдер вложенной фичи "Список слов".
-    ///  - noResultFoundText: текст "ничего не найдено" в результате поиска.
+    ///  - labelText: текст для результата поиска.
     init(
         viewModel: SearchWordListViewModel,
         wordListBuilder: WordListBuilder,
-        noResultFoundText: String,
+        labelText: String,
         theme: Theme
     ) {
         self.viewModel = viewModel
         self.wordListGraph = wordListBuilder.build()
-        centerLabel = SecondaryText(noResultFoundText, theme)
+        self.centerLabel = SecondaryText(labelText, theme)
         super.init(nibName: nil, bundle: nil)
     }
 
