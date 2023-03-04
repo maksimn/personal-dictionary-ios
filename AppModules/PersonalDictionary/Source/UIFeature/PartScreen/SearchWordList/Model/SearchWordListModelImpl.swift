@@ -7,43 +7,25 @@
 
 import RxSwift
 
-final class SearchWordListModelImpl: Model {
+final class SearchWordListModelImpl: SearchWordListModel {
 
-    private let viewModelBlock: () -> SearchWordListViewModel?
-    private weak var viewModel: SearchWordListViewModel?
     private let searchableWordList: SearchableWordList
-    private let disposeBag = DisposeBag()
 
-    init(
-        viewModelBlock: @escaping () -> SearchWordListViewModel?,
-        searchableWordList: SearchableWordList,
-        searchTextStream: SearchTextStream,
-        searchModeStream: SearchModeStream
-    ) {
-        self.viewModelBlock = viewModelBlock
+    init(searchableWordList: SearchableWordList) {
         self.searchableWordList = searchableWordList
-        Observable.combineLatest(searchTextStream.searchText, searchModeStream.searchMode)
-            .subscribe(onNext: { [weak self] (searchText, searchMode) in
-                self?.performSearch(for: searchText, mode: searchMode)
-            }).disposed(by: disposeBag)
     }
 
-    private func performSearch(for searchText: String, mode: SearchMode) {
+    func performSearch(for searchText: String, mode: SearchMode) -> SearchResultData {
         let string = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
 
-        if viewModel == nil {
-            viewModel = viewModelBlock()
-        }
-
         if string.isEmpty {
-            viewModel?.searchResult.accept(SearchResultData(searchState: .initial, foundWordList: []))
-            return
+            return SearchResultData(searchState: .initial, foundWordList: [])
         }
 
         let filteredWordList = mode == .bySourceWord ?
             searchableWordList.findWords(contain: string) :
             searchableWordList.findWords(whereTranslationContains: string)
 
-        viewModel?.searchResult.accept(SearchResultData(searchState: .fulfilled, foundWordList: filteredWordList))
+        return SearchResultData(searchState: .fulfilled, foundWordList: filteredWordList)
     }
 }

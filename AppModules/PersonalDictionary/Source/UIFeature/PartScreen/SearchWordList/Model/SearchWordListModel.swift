@@ -12,7 +12,7 @@ enum SearchState {
 }
 
 /// Результат поиска
-struct SearchResultData {
+struct SearchResultData: Equatable {
 
     /// Состояние поиска
     let searchState: SearchState
@@ -21,4 +21,7 @@ struct SearchResultData {
     let foundWordList: [Word]
 }
 
-protocol Model { }
+protocol SearchWordListModel {
+
+    func performSearch(for searchText: String, mode: SearchMode) -> SearchResultData
+}
