@@ -10,9 +10,8 @@ import UIKit
 /// Граф фичи "Список слов".
 protocol WordListGraph {
 
-    /// View controller для показа экрана/части экрана со списком слов
-    var viewController: UIViewController { get }
+    var view: UIView { get }
 
     /// Модель списка слов
-    var model: WordListModel? { get }
+    var viewModel: WordListViewModel { get }
 }

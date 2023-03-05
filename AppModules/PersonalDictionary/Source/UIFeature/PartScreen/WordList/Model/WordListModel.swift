@@ -5,25 +5,16 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
+import RxSwift
+
 /// Модель списка слов.
 protocol WordListModel: AnyObject {
 
-    /// Стейт модели списка слов.
-    var wordList: [Word] { get set }
+    func create(_ word: Word) -> Completable
 
-    /// Удалить слово по заданному индексу из списка
-    /// - Parameters:
-    ///  - position: позиция (индекс) слова в списке.
-    func remove(at position: Int)
+    func remove(_ word: Word) -> Completable
 
-    /// Переключить значение флага "избранности" (isFavorite) для слова по заданному индексу из списка
-    /// - Parameters:
-    ///  - position: позиция (индекс) слова в списке.
-    func toggleWordIsFavorite(at position: Int)
+    func update(_ word: Word) -> Completable
 
-    /// Запросить перевод для слов в списке, расположенных в заданном интервале индексов.
-    /// - Parameters:
-    ///  - startPosition: позиция (индекс) начального слова.
-    ///  - endPosition: верхняя граница индексов слов для перевода (не включая).
-    func requestTranslationsIfNeededWithin(startPosition: Int, endPosition: Int)
+    func fetchTranslationsFor(_ notTranslated: [Word]) -> Observable<Word>
 }

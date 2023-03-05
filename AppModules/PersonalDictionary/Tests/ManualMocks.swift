@@ -184,3 +184,18 @@ class MockSearchTextStream: SearchTextStream {
 class MockSearchModeStream: SearchModeStream {
     var searchMode: Observable<SearchMode> { Observable<SearchMode>.empty() }
 }
+
+class MockWordListModel: WordListModel {
+    func create(_ word: Word) -> Completable {
+        .empty()
+    }
+    func fetchTranslationsFor(_ notTranslated: [Word]) -> Observable<Word> {
+        .empty()
+    }
+    func remove(_ word: Word) -> Completable {
+        .empty()
+    }
+    func update(_ word: Word) -> Completable {
+        .empty()
+    }
+}

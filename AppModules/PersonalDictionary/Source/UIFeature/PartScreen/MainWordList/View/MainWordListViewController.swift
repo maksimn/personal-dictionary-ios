@@ -37,7 +37,7 @@ final class MainWordListViewController: UIViewController {
     override func loadView() {
         view = UIView()
 
-        layout(wordListViewController: wordListGraph.viewController)
+        layout(wordListView: wordListGraph.view)
         bindToViewModel()
     }
 
@@ -48,9 +48,9 @@ final class MainWordListViewController: UIViewController {
 
     private func bindToViewModel() {
         viewModel.wordList.subscribe(onNext: { [weak self] wordList in
-            guard let wordListModel = self?.wordListGraph.model else { return }
+            guard let wordListViewModel = self?.wordListGraph.viewModel else { return }
 
-            wordListModel.wordList = wordList
+            wordListViewModel.wordList.accept(wordList)
         }).disposed(by: disposeBag)
     }
 }

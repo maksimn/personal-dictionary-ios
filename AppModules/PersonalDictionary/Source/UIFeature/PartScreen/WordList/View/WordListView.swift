@@ -8,17 +8,36 @@
 import UIKit
 import RxSwift
 
+/// Параметры представления списка слов.
+struct WordListViewParams {
+
+    /// Высота элемента списка (таблицы)
+    let itemHeight: CGFloat
+
+    /// Класс ячейки таблицы
+    let cellClass: AnyClass
+
+    /// Reuse Id ячейки таблицы
+    let cellReuseIdentifier: String
+
+    /// Радиус скругления углов ячейки таблицы
+    let cellCornerRadius: CGFloat
+
+    /// Параметры делегата таблицы
+    let delegateParams: WordTableViewDelegateParams
+}
+
 /// Реализация представления списка слов.
-final class WordListViewController: UIViewController {
+final class WordListView: UIView {
 
     private let viewModel: WordListViewModel
 
-    let params: WordListViewParams
-    let theme: Theme
+    private let params: WordListViewParams
+    private let theme: Theme
 
-    let tableView = UITableView()
+    private let tableView = UITableView()
 
-    lazy var datasource = UITableViewDiffableDataSource<Int, Word>(tableView: tableView) {
+    private lazy var datasource = UITableViewDiffableDataSource<Int, Word>(tableView: tableView) {
         tableView, indexPath, word in
         guard let cell = tableView.dequeueReusableCell(withIdentifier: self.params.cellReuseIdentifier,
                                                        for: indexPath) as? WordTableViewCell else {
@@ -30,7 +49,7 @@ final class WordListViewController: UIViewController {
         return cell
     }
 
-    lazy var tableActions = WordTableViewDelegate(
+    private lazy var tableActions = WordTableViewDelegate(
         params: params.delegateParams,
         onScrollFinish: { [weak self] in
             self?.onTableViewScrollFinish()
@@ -55,16 +74,16 @@ final class WordListViewController: UIViewController {
         self.viewModel = viewModel
         self.params = params
         self.theme = theme
-        super.init(nibName: nil, bundle: nil)
+        super.init(frame: .zero)
         initViews()
-        subscribeToViewModel()
+        bindToViewModel()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func subscribeToViewModel() {
+    private func bindToViewModel() {
         viewModel.wordList
             .subscribe(onNext: { [weak self] wordList in
                 var snapshot = NSDiffableDataSourceSnapshot<Int, Word>()
@@ -91,6 +110,25 @@ final class WordListViewController: UIViewController {
               let start = indexPaths.first?.row,
               let end = indexPaths.last?.row else { return }
 
-        viewModel.requestTranslationsIfNeededWithin(startPosition: start, endPosition: end + 1)
+        viewModel.fetchTranslationsIfNeededWithin(start: start, end: end + 1)
+    }
+
+    // MARK: - Layout
+
+    private func initViews() {
+        backgroundColor = theme.backgroundColor
+        addSubview(tableView)
+        tableView.backgroundColor = theme.backgroundColor
+        tableView.layer.cornerRadius = params.cellCornerRadius
+        tableView.rowHeight = params.itemHeight
+        tableView.register(params.cellClass, forCellReuseIdentifier: params.cellReuseIdentifier)
+        tableView.dataSource = datasource
+        tableView.delegate = tableActions
+        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
+        tableView.snp.makeConstraints { make -> Void in
+            make.edges.equalTo(self.safeAreaLayoutGuide).inset(UIEdgeInsets(top: 14, left: 12, bottom: 0, right: 12))
+        }
+        tableView.keyboardDismissMode = .onDrag
     }
 }
