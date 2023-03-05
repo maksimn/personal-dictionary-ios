@@ -5,74 +5,89 @@
 //  Created by Maxim Ivanov on 13.11.2021.
 //
 
-import RxSwift
+import CoreModule
 import UIKit
+
+/// Параметры представления выбора режима поиска.
+struct SearchModePickerViewParams {
+
+    /// Текст для лейбла "Искать по"
+    let searchByLabelText: String
+
+    /// Текст для выбора поиска по исходному слову.
+    let sourceWordText: String
+
+    /// Текст для выбора поиска по переводу..
+    let translationText: String
+}
 
 /// Реализация представления для выбора режима поиска.
 final class SearchModePickerView: UIView {
 
     private let params: SearchModePickerViewParams
-    private let model: SearchModePickerModel
+    private let viewModel: SearchModePickerViewModel
+    private let theme: Theme
+    private let logger: SLogger
 
-    private let searchByLabel = UILabel()
-    private lazy var searchBySegmentedControl = UISegmentedControl(
-        items: [params.sourceWordText, params.translationText]
-    )
-
-    private let disposeBag = DisposeBag()
+    private let label = UILabel()
+    private lazy var segmentedControl = UISegmentedControl(items: [params.sourceWordText, params.translationText])
 
     /// Инициализатор.
     /// - Parameters:
     ///  - params: параметры представления.
     init(params: SearchModePickerViewParams,
-         model: SearchModePickerModel,
-         theme: Theme) {
+         viewModel: SearchModePickerViewModel,
+         theme: Theme,
+         logger: SLogger) {
         self.params = params
-        self.model = model
+        self.viewModel = viewModel
+        self.theme = theme
+        self.logger = logger
         super.init(frame: .zero)
-        initViews(theme)
+        initViews()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func onSearchByValueChanged(_ value: Int) {
-        switch value {
+    @objc
+    private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        logger.log("User has selected [\(sender.selectedSegmentIndex)] index of the search mode segmented control.")
+
+        switch sender.selectedSegmentIndex {
         case 0:
-            model.set(searchMode: .bySourceWord)
+            viewModel.searchMode.accept(.bySourceWord)
         case 1:
-            model.set(searchMode: .byTranslation)
+            viewModel.searchMode.accept(.byTranslation)
         default:
             break
         }
     }
 
-    private func initViews(_ theme: Theme) {
-        initSearchByLabel(theme)
-        initSearchBySegmentedControl()
+    private func initViews() {
+        initLabel()
+        initSegmentedControl()
     }
 
-    private func initSearchByLabel(_ theme: Theme) {
-        searchByLabel.textColor = theme.secondaryTextColor
-        searchByLabel.font = UIFont.systemFont(ofSize: 16)
-        searchByLabel.numberOfLines = 1
-        searchByLabel.textAlignment = .center
-        searchByLabel.text = params.searchByLabelText
-        addSubview(searchByLabel)
-        searchByLabel.snp.makeConstraints { make -> Void in
+    private func initLabel() {
+        label.textColor = theme.secondaryTextColor
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        label.text = params.searchByLabelText
+        addSubview(label)
+        label.snp.makeConstraints { make -> Void in
             make.top.equalTo(self.snp.top).offset(18)
             make.left.equalTo(self.snp.left).offset(26)
         }
     }
 
-    private func initSearchBySegmentedControl() {
-        searchBySegmentedControl.selectedSegmentIndex = 0
-        searchBySegmentedControl.rx.value.subscribe(onNext: { [weak self] value in
-            self?.onSearchByValueChanged(value)
-        }).disposed(by: disposeBag)
-        addSubview(searchBySegmentedControl)
-        searchBySegmentedControl.snp.makeConstraints { make -> Void in
+    private func initSegmentedControl() {
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
+        addSubview(segmentedControl)
+        segmentedControl.snp.makeConstraints { make -> Void in
             make.top.equalTo(self.snp.top).offset(10.5)
             make.right.equalTo(self.snp.right).offset(-22)
         }
