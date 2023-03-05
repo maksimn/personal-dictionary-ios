@@ -12,7 +12,7 @@ enum SearchMode {
 }
 
 /// Модель выбора режима поиска.
-protocol SearchModePickerModel {
+protocol SearchModePickerViewModel {
 
-    func set(searchMode: SearchMode)
+    var searchMode: BindableSeachMode { get }
 }

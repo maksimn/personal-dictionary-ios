@@ -145,6 +145,15 @@ class MockMutableSearchTextStream: MutableSearchTextStream {
     }
 }
 
+class MockMutableSearchModeStream: MutableSearchModeStream {
+
+    var mockMethod: (() -> Void)?
+
+    func send(_ searchMode: SearchMode) {
+        mockMethod?()
+    }
+}
+
 class MockSearchableWordList: SearchableWordList {
 
     var mockFindWordsResult: [Word]?

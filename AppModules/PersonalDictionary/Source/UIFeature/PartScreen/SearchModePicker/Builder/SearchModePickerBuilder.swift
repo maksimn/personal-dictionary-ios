@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 13.11.2021.
 //
 
+import CoreModule
+
 /// Реализация билдера фичи "Выбор режима поиска" по словам из словаря.
 final class SearchModePickerBuilder: ViewBuilder {
 
@@ -18,18 +20,29 @@ final class SearchModePickerBuilder: ViewBuilder {
     }
 
     func build() -> UIView {
-        let viewParams = SearchModePickerViewParams(
+        let viewModel = SearchModePickerViewModelImpl(
+            searchModeStream: SearchModeStreamImpl.instance,
+            logger: logger()
+        )
+        let view = SearchModePickerView(
+            params: viewParams(),
+            viewModel: viewModel,
+            theme: Theme.data,
+            logger: logger()
+        )
+
+        return view
+    }
+
+    private func logger() -> SLogger {
+        SLoggerImp(category: "PersonalDictionary.SearchModePicker")
+    }
+
+    private func viewParams() -> SearchModePickerViewParams {
+        SearchModePickerViewParams(
             searchByLabelText: bundle.moduleLocalizedString("LS_SEARCH_BY"),
             sourceWordText: bundle.moduleLocalizedString("LS_SOURCE_WORD"),
             translationText: bundle.moduleLocalizedString("LS_TRANSLATION")
         )
-        let model = SearchModePickerModelImpl(searchModeStream: SearchModeStreamImpl.instance)
-        let view = SearchModePickerView(
-            params: viewParams,
-            model: model,
-            theme: Theme.data
-        )
-
-        return view
     }
 }
