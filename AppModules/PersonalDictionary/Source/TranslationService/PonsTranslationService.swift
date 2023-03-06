@@ -17,7 +17,6 @@ final class PonsTranslationService: TranslationService {
 
     private let apiUrl = "https://api.pons.com/v1/dictionary"
 
-    /// Инициализатор.
     /// - Parameters:
     ///  - secret: секрет для обращения к онлайновому PONS API.
     ///  - httpClient: базовая служба для сетевых запросов по протоколу HTTP.
@@ -28,12 +27,7 @@ final class PonsTranslationService: TranslationService {
         self.logger = logger
     }
 
-    /// Извлечь перевод слова.
-    /// - Parameters:
-    ///  - word: данные о слове для его перевода.
-    /// - Returns:
-    ///  - Rx Single, в который завернута строка с переводом заданного слова.
-    func fetchTranslation(for word: Word) -> Single<String> {
+    func fetchTranslation(for word: Word) -> Single<Word> {
         let sourceLang = word.sourceLang.shortName.lowercased()
         let targetLang = word.targetLang.shortName.lowercased()
         var query = URLComponents()
@@ -54,11 +48,13 @@ final class PonsTranslationService: TranslationService {
                 )
             )
             .map { [weak self] data in
+                var word = word
                 let ponsArray = try JSONDecoder().decode([PonsResponseData].self, from: data)
 
                 self?.logger.log("PONS FETCH TRANSLATION SUCCESS")
+                word.translation = ponsArray.first?.translation
 
-                return ponsArray.first?.translation ?? ""
+                return word
             }
     }
 }

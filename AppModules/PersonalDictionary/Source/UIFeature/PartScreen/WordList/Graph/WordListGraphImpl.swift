@@ -10,11 +10,9 @@ import UIKit
 /// Реализация графа фичи "Список слов".
 final class WordListGraphImpl: WordListGraph {
 
-    /// View controller для показа экрана/части экрана со списком слов
-    private(set) var viewController: UIViewController
+    let view: UIView
 
-    /// Модель списка слов
-    private(set) weak var model: WordListModel?
+    let viewModel: WordListViewModel
 
     /// Инициализатор.
     /// - Parameters:
@@ -26,24 +24,19 @@ final class WordListGraphImpl: WordListGraph {
          cudOperations: WordCUDOperations,
          translationService: TranslationService,
          wordStream: WordStream) {
-        weak var viewModelLazy: WordListViewModel?
-
         let model = WordListModelImpl(
-            viewModelBlock: { viewModelLazy },
             cudOperations: cudOperations,
-            translationService: translationService,
+            wordStream: wordStream,
+            translationService: translationService
+        )
+        viewModel = WordListViewModelImpl(
+            model: model,
             wordStream: wordStream
         )
-        let viewModel = WordListViewModelImpl(model: model)
-        let view = WordListViewController(
+        view = WordListView(
             viewModel: viewModel,
             params: viewParams,
             theme: Theme.data
         )
-
-        viewModelLazy = viewModel
-
-        viewController = view
-        self.model = model
     }
 }

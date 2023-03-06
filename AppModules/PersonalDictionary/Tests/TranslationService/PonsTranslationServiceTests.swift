@@ -49,7 +49,7 @@ final class PonsTranslationServiceTests: XCTestCase {
         // Assert:
         let result = try single.toBlocking().first()
 
-        XCTAssertEqual(result, "translation")
+        XCTAssertEqual(result?.translation, "translation")
     }
 
     func test_fetchTranslation__returnsErrorWhenHttpRequestFails() throws {

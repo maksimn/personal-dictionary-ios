@@ -51,7 +51,7 @@ final class FavoriteWordListViewController: UIViewController {
 
     private func bindToViewModel() {
         viewModel.favoriteWordList.subscribe(onNext: { [weak self] wordList in
-            self?.wordListGraph.model?.wordList = wordList
+            self?.wordListGraph.viewModel.wordList.accept(wordList)
             self?.centerLabel.isHidden = !wordList.isEmpty
         }).disposed(by: disposeBag)
     }
@@ -59,7 +59,7 @@ final class FavoriteWordListViewController: UIViewController {
     // MARK: - Layout
 
     private func initViews() {
-        layout(wordListViewController: wordListGraph.viewController)
+        layout(wordListView: wordListGraph.view)
         initCenterLabel()
     }
 

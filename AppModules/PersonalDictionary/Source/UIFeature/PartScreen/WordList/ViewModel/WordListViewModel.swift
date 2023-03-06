@@ -23,7 +23,7 @@ protocol WordListViewModel: AnyObject {
 
     /// Запросить перевод для слов в списке, расположенных в заданном интервале индексов.
     /// - Parameters:
-    ///  - startPosition: позиция (индекс) начального слова.
-    ///  - endPosition: верхняя граница индексов слов для перевода (не включая).
-    func requestTranslationsIfNeededWithin(startPosition: Int, endPosition: Int)
+    ///  - start: позиция (индекс) начального слова.
+    ///  - end: верхняя граница индексов слов для перевода (не включая).
+    func fetchTranslationsIfNeededWithin(start: Int, end: Int)
 }

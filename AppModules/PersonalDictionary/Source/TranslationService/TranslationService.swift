@@ -14,6 +14,6 @@ protocol TranslationService {
     /// - Parameters:
     ///  - word: слово для перевода.
     /// - Returns:
-    ///  - Rx Single, в который завернута строка с переводом заданного слова.
-    func fetchTranslation(for word: Word) -> Single<String>
+    ///  - Rx Single с переведенным словом
+    func fetchTranslation(for word: Word) -> Single<Word>
 }

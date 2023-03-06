@@ -51,17 +51,17 @@ final class SearchWordListViewController: UIViewController {
 
     private func bindToViewModel() {
         viewModel.searchResult.subscribe(onNext: { [weak self] data in
-            guard let wordListModel = self?.wordListGraph.model else { return }
+            guard let wordListViewModel = self?.wordListGraph.viewModel else { return }
 
             self?.centerLabel.isHidden = !(data.searchState == .fulfilled && data.foundWordList.count == 0)
-            wordListModel.wordList = data.foundWordList
+            wordListViewModel.wordList.accept(data.foundWordList)
         }).disposed(by: disposeBag)
     }
 
     // MARK: - Layout
 
     private func initViews() {
-        layout(wordListViewController: wordListGraph.viewController)
+        layout(wordListView: wordListGraph.view)
         initCenterLabel()
     }
 
