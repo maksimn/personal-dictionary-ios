@@ -88,12 +88,8 @@ final class WordListRepositoryImpl: WordListRepository {
         filter(withPredicate: NSPredicate(format: "isFavorite == true"))
     }
 
-    /// Добавить слово в хранилище личного словаря
-    /// - Parameters:
-    ///  - word: слово для добавления.
-    /// - Returns: Rx completable для обработки завершения операции добавления слова в хранилище.
-    func add(_ word: Word) -> Completable {
-        return Completable.create { [weak self] completable in
+    func add(_ word: Word) -> Single<Word> {
+        .create { [weak self] single in
             let backgroundContext = self?.persistentContainer.newBackgroundContext()
 
             backgroundContext?.perform {
@@ -104,11 +100,11 @@ final class WordListRepositoryImpl: WordListRepository {
                 do {
                     try backgroundContext?.save()
                     DispatchQueue.main.async {
-                        completable(.completed)
+                        single(.success(word))
                     }
                 } catch {
                     DispatchQueue.main.async {
-                        completable(.error(error))
+                        single(.error(error))
                     }
                 }
             }
@@ -117,12 +113,8 @@ final class WordListRepositoryImpl: WordListRepository {
         }
     }
 
-    /// Обновить слово в хранилище личного словаря
-    /// - Parameters:
-    ///  - word: обновленное слово.
-    /// - Returns: Rx completable для обработки завершения операции обновления слова в хранилище.
-    func update(_ word: Word) -> Completable {
-        return Completable.create { [weak self] completable in
+    func update(_ word: Word) -> Single<Word> {
+        .create { [weak self] single in
             let backgroundContext = self?.persistentContainer.newBackgroundContext()
             let predicate = NSPredicate.init(format: "id = '\(word.id.raw)'")
             let fetchRequest: NSFetchRequest<WordMO> = WordMO.fetchRequest()
@@ -140,11 +132,11 @@ final class WordListRepositoryImpl: WordListRepository {
                     }
                     try backgroundContext?.save()
                     DispatchQueue.main.async {
-                        completable(.completed)
+                        single(.success(word))
                     }
                 } catch {
                     DispatchQueue.main.async {
-                        completable(.error(error))
+                        single(.error(error))
                     }
                 }
             }
@@ -152,14 +144,10 @@ final class WordListRepositoryImpl: WordListRepository {
         }
     }
 
-    /// Удалить слово из хранилища личного словаря
-    /// - Parameters:
-    ///  - wordId: идентификатор слова для его удаления из хранилища.
-    /// - Returns: Rx completable для обработки завершения операции удаления слова из хранилища.
-    func remove(with wordId: Word.Id) -> Completable {
-        return Completable.create { [weak self] completable in
+    func remove(_ word: Word) -> Single<Word> {
+        .create { [weak self] single in
             let backgroundContext = self?.persistentContainer.newBackgroundContext()
-            let predicate = NSPredicate.init(format: "id = '\(wordId.raw)'")
+            let predicate = NSPredicate.init(format: "id = '\(word.id.raw)'")
             let fetchRequest: NSFetchRequest<WordMO> = WordMO.fetchRequest()
 
             fetchRequest.predicate = predicate
@@ -175,11 +163,11 @@ final class WordListRepositoryImpl: WordListRepository {
                     }
                     try backgroundContext?.save()
                     DispatchQueue.main.async {
-                        completable(.completed)
+                        single(.success(word))
                     }
                 } catch {
                     DispatchQueue.main.async {
-                        completable(.error(error))
+                        single(.error(error))
                     }
                 }
             }
