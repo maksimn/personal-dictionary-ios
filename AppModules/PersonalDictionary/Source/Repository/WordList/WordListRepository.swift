@@ -27,20 +27,20 @@ protocol WordCUDOperations {
     /// Добавить слово в хранилище личного словаря
     /// - Parameters:
     ///  - word: слово для добавления.
-    /// - Returns: Rx completable для обработки завершения операции добавления слова в хранилище.
-    func add(_ word: Word) -> Completable
+    /// - Returns: Rx single для обработки завершения операции добавления слова в хранилище.
+    func add(_ word: Word) -> Single<Word>
 
     /// Обновить слово в хранилище личного словаря
     /// - Parameters:
     ///  - word: обновленное слово.
-    /// - Returns: Rx completable для обработки завершения операции обновления слова в хранилище.
-    func update(_ word: Word) -> Completable
+    /// - Returns: Rx single для обработки завершения операции обновления слова в хранилище.
+    func update(_ word: Word) -> Single<Word>
 
     /// Удалить слово из хранилища личного словаря
     /// - Parameters:
     ///  - wordId: идентификатор слова для его удаления из хранилища.
-    /// - Returns: Rx completable для обработки завершения операции удаления слова из хранилища.
-    func remove(with wordId: Word.Id) -> Completable
+    /// - Returns: Rx single для обработки завершения операции удаления слова из хранилища.
+    func remove(_ word: Word) -> Single<Word>
 }
 
 /// Протокол для поисковых запросов к хранилищу данных.

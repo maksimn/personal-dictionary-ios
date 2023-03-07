@@ -16,5 +16,5 @@ protocol WordListModel: AnyObject {
 
     func update(_ word: Word) -> Completable
 
-    func fetchTranslationsFor(_ notTranslated: [Word]) -> Observable<Word>
+    func fetchTranslationsFor(_ wordList: [Word], start: Int, end: Int) -> Completable
 }

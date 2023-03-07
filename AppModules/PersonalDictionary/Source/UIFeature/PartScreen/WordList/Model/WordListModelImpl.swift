@@ -13,59 +13,68 @@ final class WordListModelImpl: WordListModel {
     private let cudOperations: WordCUDOperations
     private let wordStream: RemovedWordStream & UpdatedWordStream
     private let translationService: TranslationService
+    private let intervalMs: Int
 
     init(cudOperations: WordCUDOperations,
          wordStream: RemovedWordStream & UpdatedWordStream,
-         translationService: TranslationService) {
+         translationService: TranslationService,
+         intervalMs: Int = 500) {
         self.cudOperations = cudOperations
         self.wordStream = wordStream
         self.translationService = translationService
+        self.intervalMs = intervalMs
     }
 
     func create(_ word: Word) -> Completable {
         cudOperations.add(word)
-            .andThen(
-                translationService.fetchTranslation(for: word)
-                    .map { [weak self] word in
-                        self?.wordStream.sendUpdatedWord(word)
-                        return word
-                    }
-                    .asCompletable()
-            )
+            .flatMap { word in
+                self.translationService.fetchTranslation(for: word)
+            }
+            .flatMap { translatedWord in
+                self.updateSingle(translatedWord)
+            }
+            .asCompletable()
     }
 
     func remove(_ word: Word) -> Completable {
-        cudOperations.remove(with: word.id)
-            .andThen(
-                Completable.create { [weak self] completable in
-                    self?.wordStream.sendRemovedWord(word)
-
-                    return Disposables.create {}
-                }
-            )
+        cudOperations.remove(word)
+            .map { word in
+                self.wordStream.sendRemovedWord(word)
+            }
+            .asCompletable()
     }
 
     func update(_ word: Word) -> Completable {
-        cudOperations.update(word)
-            .andThen(
-                Completable.create { [weak self] completable in
-                    self?.wordStream.sendUpdatedWord(word)
-
-                    return Disposables.create {}
-                }
-            )
+        updateSingle(word).asCompletable()
     }
 
-    func fetchTranslationsFor(_ notTranslated: [Word]) -> Observable<Word> {
-        Observable.from(notTranslated)
-            .concatMap { word in
-                Single.just(word).delay(.milliseconds(500), scheduler: MainScheduler.instance)
-            }
-            .map { (word: Word) -> Single<Word> in
+    func fetchTranslationsFor(_ wordList: [Word], start: Int, end: Int) -> Completable {
+        guard end > start, start > -1 else { return .empty() }
+        let end = min(wordList.count, end)
+        var notTranslated: [Word] = []
+
+        for position in start..<end where wordList[position].translation == nil {
+            notTranslated.append(wordList[position])
+        }
+
+        return Observable.from(notTranslated)
+            .throttle(.milliseconds(intervalMs), scheduler: MainScheduler.instance)
+            .flatMap { word in
                 self.translationService.fetchTranslation(for: word)
             }
-            .concat()
+            .flatMap { translatedWord in
+                self.update(translatedWord)
+            }
+            .asCompletable()
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
             .observeOn(MainScheduler.instance)
+    }
+
+    private func updateSingle(_ word: Word) -> Single<Word> {
+        cudOperations.update(word)
+            .map { word in
+                self.wordStream.sendUpdatedWord(word)
+                return word
+            }
     }
 }

@@ -5,6 +5,7 @@
 //  Created by Maksim Ivanov on 05.03.2023.
 //
 
+import RxSwift
 import XCTest
 @testable import PersonalDictionary
 
@@ -59,5 +60,42 @@ final class WordListViewModelImplTests: XCTestCase {
 
         // Assert
         XCTAssertEqual(viewModel.wordList.value, [array[0], array[2]])
+    }
+
+    func test_toggleWordIsFavorite_worksCorrectly() throws {
+        // Arrange
+        let mockModel = MockWordListModel()
+        let viewModel = WordListViewModelImpl(model: mockModel, wordStream: MockReadableWordStream())
+        let array = [
+            Word(text: "a", sourceLang: lang, targetLang: lang),
+            Word(text: "b", sourceLang: lang, targetLang: lang),
+            Word(text: "c", sourceLang: lang, targetLang: lang)
+        ]
+
+        viewModel.wordList.accept(array)
+
+        // Act
+        viewModel.toggleWordIsFavorite(at: 1)
+
+        // Assert
+        var word = array[1]
+
+        word.isFavorite.toggle()
+        XCTAssertEqual(viewModel.wordList.value, [array[0], word, array[2]])
+    }
+
+    func test_fetchTranslationsIfNeededWithin() throws {
+        // Arrange
+        var modelCallCounter = 0
+        let mockModel = MockWordListModel()
+        let viewModel = WordListViewModelImpl(model: mockModel, wordStream: MockReadableWordStream())
+
+        mockModel.mockFetchTranslationsForCall = { modelCallCounter += 1 }
+
+        // Act
+        viewModel.fetchTranslationsIfNeededWithin(start: 0, end: 3)
+
+        // Assert
+        XCTAssertEqual(modelCallCounter, 1)
     }
 }
