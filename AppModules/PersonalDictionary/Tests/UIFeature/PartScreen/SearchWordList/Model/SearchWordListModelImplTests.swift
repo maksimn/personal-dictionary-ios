@@ -14,14 +14,14 @@ final class SearchWordListModelImplTests: XCTestCase {
 
     func test_performSearch_searchBySourceWord_returnsCorrectData() throws {
         // Arrange
-        let mockSearchableWordList = MockSearchableWordList()
-        let model = SearchWordListModelImpl(searchableWordList: mockSearchableWordList)
+        let searchableWordListMock = SearchableWordListMock()
+        let model = SearchWordListModelImpl(searchableWordList: searchableWordListMock)
         let words = [
             Word(text: "A", sourceLang: lang, targetLang: lang),
             Word(text: "BA", sourceLang: lang, targetLang: lang)
         ]
 
-        mockSearchableWordList.mockFindWords = { _ in words }
+        searchableWordListMock.findWordsMock = { _ in words }
 
         // Act
         let searchResultData = model.performSearch(for: "A", mode: .bySourceWord)
@@ -32,11 +32,11 @@ final class SearchWordListModelImplTests: XCTestCase {
 
     func test_performSearch_searchByTranslation_returnsCorrectData() throws {
         // Arrange
-        let mockSearchableWordList = MockSearchableWordList()
-        let model = SearchWordListModelImpl(searchableWordList: mockSearchableWordList)
+        let searchableWordListMock = SearchableWordListMock()
+        let model = SearchWordListModelImpl(searchableWordList: searchableWordListMock)
         let words = [Word(text: "Aa", translation: "Bb", sourceLang: lang, targetLang: lang)]
 
-        mockSearchableWordList.mockFindWordsWhereTranslationContains = { _ in words }
+        searchableWordListMock.findWordsWhereTranslationContainsMock = { _ in words }
 
         // Act
         let searchResultData = model.performSearch(for: "b", mode: .byTranslation)
@@ -63,10 +63,10 @@ final class SearchWordListModelImplTests: XCTestCase {
 
     func performSearch_returnsInitialSearchResultData_for(searchText: String, mode: SearchMode) throws {
         // Arrange
-        let mockSearchableWordList = MockSearchableWordList()
-        let model = SearchWordListModelImpl(searchableWordList: mockSearchableWordList)
+        let searchableWordListMock = SearchableWordListMock()
+        let model = SearchWordListModelImpl(searchableWordList: searchableWordListMock)
 
-        mockSearchableWordList.mockFindWords = { _ in [] }
+        searchableWordListMock.findWordsMock = { _ in [] }
 
         // Act
         let searchResultData = model.performSearch(for: searchText, mode: mode)

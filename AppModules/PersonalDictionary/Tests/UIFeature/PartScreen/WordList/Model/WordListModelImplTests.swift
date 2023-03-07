@@ -17,22 +17,22 @@ final class WordListModelImplTests: XCTestCase {
     func test_createWord_worksCorrectlyForHappyPath() throws {
         // Arrange
         var dbUpdateCounter = 0
-        let mockCudOperations = MockWordCUDOperations()
-        let mockWordStream = MockRUWordStream()
-        let mockTranslationService = MockTranslationService()
+        let cudOperationsMock = WordCUDOperationsMock()
+        let wordStreamMock = RUWordStreamMock()
+        let translationServiceMock = TranslationServiceMock()
         let model = WordListModelImpl(
-            cudOperations: mockCudOperations,
-            wordStream: mockWordStream,
-            translationService: mockTranslationService
+            cudOperations: cudOperationsMock,
+            wordStream: wordStreamMock,
+            translationService: translationServiceMock
         )
         let translatedWord = Word(text: "abc", translation: "translation", sourceLang: lang, targetLang: lang)
 
-        mockCudOperations.mockAdd = { word in Single.just(word) }
-        mockCudOperations.mockUpdate = { (word: Word) in
+        cudOperationsMock.addWordMock = { word in Single.just(word) }
+        cudOperationsMock.updateWordMock = { (word: Word) in
             dbUpdateCounter += 1
             return Single.just(word)
         }
-        mockTranslationService.mockMethod = { _ in Single.just(translatedWord) }
+        translationServiceMock.methodMock = { _ in Single.just(translatedWord) }
 
         // Act
         let resultWord = try model.create(word).toBlocking().first()
@@ -44,14 +44,14 @@ final class WordListModelImplTests: XCTestCase {
 
     func test_createWord_failsWhenDbCreateWordFails() throws {
         // Arrange
-        let mockCudOperations = MockWordCUDOperations()
+        let cudOperationsMock = WordCUDOperationsMock()
         let model = WordListModelImpl(
-            cudOperations: mockCudOperations,
-            wordStream: MockRUWordStream(),
-            translationService: MockTranslationService()
+            cudOperations: cudOperationsMock,
+            wordStream: RUWordStreamMock(),
+            translationService: TranslationServiceMock()
         )
 
-        mockCudOperations.mockAdd = { word in Single.error(TestError.err) }
+        cudOperationsMock.addWordMock = { word in Single.error(ErrorMock.err) }
 
         // Act
         let single = model.create(word)
@@ -62,17 +62,17 @@ final class WordListModelImplTests: XCTestCase {
 
     func test_removeWord_worksCorrectlyForHappyPath() throws {
         // Arrange
-        let mockCudOperations = MockWordCUDOperations()
-        let mockWordStream = MockRUWordStream()
-        let mockTranslationService = MockTranslationService()
+        let cudOperationsMock = WordCUDOperationsMock()
+        let wordStreamMock = RUWordStreamMock()
+        let translationServiceMock = TranslationServiceMock()
         let model = WordListModelImpl(
-            cudOperations: mockCudOperations,
-            wordStream: mockWordStream,
-            translationService: mockTranslationService
+            cudOperations: cudOperationsMock,
+            wordStream: wordStreamMock,
+            translationService: translationServiceMock
         )
 
-        mockCudOperations.mockRemove = { word in Single.just(word) }
-        mockWordStream.mockSendRemovedWord = { _ in }
+        cudOperationsMock.removeWordMock = { word in Single.just(word) }
+        wordStreamMock.sendRemovedWordMock = { _ in }
 
         // Act
         let removedWord = try model.remove(word).toBlocking().first()
@@ -83,14 +83,14 @@ final class WordListModelImplTests: XCTestCase {
 
     func test_removeWord_failsWhenDbRemoveWordFails() throws {
         // Arrange
-        let mockCudOperations = MockWordCUDOperations()
+        let cudOperationsMock = WordCUDOperationsMock()
         let model = WordListModelImpl(
-            cudOperations: mockCudOperations,
-            wordStream: MockRUWordStream(),
-            translationService: MockTranslationService()
+            cudOperations: cudOperationsMock,
+            wordStream: RUWordStreamMock(),
+            translationService: TranslationServiceMock()
         )
 
-        mockCudOperations.mockRemove = { word in Single.error(TestError.err) }
+        cudOperationsMock.removeWordMock = { word in Single.error(ErrorMock.err) }
 
         // Act
         let single = model.remove(word)
@@ -103,20 +103,20 @@ final class WordListModelImplTests: XCTestCase {
         // Arrange
         var counter = 0
         var dbUpdateCounter = 0
-        let mockCudOperations = MockWordCUDOperations()
-        let mockWordStream = MockRUWordStream()
-        let mockTranslationService = MockTranslationService()
+        let cudOperationsMock = WordCUDOperationsMock()
+        let wordStreamMock = RUWordStreamMock()
+        let translationServiceMock = TranslationServiceMock()
         let model = WordListModelImpl(
-            cudOperations: mockCudOperations,
-            wordStream: mockWordStream,
-            translationService: mockTranslationService
+            cudOperations: cudOperationsMock,
+            wordStream: wordStreamMock,
+            translationService: translationServiceMock
         )
 
-        mockCudOperations.mockUpdate = { (word: Word) in
+        cudOperationsMock.updateWordMock = { (word: Word) in
             dbUpdateCounter += 1
             return Single.just(word)
         }
-        mockWordStream.mockSendUpdatedWord = { _ in counter += 1 }
+        wordStreamMock.sendUpdatedWordMock = { _ in counter += 1 }
 
         // Act
         _ = try model.update(word).toBlocking().first()
@@ -128,14 +128,14 @@ final class WordListModelImplTests: XCTestCase {
 
     func test_updateWord_failsWhenDbRemoveWordFails() throws {
         // Arrange
-        let mockCudOperations = MockWordCUDOperations()
+        let cudOperationsMock = WordCUDOperationsMock()
         let model = WordListModelImpl(
-            cudOperations: mockCudOperations,
-            wordStream: MockRUWordStream(),
-            translationService: MockTranslationService()
+            cudOperations: cudOperationsMock,
+            wordStream: RUWordStreamMock(),
+            translationService: TranslationServiceMock()
         )
 
-        mockCudOperations.mockUpdate = { word in Single.error(TestError.err) }
+        cudOperationsMock.updateWordMock = { word in Single.error(ErrorMock.err) }
 
         // Act
         let single = model.update(word)
@@ -147,13 +147,13 @@ final class WordListModelImplTests: XCTestCase {
     func test_fetchTranslationsFor_worksCorrectlyForHappyPath() throws {
         // Arrange
         var dbUpdateCounter = 0
-        let mockCudOperations = MockWordCUDOperations()
-        let mockWordStream = MockRUWordStream()
-        let mockTranslationService = MockTranslationService()
+        let cudOperationsMock = WordCUDOperationsMock()
+        let wordStreamMock = RUWordStreamMock()
+        let translationServiceMock = TranslationServiceMock()
         let model = WordListModelImpl(
-            cudOperations: mockCudOperations,
-            wordStream: mockWordStream,
-            translationService: mockTranslationService,
+            cudOperations: cudOperationsMock,
+            wordStream: wordStreamMock,
+            translationService: translationServiceMock,
             intervalMs: 0
         )
         let word1 = Word(text: "a", sourceLang: lang, targetLang: lang)
@@ -167,11 +167,11 @@ final class WordListModelImplTests: XCTestCase {
         translatedWord3.translation = "z"
 
         var i = 0
-        mockTranslationService.mockMethod = { _ in
+        translationServiceMock.methodMock = { _ in
             i += 1
             return i == 1 ? Single.just(translatedWord1) : Single.just(translatedWord3)
         }
-        mockCudOperations.mockUpdate = { (word: Word) in
+        cudOperationsMock.updateWordMock = { (word: Word) in
             dbUpdateCounter += 1
             return Single.just(word)
         }
@@ -186,18 +186,18 @@ final class WordListModelImplTests: XCTestCase {
 
     func test_fetchTranslationsFor_failsWhenTranslationApiFails() throws {
         // Arrange
-        let mockTranslationService = MockTranslationService()
+        let translationServiceMock = TranslationServiceMock()
         let model = WordListModelImpl(
-            cudOperations: MockWordCUDOperations(),
-            wordStream: MockRUWordStream(),
-            translationService: mockTranslationService,
+            cudOperations: WordCUDOperationsMock(),
+            wordStream: RUWordStreamMock(),
+            translationService: translationServiceMock,
             intervalMs: 0
         )
         let word1 = Word(text: "a", sourceLang: lang, targetLang: lang)
         let word2 = Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang)
         let word3 = Word(text: "c", sourceLang: lang, targetLang: lang)
 
-        mockTranslationService.mockMethod = { _ in Single.error(TestError.err) }
+        translationServiceMock.methodMock = { _ in Single.error(ErrorMock.err) }
 
         // Act
         let observable = model.fetchTranslationsFor([word1, word2, word3], start: 0, end: 3)

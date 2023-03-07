@@ -9,29 +9,29 @@ import CoreModule
 import RxSwift
 @testable import PersonalDictionary
 
-enum TestError: Error { case err }
+enum ErrorMock: Error { case err }
 
-class MockLogger: SLogger {
+class LoggerMock: SLogger {
     func log(_ message: String) { }
 }
 
-class MockHttpClient: HttpClient {
+class HttpClientMock: HttpClient {
 
-    var mockMethod: ((Http) -> Single<Data>)?
+    var methodMock: ((Http) -> Single<Data>)?
 
     func send(_ http: Http) -> Single<Data> {
-        mockMethod!(http)
+        methodMock!(http)
     }
 }
 
-class MockLangRepository: LangRepository {
+class LangRepositoryMock: LangRepository {
 
-    var mockAllLangs: [Lang]?
-    var mockSetSourceLang: ((Lang) -> Void)?
-    var mockSetTargetLang: ((Lang) -> Void)?
+    var allLangsMock: [Lang]?
+    var setSourceLangMock: ((Lang) -> Void)?
+    var setTargetLangMock: ((Lang) -> Void)?
 
     var allLangs: [Lang] {
-        mockAllLangs!
+        allLangsMock!
     }
 
     var sourceLang: Lang {
@@ -39,7 +39,7 @@ class MockLangRepository: LangRepository {
             fatalError()
         }
         set {
-            mockSetSourceLang?(newValue)
+            setSourceLangMock?(newValue)
         }
     }
 
@@ -48,30 +48,30 @@ class MockLangRepository: LangRepository {
             fatalError()
         }
         set {
-            mockSetTargetLang?(newValue)
+            setTargetLangMock?(newValue)
         }
     }
 }
 
-class MockWordListFetcher: WordListFetcher {
+class WordListFetcherMock: WordListFetcher {
 
-    var mockPropertyValue: [Word]?
+    var propertyMock: [Word]?
 
     var wordList: [Word] {
-        mockPropertyValue!
+        propertyMock!
     }
 }
 
-class MockFavoriteWordListFetcher: FavoriteWordListFetcher {
+class FavoriteWordListFetcherMock: FavoriteWordListFetcher {
 
-    var mockPropertyValue: [Word]?
+    var propertyMock: [Word]?
 
     var favoriteWordList: [Word] {
-        mockPropertyValue!
+        propertyMock!
     }
 }
 
-class MockReadableWordStream: ReadableWordStream {
+class ReadableWordStreamMock: ReadableWordStream {
 
     var newWord: Observable<Word> { .empty() }
 
@@ -80,16 +80,16 @@ class MockReadableWordStream: ReadableWordStream {
     var updatedWord: Observable<Word> { .empty() }
 }
 
-class MockLangPickerListener: LangPickerListener {
+class LangPickerListenerMock: LangPickerListener {
 
-    var mockMethod: ((LangPickerState) -> Void)?
+    var methodMock: ((LangPickerState) -> Void)?
 
     func onLangPickerStateChanged(_ state: LangPickerState) {
-        mockMethod!(state)
+        methodMock!(state)
     }
 }
 
-class MockNewWordStream: NewWordStream {
+class NewWordStreamMock: NewWordStream {
 
     var methodMock: ((Word) -> Void)?
 
@@ -98,12 +98,12 @@ class MockNewWordStream: NewWordStream {
     }
 }
 
-class MockNewWordModel: NewWordModel {
+class NewWordModelMock: NewWordModel {
 
-    var mockSendNewWord: ((Word) -> Void)?
+    var sendNewWordMock: ((Word) -> Void)?
 
     func sendNewWord(_ word: Word) {
-        mockSendNewWord!(word)
+        sendNewWordMock!(word)
     }
 
     func save(sourceLang: Lang) { }
@@ -111,39 +111,39 @@ class MockNewWordModel: NewWordModel {
     func save(targetLang: Lang) { }
 }
 
-class MockMutableSearchTextStream: MutableSearchTextStream {
+class MutableSearchTextStreamMock: MutableSearchTextStream {
 
-    var mockMethod: ((String) -> Void)?
+    var methodMock: ((String) -> Void)?
 
     func send(_ searchText: String) {
-        mockMethod?(searchText)
+        methodMock?(searchText)
     }
 }
 
-class MockMutableSearchModeStream: MutableSearchModeStream {
+class MutableSearchModeStreamMock: MutableSearchModeStream {
 
-    var mockMethod: ((SearchMode) -> Void)?
+    var methodMock: ((SearchMode) -> Void)?
 
     func send(_ searchMode: SearchMode) {
-        mockMethod?(searchMode)
+        methodMock?(searchMode)
     }
 }
 
-class MockSearchableWordList: SearchableWordList {
+class SearchableWordListMock: SearchableWordList {
 
-    var mockFindWords: ((String) -> [Word])?
-    var mockFindWordsWhereTranslationContains: ((String) -> [Word])?
+    var findWordsMock: ((String) -> [Word])?
+    var findWordsWhereTranslationContainsMock: ((String) -> [Word])?
 
     func findWords(contain string: String) -> [Word] {
-        mockFindWords!(string)
+        findWordsMock!(string)
     }
 
     func findWords(whereTranslationContains string: String) -> [Word] {
-        mockFindWordsWhereTranslationContains!(string)
+        findWordsWhereTranslationContainsMock!(string)
     }
 }
 
-class MockSearchWordListModel: SearchWordListModel {
+class SearchWordListModelMock: SearchWordListModel {
 
     var methodMock: ((String, SearchMode) -> SearchResultData)?
 
@@ -152,71 +152,70 @@ class MockSearchWordListModel: SearchWordListModel {
     }
 }
 
-class MockSearchTextStream: SearchTextStream {
+class SearchTextStreamMock: SearchTextStream {
     var searchText: Observable<String> { .empty() }
 }
 
-class MockSearchModeStream: SearchModeStream {
+class SearchModeStreamMock: SearchModeStream {
     var searchMode: Observable<SearchMode> { .empty() }
 }
 
-class MockWordListModel: WordListModel {
+class WordListModelMock: WordListModel {
 
-    var mockCreate: ((Word) -> Single<Word>)?
-    var mockRemove: ((Word) -> Single<Word>)?
-    var mockUpdate: ((Word) -> Single<Word>)?
-    var mockFetchTranslationsFor: (([Word], Int, Int) -> Observable<Word>)?
+    var createWordMock: ((Word) -> Single<Word>)?
+    var removeWordMock: ((Word) -> Single<Word>)?
+    var updateWordMock: ((Word) -> Single<Word>)?
+    var fetchTranslationsForWordListMock: (([Word], Int, Int) -> Observable<Word>)?
 
     func create(_ word: Word) -> Single<Word> {
-        mockCreate!(word)
+        createWordMock!(word)
     }
     func remove(_ word: Word) -> Single<Word> {
-        mockRemove!(word)
+        removeWordMock!(word)
     }
     func update(_ word: Word) -> Single<Word> {
-        mockUpdate!(word)
+        updateWordMock!(word)
     }
     func fetchTranslationsFor(_ wordList: [Word], start: Int, end: Int) -> Observable<Word> {
-        mockFetchTranslationsFor!(wordList, start, end)
+        fetchTranslationsForWordListMock!(wordList, start, end)
     }
 }
 
-class MockWordCUDOperations: WordCUDOperations {
-    var mockAdd: ((Word) -> Single<Word>)?
-    var mockRemove: ((Word) -> Single<Word>)?
-
-    var mockUpdate: ((Word) -> Single<Word>)?
+class WordCUDOperationsMock: WordCUDOperations {
+    var addWordMock: ((Word) -> Single<Word>)?
+    var removeWordMock: ((Word) -> Single<Word>)?
+    var updateWordMock: ((Word) -> Single<Word>)?
 
     func add(_ word: Word) -> Single<Word> {
-        mockAdd!(word)
+        addWordMock!(word)
     }
 
     func update(_ word: Word) -> Single<Word> {
-        mockUpdate!(word)
+        updateWordMock!(word)
     }
 
     func remove(_ word: Word) -> Single<Word> {
-        mockRemove!(word)
+        removeWordMock!(word)
     }
 }
 
-class MockRUWordStream: UpdatedWordStream, RemovedWordStream {
-    var mockSendUpdatedWord: ((Word) -> Void)?
-    var mockSendRemovedWord: ((Word) -> Void)?
+class RUWordStreamMock: UpdatedWordStream, RemovedWordStream {
+    var sendUpdatedWordMock: ((Word) -> Void)?
+    var sendRemovedWordMock: ((Word) -> Void)?
 
     func sendUpdatedWord(_ word: Word) {
-        mockSendUpdatedWord!(word)
+        sendUpdatedWordMock!(word)
     }
 
     func sendRemovedWord(_ word: Word) {
-        mockSendRemovedWord!(word)
+        sendRemovedWordMock!(word)
     }
 }
 
-class MockTranslationService: TranslationService {
-    var mockMethod: ((Word) -> Single<Word>)?
+class TranslationServiceMock: TranslationService {
+    var methodMock: ((Word) -> Single<Word>)?
 
     func fetchTranslation(for word: Word) -> Single<Word> {
-        mockMethod!(word)
+        methodMock!(word)
     }
 }

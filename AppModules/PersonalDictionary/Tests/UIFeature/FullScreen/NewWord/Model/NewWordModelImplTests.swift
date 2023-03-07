@@ -15,14 +15,14 @@ final class NewWordModelImplTests: XCTestCase {
     func test_saveSourceLang_callsStorageAPI() throws {
         // Arrange
         var callsNumber = 0
-        let mockLangRepository = MockLangRepository()
+        let langRepositoryMock = LangRepositoryMock()
         let model = NewWordModelImpl(
-            langRepository: mockLangRepository,
-            newWordStream: MockNewWordStream(),
-            logger: MockLogger()
+            langRepository: langRepositoryMock,
+            newWordStream: NewWordStreamMock(),
+            logger: LoggerMock()
         )
 
-        mockLangRepository.mockSetSourceLang = { _ in callsNumber += 1 }
+        langRepositoryMock.setSourceLangMock = { _ in callsNumber += 1 }
 
         // Act
         model.save(sourceLang: lang)
@@ -34,13 +34,13 @@ final class NewWordModelImplTests: XCTestCase {
     func test_saveTargetLang_callsStorageAPI() throws {
         // Arrange
         var callsNumber = 0
-        let mockLangRepository = MockLangRepository()
+        let langRepositoryMock = LangRepositoryMock()
         let model = NewWordModelImpl(
-            langRepository: mockLangRepository,
-            newWordStream: MockNewWordStream(),
-            logger: MockLogger()
+            langRepository: langRepositoryMock,
+            newWordStream: NewWordStreamMock(),
+            logger: LoggerMock()
         )
-        mockLangRepository.mockSetTargetLang = { _ in callsNumber += 1 }
+        langRepositoryMock.setTargetLangMock = { _ in callsNumber += 1 }
 
         // Act
         model.save(targetLang: lang)
@@ -52,14 +52,14 @@ final class NewWordModelImplTests: XCTestCase {
     func test_sendNewWord_callsModelStream() throws {
         // Arrange
         var callsNumber = 0
-        let mockNewWordStream = MockNewWordStream()
+        let newWordStreamMock = NewWordStreamMock()
         let model = NewWordModelImpl(
-            langRepository: MockLangRepository(),
-            newWordStream: mockNewWordStream,
-            logger: MockLogger()
+            langRepository: LangRepositoryMock(),
+            newWordStream: newWordStreamMock,
+            logger: LoggerMock()
         )
 
-        mockNewWordStream.methodMock = { _ in callsNumber += 1 }
+        newWordStreamMock.methodMock = { _ in callsNumber += 1 }
 
         // Act
         model.sendNewWord(Word(text: "a", sourceLang: lang, targetLang: lang))
