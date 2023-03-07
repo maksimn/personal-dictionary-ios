@@ -38,7 +38,10 @@ final class WordListViewModelImpl: WordListViewModel {
 
     func fetchTranslationsIfNeededWithin(start: Int, end: Int) {
         model.fetchTranslationsFor(wordList.value, start: start, end: end)
-            .subscribe().disposed(by: disposeBag)
+            .subscribe(onNext: { [weak self] (translated: Word) in
+                self?.onUpdatedWord(translated, withSideEffect: false)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func subscribe() {
@@ -62,9 +65,13 @@ final class WordListViewModelImpl: WordListViewModel {
         case .add:
             if let word = updated {
                 wordList.insert(word, at: position)
+
                 guard withSideEffect else { break }
+
                 model.create(word)
-                    .subscribe().disposed(by: disposeBag)
+                    .subscribe(onSuccess: { [weak self] word in
+                        self?.onUpdatedWord(word, withSideEffect: false)
+                    }).disposed(by: disposeBag)
             }
         case .remove:
             wordList.remove(at: position)

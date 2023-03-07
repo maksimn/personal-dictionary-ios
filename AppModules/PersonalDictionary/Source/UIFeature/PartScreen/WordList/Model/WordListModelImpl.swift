@@ -25,32 +25,35 @@ final class WordListModelImpl: WordListModel {
         self.intervalMs = intervalMs
     }
 
-    func create(_ word: Word) -> Completable {
+    func create(_ word: Word) -> Single<Word> {
         cudOperations.add(word)
             .flatMap { word in
                 self.translationService.fetchTranslation(for: word)
             }
             .flatMap { translatedWord in
-                self.updateSingle(translatedWord)
+                self.cudOperations.update(translatedWord)
             }
-            .asCompletable()
     }
 
-    func remove(_ word: Word) -> Completable {
+    func remove(_ word: Word) -> Single<Word> {
         cudOperations.remove(word)
             .map { word in
                 self.wordStream.sendRemovedWord(word)
+                return word
             }
-            .asCompletable()
     }
 
-    func update(_ word: Word) -> Completable {
-        updateSingle(word).asCompletable()
+    func update(_ word: Word) -> Single<Word> {
+        cudOperations.update(word)
+            .map { word in
+                self.wordStream.sendUpdatedWord(word)
+                return word
+            }
     }
 
-    func fetchTranslationsFor(_ wordList: [Word], start: Int, end: Int) -> Completable {
-        guard end > start, start > -1 else { return .empty() }
+    func fetchTranslationsFor(_ wordList: [Word], start: Int, end: Int) -> Observable<Word> {
         let end = min(wordList.count, end)
+        guard end > start, start > -1 else { return .error(WordListError.wrongIndices) }
         var notTranslated: [Word] = []
 
         for position in start..<end where wordList[position].translation == nil {
@@ -62,19 +65,10 @@ final class WordListModelImpl: WordListModel {
             .flatMap { word in
                 self.translationService.fetchTranslation(for: word)
             }
-            .flatMap { translatedWord in
-                self.update(translatedWord)
+            .flatMap { (translatedWord: Word) in
+                self.cudOperations.update(translatedWord)
             }
-            .asCompletable()
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-            .observeOn(MainScheduler.instance)
     }
 
-    private func updateSingle(_ word: Word) -> Single<Word> {
-        cudOperations.update(word)
-            .map { word in
-                self.wordStream.sendUpdatedWord(word)
-                return word
-            }
-    }
+    enum WordListError: Error { case wrongIndices }
 }

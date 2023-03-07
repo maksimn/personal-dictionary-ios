@@ -15,7 +15,6 @@ final class WordListModelImplTests: XCTestCase {
 
     func test_createWord_worksCorrectlyForHappyPath() throws {
         // Arrange
-        var counter = 0
         var dbUpdateCounter = 0
         let mockCudOperations = MockWordCUDOperations()
         let mockWordStream = MockRUWordStream()
@@ -29,17 +28,18 @@ final class WordListModelImplTests: XCTestCase {
         let translatedWord = Word(text: "abc", translation: "translation", sourceLang: lang, targetLang: lang)
 
         mockCudOperations.mockAddResult = Single.just(word)
-        mockCudOperations.mockUpdateResult = Single.just(translatedWord)
-        mockCudOperations.mockUpdateCall = { dbUpdateCounter += 1 }
-        mockTranslationService.mockResult = Single.just(translatedWord)
-        mockWordStream.mockSendUpdatedWord = { counter += 1 }
+        mockCudOperations.mockUpdateMethod = { (word: Word) in
+            dbUpdateCounter += 1
+            return Single.just(word)
+        }
+        mockTranslationService.mockMethod = { Single.just(translatedWord) }
 
         // Act
-        _ = try model.create(word).toBlocking().first()
+        let resultWord = try model.create(word).toBlocking().first()
 
         // Assert
-        XCTAssertEqual(counter, 1)
         XCTAssertEqual(dbUpdateCounter, 1)
+        XCTAssertEqual(resultWord, translatedWord)
     }
 
     func test_removeWord_worksCorrectlyForHappyPath() throws {
@@ -79,8 +79,10 @@ final class WordListModelImplTests: XCTestCase {
         )
         let word = Word(text: "abc", sourceLang: lang, targetLang: lang)
 
-        mockCudOperations.mockUpdateResult = Single.just(word)
-        mockCudOperations.mockUpdateCall = { dbUpdateCounter += 1 }
+        mockCudOperations.mockUpdateMethod = { (word: Word) in
+            dbUpdateCounter += 1
+            return Single.just(word)
+        }
         mockWordStream.mockSendUpdatedWord = { counter += 1 }
 
         // Act
@@ -93,9 +95,7 @@ final class WordListModelImplTests: XCTestCase {
 
     func test_fetchTranslationsFor_worksCorrectlyForHappyPath() throws {
         // Arrange
-        var translationCallCounter = 0
         var dbUpdateCounter = 0
-        var modelStreamCallCounter = 0
         let mockCudOperations = MockWordCUDOperations()
         let mockWordStream = MockRUWordStream()
         let mockTranslationService = MockTranslationService()
@@ -105,25 +105,34 @@ final class WordListModelImplTests: XCTestCase {
             translationService: mockTranslationService,
             intervalMs: 0
         )
-        let words = [
-            Word(text: "a", sourceLang: lang, targetLang: lang),
-            Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang),
-            Word(text: "c", sourceLang: lang, targetLang: lang)
-        ]
-        let mockTranslatedWord = Word(text: "a", translation: "x", sourceLang: lang, targetLang: lang)
+        let word1 = Word(text: "a", sourceLang: lang, targetLang: lang)
+        let word2 = Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang)
+        let word3 = Word(text: "c", sourceLang: lang, targetLang: lang)
+        let words = [word1, word2, word3]
+        var translatedWord1 = word1
+        var translatedWord3 = word3
 
-        mockTranslationService.mockResult = .just(mockTranslatedWord)
-        mockTranslationService.mockMethodCall = { translationCallCounter += 1 }
-        mockCudOperations.mockUpdateCall = { dbUpdateCounter += 1 }
-        mockCudOperations.mockUpdateResult = .just(mockTranslatedWord)
-        mockWordStream.mockSendUpdatedWord = { modelStreamCallCounter += 1 }
+        translatedWord1.translation = "x"
+        translatedWord3.translation = "z"
+
+        var i = 0
+        mockTranslationService.mockMethod = {
+            if i == 0 {
+                i += 1
+                return Single.just(translatedWord1)
+            }
+            return Single.just(translatedWord3)
+        }
+        mockCudOperations.mockUpdateMethod = { (word: Word) in
+            dbUpdateCounter += 1
+            return Single.just(word)
+        }
 
         // Act
-        _ = try model.fetchTranslationsFor(words, start: 0, end: 3).toBlocking().first()
+        let result = try model.fetchTranslationsFor(words, start: 0, end: 3).toBlocking().toArray()
 
         // Assert
-        XCTAssertEqual(translationCallCounter, 2)
         XCTAssertEqual(dbUpdateCounter, 2)
-        XCTAssertEqual(modelStreamCallCounter, 2)
+        XCTAssertEqual(result, [translatedWord1, translatedWord3])
     }
 }

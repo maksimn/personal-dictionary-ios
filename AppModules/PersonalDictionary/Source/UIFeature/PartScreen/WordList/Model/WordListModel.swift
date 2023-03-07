@@ -10,11 +10,11 @@ import RxSwift
 /// Модель списка слов.
 protocol WordListModel: AnyObject {
 
-    func create(_ word: Word) -> Completable
+    func create(_ word: Word) -> Single<Word>
 
-    func remove(_ word: Word) -> Completable
+    func remove(_ word: Word) -> Single<Word>
 
-    func update(_ word: Word) -> Completable
+    func update(_ word: Word) -> Single<Word>
 
-    func fetchTranslationsFor(_ wordList: [Word], start: Int, end: Int) -> Completable
+    func fetchTranslationsFor(_ wordList: [Word], start: Int, end: Int) -> Observable<Word>
 }

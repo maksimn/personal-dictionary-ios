@@ -187,20 +187,22 @@ class MockSearchModeStream: SearchModeStream {
 
 class MockWordListModel: WordListModel {
 
-    var mockFetchTranslationsForCall: (() -> Void)?
+    var mockCreateResult: Single<Word>?
+    var mockRemoveResult: Single<Word>?
+    var mockUpdateResult: Single<Word>?
+    var mockFetchTranslationsFor: (() -> Observable<Word>)?
 
-    func create(_ word: Word) -> Completable {
-        .empty()
+    func create(_ word: Word) -> Single<Word> {
+        mockCreateResult!
     }
-    func fetchTranslationsFor(_ wordList: [Word], start: Int, end: Int) -> Completable {
-        mockFetchTranslationsForCall?()
-        return .empty()
+    func fetchTranslationsFor(_ wordList: [Word], start: Int, end: Int) -> Observable<Word> {
+        mockFetchTranslationsFor!()
     }
-    func remove(_ word: Word) -> Completable {
-        .empty()
+    func remove(_ word: Word) -> Single<Word> {
+        mockRemoveResult!
     }
-    func update(_ word: Word) -> Completable {
-        .empty()
+    func update(_ word: Word) -> Single<Word> {
+        mockUpdateResult!
     }
 }
 
@@ -209,15 +211,14 @@ class MockWordCUDOperations: WordCUDOperations {
     var mockUpdateResult: Single<Word>?
     var mockRemoveResult: Single<Word>?
 
-    var mockUpdateCall: (() -> Void)?
+    var mockUpdateMethod: ((Word) -> Single<Word>)?
 
     func add(_ word: Word) -> Single<Word> {
         mockAddResult!
     }
 
     func update(_ word: Word) -> Single<Word> {
-        mockUpdateCall?()
-        return mockUpdateResult!
+        mockUpdateMethod!(word)
     }
 
     func remove(_ word: Word) -> Single<Word> {
@@ -239,11 +240,9 @@ class MockRUWordStream: UpdatedWordStream, RemovedWordStream {
 }
 
 class MockTranslationService: TranslationService {
-    var mockMethodCall: (() -> Void)?
-    var mockResult: Single<Word>?
+    var mockMethod: (() -> Single<Word>)?
 
     func fetchTranslation(for word: Word) -> Single<Word> {
-        mockMethodCall?()
-        return mockResult!
+        mockMethod!()
     }
 }
