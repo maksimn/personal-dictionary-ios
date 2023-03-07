@@ -27,10 +27,10 @@ class WordListRepositoryImpTests: XCTestCase {
         )
     }()
 
-    lazy var mockLangRepository = MockLangRepository()
+    lazy var langRepositoryMock = LangRepositoryMock()
 
     override func setUpWithError() throws {
-        mockLangRepository.mockAllLangs = [langOne, langTwo]
+        langRepositoryMock.allLangsMock = [langOne, langTwo]
     }
 
     override func tearDownWithError() throws {
@@ -40,8 +40,8 @@ class WordListRepositoryImpTests: XCTestCase {
     func createWordListRepository() {
         wordListRepository = WordListRepositoryImpl(
             args: repositoryArgs,
-            langRepository: mockLangRepository,
-            logger: MockLogger()
+            langRepository: langRepositoryMock,
+            logger: LoggerMock()
         )
     }
 

@@ -14,25 +14,25 @@ final class SearchWordListViewModelImplTests: XCTestCase {
         // Arrange
         let lang = Lang(id: .init(raw: 1), name: "A", shortName: "a")
         let initialData = SearchResultData(searchState: .initial, foundWordList: [])
-        let mockSearchWordListModel = MockSearchWordListModel()
+        let searchWordListModelMock = SearchWordListModelMock()
         let viewModel = SearchWordListViewModelImpl(
             initialData: initialData,
-            model: mockSearchWordListModel,
-            searchTextStream: MockSearchTextStream(),
-            searchModeStream: MockSearchModeStream()
+            model: searchWordListModelMock,
+            searchTextStream: SearchTextStreamMock(),
+            searchModeStream: SearchModeStreamMock()
         )
         let words = [
             Word(text: "A", sourceLang: lang, targetLang: lang),
             Word(text: "BA", sourceLang: lang, targetLang: lang)
         ]
-        let mockSearchResult = SearchResultData(searchState: .fulfilled, foundWordList: words)
+        let searchResultMock = SearchResultData(searchState: .fulfilled, foundWordList: words)
 
-        mockSearchWordListModel.methodMock = { (_, _) in mockSearchResult }
+        searchWordListModelMock.methodMock = { (_, _) in searchResultMock }
 
         // Act
         viewModel.onSearchInputData("a", .bySourceWord)
 
         // Assert
-        XCTAssertEqual(viewModel.searchResult.value, mockSearchResult)
+        XCTAssertEqual(viewModel.searchResult.value, searchResultMock)
     }
 }

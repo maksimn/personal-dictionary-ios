@@ -13,13 +13,13 @@ final class FavoriteWordListViewModelImplTests: XCTestCase {
 
     func test_fetchFavoriteWordList_empty() throws {
         // Arrange
-        let mockFetcher = MockFavoriteWordListFetcher()
+        let fetcherMock = FavoriteWordListFetcherMock()
         let viewModel = FavoriteWordListViewModelImpl(
-            fetcher: mockFetcher,
-            wordStream: MockReadableWordStream()
+            fetcher: fetcherMock,
+            wordStream: ReadableWordStreamMock()
         )
 
-        mockFetcher.mockPropertyValue = []
+        fetcherMock.propertyMock = []
 
         // Act
         viewModel.fetchFavoriteWordList()
@@ -35,13 +35,13 @@ final class FavoriteWordListViewModelImplTests: XCTestCase {
             Word(text: "a", sourceLang: lang, targetLang: lang, isFavorite: true),
             Word(text: "b", sourceLang: lang, targetLang: lang, isFavorite: true)
         ]
-        let mockFetcher = MockFavoriteWordListFetcher()
+        let fetcherMock = FavoriteWordListFetcherMock()
         let viewModel = FavoriteWordListViewModelImpl(
-            fetcher: mockFetcher,
-            wordStream: MockReadableWordStream()
+            fetcher: fetcherMock,
+            wordStream: ReadableWordStreamMock()
         )
 
-        mockFetcher.mockPropertyValue = favorites
+        fetcherMock.propertyMock = favorites
 
         // Act
         viewModel.fetchFavoriteWordList()

@@ -13,10 +13,10 @@ final class SearchModePickerViewModelImplTests: XCTestCase {
     func test_searchMode_sendsSearchModeToStream() throws {
         // Arrange
         var counter = 0
-        let mockSearchModeStream = MockMutableSearchModeStream()
-        let viewModel = SearchModePickerViewModelImpl(searchModeStream: mockSearchModeStream, logger: MockLogger())
+        let searchModeStreamMock = MutableSearchModeStreamMock()
+        let viewModel = SearchModePickerViewModelImpl(searchModeStream: searchModeStreamMock, logger: LoggerMock())
 
-        mockSearchModeStream.mockMethod = { _ in counter += 1 }
+        searchModeStreamMock.methodMock = { _ in counter += 1 }
 
         // Act
         viewModel.searchMode.accept(.byTranslation)

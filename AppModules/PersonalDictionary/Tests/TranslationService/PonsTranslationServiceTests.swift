@@ -14,16 +14,16 @@ final class PonsTranslationServiceTests: XCTestCase {
 
     func test_fetchTranslation__returnsCorrectTranslation() throws {
         // Arrange:
-        let mockHttpClient = MockHttpClient()
+        let httpClientMock = HttpClientMock()
         let ponsTranslationService = PonsTranslationService(
             secret: "",
-            httpClient: mockHttpClient,
-            logger: MockLogger()
+            httpClient: httpClientMock,
+            logger: LoggerMock()
         )
         let lang = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
         let word = Word(text: "word", sourceLang: lang, targetLang: lang)
 
-        mockHttpClient.mockMethod = { _ in
+        httpClientMock.methodMock = { _ in
             let ponsArray = [
                 PonsResponseData(
                     hits: [
@@ -61,16 +61,16 @@ final class PonsTranslationServiceTests: XCTestCase {
         // Arrange:
         enum HttpError: Error { case unavailable }
 
-        let mockHttpClient = MockHttpClient()
+        let httpClientMock = HttpClientMock()
         let ponsTranslationService = PonsTranslationService(
             secret: "",
-            httpClient: mockHttpClient,
-            logger: MockLogger()
+            httpClient: httpClientMock,
+            logger: LoggerMock()
         )
         let lang = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
         let word = Word(text: "word", sourceLang: lang, targetLang: lang)
 
-        mockHttpClient.mockMethod = { _ in return .error(HttpError.unavailable) }
+        httpClientMock.methodMock = { _ in return .error(HttpError.unavailable) }
 
         // Act:
         let single = ponsTranslationService.fetchTranslation(for: word)

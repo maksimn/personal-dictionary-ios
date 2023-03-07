@@ -20,8 +20,8 @@ final class NewWordViewModelImplTests: XCTestCase {
 
     func test_updateText_textIsEmpty() throws {
         // Arrange
-        let mockModel = MockNewWordModel()
-        let viewModel = NewWordViewModelImpl(model: mockModel, initState: initState)
+        let modelMock = NewWordModelMock()
+        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
 
         // Act
         viewModel.update(text: "")
@@ -32,8 +32,8 @@ final class NewWordViewModelImplTests: XCTestCase {
 
     func test_updateText_textIsSomeString() throws {
         // Arrange
-        let mockModel = MockNewWordModel()
-        let viewModel = NewWordViewModelImpl(model: mockModel, initState: initState)
+        let modelMock = NewWordModelMock()
+        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
 
         // Act
         viewModel.update(text: "Abc")
@@ -44,8 +44,8 @@ final class NewWordViewModelImplTests: XCTestCase {
 
     func test_updateStateWithLangPickerState_newTargetLang() throws {
         // Arrange
-        let mockModel = MockNewWordModel()
-        let viewModel = NewWordViewModelImpl(model: mockModel, initState: initState)
+        let modelMock = NewWordModelMock()
+        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
         let newLangPickerState = LangPickerState(
             lang: Lang(id: .init(raw: 2), name: "Bb", shortName: "b"),
             langType: .target,
@@ -64,8 +64,8 @@ final class NewWordViewModelImplTests: XCTestCase {
 
     func test_updateStateWithLangPickerState_newSourceLang() throws {
         // Arrange
-        let mockModel = MockNewWordModel()
-        let viewModel = NewWordViewModelImpl(model: mockModel, initState: initState)
+        let modelMock = NewWordModelMock()
+        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
         let newLangPickerState = LangPickerState(
             lang: Lang(id: .init(raw: 2), name: "Bb", shortName: "b"),
             langType: .source,
@@ -84,8 +84,8 @@ final class NewWordViewModelImplTests: XCTestCase {
 
     func test_presentLangPicker_toSelectSourceLang() throws {
         // Arrange
-        let mockModel = MockNewWordModel()
-        let viewModel = NewWordViewModelImpl(model: mockModel, initState: initState)
+        let modelMock = NewWordModelMock()
+        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
 
         // Act
         viewModel.presentLangPicker(langType: .source)
@@ -98,8 +98,8 @@ final class NewWordViewModelImplTests: XCTestCase {
 
     func test_presentLangPicker_toSelectTargetLang() throws {
         // Arrange
-        let mockModel = MockNewWordModel()
-        let viewModel = NewWordViewModelImpl(model: mockModel, initState: initState)
+        let modelMock = NewWordModelMock()
+        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
 
         // Act
         viewModel.presentLangPicker(langType: .target)
@@ -113,10 +113,10 @@ final class NewWordViewModelImplTests: XCTestCase {
     func test_sendNewWord_notSendingIfWordIsEmpty() throws {
         // Arrange
         var callsCounter = 0
-        let mockModel = MockNewWordModel()
-        let viewModel = NewWordViewModelImpl(model: mockModel, initState: initState)
+        let modelMock = NewWordModelMock()
+        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
 
-        mockModel.mockSendNewWord = { _ in callsCounter += 1 }
+        modelMock.sendNewWordMock = { _ in callsCounter += 1 }
 
         // Act
         viewModel.sendNewWord()
@@ -132,10 +132,10 @@ final class NewWordViewModelImplTests: XCTestCase {
 
         state.text = "Word"
 
-        let mockModel = MockNewWordModel()
-        let viewModel = NewWordViewModelImpl(model: mockModel, initState: state)
+        let modelMock = NewWordModelMock()
+        let viewModel = NewWordViewModelImpl(model: modelMock, initState: state)
 
-        mockModel.mockSendNewWord = { _ in callsCounter += 1 }
+        modelMock.sendNewWordMock = { _ in callsCounter += 1 }
 
         // Act
         viewModel.sendNewWord()
