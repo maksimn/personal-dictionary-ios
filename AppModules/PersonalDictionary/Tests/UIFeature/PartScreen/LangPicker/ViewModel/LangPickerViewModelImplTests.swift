@@ -14,7 +14,7 @@ final class LangPickerViewModelImplTests: XCTestCase {
     func test_onSelect_callsListener() throws {
         // Arrange
         var callsNumber = 0
-        let mockLangPickerListener = MockLangPickerListener({ callsNumber += 1 })
+        let mockLangPickerListener = MockLangPickerListener()
         let viewModel = LangPickerViewModelImpl()
         let lang = Lang(id: .init(raw: 0), name: "", shortName: "")
         let state = LangPickerState(
@@ -23,6 +23,7 @@ final class LangPickerViewModelImplTests: XCTestCase {
             isHidden: false
         )
 
+        mockLangPickerListener.mockMethod = { _ in callsNumber += 1 }
         viewModel.state.accept(state)
         viewModel.listener = mockLangPickerListener
 
@@ -36,10 +37,11 @@ final class LangPickerViewModelImplTests: XCTestCase {
     func test_onSelect_doesNotCallListenerIfStateIsNil() throws {
         // Arrange
         var callsNumber = 0
-        let mockLangPickerListener = MockLangPickerListener({ callsNumber += 1 })
+        let mockLangPickerListener = MockLangPickerListener()
         let viewModel = LangPickerViewModelImpl()
         let lang = Lang(id: .init(raw: 0), name: "", shortName: "")
 
+        mockLangPickerListener.mockMethod = { _ in callsNumber += 1 }
         viewModel.listener = mockLangPickerListener
 
         // Act

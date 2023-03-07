@@ -21,7 +21,7 @@ final class SearchWordListModelImplTests: XCTestCase {
             Word(text: "BA", sourceLang: lang, targetLang: lang)
         ]
 
-        mockSearchableWordList.mockFindWordsResult = words
+        mockSearchableWordList.mockFindWords = { _ in words }
 
         // Act
         let searchResultData = model.performSearch(for: "A", mode: .bySourceWord)
@@ -36,7 +36,7 @@ final class SearchWordListModelImplTests: XCTestCase {
         let model = SearchWordListModelImpl(searchableWordList: mockSearchableWordList)
         let words = [Word(text: "Aa", translation: "Bb", sourceLang: lang, targetLang: lang)]
 
-        mockSearchableWordList.mockFindWordsWhereTranslationContainsResult = words
+        mockSearchableWordList.mockFindWordsWhereTranslationContains = { _ in words }
 
         // Act
         let searchResultData = model.performSearch(for: "b", mode: .byTranslation)
@@ -66,7 +66,7 @@ final class SearchWordListModelImplTests: XCTestCase {
         let mockSearchableWordList = MockSearchableWordList()
         let model = SearchWordListModelImpl(searchableWordList: mockSearchableWordList)
 
-        mockSearchableWordList.mockFindWordsResult = []
+        mockSearchableWordList.mockFindWords = { _ in [] }
 
         // Act
         let searchResultData = model.performSearch(for: searchText, mode: mode)

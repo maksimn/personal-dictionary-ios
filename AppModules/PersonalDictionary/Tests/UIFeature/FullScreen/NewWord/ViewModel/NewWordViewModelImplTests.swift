@@ -116,7 +116,7 @@ final class NewWordViewModelImplTests: XCTestCase {
         let mockModel = MockNewWordModel()
         let viewModel = NewWordViewModelImpl(model: mockModel, initState: initState)
 
-        mockModel.mockSendNewWord = { callsCounter += 1 }
+        mockModel.mockSendNewWord = { _ in callsCounter += 1 }
 
         // Act
         viewModel.sendNewWord()
@@ -135,7 +135,7 @@ final class NewWordViewModelImplTests: XCTestCase {
         let mockModel = MockNewWordModel()
         let viewModel = NewWordViewModelImpl(model: mockModel, initState: state)
 
-        mockModel.mockSendNewWord = { callsCounter += 1 }
+        mockModel.mockSendNewWord = { _ in callsCounter += 1 }
 
         // Act
         viewModel.sendNewWord()

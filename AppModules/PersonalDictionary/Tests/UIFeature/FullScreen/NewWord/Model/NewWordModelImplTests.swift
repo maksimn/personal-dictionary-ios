@@ -15,13 +15,14 @@ final class NewWordModelImplTests: XCTestCase {
     func test_saveSourceLang_callsStorageAPI() throws {
         // Arrange
         var callsNumber = 0
-        let mockLangRepository = MockLangRepository(allLangsValue: [])
+        let mockLangRepository = MockLangRepository()
         let model = NewWordModelImpl(
             langRepository: mockLangRepository,
             newWordStream: MockNewWordStream(),
-            logger: LoggerStub()
+            logger: MockLogger()
         )
-        mockLangRepository.mockSetSourceLang = { callsNumber += 1 }
+
+        mockLangRepository.mockSetSourceLang = { _ in callsNumber += 1 }
 
         // Act
         model.save(sourceLang: lang)
@@ -33,13 +34,13 @@ final class NewWordModelImplTests: XCTestCase {
     func test_saveTargetLang_callsStorageAPI() throws {
         // Arrange
         var callsNumber = 0
-        let mockLangRepository = MockLangRepository(allLangsValue: [])
+        let mockLangRepository = MockLangRepository()
         let model = NewWordModelImpl(
             langRepository: mockLangRepository,
             newWordStream: MockNewWordStream(),
-            logger: LoggerStub()
+            logger: MockLogger()
         )
-        mockLangRepository.mockSetTargetLang = { callsNumber += 1 }
+        mockLangRepository.mockSetTargetLang = { _ in callsNumber += 1 }
 
         // Act
         model.save(targetLang: lang)
@@ -53,12 +54,12 @@ final class NewWordModelImplTests: XCTestCase {
         var callsNumber = 0
         let mockNewWordStream = MockNewWordStream()
         let model = NewWordModelImpl(
-            langRepository: MockLangRepository(allLangsValue: []),
+            langRepository: MockLangRepository(),
             newWordStream: mockNewWordStream,
-            logger: LoggerStub()
+            logger: MockLogger()
         )
 
-        mockNewWordStream.methodMock = { callsNumber += 1 }
+        mockNewWordStream.methodMock = { _ in callsNumber += 1 }
 
         // Act
         model.sendNewWord(Word(text: "a", sourceLang: lang, targetLang: lang))

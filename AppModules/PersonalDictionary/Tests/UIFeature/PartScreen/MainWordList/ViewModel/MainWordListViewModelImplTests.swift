@@ -13,8 +13,10 @@ final class MainWordListViewModelImplTests: XCTestCase {
 
     func test_fetch_empty() throws {
         // Arrange
-        let mockFetcher = MockWordListFetcher(returnValue: [])
+        let mockFetcher = MockWordListFetcher()
         let viewModel = MainWordListViewModelImpl(wordListFetcher: mockFetcher)
+
+        mockFetcher.mockPropertyValue = []
 
         // Act
         viewModel.fetch()
@@ -30,8 +32,10 @@ final class MainWordListViewModelImplTests: XCTestCase {
             Word(text: "a", sourceLang: lang, targetLang: lang),
             Word(text: "b", sourceLang: lang, targetLang: lang)
         ]
-        let mockFetcher = MockWordListFetcher(returnValue: wordList)
+        let mockFetcher = MockWordListFetcher()
         let viewModel = MainWordListViewModelImpl(wordListFetcher: mockFetcher)
+
+        mockFetcher.mockPropertyValue = wordList
 
         // Act
         viewModel.fetch()

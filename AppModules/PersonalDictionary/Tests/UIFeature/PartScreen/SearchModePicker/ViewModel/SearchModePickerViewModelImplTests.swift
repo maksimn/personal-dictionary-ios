@@ -14,9 +14,9 @@ final class SearchModePickerViewModelImplTests: XCTestCase {
         // Arrange
         var counter = 0
         let mockSearchModeStream = MockMutableSearchModeStream()
-        let viewModel = SearchModePickerViewModelImpl(searchModeStream: mockSearchModeStream, logger: LoggerStub())
+        let viewModel = SearchModePickerViewModelImpl(searchModeStream: mockSearchModeStream, logger: MockLogger())
 
-        mockSearchModeStream.mockMethod = { counter += 1 }
+        mockSearchModeStream.mockMethod = { _ in counter += 1 }
 
         // Act
         viewModel.searchMode.accept(.byTranslation)
