@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
+import RxSwift
+
 /// Модель представления списка слов.
 protocol WordListViewModel: AnyObject {
 
@@ -25,5 +27,5 @@ protocol WordListViewModel: AnyObject {
     /// - Parameters:
     ///  - start: позиция (индекс) начального слова.
     ///  - end: верхняя граница индексов слов для перевода (не включая).
-    func fetchTranslationsIfNeededWithin(start: Int, end: Int)
+    func fetchTranslationsIfNeededWithin(start: Int, end: Int) -> Observable<Word>
 }

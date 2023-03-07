@@ -111,6 +111,7 @@ final class WordListView: UIView {
               let end = indexPaths.last?.row else { return }
 
         viewModel.fetchTranslationsIfNeededWithin(start: start, end: end + 1)
+            .subscribe().disposed(by: disposeBag)
     }
 
     // MARK: - Layout

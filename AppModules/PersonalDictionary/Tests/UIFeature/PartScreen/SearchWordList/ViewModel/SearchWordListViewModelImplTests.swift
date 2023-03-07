@@ -27,7 +27,7 @@ final class SearchWordListViewModelImplTests: XCTestCase {
         ]
         let mockSearchResult = SearchResultData(searchState: .fulfilled, foundWordList: words)
 
-        mockSearchWordListModel.mockSearchResult = mockSearchResult
+        mockSearchWordListModel.methodMock = { (_, _) in mockSearchResult }
 
         // Act
         viewModel.onSearchInputData("a", .bySourceWord)

@@ -27,7 +27,11 @@ class WordListRepositoryImpTests: XCTestCase {
         )
     }()
 
-    lazy var mockLangRepository = MockLangRepository(allLangsValue: [langOne, langTwo])
+    lazy var mockLangRepository = MockLangRepository()
+
+    override func setUpWithError() throws {
+        mockLangRepository.mockAllLangs = [langOne, langTwo]
+    }
 
     override func tearDownWithError() throws {
         try wordListRepository.removeAllWords()
@@ -37,7 +41,7 @@ class WordListRepositoryImpTests: XCTestCase {
         wordListRepository = WordListRepositoryImpl(
             args: repositoryArgs,
             langRepository: mockLangRepository,
-            logger: LoggerStub()
+            logger: MockLogger()
         )
     }
 

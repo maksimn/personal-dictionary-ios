@@ -36,12 +36,12 @@ final class WordListViewModelImpl: WordListViewModel {
         perform(.update, at: position, updated: word)
     }
 
-    func fetchTranslationsIfNeededWithin(start: Int, end: Int) {
+    func fetchTranslationsIfNeededWithin(start: Int, end: Int) -> Observable<Word> {
         model.fetchTranslationsFor(wordList.value, start: start, end: end)
-            .subscribe(onNext: { [weak self] (translated: Word) in
-                self?.onUpdatedWord(translated, withSideEffect: false)
+            .executeInBackgroundAndObserveOnMainThread()
+            .do(onNext: { [weak self] word in
+                self?.onUpdatedWord(word, withSideEffect: false)
             })
-            .disposed(by: disposeBag)
     }
 
     private func subscribe() {
@@ -69,6 +69,7 @@ final class WordListViewModelImpl: WordListViewModel {
                 guard withSideEffect else { break }
 
                 model.create(word)
+                    .executeInBackgroundAndObserveOnMainThread()
                     .subscribe(onSuccess: { [weak self] word in
                         self?.onUpdatedWord(word, withSideEffect: false)
                     }).disposed(by: disposeBag)
@@ -77,6 +78,7 @@ final class WordListViewModelImpl: WordListViewModel {
             wordList.remove(at: position)
             guard withSideEffect else { break }
             model.remove(word)
+                .executeInBackgroundAndObserveOnMainThread()
                 .subscribe().disposed(by: disposeBag)
 
         case .update:
@@ -84,6 +86,7 @@ final class WordListViewModelImpl: WordListViewModel {
                 wordList[position] = updated
                 guard withSideEffect else { break }
                 model.update(updated)
+                    .executeInBackgroundAndObserveOnMainThread()
                     .subscribe().disposed(by: disposeBag)
             }
         }

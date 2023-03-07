@@ -14,34 +14,39 @@ final class PonsTranslationServiceTests: XCTestCase {
 
     func test_fetchTranslation__returnsCorrectTranslation() throws {
         // Arrange:
-        let ponsArray = [
-            PonsResponseData(
-                hits: [
-                    PonsResponseDataHit(
-                        roms: [
-                            PonsResponseDataHitsRom(
-                                arabs: [
-                                    PonsResponseDataHitsRomsArab(
-                                        translations: [
-                                            PonsResponseDataHitsRomsArabsTranslation(target: "translation")
-                                        ]
-                                    )
-                                ]
-                            )
-                        ]
-                    )
-                ]
-            )
-        ]
-        let data = try JSONEncoder().encode(ponsArray)
-        let mockHttpClient = MockHttpClient(returnValue: Single.just(data))
+        let mockHttpClient = MockHttpClient()
         let ponsTranslationService = PonsTranslationService(
             secret: "",
             httpClient: mockHttpClient,
-            logger: LoggerStub()
+            logger: MockLogger()
         )
         let lang = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
         let word = Word(text: "word", sourceLang: lang, targetLang: lang)
+
+        mockHttpClient.mockMethod = { _ in
+            let ponsArray = [
+                PonsResponseData(
+                    hits: [
+                        PonsResponseDataHit(
+                            roms: [
+                                PonsResponseDataHitsRom(
+                                    arabs: [
+                                        PonsResponseDataHitsRomsArab(
+                                            translations: [
+                                                PonsResponseDataHitsRomsArabsTranslation(target: "translation")
+                                            ]
+                                        )
+                                    ]
+                                )
+                            ]
+                        )
+                    ]
+                )
+            ]
+            let data = try! JSONEncoder().encode(ponsArray)
+
+            return Single.just(data)
+        }
 
         // Act:
         let single = ponsTranslationService.fetchTranslation(for: word)
@@ -56,18 +61,16 @@ final class PonsTranslationServiceTests: XCTestCase {
         // Arrange:
         enum HttpError: Error { case unavailable }
 
-        let mockHttpClientError = MockHttpClient(returnValue: Single<Data>.create { observer in
-            observer(.error(HttpError.unavailable))
-            return Disposables.create { }
-        })
-
+        let mockHttpClient = MockHttpClient()
         let ponsTranslationService = PonsTranslationService(
             secret: "",
-            httpClient: mockHttpClientError,
-            logger: LoggerStub()
+            httpClient: mockHttpClient,
+            logger: MockLogger()
         )
         let lang = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
         let word = Word(text: "word", sourceLang: lang, targetLang: lang)
+
+        mockHttpClient.mockMethod = { _ in return .error(HttpError.unavailable) }
 
         // Act:
         let single = ponsTranslationService.fetchTranslation(for: word)
