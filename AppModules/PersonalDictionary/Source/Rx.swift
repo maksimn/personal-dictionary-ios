@@ -7,17 +7,9 @@
 
 import RxSwift
 
-extension Observable<Word> {
+extension Single<WordListState> {
 
-    func executeInBackgroundAndObserveOnMainThread() -> Observable<Word> {
-        subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-            .observeOn(MainScheduler.instance)
-    }
-}
-
-extension Single<Word> {
-
-    func executeInBackgroundAndObserveOnMainThread() -> Single<Word> {
+    func executeInBackgroundAndObserveOnMainThread() -> Single<WordListState> {
         subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
             .observeOn(MainScheduler.instance)
     }

@@ -11,10 +11,12 @@ typealias BindableString = BehaviorRelay<String>
 
 typealias BindableSeachMode = BehaviorRelay<SearchMode>
 
-typealias BindableWordList = BehaviorRelay<[Word]>
+typealias BindableWordList = BehaviorRelay<WordListState>
 
 typealias BindableSearchResult = BehaviorRelay<SearchResultData>
 
 typealias BindableNewWordState = BehaviorRelay<NewWordState>
 
 typealias BindableLangPickerState = BehaviorRelay<LangPickerState?>
+
+typealias WordListState = [Word]

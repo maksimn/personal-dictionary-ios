@@ -8,13 +8,19 @@
 import RxSwift
 
 /// Модель списка слов.
-protocol WordListModel: AnyObject {
+protocol WordListModel {
 
-    func create(_ word: Word) -> Single<Word>
+    func create(_ word: Word, state: WordListState) -> WordListState
 
-    func remove(_ word: Word) -> Single<Word>
+    func createEffect(_ word: Word, state: WordListState) -> Single<WordListState>
 
-    func update(_ word: Word) -> Single<Word>
+    func remove(at position: Int, state: WordListState) -> WordListState
 
-    func fetchTranslationsFor(_ wordList: [Word], start: Int, end: Int) -> Observable<Word>
+    func removeEffect(_ word: Word, state: WordListState) -> Single<WordListState>
+
+    func update(_ word: Word, at position: Int, state: WordListState) -> WordListState
+
+    func updateEffect(_ word: Word, state: WordListState) -> Single<WordListState>
+
+    func fetchTranslationsFor(state: WordListState, start: Int, end: Int) -> Single<WordListState>
 }

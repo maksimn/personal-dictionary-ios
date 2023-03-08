@@ -16,8 +16,6 @@ final class WordListViewModelImpl: WordListViewModel {
     private let wordStream: ReadableWordStream
     private let disposeBag = DisposeBag()
 
-    private enum Operation { case add, update, remove }
-
     init(model: WordListModel, wordStream: ReadableWordStream) {
         self.model = model
         self.wordStream = wordStream
@@ -25,7 +23,10 @@ final class WordListViewModelImpl: WordListViewModel {
     }
 
     func remove(at position: Int) {
-        perform(.remove, at: position)
+        guard position > -1 && position < wordList.value.count else { return }
+        let word = wordList.value[position]
+
+        remove(word, at: position, withSideEffect: true)
     }
 
     func toggleWordIsFavorite(at position: Int) {
@@ -33,76 +34,75 @@ final class WordListViewModelImpl: WordListViewModel {
         var word = wordList.value[position]
 
         word.isFavorite.toggle()
-        perform(.update, at: position, updated: word)
+        update(word, at: position, withSideEffect: true)
     }
 
-    func fetchTranslationsIfNeededWithin(start: Int, end: Int) -> Observable<Word> {
-        model.fetchTranslationsFor(wordList.value, start: start, end: end)
+    func fetchTranslationsIfNeededWithin(start: Int, end: Int) -> Completable {
+        model.fetchTranslationsFor(state: wordList.value, start: start, end: end)
             .executeInBackgroundAndObserveOnMainThread()
-            .do(onNext: { [weak self] word in
-                self?.onUpdatedWord(word, withSideEffect: false)
-            })
+            .map { [weak self] state in
+                self?.wordList.accept(state)
+                return state
+            }
+            .asCompletable()
+    }
+
+    private func create(_ word: Word) {
+        let wordList = model.create(word, state: self.wordList.value)
+
+        self.wordList.accept(wordList)
+        model.createEffect(word, state: wordList)
+            .executeInBackgroundAndObserveOnMainThread()
+            .subscribe(onSuccess: { [weak self] wordList in
+                self?.wordList.accept(wordList)
+            }).disposed(by: disposeBag)
+    }
+
+    private func update(_ word: Word, at position: Int, withSideEffect: Bool) {
+        let wordList = model.update(word, at: position, state: self.wordList.value)
+
+        self.wordList.accept(wordList)
+
+        guard withSideEffect else { return }
+
+        model.updateEffect(word, state: wordList)
+            .executeInBackgroundAndObserveOnMainThread()
+            .subscribe().disposed(by: disposeBag)
+    }
+
+    private func remove(_ word: Word, at position: Int, withSideEffect: Bool) {
+        let wordList = model.remove(at: position, state: self.wordList.value)
+
+        self.wordList.accept(wordList)
+
+        guard withSideEffect else { return }
+
+        model.removeEffect(word, state: wordList)
+            .executeInBackgroundAndObserveOnMainThread()
+            .subscribe().disposed(by: disposeBag)
+    }
+
+    private func findAndRemove(_ word: Word) {
+        guard let position = wordList.value.firstIndex(where: { $0.id == word.id }) else { return }
+
+        remove(word, at: position, withSideEffect: false)
+    }
+
+    private func findAndUpdate(_ word: Word) {
+        guard let position = wordList.value.firstIndex(where: { $0.id == word.id }) else { return }
+
+        update(word, at: position, withSideEffect: false)
     }
 
     private func subscribe() {
         wordStream.newWord
-            .subscribe(onNext: { [weak self] in self?.perform(.add, at: 0, updated: $0) })
+            .subscribe(onNext: { [weak self] in self?.create($0) })
             .disposed(by: disposeBag)
         wordStream.removedWord
-            .subscribe(onNext: { [weak self] in self?.onRemovedWord($0) })
+            .subscribe(onNext: { [weak self] in self?.findAndRemove($0) })
             .disposed(by: disposeBag)
         wordStream.updatedWord
-            .subscribe(onNext: { [weak self] in self?.onUpdatedWord($0, withSideEffect: false) })
+            .subscribe(onNext: { [weak self] in self?.findAndUpdate($0) })
             .disposed(by: disposeBag)
-    }
-
-    private func perform(_ operation: Operation, at position: Int, updated: Word? = nil, withSideEffect: Bool = true) {
-        var wordList = self.wordList.value
-        guard position > -1 && position < wordList.count else { return }
-        let word = wordList[position]
-
-        switch operation {
-        case .add:
-            if let word = updated {
-                wordList.insert(word, at: position)
-
-                guard withSideEffect else { break }
-
-                model.create(word)
-                    .executeInBackgroundAndObserveOnMainThread()
-                    .subscribe(onSuccess: { [weak self] word in
-                        self?.onUpdatedWord(word, withSideEffect: false)
-                    }).disposed(by: disposeBag)
-            }
-        case .remove:
-            wordList.remove(at: position)
-            guard withSideEffect else { break }
-            model.remove(word)
-                .executeInBackgroundAndObserveOnMainThread()
-                .subscribe().disposed(by: disposeBag)
-
-        case .update:
-            if let updated = updated {
-                wordList[position] = updated
-                guard withSideEffect else { break }
-                model.update(updated)
-                    .executeInBackgroundAndObserveOnMainThread()
-                    .subscribe().disposed(by: disposeBag)
-            }
-        }
-
-        self.wordList.accept(wordList)
-    }
-
-    private func onRemovedWord(_ word: Word) {
-        guard let position = wordList.value.firstIndex(where: { $0.id == word.id }) else { return }
-
-        perform(.remove, at: position, withSideEffect: false)
-    }
-
-    private func onUpdatedWord(_ word: Word, withSideEffect: Bool) {
-        guard let position = wordList.value.firstIndex(where: { $0.id == word.id }) else { return }
-
-        perform(.update, at: position, updated: word, withSideEffect: withSideEffect)
     }
 }

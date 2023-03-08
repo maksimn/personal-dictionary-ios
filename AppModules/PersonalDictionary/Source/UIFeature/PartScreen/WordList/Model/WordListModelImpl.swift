@@ -15,6 +15,8 @@ final class WordListModelImpl: WordListModel {
     private let translationService: TranslationService
     private let intervalMs: Int
 
+    private let newWordIndex = 0
+
     init(cudOperations: WordCUDOperations,
          wordStream: RemovedWordStream & UpdatedWordStream,
          translationService: TranslationService,
@@ -25,7 +27,15 @@ final class WordListModelImpl: WordListModel {
         self.intervalMs = intervalMs
     }
 
-    func create(_ word: Word) -> Single<Word> {
+    func create(_ word: Word, state: WordListState) -> WordListState {
+        var state = state
+
+        state.insert(word, at: newWordIndex)
+
+        return state
+    }
+
+    func createEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
         cudOperations.add(word)
             .flatMap { word in
                 self.translationService.fetchTranslation(for: word)
@@ -33,32 +43,63 @@ final class WordListModelImpl: WordListModel {
             .flatMap { translatedWord in
                 self.cudOperations.update(translatedWord)
             }
+            .map { translatedWord in
+                var state = state
+
+                state[self.newWordIndex] = translatedWord
+
+                return state
+            }
     }
 
-    func remove(_ word: Word) -> Single<Word> {
+    func remove(at position: Int, state: WordListState) -> WordListState {
+        guard position > -1 && position < state.count else { return state }
+        var state = state
+
+        state.remove(at: position)
+
+        return state
+    }
+
+    func removeEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
         cudOperations.remove(word)
             .map { word in
                 self.wordStream.sendRemovedWord(word)
-                return word
+                return state
             }
     }
 
-    func update(_ word: Word) -> Single<Word> {
+    func update(_ word: Word, at position: Int, state: WordListState) -> WordListState {
+        guard position > -1 && position < state.count else { return state }
+        var state = state
+
+        state[position] = word
+
+        return state
+    }
+
+    func updateEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
         cudOperations.update(word)
             .map { word in
                 self.wordStream.sendUpdatedWord(word)
-                return word
+                return state
             }
     }
 
-    func fetchTranslationsFor(_ wordList: [Word], start: Int, end: Int) -> Observable<Word> {
-        let end = min(wordList.count, end)
-        guard end > start, start > -1 else { return .error(WordListError.wrongIndices) }
-        var notTranslated: [Word] = []
-
-        for position in start..<end where wordList[position].translation == nil {
-            notTranslated.append(wordList[position])
+    func fetchTranslationsFor(state: WordListState, start: Int, end: Int) -> Single<WordListState> {
+        guard state.count > 0 else {
+            return Single.just([])
         }
+
+        let end = min(state.count, end)
+        guard end > start, start > -1 else { return .error(WordListError.wrongIndices) }
+        var notTranslated: WordListState = []
+
+        for position in start..<end where state[position].translation == nil {
+            notTranslated.append(state[position])
+        }
+
+        var state = state
 
         return Observable.from(notTranslated)
             .throttle(.milliseconds(intervalMs), scheduler: MainScheduler.instance)
@@ -68,6 +109,14 @@ final class WordListModelImpl: WordListModel {
             .flatMap { (translatedWord: Word) in
                 self.cudOperations.update(translatedWord)
             }
+            .map { (translatedWord: Word) in
+                for i in start..<end where state[i].id == translatedWord.id {
+                    state[i] = translatedWord
+                }
+                return state
+            }
+            .takeLast(1)
+            .asSingle()
     }
 
     enum WordListError: Error { case wrongIndices }

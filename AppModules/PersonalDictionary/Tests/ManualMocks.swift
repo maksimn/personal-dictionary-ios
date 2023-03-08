@@ -161,23 +161,40 @@ class SearchModeStreamMock: SearchModeStream {
 }
 
 class WordListModelMock: WordListModel {
+    var createMock: ((Word, WordListState) -> WordListState)?
+    var createEffectMock: ((Word, WordListState) -> Single<WordListState>)?
+    var removeMock: ((Int, WordListState) -> WordListState)?
+    var removeEffectMock: ((Word, WordListState) -> Single<WordListState>)?
+    var updateMock: ((Word, Int, WordListState) -> WordListState)?
+    var updateEffectMock: ((Word, WordListState) -> Single<WordListState>)?
+    var fetchTranslationsForMock: ((WordListState, Int, Int) -> Single<WordListState>)?
 
-    var createWordMock: ((Word) -> Single<Word>)?
-    var removeWordMock: ((Word) -> Single<Word>)?
-    var updateWordMock: ((Word) -> Single<Word>)?
-    var fetchTranslationsForWordListMock: (([Word], Int, Int) -> Observable<Word>)?
+    func create(_ word: Word, state: WordListState) -> WordListState {
+        createMock!(word, state)
+    }
 
-    func create(_ word: Word) -> Single<Word> {
-        createWordMock!(word)
+    func createEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
+        createEffectMock!(word, state)
     }
-    func remove(_ word: Word) -> Single<Word> {
-        removeWordMock!(word)
+
+    func remove(at position: Int, state: WordListState) -> WordListState {
+        removeMock!(position, state)
     }
-    func update(_ word: Word) -> Single<Word> {
-        updateWordMock!(word)
+
+    func removeEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
+        removeEffectMock!(word, state)
     }
-    func fetchTranslationsFor(_ wordList: [Word], start: Int, end: Int) -> Observable<Word> {
-        fetchTranslationsForWordListMock!(wordList, start, end)
+
+    func update(_ word: Word, at position: Int, state: WordListState) -> WordListState {
+        updateMock!(word, position, state)
+    }
+
+    func updateEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
+        updateEffectMock!(word, state)
+    }
+
+    func fetchTranslationsFor(state: WordListState, start: Int, end: Int) -> Single<WordListState> {
+        fetchTranslationsForMock!(state, start, end)
     }
 }
 

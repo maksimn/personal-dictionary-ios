@@ -54,7 +54,8 @@ final class WordListViewModelImplTests: XCTestCase {
         ]
 
         viewModel.wordList.accept(array)
-        modelMock.removeWordMock = { _ in Single.just(array[1]) }
+        modelMock.removeMock = { (_, _) in [array[0], array[2]] }
+        modelMock.removeEffectMock = { (_, state) in Single.just(state) }
 
         // Act
         viewModel.remove(at: 1)
@@ -77,7 +78,8 @@ final class WordListViewModelImplTests: XCTestCase {
         word.isFavorite.toggle()
 
         viewModel.wordList.accept(words)
-        modelMock.updateWordMock = { word in Single.just(word) }
+        modelMock.updateMock = { (_, _, _) in [words[0], word, words[2]] }
+        modelMock.updateEffectMock = { (_, state) in Single.just(state) }
 
         // Act
         viewModel.toggleWordIsFavorite(at: 1)
@@ -97,7 +99,6 @@ final class WordListViewModelImplTests: XCTestCase {
         ]
 
         viewModel.wordList.accept(words)
-        modelMock.updateWordMock = { word in Single.just(word) }
 
         // Act
         viewModel.toggleWordIsFavorite(at: 5)
@@ -119,7 +120,7 @@ final class WordListViewModelImplTests: XCTestCase {
         translatedWord1.translation = "x"
         translatedWord3.translation = "z"
 
-        modelMock.fetchTranslationsForWordListMock = { (_, _, _) in Observable.from([translatedWord1, translatedWord3]) }
+        modelMock.fetchTranslationsForMock = { (_, _, _) in Single.just([translatedWord1, word2, translatedWord3]) }
         viewModel.wordList.accept([word1, word2, word3])
 
         // Act
@@ -137,7 +138,7 @@ final class WordListViewModelImplTests: XCTestCase {
         let word2 = Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang)
         let word3 = Word(text: "c", sourceLang: lang, targetLang: lang)
 
-        modelMock.fetchTranslationsForWordListMock = { (_, _, _) in .error(ErrorMock.err) }
+        modelMock.fetchTranslationsForMock = { (_, _, _) in .error(ErrorMock.err) }
         viewModel.wordList.accept([word1, word2, word3])
 
         // Act

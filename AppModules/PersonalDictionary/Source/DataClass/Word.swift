@@ -9,7 +9,7 @@ import CoreModule
 import Foundation
 
 /// Данные о слове в словаре.
-struct Word: Equatable, Hashable {
+struct Word: Equatable, Hashable, CustomStringConvertible {
 
     typealias Id = Tagged<Word, String>
 
@@ -65,5 +65,17 @@ struct Word: Equatable, Hashable {
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(id.raw)
+    }
+
+    var description: String {
+        """
+        (id: \(id.raw), \
+        text: \(text),
+        translation: \(translation ?? ""), \
+        sourceLang: \(sourceLang.id.raw), \
+        targetLang: \(targetLang.id.raw), \
+        isFavorite: \(isFavorite) \
+        createdAt: \(createdAt))
+        """
     }
 }
