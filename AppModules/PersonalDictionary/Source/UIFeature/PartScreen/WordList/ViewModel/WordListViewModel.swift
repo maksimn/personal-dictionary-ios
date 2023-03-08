@@ -8,7 +8,7 @@
 import RxSwift
 
 /// Модель представления списка слов.
-protocol WordListViewModel: AnyObject {
+protocol WordListViewModel {
 
     /// Данные модели представления.
     var wordList: BindableWordList { get }
@@ -27,5 +27,5 @@ protocol WordListViewModel: AnyObject {
     /// - Parameters:
     ///  - start: позиция (индекс) начального слова.
     ///  - end: верхняя граница индексов слов для перевода (не включая).
-    func fetchTranslationsIfNeededWithin(start: Int, end: Int) -> Observable<Word>
+    func fetchTranslationsIfNeededWithin(start: Int, end: Int) -> Completable
 }
