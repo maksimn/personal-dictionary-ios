@@ -19,6 +19,8 @@ final class WordListViewModelImplTests: XCTestCase {
         let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock(),
                                               logger: LoggerMock())
 
+        modelMock.removeMock = { (_, _, _, _) in Single.just([]) }
+
         // Act
         viewModel.remove(at: -2)
 
@@ -37,6 +39,8 @@ final class WordListViewModelImplTests: XCTestCase {
         ]
 
         viewModel.wordList.accept(array)
+        modelMock.removeMock = { (_, _, _, _) in Single.just(array) }
+
 
         // Act
         viewModel.remove(at: 3)
@@ -55,16 +59,19 @@ final class WordListViewModelImplTests: XCTestCase {
             Word(text: "b", sourceLang: lang, targetLang: lang),
             Word(text: "c", sourceLang: lang, targetLang: lang)
         ]
+        let resultArray = [array[0], array[2]]
 
         viewModel.wordList.accept(array)
-        modelMock.removeMock = { (_, _) in [array[0], array[2]] }
-        modelMock.removeEffectMock = { (_, state) in Single.just(state) }
+        modelMock.removeMock = { (_, _, _, observer) in
+            observer(resultArray)
+            return Single.just(resultArray)
+        }
 
         // Act
         viewModel.remove(at: 1)
 
         // Assert
-        XCTAssertEqual(viewModel.wordList.value, [array[0], array[2]])
+        XCTAssertEqual(viewModel.wordList.value, resultArray)
     }
 
     func test_toggleWordIsFavorite_worksCorrectly() throws {

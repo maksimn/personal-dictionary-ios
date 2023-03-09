@@ -161,28 +161,19 @@ class SearchModeStreamMock: SearchModeStream {
 }
 
 class WordListModelMock: WordListModel {
-    var createMock: ((Word, WordListState) -> WordListState)?
-    var createEffectMock: ((Word, WordListState) -> Single<WordListState>)?
-    var removeMock: ((Int, WordListState) -> WordListState)?
-    var removeEffectMock: ((Word, WordListState) -> Single<WordListState>)?
+    var createMock: ((Word, WordListState, (WordListState) -> Void) -> Single<WordListState>)?
+    var removeMock: ((Int, Bool, WordListState, (WordListState) -> Void) -> Single<WordListState>)?
     var updateMock: ((Word, Int, WordListState) -> WordListState)?
     var updateEffectMock: ((Word, WordListState) -> Single<WordListState>)?
     var fetchTranslationsForMock: ((WordListState, Int, Int) -> Single<WordListState>)?
 
-    func create(_ word: Word, state: WordListState) -> WordListState {
-        createMock!(word, state)
+    func create(_ word: Word, state: WordListState, observer: (WordListState) -> Void) -> Single<WordListState> {
+        createMock!(word, state, observer)
     }
 
-    func createEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
-        createEffectMock!(word, state)
-    }
-
-    func remove(at position: Int, state: WordListState) -> WordListState {
-        removeMock!(position, state)
-    }
-
-    func removeEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
-        removeEffectMock!(word, state)
+    func remove(at position: Int, withSideEffect: Bool, state: WordListState,
+                observer: (WordListState) -> Void) -> Single<WordListState> {
+        removeMock!(position, withSideEffect, state, observer)
     }
 
     func update(_ word: Word, at position: Int, state: WordListState) -> WordListState {

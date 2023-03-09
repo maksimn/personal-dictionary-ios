@@ -27,16 +27,14 @@ final class WordListModelImpl: WordListModel {
         self.intervalMs = intervalMs
     }
 
-    func create(_ word: Word, state: WordListState) -> WordListState {
+    func create(_ word: Word, state: WordListState, observer: (WordListState) -> Void) -> Single<WordListState> {
         var state = state
 
         state.insert(word, at: newWordIndex)
 
-        return state
-    }
+        observer(state)
 
-    func createEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
-        cudOperations.add(word)
+        return cudOperations.add(word)
             .flatMap { word in
                 self.translationService.fetchTranslation(for: word)
             }
@@ -52,17 +50,23 @@ final class WordListModelImpl: WordListModel {
             }
     }
 
-    func remove(at position: Int, state: WordListState) -> WordListState {
-        guard position > -1 && position < state.count else { return state }
+    func remove(at position: Int, withSideEffect: Bool, state: WordListState,
+                observer: (WordListState) -> Void) -> Single<WordListState> {
+        guard position > -1 && position < state.count else {
+            return Single.just(state)
+        }
+        let word = state[position]
         var state = state
 
         state.remove(at: position)
 
-        return state
-    }
+        observer(state)
 
-    func removeEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
-        cudOperations.remove(word)
+        guard withSideEffect else {
+            return Single.just(state)
+        }
+
+        return cudOperations.remove(word)
             .map { word in
                 self.wordStream.sendRemovedWord(word)
                 return state

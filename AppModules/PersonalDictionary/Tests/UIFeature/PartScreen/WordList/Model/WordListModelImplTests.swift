@@ -18,22 +18,7 @@ final class WordListModelImplTests: XCTestCase {
     lazy var word3 = Word(text: "c", sourceLang: lang, targetLang: lang)
     lazy var wordList = [word1, word2, word3]
 
-    func test_createWord_returnsCorrectWordListState() throws {
-        // Arrange
-        let model = WordListModelImpl(
-            cudOperations: WordCUDOperationsMock(),
-            wordStream: RUWordStreamMock(),
-            translationService: TranslationServiceMock()
-        )
-
-        // Act
-        let newWordList = model.create(word, state: wordList)
-
-        // Assert
-        XCTAssertEqual(newWordList, [word, word1, word2, word3])
-    }
-
-    func test_createEffect_worksCorrectlyForHappyPath() throws {
+    func test_create_worksCorrectlyForHappyPath() throws {
         // Arrange
         var dbUpdateCounter = 0
         let cudOperationsMock = WordCUDOperationsMock()
@@ -54,14 +39,15 @@ final class WordListModelImplTests: XCTestCase {
         translationServiceMock.methodMock = { _ in Single.just(translatedWord) }
 
         // Act
-        let nextState = try model.createEffect(word, state: [word, word1, word2, word3]).toBlocking().first()
+        let nextState = try model.create(word, state: [word1, word2, word3], observer: { _ in })
+            .toBlocking().first()!
 
         // Assert
         XCTAssertEqual(dbUpdateCounter, 1)
         XCTAssertEqual(nextState, [translatedWord, word1, word2, word3])
     }
 
-    func test_createEffect_failsWhenDbCreateWordFails() throws {
+    func test_create_failsWhenDbCreateWordFails() throws {
         // Arrange
         let cudOperationsMock = WordCUDOperationsMock()
         let model = WordListModelImpl(
@@ -73,13 +59,13 @@ final class WordListModelImplTests: XCTestCase {
         cudOperationsMock.addWordMock = { word in Single.error(ErrorMock.err) }
 
         // Act
-        let single = model.createEffect(word, state: wordList)
+        let single = model.create(word, state: wordList, observer: { _ in })
 
         // Assert
         XCTAssertThrowsError(try single.toBlocking().first())
     }
 
-    func test_removeWord_returnsCorrectWordListState() throws {
+    func test_remove_returnsCorrectWordListState_noSideEffects() throws {
         // Arrange
         let model = WordListModelImpl(
             cudOperations: WordCUDOperationsMock(),
@@ -88,13 +74,14 @@ final class WordListModelImplTests: XCTestCase {
         )
 
         // Act
-        let newWordList = model.remove(at: 1, state: wordList)
+        let result = try model.remove(at: 1, withSideEffect: false, state: wordList, observer: { _ in })
+            .toBlocking().first()!
 
         // Assert
-        XCTAssertEqual(newWordList, [word1, word3])
+        XCTAssertEqual(result, [word1, word3])
     }
 
-    func test_removeEffect_worksCorrectlyForHappyPath() throws {
+    func test_removeEffect_worksCorrectlyForHappyPath_withSideEffects() throws {
         // Arrange
         var dbRequestCounter = 0
         var notificationCounter = 0
@@ -114,15 +101,17 @@ final class WordListModelImplTests: XCTestCase {
         wordStreamMock.sendRemovedWordMock = { _ in notificationCounter += 1 }
 
         // Act
-        let nextState = try model.removeEffect(word, state: wordList).toBlocking().first()
+
+        let nextState = try model.remove(at: 1, withSideEffect: true, state: wordList, observer: { _ in })
+            .toBlocking().first()
 
         // Assert
-        XCTAssertEqual(nextState, wordList)
+        XCTAssertEqual(nextState, [word1, word3])
         XCTAssertEqual(dbRequestCounter, 1)
         XCTAssertEqual(notificationCounter, 1)
     }
 
-    func test_removeEffect_failsWhenDbRemoveWordFails() throws {
+    func test_remove_returnErrorWhenDbRemoveWordFails() throws {
         // Arrange
         let cudOperationsMock = WordCUDOperationsMock()
         let model = WordListModelImpl(
@@ -134,7 +123,7 @@ final class WordListModelImplTests: XCTestCase {
         cudOperationsMock.removeWordMock = { word in Single.error(ErrorMock.err) }
 
         // Act
-        let single = model.removeEffect(word, state: wordList)
+        let single = model.remove(at: 1, withSideEffect: true, state: wordList, observer: { _ in })
 
         // Assert
         XCTAssertThrowsError(try single.toBlocking().first())

@@ -26,10 +26,7 @@ final class WordListViewModelImpl: WordListViewModel {
     }
 
     func remove(at position: Int) {
-        guard position > -1 && position < wordList.value.count else { return }
-        let word = wordList.value[position]
-
-        remove(word, at: position, withSideEffect: true)
+        remove(at: position, withSideEffect: true)
     }
 
     func toggleWordIsFavorite(at position: Int) {
@@ -44,31 +41,40 @@ final class WordListViewModelImpl: WordListViewModel {
         model.fetchTranslationsFor(state: wordList.value, start: start, end: end)
             .executeInBackgroundAndObserveOnMainThread()
             .map { [weak self] state in
-                self?.logState(action: "fetchTranslationsIfNeeded", state)
-                self?.wordList.accept(state)
-
+                self?.onNewState(state, actionName: "fetchTranslationsIfNeeded")
                 return state
             }
             .asCompletable()
     }
 
-    private func create(_ word: Word) {
-        let wordList = model.create(word, state: self.wordList.value)
+    private func onNewState(_ state: WordListState, actionName: String) {
+        logState(actionName: actionName, state)
 
-        logState(action: "create word", wordList)
+        wordList.accept(state)
+    }
 
-        self.wordList.accept(wordList)
-
-        model.createEffect(word, state: wordList)
+    private func remove(at position: Int, withSideEffect: Bool) {
+        model.remove(at: position, withSideEffect: withSideEffect, state: wordList.value,
+                     observer: { [weak self] in self?.onNewState($0, actionName: "remove word") })
             .executeInBackgroundAndObserveOnMainThread()
             .subscribe(
-                onSuccess: { [weak self] wordList in
-                    self?.logState(action: "create effect", wordList)
+                onError: { [weak self] error in
+                    self?.logger.logError(error, source: "remove word")
+                }
+            )
+            .disposed(by: disposeBag)
+    }
 
-                    self?.wordList.accept(wordList)
+    private func create(_ word: Word) {
+        model.create(word, state: wordList.value,
+                     observer: { [weak self] in self?.onNewState($0, actionName: "create word") })
+            .executeInBackgroundAndObserveOnMainThread()
+            .subscribe(
+                onSuccess: { [weak self] in
+                    self?.onNewState($0, actionName: "create word")
                 },
                 onError: { [weak self] error in
-                    self?.logger.logError(error, source: "create word effect")
+                    self?.logger.logError(error, source: "create word")
                 }
             ).disposed(by: disposeBag)
     }
@@ -76,7 +82,7 @@ final class WordListViewModelImpl: WordListViewModel {
     private func update(_ word: Word, at position: Int, withSideEffect: Bool) {
         let wordList = model.update(word, at: position, state: self.wordList.value)
 
-        logState(action: "update word", wordList)
+        logState(actionName: "update word", wordList)
 
         self.wordList.accept(wordList)
 
@@ -91,28 +97,10 @@ final class WordListViewModelImpl: WordListViewModel {
             ).disposed(by: disposeBag)
     }
 
-    private func remove(_ word: Word, at position: Int, withSideEffect: Bool) {
-        let wordList = model.remove(at: position, state: self.wordList.value)
-
-        logState(action: "remove word", wordList)
-
-        self.wordList.accept(wordList)
-
-        guard withSideEffect else { return }
-
-        model.removeEffect(word, state: wordList)
-            .executeInBackgroundAndObserveOnMainThread()
-            .subscribe(
-                onError: { [weak self] error in
-                    self?.logger.logError(error, source: "remove word effect")
-                }
-            ).disposed(by: disposeBag)
-    }
-
     private func findAndRemove(_ word: Word) {
         guard let position = wordList.value.firstIndex(where: { $0.id == word.id }) else { return }
 
-        remove(word, at: position, withSideEffect: false)
+        remove(at: position, withSideEffect: false)
     }
 
     private func findAndUpdate(_ word: Word) {
@@ -147,8 +135,8 @@ final class WordListViewModelImpl: WordListViewModel {
 
     // MARK: - Logging
 
-    private func logState(action: String, _ state: WordListState) {
-        logger.log("Word list \(action) result:")
+    private func logState(actionName: String, _ state: WordListState) {
+        logger.log("Word list \(actionName) result:")
 
         if wordList.value == state {
             logger.log("\t\tno state changes")
