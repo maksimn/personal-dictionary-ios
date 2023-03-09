@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
+import CoreModule
 import UIKit
 import RxSwift
 
@@ -31,11 +32,12 @@ struct WordListViewParams {
 final class WordListView: UIView {
 
     private let viewModel: WordListViewModel
-
     private let params: WordListViewParams
     private let theme: Theme
+    private let logger: SLogger
 
     private let tableView = UITableView()
+    private let disposeBag = DisposeBag()
 
     private lazy var datasource = UITableViewDiffableDataSource<Int, Word>(tableView: tableView) {
         tableView, indexPath, word in
@@ -62,18 +64,17 @@ final class WordListView: UIView {
         }
     )
 
-    private let disposeBag = DisposeBag()
-
-    /// Инициализатор.
     /// - Parameters:
     ///  - viewModel: модель представления.
     ///  - params: параметры представления.
     init(viewModel: WordListViewModel,
          params: WordListViewParams,
-         theme: Theme) {
+         theme: Theme,
+         logger: SLogger) {
         self.viewModel = viewModel
         self.params = params
         self.theme = theme
+        self.logger = logger
         super.init(frame: .zero)
         initViews()
         bindToViewModel()
@@ -98,10 +99,12 @@ final class WordListView: UIView {
     // MARK: - User Action Handlers
 
     private func onDeleteWordTap(_ position: Int) {
+        logTapOnTableViewCellDeleteButton(position)
         viewModel.remove(at: position)
     }
 
     private func onFavoriteTap(_ position: Int) {
+        logTapOnTableViewCellStarButton(position)
         viewModel.toggleWordIsFavorite(at: position)
     }
 
@@ -110,8 +113,26 @@ final class WordListView: UIView {
               let start = indexPaths.first?.row,
               let end = indexPaths.last?.row else { return }
 
-        viewModel.fetchTranslationsIfNeededWithin(start: start, end: end + 1)
-            .subscribe().disposed(by: disposeBag)
+        logTableViewScrollFinish(start, end)
+
+        viewModel.fetchTranslationsIfNeeded(start: start, end: end + 1)
+            .subscribe(onError: { [weak self] error in
+                self?.logger.logError(error, source: "fetch translations if needed")
+            }).disposed(by: disposeBag)
+    }
+
+    // MARK: - Logging
+
+    private func logTapOnTableViewCellDeleteButton(_ position: Int) {
+        logger.log("User tap on the word table view cell delete button, the cell: #\(position)")
+    }
+
+    private func logTapOnTableViewCellStarButton(_ position: Int) {
+        logger.log("User tap on the word table view cell star button, the cell: #\(position)")
+    }
+
+    private func logTableViewScrollFinish(_ start: Int, _ end: Int) {
+        logger.log("The word table view scroll finished. Visible cells: [\(start), \(end))")
     }
 
     // MARK: - Layout

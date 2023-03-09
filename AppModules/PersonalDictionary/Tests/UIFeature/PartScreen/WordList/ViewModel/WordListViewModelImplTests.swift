@@ -16,7 +16,8 @@ final class WordListViewModelImplTests: XCTestCase {
     func test_removeAtPosition_noopWhenIndexOutOfBounds_negativeIndex() throws {
         // Arrange
         let modelMock = WordListModelMock()
-        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock())
+        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock(),
+                                              logger: LoggerMock())
 
         // Act
         viewModel.remove(at: -2)
@@ -28,7 +29,8 @@ final class WordListViewModelImplTests: XCTestCase {
     func test_removeAtPosition_noopWhenIndexOutOfBounds_positiveIndex() throws {
         // Arrange
         let modelMock = WordListModelMock()
-        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock())
+        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock(),
+                                              logger: LoggerMock())
         let array = [
             Word(text: "a", sourceLang: lang, targetLang: lang),
             Word(text: "b", sourceLang: lang, targetLang: lang)
@@ -46,7 +48,8 @@ final class WordListViewModelImplTests: XCTestCase {
     func test_removeAtPosition_positionInsideArrayBounds_worksCorrectly() throws {
         // Arrange
         let modelMock = WordListModelMock()
-        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock())
+        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock(),
+                                              logger: LoggerMock())
         let array = [
             Word(text: "a", sourceLang: lang, targetLang: lang),
             Word(text: "b", sourceLang: lang, targetLang: lang),
@@ -67,7 +70,8 @@ final class WordListViewModelImplTests: XCTestCase {
     func test_toggleWordIsFavorite_worksCorrectly() throws {
         // Arrange
         let modelMock = WordListModelMock()
-        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock())
+        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock(),
+                                              logger: LoggerMock())
         let words = [
             Word(text: "a", sourceLang: lang, targetLang: lang),
             Word(text: "b", sourceLang: lang, targetLang: lang),
@@ -91,7 +95,8 @@ final class WordListViewModelImplTests: XCTestCase {
     func test_toggleWordIsFavorite_noopWhenIndexOutOfBounds() throws {
         // Arrange
         let modelMock = WordListModelMock()
-        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock())
+        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock(),
+                                              logger: LoggerMock())
         let words = [
             Word(text: "a", sourceLang: lang, targetLang: lang),
             Word(text: "b", sourceLang: lang, targetLang: lang),
@@ -107,10 +112,11 @@ final class WordListViewModelImplTests: XCTestCase {
         XCTAssertEqual(viewModel.wordList.value, words)
     }
 
-    func test_fetchTranslationsIfNeededWithin_success() throws {
+    func test_fetchTranslationsIfNeeded_success() throws {
         // Arrange
         let modelMock = WordListModelMock()
-        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock())
+        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock(),
+                                              logger: LoggerMock())
         let word1 = Word(text: "a", sourceLang: lang, targetLang: lang)
         let word2 = Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang)
         let word3 = Word(text: "c", sourceLang: lang, targetLang: lang)
@@ -124,16 +130,17 @@ final class WordListViewModelImplTests: XCTestCase {
         viewModel.wordList.accept([word1, word2, word3])
 
         // Act
-        _ = try viewModel.fetchTranslationsIfNeededWithin(start: 0, end: 3).toBlocking().toArray()
+        _ = try viewModel.fetchTranslationsIfNeeded(start: 0, end: 3).toBlocking().toArray()
 
         // Assert
         XCTAssertEqual(viewModel.wordList.value, [translatedWord1, word2, translatedWord3])
     }
 
-    func test_fetchTranslationsIfNeededWithin_failsWhenModelCallFails() throws {
+    func test_fetchTranslationsIfNeeded_failsWhenModelCallFails() throws {
         // Arrange
         let modelMock = WordListModelMock()
-        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock())
+        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock(),
+                                              logger: LoggerMock())
         let word1 = Word(text: "a", sourceLang: lang, targetLang: lang)
         let word2 = Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang)
         let word3 = Word(text: "c", sourceLang: lang, targetLang: lang)
@@ -142,7 +149,7 @@ final class WordListViewModelImplTests: XCTestCase {
         viewModel.wordList.accept([word1, word2, word3])
 
         // Act
-        let observable = viewModel.fetchTranslationsIfNeededWithin(start: 0, end: 3)
+        let observable = viewModel.fetchTranslationsIfNeeded(start: 0, end: 3)
 
         // Assert
         XCTAssertThrowsError(try observable.toBlocking().toArray())

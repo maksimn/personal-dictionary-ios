@@ -27,5 +27,5 @@ protocol WordListViewModel {
     /// - Parameters:
     ///  - start: позиция (индекс) начального слова.
     ///  - end: верхняя граница индексов слов для перевода (не включая).
-    func fetchTranslationsIfNeededWithin(start: Int, end: Int) -> Completable
+    func fetchTranslationsIfNeeded(start: Int, end: Int) -> Completable
 }

@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
+import CoreModule
 import UIKit
 
 /// Реализация графа фичи "Список слов".
@@ -23,7 +24,8 @@ final class WordListGraphImpl: WordListGraph {
     init(viewParams: WordListViewParams,
          cudOperations: WordCUDOperations,
          translationService: TranslationService,
-         wordStream: WordStream) {
+         wordStream: WordStream,
+         logger: SLogger) {
         let model = WordListModelImpl(
             cudOperations: cudOperations,
             wordStream: wordStream,
@@ -31,12 +33,14 @@ final class WordListGraphImpl: WordListGraph {
         )
         viewModel = WordListViewModelImpl(
             model: model,
-            wordStream: wordStream
+            wordStream: wordStream,
+            logger: logger
         )
         view = WordListView(
             viewModel: viewModel,
             params: viewParams,
-            theme: Theme.data
+            theme: Theme.data,
+            logger: logger
         )
     }
 }

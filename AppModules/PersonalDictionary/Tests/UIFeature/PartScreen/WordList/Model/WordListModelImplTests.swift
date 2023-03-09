@@ -232,28 +232,20 @@ final class WordListModelImplTests: XCTestCase {
             translationService: translationServiceMock,
             intervalMs: 0
         )
-        let word1 = Word(text: "a", sourceLang: lang, targetLang: lang)
-        let word2 = Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang)
-        let word3 = Word(text: "c", sourceLang: lang, targetLang: lang)
-        let words = [word1, word2, word3]
         var translatedWord1 = word1
         var translatedWord3 = word3
 
         translatedWord1.translation = "x"
         translatedWord3.translation = "z"
-
-        var i = 0
-        translationServiceMock.methodMock = { _ in
-            i += 1
-            return i == 1 ? Single.just(translatedWord1) : Single.just(translatedWord3)
-        }
+        translationServiceMock.methodMock = { word in word == self.word1 ? Single.just(translatedWord1) :
+                                                                           Single.just(translatedWord3) }
         cudOperationsMock.updateWordMock = { (word: Word) in
             dbUpdateCounter += 1
             return Single.just(word)
         }
 
         // Act
-        let result = try model.fetchTranslationsFor(state: words, start: 0, end: 3).toBlocking().toArray()
+        let result = try model.fetchTranslationsFor(state: wordList, start: 0, end: 3).toBlocking().toArray()
 
         // Assert
         XCTAssertEqual(dbUpdateCounter, 2)
@@ -269,14 +261,11 @@ final class WordListModelImplTests: XCTestCase {
             translationService: translationServiceMock,
             intervalMs: 0
         )
-        let word1 = Word(text: "a", sourceLang: lang, targetLang: lang)
-        let word2 = Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang)
-        let word3 = Word(text: "c", sourceLang: lang, targetLang: lang)
 
         translationServiceMock.methodMock = { _ in Single.error(ErrorMock.err) }
 
         // Act
-        let observable = model.fetchTranslationsFor(state: [word1, word2, word3], start: 0, end: 3)
+        let observable = model.fetchTranslationsFor(state: wordList, start: 0, end: 3)
 
         // Assert
         XCTAssertThrowsError(try observable.toBlocking().toArray())

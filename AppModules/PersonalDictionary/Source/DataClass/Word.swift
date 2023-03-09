@@ -71,10 +71,10 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
         """
         (id: \(id.raw), \
         text: \(text),
-        translation: \(translation ?? ""), \
+        translation: \(translation ?? "nil"), \
         sourceLang: \(sourceLang.id.raw), \
         targetLang: \(targetLang.id.raw), \
-        isFavorite: \(isFavorite) \
+        isFavorite: \(isFavorite), \
         createdAt: \(createdAt))
         """
     }
