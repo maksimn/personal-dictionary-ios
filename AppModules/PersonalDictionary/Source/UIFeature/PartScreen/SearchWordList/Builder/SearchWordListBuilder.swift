@@ -52,7 +52,7 @@ final class SearchWordListBuilder: ViewControllerBuilder {
 
     private func searchableWordList() -> SearchableWordList {
         WordListRepositoryImpl(
-            appConfig: dependency.appConfig,
+            langData: dependency.appConfig.langData,
             bundle: dependency.bundle
         )
     }

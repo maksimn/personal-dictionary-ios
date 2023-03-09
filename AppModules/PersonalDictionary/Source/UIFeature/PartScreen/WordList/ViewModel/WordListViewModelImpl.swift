@@ -48,7 +48,7 @@ final class WordListViewModelImpl: WordListViewModel {
     }
 
     private func onNewState(_ state: WordListState, actionName: String) {
-        logState(actionName: actionName, state)
+        logger.logState(actionName: actionName, state)
 
         wordList.accept(state)
     }
@@ -118,41 +118,25 @@ final class WordListViewModelImpl: WordListViewModel {
 
     private func subscribe() {
         wordStream.newWord
-            .subscribe(onNext: { [weak self] in
-                self?.log($0, fromModelStream: "new word")
+            .subscribe(onNext: { [weak self] word in
+                self?.logger.log(word, fromModelStream: "new word")
 
-                self?.create($0)
+                self?.create(word)
             })
             .disposed(by: disposeBag)
         wordStream.removedWord
-            .subscribe(onNext: { [weak self] in
-                self?.log($0, fromModelStream: "removed word")
+            .subscribe(onNext: { [weak self] word in
+                self?.logger.log(word, fromModelStream: "removed word")
 
-                self?.findAndRemove($0)
+                self?.findAndRemove(word)
             })
             .disposed(by: disposeBag)
         wordStream.updatedWord
-            .subscribe(onNext: { [weak self] in
-                self?.log($0, fromModelStream: "updated word")
+            .subscribe(onNext: { [weak self] word in
+                self?.logger.log(word, fromModelStream: "updated word")
 
-                self?.findAndUpdate($0)
+                self?.findAndUpdate(word)
             })
             .disposed(by: disposeBag)
-    }
-
-    // MARK: - Logging
-
-    private func logState(actionName: String, _ state: WordListState) {
-        logger.log("Word list \(actionName) result:")
-
-        if wordList.value == state {
-            logger.log("\t\tno state changes")
-        } else {
-            logger.log("\t\tWord list state: \(state)")
-        }
-    }
-
-    private func log(_ word: Word, fromModelStream modelStreamName: String) {
-        logger.log("Received word = \(word) from the \(modelStreamName) model stream.")
     }
 }

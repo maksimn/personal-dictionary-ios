@@ -53,7 +53,7 @@ final class WordListBuilderImpl: WordListBuilder {
 
         return WordListGraphImpl(
             viewParams: viewParams,
-            cudOperations: WordListRepositoryImpl(appConfig: dependency.appConfig, bundle: dependency.bundle),
+            cudOperations: cudOperations(),
             translationService: translationService,
             wordStream: WordStreamImpl.instance,
             logger: logger()
@@ -62,5 +62,12 @@ final class WordListBuilderImpl: WordListBuilder {
 
     private func logger() -> SLogger {
         SLoggerImp(category: "PersonalDictionary.WordList")
+    }
+
+    private func cudOperations() -> WordCUDOperations {
+        WordListRepositoryImpl(
+            langData: dependency.appConfig.langData,
+            bundle: dependency.bundle
+        )
     }
 }

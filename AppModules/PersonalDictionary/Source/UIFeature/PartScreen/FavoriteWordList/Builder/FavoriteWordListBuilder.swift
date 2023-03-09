@@ -17,7 +17,7 @@ final class FavoriteWordListBuilder: ViewControllerBuilder {
 
     func build() -> UIViewController {
         let fetcher = WordListRepositoryImpl(
-            appConfig: dependency.appConfig,
+            langData: dependency.appConfig.langData,
             bundle: dependency.bundle
         )
         let viewModel = FavoriteWordListViewModelImpl(
