@@ -42,98 +42,66 @@ final class NewWordViewModelImplTests: XCTestCase {
         XCTAssertEqual(viewModel.state.value.text, "Abc")
     }
 
-    func test_updateStateWithLangPickerState_newTargetLang() throws {
+    func test_updateStateWithLangPickerState() throws {
         // Arrange
         let modelMock = NewWordModelMock()
         let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
-        let newLangPickerState = LangPickerState(
-            lang: Lang(id: .init(raw: 2), name: "Bb", shortName: "b"),
-            langType: .target,
-            isHidden: true
+        let otherLang = Lang(id: .init(raw: 2), name: "Bb", shortName: "b")
+        let newLangPickerState = LangPickerState(lang: otherLang, langType: .target, isHidden: true)
+        let newState = NewWordState(
+            text: initState.text, sourceLang: lang, targetLang: otherLang, langPickerState: newLangPickerState
         )
+
+        modelMock.selectLangEffectMock = { (_, _) in newState }
 
         // Act
         viewModel.updateStateWith(langPickerState: newLangPickerState)
 
         // Assert
-        let state = viewModel.state.value
-
-        XCTAssertEqual(state.langPickerState, newLangPickerState)
-        XCTAssertEqual(state.targetLang, newLangPickerState.lang)
-    }
-
-    func test_updateStateWithLangPickerState_newSourceLang() throws {
-        // Arrange
-        let modelMock = NewWordModelMock()
-        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
-        let newLangPickerState = LangPickerState(
-            lang: Lang(id: .init(raw: 2), name: "Bb", shortName: "b"),
-            langType: .source,
-            isHidden: true
-        )
-
-        // Act
-        viewModel.updateStateWith(langPickerState: newLangPickerState)
-
-        // Assert
-        let state = viewModel.state.value
-
-        XCTAssertEqual(state.langPickerState, newLangPickerState)
-        XCTAssertEqual(state.sourceLang, newLangPickerState.lang)
+        XCTAssertEqual(viewModel.state.value, newState)
     }
 
     func test_presentLangPicker_toSelectSourceLang() throws {
         // Arrange
+        var modelCallCount = 0
         let modelMock = NewWordModelMock()
         let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
+
+        modelMock.presentLangPickerMock = { (_, state) in
+            modelCallCount += 1
+            return state
+        }
 
         // Act
         viewModel.presentLangPicker(langType: .source)
 
         // Assert
-        let langPickerState = viewModel.state.value.langPickerState
-
-        XCTAssertEqual(langPickerState, LangPickerState(lang: initState.sourceLang, langType: .source, isHidden: false))
+        XCTAssertEqual(modelCallCount, 1)
     }
 
     func test_presentLangPicker_toSelectTargetLang() throws {
         // Arrange
+        var modelCallCount = 0
         let modelMock = NewWordModelMock()
         let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
+
+        modelMock.presentLangPickerMock = { (_, state) in
+            modelCallCount += 1
+            return state
+        }
 
         // Act
         viewModel.presentLangPicker(langType: .target)
 
         // Assert
-        let langPickerState = viewModel.state.value.langPickerState
-
-        XCTAssertEqual(langPickerState, LangPickerState(lang: initState.targetLang, langType: .target, isHidden: false))
-    }
-
-    func test_sendNewWord_notSendingIfWordIsEmpty() throws {
-        // Arrange
-        var callsCounter = 0
-        let modelMock = NewWordModelMock()
-        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
-
-        modelMock.sendNewWordMock = { _ in callsCounter += 1 }
-
-        // Act
-        viewModel.sendNewWord()
-
-        // Assert
-        XCTAssertEqual(callsCounter, 0)
+        XCTAssertEqual(modelCallCount, 1)
     }
 
     func test_sendNewWord_callsModelMethod() throws {
         // Arrange
         var callsCounter = 0
-        var state = initState
-
-        state.text = "Word"
-
         let modelMock = NewWordModelMock()
-        let viewModel = NewWordViewModelImpl(model: modelMock, initState: state)
+        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
 
         modelMock.sendNewWordMock = { _ in callsCounter += 1 }
 

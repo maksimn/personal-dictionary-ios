@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 10.11.2021.
 //
 
+import CoreModule
 import UIKit
 
 /// Реализация билдера фичи "Главный (основной) список слов" Личного словаря.
@@ -24,7 +25,10 @@ final class MainWordListBuilder: ViewControllerBuilder {
             langData: dependency.appConfig.langData,
             bundle: dependency.bundle
         )
-        let viewModel = MainWordListViewModelImpl(wordListFetcher: wordListFetcher)
+        let viewModel = MainWordListViewModelImpl(
+            wordListFetcher: wordListFetcher,
+            logger: SLoggerImp(category: "PersonalDictionary.MainWordList")
+        )
         let view = MainWordListViewController(
             viewModel: viewModel,
             wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: true, dependency: dependency)
