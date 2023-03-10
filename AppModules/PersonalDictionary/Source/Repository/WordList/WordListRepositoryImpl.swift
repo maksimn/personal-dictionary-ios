@@ -62,10 +62,7 @@ final class WordListRepositoryImpl: WordListRepository {
         self.logger = logger
     }
 
-    /// Инициализатор.
-    /// - Parameters:
-    ///  - appConfig: конфигурация приложения.
-    convenience init(appConfig: AppConfig, bundle: Bundle) {
+    convenience init(langData: LangData, bundle: Bundle) {
         self.init(
             args: WordListRepositoryArgs(
                 bundle: bundle,
@@ -73,7 +70,7 @@ final class WordListRepositoryImpl: WordListRepository {
             ),
             langRepository: LangRepositoryImpl(
                 userDefaults: UserDefaults.standard,
-                data: appConfig.langData
+                data: langData
             ),
             logger: SLoggerImp(category: "PersonalDictionary.WordListRepository")
         )

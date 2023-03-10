@@ -20,7 +20,10 @@ final class MainWordListBuilder: ViewControllerBuilder {
     /// - Returns:
     ///  - Экран "Главного (основного) списка слов".
     func build() -> UIViewController {
-        let wordListFetcher = WordListRepositoryImpl(appConfig: dependency.appConfig, bundle: dependency.bundle)
+        let wordListFetcher = WordListRepositoryImpl(
+            langData: dependency.appConfig.langData,
+            bundle: dependency.bundle
+        )
         let viewModel = MainWordListViewModelImpl(wordListFetcher: wordListFetcher)
         let view = MainWordListViewController(
             viewModel: viewModel,
