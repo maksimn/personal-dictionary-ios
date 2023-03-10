@@ -120,7 +120,7 @@ final class NewWordModelImplTests: XCTestCase {
                 sourceLang: initState.sourceLang,
                 targetLang: initState.targetLang,
                 langPickerState: LangPickerState(
-                    lang: initState.sourceLang,
+                    lang: initState.targetLang,
                     langType: .target,
                     isHidden: false
                 )

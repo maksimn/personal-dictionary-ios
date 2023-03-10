@@ -30,17 +30,19 @@ final class NewWordBuilder: ViewControllerBuilder {
         let model = NewWordModelImpl(
             langRepository: langRepository,
             newWordStream: WordStreamImpl.instance,
-            logger: SLoggerImp(category: "PersonalDictionary.NewWord")
+            logger: logger()
         )
         let viewModel = NewWordViewModelImpl(
             model: model,
-            initState: initialState()
+            initState: initialState(),
+            logger: logger()
         )
         let view = NewWordViewController(
             params: viewParams(),
             viewModel: viewModel,
             langPickerBuilder: langPickerBuilder(),
-            theme: Theme.data
+            theme: Theme.data,
+            logger: logger()
         )
 
         return view
@@ -76,5 +78,9 @@ final class NewWordBuilder: ViewControllerBuilder {
             langType: .source,
             isHidden: true
         )
+    }
+
+    private func logger() -> SLogger {
+        SLoggerImp(category: "PersonalDictionary.NewWord")
     }
 }

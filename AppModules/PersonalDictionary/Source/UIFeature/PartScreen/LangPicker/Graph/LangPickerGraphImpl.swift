@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 09.11.2021.
 //
 
+import CoreModule
 import UIKit
 
 final class LangPickerGraphImpl: LangPickerGraph {
@@ -20,7 +21,12 @@ final class LangPickerGraphImpl: LangPickerGraph {
     ///  - viewParams: параметры представления выбора языка.
     init(viewParams: LangPickerParams) {
         let viewmodel = LangPickerViewModelImpl()
-        let view = LangPickerView(params: viewParams, viewModel: viewmodel, theme: Theme.data)
+        let view = LangPickerView(
+            params: viewParams,
+            viewModel: viewmodel,
+            theme: Theme.data,
+            logger: SLoggerImp(category: "PersonalDictionary.LangPicker")
+        )
 
         uiview = view
         self.viewmodel = viewmodel
