@@ -6,7 +6,7 @@
 //
 
 /// Данные модели "Добавления нового слова" в личный словарь.
-struct NewWordState {
+struct NewWordState: Equatable {
     var text: String
     var sourceLang: Lang
     var targetLang: Lang

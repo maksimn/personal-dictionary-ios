@@ -8,12 +8,9 @@
 /// Модель "Добавления нового слова" в личный словарь.
 protocol NewWordModel {
 
-    /// Отправить событие добавления нового слова в словарь
-    func sendNewWord(_ word: Word)
+    func selectLangEffect(_ langPickerState: LangPickerState, state: NewWordState) -> NewWordState
 
-    /// Сохранить исходный язык.
-    func save(sourceLang: Lang)
+    func presentLangPicker(langType: LangType, state: NewWordState) -> NewWordState
 
-    /// Сохранить целевой язык.
-    func save(targetLang: Lang)
+    func sendNewWord(_ state: NewWordState)
 }

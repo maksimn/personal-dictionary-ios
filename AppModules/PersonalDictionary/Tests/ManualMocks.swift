@@ -100,15 +100,21 @@ class NewWordStreamMock: NewWordStream {
 
 class NewWordModelMock: NewWordModel {
 
-    var sendNewWordMock: ((Word) -> Void)?
+    var selectLangEffectMock: ((LangPickerState, NewWordState) -> NewWordState)?
+    var sendNewWordMock: ((NewWordState) -> Void)?
+    var presentLangPickerMock: ((LangType, NewWordState) -> NewWordState)?
 
-    func sendNewWord(_ word: Word) {
-        sendNewWordMock!(word)
+    func selectLangEffect(_ langPickerState: LangPickerState, state: NewWordState) -> NewWordState {
+        selectLangEffectMock!(langPickerState, state)
     }
 
-    func save(sourceLang: Lang) { }
+    func presentLangPicker(langType: LangType, state: NewWordState) -> NewWordState {
+        presentLangPickerMock!(langType, state)
+    }
 
-    func save(targetLang: Lang) { }
+    func sendNewWord(_ state: NewWordState) {
+        sendNewWordMock!(state)
+    }
 }
 
 class MutableSearchTextStreamMock: MutableSearchTextStream {

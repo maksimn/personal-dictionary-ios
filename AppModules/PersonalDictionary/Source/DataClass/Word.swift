@@ -69,7 +69,7 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
 
     var description: String {
         """
-        (id: \(id.raw), \
+        \n(id: \(id.raw), \
         text: \(text),
         translation: \(translation ?? "nil"), \
         sourceLang: \(sourceLang.id.raw), \

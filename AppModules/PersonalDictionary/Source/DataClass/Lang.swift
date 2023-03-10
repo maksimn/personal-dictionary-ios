@@ -8,7 +8,7 @@
 import CoreModule
 
 /// Структура с данными об отдельном языке.
-struct Lang: Equatable {
+struct Lang: Equatable, CustomStringConvertible {
 
     typealias Id = Tagged<Lang, Int>
 
@@ -24,5 +24,12 @@ struct Lang: Equatable {
     /// Операция сравнения на равенство двух объектов языков
     static func == (lhs: Lang, rhs: Lang) -> Bool {
         lhs.id == rhs.id
+    }
+
+    var description: String {
+        """
+        \n(id: \(id.raw), \
+        shortName: \(shortName))
+        """
     }
 }
