@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 09.11.2021.
 //
 
+import CoreModule
 import RxSwift
 import UIKit
 
@@ -13,6 +14,7 @@ final class LangPickerView: UIView {
     private let params: LangPickerParams
     private let viewModel: LangPickerViewModel
     private let theme: Theme
+    private let logger: SLogger
     private let disposeBag = DisposeBag()
 
     private lazy var langPicker = LangPicker(
@@ -27,19 +29,23 @@ final class LangPickerView: UIView {
     /// - Parameters:
     ///  - params: параметры представления выбора языка.
     ///  - viewModel: модель представления.
-    init(params: LangPickerParams,
-         viewModel: LangPickerViewModel,
-         theme: Theme) {
+    init(params: LangPickerParams, viewModel: LangPickerViewModel, theme: Theme, logger: SLogger) {
         self.params = params
         self.viewModel = viewModel
         self.theme = theme
+        self.logger = logger
         super.init(frame: .zero)
         initView()
         bindToViewModel()
+        logger.logFeatureInstallation()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        logger.logFeatureDismission()
     }
 
     private func initView() {

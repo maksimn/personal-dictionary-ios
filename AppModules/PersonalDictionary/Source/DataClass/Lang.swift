@@ -27,9 +27,6 @@ struct Lang: Equatable, CustomStringConvertible {
     }
 
     var description: String {
-        """
-        \n(id: \(id.raw), \
-        shortName: \(shortName))
-        """
+        "\n(id: \(id.raw), shortName: \(shortName))"
     }
 }

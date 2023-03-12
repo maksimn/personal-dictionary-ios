@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
+import CoreModule
 import RxSwift
 import UIKit
 
@@ -13,6 +14,7 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
 
     let params: NewWordViewParams
     let theme: Theme
+    private let logger: SLogger
 
     private let viewModel: NewWordViewModel
 
@@ -35,10 +37,12 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
     init(params: NewWordViewParams,
          viewModel: NewWordViewModel,
          langPickerBuilder: LangPickerBuilder,
-         theme: Theme) {
+         theme: Theme,
+         logger: SLogger) {
         self.params = params
         self.theme = theme
         self.viewModel = viewModel
+        self.logger = logger
         super.init(nibName: nil, bundle: nil)
         initViews()
         addLangPicker(langPickerBuilder)
@@ -47,6 +51,17 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        logger.logFeatureDismission()
+    }
+
+    // MARK: - Lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        logger.logFeatureInstallation()
     }
 
     // MARK: - UITextFieldDelegate

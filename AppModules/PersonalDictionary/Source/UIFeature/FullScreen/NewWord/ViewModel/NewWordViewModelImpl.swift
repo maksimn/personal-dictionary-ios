@@ -5,17 +5,21 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
+import CoreModule
+
 /// Реализация модели представления для экрана добавления нового слова в личный словарь.
 final class NewWordViewModelImpl: NewWordViewModel {
 
     let state: BindableNewWordState
 
     private let model: NewWordModel
+    private let logger: SLogger
 
     /// - Parameters:
     ///  - model: модель фичи "Добавление нового слова"
-    init(model: NewWordModel, initState: NewWordState) {
+    init(model: NewWordModel, initState: NewWordState, logger: SLogger) {
         self.model = model
+        self.logger = logger
         state = BindableNewWordState(value: initState)
     }
 
@@ -23,22 +27,28 @@ final class NewWordViewModelImpl: NewWordViewModel {
         var state = state.value
 
         state.text = text
-        self.state.accept(state)
+        onNewState(state, actionName: "UDPATE TEXT")
     }
 
     func updateStateWith(langPickerState: LangPickerState) {
         let state = model.selectLangEffect(langPickerState, state: state.value)
 
-        self.state.accept(state)
+        onNewState(state, actionName: "SELECT LANGUAGE")
     }
 
     func presentLangPicker(langType: LangType) {
         let state = model.presentLangPicker(langType: langType, state: state.value)
 
-        self.state.accept(state)
+        onNewState(state, actionName: "PRESENT LANGPICKER")
     }
 
     func sendNewWord() {
         model.sendNewWord(state.value)
+    }
+
+    private func onNewState(_ state: NewWordState, actionName: String) {
+        logger.logState(actionName: actionName, state)
+
+        self.state.accept(state)
     }
 }

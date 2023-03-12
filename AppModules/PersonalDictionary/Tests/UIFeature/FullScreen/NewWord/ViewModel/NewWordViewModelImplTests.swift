@@ -21,7 +21,7 @@ final class NewWordViewModelImplTests: XCTestCase {
     func test_updateText_textIsEmpty() throws {
         // Arrange
         let modelMock = NewWordModelMock()
-        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
+        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState, logger: LoggerMock())
 
         // Act
         viewModel.update(text: "")
@@ -33,7 +33,7 @@ final class NewWordViewModelImplTests: XCTestCase {
     func test_updateText_textIsSomeString() throws {
         // Arrange
         let modelMock = NewWordModelMock()
-        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
+        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState, logger: LoggerMock())
 
         // Act
         viewModel.update(text: "Abc")
@@ -45,7 +45,7 @@ final class NewWordViewModelImplTests: XCTestCase {
     func test_updateStateWithLangPickerState() throws {
         // Arrange
         let modelMock = NewWordModelMock()
-        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
+        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState, logger: LoggerMock())
         let otherLang = Lang(id: .init(raw: 2), name: "Bb", shortName: "b")
         let newLangPickerState = LangPickerState(lang: otherLang, langType: .target, isHidden: true)
         let newState = NewWordState(
@@ -65,7 +65,7 @@ final class NewWordViewModelImplTests: XCTestCase {
         // Arrange
         var modelCallCount = 0
         let modelMock = NewWordModelMock()
-        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
+        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState, logger: LoggerMock())
 
         modelMock.presentLangPickerMock = { (_, state) in
             modelCallCount += 1
@@ -83,7 +83,7 @@ final class NewWordViewModelImplTests: XCTestCase {
         // Arrange
         var modelCallCount = 0
         let modelMock = NewWordModelMock()
-        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
+        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState, logger: LoggerMock())
 
         modelMock.presentLangPickerMock = { (_, state) in
             modelCallCount += 1
@@ -101,7 +101,7 @@ final class NewWordViewModelImplTests: XCTestCase {
         // Arrange
         var callsCounter = 0
         let modelMock = NewWordModelMock()
-        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState)
+        let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState, logger: LoggerMock())
 
         modelMock.sendNewWordMock = { _ in callsCounter += 1 }
 
