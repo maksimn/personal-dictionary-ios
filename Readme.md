@@ -146,7 +146,7 @@ protocol FeatureListener: AnyObject {
 
 2) Rx Model Streams для записи и чтения (см. туториал к архитектуре RIBs).
 
-3) Использовать Unidirectional Data Flow (ReSwift). Позволяет обойтись без делегатов, без Rx и без NotificationCenter.
+3) Использовать Unidirectional Data Flow. Позволяет обойтись без делегатов, без Rx и без NotificationCenter.
 
 ---
 
