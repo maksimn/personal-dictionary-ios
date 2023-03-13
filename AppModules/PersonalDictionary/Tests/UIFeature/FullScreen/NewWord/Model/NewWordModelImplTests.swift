@@ -16,7 +16,7 @@ final class NewWordModelImplTests: XCTestCase {
     lazy var initState = NewWordState(text: "", sourceLang: lang, targetLang: lang,
                                       langPickerState: initLangPickerState)
 
-    func test_selectLangEffect_sourceLangSelection_setNewSourceLang() throws {
+    func test_selectLangEffect_sourceLangSelection_newSourceLangDidSet() throws {
         // Arrange
         var storageUpdateCount = 0
         let langRepositoryMock = LangRepositoryMock()
@@ -45,7 +45,7 @@ final class NewWordModelImplTests: XCTestCase {
         )
     }
 
-    func test_selectLangEffect_targetLangSelection_setNewSourceLang() throws {
+    func test_selectLangEffect_targetLangSelection_newTargetLangDidSet() throws {
         // Arrange
         var storageUpdateCount = 0
         let langRepositoryMock = LangRepositoryMock()
