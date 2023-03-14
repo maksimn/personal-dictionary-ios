@@ -99,6 +99,10 @@ final class WordListModelImpl: WordListModel {
             notTranslated.append(state[position])
         }
 
+        if notTranslated.isEmpty {
+            return Single.just(state)
+        }
+
         var state = state
 
         return Observable.from(notTranslated)

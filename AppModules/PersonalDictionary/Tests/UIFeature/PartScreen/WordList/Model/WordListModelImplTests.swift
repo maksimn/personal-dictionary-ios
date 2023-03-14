@@ -245,11 +245,11 @@ final class WordListModelImplTests: XCTestCase {
         }
 
         // Act
-        let result = try model.fetchTranslationsFor(state: wordList, start: 0, end: 3).toBlocking().toArray()
+        let result = try model.fetchTranslationsFor(state: wordList, start: 0, end: 3).toBlocking().first()!
 
         // Assert
         XCTAssertEqual(dbUpdateCounter, 2)
-        XCTAssertEqual(result.last!, [translatedWord1, word2, translatedWord3])
+        XCTAssertEqual(result, [translatedWord1, word2, translatedWord3])
     }
 
     func test_fetchTranslationsFor_failsWhenTranslationApiFails() throws {
@@ -269,5 +269,24 @@ final class WordListModelImplTests: XCTestCase {
 
         // Assert
         XCTAssertThrowsError(try observable.toBlocking().toArray())
+    }
+
+    func test_fetchTranslationsFor_returnsCurrentStateWhenAllWordsAreTranslated() throws {
+        // Arrange
+        let model = WordListModelImpl(
+            cudOperations: WordCUDOperationsMock(),
+            wordStream: RUWordStreamMock(),
+            translationService: TranslationServiceMock(),
+            intervalMs: 0
+        )
+        let translated = [Word(text: "a", translation: "x", sourceLang: lang, targetLang: lang),
+                          Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang),
+                          Word(text: "c", translation: "z", sourceLang: lang, targetLang: lang)]
+
+        // Act
+        let result = try model.fetchTranslationsFor(state: translated, start: 0, end: 3).toBlocking().first()
+
+        // Assert
+        XCTAssertEqual(result, translated)
     }
 }
