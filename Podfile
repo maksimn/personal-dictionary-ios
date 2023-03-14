@@ -13,15 +13,6 @@ target 'SuperList' do
   pod 'TodoList',
     :path => './AppModules/TodoList'
 
-  target 'SuperListTests' do
-    inherit! :search_paths
-
-  end
-
-  target 'SuperListUITests' do
-
-  end
-
   post_install do |installer|
    installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
