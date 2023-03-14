@@ -30,7 +30,8 @@ final class SearchTextInputViewModelImpl: SearchTextInputViewModel {
     }
 
     private func onNext(searchText: String) {
-        logger.log("Sending \"\(searchText)\" to search text stream.")
+        logger.log("Sending \"\(searchText)\" to the search text stream.")
+
         searchTextStream.send(searchText)
     }
 }
