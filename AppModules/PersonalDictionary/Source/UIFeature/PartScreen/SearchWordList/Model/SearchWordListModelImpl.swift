@@ -5,8 +5,6 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-import RxSwift
-
 final class SearchWordListModelImpl: SearchWordListModel {
 
     private let searchableWordList: SearchableWordList
