@@ -8,7 +8,7 @@
 import CoreModule
 
 /// Реализация роутера для навигации на экран Поиска.
-final class NavToSearchRouterImpl: CoreRouter {
+final class NavToSearchRouter: CoreRouter {
 
     private weak var navigationController: UINavigationController?
     private let searchBuilder: ViewControllerBuilder

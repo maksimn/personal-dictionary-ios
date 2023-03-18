@@ -11,12 +11,11 @@ import UIKit
 final class MainNavigatorImpl: MainNavigator {
 
     private weak var navigationController: UINavigationController?
-    private let navToSearchBuilder: ViewBuilder
+    private let navToSearchBuilder: SearchControllerBuilder
     private let navToFavoritesBuilder: ViewBuilder
     private let navToNewWordBuilder: ViewBuilder
     private let navToTodoListBuilder: ViewBuilder
 
-    /// Инициализатор,
     /// - Parameters:
     ///  - navigationController: корневой  navigation  сontroller приложения.
     ///  - navToSearchBuilder: билдер вложенной фичи "Элемент навигации на экран поиска".
@@ -25,7 +24,7 @@ final class MainNavigatorImpl: MainNavigator {
     ///  - navToTodoListBuilder: билдер вложенной фичи "Элемент навигации к приложению TodoList".
     init(
         navigationController: UINavigationController?,
-        navToSearchBuilder: ViewBuilder,
+        navToSearchBuilder: SearchControllerBuilder,
         navToFavoritesBuilder: ViewBuilder,
         navToNewWordBuilder: ViewBuilder,
         navToTodoListBuilder: ViewBuilder
@@ -40,17 +39,17 @@ final class MainNavigatorImpl: MainNavigator {
     /// Добавить представления элементов навигации.
     func appendTo(rootView: UIView) {
         addNavToSearch()
-        addNavToFavorites(rootView)
+        // addNavToFavorites(rootView)
         addNavToNewWord(rootView)
-        addNavToTodoList(rootView)
+        // addNavToTodoList(rootView)
     }
 
     private func addNavToSearch() {
-        let navToSearchView = navToSearchBuilder.build()
+        let searchController = navToSearchBuilder.build()
         let navigationItem = navigationController?.viewControllers.first?.navigationItem
 
         navigationItem?.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        navigationItem?.titleView = navToSearchView
+        navigationItem?.searchController = searchController
     }
 
     private func addNavToFavorites(_ rootView: UIView) {

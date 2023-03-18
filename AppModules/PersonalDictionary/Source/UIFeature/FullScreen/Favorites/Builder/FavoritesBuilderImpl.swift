@@ -20,7 +20,7 @@ final class FavoritesBuilderImpl: ViewControllerBuilder {
     func build() -> UIViewController {
         FavoritesViewController(
             headingText: dependency.bundle.moduleLocalizedString("LS_FAVORITE_WORDS"),
-            navToSearchBuilder: NavToSearchBuilderImpl(width: .smaller, dependency: dependency),
+            navToSearchBuilder: NavToSearchBuilder(dependency: dependency),
             favoriteWordListBuilder: FavoriteWordListBuilder(dependency: dependency),
             theme: Theme.data
         )
