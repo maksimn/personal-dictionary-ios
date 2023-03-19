@@ -19,7 +19,6 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
     func build() -> MainNavigator {
         MainNavigatorImpl(
             navigationController: dependency.navigationController,
-            navToSearchBuilder: NavToSearchBuilderImpl(width: .full, dependency: dependency),
             navToFavoritesBuilder: NavToFavoritesBuilder(dependency: dependency),
             navToNewWordBuilder: NavToNewWordBuilder(dependency: dependency),
             navToTodoListBuilder: NavToTodoListBuilder(

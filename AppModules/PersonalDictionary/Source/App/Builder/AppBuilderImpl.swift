@@ -36,11 +36,12 @@ public final class AppBuilderImpl: AppBuilder {
 
     private func rootViewController(_ dependency: AppDependency) -> UIViewController {
         let navigationController = dependency.navigationController
-        let mainScreenBuilder = MainScreenBuilder(dependency: dependency)
-        let mainScreen = mainScreenBuilder.build()
+        let mainWordListBuilder = MainWordListBuilder(dependency: dependency)
+        let mainWordList = mainWordListBuilder.build()
 
         navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
-        navigationController.setViewControllers([mainScreen], animated: false)
+        navigationController.navigationBar.prefersLargeTitles = true
+        navigationController.setViewControllers([mainWordList], animated: false)
 
         return navigationController
     }

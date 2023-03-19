@@ -25,7 +25,7 @@ final class SearchTextInputBuilder: SearchControllerBuilder {
         )
         let searchController = SearchControllerImpl(
             viewModel: viewModel,
-            placeholder: bundle.moduleLocalizedString("LS_SEARCH_TEXT_PLACEHOLDER"),
+            placeholder: bundle.moduleLocalizedString("LS_SEARCH"),
             logger: logger()
         )
 

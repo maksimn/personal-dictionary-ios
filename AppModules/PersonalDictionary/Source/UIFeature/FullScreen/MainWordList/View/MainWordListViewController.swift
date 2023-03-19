@@ -13,19 +13,29 @@ final class MainWordListViewController: UIViewController {
 
     private let viewModel: MainWordListViewModel
     private let wordListGraph: WordListGraph
+    private let mainNavigator: MainNavigator
+    private let searchController: UISearchController
+    private let theme: Theme
 
     private let disposeBag = DisposeBag()
 
-    /// Инициализатор.
     /// - Parameters:
     ///  - wordListBuilder: билдер вложенной фичи "Список слов".
     init(
+        title: String,
         viewModel: MainWordListViewModel,
-        wordListBuilder: WordListBuilder
+        wordListBuilder: WordListBuilder,
+        mainNavigatorBuilder: MainNavigatorBuilder,
+        searchTextInputBuilder: SearchControllerBuilder,
+        theme: Theme
     ) {
         self.viewModel = viewModel
         self.wordListGraph = wordListBuilder.build()
+        self.mainNavigator = mainNavigatorBuilder.build()
+        self.searchController = searchTextInputBuilder.build()
+        self.theme = theme
         super.init(nibName: nil, bundle: nil)
+        navigationItem.title = title
     }
 
     required init?(coder: NSCoder) {
@@ -37,13 +47,20 @@ final class MainWordListViewController: UIViewController {
     override func loadView() {
         view = UIView()
 
+        view.backgroundColor = theme.backgroundColor
         layout(wordListView: wordListGraph.view)
+        mainNavigator.appendTo(rootView: view)
         bindToViewModel()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.fetch()
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        navigationItem.searchController = searchController
     }
 
     private func bindToViewModel() {

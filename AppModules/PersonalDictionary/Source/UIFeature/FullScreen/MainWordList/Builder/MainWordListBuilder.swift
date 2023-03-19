@@ -11,9 +11,9 @@ import UIKit
 /// Реализация билдера фичи "Главный (основной) список слов" Личного словаря.
 final class MainWordListBuilder: ViewControllerBuilder {
 
-    private let dependency: RootDependency
+    private let dependency: AppDependency
 
-    init(dependency: RootDependency) {
+    init(dependency: AppDependency) {
         self.dependency = dependency
     }
 
@@ -30,8 +30,12 @@ final class MainWordListBuilder: ViewControllerBuilder {
             logger: SLoggerImp(category: "PersonalDictionary.MainWordList")
         )
         let view = MainWordListViewController(
+            title: dependency.bundle.moduleLocalizedString("LS_MY_DICTIONARY"),
             viewModel: viewModel,
-            wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: true, dependency: dependency)
+            wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: true, dependency: dependency),
+            mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: dependency),
+            searchTextInputBuilder: SearchTextInputBuilder(bundle: dependency.bundle),
+            theme: Theme.data
         )
 
         return view

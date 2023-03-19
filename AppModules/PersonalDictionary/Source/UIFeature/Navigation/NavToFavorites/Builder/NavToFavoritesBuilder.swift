@@ -25,7 +25,7 @@ final class NavToFavoritesBuilder: ViewBuilder {
             favoritesBuilder: favoritesBuilder
         )
         let view = NavToFavoritesView(
-            routingButtonTitle: "☆",
+            routingButtonTitle: dependency.bundle.moduleLocalizedString("LS_FAVORITES"),
             navToFavoritesRouter: router,
             theme: Theme.data
         )
