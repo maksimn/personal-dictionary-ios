@@ -16,3 +16,8 @@ protocol ViewControllerBuilder {
 
     func build() -> UIViewController
 }
+
+protocol SearchControllerBuilder {
+
+    func build() -> UISearchController
+}
