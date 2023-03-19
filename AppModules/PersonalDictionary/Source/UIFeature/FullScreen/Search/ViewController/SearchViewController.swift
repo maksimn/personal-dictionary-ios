@@ -10,7 +10,7 @@ import UIKit
 /// View controller экрана поиска по словам в словаре.
 final class SearchViewController: UIViewController {
 
-    private let searchTextInputView: UIView
+    private let searchTextController: UISearchController
     private let searchModePickerView: UIView
     private let searchWordListViewController: UIViewController
     private let theme: Theme
@@ -18,11 +18,11 @@ final class SearchViewController: UIViewController {
     /// - Parameters:
     ///  - searchTextInputBuilder: билдер вложенной фичи "Элемент ввода текста для поиска"
     ///  - searchModePickerBuilder: билдер вложенной фичи "Выбор режима поиска".
-    init(searchTextInputBuilder: ViewBuilder,
+    init(searchTextInputBuilder: SearchControllerBuilder,
          searchModePickerBuilder: ViewBuilder,
          searchWordListBuilder: ViewControllerBuilder,
          theme: Theme) {
-        searchTextInputView = searchTextInputBuilder.build()
+        searchTextController = searchTextInputBuilder.build()
         searchModePickerView = searchModePickerBuilder.build()
         searchWordListViewController = searchWordListBuilder.build()
         self.theme = theme
@@ -38,7 +38,6 @@ final class SearchViewController: UIViewController {
 
     private func initViews() {
         view.backgroundColor = theme.backgroundColor
-        navigationItem.titleView = searchTextInputView
         initSearchModePicker()
         layout(wordListViewController: searchWordListViewController, topOffset: 50)
     }
