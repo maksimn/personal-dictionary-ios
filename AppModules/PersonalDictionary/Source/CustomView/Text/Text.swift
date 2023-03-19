@@ -11,7 +11,7 @@ func Heading(_ text: String, _ theme: Theme) -> UILabel {
     let headingLabel = UILabel()
 
     headingLabel.textColor = theme.textColor
-    headingLabel.font = UIFont.systemFont(ofSize: 28, weight: .heavy)
+    headingLabel.font = UIFont.systemFont(ofSize: 28, weight: .medium)
     headingLabel.numberOfLines = 1
     headingLabel.textAlignment = .left
     headingLabel.text = text
