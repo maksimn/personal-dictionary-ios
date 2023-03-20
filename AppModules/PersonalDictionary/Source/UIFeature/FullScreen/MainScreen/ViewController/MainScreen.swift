@@ -10,24 +10,25 @@ import UIKit
 /// View controller Главного экрана.
 final class MainScreen: UIViewController {
 
-    private let heading: UILabel
     private let mainWordListViewController: UIViewController
     private let mainNavigator: MainNavigator
+    private let searchController: UISearchController
     private let theme: Theme
 
-    /// Инициализатор.
     /// - Parameters:
     ///  - mainWordListBuilder: билдер вложенной фичи "Главный список слов".
     ///  - mainNavigatorBuilder: билдер вложенной фичи "Контейнер элементов навигации на Главном экране приложения".
     init(heading: String,
          mainWordListBuilder: MainWordListBuilder,
          mainNavigatorBuilder: MainNavigatorBuilder,
+         searchTextInputBuilder: SearchControllerBuilder,
          theme: Theme) {
-        self.heading = Heading(heading, theme)
         self.mainWordListViewController = mainWordListBuilder.build()
         self.mainNavigator = mainNavigatorBuilder.build()
+        self.searchController = searchTextInputBuilder.build()
         self.theme = theme
         super.init(nibName: nil, bundle: nil)
+        navigationItem.title = heading
     }
 
     required init?(coder: NSCoder) {
@@ -42,20 +43,16 @@ final class MainScreen: UIViewController {
         initViews()
     }
 
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        navigationItem.searchController = searchController
+    }
+
     // MARK: - Private
 
     private func initViews() {
         view.backgroundColor = theme.backgroundColor
-        layoutHeading()
-        layout(wordListViewController: mainWordListViewController, topOffset: 46)
+        layout(wordListViewController: mainWordListViewController, topOffset: 0)
         mainNavigator.appendTo(rootView: view)
-    }
-
-    private func layoutHeading() {
-        view.addSubview(heading)
-        heading.snp.makeConstraints { make -> Void in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(14)
-            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left).offset(54.5)
-        }
     }
 }
