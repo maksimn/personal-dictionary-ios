@@ -11,15 +11,10 @@ import UIKit
 final class SearchViewController: UIViewController {
 
     private let viewModel: SearchViewModel
-
     private let searchModePickerView: UIView
-
     private let wordListGraph: WordListGraph
-
     private let centerLabel: UILabel
-
-    private let topOffset: CGFloat = 46
-
+    private let searchModePickerViewHeight: CGFloat = 46
     private let disposeBag = DisposeBag()
 
     /// - Parameters:
@@ -66,7 +61,7 @@ final class SearchViewController: UIViewController {
 
     private func initViews() {
         initSearchModePicker()
-        layout(wordListView: wordListGraph.view, topOffset: topOffset)
+        layout(wordListView: wordListGraph.view, topOffset: searchModePickerViewHeight)
         layout(centerLabel: centerLabel)
     }
 
@@ -76,7 +71,7 @@ final class SearchViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
-            make.height.equalTo(topOffset)
+            make.height.equalTo(searchModePickerViewHeight)
         }
     }
 }

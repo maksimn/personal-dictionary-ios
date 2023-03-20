@@ -27,6 +27,8 @@ final class MainSwitchViewController: UIViewController, MainSwitchView {
             layout(childViewController: mainWordListViewController)
         case .search:
             layout(childViewController: searchViewController)
+        case .empty:
+            break
         }
     }
 
@@ -37,11 +39,12 @@ final class MainSwitchViewController: UIViewController, MainSwitchView {
     func update(_ state: MainScreenState) {
         switch state {
         case .main:
-            searchViewController.removeFromParentViewController()
             layout(childViewController: mainWordListViewController)
         case .search:
-            mainWordListViewController.removeFromParentViewController()
             layout(childViewController: searchViewController)
+        case .empty:
+            mainWordListViewController.removeFromParentViewController()
+            searchViewController.removeFromParentViewController()
         }
     }
 }

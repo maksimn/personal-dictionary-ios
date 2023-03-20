@@ -11,7 +11,7 @@ import UIKit
 final class MainScreen: UIViewController {
 
     private let mainSwitchViewController: UIViewController
-    private let searchController: UISearchController
+    private let searchTextInput: UISearchController
     private let navToFavoritesBuilder: ViewBuilder
     private let navToTodoListBuilder: ViewBuilder
     private let theme: Theme
@@ -25,7 +25,7 @@ final class MainScreen: UIViewController {
         theme: Theme
     ) {
         self.mainSwitchViewController = mainSwitchBuilder.build()
-        self.searchController = searchTextInputBuilder.build()
+        self.searchTextInput = searchTextInputBuilder.build()
         self.navToFavoritesBuilder = navToFavoritesBuilder
         self.navToTodoListBuilder = navToTodoListBuilder
         self.theme = theme
@@ -50,7 +50,7 @@ final class MainScreen: UIViewController {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        navigationItem.searchController = searchController
+        navigationItem.searchController = searchTextInput
     }
 
     // MARK: - Private

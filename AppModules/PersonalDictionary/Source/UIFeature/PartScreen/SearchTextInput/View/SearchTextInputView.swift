@@ -8,7 +8,7 @@
 import CoreModule
 import UIKit
 
-final class SearchControllerImpl: UISearchController, UISearchResultsUpdating, UISearchControllerDelegate {
+final class SearchTextInputView: UISearchController, UISearchResultsUpdating, UISearchControllerDelegate {
 
     private let viewModel: SearchTextInputViewModel
     private let logger: SLogger
@@ -40,13 +40,25 @@ final class SearchControllerImpl: UISearchController, UISearchResultsUpdating, U
     // MARK: - UISearchControllerDelegate
 
     func willDismissSearchController(_ searchController: UISearchController) {
-        logger.log("User is dismissing search.")
+        logger.log("User will dismiss search.")
+
+        viewModel.mainScreenState.accept(.empty)
+    }
+
+    func didDismissSearchController(_ searchController: UISearchController) {
+        logger.log("User did dismiss search.")
 
         viewModel.mainScreenState.accept(.main)
     }
 
     func willPresentSearchController(_ searchController: UISearchController) {
-        logger.log("User is presenting search.")
+        logger.log("User will present search.")
+
+        viewModel.mainScreenState.accept(.empty)
+    }
+
+    func didPresentSearchController(_ searchController: UISearchController) {
+        logger.log("User did present search.")
 
         viewModel.mainScreenState.accept(.search)
     }

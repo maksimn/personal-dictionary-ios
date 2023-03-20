@@ -24,13 +24,13 @@ final class SearchTextInputBuilder: SearchControllerBuilder {
             mainScreenStateStream: MainScreenStateStreamImpl.instance,
             logger: logger()
         )
-        let searchController = SearchControllerImpl(
+        let view = SearchTextInputView(
             viewModel: viewModel,
             placeholder: bundle.moduleLocalizedString("LS_SEARCH"),
             logger: logger()
         )
 
-        return searchController
+        return view
     }
 
     private func logger() -> SLogger {
