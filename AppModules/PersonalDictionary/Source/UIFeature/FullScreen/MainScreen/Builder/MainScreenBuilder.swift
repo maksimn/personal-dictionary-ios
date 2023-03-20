@@ -23,8 +23,9 @@ final class MainScreenBuilder: ViewControllerBuilder {
     func build() -> UIViewController {
         MainScreen(
             heading: dependency.bundle.moduleLocalizedString("LS_MY_DICTIONARY"),
-            mainSwitchBuilder: MainSwitchBuilder(dependency: dependency),
+            mainWordListBuilder: MainWordListBuilder(dependency: dependency),
             searchTextInputBuilder: SearchTextInputBuilder(bundle: dependency.bundle),
+            navToSearchBuilder: NavToSearchBuilder(dependency: dependency),
             navToFavoritesBuilder: NavToFavoritesBuilder(dependency: dependency),
             navToTodoListBuilder: NavToTodoListBuilder(
                 rootViewController: dependency.navigationController,

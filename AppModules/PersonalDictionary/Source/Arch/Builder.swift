@@ -23,3 +23,5 @@ protocol SearchControllerBuilder {
 }
 
 protocol Model { }
+
+protocol EmptyRouter { }

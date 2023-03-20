@@ -14,6 +14,7 @@ final class SearchViewController: UIViewController {
     private let searchModePickerView: UIView
     private let wordListGraph: WordListGraph
     private let centerLabel: UILabel
+    private let theme: Theme
     private let searchModePickerViewHeight: CGFloat = 46
     private let disposeBag = DisposeBag()
 
@@ -32,6 +33,7 @@ final class SearchViewController: UIViewController {
         self.searchModePickerView = searchModePickerBuilder.build()
         self.wordListGraph = wordListBuilder.build()
         self.centerLabel = SecondaryText(labelText, theme)
+        self.theme = theme
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -44,6 +46,7 @@ final class SearchViewController: UIViewController {
     override func loadView() {
         view = UIView()
 
+        view.backgroundColor = theme.backgroundColor
         initViews()
         bindToViewModel()
     }

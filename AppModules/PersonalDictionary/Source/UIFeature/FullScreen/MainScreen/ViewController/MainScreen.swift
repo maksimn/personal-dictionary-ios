@@ -10,22 +10,25 @@ import UIKit
 /// View controller Главного экрана.
 final class MainScreen: UIViewController {
 
-    private let mainSwitchViewController: UIViewController
+    private let mainWordListViewController: UIViewController
     private let searchTextInput: UISearchController
+    private let navToSearchBuilder: ViewBuilder
     private let navToFavoritesBuilder: ViewBuilder
     private let navToTodoListBuilder: ViewBuilder
     private let theme: Theme
 
     init(
         heading: String,
-        mainSwitchBuilder: ViewControllerBuilder,
+        mainWordListBuilder: ViewControllerBuilder,
         searchTextInputBuilder: SearchControllerBuilder,
+        navToSearchBuilder: ViewBuilder,
         navToFavoritesBuilder: ViewBuilder,
         navToTodoListBuilder: ViewBuilder,
         theme: Theme
     ) {
-        self.mainSwitchViewController = mainSwitchBuilder.build()
+        self.mainWordListViewController = mainWordListBuilder.build()
         self.searchTextInput = searchTextInputBuilder.build()
+        self.navToSearchBuilder = navToSearchBuilder
         self.navToFavoritesBuilder = navToFavoritesBuilder
         self.navToTodoListBuilder = navToTodoListBuilder
         self.theme = theme
@@ -43,9 +46,10 @@ final class MainScreen: UIViewController {
         view = UIView()
 
         view.backgroundColor = theme.backgroundColor
-        layout(childViewController: mainSwitchViewController)
-        addNavToFavorites(view)
-        addNavToTodoList(view)
+        layout(childViewController: mainWordListViewController)
+        addNavToSearch()
+        addNavToFavorites()
+        addNavToTodoList()
     }
 
     override func viewWillLayoutSubviews() {
@@ -55,19 +59,21 @@ final class MainScreen: UIViewController {
 
     // MARK: - Private
 
-    private func addNavToFavorites(_ rootView: UIView) {
+    private func addNavToSearch() {
+        let uiview = navToSearchBuilder.build()
+
+        view.addSubview(uiview)
+    }
+
+    private func addNavToFavorites() {
         let navView = navToFavoritesBuilder.build()
 
-        navItem?.leftBarButtonItem = UIBarButtonItem(customView: navView)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: navView)
     }
 
-    private func addNavToTodoList(_ rootView: UIView) {
+    private func addNavToTodoList() {
         let navView = navToTodoListBuilder.build()
 
-        navItem?.rightBarButtonItem = UIBarButtonItem(customView: navView)
-    }
-
-    private var navItem: UINavigationItem? {
-        navigationController?.viewControllers.first?.navigationItem
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: navView)
     }
 }
