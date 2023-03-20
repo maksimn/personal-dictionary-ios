@@ -7,15 +7,15 @@
 
 import RxSwift
 
-final class SearchWordListViewModelImpl: SearchWordListViewModel {
+final class SearchViewModelImpl: SearchViewModel {
 
     let searchResult: BindableSearchResult
 
-    private let model: SearchWordListModel
+    private let model: SearchModel
     private let disposeBag = DisposeBag()
 
     init(initialData: SearchResultData,
-         model: SearchWordListModel,
+         model: SearchModel,
          searchTextStream: SearchTextStream,
          searchModeStream: SearchModeStream) {
         searchResult = BindableSearchResult(value: initialData)

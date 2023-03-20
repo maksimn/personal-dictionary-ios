@@ -21,7 +21,7 @@ struct SearchResultData: Equatable {
     let foundWordList: [Word]
 }
 
-protocol SearchWordListModel {
+protocol SearchModel {
 
     func performSearch(for searchText: String, mode: SearchMode) -> SearchResultData
 }

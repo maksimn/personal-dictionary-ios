@@ -5,7 +5,7 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-final class SearchWordListModelImpl: SearchWordListModel {
+final class SearchModelImpl: SearchModel {
 
     private let searchableWordList: SearchableWordList
 

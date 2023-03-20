@@ -12,11 +12,8 @@ import UIKit
 final class FavoritesViewController: UIViewController {
 
     private let viewModel: FavoritesViewModel
-
     private let wordListGraph: WordListGraph
-
     private let theme: Theme
-
     private let centerLabel: UILabel
 
     private let disposeBag = DisposeBag()
@@ -62,19 +59,8 @@ final class FavoritesViewController: UIViewController {
         }).disposed(by: disposeBag)
     }
 
-    // MARK: - Layout
-
     private func initViews() {
         layout(wordListView: wordListGraph.view)
-        initCenterLabel()
-    }
-
-    private func initCenterLabel() {
-        view.addSubview(centerLabel)
-        centerLabel.snp.makeConstraints { make -> Void in
-            make.centerY.equalTo(view).offset(-20)
-            make.left.equalTo(view.snp.left)
-            make.right.equalTo(view.snp.right)
-        }
+        layout(centerLabel: centerLabel)
     }
 }

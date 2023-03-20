@@ -8,10 +8,17 @@
 @nonobjc
 extension UIViewController {
 
-    func layout(wordListViewController: UIViewController, topOffset: CGFloat) {
+    func layout(wordListViewController: UIViewController) {
         add(childViewController: wordListViewController)
 
         wordListViewController.view.snp.makeConstraints { make -> Void in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+
+    func layout(wordListView: UIView, topOffset: CGFloat = 0) {
+        view.addSubview(wordListView)
+        wordListView.snp.makeConstraints { make -> Void in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(topOffset)
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
@@ -19,10 +26,12 @@ extension UIViewController {
         }
     }
 
-    func layout(wordListView: UIView) {
-        view.addSubview(wordListView)
-        wordListView.snp.makeConstraints { make -> Void in
-            make.edges.equalTo(view)
+    func layout(centerLabel: UILabel) {
+        view.addSubview(centerLabel)
+        centerLabel.snp.makeConstraints { make -> Void in
+            make.centerY.equalTo(view).offset(-20)
+            make.left.equalTo(view.snp.left)
+            make.right.equalTo(view.snp.right)
         }
     }
 }
