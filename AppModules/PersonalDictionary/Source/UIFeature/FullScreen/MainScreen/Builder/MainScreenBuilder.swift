@@ -23,12 +23,9 @@ final class MainScreenBuilder: ViewControllerBuilder {
     func build() -> UIViewController {
         MainScreen(
             heading: dependency.bundle.moduleLocalizedString("LS_MY_DICTIONARY"),
-            mainWordListBuilder: MainWordListBuilder(dependency: dependency),
+            mainSwitchBuilder: MainSwitchBuilder(dependency: dependency),
             mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: dependency),
             searchTextInputBuilder: SearchTextInputBuilder(bundle: dependency.bundle),
-            searchBuilder: SearchBuilder(dependency: dependency),
-            mainScreenStateStream: MainScreenStateStreamImpl.instance,
-            logger: SLoggerImp(category: "PersonalDictionary.MainScreen"),
             theme: Theme.data
         )
     }

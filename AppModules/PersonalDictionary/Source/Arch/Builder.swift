@@ -21,3 +21,5 @@ protocol SearchControllerBuilder {
 
     func build() -> UISearchController
 }
+
+protocol Model { }
