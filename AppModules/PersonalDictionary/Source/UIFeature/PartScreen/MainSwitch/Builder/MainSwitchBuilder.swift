@@ -9,9 +9,9 @@ import CoreModule
 
 final class MainSwitchBuilder: ViewControllerBuilder {
 
-    private let dependency: RootDependency
+    private let dependency: AppDependency
 
-    init(dependency: RootDependency) {
+    init(dependency: AppDependency) {
         self.dependency = dependency
     }
 

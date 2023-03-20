@@ -24,8 +24,12 @@ final class MainScreenBuilder: ViewControllerBuilder {
         MainScreen(
             heading: dependency.bundle.moduleLocalizedString("LS_MY_DICTIONARY"),
             mainSwitchBuilder: MainSwitchBuilder(dependency: dependency),
-            mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: dependency),
             searchTextInputBuilder: SearchTextInputBuilder(bundle: dependency.bundle),
+            navToFavoritesBuilder: NavToFavoritesBuilder(dependency: dependency),
+            navToTodoListBuilder: NavToTodoListBuilder(
+                rootViewController: dependency.navigationController,
+                bundle: dependency.bundle
+            ),
             theme: Theme.data
         )
     }

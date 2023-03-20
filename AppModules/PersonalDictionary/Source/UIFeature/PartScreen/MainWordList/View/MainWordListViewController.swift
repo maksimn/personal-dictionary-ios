@@ -13,18 +13,18 @@ final class MainWordListViewController: UIViewController {
 
     private let viewModel: MainWordListViewModel
     private let wordListGraph: WordListGraph
+    private let navToNewWordView: UIView
 
     private let disposeBag = DisposeBag()
 
-    /// Инициализатор.
-    /// - Parameters:
-    ///  - wordListBuilder: билдер вложенной фичи "Список слов".
     init(
         viewModel: MainWordListViewModel,
-        wordListBuilder: WordListBuilder
+        wordListBuilder: WordListBuilder,
+        navToNewWordBuilder: NavToNewWordBuilder
     ) {
         self.viewModel = viewModel
         self.wordListGraph = wordListBuilder.build()
+        self.navToNewWordView = navToNewWordBuilder.build()
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -38,6 +38,7 @@ final class MainWordListViewController: UIViewController {
         view = UIView()
 
         layout(wordListView: wordListGraph.view)
+        addNavToNewWord()
         bindToViewModel()
     }
 
@@ -52,5 +53,14 @@ final class MainWordListViewController: UIViewController {
 
             wordListViewModel.wordList.accept(wordList)
         }).disposed(by: disposeBag)
+    }
+
+    private func addNavToNewWord() {
+        view.addSubview(navToNewWordView)
+        navToNewWordView.snp.makeConstraints { make -> Void in
+            make.size.equalTo(CGSize(width: 44, height: 44))
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-26)
+            make.centerX.equalTo(view)
+        }
     }
 }
