@@ -30,6 +30,7 @@ final class MainNavigatorImpl: MainNavigator {
         self.navToFavoritesBuilder = navToFavoritesBuilder
         self.navToNewWordBuilder = navToNewWordBuilder
         self.navToTodoListBuilder = navToTodoListBuilder
+        navItem?.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 
     /// Добавить представления элементов навигации.

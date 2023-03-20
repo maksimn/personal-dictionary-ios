@@ -8,7 +8,7 @@
 import RxSwift
 
 /// Реализация модели представления списка избранных слов.
-final class FavoriteWordListViewModelImpl: FavoriteWordListViewModel {
+final class FavoritesViewModelImpl: FavoritesViewModel {
 
     let favoriteWordList = BindableWordList(value: [])
 

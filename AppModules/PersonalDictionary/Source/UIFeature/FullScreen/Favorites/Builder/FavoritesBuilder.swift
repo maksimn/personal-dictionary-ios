@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class FavoriteWordListBuilder: ViewControllerBuilder {
+final class FavoritesBuilder: ViewControllerBuilder {
 
     private let dependency: RootDependency
 
@@ -20,11 +20,12 @@ final class FavoriteWordListBuilder: ViewControllerBuilder {
             langData: dependency.appConfig.langData,
             bundle: dependency.bundle
         )
-        let viewModel = FavoriteWordListViewModelImpl(
+        let viewModel = FavoritesViewModelImpl(
             fetcher: fetcher,
             wordStream: WordStreamImpl.instance
         )
-        let view = FavoriteWordListViewController(
+        let view = FavoritesViewController(
+            title: title(),
             viewModel: viewModel,
             wordListBuilder: wordListBuilder(),
             labelText: labelText(),
@@ -32,6 +33,10 @@ final class FavoriteWordListBuilder: ViewControllerBuilder {
         )
 
         return view
+    }
+
+    private func title() -> String {
+        dependency.bundle.moduleLocalizedString("LS_FAVORITE_WORDS")
     }
 
     private func labelText() -> String {

@@ -9,26 +9,31 @@ import RxSwift
 import UIKit
 
 /// Реализация представления списка избранных слов.
-final class FavoriteWordListViewController: UIViewController {
+final class FavoritesViewController: UIViewController {
 
-    private let viewModel: FavoriteWordListViewModel
+    private let viewModel: FavoritesViewModel
 
     private let wordListGraph: WordListGraph
+
+    private let theme: Theme
 
     private let centerLabel: UILabel
 
     private let disposeBag = DisposeBag()
 
     init(
-        viewModel: FavoriteWordListViewModel,
+        title: String,
+        viewModel: FavoritesViewModel,
         wordListBuilder: WordListBuilder,
         labelText: String,
         theme: Theme
     ) {
         self.viewModel = viewModel
         self.wordListGraph = wordListBuilder.build()
-        centerLabel = SecondaryText(labelText, theme)
+        self.centerLabel = SecondaryText(labelText, theme)
+        self.theme = theme
         super.init(nibName: nil, bundle: nil)
+        navigationItem.title = title
     }
     
     required init?(coder: NSCoder) {
@@ -40,6 +45,7 @@ final class FavoriteWordListViewController: UIViewController {
     override func loadView() {
         view = UIView()
 
+        view.backgroundColor = theme.backgroundColor
         initViews()
         bindToViewModel()
     }

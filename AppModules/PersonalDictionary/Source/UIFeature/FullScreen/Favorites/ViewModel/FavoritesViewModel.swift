@@ -6,7 +6,7 @@
 //
 
 /// Модель представления списка избранных слов.
-protocol FavoriteWordListViewModel: AnyObject {
+protocol FavoritesViewModel: AnyObject {
 
     var favoriteWordList: BindableWordList { get }
 
