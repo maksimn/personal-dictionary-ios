@@ -19,7 +19,6 @@ final class SearchBuilder: ViewControllerBuilder {
     ///  - View controller экрана поиска по словам в словаре.
     func build() -> UIViewController {
         SearchViewController(
-            searchTextInputBuilder: SearchTextInputBuilder(bundle: dependency.bundle),
             searchModePickerBuilder: SearchModePickerBuilder(bundle: dependency.bundle),
             searchWordListBuilder: SearchWordListBuilder(dependency: dependency),
             theme: Theme.data

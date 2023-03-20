@@ -54,6 +54,7 @@ final class MainNavigatorImpl: MainNavigator {
             make.bottom.equalTo(rootView.safeAreaLayoutGuide.snp.bottom).offset(-26)
             make.centerX.equalTo(rootView)
         }
+        navView.layer.zPosition = 100
     }
 
     private func addNavToTodoList(_ rootView: UIView) {

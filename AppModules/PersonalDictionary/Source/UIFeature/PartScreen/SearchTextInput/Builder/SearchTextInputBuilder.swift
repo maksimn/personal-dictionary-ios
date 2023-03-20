@@ -21,6 +21,7 @@ final class SearchTextInputBuilder: SearchControllerBuilder {
     func build() -> UISearchController {
         let viewModel = SearchTextInputViewModelImpl(
             searchTextStream: SearchTextStreamImpl.instance,
+            mainScreenStateStream: MainScreenStateStreamImpl.instance,
             logger: logger()
         )
         let searchController = SearchControllerImpl(
