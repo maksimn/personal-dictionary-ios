@@ -11,9 +11,9 @@ import UIKit
 /// Реализация билдера фичи "Главный (основной) список слов" Личного словаря.
 final class MainWordListBuilder: ViewControllerBuilder {
 
-    private let dependency: RootDependency
+    private let dependency: AppDependency
 
-    init(dependency: RootDependency) {
+    init(dependency: AppDependency) {
         self.dependency = dependency
     }
 
@@ -31,7 +31,8 @@ final class MainWordListBuilder: ViewControllerBuilder {
         )
         let view = MainWordListViewController(
             viewModel: viewModel,
-            wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: true, dependency: dependency)
+            wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: true, dependency: dependency),
+            navToNewWordBuilder: NavToNewWordBuilder(dependency: dependency)
         )
 
         return view

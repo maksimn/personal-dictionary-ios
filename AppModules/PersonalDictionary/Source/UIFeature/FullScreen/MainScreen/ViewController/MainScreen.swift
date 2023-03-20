@@ -10,24 +10,27 @@ import UIKit
 /// View controller Главного экрана.
 final class MainScreen: UIViewController {
 
-    private let heading: UILabel
-    private let mainWordListViewController: UIViewController
-    private let mainNavigator: MainNavigator
+    private let mainSwitchViewController: UIViewController
+    private let searchController: UISearchController
+    private let navToFavoritesBuilder: ViewBuilder
+    private let navToTodoListBuilder: ViewBuilder
     private let theme: Theme
 
-    /// Инициализатор.
-    /// - Parameters:
-    ///  - mainWordListBuilder: билдер вложенной фичи "Главный список слов".
-    ///  - mainNavigatorBuilder: билдер вложенной фичи "Контейнер элементов навигации на Главном экране приложения".
-    init(heading: String,
-         mainWordListBuilder: MainWordListBuilder,
-         mainNavigatorBuilder: MainNavigatorBuilder,
-         theme: Theme) {
-        self.heading = Heading(heading, theme)
-        self.mainWordListViewController = mainWordListBuilder.build()
-        self.mainNavigator = mainNavigatorBuilder.build()
+    init(
+        heading: String,
+        mainSwitchBuilder: ViewControllerBuilder,
+        searchTextInputBuilder: SearchControllerBuilder,
+        navToFavoritesBuilder: ViewBuilder,
+        navToTodoListBuilder: ViewBuilder,
+        theme: Theme
+    ) {
+        self.mainSwitchViewController = mainSwitchBuilder.build()
+        self.searchController = searchTextInputBuilder.build()
+        self.navToFavoritesBuilder = navToFavoritesBuilder
+        self.navToTodoListBuilder = navToTodoListBuilder
         self.theme = theme
         super.init(nibName: nil, bundle: nil)
+        navigationItem.title = heading
     }
 
     required init?(coder: NSCoder) {
@@ -39,23 +42,32 @@ final class MainScreen: UIViewController {
     override func loadView() {
         view = UIView()
 
-        initViews()
+        view.backgroundColor = theme.backgroundColor
+        layout(childViewController: mainSwitchViewController)
+        addNavToFavorites(view)
+        addNavToTodoList(view)
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        navigationItem.searchController = searchController
     }
 
     // MARK: - Private
 
-    private func initViews() {
-        view.backgroundColor = theme.backgroundColor
-        layoutHeading()
-        layout(wordListViewController: mainWordListViewController, topOffset: 46)
-        mainNavigator.appendTo(rootView: view)
+    private func addNavToFavorites(_ rootView: UIView) {
+        let navView = navToFavoritesBuilder.build()
+
+        navItem?.leftBarButtonItem = UIBarButtonItem(customView: navView)
     }
 
-    private func layoutHeading() {
-        view.addSubview(heading)
-        heading.snp.makeConstraints { make -> Void in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(14)
-            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left).offset(54.5)
-        }
+    private func addNavToTodoList(_ rootView: UIView) {
+        let navView = navToTodoListBuilder.build()
+
+        navItem?.rightBarButtonItem = UIBarButtonItem(customView: navView)
+    }
+
+    private var navItem: UINavigationItem? {
+        navigationController?.viewControllers.first?.navigationItem
     }
 }

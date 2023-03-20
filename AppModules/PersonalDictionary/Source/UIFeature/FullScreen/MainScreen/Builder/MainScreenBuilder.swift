@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 10.11.2021.
 //
 
+import CoreModule
 import UIKit
 
 /// Реализация билдера фичи "Главный экран приложения" Личного словаря.
@@ -22,8 +23,13 @@ final class MainScreenBuilder: ViewControllerBuilder {
     func build() -> UIViewController {
         MainScreen(
             heading: dependency.bundle.moduleLocalizedString("LS_MY_DICTIONARY"),
-            mainWordListBuilder: MainWordListBuilder(dependency: dependency),
-            mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: dependency),
+            mainSwitchBuilder: MainSwitchBuilder(dependency: dependency),
+            searchTextInputBuilder: SearchTextInputBuilder(bundle: dependency.bundle),
+            navToFavoritesBuilder: NavToFavoritesBuilder(dependency: dependency),
+            navToTodoListBuilder: NavToTodoListBuilder(
+                rootViewController: dependency.navigationController,
+                bundle: dependency.bundle
+            ),
             theme: Theme.data
         )
     }

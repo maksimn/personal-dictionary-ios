@@ -40,16 +40,14 @@ final class NavToFavoritesView: UIView {
 
     private func initRoutingButton(_ theme: Theme) {
         routingButton.setTitle(routingButtonTitle, for: .normal)
-        routingButton.setTitleColor(theme.goldColor, for: .normal)
-        routingButton.titleLabel?.font = UIFont.systemFont(ofSize: 26)
+        routingButton.setTitleColor(.systemBlue, for: .normal)
+        routingButton.titleLabel?.font = theme.normalFont
         routingButton.backgroundColor = .clear
         routingButton.layer.cornerRadius = 8
-        routingButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
         routingButton.addTarget(self, action: #selector(onRoutingButtonTap), for: .touchUpInside)
         addSubview(routingButton)
         routingButton.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(self.snp.top).offset(14.5)
-            make.left.equalTo(self.snp.left).offset(9)
+            make.edges.equalTo(self)
         }
     }
 }
