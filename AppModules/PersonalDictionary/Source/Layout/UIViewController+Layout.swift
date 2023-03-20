@@ -8,10 +8,9 @@
 @nonobjc
 extension UIViewController {
 
-    func layout(wordListViewController: UIViewController) {
-        add(childViewController: wordListViewController)
-
-        wordListViewController.view.snp.makeConstraints { make -> Void in
+    func layout(childViewController: UIViewController) {
+        add(childViewController: childViewController)
+        childViewController.view.snp.makeConstraints { make -> Void in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }

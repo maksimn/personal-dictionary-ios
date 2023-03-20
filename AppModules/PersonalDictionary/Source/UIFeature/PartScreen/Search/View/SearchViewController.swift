@@ -18,6 +18,8 @@ final class SearchViewController: UIViewController {
 
     private let centerLabel: UILabel
 
+    private let topOffset: CGFloat = 46
+
     private let disposeBag = DisposeBag()
 
     /// - Parameters:
@@ -64,7 +66,7 @@ final class SearchViewController: UIViewController {
 
     private func initViews() {
         initSearchModePicker()
-        layout(wordListView: wordListGraph.view, topOffset: 50)
+        layout(wordListView: wordListGraph.view, topOffset: topOffset)
         layout(centerLabel: centerLabel)
     }
 
@@ -74,7 +76,7 @@ final class SearchViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
-            make.height.equalTo(50)
+            make.height.equalTo(topOffset)
         }
     }
 }
