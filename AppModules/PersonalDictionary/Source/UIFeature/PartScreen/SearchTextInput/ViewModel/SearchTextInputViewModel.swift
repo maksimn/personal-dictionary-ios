@@ -9,4 +9,6 @@
 protocol SearchTextInputViewModel {
 
     var searchText: BindableString { get }
+
+    var mainScreenState: BindableMainScreenState { get }
 }

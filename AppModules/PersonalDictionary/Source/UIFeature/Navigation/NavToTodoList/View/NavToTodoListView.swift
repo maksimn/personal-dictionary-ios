@@ -40,10 +40,9 @@ final class NavToTodoListView: UIView {
 
     private func initRoutingButton(_ theme: Theme) {
         routingButton.setTitle(routingButtonTitle, for: .normal)
-        routingButton.setTitleColor(theme.secondaryTextColor, for: .normal)
+        routingButton.setTitleColor(.systemBlue, for: .normal)
         routingButton.backgroundColor = .clear
         routingButton.layer.cornerRadius = 8
-        routingButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
         routingButton.addTarget(self, action: #selector(onRoutingButtonTap), for: .touchUpInside)
         addSubview(routingButton)
         routingButton.snp.makeConstraints { make -> Void in

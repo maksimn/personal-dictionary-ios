@@ -7,6 +7,8 @@
 
 import RxCocoa
 
+typealias BindableMainScreenState = BehaviorRelay<MainScreenState>
+
 typealias BindableString = BehaviorRelay<String>
 
 typealias BindableSeachMode = BehaviorRelay<SearchMode>

@@ -19,13 +19,13 @@ final class NavToFavoritesBuilder: ViewBuilder {
     /// Создать фичу.
     /// - Returns: представление фичи.
     func build() -> UIView {
-        let favoritesBuilder = FavoritesBuilderImpl(dependency: dependency)
+        let favoritesBuilder = FavoritesBuilder(dependency: dependency)
         let router = NavToFavoritesRouter(
             navigationController: dependency.navigationController,
             favoritesBuilder: favoritesBuilder
         )
         let view = NavToFavoritesView(
-            routingButtonTitle: "☆",
+            routingButtonTitle: dependency.bundle.moduleLocalizedString("LS_FAVORITES"),
             navToFavoritesRouter: router,
             theme: Theme.data
         )
