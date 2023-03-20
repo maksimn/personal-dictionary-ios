@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 09.11.2022.
 //
 
+@nonobjc
 extension UIViewController {
 
     func layout(wordListViewController: UIViewController, topOffset: CGFloat) {

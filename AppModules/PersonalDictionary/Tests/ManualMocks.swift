@@ -242,3 +242,12 @@ class TranslationServiceMock: TranslationService {
         methodMock!(word)
     }
 }
+
+class MutableMainScreenStateStreamMock: MutableMainScreenStateStream {
+
+    var methodMock: ((MainScreenState) -> Void)?
+
+    func send(_ mainScreenState: MainScreenState) {
+        methodMock?(mainScreenState)
+    }
+}

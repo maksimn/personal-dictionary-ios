@@ -14,7 +14,11 @@ final class SearchTextInputViewModelImplTests: XCTestCase {
         // Arrange
         var counter = 0
         let searchTextStreamMock = MutableSearchTextStreamMock()
-        let viewModel = SearchTextInputViewModelImpl(searchTextStream: searchTextStreamMock, logger: LoggerMock())
+        let viewModel = SearchTextInputViewModelImpl(
+            searchTextStream: searchTextStreamMock,
+            mainScreenStateStream: MutableMainScreenStateStreamMock(),
+            logger: LoggerMock()
+        )
 
         searchTextStreamMock.methodMock = { _ in counter += 1 }
 
