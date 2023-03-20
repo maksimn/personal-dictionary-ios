@@ -7,7 +7,7 @@
 
 import RxSwift
 
-enum MainScreenState { case main, search }
+enum MainScreenState { case main, search, empty }
 
 protocol MainScreenStateStream {
 
