@@ -72,10 +72,10 @@ final class MainScreen: UIViewController {
 
         if mainScreenState != state && mainScreenState == .search {
             mainWordListViewController.removeFromParentViewController()
-            layout(wordListViewController: searchViewController, topOffset: 0)
+            layout(wordListViewController: searchViewController)
         } else if mainScreenState != state && mainScreenState == .main {
             searchViewController.removeFromParentViewController()
-            layout(wordListViewController: mainWordListViewController, topOffset: 0)
+            layout(wordListViewController: mainWordListViewController)
         }
 
         state = mainScreenState
@@ -83,7 +83,7 @@ final class MainScreen: UIViewController {
 
     private func initViews() {
         view.backgroundColor = theme.backgroundColor
-        layout(wordListViewController: mainWordListViewController, topOffset: 0)
+        layout(wordListViewController: mainWordListViewController)
         mainNavigator.appendTo(rootView: view)
     }
 }

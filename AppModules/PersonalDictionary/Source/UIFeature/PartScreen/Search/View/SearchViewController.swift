@@ -8,9 +8,11 @@
 import RxSwift
 import UIKit
 
-final class SearchWordListViewController: UIViewController {
+final class SearchViewController: UIViewController {
 
-    private let viewModel: SearchWordListViewModel
+    private let viewModel: SearchViewModel
+
+    private let searchModePickerView: UIView
 
     private let wordListGraph: WordListGraph
 
@@ -23,12 +25,14 @@ final class SearchWordListViewController: UIViewController {
     ///  - wordListBuilder: билдер вложенной фичи "Список слов".
     ///  - labelText: текст для результата поиска.
     init(
-        viewModel: SearchWordListViewModel,
+        viewModel: SearchViewModel,
+        searchModePickerBuilder: ViewBuilder,
         wordListBuilder: WordListBuilder,
         labelText: String,
         theme: Theme
     ) {
         self.viewModel = viewModel
+        self.searchModePickerView = searchModePickerBuilder.build()
         self.wordListGraph = wordListBuilder.build()
         self.centerLabel = SecondaryText(labelText, theme)
         super.init(nibName: nil, bundle: nil)
@@ -58,19 +62,19 @@ final class SearchWordListViewController: UIViewController {
         }).disposed(by: disposeBag)
     }
 
-    // MARK: - Layout
-
     private func initViews() {
-        layout(wordListView: wordListGraph.view)
-        initCenterLabel()
+        initSearchModePicker()
+        layout(wordListView: wordListGraph.view, topOffset: 50)
+        layout(centerLabel: centerLabel)
     }
 
-    private func initCenterLabel() {
-        view.addSubview(centerLabel)
-        centerLabel.snp.makeConstraints { make -> Void in
-            make.centerY.equalTo(view).offset(-20)
-            make.left.equalTo(view.snp.left)
-            make.right.equalTo(view.snp.right)
+    private func initSearchModePicker() {
+        view.addSubview(searchModePickerView)
+        searchModePickerView.snp.makeConstraints { make -> Void in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
+            make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
+            make.height.equalTo(50)
         }
     }
 }

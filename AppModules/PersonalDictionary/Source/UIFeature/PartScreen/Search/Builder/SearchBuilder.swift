@@ -1,11 +1,11 @@
 //
-//  SearchBuilderImpl.swift
+//  SearchWordListBuilder.swift
 //  PersonalDictionary
 //
-//  Created by Maxim Ivanov on 11.11.2021.
+//  Created by Maxim Ivanov on 13.11.2022.
 //
 
-/// Билдер Фичи "Поиск по словам в словаре".
+/// Реализация билдера фичи "Поиск по списку слов".
 final class SearchBuilder: ViewControllerBuilder {
 
     private let dependency: RootDependency
@@ -14,14 +14,47 @@ final class SearchBuilder: ViewControllerBuilder {
         self.dependency = dependency
     }
 
-    /// Создать экран Поиска.
-    /// - Returns:
-    ///  - View controller экрана поиска по словам в словаре.
     func build() -> UIViewController {
-        SearchViewController(
+        let model = SearchModelImpl(searchableWordList: searchableWordList())
+        let viewModel = SearchViewModelImpl(
+            initialData: initialData(),
+            model: model,
+            searchTextStream: SearchTextStreamImpl.instance,
+            searchModeStream: SearchModeStreamImpl.instance
+        )
+        let view = SearchViewController(
+            viewModel: viewModel,
             searchModePickerBuilder: SearchModePickerBuilder(bundle: dependency.bundle),
-            searchWordListBuilder: SearchWordListBuilder(dependency: dependency),
+            wordListBuilder: wordListBuilder(),
+            labelText: labelText(),
             theme: Theme.data
+        )
+
+        return view
+    }
+
+    private func initialData() -> SearchResultData {
+        SearchResultData(
+            searchState: .initial,
+            foundWordList: []
+        )
+    }
+
+    private func wordListBuilder() -> WordListBuilder {
+        WordListBuilderImpl(
+            shouldAnimateWhenAppear: false,
+            dependency: dependency
+        )
+    }
+
+    private func labelText() -> String {
+        dependency.bundle.moduleLocalizedString("LS_NO_WORDS_FOUND")
+    }
+
+    private func searchableWordList() -> SearchableWordList {
+        WordListRepositoryImpl(
+            langData: dependency.appConfig.langData,
+            bundle: dependency.bundle
         )
     }
 }

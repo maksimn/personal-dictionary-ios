@@ -8,14 +8,14 @@
 import XCTest
 @testable import PersonalDictionary
 
-final class SearchWordListViewModelImplTests: XCTestCase {
+final class SearchViewModelImplTests: XCTestCase {
 
     func test_onSearchInputData_updateViewModelWithDataFromSearchModel() throws {
         // Arrange
         let lang = Lang(id: .init(raw: 1), name: "A", shortName: "a")
         let initialData = SearchResultData(searchState: .initial, foundWordList: [])
-        let searchWordListModelMock = SearchWordListModelMock()
-        let viewModel = SearchWordListViewModelImpl(
+        let searchWordListModelMock = SearchModelMock()
+        let viewModel = SearchViewModelImpl(
             initialData: initialData,
             model: searchWordListModelMock,
             searchTextStream: SearchTextStreamMock(),

@@ -149,7 +149,7 @@ class SearchableWordListMock: SearchableWordList {
     }
 }
 
-class SearchWordListModelMock: SearchWordListModel {
+class SearchModelMock: SearchModel {
 
     var methodMock: ((String, SearchMode) -> SearchResultData)?
 

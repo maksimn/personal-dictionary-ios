@@ -8,14 +8,14 @@
 import XCTest
 @testable import PersonalDictionary
 
-final class SearchWordListModelImplTests: XCTestCase {
+final class SearchModelImplTests: XCTestCase {
 
     let lang = Lang(id: .init(raw: 1), name: "A", shortName: "a")
 
     func test_performSearch_searchBySourceWord_returnsCorrectData() throws {
         // Arrange
         let searchableWordListMock = SearchableWordListMock()
-        let model = SearchWordListModelImpl(searchableWordList: searchableWordListMock)
+        let model = SearchModelImpl(searchableWordList: searchableWordListMock)
         let words = [
             Word(text: "A", sourceLang: lang, targetLang: lang),
             Word(text: "BA", sourceLang: lang, targetLang: lang)
@@ -33,7 +33,7 @@ final class SearchWordListModelImplTests: XCTestCase {
     func test_performSearch_searchByTranslation_returnsCorrectData() throws {
         // Arrange
         let searchableWordListMock = SearchableWordListMock()
-        let model = SearchWordListModelImpl(searchableWordList: searchableWordListMock)
+        let model = SearchModelImpl(searchableWordList: searchableWordListMock)
         let words = [Word(text: "Aa", translation: "Bb", sourceLang: lang, targetLang: lang)]
 
         searchableWordListMock.findWordsWhereTranslationContainsMock = { _ in words }
@@ -64,7 +64,7 @@ final class SearchWordListModelImplTests: XCTestCase {
     func performSearch_returnsInitialSearchResultData_for(searchText: String, mode: SearchMode) throws {
         // Arrange
         let searchableWordListMock = SearchableWordListMock()
-        let model = SearchWordListModelImpl(searchableWordList: searchableWordListMock)
+        let model = SearchModelImpl(searchableWordList: searchableWordListMock)
 
         searchableWordListMock.findWordsMock = { _ in [] }
 
