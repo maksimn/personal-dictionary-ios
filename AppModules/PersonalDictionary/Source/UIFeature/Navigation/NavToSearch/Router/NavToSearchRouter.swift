@@ -41,7 +41,7 @@ final class NavToSearchRouter: EmptyRouter {
             guard searchViewController == nil else { return }
             let searchViewController = searchBuilder.build()
 
-            navigationController?.viewControllers.first?.layout(childViewController: searchViewController)
+            navigationController?.topViewController?.layout(childViewController: searchViewController)
 
             self.searchViewController = searchViewController
         case .empty:
