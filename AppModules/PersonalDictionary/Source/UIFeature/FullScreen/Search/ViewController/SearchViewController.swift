@@ -10,19 +10,16 @@ import UIKit
 /// View controller экрана поиска по словам в словаре.
 final class SearchViewController: UIViewController {
 
-    private let searchTextInputView: UIView
     private let searchModePickerView: UIView
     private let searchWordListViewController: UIViewController
     private let theme: Theme
+    private let searchModePickerViewHeight: CGFloat = 46
 
     /// - Parameters:
-    ///  - searchTextInputBuilder: билдер вложенной фичи "Элемент ввода текста для поиска"
     ///  - searchModePickerBuilder: билдер вложенной фичи "Выбор режима поиска".
-    init(searchTextInputBuilder: ViewBuilder,
-         searchModePickerBuilder: ViewBuilder,
+    init(searchModePickerBuilder: ViewBuilder,
          searchWordListBuilder: ViewControllerBuilder,
          theme: Theme) {
-        searchTextInputView = searchTextInputBuilder.build()
         searchModePickerView = searchModePickerBuilder.build()
         searchWordListViewController = searchWordListBuilder.build()
         self.theme = theme
@@ -38,9 +35,8 @@ final class SearchViewController: UIViewController {
 
     private func initViews() {
         view.backgroundColor = theme.backgroundColor
-        navigationItem.titleView = searchTextInputView
         initSearchModePicker()
-        layout(wordListViewController: searchWordListViewController, topOffset: 50)
+        layout(childViewController: searchWordListViewController, topOffset: searchModePickerViewHeight)
     }
 
     private func initSearchModePicker() {
@@ -49,7 +45,7 @@ final class SearchViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
-            make.height.equalTo(50)
+            make.height.equalTo(searchModePickerViewHeight)
         }
     }
 }

@@ -11,77 +11,69 @@ import UIKit
 final class MainNavigatorImpl: MainNavigator {
 
     private weak var navigationController: UINavigationController?
-    private let navToSearchBuilder: ViewBuilder
-    private let navToFavoritesBuilder: ViewBuilder
+    private let searchTextInputView: UISearchController
+    private let navToSearch: UISearchControllerDelegate
     private let navToNewWordBuilder: ViewBuilder
+    private let navToFavoritesBuilder: ViewBuilder
     private let navToTodoListBuilder: ViewBuilder
 
     /// Инициализатор,
     /// - Parameters:
     ///  - navigationController: корневой  navigation  сontroller приложения.
-    ///  - navToSearchBuilder: билдер вложенной фичи "Элемент навигации на экран поиска".
     ///  - navToFavoritesBuilder: билдер вложенной фичи "Элемент навигации на экран списка избранных слов".
-    ///  - navToNewWordBuilder: билдер вложенной фичи "Элемент навигации на экран добавления нового слова в словарь".
     ///  - navToTodoListBuilder: билдер вложенной фичи "Элемент навигации к приложению TodoList".
     init(
         navigationController: UINavigationController?,
-        navToSearchBuilder: ViewBuilder,
-        navToFavoritesBuilder: ViewBuilder,
+        searchTextInputBuilder: SearchTextInputBuilder,
+        navToSearchBuilder: NavToSearchBuilder,
         navToNewWordBuilder: ViewBuilder,
+        navToFavoritesBuilder: ViewBuilder,
         navToTodoListBuilder: ViewBuilder
     ) {
         self.navigationController = navigationController
-        self.navToSearchBuilder = navToSearchBuilder
-        self.navToFavoritesBuilder = navToFavoritesBuilder
+        self.searchTextInputView = searchTextInputBuilder.build()
+        self.navToSearch = navToSearchBuilder.build()
         self.navToNewWordBuilder = navToNewWordBuilder
+        self.navToFavoritesBuilder = navToFavoritesBuilder
         self.navToTodoListBuilder = navToTodoListBuilder
+        searchTextInputView.delegate = navToSearch
     }
 
     /// Добавить представления элементов навигации.
     func appendTo(rootView: UIView) {
-        addNavToSearch()
-        addNavToFavorites(rootView)
         addNavToNewWord(rootView)
-        addNavToTodoList(rootView)
+        addNavToFavorites()
+        addNavToTodoList()
     }
 
-    private func addNavToSearch() {
-        let navToSearchView = navToSearchBuilder.build()
-        let navigationItem = navigationController?.viewControllers.first?.navigationItem
-
-        navigationItem?.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        navigationItem?.titleView = navToSearchView
+    func viewWillLayoutSubviews() {
+        navigationItem?.searchController = searchTextInputView
     }
 
-    private func addNavToFavorites(_ rootView: UIView) {
-        let navToFavoriteWordListView = navToFavoritesBuilder.build()
+    private func addNavToFavorites() {
+        let navView = navToFavoritesBuilder.build()
 
-        rootView.addSubview(navToFavoriteWordListView)
-        navToFavoriteWordListView.snp.makeConstraints { make -> Void in
-            make.top.equalTo(rootView.safeAreaLayoutGuide.snp.top)
-            make.left.equalTo(rootView.safeAreaLayoutGuide.snp.left)
-            make.size.equalTo(CGSize(width: 60, height: 50))
-        }
+        navigationItem?.leftBarButtonItem = UIBarButtonItem(customView: navView)
     }
 
-    private func addNavToNewWord(_ rootView: UIView) {
-        let navView = navToNewWordBuilder.build()
-
-        rootView.addSubview(navView)
-        navView.snp.makeConstraints { make -> Void in
-            make.size.equalTo(CGSize(width: 44, height: 44))
-            make.bottom.equalTo(rootView.safeAreaLayoutGuide.snp.bottom).offset(-26)
-            make.centerX.equalTo(rootView)
-        }
-    }
-
-    private func addNavToTodoList(_ rootView: UIView) {
+    private func addNavToTodoList() {
         let navView = navToTodoListBuilder.build()
 
-        rootView.addSubview(navView)
-        navView.snp.makeConstraints { make -> Void in
-            make.top.equalTo(rootView.safeAreaLayoutGuide.snp.top).offset(21)
-            make.right.equalTo(rootView.snp.right).offset(-10)
+        navigationItem?.rightBarButtonItem = UIBarButtonItem(customView: navView)
+    }
+
+    private func addNavToNewWord(_ view: UIView) {
+        let navToNewWordView = navToNewWordBuilder.build()
+
+        view.addSubview(navToNewWordView)
+        navToNewWordView.snp.makeConstraints { make -> Void in
+            make.size.equalTo(CGSize(width: 44, height: 44))
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-26)
+            make.centerX.equalTo(view)
         }
+    }
+
+    private var navigationItem: UINavigationItem? {
+        navigationController?.viewControllers.first?.navigationItem
     }
 }

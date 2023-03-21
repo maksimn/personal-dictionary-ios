@@ -8,35 +8,32 @@
 import CoreModule
 import UIKit
 
-/// Ширина представления фичи "Навигация на экран Поиска".
-enum NavToSearchWidth {
-    case full /// полная (во всю ширину экрана).
-    case smaller /// меньшая ширина, чем full.
+protocol NavToSearchBuilder {
+
+    func build() -> UISearchControllerDelegate
 }
 
 /// Реализация билдера фичи "Навигация на экран Поиска".
-final class NavToSearchBuilderImpl: ViewBuilder {
-
-    private let width: NavToSearchWidth
+final class NavToSearchBuilderImpl: NavToSearchBuilder {
 
     private let dependency: AppDependency
 
-    init(width: NavToSearchWidth,
-         dependency: AppDependency) {
-        self.width = width
+    init(dependency: AppDependency) {
         self.dependency = dependency
     }
 
-    /// Создать фичу.
-    /// - Returns: представление фичи.
-    func build() -> UIView {
+    func build() -> UISearchControllerDelegate {
         let searchBuilder = SearchBuilder(dependency: dependency)
         let router = NavToSearchRouterImpl(
             navigationController: dependency.navigationController,
             searchBuilder: searchBuilder
         )
-        let view = NavToSearchView(width: width, router: router)
+        let navToSearch = NavToSearch(
+            navigationController: dependency.navigationController,
+            navToSearchRouter: router,
+            logger: SLoggerImp(category: "PersonalDictionary.NavToSearch")
+        )
 
-        return view
+        return navToSearch
     }
 }

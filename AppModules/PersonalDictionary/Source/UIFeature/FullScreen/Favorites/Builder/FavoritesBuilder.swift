@@ -1,12 +1,12 @@
 //
-//  FavoriteWordListBuilderImpl.swift
+//  FavoriteWordListBuilder.swift
 //  PersonalDictionary
 //
-//  Created by Maxim Ivanov on 11.11.2021.
+//  Created by Maxim Ivanov on 10.11.2021.
 //
 
 /// Реализация билдера фичи "Избранное".
-final class FavoritesBuilderImpl: ViewControllerBuilder {
+final class FavoritesBuilder: ViewControllerBuilder {
 
     private let dependency: AppDependency
 
@@ -20,7 +20,6 @@ final class FavoritesBuilderImpl: ViewControllerBuilder {
     func build() -> UIViewController {
         FavoritesViewController(
             headingText: dependency.bundle.moduleLocalizedString("LS_FAVORITE_WORDS"),
-            navToSearchBuilder: NavToSearchBuilderImpl(width: .smaller, dependency: dependency),
             favoriteWordListBuilder: FavoriteWordListBuilder(dependency: dependency),
             theme: Theme.data
         )
