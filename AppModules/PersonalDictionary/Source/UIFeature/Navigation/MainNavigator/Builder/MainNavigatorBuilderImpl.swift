@@ -19,9 +19,9 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
     func build() -> MainNavigator {
         MainNavigatorImpl(
             navigationController: dependency.navigationController,
+            searchTextInputBuilder: SearchTextInputBuilder(bundle: dependency.bundle),
             navToSearchBuilder: NavToSearchBuilder(dependency: dependency),
             navToFavoritesBuilder: NavToFavoritesBuilder(dependency: dependency),
-            navToNewWordBuilder: NavToNewWordBuilder(dependency: dependency),
             navToTodoListBuilder: NavToTodoListBuilder(
                 rootViewController: dependency.navigationController,
                 bundle: dependency.bundle
