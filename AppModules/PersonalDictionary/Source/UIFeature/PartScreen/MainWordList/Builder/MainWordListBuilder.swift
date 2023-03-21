@@ -32,8 +32,7 @@ final class MainWordListBuilder: ViewControllerBuilder {
         )
         let view = MainWordListViewController(
             viewModel: viewModel,
-            wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: true, dependency: dependency),
-            navToNewWordBuilder: NavToNewWordBuilder(dependency: dependency)
+            wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: true, dependency: dependency)
         )
 
         return view

@@ -20,6 +20,7 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
         MainNavigatorImpl(
             navigationController: dependency.navigationController,
             searchTextInputBuilder: SearchTextInputBuilder(bundle: dependency.bundle),
+            navToNewWordBuilder: NavToNewWordBuilder(dependency: dependency),
             navToSearchBuilder: NavToSearchBuilder(dependency: dependency),
             navToFavoritesBuilder: NavToFavoritesBuilder(dependency: dependency),
             navToTodoListBuilder: NavToTodoListBuilder(

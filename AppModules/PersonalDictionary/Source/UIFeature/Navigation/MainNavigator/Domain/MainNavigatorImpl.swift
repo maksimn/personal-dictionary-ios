@@ -12,6 +12,7 @@ final class MainNavigatorImpl: MainNavigator {
 
     private weak var navigationController: UINavigationController?
     private let searchTextInput: UISearchController
+    private let navToNewWordBuilder: NavToNewWordBuilder
     private let navToSearchBuilder: ViewBuilder
     private let navToFavoritesBuilder: ViewBuilder
     private let navToTodoListBuilder: ViewBuilder
@@ -25,12 +26,14 @@ final class MainNavigatorImpl: MainNavigator {
     init(
         navigationController: UINavigationController?,
         searchTextInputBuilder: SearchControllerBuilder,
+        navToNewWordBuilder: NavToNewWordBuilder,
         navToSearchBuilder: ViewBuilder,
         navToFavoritesBuilder: ViewBuilder,
         navToTodoListBuilder: ViewBuilder
     ) {
         self.navigationController = navigationController
         self.searchTextInput = searchTextInputBuilder.build()
+        self.navToNewWordBuilder = navToNewWordBuilder
         self.navToSearchBuilder = navToSearchBuilder
         self.navToFavoritesBuilder = navToFavoritesBuilder
         self.navToTodoListBuilder = navToTodoListBuilder
@@ -38,6 +41,7 @@ final class MainNavigatorImpl: MainNavigator {
 
     /// Добавить представления элементов навигации.
     func appendTo(rootView: UIView) {
+        addNavToNewWord(rootView)
         addNavToSearch(rootView)
         addNavToFavorites()
         addNavToTodoList()
@@ -63,6 +67,17 @@ final class MainNavigatorImpl: MainNavigator {
         let navView = navToTodoListBuilder.build()
 
         navigationItem?.rightBarButtonItem = UIBarButtonItem(customView: navView)
+    }
+
+    private func addNavToNewWord(_ view: UIView) {
+        let navToNewWordView = navToNewWordBuilder.build()
+
+        view.addSubview(navToNewWordView)
+        navToNewWordView.snp.makeConstraints { make -> Void in
+            make.size.equalTo(CGSize(width: 44, height: 44))
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-26)
+            make.centerX.equalTo(view)
+        }
     }
 
     private var navigationItem: UINavigationItem? {
