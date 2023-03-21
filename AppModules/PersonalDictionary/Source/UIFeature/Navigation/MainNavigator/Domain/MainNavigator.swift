@@ -12,4 +12,6 @@ protocol MainNavigator {
 
     /// Добавить представления элементов навигации.
     func appendTo(rootView: UIView)
+
+    func viewWillLayoutSubviews()
 }

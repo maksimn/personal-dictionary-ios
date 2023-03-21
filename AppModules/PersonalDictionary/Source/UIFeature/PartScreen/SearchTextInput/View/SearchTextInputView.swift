@@ -8,53 +8,31 @@
 import CoreModule
 import UIKit
 
-/// Параметры представления элемента ввода поискового текста.
-struct SearchTextInputParams {
+final class SearchTextInputView: UISearchController, UISearchResultsUpdating {
 
-    /// Плейсхолдер для состояния элемента, когда поисковый текст пуст.
-    let placeholder: String
-
-    /// Размер элемента.
-    let size: CGSize
-}
-
-/// Реализация представления элемента ввода поискового текста.
-final class SearchTextInputView: UIView, UISearchBarDelegate {
-
-    private let params: SearchTextInputParams
     private let viewModel: SearchTextInputViewModel
     private let logger: SLogger
 
-    private let searchBar = UISearchBar()
-
-    /// Инициализатор.
-    /// - Parameters:
-    ///  - params: параметры представления.
-    init(params: SearchTextInputParams,
-         viewModel: SearchTextInputViewModel,
-         logger: SLogger) {
-        self.params = params
+    init(viewModel: SearchTextInputViewModel, placeholder: String, logger: SLogger) {
         self.viewModel = viewModel
         self.logger = logger
-        super.init(frame: CGRect(origin: .zero, size: params.size))
-        initSearchBar()
+        super.init(searchResultsController: nil)
+        searchResultsUpdater = self
+        obscuresBackgroundDuringPresentation = false
+        searchBar.placeholder = placeholder
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func initSearchBar() {
-        addSubview(searchBar)
-        searchBar.frame = frame
-        searchBar.placeholder = params.placeholder
-        searchBar.delegate = self
-    }
+    // MARK: - UISearchResultsUpdating
 
-    // MARK: - UISearchBarDelegate
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text else { return }
 
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         logger.log("User is entering search text: \"\(searchText)\"")
+
         viewModel.searchText.accept(searchText)
     }
 }

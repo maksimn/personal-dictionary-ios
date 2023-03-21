@@ -40,6 +40,7 @@ public final class AppBuilderImpl: AppBuilder {
         let mainScreen = mainScreenBuilder.build()
 
         navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
+        navigationController.navigationBar.prefersLargeTitles = true
         navigationController.setViewControllers([mainScreen], animated: false)
 
         return navigationController
