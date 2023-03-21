@@ -15,6 +15,8 @@ typealias BindableSeachMode = BehaviorRelay<SearchMode>
 
 typealias BindableWordList = BehaviorRelay<WordListState>
 
+typealias BindableMainWordListState = BehaviorRelay<MainWordListState>
+
 typealias BindableSearchResult = BehaviorRelay<SearchResultData>
 
 typealias BindableNewWordState = BehaviorRelay<NewWordState>

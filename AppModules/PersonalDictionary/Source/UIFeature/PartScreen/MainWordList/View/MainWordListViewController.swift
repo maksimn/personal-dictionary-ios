@@ -20,14 +20,12 @@ final class MainWordListViewController: UIViewController {
     init(
         viewModel: MainWordListViewModel,
         wordListBuilder: WordListBuilder,
-        navToNewWordBuilder: NavToNewWordBuilder,
-        mainScreenStateStream: MainScreenStateStream
+        navToNewWordBuilder: NavToNewWordBuilder
     ) {
         self.viewModel = viewModel
         self.wordListGraph = wordListBuilder.build()
         self.navToNewWordView = navToNewWordBuilder.build()
         super.init(nibName: nil, bundle: nil)
-        subscribe(to: mainScreenStateStream.mainScreenState)
     }
 
     required init?(coder: NSCoder) {
@@ -50,10 +48,11 @@ final class MainWordListViewController: UIViewController {
     }
 
     private func bindToViewModel() {
-        viewModel.wordList.subscribe(onNext: { [weak self] wordList in
+        viewModel.state.subscribe(onNext: { [weak self] state in
             guard let wordListViewModel = self?.wordListGraph.viewModel else { return }
 
-            wordListViewModel.wordList.accept(wordList)
+            wordListViewModel.wordList.accept(state.wordList)
+            self?.view.isHidden = state.isHidden
         }).disposed(by: disposeBag)
     }
 
@@ -63,23 +62,6 @@ final class MainWordListViewController: UIViewController {
             make.size.equalTo(CGSize(width: 44, height: 44))
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-26)
             make.centerX.equalTo(view)
-        }
-    }
-
-    private func subscribe(to mainScreenState: Observable<MainScreenState>) {
-        mainScreenState.subscribe(onNext: { [weak self] state in
-            self?.onNext(state: state)
-        }).disposed(by: disposeBag)
-    }
-
-    private func onNext(state: MainScreenState) {
-        switch state {
-        case .main:
-            view.isHidden = false
-        case .search:
-            break
-        case .empty:
-            view.isHidden = true
         }
     }
 }

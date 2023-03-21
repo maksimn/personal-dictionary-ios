@@ -27,13 +27,13 @@ final class MainWordListBuilder: ViewControllerBuilder {
         )
         let viewModel = MainWordListViewModelImpl(
             wordListFetcher: wordListFetcher,
+            mainScreenStateStream: MainScreenStateStreamImpl.instance,
             logger: SLoggerImp(category: "PersonalDictionary.MainWordList")
         )
         let view = MainWordListViewController(
             viewModel: viewModel,
             wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: true, dependency: dependency),
-            navToNewWordBuilder: NavToNewWordBuilder(dependency: dependency),
-            mainScreenStateStream: MainScreenStateStreamImpl.instance
+            navToNewWordBuilder: NavToNewWordBuilder(dependency: dependency)
         )
 
         return view

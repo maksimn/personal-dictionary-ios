@@ -5,10 +5,15 @@
 //  Created by Maxim Ivanov on 07.11.2021.
 //
 
+struct MainWordListState {
+    var wordList: [Word]
+    var isHidden: Bool
+}
+
 protocol MainWordListViewModel: AnyObject {
 
     /// Данные модели представления.
-    var wordList: BindableWordList { get }
+    var state: BindableMainWordListState { get }
 
     func fetch()
 }
