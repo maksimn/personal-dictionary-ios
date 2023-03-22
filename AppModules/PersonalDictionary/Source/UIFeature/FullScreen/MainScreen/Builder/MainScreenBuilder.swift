@@ -21,7 +21,7 @@ final class MainScreenBuilder: ViewControllerBuilder {
     ///  - Главный экран приложения.
     func build() -> UIViewController {
         MainScreen(
-            heading: dependency.bundle.moduleLocalizedString("LS_MY_DICTIONARY"),
+            title: dependency.bundle.moduleLocalizedString("LS_MY_DICTIONARY"),
             mainWordListBuilder: MainWordListBuilder(dependency: dependency),
             mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: dependency),
             theme: Theme.data

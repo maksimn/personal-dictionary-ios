@@ -5,6 +5,8 @@
 //  Created by Maksim Ivanov on 26.02.2022.
 //
 
+import CoreModule
+
 /// Реализация билдера фичи "Контейнер элементов навигации на Главном экране приложения".
 final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
 
@@ -26,7 +28,8 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
             navToTodoListBuilder: NavToTodoListBuilder(
                 rootViewController: dependency.navigationController,
                 bundle: dependency.bundle
-            )
+            ),
+            logger: SLoggerImp(category: "PersonalDictionary.MainNavigator")
         )
     }
 }

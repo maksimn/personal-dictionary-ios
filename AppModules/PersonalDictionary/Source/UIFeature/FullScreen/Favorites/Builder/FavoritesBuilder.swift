@@ -19,7 +19,7 @@ final class FavoritesBuilder: ViewControllerBuilder {
     ///  - View controller экрана.
     func build() -> UIViewController {
         FavoritesViewController(
-            headingText: dependency.bundle.moduleLocalizedString("LS_FAVORITE_WORDS"),
+            title: dependency.bundle.moduleLocalizedString("LS_FAVORITE_WORDS"),
             favoriteWordListBuilder: FavoriteWordListBuilder(dependency: dependency),
             theme: Theme.data
         )
