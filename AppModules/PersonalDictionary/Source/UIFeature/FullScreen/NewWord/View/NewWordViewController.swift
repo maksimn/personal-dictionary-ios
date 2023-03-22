@@ -27,6 +27,8 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
     let okButton = UIButton()
     let textField = UITextField()
 
+    private let featureName = "PersonalDictionary.NewWord"
+
     private let disposeBag = DisposeBag()
 
     /// Инициализатор.
@@ -54,14 +56,14 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
     }
 
     deinit {
-        logger.logFeatureDismission()
+        logger.log(dismissedFeatureName: featureName)
     }
 
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        logger.logFeatureInstallation()
+        logger.log(installedFeatureName: featureName)
     }
 
     // MARK: - UITextFieldDelegate
