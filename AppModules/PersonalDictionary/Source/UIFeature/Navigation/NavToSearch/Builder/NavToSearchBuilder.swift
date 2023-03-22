@@ -10,7 +10,7 @@ import UIKit
 
 protocol NavToSearchBuilder {
 
-    func build() -> UISearchControllerDelegate
+    func build() -> NavToSearchRouter
 }
 
 /// Реализация билдера фичи "Навигация на экран Поиска".
@@ -22,18 +22,13 @@ final class NavToSearchBuilderImpl: NavToSearchBuilder {
         self.dependency = dependency
     }
 
-    func build() -> UISearchControllerDelegate {
+    func build() -> NavToSearchRouter {
         let searchBuilder = SearchBuilder(dependency: dependency)
         let router = NavToSearchRouterImpl(
             navigationController: dependency.navigationController,
             searchBuilder: searchBuilder
         )
-        let navToSearch = NavToSearch(
-            navigationController: dependency.navigationController,
-            navToSearchRouter: router,
-            logger: SLoggerImp(category: "PersonalDictionary.NavToSearch")
-        )
 
-        return navToSearch
+        return router
     }
 }

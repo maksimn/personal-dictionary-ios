@@ -15,15 +15,15 @@ final class FavoritesViewController: UIViewController {
     private let theme: Theme
 
     /// - Parameters:
-    ///  - headingText: текст заголовка экрана.
+    ///  - title: текст заголовка экрана.
     ///  - favoriteWordListBuilder: билдер вложенной фичи "Список избранных слов".
-    init(headingText: String,
+    init(title: String,
          favoriteWordListBuilder: ViewControllerBuilder,
          theme: Theme) {
         favoriteWordListViewController = favoriteWordListBuilder.build()
         self.theme = theme
         super.init(nibName: nil, bundle: nil)
-        navigationItem.title = headingText
+        navigationItem.title = title
         initViews()
     }
 

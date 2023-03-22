@@ -5,6 +5,9 @@
 //  Created by Maksim Ivanov on 26.02.2022.
 //
 
+import CoreModule
+import RxCocoa
+import RxSwift
 import UIKit
 
 /// Реализация контейнера элементов навигации на Главном экране приложения.
@@ -12,10 +15,13 @@ final class MainNavigatorImpl: MainNavigator {
 
     private weak var navigationController: UINavigationController?
     private let searchTextInputView: UISearchController
-    private let navToSearch: UISearchControllerDelegate
-    private let navToNewWordBuilder: ViewBuilder
-    private let navToFavoritesBuilder: ViewBuilder
-    private let navToTodoListBuilder: ViewBuilder
+    private let navToSearchRouter: NavToSearchRouter
+    private let navToNewWordView: UIView
+    private let navToFavoritesView: UIView
+    private let navToTodoListView: UIView
+    private let logger: SLogger
+
+    private let disposeBag = DisposeBag()
 
     /// Инициализатор,
     /// - Parameters:
@@ -24,47 +30,34 @@ final class MainNavigatorImpl: MainNavigator {
     ///  - navToTodoListBuilder: билдер вложенной фичи "Элемент навигации к приложению TodoList".
     init(
         navigationController: UINavigationController?,
-        searchTextInputBuilder: SearchTextInputBuilder,
+        searchTextInputBuilder: SearchControllerBuilder,
         navToSearchBuilder: NavToSearchBuilder,
         navToNewWordBuilder: ViewBuilder,
         navToFavoritesBuilder: ViewBuilder,
-        navToTodoListBuilder: ViewBuilder
+        navToTodoListBuilder: ViewBuilder,
+        logger: SLogger
     ) {
         self.navigationController = navigationController
         self.searchTextInputView = searchTextInputBuilder.build()
-        self.navToSearch = navToSearchBuilder.build()
-        self.navToNewWordBuilder = navToNewWordBuilder
-        self.navToFavoritesBuilder = navToFavoritesBuilder
-        self.navToTodoListBuilder = navToTodoListBuilder
-        searchTextInputView.delegate = navToSearch
+        self.navToSearchRouter = navToSearchBuilder.build()
+        self.navToNewWordView = navToNewWordBuilder.build()
+        self.navToFavoritesView = navToFavoritesBuilder.build()
+        self.navToTodoListView = navToTodoListBuilder.build()
+        self.logger = logger
+        subscribeToSearchTextInput()
     }
 
-    /// Добавить представления элементов навигации.
     func appendTo(rootView: UIView) {
         addNavToNewWord(rootView)
-        addNavToFavorites()
-        addNavToTodoList()
+        navigationItem?.leftBarButtonItem = UIBarButtonItem(customView: navToFavoritesView)
+        navigationItem?.rightBarButtonItem = UIBarButtonItem(customView: navToTodoListView)
     }
 
     func viewWillLayoutSubviews() {
         navigationItem?.searchController = searchTextInputView
     }
 
-    private func addNavToFavorites() {
-        let navView = navToFavoritesBuilder.build()
-
-        navigationItem?.leftBarButtonItem = UIBarButtonItem(customView: navView)
-    }
-
-    private func addNavToTodoList() {
-        let navView = navToTodoListBuilder.build()
-
-        navigationItem?.rightBarButtonItem = UIBarButtonItem(customView: navView)
-    }
-
     private func addNavToNewWord(_ view: UIView) {
-        let navToNewWordView = navToNewWordBuilder.build()
-
         view.addSubview(navToNewWordView)
         navToNewWordView.snp.makeConstraints { make -> Void in
             make.size.equalTo(CGSize(width: 44, height: 44))
@@ -73,7 +66,64 @@ final class MainNavigatorImpl: MainNavigator {
         }
     }
 
+    private var firstVisibleViewController: UIViewController? {
+        navigationController?.viewControllers.first
+    }
+
     private var navigationItem: UINavigationItem? {
-        navigationController?.viewControllers.first?.navigationItem
+        firstVisibleViewController?.navigationItem
+    }
+
+    // Leaky abstraction:
+    private var mainWordListViewController: UIViewController? {
+        firstVisibleViewController?.children.first
+    }
+
+    private func subscribeToSearchTextInput() {
+        searchTextInputView.rx.willDismiss
+            .subscribe(onNext: { [weak self] in
+                self?.searchTextInputWillDismiss()
+            }).disposed(by: disposeBag)
+
+        searchTextInputView.rx.didDismiss
+            .subscribe(onNext: { [weak self] in
+                self?.searchTextInputDidDismiss()
+            }).disposed(by: disposeBag)
+
+        searchTextInputView.rx.willPresent
+            .subscribe(onNext: { [weak self] in
+                self?.searchTextInputWillPresent()
+            }).disposed(by: disposeBag)
+
+        searchTextInputView.rx.didPresent
+            .subscribe(onNext: { [weak self] in
+                self?.searchTextInputDidPresent()
+            }).disposed(by: disposeBag)
+    }
+
+    private func searchTextInputWillDismiss() {
+        logger.log("User will dismiss search.")
+
+        navToSearchRouter.dismissSearch()
+    }
+
+    private func searchTextInputDidDismiss() {
+        logger.log("User did dismiss search.")
+
+        navToNewWordView.isHidden = false
+        mainWordListViewController?.view.isHidden = false
+    }
+
+    private func searchTextInputWillPresent() {
+        logger.log("User will present search.")
+
+        navToNewWordView.isHidden = true
+        mainWordListViewController?.view.isHidden = true
+    }
+
+    private func searchTextInputDidPresent() {
+        logger.log("User did present search.")
+
+        navToSearchRouter.presentSearch()
     }
 }

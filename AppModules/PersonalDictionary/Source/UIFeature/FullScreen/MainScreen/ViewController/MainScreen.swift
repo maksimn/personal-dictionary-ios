@@ -18,7 +18,7 @@ final class MainScreen: UIViewController {
     /// - Parameters:
     ///  - mainWordListBuilder: билдер вложенной фичи "Главный список слов".
     ///  - mainNavigatorBuilder: билдер вложенной фичи "Контейнер элементов навигации на Главном экране приложения".
-    init(heading: String,
+    init(title: String,
          mainWordListBuilder: MainWordListBuilder,
          mainNavigatorBuilder: MainNavigatorBuilder,
          theme: Theme) {
@@ -26,7 +26,7 @@ final class MainScreen: UIViewController {
         self.mainNavigator = mainNavigatorBuilder.build()
         self.theme = theme
         super.init(nibName: nil, bundle: nil)
-        navigationItem.title = heading
+        navigationItem.title = title
     }
 
     required init?(coder: NSCoder) {
