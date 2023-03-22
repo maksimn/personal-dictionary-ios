@@ -55,6 +55,8 @@ final class MainNavigatorImpl: MainNavigator {
 
     func viewWillLayoutSubviews() {
         navigationItem?.searchController = searchTextInputView
+
+        logger.log(installedFeatureName: "PersonalDictionary.SearchTextInput")
     }
 
     private func addNavToNewWord(_ view: UIView) {

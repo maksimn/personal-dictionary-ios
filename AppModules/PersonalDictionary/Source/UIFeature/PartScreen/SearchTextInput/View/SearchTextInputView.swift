@@ -6,33 +6,44 @@
 //
 
 import CoreModule
+import RxSwift
 import UIKit
 
-final class SearchTextInputView: UISearchController, UISearchResultsUpdating {
+final class SearchTextInputView: UISearchController {
 
-    private let viewModel: SearchTextInputViewModel
+    private let model: SearchTextInputModel
     private let logger: SLogger
 
-    init(viewModel: SearchTextInputViewModel, placeholder: String, logger: SLogger) {
-        self.viewModel = viewModel
+    private let disposeBag = DisposeBag()
+
+    init(model: SearchTextInputModel, placeholder: String, logger: SLogger) {
+        self.model = model
         self.logger = logger
         super.init(searchResultsController: nil)
-        searchResultsUpdater = self
-        obscuresBackgroundDuringPresentation = false
         searchBar.placeholder = placeholder
+        obscuresBackgroundDuringPresentation = false
+        subscribe()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - UISearchResultsUpdating
+    deinit {
+        logger.log(dismissedFeatureName: "PersonalDictionary.SearchTextInput")
+    }
 
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text else { return }
+    private func subscribe() {
+        searchBar.rx.text
+            .subscribe(onNext: { [weak self] searchText in
+                self?.onNext(searchText)
+            }).disposed(by: disposeBag)
+    }
+
+    private func onNext(_ searchText: String?) {
+        guard let searchText = searchText else { return }
 
         logger.log("User is entering search text: \"\(searchText)\"")
-
-        viewModel.searchText.accept(searchText)
+        model.process(searchText)
     }
 }

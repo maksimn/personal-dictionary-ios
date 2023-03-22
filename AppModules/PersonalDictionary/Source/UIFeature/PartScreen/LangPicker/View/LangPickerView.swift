@@ -25,6 +25,8 @@ final class LangPickerView: UIView {
         }
     )
 
+    private let featureName = "PersonalDictionary.LangPicker"
+
     /// Инициализатор.
     /// - Parameters:
     ///  - params: параметры представления выбора языка.
@@ -37,7 +39,7 @@ final class LangPickerView: UIView {
         super.init(frame: .zero)
         initView()
         bindToViewModel()
-        logger.logFeatureInstallation()
+        logger.log(installedFeatureName: featureName)
     }
 
     required init?(coder: NSCoder) {
@@ -45,7 +47,7 @@ final class LangPickerView: UIView {
     }
 
     deinit {
-        logger.logFeatureDismission()
+        logger.log(dismissedFeatureName: featureName)
     }
 
     private func initView() {

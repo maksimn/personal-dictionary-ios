@@ -19,15 +19,12 @@ final class SearchTextInputBuilder: SearchControllerBuilder {
     }
 
     func build() -> UISearchController {
-        let viewModel = SearchTextInputViewModelImpl(
+        let placeholder = bundle.moduleLocalizedString("LS_SEARCH")
+        let model = SearchTextInputModelImpl(
             searchTextStream: SearchTextStreamImpl.instance,
             logger: logger()
         )
-        let view = SearchTextInputView(
-            viewModel: viewModel,
-            placeholder: bundle.moduleLocalizedString("LS_SEARCH"),
-            logger: logger()
-        )
+        let view = SearchTextInputView(model: model, placeholder: placeholder, logger: logger())
 
         return view
     }

@@ -20,11 +20,11 @@ extension SLogger {
         log("\n\t\tError: \(error) \n\t\tfrom \(source).")
     }
 
-    public func logFeatureInstallation() {
-        log("The feature has been installed.")
+    public func log(installedFeatureName: String) {
+        log("The \(installedFeatureName) feature has been installed.")
     }
 
-    public func logFeatureDismission() {
-        log("The feature has been dismissed.")
+    public func log(dismissedFeatureName: String) {
+        log("The \(dismissedFeatureName) feature has been dismissed.")
     }
 }
