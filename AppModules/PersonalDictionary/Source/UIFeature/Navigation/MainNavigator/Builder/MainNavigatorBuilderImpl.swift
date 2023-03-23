@@ -10,9 +10,12 @@ import CoreModule
 /// Реализация билдера фичи "Контейнер элементов навигации на Главном экране приложения".
 final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
 
+    private let navigationItemGetter: () -> UINavigationItem?
     private let dependency: AppDependency
 
-    init(dependency: AppDependency) {
+    init(navigationItemGetter: @escaping () -> UINavigationItem?,
+         dependency: AppDependency) {
+        self.navigationItemGetter = navigationItemGetter
         self.dependency = dependency
     }
 
@@ -20,7 +23,7 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
     /// - Returns: объект контейнера.
     func build() -> MainNavigator {
         MainNavigatorImpl(
-            navigationController: dependency.navigationController,
+            navigationItemGetter: navigationItemGetter,
             searchTextInputBuilder: SearchTextInputBuilder(bundle: dependency.bundle),
             navToSearchBuilder: NavToSearchBuilderImpl(dependency: dependency),
             navToNewWordBuilder: NavToNewWordBuilder(dependency: dependency),
