@@ -18,7 +18,7 @@ final class SearchTextInputModelImpl: SearchTextInputModel {
     }
 
     func process(_ searchText: String) {
-        logger.log("Sending \"\(searchText)\" to the search text stream.")
+        logger.logSending(searchText, toModelStream: "search text")
 
         searchTextStream.send(searchText)
     }

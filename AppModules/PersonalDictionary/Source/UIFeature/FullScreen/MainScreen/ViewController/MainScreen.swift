@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 07.11.2021.
 //
 
+import RxSwift
 import UIKit
 
 /// View controller Главного экрана.
@@ -13,6 +14,8 @@ final class MainScreen: UIViewController {
     private let mainWordListViewController: UIViewController
     private var mainNavigator: MainNavigator
     private let theme: Theme
+
+    private let disposeBag = DisposeBag()
 
     /// Инициализатор.
     /// - Parameters:
@@ -27,7 +30,6 @@ final class MainScreen: UIViewController {
         self.theme = theme
         super.init(nibName: nil, bundle: nil)
         navigationItem.title = title
-        mainNavigator.delegate = self
     }
 
     required init?(coder: NSCoder) {
@@ -47,16 +49,25 @@ final class MainScreen: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         mainNavigator.viewWillLayoutSubviews()
-    }
-}
-
-extension MainScreen: MainNavigatorDelegate {
-
-    func shouldShowView() {
-        mainWordListViewController.view.isHidden = false
+        subscribeToSearchControllerIfNeeded()
     }
 
-    func shouldHideView() {
-        mainWordListViewController.view.isHidden = true
+    private var isSubscribedToSearchController = false
+
+    private func subscribeToSearchControllerIfNeeded() {
+        guard !isSubscribedToSearchController else { return }
+        guard let searchController = navigationItem.searchController else { return }
+
+        isSubscribedToSearchController.toggle()
+
+        searchController.rx.willPresent
+            .subscribe(onNext: { [weak self] in
+                self?.mainWordListViewController.view.isHidden = true
+            }).disposed(by: disposeBag)
+
+        searchController.rx.didDismiss
+            .subscribe(onNext: { [weak self] in
+                self?.mainWordListViewController.view.isHidden = false
+            }).disposed(by: disposeBag)
     }
 }

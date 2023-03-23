@@ -27,4 +27,12 @@ extension SLogger {
     public func log(dismissedFeatureName: String) {
         log("The \(dismissedFeatureName) feature has been dismissed.")
     }
+
+    public func logSending<T>(_ object: T, toModelStream modelStreamName: String) {
+        log("Sending \(type(of: object)) = \(object) to the \(modelStreamName) model stream.")
+    }
+
+    public func logReceiving<T>(_ object: T, fromModelStream modelStreamName: String) {
+        log("Received \(type(of: object)) = \(object) from the \(modelStreamName) model stream.")
+    }
 }
