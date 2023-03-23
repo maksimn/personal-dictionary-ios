@@ -30,7 +30,7 @@ final class SearchModePickerViewModelImpl: SearchModePickerViewModel {
     }
 
     private func onNext(searchMode: SearchMode) {
-        logger.log("Sending \"\(searchMode)\" to the search mode stream.")
+        logger.logSending(searchMode, toModelStream: "search mode")
 
         searchModeStream.send(searchMode)
     }

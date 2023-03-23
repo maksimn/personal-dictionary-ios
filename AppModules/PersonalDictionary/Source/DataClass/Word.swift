@@ -69,13 +69,13 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
 
     var description: String {
         """
-        \n(id: \(id.raw), \
-        text: \(text),
+        (id: \(id.raw), \
+        text: \(text), \
         translation: \(translation ?? "nil"), \
         sourceLang: \(sourceLang.id.raw), \
         targetLang: \(targetLang.id.raw), \
         isFavorite: \(isFavorite), \
-        createdAt: \(createdAt))
+        createdAt: \(createdAt))\n
         """
     }
 }

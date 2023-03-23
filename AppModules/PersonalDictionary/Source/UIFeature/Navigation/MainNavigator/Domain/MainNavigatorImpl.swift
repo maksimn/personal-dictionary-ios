@@ -13,11 +13,7 @@ import UIKit
 /// Реализация контейнера элементов навигации на Главном экране приложения.
 final class MainNavigatorImpl: MainNavigator {
 
-    weak var delegate: MainNavigatorDelegate?
-
     private lazy var navigationItem = navigationItemGetter()
-
-    private var isSearchTextInputInstalled = false
 
     private let navigationItemGetter: () -> UINavigationItem?
     private let searchTextInputView: UISearchController
@@ -59,7 +55,7 @@ final class MainNavigatorImpl: MainNavigator {
 
     func viewWillLayoutSubviews() {
         navigationItem?.searchController = searchTextInputView
-        logSearchTextInputFeatureIsInstalled()
+        logSearchTextInputInstallationIfNeeded()
     }
 
     private func addNavToNewWord(_ view: UIView) {
@@ -103,14 +99,12 @@ final class MainNavigatorImpl: MainNavigator {
         logger.log("User did dismiss search.")
 
         navToNewWordView.isHidden = false
-        delegate?.shouldShowView()
     }
 
     private func searchTextInputWillPresent() {
         logger.log("User will present search.")
 
         navToNewWordView.isHidden = true
-        delegate?.shouldHideView()
     }
 
     private func searchTextInputDidPresent() {
@@ -119,7 +113,9 @@ final class MainNavigatorImpl: MainNavigator {
         navToSearchRouter.presentSearch()
     }
 
-    private func logSearchTextInputFeatureIsInstalled() {
+    private var isSearchTextInputInstalled = false
+
+    private func logSearchTextInputInstallationIfNeeded() {
         if !isSearchTextInputInstalled {
             isSearchTextInputInstalled.toggle()
             logger.log(installedFeatureName: "PersonalDictionary.SearchTextInput")

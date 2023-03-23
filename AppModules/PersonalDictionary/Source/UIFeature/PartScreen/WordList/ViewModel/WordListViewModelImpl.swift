@@ -40,10 +40,9 @@ final class WordListViewModelImpl: WordListViewModel {
     func fetchTranslationsIfNeeded(start: Int, end: Int) -> Completable {
         model.fetchTranslationsFor(state: wordList.value, start: start, end: end)
             .executeInBackgroundAndObserveOnMainThread()
-            .map { [weak self] state in
+            .do(onSuccess: { [weak self] state in
                 self?.onNewState(state, actionName: "fetchTranslationsIfNeeded")
-                return state
-            }
+            })
             .asCompletable()
     }
 
@@ -119,21 +118,21 @@ final class WordListViewModelImpl: WordListViewModel {
     private func subscribe() {
         wordStream.newWord
             .subscribe(onNext: { [weak self] word in
-                self?.logger.log(word, fromModelStream: "new word")
+                self?.logger.logReceiving(word, fromModelStream: "new word")
 
                 self?.create(word)
             })
             .disposed(by: disposeBag)
         wordStream.removedWord
             .subscribe(onNext: { [weak self] word in
-                self?.logger.log(word, fromModelStream: "removed word")
+                self?.logger.logReceiving(word, fromModelStream: "removed word")
 
                 self?.findAndRemove(word)
             })
             .disposed(by: disposeBag)
         wordStream.updatedWord
             .subscribe(onNext: { [weak self] word in
-                self?.logger.log(word, fromModelStream: "updated word")
+                self?.logger.logReceiving(word, fromModelStream: "updated word")
 
                 self?.findAndUpdate(word)
             })
