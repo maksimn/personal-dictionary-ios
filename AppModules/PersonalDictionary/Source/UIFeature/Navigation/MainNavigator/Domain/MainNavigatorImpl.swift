@@ -13,7 +13,11 @@ import UIKit
 /// Реализация контейнера элементов навигации на Главном экране приложения.
 final class MainNavigatorImpl: MainNavigator {
 
-    private weak var navigationController: UINavigationController?
+    weak var delegate: MainNavigatorDelegate?
+
+    private let navigationItemBlock: () -> UINavigationItem?
+    private lazy var navigationItem: UINavigationItem? = navigationItemBlock()
+
     private let searchTextInputView: UISearchController
     private let navToSearchRouter: NavToSearchRouter
     private let navToNewWordView: UIView
@@ -23,13 +27,14 @@ final class MainNavigatorImpl: MainNavigator {
 
     private let disposeBag = DisposeBag()
 
+    private var isSearchTextInputInstalled = false
+
     /// Инициализатор,
     /// - Parameters:
-    ///  - navigationController: корневой  navigation  сontroller приложения.
     ///  - navToFavoritesBuilder: билдер вложенной фичи "Элемент навигации на экран списка избранных слов".
     ///  - navToTodoListBuilder: билдер вложенной фичи "Элемент навигации к приложению TodoList".
     init(
-        navigationController: UINavigationController?,
+        navigationItemBlock: @escaping () -> UINavigationItem?,
         searchTextInputBuilder: SearchControllerBuilder,
         navToSearchBuilder: NavToSearchBuilder,
         navToNewWordBuilder: ViewBuilder,
@@ -37,7 +42,7 @@ final class MainNavigatorImpl: MainNavigator {
         navToTodoListBuilder: ViewBuilder,
         logger: SLogger
     ) {
-        self.navigationController = navigationController
+        self.navigationItemBlock = navigationItemBlock
         self.searchTextInputView = searchTextInputBuilder.build()
         self.navToSearchRouter = navToSearchBuilder.build()
         self.navToNewWordView = navToNewWordBuilder.build()
@@ -55,8 +60,7 @@ final class MainNavigatorImpl: MainNavigator {
 
     func viewWillLayoutSubviews() {
         navigationItem?.searchController = searchTextInputView
-
-        logger.log(installedFeatureName: "PersonalDictionary.SearchTextInput")
+        logSearchTextInputFeatureIsInstalled()
     }
 
     private func addNavToNewWord(_ view: UIView) {
@@ -66,19 +70,6 @@ final class MainNavigatorImpl: MainNavigator {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-26)
             make.centerX.equalTo(view)
         }
-    }
-
-    private var firstVisibleViewController: UIViewController? {
-        navigationController?.viewControllers.first
-    }
-
-    private var navigationItem: UINavigationItem? {
-        firstVisibleViewController?.navigationItem
-    }
-
-    // Leaky abstraction:
-    private var mainWordListViewController: UIViewController? {
-        firstVisibleViewController?.children.first
     }
 
     private func subscribeToSearchTextInput() {
@@ -113,19 +104,26 @@ final class MainNavigatorImpl: MainNavigator {
         logger.log("User did dismiss search.")
 
         navToNewWordView.isHidden = false
-        mainWordListViewController?.view.isHidden = false
+        delegate?.shouldShowView()
     }
 
     private func searchTextInputWillPresent() {
         logger.log("User will present search.")
 
         navToNewWordView.isHidden = true
-        mainWordListViewController?.view.isHidden = true
+        delegate?.shouldHideView()
     }
 
     private func searchTextInputDidPresent() {
         logger.log("User did present search.")
 
         navToSearchRouter.presentSearch()
+    }
+
+    private func logSearchTextInputFeatureIsInstalled() {
+        if !isSearchTextInputInstalled {
+            isSearchTextInputInstalled.toggle()
+            logger.log(installedFeatureName: "PersonalDictionary.SearchTextInput")
+        }
     }
 }

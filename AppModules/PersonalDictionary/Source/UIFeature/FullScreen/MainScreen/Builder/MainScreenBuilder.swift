@@ -20,11 +20,21 @@ final class MainScreenBuilder: ViewControllerBuilder {
     /// - Returns:
     ///  - Главный экран приложения.
     func build() -> UIViewController {
-        MainScreen(
+        var navigationItem: UINavigationItem?
+
+        let mainNavigatorBuilder = MainNavigatorBuilderImpl(
+            navigationItemBlock: { navigationItem },
+            dependency: dependency
+        )
+        let mainScreen = MainScreen(
             title: dependency.bundle.moduleLocalizedString("LS_MY_DICTIONARY"),
             mainWordListBuilder: MainWordListBuilder(dependency: dependency),
-            mainNavigatorBuilder: MainNavigatorBuilderImpl(dependency: dependency),
+            mainNavigatorBuilder: mainNavigatorBuilder,
             theme: Theme.data
         )
+
+        navigationItem = mainScreen.navigationItem
+
+        return mainScreen
     }
 }
