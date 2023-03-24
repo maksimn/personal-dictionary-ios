@@ -12,9 +12,9 @@ final class MainWordListViewModelImpl: MainWordListViewModel {
     let wordList = BindableWordList(value: [])
 
     private let wordListFetcher: WordListFetcher
-    private let logger: SLogger
+    private let logger: Logger
 
-    init(wordListFetcher: WordListFetcher, logger: SLogger) {
+    init(wordListFetcher: WordListFetcher, logger: Logger) {
         self.wordListFetcher = wordListFetcher
         self.logger = logger
     }

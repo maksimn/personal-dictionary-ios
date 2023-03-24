@@ -32,7 +32,7 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
                 rootViewController: dependency.navigationController,
                 bundle: dependency.bundle
             ),
-            logger: SLoggerImp(category: "PersonalDictionary.MainNavigator")
+            logger: LoggerImpl(category: "PersonalDictionary.MainNavigator")
         )
     }
 }

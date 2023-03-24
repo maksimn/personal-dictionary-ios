@@ -27,7 +27,7 @@ final class MainWordListBuilder: ViewControllerBuilder {
         )
         let viewModel = MainWordListViewModelImpl(
             wordListFetcher: wordListFetcher,
-            logger: SLoggerImp(category: "PersonalDictionary.MainWordList")
+            logger: LoggerImpl(category: "PersonalDictionary.MainWordList")
         )
         let view = MainWordListViewController(
             viewModel: viewModel,

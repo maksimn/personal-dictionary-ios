@@ -12,13 +12,13 @@ final class NewWordModelImpl: NewWordModel {
 
     private var langRepository: LangRepository
     private let newWordStream: NewWordStream
-    private let logger: SLogger
+    private let logger: Logger
 
     /// - Parameters:
     ///  - viewModelBlock: замыкание для инициализации ссылки на модель представления.
     ///  - langRepository: хранилище с данными о языках в приложении.
     ///  - newWordStream: поток для отправки событий добавления нового слова в словарь
-    init(langRepository: LangRepository, newWordStream: NewWordStream, logger: SLogger) {
+    init(langRepository: LangRepository, newWordStream: NewWordStream, logger: Logger) {
         self.langRepository = langRepository
         self.newWordStream = newWordStream
         self.logger = logger

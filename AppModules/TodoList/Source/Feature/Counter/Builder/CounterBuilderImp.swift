@@ -11,7 +11,7 @@ import CoreModule
 final class CounterBuilderImp: CounterBuilder {
 
     func build() -> CounterGraph {
-        let logger = SLoggerImp(category: "TodoList.Counter")
+        let logger = LoggerImpl(category: "TodoList.Counter")
         let todoListCache = TodoListCacheImp(
             container: TodoListPersistentContainer(logger: logger),
             logger: logger

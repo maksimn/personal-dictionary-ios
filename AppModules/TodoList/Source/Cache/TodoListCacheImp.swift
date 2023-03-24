@@ -12,7 +12,7 @@ import Foundation
 class TodoListCacheImp: TodoListCache {
 
     private let container: TodoListPersistentContainer
-    private let logger: SLogger
+    private let logger: Logger
 
     private var mainContext: NSManagedObjectContext {
         container.persistentContainer.viewContext
@@ -23,7 +23,7 @@ class TodoListCacheImp: TodoListCache {
     }
 
     init(container: TodoListPersistentContainer,
-         logger: SLogger) {
+         logger: Logger) {
         self.container = container
         self.logger = logger
     }

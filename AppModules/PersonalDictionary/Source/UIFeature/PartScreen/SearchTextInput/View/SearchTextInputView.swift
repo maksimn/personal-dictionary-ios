@@ -12,11 +12,11 @@ import UIKit
 final class SearchTextInputView: UISearchController {
 
     private let model: SearchTextInputModel
-    private let logger: SLogger
+    private let logger: Logger
 
     private let disposeBag = DisposeBag()
 
-    init(model: SearchTextInputModel, placeholder: String, logger: SLogger) {
+    init(model: SearchTextInputModel, placeholder: String, logger: Logger) {
         self.model = model
         self.logger = logger
         super.init(searchResultsController: nil)

@@ -21,7 +21,7 @@ final class MainNavigatorImpl: MainNavigator {
     private let navToNewWordView: UIView
     private let navToFavoritesView: UIView
     private let navToTodoListView: UIView
-    private let logger: SLogger
+    private let logger: Logger
     private let disposeBag = DisposeBag()
 
     /// Инициализатор,
@@ -35,7 +35,7 @@ final class MainNavigatorImpl: MainNavigator {
         navToNewWordBuilder: ViewBuilder,
         navToFavoritesBuilder: ViewBuilder,
         navToTodoListBuilder: ViewBuilder,
-        logger: SLogger
+        logger: Logger
     ) {
         self.navigationItemGetter = navigationItemGetter
         self.searchTextInputView = searchTextInputBuilder.build()

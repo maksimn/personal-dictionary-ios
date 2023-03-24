@@ -60,8 +60,8 @@ final class WordListBuilderImpl: WordListBuilder {
         )
     }
 
-    private func logger() -> SLogger {
-        SLoggerImp(category: "PersonalDictionary.WordList")
+    private func logger() -> Logger {
+        LoggerImpl(category: "PersonalDictionary.WordList")
     }
 
     private func cudOperations() -> WordCUDOperations {

@@ -13,7 +13,7 @@ final class PonsTranslationService: TranslationService {
 
     private let httpClient: HttpClient
     private let secret: String
-    private let logger: SLogger
+    private let logger: Logger
 
     private let apiUrl = "https://api.pons.com/v1/dictionary"
 
@@ -21,7 +21,7 @@ final class PonsTranslationService: TranslationService {
     ///  - secret: секрет для обращения к онлайновому PONS API.
     ///  - httpClient: базовая служба для сетевых запросов по протоколу HTTP.
     ///  - logger: логгер.
-    init(secret: String, httpClient: HttpClient, logger: SLogger) {
+    init(secret: String, httpClient: HttpClient, logger: Logger) {
         self.secret = secret
         self.httpClient = httpClient
         self.logger = logger

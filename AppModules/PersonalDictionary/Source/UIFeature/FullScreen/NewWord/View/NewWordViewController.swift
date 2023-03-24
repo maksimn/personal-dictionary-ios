@@ -14,7 +14,7 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
 
     let params: NewWordViewParams
     let theme: Theme
-    private let logger: SLogger
+    private let logger: Logger
 
     private let viewModel: NewWordViewModel
 
@@ -40,7 +40,7 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
          viewModel: NewWordViewModel,
          langPickerBuilder: LangPickerBuilder,
          theme: Theme,
-         logger: SLogger) {
+         logger: Logger) {
         self.params = params
         self.theme = theme
         self.viewModel = viewModel

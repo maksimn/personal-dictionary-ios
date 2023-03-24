@@ -20,7 +20,7 @@ class TodoListServiceOne: TodoListService {
     private let isRemotingEnabled: Bool
     private let cache: TodoListCache
     private let deadItemsCache: DeadItemsCache
-    private let logger: SLogger
+    private let logger: Logger
     private let networking: NetworkingService
     private let httpRequestCounterPublisher: HttpRequestCounterPublisher
     private let mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisher
@@ -36,7 +36,7 @@ class TodoListServiceOne: TodoListService {
     init(isRemotingEnabled: Bool,
          cache: TodoListCache,
          deadItemsCache: DeadItemsCache,
-         logger: SLogger,
+         logger: Logger,
          networking: NetworkingService,
          httpRequestCounterPublisher: HttpRequestCounterPublisher,
          mergeItemsWithRemotePublisher: MergeItemsWithRemotePublisher) {

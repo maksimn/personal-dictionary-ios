@@ -39,14 +39,14 @@ final class WordListRepositoryImpl: WordListRepository {
             container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
 
             if let error = error {
-                self.logger.log("\(error)")
+                self.logger.logError(error)
             }
         })
         return container
     }()
 
     private let langRepository: LangRepository
-    private let logger: SLogger
+    private let logger: Logger
     private let args: WordListRepositoryArgs
 
     /// Инициализатор.
@@ -56,7 +56,7 @@ final class WordListRepositoryImpl: WordListRepository {
     ///  - logger: логгер.
     init(args: WordListRepositoryArgs,
          langRepository: LangRepository,
-         logger: SLogger) {
+         logger: Logger) {
         self.args = args
         self.langRepository = langRepository
         self.logger = logger
@@ -72,7 +72,7 @@ final class WordListRepositoryImpl: WordListRepository {
                 userDefaults: UserDefaults.standard,
                 data: langData
             ),
-            logger: SLoggerImp(category: "PersonalDictionary.WordListRepository")
+            logger: LoggerImpl(category: "PersonalDictionary.WordListRepository")
         )
     }
 
