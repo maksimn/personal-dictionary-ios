@@ -34,7 +34,7 @@ final class WordListView: UIView {
     private let viewModel: WordListViewModel
     private let params: WordListViewParams
     private let theme: Theme
-    private let logger: SLogger
+    private let logger: Logger
 
     private let tableView = UITableView()
     private let disposeBag = DisposeBag()
@@ -70,7 +70,7 @@ final class WordListView: UIView {
     init(viewModel: WordListViewModel,
          params: WordListViewParams,
          theme: Theme,
-         logger: SLogger) {
+         logger: Logger) {
         self.viewModel = viewModel
         self.params = params
         self.theme = theme
@@ -117,7 +117,7 @@ final class WordListView: UIView {
 
         viewModel.fetchTranslationsIfNeeded(start: start, end: end + 1)
             .subscribe(onError: { [weak self] error in
-                self?.logger.logError(error, source: "fetch translations if needed")
+                self?.logger.logError(error)
             }).disposed(by: disposeBag)
     }
 

@@ -28,7 +28,7 @@ final class PushNotificationBuilderImpl: PushNotificationBuilder {
             pnTimeCalculator: pnTimeCalculator(),
             pushNotificationData: pushNotificationData(),
             navToNewWordRouter: navToNewWordRouter(),
-            logger: SLoggerImp(category: "PersonalDictionary.PushNotification")
+            logger: LoggerImpl(category: "PersonalDictionary.PushNotification")
         )
     }
 

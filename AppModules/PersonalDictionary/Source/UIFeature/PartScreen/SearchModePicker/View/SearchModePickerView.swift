@@ -27,7 +27,7 @@ final class SearchModePickerView: UIView {
     private let params: SearchModePickerViewParams
     private let viewModel: SearchModePickerViewModel
     private let theme: Theme
-    private let logger: SLogger
+    private let logger: Logger
 
     private let label = UILabel()
     private lazy var segmentedControl = UISegmentedControl(items: [params.sourceWordText, params.translationText])
@@ -38,7 +38,7 @@ final class SearchModePickerView: UIView {
     init(params: SearchModePickerViewParams,
          viewModel: SearchModePickerViewModel,
          theme: Theme,
-         logger: SLogger) {
+         logger: Logger) {
         self.params = params
         self.viewModel = viewModel
         self.theme = theme

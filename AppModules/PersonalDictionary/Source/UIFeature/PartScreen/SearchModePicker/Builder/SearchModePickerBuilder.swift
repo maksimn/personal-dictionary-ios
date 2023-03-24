@@ -34,8 +34,8 @@ final class SearchModePickerBuilder: ViewBuilder {
         return view
     }
 
-    private func logger() -> SLogger {
-        SLoggerImp(category: "PersonalDictionary.SearchModePicker")
+    private func logger() -> Logger {
+        LoggerImpl(category: "PersonalDictionary.SearchModePicker")
     }
 
     private func viewParams() -> SearchModePickerViewParams {

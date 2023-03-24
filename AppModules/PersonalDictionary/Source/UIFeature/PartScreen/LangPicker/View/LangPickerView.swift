@@ -14,7 +14,7 @@ final class LangPickerView: UIView {
     private let params: LangPickerParams
     private let viewModel: LangPickerViewModel
     private let theme: Theme
-    private let logger: SLogger
+    private let logger: Logger
     private let disposeBag = DisposeBag()
 
     private lazy var langPicker = LangPicker(
@@ -31,7 +31,7 @@ final class LangPickerView: UIView {
     /// - Parameters:
     ///  - params: параметры представления выбора языка.
     ///  - viewModel: модель представления.
-    init(params: LangPickerParams, viewModel: LangPickerViewModel, theme: Theme, logger: SLogger) {
+    init(params: LangPickerParams, viewModel: LangPickerViewModel, theme: Theme, logger: Logger) {
         self.params = params
         self.viewModel = viewModel
         self.theme = theme

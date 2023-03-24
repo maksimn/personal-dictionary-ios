@@ -10,9 +10,9 @@ import CoreModule
 
 final class TodoListPersistentContainer {
 
-    private let logger: SLogger
+    private let logger: Logger
 
-    init(logger: SLogger) {
+    init(logger: Logger) {
         self.logger = logger
     }
 

@@ -11,8 +11,9 @@ import RxSwift
 
 enum ErrorMock: Error { case err }
 
-class LoggerMock: SLogger {
-    func log(_ message: String) { }
+class LoggerMock: Logger {
+
+    func log(_ message: String, level: LogLevel) { }
 }
 
 class HttpClientMock: HttpClient {

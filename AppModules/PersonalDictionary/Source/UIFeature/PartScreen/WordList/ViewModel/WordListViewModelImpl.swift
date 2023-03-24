@@ -15,10 +15,10 @@ final class WordListViewModelImpl: WordListViewModel {
 
     private let model: WordListModel
     private let wordStream: ReadableWordStream
-    private let logger: SLogger
+    private let logger: Logger
     private let disposeBag = DisposeBag()
 
-    init(model: WordListModel, wordStream: ReadableWordStream, logger: SLogger) {
+    init(model: WordListModel, wordStream: ReadableWordStream, logger: Logger) {
         self.model = model
         self.wordStream = wordStream
         self.logger = logger
@@ -64,7 +64,7 @@ final class WordListViewModelImpl: WordListViewModel {
                     self?.onNewState(wordList, actionName: "create effect")
                 },
                 onError: { [weak self] error in
-                    self?.logger.logError(error, source: "create word effect")
+                    self?.logger.logError(error)
                 }
             ).disposed(by: disposeBag)
     }
@@ -80,7 +80,7 @@ final class WordListViewModelImpl: WordListViewModel {
             .executeInBackgroundAndObserveOnMainThread()
             .subscribe(
                 onError: { [weak self] error in
-                    self?.logger.logError(error, source: "update word effect")
+                    self?.logger.logError(error)
                 }
             ).disposed(by: disposeBag)
     }
@@ -98,7 +98,7 @@ final class WordListViewModelImpl: WordListViewModel {
             .executeInBackgroundAndObserveOnMainThread()
             .subscribe(
                 onError: { [weak self] error in
-                    self?.logger.logError(error, source: "remove word effect")
+                    self?.logger.logError(error)
                 }
             ).disposed(by: disposeBag)
     }

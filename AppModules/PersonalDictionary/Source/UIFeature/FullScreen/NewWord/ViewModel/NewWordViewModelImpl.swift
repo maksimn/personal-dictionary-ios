@@ -13,11 +13,11 @@ final class NewWordViewModelImpl: NewWordViewModel {
     let state: BindableNewWordState
 
     private let model: NewWordModel
-    private let logger: SLogger
+    private let logger: Logger
 
     /// - Parameters:
     ///  - model: модель фичи "Добавление нового слова"
-    init(model: NewWordModel, initState: NewWordState, logger: SLogger) {
+    init(model: NewWordModel, initState: NewWordState, logger: Logger) {
         self.model = model
         self.logger = logger
         state = BindableNewWordState(value: initState)

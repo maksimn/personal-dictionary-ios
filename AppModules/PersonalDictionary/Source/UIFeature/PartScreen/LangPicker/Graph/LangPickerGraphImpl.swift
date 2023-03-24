@@ -25,7 +25,7 @@ final class LangPickerGraphImpl: LangPickerGraph {
             params: viewParams,
             viewModel: viewmodel,
             theme: Theme.data,
-            logger: SLoggerImp(category: "PersonalDictionary.LangPicker")
+            logger: LoggerImpl(category: "PersonalDictionary.LangPicker")
         )
 
         uiview = view

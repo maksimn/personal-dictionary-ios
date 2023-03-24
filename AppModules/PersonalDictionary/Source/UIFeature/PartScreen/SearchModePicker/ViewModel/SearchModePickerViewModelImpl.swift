@@ -14,10 +14,10 @@ final class SearchModePickerViewModelImpl: SearchModePickerViewModel {
     let searchMode = BindableSeachMode(value: .bySourceWord)
 
     private let searchModeStream: MutableSearchModeStream
-    private let logger: SLogger
+    private let logger: Logger
     private let disposeBag = DisposeBag()
 
-    init(searchModeStream: MutableSearchModeStream, logger: SLogger) {
+    init(searchModeStream: MutableSearchModeStream, logger: Logger) {
         self.searchModeStream = searchModeStream
         self.logger = logger
         subscribe()

@@ -29,7 +29,7 @@ final class SearchTextInputBuilder: SearchControllerBuilder {
         return view
     }
 
-    private func logger() -> SLogger {
-        SLoggerImp(category: "PersonalDictionary.SearchTextInput")
+    private func logger() -> Logger {
+        LoggerImpl(category: "PersonalDictionary.SearchTextInput")
     }
 }

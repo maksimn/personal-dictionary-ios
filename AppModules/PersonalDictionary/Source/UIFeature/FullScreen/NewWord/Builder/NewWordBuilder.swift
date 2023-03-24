@@ -80,7 +80,7 @@ final class NewWordBuilder: ViewControllerBuilder {
         )
     }
 
-    private func logger() -> SLogger {
-        SLoggerImp(category: "PersonalDictionary.NewWord")
+    private func logger() -> Logger {
+        LoggerImpl(category: "PersonalDictionary.NewWord")
     }
 }

@@ -10,9 +10,9 @@ import CoreModule
 final class SearchTextInputModelImpl: SearchTextInputModel {
 
     private let searchTextStream: MutableSearchTextStream
-    private let logger: SLogger
+    private let logger: Logger
 
-    init(searchTextStream: MutableSearchTextStream, logger: SLogger) {
+    init(searchTextStream: MutableSearchTextStream, logger: Logger) {
         self.searchTextStream = searchTextStream
         self.logger = logger
     }
