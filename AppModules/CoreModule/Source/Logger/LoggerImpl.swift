@@ -16,7 +16,9 @@ public final class LoggerImpl: CoreModule.Logger {
     }
 
     public func log(_ message: String, level: LogLevel) {
-        logger.log(level: level.getOsLogLevel(), "\(message)")
+        guard isDevelopment() else { return }
+
+        logger.log(level: level.getOsLogLevel(), "[\(level.rawValue)] \(message)")
     }
 }
 

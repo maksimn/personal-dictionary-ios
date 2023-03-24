@@ -1,6 +1,4 @@
-## Personal Dictionary – iOS app where a user works with a personal dictionary of foreign words.
-
----
+## Personal Dictionary – iOS app where a user keeps the personal dictionary of foreign words.
 
 ## Приложение, в котором пользователь может составить свой личный словарь незнакомых иностранных слов.
 

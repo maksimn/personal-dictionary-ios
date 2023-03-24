@@ -27,6 +27,6 @@ struct Lang: Equatable, CustomStringConvertible {
     }
 
     var description: String {
-        "\n(id: \(id.raw), shortName: \(shortName))"
+        "Lang(id: \(id.raw), name: \(name))"
     }
 }
