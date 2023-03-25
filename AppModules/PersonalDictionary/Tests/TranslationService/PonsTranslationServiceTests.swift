@@ -5,6 +5,7 @@
 //  Created by Maksim Ivanov on 24.02.2023.
 //
 
+import CoreModule
 import RxSwift
 import RxBlocking
 import XCTest
@@ -22,30 +23,29 @@ final class PonsTranslationServiceTests: XCTestCase {
         )
         let lang = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
         let word = Word(text: "word", sourceLang: lang, targetLang: lang)
+        let ponsArray = [
+            PonsResponseData(
+                hits: [
+                    PonsResponseDataHit(
+                        roms: [
+                            PonsResponseDataHitsRom(
+                                arabs: [
+                                    PonsResponseDataHitsRomsArab(
+                                        translations: [
+                                            PonsResponseDataHitsRomsArabsTranslation(target: "translation")
+                                        ]
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                ]
+            )
+        ]
+        let data = try! JSONEncoder().encode(ponsArray)
 
         httpClientMock.methodMock = { _ in
-            let ponsArray = [
-                PonsResponseData(
-                    hits: [
-                        PonsResponseDataHit(
-                            roms: [
-                                PonsResponseDataHitsRom(
-                                    arabs: [
-                                        PonsResponseDataHitsRomsArab(
-                                            translations: [
-                                                PonsResponseDataHitsRomsArabsTranslation(target: "translation")
-                                            ]
-                                        )
-                                    ]
-                                )
-                            ]
-                        )
-                    ]
-                )
-            ]
-            let data = try! JSONEncoder().encode(ponsArray)
-
-            return Single.just(data)
+            Single.just((response: HTTPURLResponse(), data: data)).asObservable()
         }
 
         // Act:

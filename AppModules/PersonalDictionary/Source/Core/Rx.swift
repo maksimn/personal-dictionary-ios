@@ -10,7 +10,7 @@ import RxSwift
 extension Single<WordListState> {
 
     func executeInBackgroundAndObserveOnMainThread() -> Single<WordListState> {
-        subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-            .observeOn(MainScheduler.instance)
+        subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+            .observe(on: MainScheduler.instance)
     }
 }

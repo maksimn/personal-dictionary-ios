@@ -18,7 +18,7 @@ public final class JSONCoderImpl: JsonCoder {
 
                 observer(.success(typedObject))
             } catch {
-                observer(.error(error))
+                observer(.failure(error))
             }
             return Disposables.create { }
         }
@@ -31,7 +31,7 @@ public final class JSONCoderImpl: JsonCoder {
 
                 observer(.success(data))
             } catch {
-                observer(.error(error))
+                observer(.failure(error))
             }
             return Disposables.create { }
         }

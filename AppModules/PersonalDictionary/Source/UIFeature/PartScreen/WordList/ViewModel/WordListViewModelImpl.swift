@@ -63,7 +63,7 @@ final class WordListViewModelImpl: WordListViewModel {
                 onSuccess: { [weak self] wordList in
                     self?.onNewState(wordList, actionName: "create effect")
                 },
-                onError: { [weak self] error in
+                onFailure: { [weak self] error in
                     self?.logger.logError(error)
                 }
             ).disposed(by: disposeBag)
@@ -79,7 +79,7 @@ final class WordListViewModelImpl: WordListViewModel {
         model.updateEffect(word, state: wordList)
             .executeInBackgroundAndObserveOnMainThread()
             .subscribe(
-                onError: { [weak self] error in
+                onFailure: { [weak self] error in
                     self?.logger.logError(error)
                 }
             ).disposed(by: disposeBag)
@@ -97,7 +97,7 @@ final class WordListViewModelImpl: WordListViewModel {
         model.removeEffect(word, state: wordList)
             .executeInBackgroundAndObserveOnMainThread()
             .subscribe(
-                onError: { [weak self] error in
+                onFailure: { [weak self] error in
                     self?.logger.logError(error)
                 }
             ).disposed(by: disposeBag)

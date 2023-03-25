@@ -19,7 +19,7 @@ Pod::Spec.new do |spec|
   spec.source_files  = 'Source/**/*'
   spec.source = { :path => '.' }
 
-  spec.dependency 'RxCocoa', '5.1'
-  spec.dependency 'RxSwift', '5.1'
+  spec.dependency 'RxCocoa', '6.5.0'
+  spec.dependency 'RxSwift', '6.5.0'
 
 end
