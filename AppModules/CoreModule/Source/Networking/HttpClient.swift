@@ -24,7 +24,9 @@ public struct Http {
     }
 }
 
+public typealias RxHttpResponse = Observable<(response: HTTPURLResponse, data: Data)>
+
 public protocol HttpClient {
 
-    func send(_ http: Http) -> Single<Data>
+    func send(_ http: Http) -> RxHttpResponse
 }

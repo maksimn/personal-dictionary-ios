@@ -101,7 +101,7 @@ final class WordListRepositoryImpl: WordListRepository {
                     }
                 } catch {
                     DispatchQueue.main.async {
-                        single(.error(error))
+                        single(.failure(error))
                     }
                 }
             }
@@ -133,7 +133,7 @@ final class WordListRepositoryImpl: WordListRepository {
                     }
                 } catch {
                     DispatchQueue.main.async {
-                        single(.error(error))
+                        single(.failure(error))
                     }
                 }
             }
@@ -164,7 +164,7 @@ final class WordListRepositoryImpl: WordListRepository {
                     }
                 } catch {
                     DispatchQueue.main.async {
-                        single(.error(error))
+                        single(.failure(error))
                     }
                 }
             }

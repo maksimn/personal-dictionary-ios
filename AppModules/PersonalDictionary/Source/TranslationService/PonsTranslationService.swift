@@ -47,7 +47,10 @@ final class PonsTranslationService: TranslationService {
                     headers: ["X-Secret": secret]
                 )
             )
-            .map { [weak self] data in
+            .take(1)
+            .asSingle()
+            .map { [weak self] httpResponse in
+                let data = httpResponse.data
                 var word = word
                 let ponsArray = try JSONDecoder().decode([PonsResponseData].self, from: data)
 

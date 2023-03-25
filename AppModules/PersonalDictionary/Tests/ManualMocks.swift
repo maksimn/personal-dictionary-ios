@@ -18,9 +18,9 @@ class LoggerMock: Logger {
 
 class HttpClientMock: HttpClient {
 
-    var methodMock: ((Http) -> Single<Data>)?
+    var methodMock: ((Http) -> RxHttpResponse)?
 
-    func send(_ http: Http) -> Single<Data> {
+    func send(_ http: Http) -> RxHttpResponse {
         methodMock!(http)
     }
 }

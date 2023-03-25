@@ -25,13 +25,13 @@ Pod::Spec.new do |spec|
 
   spec.dependency 'CoreModule'
   spec.dependency 'TodoList'
-  spec.dependency 'RxCocoa', '5.1'
-  spec.dependency 'RxSwift', '5.1'
+  spec.dependency 'RxCocoa', '6.5.0'
+  spec.dependency 'RxSwift', '6.5.0'
   spec.dependency 'SnapKit', '~> 4.0'
 
   spec.test_spec 'Tests' do |test_spec|
     test_spec.source_files = 'Tests/**/*'
-    test_spec.dependency 'RxBlocking', '5.1'
+    test_spec.dependency 'RxBlocking', '6.5.0'
   end  
 
 end

@@ -90,15 +90,15 @@ class NetworkingServiceImp: NetworkingService {
 
     private func send<OutputDTO: DTO>(_ http: Http) -> Single<OutputDTO> {
         httpClient.send(http)
-            .map { [weak self] data -> Single<OutputDTO> in
-                self?.todoCoder.parseFromJson(data) ?? .error(DefaultNetworkingService.error)
+            .map { [weak self] httpResponse -> Single<OutputDTO> in
+                self?.todoCoder.parseFromJson(httpResponse.data) ?? .error(DefaultNetworkingService.error)
             }
             .asObservable().concat().asSingle()
     }
 
     private func send<InputDTO: Encodable, OutputDTO: DTO>(_ http: Http, dto: InputDTO) -> Single<OutputDTO> {
         todoCoder.convertToJson(dto)
-            .map { [weak self] data -> Single<Data> in
+            .map { [weak self] data -> RxHttpResponse in
                 self?.httpClient.send(
                     Http(
                         urlString: http.urlString,
@@ -109,8 +109,8 @@ class NetworkingServiceImp: NetworkingService {
                 ) ?? .error(DefaultNetworkingService.error)
             }
             .asObservable().concat().asSingle()
-            .map { [weak self] data -> Single<OutputDTO> in
-                self?.todoCoder.parseFromJson(data) ?? .error(DefaultNetworkingService.error)
+            .map { [weak self] httpResponse -> Single<OutputDTO> in
+                self?.todoCoder.parseFromJson(httpResponse.data) ?? .error(DefaultNetworkingService.error)
             }
             .asObservable().concat().asSingle()
     }
