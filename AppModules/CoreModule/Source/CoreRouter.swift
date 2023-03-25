@@ -1,6 +1,6 @@
 //
 //  CoreRouter.swift
-//  PersonalDictionary
+//  CoreModule
 //
 //  Created by Maxim Ivanov on 16.12.2021.
 //
