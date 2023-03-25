@@ -64,9 +64,9 @@ final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUs
 
         userNotificationCenter.add(notificationRequest, withCompletionHandler: { [weak self] error in
             if let error = error {
-                self?.logger.log("\(error)")
+                self?.logger.logError(error)
             } else {
-                self?.logger.log("PushNotificationService schedule SUCCESS.")
+                self?.logger.logContext("PushNotificationService schedule SUCCESS.")
             }
         })
     }
@@ -96,9 +96,9 @@ final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUs
             options: [.alert, .sound, .badge],
             completionHandler: { [weak self] granted, error in
                 if !granted, let error = error {
-                    self?.logger.log("\(error)")
+                    self?.logger.logError(error)
                 } else {
-                    self?.logger.log("PushNotificationService requestAuthorization SUCCESS.")
+                    self?.logger.logContext("PushNotificationService requestAuthorization SUCCESS.")
                 }
             }
         )

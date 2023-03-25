@@ -124,15 +124,15 @@ final class WordListView: UIView {
     // MARK: - Logging
 
     private func logTapOnTableViewCellDeleteButton(_ position: Int) {
-        logger.log("User tap on the word table view cell delete button, the cell: #\(position)")
+        logger.debug("User tap on the word table view cell delete button, the cell: #\(position)")
     }
 
     private func logTapOnTableViewCellStarButton(_ position: Int) {
-        logger.log("User tap on the word table view cell star button, the cell: #\(position)")
+        logger.debug("User tap on the word table view cell star button, the cell: #\(position)")
     }
 
     private func logTableViewScrollFinish(_ start: Int, _ end: Int) {
-        logger.log("The word table view scroll finished. Visible cells: [\(start), \(end))")
+        logger.debug("The word table view scroll finished. Visible cells: [\(start), \(end))")
     }
 
     // MARK: - Layout

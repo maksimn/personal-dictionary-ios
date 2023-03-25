@@ -7,14 +7,29 @@
 
 extension Logger {
 
-    public func log(_ message: String,
-                    shouldLogContext: Bool = true,
-                    file: String = #file,
-                    function: String = #function,
-                    line: Int = #line) {
+    public func debug(_ message: String) {
+        log(message, level: .debug)
+    }
+
+    public func logContext(_ message: String,
+                           level: LogLevel = .default,
+                           shouldLogContext: Bool = true,
+                           file: String = #file,
+                           function: String = #function,
+                           line: Int = #line) {
         guard isDevelopment() else { return }
 
-        log(message, level: .default, shouldLogContext: shouldLogContext, file: file, function: function, line: line)
+        log(message, level: level, shouldLogContext: shouldLogContext, file: file, function: function, line: line)
+    }
+
+    public func logError(_ error: Error,
+                         shouldLogContext: Bool = true,
+                         file: String = #file,
+                         function: String = #function,
+                         line: Int = #line) {
+        guard isDevelopment() else { return }
+
+        log("\(error)", level: .error, shouldLogContext: shouldLogContext, file: file, function: function, line: line)
     }
 
     public func logState<State>(actionName: String,
@@ -27,13 +42,6 @@ extension Logger {
         let text = "\(actionName) result:\n\(state)"
 
         log(text, level: .default, shouldLogContext: shouldLogContext, file: file, function: function, line: line)
-    }
-
-    public func logError(_ error: Error, shouldLogContext: Bool = true, file: String = #file,
-                         function: String = #function, line: Int = #line) {
-        guard isDevelopment() else { return }
-
-        log("\(error)", level: .error, shouldLogContext: shouldLogContext, file: file, function: function, line: line)
     }
 
     public func logSending<T>(_ object: T,

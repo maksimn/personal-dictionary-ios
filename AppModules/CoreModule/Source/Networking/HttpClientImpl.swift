@@ -30,10 +30,8 @@ public class HttpClientImpl: HttpClient {
         request.httpMethod = http.method
         request.httpBody = http.body
 
-        if let headers = http.headers {
-            for (key, value) in headers {
-                request.addValue(value, forHTTPHeaderField: key)
-            }
+        http.headers?.forEach { (key, value) in
+            request.addValue(value, forHTTPHeaderField: key)
         }
 
         return session.rx.response(request: request)

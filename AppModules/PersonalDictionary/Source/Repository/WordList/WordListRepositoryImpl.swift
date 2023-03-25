@@ -208,7 +208,7 @@ final class WordListRepositoryImpl: WordListRepository {
 
             return wordMOList.compactMap { $0.convert(using: langRepository) }
         } catch {
-            logger.log("\(error)")
+            logger.logError(error)
             return []
         }
     }

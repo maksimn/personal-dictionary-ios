@@ -32,7 +32,7 @@ final class TodoListPersistentContainer {
             container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
 
             if let error = error {
-                self.logger.log("\(error)")
+                self.logger.logContext("\(error)")
             }
         })
         return container

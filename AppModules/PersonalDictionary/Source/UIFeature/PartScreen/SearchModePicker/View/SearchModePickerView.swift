@@ -53,7 +53,7 @@ final class SearchModePickerView: UIView {
 
     @objc
     private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
-        logger.log("User has selected [\(sender.selectedSegmentIndex)] index of the search mode segmented control.")
+        logger.debug("User has selected [\(sender.selectedSegmentIndex)] index of the search mode segmented control.")
 
         switch sender.selectedSegmentIndex {
         case 0:
