@@ -29,7 +29,7 @@ final class NewWordBuilder: ViewControllerBuilder {
     func build() -> UIViewController {
         let model = NewWordModelImpl(
             langRepository: langRepository,
-            newWordStream: WordStreamImpl.instance,
+            newWordSender: WordStreamImpl.instance,
             logger: logger()
         )
         let viewModel = NewWordViewModelImpl(

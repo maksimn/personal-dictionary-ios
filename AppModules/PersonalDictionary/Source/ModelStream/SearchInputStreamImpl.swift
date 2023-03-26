@@ -8,9 +8,9 @@
 import RxSwift
 import RxCocoa
 
-final class SearchTextStreamImpl: SearchTextStream, MutableSearchTextStream {
+final class SearchTextStreamImpl: SearchTextStream, SearchTextSender {
 
-    private let relay = BehaviorRelay<String>(value: "")
+    private let relay = BehaviorRelay(value: "")
 
     static let instance = SearchTextStreamImpl()
 
@@ -25,9 +25,9 @@ final class SearchTextStreamImpl: SearchTextStream, MutableSearchTextStream {
     }
 }
 
-final class SearchModeStreamImpl: SearchModeStream, MutableSearchModeStream {
+final class SearchModeStreamImpl: SearchModeStream, SearchModeSender {
 
-    private let relay = BehaviorRelay<SearchMode>(value: .bySourceWord)
+    private let relay = BehaviorRelay(value: SearchMode.bySourceWord)
 
     static let instance = SearchModeStreamImpl()
 

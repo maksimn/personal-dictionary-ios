@@ -14,11 +14,11 @@ final class WordListViewModelImpl: WordListViewModel {
     let wordList = BindableWordList(value: [])
 
     private let model: WordListModel
-    private let wordStream: ReadableWordStream
+    private let wordStream: UpdatedWordStream & RemovedWordStream
     private let logger: Logger
     private let disposeBag = DisposeBag()
 
-    init(model: WordListModel, wordStream: ReadableWordStream, logger: Logger) {
+    init(model: WordListModel, wordStream: UpdatedWordStream & RemovedWordStream, logger: Logger) {
         self.model = model
         self.wordStream = wordStream
         self.logger = logger
@@ -50,23 +50,6 @@ final class WordListViewModelImpl: WordListViewModel {
         logger.logState(actionName: actionName, state)
 
         wordList.accept(state)
-    }
-
-    private func create(_ word: Word) {
-        let wordList = model.create(word, state: self.wordList.value)
-
-        onNewState(wordList, actionName: "create word")
-
-        model.createEffect(word, state: wordList)
-            .executeInBackgroundAndObserveOnMainThread()
-            .subscribe(
-                onSuccess: { [weak self] wordList in
-                    self?.onNewState(wordList, actionName: "create effect")
-                },
-                onFailure: { [weak self] error in
-                    self?.logger.logError(error)
-                }
-            ).disposed(by: disposeBag)
     }
 
     private func update(_ word: Word, at position: Int, withSideEffect: Bool) {
@@ -116,13 +99,6 @@ final class WordListViewModelImpl: WordListViewModel {
     }
 
     private func subscribe() {
-        wordStream.newWord
-            .subscribe(onNext: { [weak self] word in
-                self?.logger.logReceiving(word, fromModelStream: "new word")
-
-                self?.create(word)
-            })
-            .disposed(by: disposeBag)
         wordStream.removedWord
             .subscribe(onNext: { [weak self] word in
                 self?.logger.logReceiving(word, fromModelStream: "removed word")

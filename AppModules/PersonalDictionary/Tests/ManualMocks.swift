@@ -54,12 +54,27 @@ class LangRepositoryMock: LangRepository {
     }
 }
 
-class WordListFetcherMock: WordListFetcher {
+class WordListRepositoryMock: WordListFetcher, WordCUDOperations {
 
-    var propertyMock: [Word]?
+    var wordListMock: [Word]?
+    var addWordMock: ((Word) -> Single<Word>)?
+    var removeWordMock: ((Word) -> Single<Word>)?
+    var updateWordMock: ((Word) -> Single<Word>)?
 
     var wordList: [Word] {
-        propertyMock!
+        wordListMock!
+    }
+
+    func add(_ word: Word) -> Single<Word> {
+        addWordMock!(word)
+    }
+
+    func update(_ word: Word) -> Single<Word> {
+        updateWordMock!(word)
+    }
+
+    func remove(_ word: Word) -> Single<Word> {
+        removeWordMock!(word)
     }
 }
 
@@ -72,13 +87,26 @@ class FavoriteWordListFetcherMock: FavoriteWordListFetcher {
     }
 }
 
-class ReadableWordStreamMock: ReadableWordStream {
+class NewWordStreamMock: NewWordStream {
 
     var newWord: Observable<Word> { .empty() }
+}
 
-    var removedWord: Observable<Word> { .empty() }
+class UpdatedWordStreamMock: UpdatedWordStream {
 
     var updatedWord: Observable<Word> { .empty() }
+}
+
+class RemovedWordStreamMock: RemovedWordStream {
+
+    var removedWord: Observable<Word> { .empty() }
+}
+
+class UpdatedRemovedWordStreamMock: UpdatedWordStream, RemovedWordStream {
+
+    var updatedWord: Observable<Word> { .empty() }
+
+    var removedWord: Observable<Word> { .empty() }
 }
 
 class LangPickerListenerMock: LangPickerListener {
@@ -90,7 +118,7 @@ class LangPickerListenerMock: LangPickerListener {
     }
 }
 
-class NewWordStreamMock: NewWordStream {
+class NewWordSenderMock: NewWordSender {
 
     var methodMock: ((Word) -> Void)?
 
@@ -118,7 +146,7 @@ class NewWordModelMock: NewWordModel {
     }
 }
 
-class MutableSearchTextStreamMock: MutableSearchTextStream {
+class SearchTextSenderMock: SearchTextSender {
 
     var methodMock: ((String) -> Void)?
 
@@ -127,7 +155,7 @@ class MutableSearchTextStreamMock: MutableSearchTextStream {
     }
 }
 
-class MutableSearchModeStreamMock: MutableSearchModeStream {
+class SearchModeSenderMock: SearchModeSender {
 
     var methodMock: ((SearchMode) -> Void)?
 
@@ -168,21 +196,11 @@ class SearchModeStreamMock: SearchModeStream {
 }
 
 class WordListModelMock: WordListModel {
-    var createMock: ((Word, WordListState) -> WordListState)?
-    var createEffectMock: ((Word, WordListState) -> Single<WordListState>)?
     var removeMock: ((Int, WordListState) -> WordListState)?
     var removeEffectMock: ((Word, WordListState) -> Single<WordListState>)?
     var updateMock: ((Word, Int, WordListState) -> WordListState)?
     var updateEffectMock: ((Word, WordListState) -> Single<WordListState>)?
     var fetchTranslationsForMock: ((WordListState, Int, Int) -> Single<WordListState>)?
-
-    func create(_ word: Word, state: WordListState) -> WordListState {
-        createMock!(word, state)
-    }
-
-    func createEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
-        createEffectMock!(word, state)
-    }
 
     func remove(at position: Int, state: WordListState) -> WordListState {
         removeMock!(position, state)
@@ -223,7 +241,7 @@ class WordCUDOperationsMock: WordCUDOperations {
     }
 }
 
-class RUWordStreamMock: UpdatedWordStream, RemovedWordStream {
+class RUWordStreamMock: UpdatedWordSender, RemovedWordSender {
     var sendUpdatedWordMock: ((Word) -> Void)?
     var sendRemovedWordMock: ((Word) -> Void)?
 
@@ -241,5 +259,24 @@ class TranslationServiceMock: TranslationService {
 
     func fetchTranslation(for word: Word) -> Single<Word> {
         methodMock!(word)
+    }
+}
+
+class MainWordListModelMock: MainWordListModel {
+
+    var fetchMainWordListMock: (() -> WordListState)?
+    var createMock: ((Word, WordListState) -> WordListState)?
+    var createEffectMock: ((Word, WordListState) -> Single<WordListState>)?
+
+    func fetchMainWordList() -> WordListState {
+        fetchMainWordListMock!()
+    }
+
+    func create(_ word: Word, state: WordListState) -> WordListState {
+        createMock!(word, state)
+    }
+
+    func createEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
+        createEffectMock!(word, state)
     }
 }

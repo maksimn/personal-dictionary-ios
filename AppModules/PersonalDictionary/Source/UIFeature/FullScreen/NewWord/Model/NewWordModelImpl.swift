@@ -11,16 +11,16 @@ import CoreModule
 final class NewWordModelImpl: NewWordModel {
 
     private var langRepository: LangRepository
-    private let newWordStream: NewWordStream
+    private let newWordSender: NewWordSender
     private let logger: Logger
 
     /// - Parameters:
     ///  - viewModelBlock: замыкание для инициализации ссылки на модель представления.
     ///  - langRepository: хранилище с данными о языках в приложении.
-    ///  - newWordStream: поток для отправки событий добавления нового слова в словарь
-    init(langRepository: LangRepository, newWordStream: NewWordStream, logger: Logger) {
+    ///  - newWordSender: поток для отправки событий добавления нового слова в словарь
+    init(langRepository: LangRepository, newWordSender: NewWordSender, logger: Logger) {
         self.langRepository = langRepository
-        self.newWordStream = newWordStream
+        self.newWordSender = newWordSender
         self.logger = logger
     }
 
@@ -64,7 +64,7 @@ final class NewWordModelImpl: NewWordModel {
         guard !word.text.isEmpty else { return }
 
         logger.logSending(word, toModelStream: "NEW WORD")
-        newWordStream.sendNewWord(word)
+        newWordSender.sendNewWord(word)
     }
 
     // MARK: - Private

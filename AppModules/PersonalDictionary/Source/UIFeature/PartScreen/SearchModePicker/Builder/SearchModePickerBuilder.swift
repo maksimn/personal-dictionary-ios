@@ -21,7 +21,7 @@ final class SearchModePickerBuilder: ViewBuilder {
 
     func build() -> UIView {
         let viewModel = SearchModePickerViewModelImpl(
-            searchModeStream: SearchModeStreamImpl.instance,
+            searchModeSender: SearchModeStreamImpl.instance,
             logger: logger()
         )
         let view = SearchModePickerView(

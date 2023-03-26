@@ -9,17 +9,17 @@ import CoreModule
 
 final class SearchTextInputModelImpl: SearchTextInputModel {
 
-    private let searchTextStream: MutableSearchTextStream
+    private let searchTextSender: SearchTextSender
     private let logger: Logger
 
-    init(searchTextStream: MutableSearchTextStream, logger: Logger) {
-        self.searchTextStream = searchTextStream
+    init(searchTextSender: SearchTextSender, logger: Logger) {
+        self.searchTextSender = searchTextSender
         self.logger = logger
     }
 
     func process(_ searchText: String) {
         logger.logSending(searchText, toModelStream: "search text")
 
-        searchTextStream.send(searchText)
+        searchTextSender.send(searchText)
     }
 }
