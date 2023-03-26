@@ -43,7 +43,7 @@ final class SearchTextInputView: UISearchController {
     private func onNext(_ searchText: String?) {
         guard let searchText = searchText else { return }
 
-        logger.log("User is entering search text: \"\(searchText)\"")
+        logger.debug("User is entering search text: \"\(searchText)\"")
         model.process(searchText)
     }
 }

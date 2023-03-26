@@ -63,7 +63,7 @@ final class NewWordModelImpl: NewWordModel {
 
         guard !word.text.isEmpty else { return }
 
-        logSendNewWord(word)
+        logger.logSending(word, toModelStream: "NEW WORD")
         newWordStream.sendNewWord(word)
     }
 
@@ -71,21 +71,15 @@ final class NewWordModelImpl: NewWordModel {
 
     private func save(sourceLang: Lang) {
         langRepository.sourceLang = sourceLang
-        logSavedLang(.source, lang: sourceLang)
+        logger.logContext(saveLangMessage(.source, lang: sourceLang))
     }
 
     private func save(targetLang: Lang) {
         langRepository.targetLang = targetLang
-        logSavedLang(.target, lang: targetLang)
+        logger.logContext(saveLangMessage(.target, lang: targetLang))
     }
 
-    // MARK: - Logging
-
-    private func logSendNewWord(_ word: Word) {
-        logger.log("NewWord model is sending a word to the new word stream:\n word = \(word)\n")
-    }
-
-    private func logSavedLang(_ langType: LangType, lang: Lang) {
-        logger.log("\(langType) language: \(lang) has been saved.")
+    private func saveLangMessage(_ langType: LangType, lang: Lang) -> String {
+        "\(langType) language: \(lang) has been saved."
     }
 }

@@ -51,6 +51,9 @@ final class MainNavigatorImpl: MainNavigator {
         addNavToNewWord(rootView)
         navigationItem?.leftBarButtonItem = UIBarButtonItem(customView: navToFavoritesView)
         navigationItem?.rightBarButtonItem = UIBarButtonItem(customView: navToTodoListView)
+
+        logNavToFavoritesFeatureInstallation()
+        logNavToTodoListFeatureInstallation()
     }
 
     func viewWillLayoutSubviews() {
@@ -65,6 +68,8 @@ final class MainNavigatorImpl: MainNavigator {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-26)
             make.centerX.equalTo(view)
         }
+
+        logger.log(installedFeatureName: "NavToNewWord")
     }
 
     private func subscribeToSearchTextInput() {
@@ -90,35 +95,64 @@ final class MainNavigatorImpl: MainNavigator {
     }
 
     private func searchTextInputWillDismiss() {
-        logger.log("User will dismiss search.")
+        logger.debug("User will dismiss search.")
 
         navToSearchRouter.dismissSearch()
     }
 
     private func searchTextInputDidDismiss() {
-        logger.log("User did dismiss search.")
+        logger.debug("User did dismiss search.")
 
         navToNewWordView.isHidden = false
     }
 
     private func searchTextInputWillPresent() {
-        logger.log("User will present search.")
+        logger.debug("User will present search.")
 
         navToNewWordView.isHidden = true
     }
 
     private func searchTextInputDidPresent() {
-        logger.log("User did present search.")
+        logger.debug("User did present search.")
 
         navToSearchRouter.presentSearch()
     }
 
+    // MARK: - Logging
+
     private var isSearchTextInputInstalled = false
 
     private func logSearchTextInputInstallationIfNeeded() {
-        if !isSearchTextInputInstalled {
+        if navigationItem != nil && !isSearchTextInputInstalled {
             isSearchTextInputInstalled.toggle()
-            logger.log(installedFeatureName: "PersonalDictionary.SearchTextInput")
+            logger.log(installedFeatureName: "SearchTextInput")
+        } else if navigationItem == nil {
+            logWarningOnNotInstalled("SearchTextInput", summary: "Users won't be able to use Search.")
         }
+    }
+
+    private func logNavToFavoritesFeatureInstallation() {
+        guard navigationItem != nil else {
+            logWarningOnNotInstalled("NavToFavorites", summary: "Users won't be able to navigate to Favorites Screen.")
+            return
+        }
+
+        logger.log(installedFeatureName: "NavToFavorites")
+    }
+
+    private func logNavToTodoListFeatureInstallation() {
+        guard navigationItem != nil else {
+            logWarningOnNotInstalled("NavToTodoList", summary: "Users won't be able to navigate to To-do list.")
+            return
+        }
+
+        logger.log(installedFeatureName: "NavToTodoList")
+    }
+
+    private func logWarningOnNotInstalled(_ feature: String, summary: String) {
+        logger.log(
+            "Reference to navigation item is NIL, so \(feature) feature cannot be installed. \(summary)",
+            level: .warn
+        )
     }
 }

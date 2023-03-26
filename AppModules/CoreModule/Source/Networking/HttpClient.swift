@@ -7,6 +7,8 @@
 
 import RxSwift
 
+public typealias RxHttpResponse = Observable<(response: HTTPURLResponse, data: Data)>
+
 public struct Http {
     public let urlString: String
     public let method: String
@@ -23,8 +25,6 @@ public struct Http {
         self.body = body
     }
 }
-
-public typealias RxHttpResponse = Observable<(response: HTTPURLResponse, data: Data)>
 
 public protocol HttpClient {
 

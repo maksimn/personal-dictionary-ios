@@ -37,7 +37,7 @@ final class PonsTranslationService: TranslationService {
             URLQueryItem(name: "l", value: sourceLang + targetLang)
         ]
 
-        logger.log("PONS FETCH TRANSLATION START")
+        logger.logContext("PONS FETCH TRANSLATION START")
 
         return httpClient
             .send(
@@ -54,7 +54,7 @@ final class PonsTranslationService: TranslationService {
                 var word = word
                 let ponsArray = try JSONDecoder().decode([PonsResponseData].self, from: data)
 
-                self?.logger.log("PONS FETCH TRANSLATION SUCCESS")
+                self?.logger.logContext("PONS FETCH TRANSLATION SUCCESS")
                 word.translation = ponsArray.first?.translation
 
                 return word

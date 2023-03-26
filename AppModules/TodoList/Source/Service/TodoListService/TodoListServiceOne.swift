@@ -63,8 +63,8 @@ class TodoListServiceOne: TodoListService {
         } else {
             requestWillStart(getTodoList)
             networking.fetchTodoList()
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-                .observeOn(MainScheduler.instance)
+                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+                .observe(on: MainScheduler.instance)
                 .subscribe(
                     onSuccess: { [weak self] fetchedItems in
                         self?.requestDidEnd(getTodoList)
@@ -75,7 +75,7 @@ class TodoListServiceOne: TodoListService {
                             completion(error)
                         }
                     },
-                    onError: { [weak self] error in
+                    onFailure: { [weak self] error in
                         self?.requestDidEnd(getTodoList, withError: error)
                         completion(error)
                     }
@@ -103,8 +103,8 @@ class TodoListServiceOne: TodoListService {
         requestWillStart(createTodoItem)
         cache.insert(todoItem.update(isDirty: true)) { [weak self] _ in
             self?.networking.createTodoItem(todoItem)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-                .observeOn(MainScheduler.instance)
+                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+                .observe(on: MainScheduler.instance)
                 .subscribe(
                     onSuccess: { [weak self] item in
                         self?.requestDidEnd(createTodoItem)
@@ -112,7 +112,7 @@ class TodoListServiceOne: TodoListService {
                             completion(nil)
                         }
                     },
-                    onError: { [weak self] error in
+                    onFailure: { [weak self] error in
                         self?.handleItemRequestError(error, todoItem, requestName: createTodoItem, completion)
                     }
                 ).disposed(by: self?.disposeBag ?? DisposeBag())
@@ -139,8 +139,8 @@ class TodoListServiceOne: TodoListService {
         requestWillStart(updateTodoItem)
         cache.update(todoItem.update(isDirty: true)) { [weak self] _ in
             self?.networking.updateTodoItem(todoItem)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-                .observeOn(MainScheduler.instance)
+                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+                .observe(on: MainScheduler.instance)
                 .subscribe(
                     onSuccess: { [weak self] item in
                         self?.requestDidEnd(updateTodoItem)
@@ -148,7 +148,7 @@ class TodoListServiceOne: TodoListService {
                             completion(nil)
                         }
                     },
-                    onError: { [weak self] error in
+                    onFailure: { [weak self] error in
                         self?.handleItemRequestError(error, todoItem, requestName: updateTodoItem, completion)
                     }
                 ).disposed(by: self?.disposeBag ?? DisposeBag())
@@ -179,8 +179,8 @@ class TodoListServiceOne: TodoListService {
                 self?.requestWillStart(deleteTodoItem)
                 self?.deadItemsCache.insert(tombstone: tombstone) { [weak self] _ in
                     self?.networking.deleteTodoItem(todoItem.id)
-                        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-                        .observeOn(MainScheduler.instance)
+                        .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+                        .observe(on: MainScheduler.instance)
                         .subscribe(
                             onSuccess: { [weak self] item in
                                 self?.requestDidEnd(deleteTodoItem)
@@ -188,7 +188,7 @@ class TodoListServiceOne: TodoListService {
                                     completion(nil)
                                 }
                             },
-                            onError: { [weak self] error in
+                            onFailure: { [weak self] error in
                                 self?.handleItemRequestError(error, todoItem, requestName: deleteTodoItem, completion)
                             }
                         ).disposed(by: self?.disposeBag ?? DisposeBag())
@@ -208,8 +208,8 @@ class TodoListServiceOne: TodoListService {
 
         requestWillStart(mergeTodoList)
         networking.mergeTodoList(requestData)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-            .observeOn(MainScheduler.instance)
+            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+            .observe(on: MainScheduler.instance)
             .subscribe(
                 onSuccess: { [weak self] items in
                     self?.requestDidEnd(mergeTodoList)
@@ -220,7 +220,7 @@ class TodoListServiceOne: TodoListService {
                         completion(error)
                     }
                 },
-                onError: { [weak self] error in
+                onFailure: { [weak self] error in
                     self?.requestDidEnd(deleteTodoItem, withError: error)
                     self?.retryMergeRequestAfterDelay(completion)
                 }
@@ -255,7 +255,7 @@ class TodoListServiceOne: TodoListService {
     }
 
     private func requestWillStart(_ requestName: String) {
-        logger.log("\n\(requestName) NETWORK REQUEST START\n")
+        logger.logContext("\n\(requestName) NETWORK REQUEST START\n")
         httpRequestCounterPublisher.increment()
     }
 
@@ -263,9 +263,9 @@ class TodoListServiceOne: TodoListService {
         httpRequestCounterPublisher.decrement()
 
         if let error = error {
-            logger.log("\n\(requestName) NETWORK REQUEST ERROR\n\("\(error)")\n")
+            logger.logContext("\n\(requestName) NETWORK REQUEST ERROR\n\("\(error)")\n")
         } else {
-            logger.log("\n\(requestName) NETWORK REQUEST SUCCESS\n")
+            logger.logContext("\n\(requestName) NETWORK REQUEST SUCCESS\n")
         }
     }
 

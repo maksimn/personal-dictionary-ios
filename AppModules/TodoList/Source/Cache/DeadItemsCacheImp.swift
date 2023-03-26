@@ -37,7 +37,7 @@ final class DeadItemsCacheImp: DeadItemsCache {
                 Tombstone(itemId: tombstoneMO.itemId ?? "", deletedAt: tombstoneMO.deletedAt ?? Date())
             }
         } catch {
-            logger.log("\(error)")
+            logger.logContext("\(error)")
             return []
         }
     }
@@ -57,7 +57,7 @@ final class DeadItemsCacheImp: DeadItemsCache {
                     completion(nil)
                 }
             } catch {
-                self?.logger.log("\(error)")
+                self?.logger.logContext("\(error)")
                 DispatchQueue.main.async {
                     completion(error)
                 }
@@ -78,7 +78,7 @@ final class DeadItemsCacheImp: DeadItemsCache {
                     completion(nil)
                 }
             } catch {
-                self?.logger.log("\(error)")
+                self?.logger.logContext("\(error)")
                 DispatchQueue.main.async {
                     completion(error)
                 }
