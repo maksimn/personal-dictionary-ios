@@ -14,7 +14,7 @@ struct NewWordState: Equatable {
 }
 
 /// Модель представления для экрана добавления нового слова в личный словарь.
-protocol NewWordViewModel: AnyObject {
+protocol NewWordViewModel: LangPickerListener {
 
     /// Данные модели представления
     var state: BindableNewWordState { get }
@@ -23,9 +23,6 @@ protocol NewWordViewModel: AnyObject {
     /// - Parameters:
     ///  - text: написание слова
     func update(text: String)
-
-    /// Обновить данные об исходном / целевом языке для слова в модели
-    func updateStateWith(langPickerState: LangPickerState)
 
     /// Показать представление для выбора языка.
     /// - Parameters:
