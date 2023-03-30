@@ -10,7 +10,7 @@ import RxSwift
 import UIKit
 
 /// View Controller экрана добавления нового слова в личный словарь.
-final class NewWordViewController: UIViewController, LangPickerListener, UITextFieldDelegate {
+final class NewWordViewController: UIViewController, UITextFieldDelegate {
 
     let params: NewWordViewParams
     let theme: Theme
@@ -26,8 +26,6 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
     let arrowLabel = UILabel()
     let okButton = UIButton()
     let textField = UITextField()
-
-    private let featureName = "PersonalDictionary.NewWord"
 
     private let disposeBag = DisposeBag()
 
@@ -56,14 +54,14 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
     }
 
     deinit {
-        logger.log(dismissedFeatureName: featureName)
+        logger.log(dismissedFeatureName: "NewWord")
     }
 
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        logger.log(installedFeatureName: featureName)
+        logger.log(installedFeatureName: "NewWord")
     }
 
     // MARK: - UITextFieldDelegate
@@ -95,12 +93,6 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
         sendNewWordEventAndDismiss()
     }
 
-    // MARK: - LangPickerListener
-
-    func onLangPickerStateChanged(_ state: LangPickerState) {
-        viewModel.updateStateWith(langPickerState: state)
-    }
-
     // MARK: - Private
 
     private func addLangPicker(_ langPickerBuilder: LangPickerBuilder) {
@@ -113,7 +105,9 @@ final class NewWordViewController: UIViewController, LangPickerListener, UITextF
             make.edges.equalTo(contentView)
         }
 
-        langPickerGraph?.viewmodel.listener = self
+        langPickerGraph?.viewmodel.listener = viewModel
+
+        logger.log(installedFeatureName: "LangPicker")
     }
 
     private func bindToViewModel() {

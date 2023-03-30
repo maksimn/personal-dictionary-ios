@@ -42,7 +42,7 @@ final class NewWordViewModelImplTests: XCTestCase {
         XCTAssertEqual(viewModel.state.value.text, "Abc")
     }
 
-    func test_updateStateWithLangPickerState() throws {
+    func test_onLangPickerStateChanged() throws {
         // Arrange
         let modelMock = NewWordModelMock()
         let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState, logger: LoggerMock())
@@ -55,7 +55,7 @@ final class NewWordViewModelImplTests: XCTestCase {
         modelMock.selectLangEffectMock = { (_, _) in newState }
 
         // Act
-        viewModel.updateStateWith(langPickerState: newLangPickerState)
+        viewModel.onLangPickerStateChanged(newLangPickerState)
 
         // Assert
         XCTAssertEqual(viewModel.state.value, newState)

@@ -30,8 +30,8 @@ final class NewWordViewModelImpl: NewWordViewModel {
         onNewState(state, actionName: "UDPATE TEXT")
     }
 
-    func updateStateWith(langPickerState: LangPickerState) {
-        let state = model.selectLangEffect(langPickerState, state: state.value)
+    func onLangPickerStateChanged(_ langPickerState: LangPickerState) {
+        let state = model.selectLangEffect(langPickerState, state: self.state.value)
 
         onNewState(state, actionName: "SELECT LANGUAGE")
     }
