@@ -15,13 +15,13 @@ protocol NewWordStream {
 
 protocol UpdatedWordStream {
 
-    /// Для подписки на события добавления новых слов в словарь.
+    /// Для подписки на события обновления слов в словаре.
     var updatedWord: Observable<Word> { get }
 }
 
 protocol RemovedWordStream {
 
-    /// Для подписки на события добавления новых слов в словарь.
+    /// Для подписки на события удаления слов из словаря.
     var removedWord: Observable<Word> { get }
 }
 
@@ -34,7 +34,7 @@ protocol NewWordSender {
     func sendNewWord(_ word: Word)
 }
 
-/// ModelStream для отправки событий обновления слова в личном словаре.
+/// Отправитель событий обновления слова в личном словаре.
 protocol UpdatedWordSender {
 
     /// Отправить событие обновления слова из словаря.
@@ -43,7 +43,7 @@ protocol UpdatedWordSender {
     func sendUpdatedWord(_ word: Word)
 }
 
-/// ModelStream для отправки событий удаления слова из личного словаря.
+/// Отправитель событий удаления слова из личного словаря.
 protocol RemovedWordSender {
 
     /// Отправить событие удаления слова из словаря.
@@ -52,5 +52,6 @@ protocol RemovedWordSender {
     func sendRemovedWord(_ word: Word)
 }
 
-protocol WordStream: NewWordStream, UpdatedWordStream, RemovedWordStream,
-                     NewWordSender, UpdatedWordSender, RemovedWordSender { }
+protocol WordStream: NewWordStream, NewWordSender,
+                     UpdatedWordStream, UpdatedWordSender,
+                     RemovedWordStream, RemovedWordSender { }
