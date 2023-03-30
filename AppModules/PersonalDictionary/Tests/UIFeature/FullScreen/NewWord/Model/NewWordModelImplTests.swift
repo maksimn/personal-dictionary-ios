@@ -22,7 +22,7 @@ final class NewWordModelImplTests: XCTestCase {
         let langRepositoryMock = LangRepositoryMock()
         let model = NewWordModelImpl(
             langRepository: langRepositoryMock,
-            newWordStream: NewWordStreamMock(),
+            newWordSender: NewWordSenderMock(),
             logger: LoggerMock()
         )
         let langPickerState = LangPickerState(lang: otherLang, langType: .source, isHidden: true)
@@ -51,7 +51,7 @@ final class NewWordModelImplTests: XCTestCase {
         let langRepositoryMock = LangRepositoryMock()
         let model = NewWordModelImpl(
             langRepository: langRepositoryMock,
-            newWordStream: NewWordStreamMock(),
+            newWordSender: NewWordSenderMock(),
             logger: LoggerMock()
         )
         let langPickerState = LangPickerState(lang: otherLang, langType: .target, isHidden: true)
@@ -78,7 +78,7 @@ final class NewWordModelImplTests: XCTestCase {
         // Arrange
         let model = NewWordModelImpl(
             langRepository: LangRepositoryMock(),
-            newWordStream: NewWordStreamMock(),
+            newWordSender: NewWordSenderMock(),
             logger: LoggerMock()
         )
 
@@ -105,7 +105,7 @@ final class NewWordModelImplTests: XCTestCase {
         // Arrange
         let model = NewWordModelImpl(
             langRepository: LangRepositoryMock(),
-            newWordStream: NewWordStreamMock(),
+            newWordSender: NewWordSenderMock(),
             logger: LoggerMock()
         )
 
@@ -131,15 +131,15 @@ final class NewWordModelImplTests: XCTestCase {
     func test_sendNewWord_callsModelStream() throws {
         // Arrange
         var notificationCount = 0
-        let newWordStreamMock = NewWordStreamMock()
+        let newWordSenderMock = NewWordSenderMock()
         let model = NewWordModelImpl(
             langRepository: LangRepositoryMock(),
-            newWordStream: newWordStreamMock,
+            newWordSender: newWordSenderMock,
             logger: LoggerMock()
         )
         let state = NewWordState(text: "a", sourceLang: lang, targetLang: lang, langPickerState: initLangPickerState)
 
-        newWordStreamMock.methodMock = { _ in notificationCount += 1 }
+        newWordSenderMock.methodMock = { _ in notificationCount += 1 }
 
         // Act
         model.sendNewWord(state)
@@ -151,14 +151,14 @@ final class NewWordModelImplTests: XCTestCase {
     func test_sendNewWord_notSendingIfWordTextIsEmpty() throws {
         // Arrange
         var notificationCount = 0
-        let newWordStreamMock = NewWordStreamMock()
+        let newWordSenderMock = NewWordSenderMock()
         let model = NewWordModelImpl(
             langRepository: LangRepositoryMock(),
-            newWordStream: newWordStreamMock,
+            newWordSender: newWordSenderMock,
             logger: LoggerMock()
         )
 
-        newWordStreamMock.methodMock = { _ in notificationCount += 1 }
+        newWordSenderMock.methodMock = { _ in notificationCount += 1 }
 
         // Act
         model.sendNewWord(initState)

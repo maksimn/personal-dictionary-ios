@@ -98,7 +98,7 @@ final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUs
                 if !granted, let error = error {
                     self?.logger.logError(error)
                 } else {
-                    self?.logger.logContext("PushNotificationService requestAuthorization SUCCESS.")
+                    self?.logger.log(installedFeatureName: "PushNotificationService")
                 }
             }
         )

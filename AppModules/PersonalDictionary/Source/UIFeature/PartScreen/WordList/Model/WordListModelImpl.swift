@@ -11,45 +11,18 @@ import RxSwift
 final class WordListModelImpl: WordListModel {
 
     private let cudOperations: WordCUDOperations
-    private let wordStream: RemovedWordStream & UpdatedWordStream
+    private let wordSender: RemovedWordSender & UpdatedWordSender
     private let translationService: TranslationService
     private let intervalMs: Int
 
-    private let newWordIndex = 0
-
     init(cudOperations: WordCUDOperations,
-         wordStream: RemovedWordStream & UpdatedWordStream,
+         wordSender: RemovedWordSender & UpdatedWordSender,
          translationService: TranslationService,
          intervalMs: Int = 500) {
         self.cudOperations = cudOperations
-        self.wordStream = wordStream
+        self.wordSender = wordSender
         self.translationService = translationService
         self.intervalMs = intervalMs
-    }
-
-    func create(_ word: Word, state: WordListState) -> WordListState {
-        var state = state
-
-        state.insert(word, at: newWordIndex)
-
-        return state
-    }
-
-    func createEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
-        cudOperations.add(word)
-            .flatMap { word in
-                self.translationService.fetchTranslation(for: word)
-            }
-            .flatMap { translatedWord in
-                self.cudOperations.update(translatedWord)
-            }
-            .map { translatedWord in
-                var state = state
-
-                state[self.newWordIndex] = translatedWord
-
-                return state
-            }
     }
 
     func remove(at position: Int, state: WordListState) -> WordListState {
@@ -63,9 +36,11 @@ final class WordListModelImpl: WordListModel {
 
     func removeEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
         cudOperations.remove(word)
-            .map { word in
-                self.wordStream.sendRemovedWord(word)
-                return state
+            .do(onSuccess: { word in
+                self.wordSender.sendRemovedWord(word)
+            })
+            .map { _ in
+                state
             }
     }
 
@@ -80,9 +55,11 @@ final class WordListModelImpl: WordListModel {
 
     func updateEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
         cudOperations.update(word)
-            .map { word in
-                self.wordStream.sendUpdatedWord(word)
-                return state
+            .do(onSuccess: { word in
+                self.wordSender.sendUpdatedWord(word)
+            })
+            .map { _ in
+                state
             }
     }
 

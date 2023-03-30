@@ -12,7 +12,7 @@ protocol SearchTextStream {
     var searchText: Observable<String> { get }
 }
 
-protocol MutableSearchTextStream {
+protocol SearchTextSender {
 
     func send(_ searchText: String)
 }
@@ -22,7 +22,7 @@ protocol SearchModeStream {
     var searchMode: Observable<SearchMode> { get }
 }
 
-protocol MutableSearchModeStream {
+protocol SearchModeSender {
 
     func send(_ searchMode: SearchMode)
 }

@@ -5,10 +5,13 @@
 //  Created by Maxim Ivanov on 05.12.2021.
 //
 
+import CoreModule
 import UIKit
 
 /// Реализация билдера приложения "Личный словарь иностранных слов".
 public final class AppBuilderImpl: AppBuilder {
+
+    private lazy var logger = LoggerImpl(category: "PersonalDictionary.App")
 
     public init() { }
 
@@ -16,22 +19,24 @@ public final class AppBuilderImpl: AppBuilder {
     /// - Returns: объект приложения.
     public func build() -> App {
         let dependency = appDependency()
-
-        return App(
+        let app = App(
             rootViewController: rootViewController(dependency),
             pushNotificationService: pushNotificationService(dependency)
         )
+
+        logger.log(installedFeatureName: "App")
+
+        return app
     }
 
     private func appDependency() -> AppDependency {
         let bundle = Bundle(for: type(of: self))
         let appConfigFactory = AppConfigFactory(bundle: bundle)
+        let appConfig = appConfigFactory.create()
 
-        return AppDependencyImpl(
-            navigationController: UINavigationController(),
-            appConfig: appConfigFactory.create(),
-            bundle: bundle
-        )
+        logger.debug("App Config has been created.")
+
+        return AppDependencyImpl(navigationController: UINavigationController(), appConfig: appConfig, bundle: bundle)
     }
 
     private func rootViewController(_ dependency: AppDependency) -> UIViewController {
@@ -42,6 +47,8 @@ public final class AppBuilderImpl: AppBuilder {
         navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
         navigationController.navigationBar.prefersLargeTitles = true
         navigationController.setViewControllers([mainScreen], animated: false)
+
+        logger.log(installedFeatureName: "MainScreen")
 
         return navigationController
     }

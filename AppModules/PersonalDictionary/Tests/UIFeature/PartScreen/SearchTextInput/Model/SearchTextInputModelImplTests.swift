@@ -13,10 +13,10 @@ final class SearchTextInputViewModelImplTests: XCTestCase {
     func test_searchText_sendsSearchTextToStream() throws {
         // Arrange
         var counter = 0
-        let searchTextStreamMock = MutableSearchTextStreamMock()
-        let model = SearchTextInputModelImpl(searchTextStream: searchTextStreamMock, logger: LoggerMock())
+        let searchTextSenderMock = SearchTextSenderMock()
+        let model = SearchTextInputModelImpl(searchTextSender: searchTextSenderMock, logger: LoggerMock())
 
-        searchTextStreamMock.methodMock = { _ in counter += 1 }
+        searchTextSenderMock.methodMock = { _ in counter += 1 }
 
         // Act
         model.process("abc")

@@ -6,24 +6,61 @@
 //
 
 import CoreModule
+import RxSwift
 
 final class MainWordListViewModelImpl: MainWordListViewModel {
 
     let wordList = BindableWordList(value: [])
 
-    private let wordListFetcher: WordListFetcher
+    private let model: MainWordListModel
+    private let newWordStream: NewWordStream
     private let logger: Logger
 
-    init(wordListFetcher: WordListFetcher, logger: Logger) {
-        self.wordListFetcher = wordListFetcher
+    private let disposeBag = DisposeBag()
+
+    init(model: MainWordListModel, newWordStream: NewWordStream, logger: Logger) {
+        self.model = model
+        self.newWordStream = newWordStream
         self.logger = logger
+        subscribe()
     }
 
     func fetch() {
-        let wordList = wordListFetcher.wordList
+        let wordList = model.fetchMainWordList()
 
-        self.wordList.accept(wordList)
+        onNewState(wordList, actionName: "FETCH MAIN WORDLIST")
+    }
 
-        logger.logState(actionName: "FETCH MAIN WORDLIST", wordList)
+    private func onNewState(_ state: WordListState, actionName: String) {
+        logger.logState(actionName: actionName, state)
+
+        wordList.accept(state)
+    }
+
+    private func create(_ word: Word) {
+        let wordList = model.create(word, state: self.wordList.value)
+
+        onNewState(wordList, actionName: "create word")
+
+        model.createEffect(word, state: wordList)
+            .executeInBackgroundAndObserveOnMainThread()
+            .subscribe(
+                onSuccess: { [weak self] wordList in
+                    self?.onNewState(wordList, actionName: "create effect")
+                },
+                onFailure: { [weak self] error in
+                    self?.logger.logError(error)
+                }
+            ).disposed(by: disposeBag)
+    }
+
+    private func subscribe() {
+        newWordStream.newWord
+            .subscribe(onNext: { [weak self] word in
+                self?.logger.logReceiving(word, fromModelStream: "new word")
+
+                self?.create(word)
+            })
+            .disposed(by: disposeBag)
     }
 }

@@ -16,7 +16,7 @@ final class FavoriteWordListViewModelImplTests: XCTestCase {
         let fetcherMock = FavoriteWordListFetcherMock()
         let viewModel = FavoriteWordListViewModelImpl(
             fetcher: fetcherMock,
-            wordStream: ReadableWordStreamMock()
+            wordStream: UpdatedWordStreamMock()
         )
 
         fetcherMock.propertyMock = []
@@ -38,7 +38,7 @@ final class FavoriteWordListViewModelImplTests: XCTestCase {
         let fetcherMock = FavoriteWordListFetcherMock()
         let viewModel = FavoriteWordListViewModelImpl(
             fetcher: fetcherMock,
-            wordStream: ReadableWordStreamMock()
+            wordStream: UpdatedWordStreamMock()
         )
 
         fetcherMock.propertyMock = favorites

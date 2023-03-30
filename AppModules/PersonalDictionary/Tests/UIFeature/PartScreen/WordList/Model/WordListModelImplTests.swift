@@ -18,72 +18,11 @@ final class WordListModelImplTests: XCTestCase {
     lazy var word3 = Word(text: "c", sourceLang: lang, targetLang: lang)
     lazy var wordList = [word1, word2, word3]
 
-    func test_createWord_returnsCorrectWordListState() throws {
-        // Arrange
-        let model = WordListModelImpl(
-            cudOperations: WordCUDOperationsMock(),
-            wordStream: RUWordStreamMock(),
-            translationService: TranslationServiceMock()
-        )
-
-        // Act
-        let newWordList = model.create(word, state: wordList)
-
-        // Assert
-        XCTAssertEqual(newWordList, [word, word1, word2, word3])
-    }
-
-    func test_createEffect_worksCorrectlyForHappyPath() throws {
-        // Arrange
-        var dbUpdateCounter = 0
-        let cudOperationsMock = WordCUDOperationsMock()
-        let wordStreamMock = RUWordStreamMock()
-        let translationServiceMock = TranslationServiceMock()
-        let model = WordListModelImpl(
-            cudOperations: cudOperationsMock,
-            wordStream: wordStreamMock,
-            translationService: translationServiceMock
-        )
-        let translatedWord = Word(text: "abc", translation: "translation", sourceLang: lang, targetLang: lang)
-
-        cudOperationsMock.addWordMock = { word in Single.just(word) }
-        cudOperationsMock.updateWordMock = { (word: Word) in
-            dbUpdateCounter += 1
-            return Single.just(word)
-        }
-        translationServiceMock.methodMock = { _ in Single.just(translatedWord) }
-
-        // Act
-        let nextState = try model.createEffect(word, state: [word, word1, word2, word3]).toBlocking().first()
-
-        // Assert
-        XCTAssertEqual(dbUpdateCounter, 1)
-        XCTAssertEqual(nextState, [translatedWord, word1, word2, word3])
-    }
-
-    func test_createEffect_failsWhenDbCreateWordFails() throws {
-        // Arrange
-        let cudOperationsMock = WordCUDOperationsMock()
-        let model = WordListModelImpl(
-            cudOperations: cudOperationsMock,
-            wordStream: RUWordStreamMock(),
-            translationService: TranslationServiceMock()
-        )
-
-        cudOperationsMock.addWordMock = { word in Single.error(ErrorMock.err) }
-
-        // Act
-        let single = model.createEffect(word, state: wordList)
-
-        // Assert
-        XCTAssertThrowsError(try single.toBlocking().first())
-    }
-
     func test_removeWord_returnsCorrectWordListState() throws {
         // Arrange
         let model = WordListModelImpl(
             cudOperations: WordCUDOperationsMock(),
-            wordStream: RUWordStreamMock(),
+            wordSender: RUWordStreamMock(),
             translationService: TranslationServiceMock()
         )
 
@@ -103,7 +42,7 @@ final class WordListModelImplTests: XCTestCase {
         let translationServiceMock = TranslationServiceMock()
         let model = WordListModelImpl(
             cudOperations: cudOperationsMock,
-            wordStream: wordStreamMock,
+            wordSender: wordStreamMock,
             translationService: translationServiceMock
         )
 
@@ -127,7 +66,7 @@ final class WordListModelImplTests: XCTestCase {
         let cudOperationsMock = WordCUDOperationsMock()
         let model = WordListModelImpl(
             cudOperations: cudOperationsMock,
-            wordStream: RUWordStreamMock(),
+            wordSender: RUWordStreamMock(),
             translationService: TranslationServiceMock()
         )
 
@@ -144,7 +83,7 @@ final class WordListModelImplTests: XCTestCase {
         // Arrange
         let model = WordListModelImpl(
             cudOperations: WordCUDOperationsMock(),
-            wordStream: RUWordStreamMock(),
+            wordSender: RUWordStreamMock(),
             translationService: TranslationServiceMock()
         )
 
@@ -164,7 +103,7 @@ final class WordListModelImplTests: XCTestCase {
         let translationServiceMock = TranslationServiceMock()
         let model = WordListModelImpl(
             cudOperations: cudOperationsMock,
-            wordStream: wordStreamMock,
+            wordSender: wordStreamMock,
             translationService: translationServiceMock
         )
 
@@ -188,7 +127,7 @@ final class WordListModelImplTests: XCTestCase {
         let cudOperationsMock = WordCUDOperationsMock()
         let model = WordListModelImpl(
             cudOperations: cudOperationsMock,
-            wordStream: RUWordStreamMock(),
+            wordSender: RUWordStreamMock(),
             translationService: TranslationServiceMock()
         )
 
@@ -207,7 +146,7 @@ final class WordListModelImplTests: XCTestCase {
         let translationServiceMock = TranslationServiceMock()
         let model = WordListModelImpl(
             cudOperations: cudOperationsMock,
-            wordStream: RUWordStreamMock(),
+            wordSender: RUWordStreamMock(),
             translationService: translationServiceMock,
             intervalMs: 0
         )
@@ -228,7 +167,7 @@ final class WordListModelImplTests: XCTestCase {
         let translationServiceMock = TranslationServiceMock()
         let model = WordListModelImpl(
             cudOperations: cudOperationsMock,
-            wordStream: RUWordStreamMock(),
+            wordSender: RUWordStreamMock(),
             translationService: translationServiceMock,
             intervalMs: 0
         )
@@ -257,7 +196,7 @@ final class WordListModelImplTests: XCTestCase {
         let translationServiceMock = TranslationServiceMock()
         let model = WordListModelImpl(
             cudOperations: WordCUDOperationsMock(),
-            wordStream: RUWordStreamMock(),
+            wordSender: RUWordStreamMock(),
             translationService: translationServiceMock,
             intervalMs: 0
         )
@@ -275,7 +214,7 @@ final class WordListModelImplTests: XCTestCase {
         // Arrange
         let model = WordListModelImpl(
             cudOperations: WordCUDOperationsMock(),
-            wordStream: RUWordStreamMock(),
+            wordSender: RUWordStreamMock(),
             translationService: TranslationServiceMock(),
             intervalMs: 0
         )

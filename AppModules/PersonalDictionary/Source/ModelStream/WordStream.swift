@@ -7,21 +7,26 @@
 
 import RxSwift
 
-/// Общий ModelStream для подписки на события со словами в личном словаре.
-protocol ReadableWordStream {
+protocol NewWordStream {
 
     /// Для подписки на события добавления новых слов в словарь.
     var newWord: Observable<Word> { get }
+}
 
-    /// Для подписки на события удаления слова из словаря
-    var removedWord: Observable<Word> { get }
+protocol UpdatedWordStream {
 
-    /// Для подписки на события обновления слова из словаря
+    /// Для подписки на события добавления новых слов в словарь.
     var updatedWord: Observable<Word> { get }
 }
 
+protocol RemovedWordStream {
+
+    /// Для подписки на события добавления новых слов в словарь.
+    var removedWord: Observable<Word> { get }
+}
+
 /// Отправитель событий добавления нового слова в личный словарь.
-protocol NewWordStream {
+protocol NewWordSender {
 
     /// Отправить событие добавления нового слова в словарь.
     /// - Parameters:
@@ -30,7 +35,7 @@ protocol NewWordStream {
 }
 
 /// ModelStream для отправки событий обновления слова в личном словаре.
-protocol UpdatedWordStream {
+protocol UpdatedWordSender {
 
     /// Отправить событие обновления слова из словаря.
     /// - Parameters:
@@ -39,7 +44,7 @@ protocol UpdatedWordStream {
 }
 
 /// ModelStream для отправки событий удаления слова из личного словаря.
-protocol RemovedWordStream {
+protocol RemovedWordSender {
 
     /// Отправить событие удаления слова из словаря.
     /// - Parameters:
@@ -47,8 +52,5 @@ protocol RemovedWordStream {
     func sendRemovedWord(_ word: Word)
 }
 
-/// Общий WordStream для событий со словами в личном словаре.
-protocol WordStream: ReadableWordStream,
-                     NewWordStream,
-                     UpdatedWordStream,
-                     RemovedWordStream { }
+protocol WordStream: NewWordStream, UpdatedWordStream, RemovedWordStream,
+                     NewWordSender, UpdatedWordSender, RemovedWordSender { }

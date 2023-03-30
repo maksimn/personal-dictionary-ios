@@ -16,7 +16,7 @@ final class WordListViewModelImplTests: XCTestCase {
     func test_removeAtPosition_noopWhenIndexOutOfBounds_negativeIndex() throws {
         // Arrange
         let modelMock = WordListModelMock()
-        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock(),
+        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: UpdatedRemovedWordStreamMock(),
                                               logger: LoggerMock())
 
         // Act
@@ -29,7 +29,7 @@ final class WordListViewModelImplTests: XCTestCase {
     func test_removeAtPosition_noopWhenIndexOutOfBounds_positiveIndex() throws {
         // Arrange
         let modelMock = WordListModelMock()
-        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock(),
+        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: UpdatedRemovedWordStreamMock(),
                                               logger: LoggerMock())
         let array = [
             Word(text: "a", sourceLang: lang, targetLang: lang),
@@ -48,7 +48,7 @@ final class WordListViewModelImplTests: XCTestCase {
     func test_removeAtPosition_positionInsideArrayBounds_worksCorrectly() throws {
         // Arrange
         let modelMock = WordListModelMock()
-        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock(),
+        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: UpdatedRemovedWordStreamMock(),
                                               logger: LoggerMock())
         let array = [
             Word(text: "a", sourceLang: lang, targetLang: lang),
@@ -70,7 +70,7 @@ final class WordListViewModelImplTests: XCTestCase {
     func test_toggleWordIsFavorite_worksCorrectly() throws {
         // Arrange
         let modelMock = WordListModelMock()
-        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock(),
+        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: UpdatedRemovedWordStreamMock(),
                                               logger: LoggerMock())
         let words = [
             Word(text: "a", sourceLang: lang, targetLang: lang),
@@ -95,7 +95,7 @@ final class WordListViewModelImplTests: XCTestCase {
     func test_toggleWordIsFavorite_noopWhenIndexOutOfBounds() throws {
         // Arrange
         let modelMock = WordListModelMock()
-        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock(),
+        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: UpdatedRemovedWordStreamMock(),
                                               logger: LoggerMock())
         let words = [
             Word(text: "a", sourceLang: lang, targetLang: lang),
@@ -115,7 +115,7 @@ final class WordListViewModelImplTests: XCTestCase {
     func test_fetchTranslationsIfNeeded_success() throws {
         // Arrange
         let modelMock = WordListModelMock()
-        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock(),
+        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: UpdatedRemovedWordStreamMock(),
                                               logger: LoggerMock())
         let word1 = Word(text: "a", sourceLang: lang, targetLang: lang)
         let word2 = Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang)
@@ -139,7 +139,7 @@ final class WordListViewModelImplTests: XCTestCase {
     func test_fetchTranslationsIfNeeded_failsWhenModelCallFails() throws {
         // Arrange
         let modelMock = WordListModelMock()
-        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: ReadableWordStreamMock(),
+        let viewModel = WordListViewModelImpl(model: modelMock, wordStream: UpdatedRemovedWordStreamMock(),
                                               logger: LoggerMock())
         let word1 = Word(text: "a", sourceLang: lang, targetLang: lang)
         let word2 = Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang)

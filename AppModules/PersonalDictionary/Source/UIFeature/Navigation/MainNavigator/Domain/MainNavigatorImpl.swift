@@ -49,16 +49,25 @@ final class MainNavigatorImpl: MainNavigator {
 
     func appendTo(rootView: UIView) {
         addNavToNewWord(rootView)
-        navigationItem?.leftBarButtonItem = UIBarButtonItem(customView: navToFavoritesView)
-        navigationItem?.rightBarButtonItem = UIBarButtonItem(customView: navToTodoListView)
-
-        logNavToFavoritesFeatureInstallation()
-        logNavToTodoListFeatureInstallation()
+        addNavToFavorites()
+        addNavToTodoList()
     }
 
     func viewWillLayoutSubviews() {
         navigationItem?.searchController = searchTextInputView
         logSearchTextInputInstallationIfNeeded()
+    }
+
+    private func addNavToFavorites() {
+        navigationItem?.leftBarButtonItem = UIBarButtonItem(customView: navToFavoritesView)
+
+        logNavToFavoritesFeatureInstallation()
+    }
+
+    private func addNavToTodoList() {
+        navigationItem?.rightBarButtonItem = UIBarButtonItem(customView: navToTodoListView)
+
+        logNavToTodoListFeatureInstallation()
     }
 
     private func addNavToNewWord(_ view: UIView) {
@@ -127,31 +136,29 @@ final class MainNavigatorImpl: MainNavigator {
             isSearchTextInputInstalled.toggle()
             logger.log(installedFeatureName: "SearchTextInput")
         } else if navigationItem == nil {
-            logWarningOnNotInstalled("SearchTextInput", summary: "Users won't be able to use Search.")
+            logWarningOnNotInstalled("SearchTextInput", warning: "Users won't be able to use Search.")
         }
     }
 
     private func logNavToFavoritesFeatureInstallation() {
-        guard navigationItem != nil else {
-            logWarningOnNotInstalled("NavToFavorites", summary: "Users won't be able to navigate to Favorites Screen.")
-            return
-        }
-
-        logger.log(installedFeatureName: "NavToFavorites")
+        logFeatureInstallation("NavToFavorites", warning: "Users won't be able to navigate to Favorites Screen.")
     }
 
     private func logNavToTodoListFeatureInstallation() {
-        guard navigationItem != nil else {
-            logWarningOnNotInstalled("NavToTodoList", summary: "Users won't be able to navigate to To-do list.")
-            return
-        }
-
-        logger.log(installedFeatureName: "NavToTodoList")
+        logFeatureInstallation("NavToTodoList", warning: "Users won't be able to navigate to To-do list.")
     }
 
-    private func logWarningOnNotInstalled(_ feature: String, summary: String) {
+    private func logFeatureInstallation(_ feature: String, warning: String) {
+        guard navigationItem != nil else {
+            return logWarningOnNotInstalled(feature, warning: warning)
+        }
+
+        logger.log(installedFeatureName: feature)
+    }
+
+    private func logWarningOnNotInstalled(_ feature: String, warning: String) {
         logger.log(
-            "Reference to navigation item is NIL, so \(feature) feature cannot be installed. \(summary)",
+            "Reference to navigation item is NIL, so \(feature) feature cannot be installed. \(warning)",
             level: .warn
         )
     }

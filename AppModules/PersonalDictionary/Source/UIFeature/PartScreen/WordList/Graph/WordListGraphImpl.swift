@@ -28,7 +28,7 @@ final class WordListGraphImpl: WordListGraph {
          logger: Logger) {
         let model = WordListModelImpl(
             cudOperations: cudOperations,
-            wordStream: wordStream,
+            wordSender: wordStream,
             translationService: translationService
         )
         viewModel = WordListViewModelImpl(

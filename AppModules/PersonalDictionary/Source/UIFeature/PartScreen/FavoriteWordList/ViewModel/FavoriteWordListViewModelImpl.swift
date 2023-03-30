@@ -13,10 +13,10 @@ final class FavoriteWordListViewModelImpl: FavoriteWordListViewModel {
     let favoriteWordList = BindableWordList(value: [])
 
     private let fetcher: FavoriteWordListFetcher
-    private let wordStream: ReadableWordStream
+    private let wordStream: UpdatedWordStream
     private let disposeBag = DisposeBag()
 
-    init(fetcher: FavoriteWordListFetcher, wordStream: ReadableWordStream) {
+    init(fetcher: FavoriteWordListFetcher, wordStream: UpdatedWordStream) {
         self.fetcher = fetcher
         self.wordStream = wordStream
         subscribeToWordStream()
