@@ -117,7 +117,7 @@ final class WordListView: UIView {
 
         viewModel.fetchTranslationsIfNeeded(start: start, end: end + 1)
             .subscribe(onError: { [weak self] error in
-                self?.logger.logError(error)
+                self?.logger.errorWithContext(error)
             }).disposed(by: disposeBag)
     }
 

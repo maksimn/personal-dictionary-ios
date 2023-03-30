@@ -71,12 +71,12 @@ final class NewWordModelImpl: NewWordModel {
 
     private func save(sourceLang: Lang) {
         langRepository.sourceLang = sourceLang
-        logger.logContext(saveLangMessage(.source, lang: sourceLang))
+        logger.logWithContext(saveLangMessage(.source, lang: sourceLang))
     }
 
     private func save(targetLang: Lang) {
         langRepository.targetLang = targetLang
-        logger.logContext(saveLangMessage(.target, lang: targetLang))
+        logger.logWithContext(saveLangMessage(.target, lang: targetLang))
     }
 
     private func saveLangMessage(_ langType: LangType, lang: Lang) -> String {

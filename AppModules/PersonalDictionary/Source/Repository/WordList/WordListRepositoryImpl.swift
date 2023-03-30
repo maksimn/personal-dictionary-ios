@@ -39,7 +39,7 @@ final class WordListRepositoryImpl: WordListRepository {
             container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
 
             if let error = error {
-                self.logger.logError(error)
+                self.logger.errorWithContext(error)
             }
         })
         return container
@@ -208,7 +208,7 @@ final class WordListRepositoryImpl: WordListRepository {
 
             return wordMOList.compactMap { $0.convert(using: langRepository) }
         } catch {
-            logger.logError(error)
+            logger.errorWithContext(error)
             return []
         }
     }

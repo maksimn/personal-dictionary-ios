@@ -63,7 +63,7 @@ final class WordListViewModelImpl: WordListViewModel {
             .executeInBackgroundAndObserveOnMainThread()
             .subscribe(
                 onFailure: { [weak self] error in
-                    self?.logger.logError(error)
+                    self?.logger.errorWithContext(error)
                 }
             ).disposed(by: disposeBag)
     }
@@ -81,7 +81,7 @@ final class WordListViewModelImpl: WordListViewModel {
             .executeInBackgroundAndObserveOnMainThread()
             .subscribe(
                 onFailure: { [weak self] error in
-                    self?.logger.logError(error)
+                    self?.logger.errorWithContext(error)
                 }
             ).disposed(by: disposeBag)
     }

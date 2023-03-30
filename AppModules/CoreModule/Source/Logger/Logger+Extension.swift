@@ -11,83 +11,69 @@ extension Logger {
         log(message, level: .debug)
     }
 
-    public func logContext(_ message: String,
-                           level: LogLevel = .default,
-                           shouldLogContext: Bool = true,
-                           file: String = #file,
-                           function: String = #function,
-                           line: Int = #line) {
+    public func logWithContext(_ message: String,
+                               level: LogLevel = .default,
+                               file: String = #file,
+                               function: String = #function,
+                               line: Int = #line) {
         guard isDevelopment() else { return }
 
-        log(message, level: level, shouldLogContext: shouldLogContext, file: file, function: function, line: line)
+        log(message, level: level, file: file, function: function, line: line)
     }
 
-    public func logError(_ error: Error,
-                         shouldLogContext: Bool = true,
-                         file: String = #file,
-                         function: String = #function,
-                         line: Int = #line) {
+    public func errorWithContext(_ error: Error,
+                                 file: String = #file,
+                                 function: String = #function,
+                                 line: Int = #line) {
         guard isDevelopment() else { return }
 
-        log("\(error)", level: .error, shouldLogContext: shouldLogContext, file: file, function: function, line: line)
+        log("\(error)", level: .error, file: file, function: function, line: line)
     }
 
     public func logState<State>(actionName: String,
                                 _ state: State,
-                                shouldLogContext: Bool = true,
                                 file: String = #file,
                                 function: String = #function,
                                 line: Int = #line) {
         guard isDevelopment() else { return }
         let text = "\(actionName) result:\n\(state)"
 
-        log(text, level: .default, shouldLogContext: shouldLogContext, file: file, function: function, line: line)
+        log(text, level: .default, file: file, function: function, line: line)
     }
 
     public func logSending<T>(_ object: T,
                               toModelStream modelStreamName: String,
-                              shouldLogContext: Bool = true,
                               file: String = #file,
                               function: String = #function,
                               line: Int = #line) {
         guard isDevelopment() else { return }
         let text = "Sending \(type(of: object)) = \(object) to the \(modelStreamName) model stream."
 
-        log(text, level: .default, shouldLogContext: shouldLogContext, file: file, function: function, line: line)
+        log(text, level: .default, file: file, function: function, line: line)
     }
 
     public func logReceiving<T>(_ object: T,
                                 fromModelStream modelStreamName: String,
-                                shouldLogContext: Bool = true,
                                 file: String = #file,
                                 function: String = #function,
                                 line: Int = #line) {
         guard isDevelopment() else { return }
         let text = "Received \(type(of: object)) = \(object) from the \(modelStreamName) model stream."
 
-        log(text, level: .default, shouldLogContext: shouldLogContext, file: file, function: function, line: line)
+        log(text, level: .default, file: file, function: function, line: line)
     }
 
     public func log(installedFeatureName: String) {
-        log("The \(installedFeatureName) feature has been installed.", level: .debug)
+        debug("The \(installedFeatureName) feature has been installed.")
     }
 
     public func log(dismissedFeatureName: String) {
-        log("The \(dismissedFeatureName) feature has been dismissed.", level: .debug)
+        debug("The \(dismissedFeatureName) feature has been dismissed.")
     }
 
-    private func log(_ text: String,
-                     level: LogLevel,
-                     shouldLogContext: Bool,
-                     file: String,
-                     function: String,
-                     line: Int) {
-        if shouldLogContext {
-            let context = LogContext(file: file, function: function, line: line)
+    private func log(_ text: String, level: LogLevel, file: String, function: String, line: Int) {
+        let description = "\((file as NSString).lastPathComponent) line:\(line) \(function)"
 
-            return log("\(text) -> \(context.description)", level: level)
-        }
-
-        log(text, level: level)
+        log("\(text) -> \(description)", level: level)
     }
 }
