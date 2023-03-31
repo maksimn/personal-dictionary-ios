@@ -87,10 +87,10 @@ final class WordListModelImpl: WordListModel {
             .flatMap { word in
                 self.translationService.fetchTranslation(for: word)
             }
-            .flatMap { (translatedWord: Word) in
+            .flatMap { translatedWord in
                 self.cudOperations.update(translatedWord)
             }
-            .map { (translatedWord: Word) in
+            .map { translatedWord in
                 for i in start..<end where state[i].id == translatedWord.id {
                     state[i] = translatedWord
                 }

@@ -6,14 +6,11 @@
 //
 
 /// Структура с данными после парсинга "сырого" JSON ответа PONS API.
-/// См. документацию к API: https://ru.pons.com/p/files/uploads/pons/api/api-documentation.pdf
+/// См. документацию к API: https://www.pons.com/p/files/uploads/pons/api/api-documentation.pdf
 struct PonsResponseData: Codable {
 
     /// Интересующее нас поле из JSON ответа PONS API.
     let hits: [PonsResponseDataHit]
-}
-
-extension PonsResponseData {
 
     /// Получение запрошенного перевод слова
     /// - Returns:
