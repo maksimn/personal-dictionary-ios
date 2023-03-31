@@ -12,7 +12,7 @@ extension Logger {
     }
 
     public func logWithContext(_ message: String,
-                               level: LogLevel = .default,
+                               level: LogLevel = .info,
                                file: String = #file,
                                function: String = #function,
                                line: Int = #line) {
@@ -38,7 +38,7 @@ extension Logger {
         guard isDevelopment() else { return }
         let text = "\(actionName) result:\n\(state)"
 
-        log(text, level: .default, file: file, function: function, line: line)
+        log(text, level: .info, file: file, function: function, line: line)
     }
 
     public func logSending<T>(_ object: T,
@@ -49,7 +49,7 @@ extension Logger {
         guard isDevelopment() else { return }
         let text = "Sending \(type(of: object)) = \(object) to the \(modelStreamName) model stream."
 
-        log(text, level: .default, file: file, function: function, line: line)
+        log(text, level: .info, file: file, function: function, line: line)
     }
 
     public func logReceiving<T>(_ object: T,
@@ -60,7 +60,7 @@ extension Logger {
         guard isDevelopment() else { return }
         let text = "Received \(type(of: object)) = \(object) from the \(modelStreamName) model stream."
 
-        log(text, level: .default, file: file, function: function, line: line)
+        log(text, level: .info, file: file, function: function, line: line)
     }
 
     public func log(installedFeatureName: String) {

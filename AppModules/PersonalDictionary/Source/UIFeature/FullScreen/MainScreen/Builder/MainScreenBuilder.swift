@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 10.11.2021.
 //
 
+import CoreModule
 import UIKit
 
 /// Реализация билдера фичи "Главный экран приложения" Личного словаря.
@@ -30,7 +31,8 @@ final class MainScreenBuilder: ViewControllerBuilder {
             title: dependency.bundle.moduleLocalizedString("LS_MY_DICTIONARY"),
             mainWordListBuilder: MainWordListBuilder(dependency: dependency),
             mainNavigatorBuilder: mainNavigatorBuilder,
-            theme: Theme.data
+            theme: Theme.data,
+            logger: LoggerImpl(category: "PersonalDictionary.MainScreen")
         )
 
         navigationItem = mainScreen.navigationItem

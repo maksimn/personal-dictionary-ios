@@ -43,13 +43,13 @@ final class PonsTranslationService: TranslationService {
             headers: ["X-Secret": secret]
         )
 
-        logger.log("PONS FETCH TRANSLATION START, word = \(word)", level: .default)
-        logger.log("HTTP REQUEST START, \(http)", level: .default)
+        logger.log("PONS FETCH TRANSLATION START, word = \(word)", level: .info)
+        logger.log("HTTP REQUEST START, \(http)", level: .info)
 
         return httpClient.send(http)
             .do(
                 onNext: { httpResponse in
-                    self.logger.log("HTTP RESPONSE FETCHED, \(httpResponse)", level: .default)
+                    self.logger.log("HTTP RESPONSE FETCHED, \(httpResponse)", level: .info)
                 },
                 onError: { error in
                     self.logger.log("HTTP REQUEST ERROR, \(error)", level: .error)
@@ -68,7 +68,7 @@ final class PonsTranslationService: TranslationService {
             }
             .do(
                 onSuccess: { word in
-                    self.logger.log("PONS FETCH TRANSLATION SUCCESS, word = \(word)", level: .default)
+                    self.logger.log("PONS FETCH TRANSLATION SUCCESS, word = \(word)", level: .info)
                 },
                 onError: { error in
                     self.logger.log("PONS FETCH TRANSLATION ERROR, word = \(word)", level: .error)

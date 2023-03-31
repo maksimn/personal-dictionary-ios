@@ -30,9 +30,6 @@ extension LogLevel {
             return .debug
             
         case .info:
-            return .info
-            
-        case .default:
             return .default
             
         case .warn:
