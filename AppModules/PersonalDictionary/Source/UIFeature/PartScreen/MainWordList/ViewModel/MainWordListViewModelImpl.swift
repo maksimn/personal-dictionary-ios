@@ -49,7 +49,7 @@ final class MainWordListViewModelImpl: MainWordListViewModel {
                     self?.onNewState(wordList, actionName: "create effect")
                 },
                 onFailure: { [weak self] error in
-                    self?.logger.logError(error)
+                    self?.logger.errorWithContext(error)
                 }
             ).disposed(by: disposeBag)
     }
