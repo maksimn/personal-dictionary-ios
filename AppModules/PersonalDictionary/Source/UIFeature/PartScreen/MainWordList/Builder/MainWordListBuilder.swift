@@ -27,7 +27,7 @@ final class MainWordListBuilder: ViewControllerBuilder {
         )
         let translationService = PonsTranslationService(
             secret: dependency.appConfig.ponsApiSecret,
-            httpClient: HttpClientImpl(sessionConfiguration: URLSessionConfiguration.default),
+            httpClient: HttpClientImpl(),
             logger: logger()
         )
 

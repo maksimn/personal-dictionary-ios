@@ -17,7 +17,7 @@ public class HttpClientImpl: HttpClient {
         return URLSession(configuration: sessionConfiguration)
     }()
 
-    public init(sessionConfiguration: URLSessionConfiguration) {
+    public init(sessionConfiguration: URLSessionConfiguration = URLSessionConfiguration.default) {
         self.sessionConfiguration = sessionConfiguration
         URLSession.rx.shouldLogRequest = { _ in false }
     }

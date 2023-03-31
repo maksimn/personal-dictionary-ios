@@ -37,27 +37,42 @@ final class PonsTranslationService: TranslationService {
             URLQueryItem(name: "l", value: sourceLang + targetLang)
         ]
 
-        logger.logWithContext("PONS FETCH TRANSLATION START")
+        let http = Http(
+            urlString: apiUrl + (query.string ?? ""),
+            method: "GET",
+            headers: ["X-Secret": secret]
+        )
 
-        return httpClient
-            .send(
-                Http(
-                    urlString: apiUrl + (query.string ?? ""),
-                    method: "GET",
-                    headers: ["X-Secret": secret]
-                )
+        logger.log("PONS FETCH TRANSLATION START, word = \(word)", level: .default)
+        logger.log("HTTP REQUEST START, \(http)", level: .default)
+
+        return httpClient.send(http)
+            .do(
+                onNext: { httpResponse in
+                    self.logger.log("HTTP RESPONSE FETCHED, \(httpResponse)", level: .default)
+                },
+                onError: { error in
+                    self.logger.log("HTTP REQUEST ERROR, \(error)", level: .error)
+                }
             )
             .take(1)
             .asSingle()
-            .map { [weak self] httpResponse in
+            .map { httpResponse in
                 let data = httpResponse.data
                 var word = word
                 let ponsArray = try JSONDecoder().decode([PonsResponseData].self, from: data)
 
-                self?.logger.logWithContext("PONS FETCH TRANSLATION SUCCESS")
                 word.translation = ponsArray.first?.translation
 
                 return word
             }
+            .do(
+                onSuccess: { word in
+                    self.logger.log("PONS FETCH TRANSLATION SUCCESS, word = \(word)", level: .default)
+                },
+                onError: { error in
+                    self.logger.log("PONS FETCH TRANSLATION ERROR, word = \(word)", level: .error)
+                }
+            )
     }
 }

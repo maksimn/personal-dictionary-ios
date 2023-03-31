@@ -28,7 +28,7 @@ final class RichTodoListBuilderImp: RichTodoListBuilder {
                 "Authorization": token,
                 "Content-Type": "application/json"
             ],
-            httpClient: HttpClientImpl(sessionConfiguration: URLSessionConfiguration.default),
+            httpClient: HttpClientImpl(),
             todoCoder: JSONCoderImpl()
         )
         let persistentContainer = TodoListPersistentContainer(logger: logger)
