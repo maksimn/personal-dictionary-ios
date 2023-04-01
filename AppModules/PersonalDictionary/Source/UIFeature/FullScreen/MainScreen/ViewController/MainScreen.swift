@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 07.11.2021.
 //
 
+import CoreModule
 import RxSwift
 import UIKit
 
@@ -14,6 +15,7 @@ final class MainScreen: UIViewController {
     private let mainWordListViewController: UIViewController
     private var mainNavigator: MainNavigator
     private let theme: Theme
+    private let logger: Logger
 
     private let disposeBag = DisposeBag()
 
@@ -24,16 +26,22 @@ final class MainScreen: UIViewController {
     init(title: String,
          mainWordListBuilder: MainWordListBuilder,
          mainNavigatorBuilder: MainNavigatorBuilder,
-         theme: Theme) {
+         theme: Theme,
+         logger: Logger) {
         self.mainWordListViewController = mainWordListBuilder.build()
         self.mainNavigator = mainNavigatorBuilder.build()
         self.theme = theme
+        self.logger = logger
         super.init(nibName: nil, bundle: nil)
         navigationItem.title = title
     }
 
     required init?(coder: NSCoder) {
         fatalError("init?(coder: NSCoder) are not implemented.")
+    }
+
+    deinit {
+        logger.log(dismissedFeatureName: "MainScreen")
     }
 
     // MARK: - Lifecycle
@@ -56,9 +64,17 @@ final class MainScreen: UIViewController {
 
     private func subscribeToSearchControllerIfNeeded() {
         guard !isSubscribedToSearchController else { return }
-        guard let searchController = navigationItem.searchController else { return }
 
         isSubscribedToSearchController.toggle()
+
+        guard let searchController = navigationItem.searchController else {
+            return logger.logWithContext(
+                "MainScreen searchController is nil. The events won't be handled.",
+                level: .warn
+            )
+        }
+
+        logger.debug("MainScreen searchController is OK.")
 
         searchController.rx.willPresent
             .subscribe(onNext: { [weak self] in

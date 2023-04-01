@@ -8,7 +8,6 @@
 public enum LogLevel: String {
     case debug = "DEBUG"
     case info = "INFO"
-    case `default` = "DEFAULT"
     case warn =  "WARN ⚠️"
     case error = "ALERT ❌"
 }
