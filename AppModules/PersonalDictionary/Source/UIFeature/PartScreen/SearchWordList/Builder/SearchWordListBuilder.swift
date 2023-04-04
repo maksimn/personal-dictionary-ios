@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 13.11.2022.
 //
 
+import UIKit
+
 /// Реализация билдера фичи "Поиск по списку слов".
 final class SearchWordListBuilder: ViewControllerBuilder {
 

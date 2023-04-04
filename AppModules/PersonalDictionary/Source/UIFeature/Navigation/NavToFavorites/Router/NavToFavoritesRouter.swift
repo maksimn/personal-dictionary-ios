@@ -6,6 +6,7 @@
 //
 
 import CoreModule
+import UIKit
 
 /// Реализация роутера для навигации на экран Избранного.
 final class NavToFavoritesRouter: CoreRouter {

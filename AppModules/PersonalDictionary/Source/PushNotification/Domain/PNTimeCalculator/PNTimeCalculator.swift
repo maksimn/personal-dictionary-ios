@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 13.05.2022.
 //
 
+import Foundation
+
 /// Тип для вычисления времени возникновения пуш-уведомления.
 protocol PNTimeCalculator {
 

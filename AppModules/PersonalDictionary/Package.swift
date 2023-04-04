@@ -1,9 +1,10 @@
-// swift-tools-version:5.6
+// swift-tools-version:5.7
 
 import PackageDescription
 
 let package = Package(
     name: "PersonalDictionary",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v13)
     ],
@@ -14,20 +15,24 @@ let package = Package(
         )
     ],
     dependencies: [
+        .package(url: "https://github.com/SnapKit/SnapKit", from: "5.6.0"),
         .package(url: "https://github.com/ReactiveX/RxSwift", revision: "6.5.0"),
-        .package(url: "https://github.com/SnapKit/SnapKit", from: "4.0"),
-        .package(path: "../CoreModule", from: "0.0.0"),
-        .package(path: "../TodoList", from: "0.0.0")
+        .package(path: "../CoreModule"),
+        .package(path: "../TodoList")
     ],
     targets: [
         .target(
             name: "PersonalDictionary",
+            dependencies: [
+                "CoreModule", "RxSwift", "SnapKit", "TodoList", .product(name: "RxCocoa", package: "RxSwift")
+            ],
             path: "Source",
-            resources: [
-                .copy("Resources/Assets.xcassets"),
-                .copy("Resources/StorageModel.xcdatamodeld"),
-                .copy("Resources/Localizable")
-            ]
+            resources: []
+        ),
+        .testTarget(
+            name: "PersonalDictionaryTests",
+            dependencies: ["PersonalDictionary", .product(name: "RxBlocking", package: "RxSwift")],
+            path: "Tests"
         )
     ]
 )

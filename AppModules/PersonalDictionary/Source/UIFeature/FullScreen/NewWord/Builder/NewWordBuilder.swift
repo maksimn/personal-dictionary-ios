@@ -6,6 +6,7 @@
 //
 
 import CoreModule
+import UIKit
 
 /// Реализация билдера Фичи "Добавление нового слова" в личный словарь.
 final class NewWordBuilder: ViewControllerBuilder {
