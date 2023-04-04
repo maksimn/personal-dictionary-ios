@@ -3,34 +3,26 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0CFBD81D29DBC38F00B647DF /* CoreModule in Frameworks */ = {isa = PBXBuildFile; productRef = 0CFBD81C29DBC38F00B647DF /* CoreModule */; };
 		599B2BD1276ED1A3003659DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599B2BD0276ED1A3003659DC /* AppDelegate.swift */; };
 		599B2BD3276ED1A3003659DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599B2BD2276ED1A3003659DC /* SceneDelegate.swift */; };
 		599B2BDA276ED1A4003659DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 599B2BD9276ED1A4003659DC /* Assets.xcassets */; };
 		599B2BDD276ED1A4003659DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 599B2BDB276ED1A4003659DC /* LaunchScreen.storyboard */; };
-		A71E417B2F33687E7252D076 /* Pods_SuperList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5738B0325C8FC9C682D8E34E /* Pods_SuperList.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0CF923BA282EC040002F2B67 /* SuperList.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SuperList.entitlements; sourceTree = "<group>"; };
-		0D4B4E6BC0396BF9B7A34CB2 /* Pods_SuperList_SuperListUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperList_SuperListUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2FC4CEAF6217F38E5124D73D /* Pods-SuperList-SuperListUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperList-SuperListUITests.debug.xcconfig"; path = "Target Support Files/Pods-SuperList-SuperListUITests/Pods-SuperList-SuperListUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		3CD071BE46EB88AE719088EA /* Pods_SuperListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		569E3A1BAE1083FFE636475A /* Pods-SuperList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperList.debug.xcconfig"; path = "Target Support Files/Pods-SuperList/Pods-SuperList.debug.xcconfig"; sourceTree = "<group>"; };
-		5738B0325C8FC9C682D8E34E /* Pods_SuperList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0CFBD81A29DBC2F500B647DF /* CoreModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CoreModule; path = AppModules/CoreModule; sourceTree = "<group>"; };
 		599B2BCD276ED1A3003659DC /* SuperList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		599B2BD0276ED1A3003659DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		599B2BD2276ED1A3003659DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		599B2BD9276ED1A4003659DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		599B2BDC276ED1A4003659DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		599B2BDE276ED1A4003659DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		855ABAE77B2F1687CE5E0DCF /* Pods-SuperList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperList.release.xcconfig"; path = "Target Support Files/Pods-SuperList/Pods-SuperList.release.xcconfig"; sourceTree = "<group>"; };
-		B533C947F33FF03B4980B027 /* Pods-SuperListTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperListTests.release.xcconfig"; path = "Target Support Files/Pods-SuperListTests/Pods-SuperListTests.release.xcconfig"; sourceTree = "<group>"; };
-		BCE6EDFD2CCEAA43152D7DAB /* Pods-SuperListTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperListTests.debug.xcconfig"; path = "Target Support Files/Pods-SuperListTests/Pods-SuperListTests.debug.xcconfig"; sourceTree = "<group>"; };
-		F57BF35E23334997EF5FF9BF /* Pods-SuperList-SuperListUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperList-SuperListUITests.release.xcconfig"; path = "Target Support Files/Pods-SuperList-SuperListUITests/Pods-SuperList-SuperListUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,20 +30,35 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A71E417B2F33687E7252D076 /* Pods_SuperList.framework in Frameworks */,
+				0CFBD81D29DBC38F00B647DF /* CoreModule in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0CFBD81929DBC2F500B647DF /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				0CFBD81A29DBC2F500B647DF /* CoreModule */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		0CFBD81B29DBC38F00B647DF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		599B2BC4276ED1A3003659DC = {
 			isa = PBXGroup;
 			children = (
+				0CFBD81929DBC2F500B647DF /* Packages */,
 				599B2BCF276ED1A3003659DC /* SuperList */,
 				599B2BCE276ED1A3003659DC /* Products */,
-				AFA2639FD3B004F0DEB7A794 /* Pods */,
-				AF9FF86AA153D360266F23CF /* Frameworks */,
+				0CFBD81B29DBC38F00B647DF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -76,29 +83,6 @@
 			path = SuperList;
 			sourceTree = "<group>";
 		};
-		AF9FF86AA153D360266F23CF /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				5738B0325C8FC9C682D8E34E /* Pods_SuperList.framework */,
-				0D4B4E6BC0396BF9B7A34CB2 /* Pods_SuperList_SuperListUITests.framework */,
-				3CD071BE46EB88AE719088EA /* Pods_SuperListTests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		AFA2639FD3B004F0DEB7A794 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				569E3A1BAE1083FFE636475A /* Pods-SuperList.debug.xcconfig */,
-				855ABAE77B2F1687CE5E0DCF /* Pods-SuperList.release.xcconfig */,
-				2FC4CEAF6217F38E5124D73D /* Pods-SuperList-SuperListUITests.debug.xcconfig */,
-				F57BF35E23334997EF5FF9BF /* Pods-SuperList-SuperListUITests.release.xcconfig */,
-				BCE6EDFD2CCEAA43152D7DAB /* Pods-SuperListTests.debug.xcconfig */,
-				B533C947F33FF03B4980B027 /* Pods-SuperListTests.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -106,17 +90,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 599B2BF7276ED1A5003659DC /* Build configuration list for PBXNativeTarget "SuperList" */;
 			buildPhases = (
-				6FC5FF531B955B0900067AF8 /* [CP] Check Pods Manifest.lock */,
 				599B2BC9276ED1A3003659DC /* Sources */,
 				599B2BCA276ED1A3003659DC /* Frameworks */,
 				599B2BCB276ED1A3003659DC /* Resources */,
-				4850A2D9C70281A61BF9C8F3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = SuperList;
+			packageProductDependencies = (
+				0CFBD81C29DBC38F00B647DF /* CoreModule */,
+			);
 			productName = SuperList;
 			productReference = 599B2BCD276ED1A3003659DC /* SuperList.app */;
 			productType = "com.apple.product-type.application";
@@ -165,48 +150,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		4850A2D9C70281A61BF9C8F3 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SuperList/Pods-SuperList-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SuperList/Pods-SuperList-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SuperList/Pods-SuperList-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6FC5FF531B955B0900067AF8 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SuperList-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		599B2BC9276ED1A3003659DC /* Sources */ = {
@@ -352,7 +295,6 @@
 		};
 		599B2BF8276ED1A5003659DC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 569E3A1BAE1083FFE636475A /* Pods-SuperList.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -373,7 +315,6 @@
 		};
 		599B2BF9276ED1A5003659DC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 855ABAE77B2F1687CE5E0DCF /* Pods-SuperList.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -414,6 +355,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0CFBD81C29DBC38F00B647DF /* CoreModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CoreModule;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 599B2BC5276ED1A3003659DC /* Project object */;
 }
