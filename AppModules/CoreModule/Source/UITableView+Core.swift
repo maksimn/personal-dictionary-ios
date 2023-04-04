@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 13.01.2022.
 //
 
+import UIKit
+
 extension UITableView {
 
     public func isLastVisibleCell(at indexPath: IndexPath) -> Bool {
