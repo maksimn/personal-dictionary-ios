@@ -13,13 +13,13 @@ import UIKit
 final class NavToTodoListRouter: CoreRouter {
 
     private let rootViewController: UIViewController
-    private let todoListBuilder: TodoList.MainBuilder
+    private let todoListBuilder: TodoList.ViewControllerBuilder
 
     /// - Parameters:
     ///   - rootViewController: view контроллер экрана, с которого начинается переход к приложению "Список дел" (TodoList).
     ///   - todoListBuilder: билдер приложения TodoList ("Список дел").
     init(rootViewController: UIViewController,
-         todoListBuilder: TodoList.MainBuilder) {
+         todoListBuilder: TodoList.ViewControllerBuilder) {
         self.rootViewController = rootViewController
         self.todoListBuilder = todoListBuilder
     }

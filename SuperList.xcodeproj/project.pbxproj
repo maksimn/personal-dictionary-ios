@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0C7E962029DC8D4E00799EAC /* PersonalDictionary in Frameworks */ = {isa = PBXBuildFile; productRef = 0C7E961F29DC8D4E00799EAC /* PersonalDictionary */; };
-		0CFBD81D29DBC38F00B647DF /* CoreModule in Frameworks */ = {isa = PBXBuildFile; productRef = 0CFBD81C29DBC38F00B647DF /* CoreModule */; };
-		0CFDEA9B29DC332500096523 /* TodoList in Frameworks */ = {isa = PBXBuildFile; productRef = 0CFDEA9A29DC332500096523 /* TodoList */; };
+		0CDEF35029DCE57D009F8F5A /* CoreModule in Frameworks */ = {isa = PBXBuildFile; productRef = 0CDEF34F29DCE57D009F8F5A /* CoreModule */; };
+		0CDEF35229DCE57D009F8F5A /* PersonalDictionary in Frameworks */ = {isa = PBXBuildFile; productRef = 0CDEF35129DCE57D009F8F5A /* PersonalDictionary */; };
+		0CDEF35429DCE57D009F8F5A /* TodoList in Frameworks */ = {isa = PBXBuildFile; productRef = 0CDEF35329DCE57D009F8F5A /* TodoList */; };
 		599B2BD1276ED1A3003659DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599B2BD0276ED1A3003659DC /* AppDelegate.swift */; };
 		599B2BD3276ED1A3003659DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599B2BD2276ED1A3003659DC /* SceneDelegate.swift */; };
 		599B2BDA276ED1A4003659DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 599B2BD9276ED1A4003659DC /* Assets.xcassets */; };
@@ -34,9 +34,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0CFDEA9B29DC332500096523 /* TodoList in Frameworks */,
-				0CFBD81D29DBC38F00B647DF /* CoreModule in Frameworks */,
-				0C7E962029DC8D4E00799EAC /* PersonalDictionary in Frameworks */,
+				0CDEF35229DCE57D009F8F5A /* PersonalDictionary in Frameworks */,
+				0CDEF35029DCE57D009F8F5A /* CoreModule in Frameworks */,
+				0CDEF35429DCE57D009F8F5A /* TodoList in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,9 +108,9 @@
 			);
 			name = SuperList;
 			packageProductDependencies = (
-				0CFBD81C29DBC38F00B647DF /* CoreModule */,
-				0CFDEA9A29DC332500096523 /* TodoList */,
-				0C7E961F29DC8D4E00799EAC /* PersonalDictionary */,
+				0CDEF34F29DCE57D009F8F5A /* CoreModule */,
+				0CDEF35129DCE57D009F8F5A /* PersonalDictionary */,
+				0CDEF35329DCE57D009F8F5A /* TodoList */,
 			);
 			productName = SuperList;
 			productReference = 599B2BCD276ED1A3003659DC /* SuperList.app */;
@@ -367,15 +367,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0C7E961F29DC8D4E00799EAC /* PersonalDictionary */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = PersonalDictionary;
-		};
-		0CFBD81C29DBC38F00B647DF /* CoreModule */ = {
+		0CDEF34F29DCE57D009F8F5A /* CoreModule */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CoreModule;
 		};
-		0CFDEA9A29DC332500096523 /* TodoList */ = {
+		0CDEF35129DCE57D009F8F5A /* PersonalDictionary */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PersonalDictionary;
+		};
+		0CDEF35329DCE57D009F8F5A /* TodoList */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TodoList;
 		};

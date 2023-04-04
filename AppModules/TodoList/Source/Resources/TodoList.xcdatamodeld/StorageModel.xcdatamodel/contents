@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19H15" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="TodoItemMO" representedClassName="TodoItemMO" syncable="YES">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G320" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="TodoMO" representedClassName="TodoMO" syncable="YES">
         <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="deadline" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="String"/>
@@ -17,15 +17,6 @@
     </entity>
     <entity name="TombstoneMO" representedClassName="TombstoneMO" syncable="YES">
         <attribute name="deletedAt" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="itemId" attributeType="String"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="itemId"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
+        <attribute name="todoId" attributeType="String"/>
     </entity>
-    <elements>
-        <element name="TodoItemMO" positionX="-63" positionY="-18" width="128" height="163"/>
-        <element name="TombstoneMO" positionX="-54" positionY="54" width="128" height="73"/>
-    </elements>
 </model>

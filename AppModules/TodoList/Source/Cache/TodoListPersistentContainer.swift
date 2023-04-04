@@ -6,7 +6,6 @@
 //
 
 import CoreData
-import CoreModule
 
 final class TodoListPersistentContainer {
 
@@ -17,7 +16,7 @@ final class TodoListPersistentContainer {
     }
 
     lazy var persistentContainer: NSPersistentContainer = {
-        let bundle = Bundle.module
+        let bundle = Bundle(for: type(of: self))
         let persistentContainerName = "TodoList"
 
         guard let modelURL = bundle.url(forResource: persistentContainerName, withExtension: "momd"),
@@ -32,7 +31,7 @@ final class TodoListPersistentContainer {
             container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
 
             if let error = error {
-                self.logger.logWithContext("\(error)")
+                self.logger.log(error: error)
             }
         })
         return container
