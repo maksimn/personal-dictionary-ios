@@ -6,6 +6,7 @@
 //
 
 import CoreModule
+import UIKit
 
 /// Реализация билдера фичи "Выбор режима поиска" по словам из словаря.
 final class SearchModePickerBuilder: ViewBuilder {

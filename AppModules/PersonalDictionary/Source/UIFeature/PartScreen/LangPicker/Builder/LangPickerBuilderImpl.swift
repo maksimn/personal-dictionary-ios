@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 10.11.2021.
 //
 
+import UIKit
+
 /// Реализация билдера Фичи "Выбор языка".
 final class LangPickerBuilderImpl: LangPickerBuilder {
 

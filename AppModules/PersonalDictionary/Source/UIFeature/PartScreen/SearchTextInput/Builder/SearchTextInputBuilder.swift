@@ -6,6 +6,7 @@
 //
 
 import CoreModule
+import UIKit
 
 /// Реализация билдера фичи "Элемент ввода поискового текста".
 final class SearchTextInputBuilder: SearchControllerBuilder {

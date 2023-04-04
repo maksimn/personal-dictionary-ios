@@ -6,6 +6,7 @@
 //
 
 import CoreModule
+import Foundation
 import RxSwift
 
 /// Служба для получения перевода слова из PONS Online Dictionary API,
