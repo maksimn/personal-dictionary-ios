@@ -9,31 +9,16 @@ import os
 
 public final class LoggerImpl: CoreModule.Logger {
 
-    private let category: String
-
-    private var _logger: Any?
-
-    @available(iOS 14.0, *)
-    private var logger: os.Logger {
-        if _logger == nil {
-            _logger = os.Logger(subsystem: "General", category: category)
-        }
-
-        return _logger as! os.Logger
-    }
+    private let logger: os.Logger
 
     public init(category: String) {
-        self.category = category
+        logger = os.Logger(subsystem: "General", category: category)
     }
 
     public func log(_ message: String, level: LogLevel) {
         guard isDevelopment() else { return }
 
-        if #available(iOS 14, *) {
-            logger.log(level: level.getOsLogLevel(), "[\(level.rawValue)] \(message)")
-        } else {
-            print("[\(category)] [\(level.rawValue)] \(message)")
-        }
+        logger.log(level: level.getOsLogLevel(), "[\(level.rawValue)] \(message)")
     }
 }
 
