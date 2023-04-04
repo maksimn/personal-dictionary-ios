@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0CFBD81D29DBC38F00B647DF /* CoreModule in Frameworks */ = {isa = PBXBuildFile; productRef = 0CFBD81C29DBC38F00B647DF /* CoreModule */; };
+		0CFDEA9B29DC332500096523 /* TodoList in Frameworks */ = {isa = PBXBuildFile; productRef = 0CFDEA9A29DC332500096523 /* TodoList */; };
 		599B2BD1276ED1A3003659DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599B2BD0276ED1A3003659DC /* AppDelegate.swift */; };
 		599B2BD3276ED1A3003659DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599B2BD2276ED1A3003659DC /* SceneDelegate.swift */; };
 		599B2BDA276ED1A4003659DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 599B2BD9276ED1A4003659DC /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 /* Begin PBXFileReference section */
 		0CF923BA282EC040002F2B67 /* SuperList.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SuperList.entitlements; sourceTree = "<group>"; };
 		0CFBD81A29DBC2F500B647DF /* CoreModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CoreModule; path = AppModules/CoreModule; sourceTree = "<group>"; };
+		0CFDEA9929DC32DA00096523 /* TodoList */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = TodoList; path = AppModules/TodoList; sourceTree = "<group>"; };
 		599B2BCD276ED1A3003659DC /* SuperList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		599B2BD0276ED1A3003659DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		599B2BD2276ED1A3003659DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -30,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CFDEA9B29DC332500096523 /* TodoList in Frameworks */,
 				0CFBD81D29DBC38F00B647DF /* CoreModule in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -41,6 +44,7 @@
 			isa = PBXGroup;
 			children = (
 				0CFBD81A29DBC2F500B647DF /* CoreModule */,
+				0CFDEA9929DC32DA00096523 /* TodoList */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -101,6 +105,7 @@
 			name = SuperList;
 			packageProductDependencies = (
 				0CFBD81C29DBC38F00B647DF /* CoreModule */,
+				0CFDEA9A29DC332500096523 /* TodoList */,
 			);
 			productName = SuperList;
 			productReference = 599B2BCD276ED1A3003659DC /* SuperList.app */;
@@ -360,6 +365,10 @@
 		0CFBD81C29DBC38F00B647DF /* CoreModule */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CoreModule;
+		};
+		0CFDEA9A29DC332500096523 /* TodoList */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TodoList;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

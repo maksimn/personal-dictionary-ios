@@ -24,7 +24,7 @@ final class NavToEditorBuilderImp: NavToEditorBuilder {
             editorBuilder: editorBuilder
         )
         let view = NavToEditorView(
-            navigationImage: UIImage(named: "icon-plus", in: Bundle(for: type(of: self)), with: nil)!,
+            navigationImage: UIImage(named: "icon-plus", in: Bundle.module, with: nil)!,
             router: router
         )
 

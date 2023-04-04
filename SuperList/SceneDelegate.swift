@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 19.12.2021.
 //
 
+import TodoList
 import CoreModule
 import UIKit
 
@@ -16,16 +17,14 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        let view = UIViewController()
+        let todoListBuilder = TodoList.MainBuilderImp()
 
         let logger = LoggerImpl(category: "xxx")
 
-        logger.log("I warn you", level: .warn)
-
-        view.view.backgroundColor = .red
+        logger.log("Some message", level: .warn)
 
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = view
+        window?.rootViewController = todoListBuilder.build()
         window?.makeKeyAndVisible()
     }
 }

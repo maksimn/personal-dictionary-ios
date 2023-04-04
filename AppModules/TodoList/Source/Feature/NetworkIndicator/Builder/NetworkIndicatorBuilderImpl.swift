@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 01.01.2022.
 //
 
+import UIKit
+
 final class NetworkIndicatorBuilderImpl: NetworkIndicatorBuilder {
 
     func build() -> UIView {
