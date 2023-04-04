@@ -6,6 +6,7 @@
 //
 
 import CoreModule
+import UIKit
 
 /// Реализация билдера фичи "Список слов".
 final class WordListBuilderImpl: WordListBuilder {

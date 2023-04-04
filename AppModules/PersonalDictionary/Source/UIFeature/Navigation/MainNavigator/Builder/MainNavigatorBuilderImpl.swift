@@ -6,6 +6,7 @@
 //
 
 import CoreModule
+import UIKit
 
 /// Реализация билдера фичи "Контейнер элементов навигации на Главном экране приложения".
 final class MainNavigatorBuilderImpl: MainNavigatorBuilder {

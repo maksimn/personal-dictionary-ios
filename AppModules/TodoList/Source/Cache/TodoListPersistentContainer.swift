@@ -17,7 +17,7 @@ final class TodoListPersistentContainer {
     }
 
     lazy var persistentContainer: NSPersistentContainer = {
-        let bundle = Bundle(for: type(of: self))
+        let bundle = Bundle.module
         let persistentContainerName = "TodoList"
 
         guard let modelURL = bundle.url(forResource: persistentContainerName, withExtension: "momd"),

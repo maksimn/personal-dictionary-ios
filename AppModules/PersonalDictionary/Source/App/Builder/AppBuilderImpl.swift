@@ -30,7 +30,7 @@ public final class AppBuilderImpl: AppBuilder {
     }
 
     private func appDependency() -> AppDependency {
-        let bundle = Bundle(for: type(of: self))
+        let bundle = Bundle.module
         let appConfigFactory = AppConfigFactory(bundle: bundle)
         let appConfig = appConfigFactory.create()
 

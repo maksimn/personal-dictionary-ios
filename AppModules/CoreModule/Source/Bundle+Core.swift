@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 19.12.2021.
 //
 
+import UIKit
+
 extension Bundle {
 
     public func moduleLocalizedString(_ text: String) -> String {

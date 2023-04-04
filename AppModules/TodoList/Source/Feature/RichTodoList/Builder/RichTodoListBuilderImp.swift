@@ -7,6 +7,7 @@
 
 import CoreModule
 import RxSwift
+import UIKit
 
 protocol TodoItemCUDSubscriber: CreatedTodoItemSubscriber, UpdatedTodoItemSubscriber, DeletedTodoItemSubscriber,
     MergeItemsWithRemoteSubscriber { }

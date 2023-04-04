@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 11.11.2021.
 //
 
+import UIKit
+
 /// Билдер Фичи "Поиск по словам в словаре".
 final class SearchBuilder: ViewControllerBuilder {
 

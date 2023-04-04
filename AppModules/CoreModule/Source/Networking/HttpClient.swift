@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 09.10.2021.
 //
 
+import Foundation
+import RxCocoa
 import RxSwift
 
 public typealias RxHttpResponse = Observable<(response: HTTPURLResponse, data: Data)>

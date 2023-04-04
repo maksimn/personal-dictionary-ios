@@ -5,6 +5,8 @@
 //  Created by Maxim Ivanov on 16.12.2021.
 //
 
+import Foundation
+
 extension Logger {
 
     public func debug(_ message: String) {
