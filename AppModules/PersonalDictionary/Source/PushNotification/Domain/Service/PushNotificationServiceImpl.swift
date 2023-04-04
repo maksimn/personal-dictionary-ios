@@ -76,12 +76,8 @@ final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUs
     func userNotificationCenter(_ center: UNUserNotificationCenter,
             willPresent notification: UNNotification,
             withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        let isApplicationInBackground = application.applicationState == .background
-
-        if isApplicationInBackground, #available(iOS 14, *) {
+        if application.applicationState == .background {
             completionHandler([.banner, .list, .sound])
-        } else if isApplicationInBackground {
-            completionHandler([.sound])
         }
     }
 

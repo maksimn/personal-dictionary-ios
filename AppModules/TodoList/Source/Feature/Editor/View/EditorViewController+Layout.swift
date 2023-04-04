@@ -211,9 +211,7 @@ extension EditorViewController {
     }
 
     private func initDatePicker() {
-        if #available(iOS 14.0, *) {
-            deadlineDatePicker.preferredDatePickerStyle = .inline
-        }
+        deadlineDatePicker.preferredDatePickerStyle = .inline
         deadlineDatePicker.datePickerMode = .date
         let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
         deadlineDatePicker.setDate(tomorrow, animated: false)

@@ -6,7 +6,7 @@ let package = Package(
     name: "PersonalDictionary",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v13)
+        .iOS(.v14)
     ],
     products: [
         .library(
