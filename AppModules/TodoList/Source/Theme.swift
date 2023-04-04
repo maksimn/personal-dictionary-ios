@@ -39,7 +39,7 @@ struct Theme {
 
 class ThemeImage {
 
-    private lazy var bundle = Bundle(for: type(of: self))
+    private lazy var bundle = Bundle.module
 
     lazy var highPriorityMark = UIImage(named: "high-priority", in: bundle, with: nil)!
     lazy var lowPriorityMark = UIImage(named: "low-priority", in: bundle, with: nil)!

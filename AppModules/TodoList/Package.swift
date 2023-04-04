@@ -14,7 +14,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/SnapKit/SnapKit", from: "4.0.0"),
+        .package(url: "https://github.com/SnapKit/SnapKit", from: "5.6.0"),
         .package(path: "../CoreModule")
     ],
     targets: [
@@ -22,10 +22,7 @@ let package = Package(
             name: "TodoList",
             dependencies: ["SnapKit", "CoreModule"],
             path: "Source",
-            resources: [
-                // .copy("Resources/Assets.xcassets"),
-                // .copy("Resources/TodoList.xcdatamodeld")
-            ]
+            resources: []
         )
     ]
 )
