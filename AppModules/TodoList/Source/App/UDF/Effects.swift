@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import CoreModule
 import Foundation
 
 protocol Effects {
@@ -115,7 +116,7 @@ struct EffectsImp: Effects {
             } catch TodoListCacheError.updateFailed(let error) {
                 await send(.log(.updateTodoInCacheError(todo, error)))
             } catch {
-                logger.log(error: error)
+                logger.errorWithContext(error)
             }
 
             await send(.networkIndicator(.decrementNetworkRequestCount))
@@ -157,7 +158,7 @@ struct EffectsImp: Effects {
             } catch TodoListCacheError.updateFailed(let error) {
                 await send(.log(.updateTodoInCacheError(todo, error)))
             } catch {
-                logger.log(error: error)
+                logger.errorWithContext(error)
             }
 
             await send(.networkIndicator(.decrementNetworkRequestCount))
@@ -191,7 +192,7 @@ struct EffectsImp: Effects {
                 await send(.log(.deleteRemoteTodoError(todo, error)))
                 try await createTombstone(for: todo)
             } catch {
-                logger.log(error: error)
+                logger.errorWithContext(error)
                 try await createTombstone(for: todo)
             }
 

@@ -6,11 +6,14 @@
 //
 
 import ComposableArchitecture
+import CoreModule
 import UIKit
 
-final class AppBuilder: ViewControllerBuilder {
+public final class AppBuilder: ViewControllerBuilder {
 
-    func build() -> UIViewController {
+    public init() { }
+
+    public func build() -> UIViewController {
         let effects = EffectsImp(
             cache: TodoListCacheImp(logger: logger),
             deadCache: DeadCacheImp(logger: logger),
@@ -45,6 +48,6 @@ final class AppBuilder: ViewControllerBuilder {
     }
 
     private var logger: Logger {
-        LoggerImpl()
+        LoggerImpl(category: "TodoList.App")
     }
 }

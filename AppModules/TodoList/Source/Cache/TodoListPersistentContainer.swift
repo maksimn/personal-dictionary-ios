@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import CoreModule
 
 final class TodoListPersistentContainer {
 
@@ -31,7 +32,7 @@ final class TodoListPersistentContainer {
             container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
 
             if let error = error {
-                self.logger.log(error: error)
+                self.logger.errorWithContext(error)
             }
         })
         return container

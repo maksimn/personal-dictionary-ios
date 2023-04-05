@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import CoreModule
 import UIKit
 
 final class NetworkIndicatorBuilder: ViewBuilder {

@@ -5,7 +5,7 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
-
+import CoreModule
 import UIKit
 
 /// View controller экрана Избранного.

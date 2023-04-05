@@ -7,6 +7,7 @@
 
 import Combine
 import ComposableArchitecture
+import CoreModule
 import UIKit
 
 struct MainListViewParams {

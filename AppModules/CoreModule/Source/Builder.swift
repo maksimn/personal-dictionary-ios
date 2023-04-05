@@ -7,17 +7,17 @@
 
 import UIKit
 
-protocol ViewBuilder {
+public protocol ViewBuilder {
 
     func build() -> UIView
 }
 
-protocol ViewControllerBuilder {
+public protocol ViewControllerBuilder {
 
     func build() -> UIViewController
 }
 
-protocol SearchControllerBuilder {
+public protocol SearchControllerBuilder {
 
     func build() -> UISearchController
 }

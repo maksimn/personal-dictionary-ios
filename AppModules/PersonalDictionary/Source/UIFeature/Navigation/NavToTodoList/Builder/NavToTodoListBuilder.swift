@@ -26,7 +26,7 @@ final class NavToTodoListBuilder: ViewBuilder {
     func build() -> UIView {
         let router = NavToTodoListRouter(
             rootViewController: rootViewController ?? UIViewController(),
-            todoListBuilder: TodoListBuilderImpl()
+            todoListBuilder: TodoList.AppBuilder()
         )
 
         return NavToTodoListView(

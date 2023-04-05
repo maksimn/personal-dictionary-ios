@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import CoreModule
 import Foundation
 
 class TodoListCacheImp: TodoListCache {
@@ -43,7 +44,7 @@ class TodoListCacheImp: TodoListCache {
 
             return todoMOList.map { $0.todo }
         } catch {
-            logger.log(error: error)
+            logger.errorWithContext(error)
             return []
         }
     }
@@ -94,7 +95,7 @@ class TodoListCacheImp: TodoListCache {
                     completion(.success(Void()))
                 }
             } catch {
-                self?.logger.log(error: error)
+                self?.logger.errorWithContext(error)
                 DispatchQueue.main.async {
                     completion(.failure(TodoListCacheError.insertFailed(error)))
                 }
@@ -123,7 +124,7 @@ class TodoListCacheImp: TodoListCache {
                     completion(.success(Void()))
                 }
             } catch {
-                self?.logger.log(error: error)
+                self?.logger.errorWithContext(error)
                 DispatchQueue.main.async {
                     completion(.failure(TodoListCacheError.updateFailed(error)))
                 }
@@ -152,7 +153,7 @@ class TodoListCacheImp: TodoListCache {
                     completion(.success(Void()))
                 }
             } catch {
-                self?.logger.log(error: error)
+                self?.logger.errorWithContext(error)
                 DispatchQueue.main.async {
                     completion(.failure(TodoListCacheError.deleteFailed(error)))
                 }
@@ -179,7 +180,7 @@ class TodoListCacheImp: TodoListCache {
                     completion(.success(Void()))
                 }
             } catch let error as NSError {
-                self?.logger.log(error: error)
+                self?.logger.errorWithContext(error)
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
