@@ -9,7 +9,7 @@ import UIKit
 
 extension Notification {
 
-    var keyboardSize: CGSize {
+    public var keyboardSize: CGSize {
         ((userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size) ?? .zero
     }
 }

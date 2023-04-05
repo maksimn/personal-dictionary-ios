@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 11.11.2021.
 //
 
+import CoreModule
 import UIKit
 
 /// Билдер Фичи "Поиск по словам в словаре".

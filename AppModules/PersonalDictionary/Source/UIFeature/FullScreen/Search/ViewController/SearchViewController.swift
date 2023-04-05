@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 12.11.2021.
 //
 
+import CoreModule
 import UIKit
 
 /// View controller экрана поиска по словам в словаре.

@@ -5,6 +5,7 @@
 //  Created by Maksim Ivanov on 10.08.2022.
 //
 
+import CoreModule
 import SnapKit
 import UIKit
 

@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 08.07.2021.
 //
 
+import CoreModule
 import CoreData
 
 final class DeadCacheImp: DeadCache {
@@ -34,7 +35,7 @@ final class DeadCacheImp: DeadCache {
                 Tombstone(todoId: tombstoneMO.todoId ?? "", deletedAt: tombstoneMO.deletedAt ?? Date())
             }
         } catch {
-            logger.log(error: error)
+            logger.errorWithContext(error)
             return []
         }
     }
@@ -70,7 +71,7 @@ final class DeadCacheImp: DeadCache {
                     completion(.success(Void()))
                 }
             } catch {
-                self?.logger.log(error: error)
+                self?.logger.errorWithContext(error)
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
@@ -91,7 +92,7 @@ final class DeadCacheImp: DeadCache {
                     completion(.success(Void()))
                 }
             } catch {
-                self?.logger.log(error: error)
+                self?.logger.errorWithContext(error)
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
