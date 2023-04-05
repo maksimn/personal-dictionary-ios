@@ -16,13 +16,15 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.52.0"),
-        .package(url: "https://github.com/SnapKit/SnapKit", from: "5.6.0")
+        .package(url: "https://github.com/SnapKit/SnapKit", from: "5.6.0"),
+        .package(path: "../CoreModule")
     ],
     targets: [
         .target(
             name: "TodoList",
             dependencies: [
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                "CoreModule",
                 "SnapKit"
             ],
             path: "Source",

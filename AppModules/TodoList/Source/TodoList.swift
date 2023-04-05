@@ -17,12 +17,8 @@ public final class TodoListBuilderImpl: TodoListBuilder {
     public init() { }
 
     public func build() -> UIViewController {
-        let viewController = UIViewController()
+        let appBuilder = AppBuilder()
 
-        viewController.view.backgroundColor = .red
-
-        _ = Theme.data
-
-        return viewController
+        return appBuilder.build()
     }
 }
