@@ -9,11 +9,6 @@ import Foundation
 
 struct Tombstone: Codable {
 
-    init(itemId: String, deletedAt: Date) {
-        self.itemId = itemId
-        self.deletedAt = deletedAt
-    }
-
-    let itemId: String
+    let todoId: String
     let deletedAt: Date
 }

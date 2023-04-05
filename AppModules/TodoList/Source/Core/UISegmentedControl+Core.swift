@@ -1,15 +1,15 @@
 //
 //  UISegmentedControl+Core.swift
-//  ToDoList
+//  ReTodoList
 //
-//  Created by Maxim Ivanov on 03.01.2022.
+//  Created by Maksim Ivanov on 12.08.2022.
 //
 
 import UIKit
 
 extension UISegmentedControl {
 
-    func setTodoItem(priority: TodoItemPriority) {
+    func setTodoPriority(_ priority: TodoPriority) {
         switch priority {
         case .high:
             selectedSegmentIndex = 2
@@ -20,7 +20,7 @@ extension UISegmentedControl {
         }
     }
 
-    var todoItemPriority: TodoItemPriority {
+    var todoPriority: TodoPriority {
         switch selectedSegmentIndex {
         case 0:
             return .low

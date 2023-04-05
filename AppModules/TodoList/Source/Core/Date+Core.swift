@@ -1,15 +1,15 @@
 //
 //  Date+Core.swift
-//  ToDoList
+//  ReTodoList
 //
-//  Created by Maxim Ivanov on 18.06.2021.
+//  Created by Maksim Ivanov on 12.08.2022.
 //
 
 import Foundation
 
 extension Date {
 
-    var formattedDate: String {
+    var dMMMMyyyy: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d MMMM yyyy"
 

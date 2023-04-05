@@ -11,7 +11,7 @@ import CoreData
 class TombstoneMO: NSManagedObject {
 
     @NSManaged var deletedAt: Date?
-    @NSManaged var itemId: String?
+    @NSManaged var todoId: String?
 
     static var name: String {
         "TombstoneMO"

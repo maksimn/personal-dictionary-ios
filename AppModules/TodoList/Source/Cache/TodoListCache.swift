@@ -9,15 +9,19 @@ protocol TodoListCache {
 
     var isDirty: Bool { get }
 
-    var items: [TodoItem] { get }
+    var todos: [Todo] { get }
 
-    var completedItemCount: Int { get }
+    func insert(_ todo: Todo) async throws
 
-    func insert(_ todoItem: TodoItem, _ completion: @escaping (Error?) -> Void)
+    func update(_ todo: Todo) async throws
 
-    func update(_ todoItem: TodoItem, _ completion: @escaping (Error?) -> Void)
+    func delete(_ todo: Todo) async throws
 
-    func delete(_ todoItem: TodoItem, _ completion: @escaping (Error?) -> Void)
+    func replaceWith(_ todoList: [Todo]) async throws
+}
 
-    func replaceWith(_ todoList: [TodoItem], _ completion: @escaping (Error?) -> Void)
+enum TodoListCacheError: Error {
+    case insertFailed(Error)
+    case updateFailed(Error)
+    case deleteFailed(Error)
 }
