@@ -5,9 +5,8 @@
 //  Created by Maksim Ivanov on 24.02.2023.
 //
 
+import Combine
 import CoreModule
-import RxSwift
-import RxBlocking
 import XCTest
 @testable import PersonalDictionary
 
@@ -45,7 +44,7 @@ final class PonsTranslationServiceTests: XCTestCase {
         let data = try! JSONEncoder().encode(ponsArray)
 
         httpClientMock.methodMock = { _ in
-            Single.just((response: HTTPURLResponse(), data: data)).asObservable()
+            RxHttpResponse(CurrentValueSubject((response: HTTPURLResponse(), data: data)))
         }
 
         // Act:
@@ -59,8 +58,6 @@ final class PonsTranslationServiceTests: XCTestCase {
 
     func test_fetchTranslation__returnsErrorWhenHttpRequestFails() throws {
         // Arrange:
-        enum HttpError: Error { case unavailable }
-
         let httpClientMock = HttpClientMock()
         let ponsTranslationService = PonsTranslationService(
             secret: "",
@@ -70,7 +67,9 @@ final class PonsTranslationServiceTests: XCTestCase {
         let lang = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
         let word = Word(text: "word", sourceLang: lang, targetLang: lang)
 
-        httpClientMock.methodMock = { _ in return .error(HttpError.unavailable) }
+        httpClientMock.methodMock = { _ in
+            RxHttpResponse(Fail(error: URLError(.unknown) as Error))
+        }
 
         // Act:
         let single = ponsTranslationService.fetchTranslation(for: word)

@@ -13,13 +13,9 @@ let package = Package(
             targets: ["CoreModule"]
         )
     ],
-    dependencies: [
-        .package(url: "https://github.com/ReactiveX/RxSwift", revision: "6.5.0")
-    ],
     targets: [
         .target(
             name: "CoreModule",
-            dependencies: ["RxSwift", .product(name: "RxCocoa", package: "RxSwift")],
             path: "Source"
         )
     ]

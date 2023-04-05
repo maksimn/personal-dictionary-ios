@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 09.10.2021.
 //
 
+import Combine
 import CoreModule
 import Foundation
 import RxSwift
@@ -17,6 +18,8 @@ final class PonsTranslationService: TranslationService {
     private let logger: Logger
 
     private let apiUrl = "https://api.pons.com/v1/dictionary"
+
+    private var cancellables: Set<AnyCancellable> = []
 
     /// - Parameters:
     ///  - secret: секрет для обращения к онлайновому PONS API.
@@ -47,7 +50,9 @@ final class PonsTranslationService: TranslationService {
         logger.log("PONS FETCH TRANSLATION START, word = \(word)", level: .info)
         logger.log("HTTP REQUEST START, \(http)", level: .info)
 
-        return httpClient.send(http)
+        return transformToRxObservable(
+                httpClient.send(http)
+            )
             .do(
                 onNext: { httpResponse in
                     self.logger.log("HTTP RESPONSE FETCHED, \(httpResponse)", level: .info)
@@ -75,5 +80,30 @@ final class PonsTranslationService: TranslationService {
                     self.logger.log("PONS FETCH TRANSLATION ERROR, word = \(word)", level: .error)
                 }
             )
+    }
+
+    private func transformToRxObservable(_ rxHttpResponse: RxHttpResponse) -> Observable<(response: HTTPURLResponse,
+                                                                                          data: Data)> {
+        .create { observer in
+            rxHttpResponse.sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .failure(let error):
+                        observer.on(.error(PonsTranslationServiceError.error(error)))
+                    case .finished:
+                        observer.on(.completed)
+                    }
+                },
+                receiveValue: { httpResponse in
+                    observer.on(.next(httpResponse))
+                }
+            ).store(in: &self.cancellables)
+
+            return Disposables.create { }
+        }
+    }
+
+    private enum PonsTranslationServiceError: Error {
+        case error(Error)
     }
 }

@@ -5,9 +5,8 @@
 //  Created by Maxim Ivanov on 09.10.2021.
 //
 
+import Combine
 import Foundation
-import RxCocoa
-import RxSwift
 
 public class HttpClientImpl: HttpClient {
 
@@ -20,12 +19,14 @@ public class HttpClientImpl: HttpClient {
 
     public init(sessionConfiguration: URLSessionConfiguration = URLSessionConfiguration.default) {
         self.sessionConfiguration = sessionConfiguration
-        URLSession.rx.shouldLogRequest = { _ in false }
     }
 
     public func send(_ http: Http) -> RxHttpResponse {
         let urlString = http.urlString
-        guard let url = URL(string: urlString) else { return .error(HttpError.urlUndefined) }
+        guard let url = URL(string: urlString) else {
+            return Fail(error: URLError(.badURL))
+                .eraseToAnyPublisher()
+        }
         var request = URLRequest(url: url)
 
         request.httpMethod = http.method
@@ -35,10 +36,18 @@ public class HttpClientImpl: HttpClient {
             request.addValue(value, forHTTPHeaderField: key)
         }
 
-        return session.rx.response(request: request)
+        return session.dataTaskPublisher(for: request)
+            .tryMap { value in
+                guard let httpURLResponse = value.response as? HTTPURLResponse else {
+                    throw HttpClientError.nonHttpRequest
+                }
+
+                return (response: httpURLResponse, data: value.data)
+            }
+            .eraseToAnyPublisher()
     }
 
-    enum HttpError: Error {
-        case urlUndefined
+    enum HttpClientError: Error {
+        case nonHttpRequest
     }
 }

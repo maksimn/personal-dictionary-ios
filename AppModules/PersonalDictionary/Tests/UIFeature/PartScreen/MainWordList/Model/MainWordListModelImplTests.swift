@@ -18,6 +18,23 @@ final class MainWordListModelImplTests: XCTestCase {
     lazy var word3 = Word(text: "c", sourceLang: lang, targetLang: lang)
     lazy var wordList = [word1, word2, word3]
 
+    func test_fetchMainWordList_worksCorrectly() throws {
+        // Arrange
+        let wordListRepositoryMock = WordListRepositoryMock()
+        let model = MainWordListModelImpl(
+            wordListRepository: wordListRepositoryMock,
+            translationService: TranslationServiceMock()
+        )
+
+        wordListRepositoryMock.wordListMock = wordList
+
+        // Act
+        let fetchedWordList = model.fetchMainWordList()
+
+        // Assert
+        XCTAssertEqual(fetchedWordList, wordList)
+    }
+
     func test_createWord_returnsCorrectWordListState() throws {
         // Arrange
         let model = MainWordListModelImpl(
