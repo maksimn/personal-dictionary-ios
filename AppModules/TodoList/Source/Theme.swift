@@ -1,8 +1,8 @@
 //
 //  Theme.swift
-//  ToDoList
+//  ReTodoList
 //
-//  Created by Maxim Ivanov on 17.06.2021.
+//  Created by Maksim Ivanov on 11.08.2022.
 //
 
 import UIKit
@@ -10,48 +10,50 @@ import UIKit
 struct Theme {
 
     let backgroundColor: UIColor
-
-    let lightTextColor: UIColor
-
+    let textColor: UIColor
+    let secondaryTextColor: UIColor
+    let cellColor: UIColor
     let darkRed: UIColor
-
     let darkGreen: UIColor
+    let normalFont: UIFont
 
-    private init(backgroundColor: UIColor,
-                 lightTextColor: UIColor,
-                 darkRed: UIColor,
-                 darkGreen: UIColor) {
+    private init(
+        backgroundColor: UIColor,
+        textColor: UIColor,
+        secondaryTextColor: UIColor,
+        cellColor: UIColor,
+        darkRed: UIColor,
+        darkGreen: UIColor,
+        normalFont: UIFont
+    ) {
         self.backgroundColor = backgroundColor
-        self.lightTextColor = lightTextColor
+        self.textColor = textColor
+        self.secondaryTextColor = secondaryTextColor
+        self.cellColor = cellColor
         self.darkRed = darkRed
         self.darkGreen = darkGreen
+        self.normalFont = normalFont
     }
 
     static let data = Theme(
-        backgroundColor: UIColor(red: 1.00, green: 0.80, blue: 1.00, alpha: 1.00),
-        lightTextColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.3),
+        backgroundColor: UIColor(
+            light: UIColor(red: 0.97, green: 0.97, blue: 0.95, alpha: 1.0),
+            dark: .black
+        ),
+        textColor: UIColor(
+            light: .black,
+            dark: .white
+        ),
+        secondaryTextColor: UIColor(
+            light: UIColor(red: 0, green: 0, blue: 0, alpha: 0.3),
+            dark: .lightGray
+        ),
+        cellColor: UIColor(
+            light: .white,
+            dark: UIColor(red: 0.13, green: 0.13, blue: 0.13, alpha: 1.00)
+        ),
         darkRed: UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1),
-        darkGreen: UIColor(red: 0.196, green: 0.843, blue: 0.294, alpha: 1)
+        darkGreen: UIColor(red: 0.196, green: 0.843, blue: 0.294, alpha: 1),
+        normalFont: UIFont.systemFont(ofSize: 17)
     )
-
-    static let image = ThemeImage()
-}
-
-class ThemeImage {
-
-    private lazy var bundle = Bundle.module
-
-    lazy var highPriorityMark = UIImage(named: "high-priority", in: bundle, with: nil)!
-    lazy var lowPriorityMark = UIImage(named: "low-priority", in: bundle, with: nil)!
-
-    lazy var completedTodoMark = UIImage(named: "finished-todo", in: bundle, with: nil)!
-    lazy var completedTodoMarkInverse = UIImage(named: "finished-todo-inverse", in: bundle, with: nil)!
-    lazy var highPriorityTodoMark = UIImage(named: "high-priority-circle", in: bundle, with: nil)!
-    lazy var incompletedTodoMark = UIImage(named: "not-finished-todo", in: bundle, with: nil)!
-
-    lazy var rightArrowMark = UIImage(named: "right-arrow", in: bundle, with: nil)!
-
-    lazy var smallCalendarIcon = UIImage(named: "small-calendar", in: bundle, with: nil)!
-
-    lazy var trashImage = UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(weight: .bold))!
 }
