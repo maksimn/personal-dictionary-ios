@@ -1,0 +1,21 @@
+/* 
+  Localizable.strings
+  ReTodoList
+
+  Created by Maksim Ivanov on 24.01.2023.
+  
+*/
+
+"LS_CANCEL" = "Отменить";
+"LS_COMPLETED" = "Выполнено — %d";
+"LS_DEADLINE" = "Сделать до";
+"LS_DELETE" = "Удалить";
+"LS_HIDE" = "Скрыть";
+"LS_MAIN_SCREEN_TITLE" = "Мои дела";
+"LS_NEWTODO" = "Новое";
+"LS_NORMAL_PRIORITY" = "нет";
+"LS_PRIORITY" = "Важность";
+"LS_SAVE" = "Сохранить";
+"LS_SHOW" = "Показать";
+"LS_TODO" = "Дело";
+"LS_TODO_2" = "Что надо сделать?";
