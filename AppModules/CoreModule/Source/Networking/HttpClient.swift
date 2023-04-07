@@ -5,11 +5,10 @@
 //  Created by Maxim Ivanov on 09.10.2021.
 //
 
+import Combine
 import Foundation
-import RxCocoa
-import RxSwift
 
-public typealias RxHttpResponse = Observable<(response: HTTPURLResponse, data: Data)>
+public typealias RxHttpResponse = AnyPublisher<(response: HTTPURLResponse, data: Data), Error>
 
 public struct Http {
     public let urlString: String
