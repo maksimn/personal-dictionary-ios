@@ -5,9 +5,6 @@
 //  Created by Maksim Ivanov on 21.02.2022.
 //
 
-import CoreModule
-import UIKit
-
 protocol NavToSearchBuilder {
 
     func build() -> NavToSearchRouter

@@ -89,7 +89,7 @@ final class PonsTranslationService: TranslationService {
                 receiveCompletion: { completion in
                     switch completion {
                     case .failure(let error):
-                        observer.on(.error(PonsTranslationServiceError.error(error)))
+                        observer.on(.error(error))
                     case .finished:
                         observer.on(.completed)
                     }
@@ -101,9 +101,5 @@ final class PonsTranslationService: TranslationService {
 
             return Disposables.create { }
         }
-    }
-
-    private enum PonsTranslationServiceError: Error {
-        case error(Error)
     }
 }

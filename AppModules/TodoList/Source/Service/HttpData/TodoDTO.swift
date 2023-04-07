@@ -85,3 +85,14 @@ extension Todo {
         isDirty = false
     }
 }
+
+extension Array where Element == TodoDTO {
+
+    func mapAndSort() -> [Todo] {
+        var todos = self.map { Todo($0) }
+
+        todos.sortByCreateAt()
+
+        return todos
+    }
+}

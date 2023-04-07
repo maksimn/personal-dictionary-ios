@@ -5,15 +5,17 @@
 //  Created by Maxim Ivanov on 29.06.2021.
 //
 
+import Combine
+
 protocol TodoListNetworking {
 
-    func fetchTodoList(_ completion: @escaping TodoListDTOCallback)
+    func fetchTodoList() -> AnyPublisher<[TodoDTO], Error>
 
-    func createTodo(_ todoDTO: TodoDTO, _ completion: @escaping TodoDTOCallback)
+    func createTodo(_ todoDTO: TodoDTO) -> AnyPublisher<TodoDTO, Error>
 
-    func updateTodo(_ todoDTO: TodoDTO, _ completion: @escaping TodoDTOCallback)
+    func updateTodo(_ todoDTO: TodoDTO) -> AnyPublisher<TodoDTO, Error>
 
-    func deleteTodo(_ id: String, _ completion: @escaping TodoDTOCallback)
+    func deleteTodo(_ id: String) -> AnyPublisher<TodoDTO, Error>
 
-    func syncTodoList(_ requestData: SyncTodoListRequestData, _ completion: @escaping TodoListDTOCallback)
+    func syncTodoList(_ requestData: SyncTodoListRequestData) -> AnyPublisher<[TodoDTO], Error>
 }
