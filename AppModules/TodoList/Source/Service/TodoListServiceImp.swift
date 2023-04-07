@@ -5,6 +5,7 @@
 //  Created by Maksim Ivanov on 14.08.2022.
 //
 
+import Combine
 import Foundation
 
 final class TodoListServiceImp: TodoListService {
@@ -21,44 +22,77 @@ final class TodoListServiceImp: TodoListService {
     private let maxSyncAttempts = 6
     private var hasPendingSyncRequest = false
 
+    private var cancellables: Set<AnyCancellable> = []
+
     init(networking: TodoListNetworking) {
         self.networking = networking
     }
 
     func getTodos() async throws -> [Todo] {
         return try await withCheckedThrowingContinuation { continuation in
-            networking.fetchTodoList { result in
-                switch result {
-                case .success(let dtos):
-                    continuation.resume(returning: TodoListServiceImp.mapAndSort(dtos))
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                }
-            }
+            networking.fetchTodoList()
+                .sink(receiveCompletion: { completion in
+                    switch completion {
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    case .finished:
+                        break
+                    }
+                }, receiveValue: { dtos in
+                    continuation.resume(returning: dtos.mapAndSort())
+                })
+                .store(in: &self.cancellables)
         }
     }
 
     func createRemote(_ todo: Todo) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            createRemote(todo) { result in
-                continuation.resume(with: result)
-            }
+        return try await withCheckedThrowingContinuation { continuation in
+            networking.createTodo(TodoDTO(todo))
+                .sink(receiveCompletion: { completion in
+                    switch completion {
+                    case .failure(let error):
+                        continuation.resume(throwing: TodoListServiceError.createFailed(error))
+                    case .finished:
+                        break
+                    }
+                }, receiveValue: { dto in
+                    continuation.resume(returning: Void())
+                })
+                .store(in: &self.cancellables)
         }
     }
 
     func updateRemote(_ todo: Todo) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            updateRemote(todo) { result in
-                continuation.resume(with: result)
-            }
+        return try await withCheckedThrowingContinuation { continuation in
+            networking.updateTodo(TodoDTO(todo))
+                .sink(receiveCompletion: { completion in
+                    switch completion {
+                    case .failure(let error):
+                        continuation.resume(throwing: TodoListServiceError.updateFailed(error))
+                    case .finished:
+                        break
+                    }
+                }, receiveValue: { dto in
+                    continuation.resume(returning: Void())
+                })
+                .store(in: &self.cancellables)
         }
     }
 
     func deleteRemote(_ todo: Todo) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            deleteRemote(todo) { result in
-                continuation.resume(with: result)
-            }
+        return try await withCheckedThrowingContinuation { continuation in
+            networking.deleteTodo(todo.id)
+                .sink(receiveCompletion: { completion in
+                    switch completion {
+                    case .failure(let error):
+                        continuation.resume(throwing: TodoListServiceError.deleteFailed(error))
+                    case .finished:
+                        break
+                    }
+                }, receiveValue: { dto in
+                    continuation.resume(returning: Void())
+                })
+                .store(in: &self.cancellables)
         }
     }
 
@@ -66,39 +100,6 @@ final class TodoListServiceImp: TodoListService {
         return try await withCheckedThrowingContinuation { continuation in
             syncWithRemote(deleted, other) { result in
                 continuation.resume(with: result)
-            }
-        }
-    }
-
-    private func createRemote(_ todo: Todo, _ completion: @escaping VoidCallback) {
-        networking.createTodo(TodoDTO(todo)) { result in
-            switch result {
-            case .success:
-                completion(.success(Void()))
-            case .failure(let error):
-                completion(.failure(TodoListServiceError.createFailed(error)))
-            }
-        }
-    }
-
-    private func updateRemote(_ todo: Todo, _ completion: @escaping VoidCallback) {
-        networking.updateTodo(TodoDTO(todo)) { result in
-            switch result {
-            case .success:
-                completion(.success(Void()))
-            case .failure(let error):
-                completion(.failure(TodoListServiceError.updateFailed(error)))
-            }
-        }
-    }
-
-    private func deleteRemote(_ todo: Todo, _ completion: @escaping VoidCallback) {
-        networking.deleteTodo(todo.id) { result in
-            switch result {
-            case .success:
-                completion(.success(Void()))
-            case .failure(let error):
-                completion(.failure(TodoListServiceError.deleteFailed(error)))
             }
         }
     }
@@ -111,38 +112,34 @@ final class TodoListServiceImp: TodoListService {
         hasPendingSyncRequest = true
 
         let requestData = SyncTodoListRequestData(deleted: deleted, other: other.map { TodoDTO($0) })
-        networking.syncTodoList(requestData) { [weak self] result in
-            guard let self = self else { return }
 
-            switch result {
-            case .success(let dtos):
+        networking.syncTodoList(requestData)
+            .sink(receiveCompletion: { completionValue in
+                switch completionValue {
+                case .failure(let error):
+                    if self.syncAttempts > self.maxSyncAttempts {
+                        self.syncAttempts = 0
+                        self.hasPendingSyncRequest = false
+
+                        return completion(.failure(error))
+                    }
+
+                    self.retrySyncRequestAfter(
+                        delay: self.nextDelay, deleted, other, completion
+                    )
+                    self.currentDelay = self.nextDelay
+
+                case .finished:
+                    break
+                }
+            }, receiveValue: { dtos in
                 self.currentDelay = TodoListServiceImp.minDelay
                 self.syncAttempts = 0
                 self.hasPendingSyncRequest = false
 
-                completion(.success(TodoListServiceImp.mapAndSort(dtos)))
-            case .failure(let error):
-                if self.syncAttempts > self.maxSyncAttempts {
-                    self.syncAttempts = 0
-                    self.hasPendingSyncRequest = false
-
-                    return completion(.failure(error))
-                }
-
-                self.retrySyncRequestAfter(
-                    delay: self.nextDelay, deleted, other, completion
-                )
-                self.currentDelay = self.nextDelay
-            }
-        }
-    }
-
-    private static func mapAndSort(_ dtos: [TodoDTO]) -> [Todo] {
-        var todos = dtos.map { Todo($0) }
-
-        todos.sortByCreateAt()
-
-        return todos
+                completion(.success(dtos.mapAndSort()))
+            })
+            .store(in: &self.cancellables)
     }
 
     private var nextDelay: Double {

@@ -1,10 +1,12 @@
 //
-//  DefaultNetworkingService.swift
+//  TodoListNetworkingImp.swift
 //  ToDoList
 //
 //  Created by Maxim Ivanov on 29.06.2021.
 //
 
+import Combine
+import CoreModule
 import Foundation
 
 class TodoListNetworkingImp: TodoListNetworking {
@@ -12,122 +14,91 @@ class TodoListNetworkingImp: TodoListNetworking {
     private let urlString: String
     private let headers: [String: String]
     private let httpClient: HttpClient
-    private let coder: JsonCoder
 
     init(urlString: String,
          headers: [String: String],
-         httpClient: HttpClient,
-         coder: JsonCoder) {
+         httpClient: HttpClient) {
         self.urlString = urlString
         self.headers = headers
         self.httpClient = httpClient
-        self.coder = coder
     }
 
-    func fetchTodoList(_ completion: @escaping TodoListDTOCallback) {
+    func fetchTodoList() -> AnyPublisher<[TodoDTO], Error> {
         send(
             Http(
                 urlString: "\(urlString)/tasks/",
                 method: "GET",
                 headers: headers
-            ),
-            completion
+            )
         )
     }
 
-    func createTodo(_ todoDTO: TodoDTO, _ completion: @escaping TodoDTOCallback) {
+    func createTodo(_ todoDTO: TodoDTO) -> AnyPublisher<TodoDTO, Error> {
         send(
             Http(
                 urlString: "\(urlString)/tasks/",
                 method: "POST",
                 headers: headers
             ),
-            todoDTO,
-            completion
+            todoDTO
         )
     }
 
-    func updateTodo(_ todoDTO: TodoDTO, _ completion: @escaping TodoDTOCallback) {
+    func updateTodo(_ todoDTO: TodoDTO) -> AnyPublisher<TodoDTO, Error> {
         send(
             Http(
                 urlString: "\(urlString)/tasks/\(todoDTO.id)",
                 method: "PUT",
                 headers: headers
             ),
-            todoDTO,
-            completion
+            todoDTO
         )
     }
 
-    func deleteTodo(_ id: String, _ completion: @escaping TodoDTOCallback) {
+    func deleteTodo(_ id: String) -> AnyPublisher<TodoDTO, Error> {
         send(
             Http(
                 urlString: "\(urlString)/tasks/\(id)",
                 method: "DELETE",
                 headers: headers
-            ),
-            completion
+            )
         )
     }
 
-    func syncTodoList(_ requestData: SyncTodoListRequestData, _ completion: @escaping TodoListDTOCallback) {
+    func syncTodoList(_ requestData: SyncTodoListRequestData) -> AnyPublisher<[TodoDTO], Error> {
         send(
             Http(
                 urlString: "\(urlString)/tasks/",
                 method: "PUT",
                 headers: headers
             ),
-            requestData,
-            completion
+            requestData
         )
     }
 
-    private func send<OutputDTO: Decodable>(_ http: Http, _ completion: @escaping (Result<OutputDTO, Error>) -> Void) {
-        httpClient.send(http) { [weak self] result in
-            self?.decode(result, completion)
-        }
+    private func send<OutputDTO: Decodable>(_ http: Http) -> AnyPublisher<OutputDTO, Error> {
+        httpClient.send(http)
+            .tryMap { httpResponse in
+                httpResponse.data
+            }
+            .decode(type: OutputDTO.self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
     }
 
-    private func send<InputDTO: Encodable, OutputDTO: Decodable>(
-        _ http: Http,
-        _ dto: InputDTO,
-        _ completion: @escaping (Result<OutputDTO, Error>) -> Void
-    ) {
-        coder.encode(dto) { [weak self] result in
-            do {
-                let data = try result.get()
-
-                self?.httpClient.send(
+    private func send<InputDTO: Encodable, OutputDTO: Decodable>(_ http: Http,
+                                                                 _ dto: InputDTO) -> AnyPublisher<OutputDTO, Error> {
+        Just(dto)
+            .encode(encoder: JSONEncoder())
+            .flatMap { data in
+                self.send(
                     Http(
                         urlString: http.urlString,
                         method: http.method,
                         headers: http.headers,
                         body: data
                     )
-                ) { [weak self] result in
-                    self?.decode(result, completion)
-                }
-            } catch {
-                completion(.failure(error))
+                )
             }
-        }
-    }
-
-    private func decode<OutputDTO: Decodable>(_ result: Result<Data, Error>,
-                                              _ completion: @escaping (Result<OutputDTO, Error>) -> Void) {
-        do {
-            let data = try result.get()
-
-            coder.decode(data) { (result: Result<OutputDTO, Error>) in
-                switch result {
-                case .success(let dto):
-                    completion(.success(dto))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-        } catch {
-            completion(.failure(error))
-        }
+            .eraseToAnyPublisher()
     }
 }

@@ -47,7 +47,13 @@ final class MainNavigatorImpl: MainNavigator {
         subscribeToSearchTextInput()
     }
 
+    deinit {
+        logger.log(dismissedFeatureName: "MainNavigatorImpl")
+    }
+
     func appendTo(rootView: UIView) {
+        logger.log(installedFeatureName: "MainNavigatorImpl")
+
         addNavToNewWord(rootView)
         addNavToFavorites()
         addNavToTodoList()
