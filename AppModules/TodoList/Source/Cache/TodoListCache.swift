@@ -19,9 +19,3 @@ protocol TodoListCache {
 
     func replaceWith(_ todoList: [Todo]) async throws
 }
-
-enum TodoListCacheError: Error {
-    case insertFailed(Error)
-    case updateFailed(Error)
-    case deleteFailed(Error)
-}

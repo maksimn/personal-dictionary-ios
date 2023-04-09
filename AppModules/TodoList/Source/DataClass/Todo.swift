@@ -95,4 +95,8 @@ struct Todo: Equatable {
         lhs.updatedAt == rhs.updatedAt &&
         lhs.isDirty == rhs.isDirty
     }
+
+    var description: String {
+        "\(self)"
+    }
 }

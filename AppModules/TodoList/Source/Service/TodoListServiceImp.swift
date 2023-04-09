@@ -51,7 +51,7 @@ final class TodoListServiceImp: TodoListService {
                 .sink(receiveCompletion: { completion in
                     switch completion {
                     case .failure(let error):
-                        continuation.resume(throwing: TodoListServiceError.createFailed(error))
+                        continuation.resume(throwing: error)
                     case .finished:
                         break
                     }
@@ -68,7 +68,7 @@ final class TodoListServiceImp: TodoListService {
                 .sink(receiveCompletion: { completion in
                     switch completion {
                     case .failure(let error):
-                        continuation.resume(throwing: TodoListServiceError.updateFailed(error))
+                        continuation.resume(throwing: error)
                     case .finished:
                         break
                     }
@@ -85,7 +85,7 @@ final class TodoListServiceImp: TodoListService {
                 .sink(receiveCompletion: { completion in
                     switch completion {
                     case .failure(let error):
-                        continuation.resume(throwing: TodoListServiceError.deleteFailed(error))
+                        continuation.resume(throwing: error)
                     case .finished:
                         break
                     }
@@ -158,5 +158,9 @@ final class TodoListServiceImp: TodoListService {
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) { [weak self] in
             self?.syncWithRemote(deleted, other, completion)
         }
+    }
+
+    enum TodoListServiceError: Error {
+        case syncRequestPending
     }
 }

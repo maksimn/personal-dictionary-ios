@@ -97,7 +97,7 @@ class TodoListCacheImp: TodoListCache {
             } catch {
                 self?.logger.errorWithContext(error)
                 DispatchQueue.main.async {
-                    completion(.failure(TodoListCacheError.insertFailed(error)))
+                    completion(.failure(error))
                 }
             }
         }
@@ -126,7 +126,7 @@ class TodoListCacheImp: TodoListCache {
             } catch {
                 self?.logger.errorWithContext(error)
                 DispatchQueue.main.async {
-                    completion(.failure(TodoListCacheError.updateFailed(error)))
+                    completion(.failure(error))
                 }
             }
         }
@@ -155,7 +155,7 @@ class TodoListCacheImp: TodoListCache {
             } catch {
                 self?.logger.errorWithContext(error)
                 DispatchQueue.main.async {
-                    completion(.failure(TodoListCacheError.deleteFailed(error)))
+                    completion(.failure(error))
                 }
             }
         }
