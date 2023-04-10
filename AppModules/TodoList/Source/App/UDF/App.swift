@@ -10,11 +10,12 @@ import Foundation
 
 struct App: ReducerProtocol {
 
-    private let effects: Effects
-
-    init(effects: Effects) {
-        self.effects = effects
-    }
+    let loadCachedTodosEffect: Effect
+    let getRemoteTodosEffect: Effect
+    let replaceAllTodosInCacheEffect: TodoListEffect
+    let createTodoEffect: TodoEffect
+    let updateTodoEffect: TodoEffect
+    let deleteTodoEffect: TodoEffect
 
     struct State: Equatable {
         var mainList = MainList.State()
@@ -72,31 +73,31 @@ struct App: ReducerProtocol {
     private func reduceInto(_ state: inout State, mainListAction action: MainList.Action) -> EffectTask<Action> {
         switch action {
         case .loadCachedTodos:
-            return effects.loadCachedTodos()
+            return loadCachedTodosEffect.run()
 
         case .getRemoteTodos:
-            return effects.getRemoteTodos()
+            return getRemoteTodosEffect.run()
 
         case .createTodo(let todo):
-            return effects.create(todo: todo)
+            return createTodoEffect.run(todo: todo)
 
         case .toggleTodoCompletion(let todo):
-            return effects.update(todo: todo.update(isCompleted: !todo.isCompleted))
+            return updateTodoEffect.run(todo: todo.update(isCompleted: !todo.isCompleted))
 
         case .deleteTodo(let todo):
-            return effects.delete(todo: todo)
+            return deleteTodoEffect.run(todo: todo)
 
         case .editor(.saveTodo(let todo, let mode)):
             switch mode {
             case .create:
-                return effects.create(todo: todo)
+                return createTodoEffect.run(todo: todo)
 
             case .edit:
-                return effects.update(todo: todo)
+                return updateTodoEffect.run(todo: todo)
             }
 
         case .editor(.deleteTodo(let todo)):
-            return effects.delete(todo: todo)
+            return deleteTodoEffect.run(todo: todo)
 
         default:
             return .none
@@ -111,6 +112,6 @@ struct App: ReducerProtocol {
     private func updateAndSaveInCache(state: inout State, todos: [Todo]) -> EffectTask<Action> {
         update(state: &state, with: todos)
 
-        return effects.replaceAllTodosInCache(todos: todos)
+        return replaceAllTodosInCacheEffect.run(todoList: todos)
     }
 }
