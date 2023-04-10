@@ -34,8 +34,6 @@ struct App: ReducerProtocol {
 
         case mainList(MainList.Action)
         case networkIndicator(NetworkIndicator.Action)
-
-        case log(LogAction)
     }
 
     var body: some ReducerProtocol<State, Action> {

@@ -17,10 +17,3 @@ protocol TodoListService {
 
     func syncWithRemote(_ deleted: [String], _ other: [Todo]) async throws -> [Todo]
 }
-
-enum TodoListServiceError: Error {
-    case createFailed(Error)
-    case updateFailed(Error)
-    case deleteFailed(Error)
-    case syncRequestPending
-}
