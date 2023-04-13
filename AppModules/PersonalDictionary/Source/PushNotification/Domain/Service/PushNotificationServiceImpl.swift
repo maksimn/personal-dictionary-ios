@@ -21,7 +21,7 @@ final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUs
     private let application: UIApplication
     private let pnTimeCalculator: PNTimeCalculator
     private let pushNotificationData: PushNotificationData
-    private let navToNewWordRouter: CoreRouter
+    private let navToNewWordRouter: Router
     private let logger: Logger
 
     private lazy var content = {
@@ -38,7 +38,7 @@ final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUs
          application: UIApplication,
          pnTimeCalculator: PNTimeCalculator,
          pushNotificationData: PushNotificationData,
-         navToNewWordRouter: CoreRouter,
+         navToNewWordRouter: Router,
          logger: Logger) {
         self.userNotificationCenter = userNotificationCenter
         self.application = application

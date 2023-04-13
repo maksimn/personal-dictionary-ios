@@ -14,14 +14,14 @@ final class NavToNewWordView: UIView {
     private let navToNewWordButton = UIButton()
 
     private let navToNewWordImage: UIImage
-    private let router: CoreRouter
+    private let router: Router
 
     /// Инициализатор.
     /// - Parameters:
     ///  - navToNewWordImage: картинка для представления.
     ///  - router: роутер для навигации на экран.
     init(navToNewWordImage: UIImage,
-         router: CoreRouter) {
+         router: Router) {
         self.navToNewWordImage = navToNewWordImage
         self.router = router
         super.init(frame: .zero)
