@@ -46,14 +46,14 @@ public final class AppBuilder: ViewControllerBuilder {
 
     private lazy var insertTodoIntoCacheEffect = InsertTodoIntoCacheEffect(
         cache: cache,
-        logger: logger,
-        syncEffect: syncWithRemoteTodosEffect
+        syncEffect: syncWithRemoteTodosEffect,
+        logger: logger
     )
 
     private lazy var updateTodoInCacheEffect = UpdateTodoInCacheEffect(
         cache: cache,
-        logger: logger,
-        syncEffect: syncWithRemoteTodosEffect
+        syncEffect: syncWithRemoteTodosEffect,
+        logger: logger
     )
 
     private lazy var createTodoEffect = CreateTodoEffect(

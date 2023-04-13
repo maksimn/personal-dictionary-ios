@@ -24,7 +24,7 @@ protocol TodoListEffect {
 
 protocol SyncEffect {
 
-    func sync(_ send: Send<App.Action>) async
+    func run(_ send: Send<App.Action>) async
 }
 
 protocol CachedTodoEffect {
