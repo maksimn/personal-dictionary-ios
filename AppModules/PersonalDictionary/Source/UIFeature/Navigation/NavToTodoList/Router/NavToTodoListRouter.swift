@@ -10,7 +10,7 @@ import TodoList
 import UIKit
 
 /// Роутер, предназначенный для перехода к приложению "Список дел" (TodoList).
-final class NavToTodoListRouter: CoreRouter {
+final class NavToTodoListRouter: Router {
 
     private let rootViewController: UIViewController
     private let todoListBuilder: ViewControllerBuilder

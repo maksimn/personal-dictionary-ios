@@ -9,7 +9,7 @@ import CoreModule
 import UIKit
 
 /// Реализация роутера для навигации на экран Избранного.
-final class NavToFavoritesRouter: CoreRouter {
+final class NavToFavoritesRouter: Router {
 
     private weak var navigationController: UINavigationController?
     private let favoritesBuilder: ViewControllerBuilder

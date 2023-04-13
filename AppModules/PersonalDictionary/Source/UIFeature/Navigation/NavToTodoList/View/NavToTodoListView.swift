@@ -12,7 +12,7 @@ import UIKit
 final class NavToTodoListView: UIView {
 
     private let routingButtonTitle: String
-    private let router: CoreRouter
+    private let router: Router
 
     private let routingButton = UIButton()
 
@@ -21,7 +21,7 @@ final class NavToTodoListView: UIView {
     ///  - routingButtonTitle: тайтл для навигационной кнопки.
     ///  - router: роутер для навигации на новый экран.
     init(routingButtonTitle: String,
-         router: CoreRouter,
+         router: Router,
          theme: Theme) {
         self.routingButtonTitle = routingButtonTitle
         self.router = router

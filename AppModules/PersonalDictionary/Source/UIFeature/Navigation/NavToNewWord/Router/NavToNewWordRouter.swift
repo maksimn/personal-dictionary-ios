@@ -9,7 +9,7 @@ import CoreModule
 import UIKit
 
 /// Реализация роутера для навигации на экран добавления нового слова в Личный словарь.
-final class NavToNewWordRouter: CoreRouter {
+final class NavToNewWordRouter: Router {
 
     private weak var navigationController: UINavigationController?
     private let newWordBuilder: ViewControllerBuilder

@@ -12,7 +12,7 @@ import UIKit
 final class NavToFavoritesView: UIView {
 
     private let routingButtonTitle: String
-    private let navToFavoritesRouter: CoreRouter
+    private let navToFavoritesRouter: Router
 
     private let routingButton = UIButton()
 
@@ -21,7 +21,7 @@ final class NavToFavoritesView: UIView {
     ///  - routingButtonTitle: текст  навигационной кнопки на экран списка избранных слов.
     ///  - navToFavoritesRouter: роутер для навигации на экран Избранного.
     init(routingButtonTitle: String,
-         navToFavoritesRouter: CoreRouter,
+         navToFavoritesRouter: Router,
          theme: Theme) {
         self.routingButtonTitle = routingButtonTitle
         self.navToFavoritesRouter = navToFavoritesRouter
