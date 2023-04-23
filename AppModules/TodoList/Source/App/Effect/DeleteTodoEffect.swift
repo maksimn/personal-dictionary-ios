@@ -40,7 +40,7 @@ struct DeleteTodoEffect: TodoEffect {
                     let tombstone = Tombstone(todoId: todo.id, deletedAt: Date())
 
                     try await deadCache.insert(tombstone)
-                    await syncEffect.sync(send)
+                    await syncEffect.run(send)
 
                     return
                 }

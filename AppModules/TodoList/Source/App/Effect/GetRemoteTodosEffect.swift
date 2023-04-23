@@ -17,7 +17,7 @@ struct GetRemoteTodosEffect: Effect {
     func run() -> AppEffectTask {
         .run { send in
             if cache.isDirty {
-                await syncEffect.sync(send)
+                await syncEffect.run(send)
                 return
             }
 

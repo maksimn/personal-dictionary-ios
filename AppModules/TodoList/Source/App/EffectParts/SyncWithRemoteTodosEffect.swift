@@ -13,7 +13,7 @@ struct SyncWithRemoteTodosEffect: SyncEffect {
     let deadCache: DeadCache
     let service: TodoListService
 
-    func sync(_ send: Send<App.Action>) async {
+    func run(_ send: Send<App.Action>) async {
         let deleted = Array(Set(deadCache.items.map { $0.todoId }))
         let dirtyTodos = cache.todos.filter { $0.isDirty }
 

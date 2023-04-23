@@ -11,9 +11,9 @@ import CoreModule
 struct UpdateTodoInCacheEffect: CachedTodoEffect {
 
     let cache: TodoListCache
-    let logger: Logger
     let syncEffect: SyncEffect
-
+    let logger: Logger
+    
     private let updateTodoInCacheStart = "UPDATE TODO IN CACHE START: "
     private let updateTodoInCacheSuccess = "UPDATE TODO IN CACHE SUCCESS: "
     private let updateTodoInCacheError = "UPDATE TODO IN CACHE ERROR: "
@@ -25,7 +25,7 @@ struct UpdateTodoInCacheEffect: CachedTodoEffect {
             logger.logWithContext(updateTodoInCacheSuccess + todo.description)
 
             if shouldSync {
-                await syncEffect.sync(send)
+                await syncEffect.run(send)
             }
         } catch {
             logger.logWithContext(updateTodoInCacheError + error.localizedDescription, level: .error)
