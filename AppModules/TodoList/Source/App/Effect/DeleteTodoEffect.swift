@@ -5,6 +5,7 @@
 //  Created by Maksim Ivanov on 10.04.2023.
 //
 
+import ComposableArchitecture
 import CoreModule
 import Foundation
 
@@ -16,46 +17,43 @@ struct DeleteTodoEffect: TodoEffect {
     let syncEffect: SyncEffect
     let logger: Logger
 
-    private let deleteTodoFromCacheStart = "DELETE TODO FROM CACHE START: "
-    private let deleteTodoFromCacheSuccess = "DELETE TODO FROM CACHE SUCCESS: "
-    private let deleteTodoFromCacheError = "DELETE TODO FROM CACHE ERROR: "
-
-    private let deleteRemoteTodoStart = "DELETE REMOTE TODO START: "
-    private let deleteRemoteTodoSuccess = "DELETE REMOTE TODO SUCCESS: "
-    private let deleteRemoteTodoError = "DELETE REMOTE TODO ERROR: "
-
     func run(todo: Todo) -> AppEffectTask {
         .run { send in
-            do {
-                logger.logWithContext(deleteTodoFromCacheStart + todo.description)
-                try await cache.delete(todo)
-                logger.logWithContext(deleteRemoteTodoSuccess + todo.description)
-            } catch {
-                logger.logWithContext(deleteRemoteTodoError + error.localizedDescription, level: .error)
-                throw error
+            try await deleteFromCache(todo)
+            await deleteRemote(todo, send)
+        }
+    }
+
+    private func deleteFromCache(_ todo: Todo) async throws {
+        do {
+            logger.logWithContext("DELETE TODO FROM CACHE START: \(todo)")
+            try await cache.delete(todo)
+            logger.logWithContext("DELETE TODO FROM CACHE SUCCESS: \(todo)")
+        } catch {
+            logger.logWithContext("DELETE TODO FROM CACHE ERROR: \(error)\t \(todo)", level: .error)
+            throw error
+        }
+    }
+
+    private func deleteRemote(_ todo: Todo, _ send: Send<App.Action>) async {
+        do {
+            if cache.isDirty {
+                try await createTombstone(for: todo)
+                return await syncEffect.run(send)
             }
 
-            do {
-                if cache.isDirty {
-                    let tombstone = Tombstone(todoId: todo.id, deletedAt: Date())
+            await send(.networkIndicator(.incrementNetworkRequestCount))
 
-                    try await deadCache.insert(tombstone)
-                    await syncEffect.run(send)
+            logger.logWithContext("DELETE REMOTE TODO START: \(todo)")
 
-                    return
-                }
+            try await service.deleteRemote(todo)
+            await send(.networkIndicator(.decrementNetworkRequestCount))
 
-                await send(.networkIndicator(.incrementNetworkRequestCount))
-                logger.logWithContext(deleteRemoteTodoStart + todo.description)
-                try await service.deleteRemote(todo)
-                await send(.networkIndicator(.decrementNetworkRequestCount))
-                logger.logWithContext(deleteRemoteTodoSuccess + todo.description)
-            } catch {
-                await send(.networkIndicator(.decrementNetworkRequestCount))
-                logger.logWithContext(deleteRemoteTodoError + error.localizedDescription, level: .error)
-            }
+            logger.logWithContext("DELETE REMOTE TODO SUCCESS: \(todo)")
+        } catch {
+            await send(.networkIndicator(.decrementNetworkRequestCount))
 
-            try await createTombstone(for: todo)
+            logger.logWithContext("DELETE REMOTE TODO ERROR: \(error)\t \(todo)")
         }
     }
 

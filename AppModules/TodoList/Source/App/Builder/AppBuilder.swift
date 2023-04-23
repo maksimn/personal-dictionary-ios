@@ -46,13 +46,11 @@ public final class AppBuilder: ViewControllerBuilder {
 
     private lazy var insertTodoIntoCacheEffect = InsertTodoIntoCacheEffect(
         cache: cache,
-        syncEffect: syncWithRemoteTodosEffect,
         logger: logger
     )
 
     private lazy var updateTodoInCacheEffect = UpdateTodoInCacheEffect(
         cache: cache,
-        syncEffect: syncWithRemoteTodosEffect,
         logger: logger
     )
 
@@ -61,6 +59,7 @@ public final class AppBuilder: ViewControllerBuilder {
         service: service,
         insertTodoIntoCacheEffect: insertTodoIntoCacheEffect,
         updateTodoInCacheEffect: updateTodoInCacheEffect,
+        syncEffect: syncWithRemoteTodosEffect,
         logger: logger
     )
 
@@ -68,6 +67,7 @@ public final class AppBuilder: ViewControllerBuilder {
         cache: cache,
         service: service,
         updateTodoInCacheEffect: updateTodoInCacheEffect,
+        syncEffect: syncWithRemoteTodosEffect,
         logger: logger
     )
 

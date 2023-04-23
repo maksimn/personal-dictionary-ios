@@ -5,45 +5,48 @@
 //  Created by Maksim Ivanov on 10.04.2023.
 //
 
+import ComposableArchitecture
 import CoreModule
 
 struct CreateTodoEffect: TodoEffect {
 
     let cache: TodoListCache
     let service: TodoListService
-    let insertTodoIntoCacheEffect: CachedTodoEffect
-    let updateTodoInCacheEffect: CachedTodoEffect
+    let insertTodoIntoCacheEffect: AsyncTodoEffect
+    let updateTodoInCacheEffect: AsyncTodoEffect
+    let syncEffect: SyncEffect
     let logger: Logger
-
-    private let createRemoteTodoStart = "CREATE REMOTE TODO START: "
-    private let createRemoteTodoSuccess = "CREATE REMOTE TODO SUCCESS: "
-    private let createRemoteTodoError = "CREATE REMOTE TODO ERROR: "
 
     func run(todo: Todo) -> AppEffectTask {
         .run { send in
             let dirtyTodo = todo.update(isDirty: true)
+            let cleanTodo = todo.update(isDirty: false)
 
             if cache.isDirty {
-                try await insertTodoIntoCacheEffect.run(todo: dirtyTodo, shouldSync: true, send)
-                return
+                try await insertTodoIntoCacheEffect.run(todo: dirtyTodo)
+                return await syncEffect.run(send)
             }
 
-            try await insertTodoIntoCacheEffect.run(todo: dirtyTodo, shouldSync: false, send)
+            try await insertTodoIntoCacheEffect.run(todo: dirtyTodo)
+            try await createRemote(todo: cleanTodo, send)
+            try await updateTodoInCacheEffect.run(todo: cleanTodo)
+        }
+    }
 
-            do {
-                await send(.networkIndicator(.incrementNetworkRequestCount))
-                logger.logWithContext(createRemoteTodoStart + todo.description)
-                try await service.createRemote(todo)
-                await send(.networkIndicator(.decrementNetworkRequestCount))
-                logger.logWithContext(createRemoteTodoSuccess + todo.description)
-            } catch {
-                await send(.networkIndicator(.decrementNetworkRequestCount))
-                logger.logWithContext(createRemoteTodoError + error.localizedDescription, level: .error)
+    private func createRemote(todo: Todo, _ send: Send<App.Action>) async throws {
+        do {
+            logger.logWithContext("CREATE REMOTE TODO START: \(todo)")
 
-                return
-            }
+            await send(.networkIndicator(.incrementNetworkRequestCount))
+            try await service.createRemote(todo)
+            await send(.networkIndicator(.decrementNetworkRequestCount))
 
-            try await updateTodoInCacheEffect.run(todo: todo, shouldSync: false, send)
+            logger.logWithContext("CREATE REMOTE TODO SUCCESS: \(todo)")
+        } catch {
+            logger.logWithContext("CREATE REMOTE TODO ERROR: \(error)\t TODO: \(todo)", level: .error)
+
+            await send(.networkIndicator(.decrementNetworkRequestCount))
+            throw error
         }
     }
 }

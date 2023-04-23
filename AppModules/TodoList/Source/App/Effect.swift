@@ -17,6 +17,11 @@ protocol TodoEffect {
     func run(todo: Todo) -> AppEffectTask
 }
 
+protocol AsyncTodoEffect {
+
+    func run(todo: Todo) async throws
+}
+
 protocol TodoListEffect {
 
     func run(todoList: [Todo]) -> AppEffectTask
@@ -25,9 +30,4 @@ protocol TodoListEffect {
 protocol SyncEffect {
 
     func run(_ send: Send<App.Action>) async
-}
-
-protocol CachedTodoEffect {
-
-    func run(todo: Todo, shouldSync: Bool, _ send: Send<App.Action>) async throws
 }
