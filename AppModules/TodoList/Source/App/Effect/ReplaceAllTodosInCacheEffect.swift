@@ -12,20 +12,16 @@ struct ReplaceAllTodosInCacheEffect: TodoListEffect {
     let cache: TodoListCache
     let logger: Logger
 
-    private let replaceAllTodosInCacheStart = "REPLACE ALL TODOS IN CACHE START"
-    private let replaceAllTodosInCacheSuccess = "REPLACE ALL TODOS IN CACHE SUCCESS"
-    private let replaceAllTodosInCacheError = "REPLACE ALL TODOS IN CACHE ERROR: "
-
     func run(todoList: [Todo]) -> AppEffectTask {
         .run { send in
-            logger.logWithContext(replaceAllTodosInCacheStart)
+            logger.logWithContext("REPLACE ALL TODOS IN CACHE START")
 
             do {
                 try await cache.replaceWith(todoList)
 
-                logger.logWithContext(replaceAllTodosInCacheSuccess)
+                logger.logWithContext("REPLACE ALL TODOS IN CACHE SUCCESS")
             } catch {
-                logger.logWithContext(replaceAllTodosInCacheError + error.localizedDescription, level: .error)
+                logger.logWithContext("REPLACE ALL TODOS IN CACHE ERROR: \(error)", level: .error)
             }
         }
     }

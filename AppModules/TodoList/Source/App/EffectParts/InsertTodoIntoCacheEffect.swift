@@ -8,27 +8,18 @@
 import ComposableArchitecture
 import CoreModule
 
-struct InsertTodoIntoCacheEffect: CachedTodoEffect {
+struct InsertTodoIntoCacheEffect: AsyncTodoEffect {
 
     let cache: TodoListCache
-    let syncEffect: SyncEffect
     let logger: Logger
-    
-    private let insertTodoIntoCacheStart = "INSERT TODO INTO CACHE START: "
-    private let insertTodoIntoCacheSuccess = "INSERT TODO INTO CACHE SUCCESS: "
-    private let insertTodoIntoCacheError = "INSERT TODO INTO CACHE ERROR: "
 
-    func run(todo: Todo, shouldSync: Bool, _ send: Send<App.Action>) async throws {
+    func run(todo: Todo) async throws {
         do {
-            logger.logWithContext(insertTodoIntoCacheStart + todo.description)
+            logger.logWithContext("INSERT TODO INTO CACHE START: \(todo)")
             try await cache.insert(todo)
-            logger.logWithContext(insertTodoIntoCacheSuccess + todo.description)
-
-            if shouldSync {
-                await syncEffect.run(send)
-            }
+            logger.logWithContext("INSERT TODO INTO CACHE SUCCESS: \(todo)")
         } catch {
-            logger.logWithContext(insertTodoIntoCacheError + error.localizedDescription, level: .error)
+            logger.logWithContext("INSERT TODO INTO CACHE ERROR: \(error)" , level: .error)
             throw error
         }
     }
