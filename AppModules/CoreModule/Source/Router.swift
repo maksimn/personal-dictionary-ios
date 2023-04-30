@@ -9,3 +9,10 @@ public protocol Router {
 
     func navigate()
 }
+
+public protocol ParametrizedRouter {
+
+    associatedtype Parameter
+
+    func navigate(_ parameter: Parameter)
+}

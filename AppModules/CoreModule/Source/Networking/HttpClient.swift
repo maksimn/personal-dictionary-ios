@@ -17,7 +17,7 @@ public struct Http {
     public let body: Data?
 
     public init(urlString: String = "",
-                method: String = "",
+                method: String = "GET",
                 headers: [String: String]? = nil,
                 body: Data? = nil) {
         self.urlString = urlString
