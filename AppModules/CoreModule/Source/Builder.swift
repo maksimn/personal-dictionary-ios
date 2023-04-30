@@ -12,9 +12,23 @@ public protocol ViewBuilder {
     func build() -> UIView
 }
 
+public protocol ParametrizedViewBuilder {
+
+    associatedtype Parameter
+
+    func build(_ parameter: Parameter) -> UIView
+}
+
 public protocol ViewControllerBuilder {
 
     func build() -> UIViewController
+}
+
+public protocol ParametrizedViewControllerBuilder {
+
+    associatedtype Parameter
+
+    func build(_ parameter: Parameter) -> UIViewController
 }
 
 public protocol SearchControllerBuilder {
