@@ -5,25 +5,22 @@
 //  Created by Maxim Ivanov on 07.11.2021.
 //
 
-import RxSwift
 import UIKit
 
 /// View controller Главного списка слов.
-final class MainWordListViewController: UIViewController {
+final class MainWordListViewController: UIViewController, MainWordListView {
 
-    private let viewModel: MainWordListViewModel
+    private let presenter: MainWordListPresenter
     private let wordListGraph: WordListGraph
-
-    private let disposeBag = DisposeBag()
 
     /// Инициализатор.
     /// - Parameters:
     ///  - wordListBuilder: билдер вложенной фичи "Список слов".
     init(
-        viewModel: MainWordListViewModel,
+        presenter: MainWordListPresenter,
         wordListBuilder: WordListBuilder
     ) {
-        self.viewModel = viewModel
+        self.presenter = presenter
         self.wordListGraph = wordListBuilder.build()
         super.init(nibName: nil, bundle: nil)
     }
@@ -38,19 +35,16 @@ final class MainWordListViewController: UIViewController {
         view = UIView()
 
         layout(wordListView: wordListGraph.view)
-        bindToViewModel()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.fetch()
+        presenter.fetchWordList()
     }
 
-    private func bindToViewModel() {
-        viewModel.wordList.subscribe(onNext: { [weak self] wordList in
-            guard let wordListViewModel = self?.wordListGraph.viewModel else { return }
+    func set(wordList: WordListState) {
+        let wordListViewModel = wordListGraph.viewModel
 
-            wordListViewModel.wordList.accept(wordList)
-        }).disposed(by: disposeBag)
+        wordListViewModel.wordList.accept(wordList)
     }
 }

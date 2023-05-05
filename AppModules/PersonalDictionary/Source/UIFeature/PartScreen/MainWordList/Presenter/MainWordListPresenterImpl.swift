@@ -8,9 +8,9 @@
 import CoreModule
 import RxSwift
 
-final class MainWordListViewModelImpl: MainWordListViewModel {
+final class MainWordListPresenterImpl: MainWordListPresenter {
 
-    let wordList = BindableWordList(value: [])
+    weak var view: MainWordListView?
 
     private let model: MainWordListModel
     private let newWordStream: NewWordStream
@@ -25,7 +25,7 @@ final class MainWordListViewModelImpl: MainWordListViewModel {
         subscribe()
     }
 
-    func fetch() {
+    func fetchWordList() {
         let wordList = model.fetchMainWordList()
 
         onNewState(wordList, actionName: "FETCH MAIN WORDLIST")
@@ -34,11 +34,11 @@ final class MainWordListViewModelImpl: MainWordListViewModel {
     private func onNewState(_ state: WordListState, actionName: String) {
         logger.logState(actionName: actionName, state)
 
-        wordList.accept(state)
+        view?.set(wordList: state)
     }
 
     private func create(_ word: Word) {
-        let wordList = model.create(word, state: self.wordList.value)
+        let wordList = model.create(word, state: model.fetchMainWordList())
 
         onNewState(wordList, actionName: "create word")
 

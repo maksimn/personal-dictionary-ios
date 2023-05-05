@@ -35,15 +35,17 @@ final class MainWordListBuilder: ViewControllerBuilder {
             wordListRepository: wordListRepository,
             translationService: translationService
         )
-        let viewModel = MainWordListViewModelImpl(
+        let presenter = MainWordListPresenterImpl(
             model: model,
             newWordStream: WordStreamImpl.instance,
             logger: logger()
         )
         let view = MainWordListViewController(
-            viewModel: viewModel,
+            presenter: presenter,
             wordListBuilder: WordListBuilderImpl(shouldAnimateWhenAppear: true, dependency: dependency)
         )
+
+        presenter.view = view
 
         return view
     }
