@@ -38,7 +38,7 @@ final class MainWordListViewModelImpl: MainWordListViewModel {
     }
 
     private func create(_ word: Word) {
-        let wordList = model.create(word, state: self.wordList.value)
+        let wordList = model.create(word, state: model.fetchMainWordList())
 
         onNewState(wordList, actionName: "create word")
 
