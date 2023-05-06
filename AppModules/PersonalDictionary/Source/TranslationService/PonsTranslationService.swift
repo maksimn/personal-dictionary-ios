@@ -48,22 +48,9 @@ final class PonsTranslationService: TranslationService {
         )
 
         logger.log("PONS FETCH TRANSLATION START, word = \(word)", level: .info)
-        logger.log("HTTP REQUEST START, \(http)", level: .info)
 
         return transformToRxObservable(
                 httpClient.send(http)
-            )
-            .do(
-                onNext: { httpResponse in
-                    self.logger.log("""
-                        HTTP RESPONSE FETCHED
-                        HTTPURLResponse: \(httpResponse.response)
-                        Data: \(String(decoding: httpResponse.data, as: UTF8.self))
-                    """, level: .info)
-                },
-                onError: { error in
-                    self.logger.log("HTTP REQUEST ERROR, \(error)", level: .error)
-                }
             )
             .take(1)
             .asSingle()
