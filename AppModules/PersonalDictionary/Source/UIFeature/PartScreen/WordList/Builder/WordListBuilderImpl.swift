@@ -48,7 +48,7 @@ final class WordListBuilderImpl: WordListBuilder {
         )
         let translationService = PonsTranslationService(
             secret: dependency.appConfig.ponsApiSecret,
-            httpClient: HttpClientImpl(),
+            httpClient: LoggableHttpClient(logger: logger()),
             logger: logger()
         )
 
