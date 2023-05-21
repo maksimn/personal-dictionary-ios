@@ -19,7 +19,7 @@ struct PonsResponseData: Codable {
         guard let str = hits.first?.roms.first?.arabs.first?.translations.first?.target else { return nil }
 
         if let end = str.firstIndex(of: "<") {
-            return String(str[..<end])
+            return String(str[..<str.index(before: end)])
         }
 
         return str
