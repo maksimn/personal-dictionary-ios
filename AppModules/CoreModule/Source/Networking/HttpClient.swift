@@ -1,5 +1,5 @@
 //
-//  CoreService.swift
+//  HttpClient.swift
 //  PersonalDictionary
 //
 //  Created by Maxim Ivanov on 09.10.2021.

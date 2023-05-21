@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 27.10.2022.
 //
 
+import SwiftUI
 import UIKit
 
 public protocol ViewBuilder {
@@ -34,4 +35,10 @@ public protocol ParametrizedViewControllerBuilder {
 public protocol SearchControllerBuilder {
 
     func build() -> UISearchController
+}
+
+public protocol SwiftViewBuilder {
+    associatedtype ViewType: View
+
+    func build() -> ViewType
 }
