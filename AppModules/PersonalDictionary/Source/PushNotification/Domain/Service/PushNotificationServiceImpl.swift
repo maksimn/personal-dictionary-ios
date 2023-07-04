@@ -73,9 +73,10 @@ final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUs
 
     // MARK: - UNUserNotificationCenterDelegate
 
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-            willPresent notification: UNNotification,
-            withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         if application.applicationState == .background {
             completionHandler([.banner, .list, .sound])
         }

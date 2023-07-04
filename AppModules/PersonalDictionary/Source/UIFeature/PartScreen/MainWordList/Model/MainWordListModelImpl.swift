@@ -25,12 +25,12 @@ final class MainWordListModelImpl: MainWordListModel {
 
     func create(_ word: Word, state: WordListState) -> WordListState {
         var state = state
-        
+
         state.insert(word, at: newWordIndex)
-        
+
         return state
     }
-    
+
     func createEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
         wordListRepository.add(word)
             .flatMap { word in
@@ -41,9 +41,9 @@ final class MainWordListModelImpl: MainWordListModel {
             }
             .map { translatedWord in
                 var state = state
-                
+
                 state[self.newWordIndex] = translatedWord
-                
+
                 return state
             }
     }

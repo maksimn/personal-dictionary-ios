@@ -70,7 +70,7 @@ final class WordListModelImplTests: XCTestCase {
             translationService: TranslationServiceMock()
         )
 
-        cudOperationsMock.removeWordMock = { word in Single.error(ErrorMock.err) }
+        cudOperationsMock.removeWordMock = { _ in Single.error(ErrorMock.err) }
 
         // Act
         let single = model.removeEffect(word, state: wordList)
@@ -131,7 +131,7 @@ final class WordListModelImplTests: XCTestCase {
             translationService: TranslationServiceMock()
         )
 
-        cudOperationsMock.updateWordMock = { word in Single.error(ErrorMock.err) }
+        cudOperationsMock.updateWordMock = { _ in Single.error(ErrorMock.err) }
 
         // Act
         let single = model.updateEffect(word, state: [word, word2])

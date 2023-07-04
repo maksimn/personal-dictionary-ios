@@ -20,10 +20,10 @@ struct AppConfig {
     /// Время ежедневного пуш-уведомления
     struct EverydayPNTime {
 
-        /// Час
-        let hh: Int
+        /// Часы
+        let hours: Int
 
         /// Минуты
-        let mm: Int
+        let minutes: Int
     }
 }

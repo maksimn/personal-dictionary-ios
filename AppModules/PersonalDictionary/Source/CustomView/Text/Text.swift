@@ -7,7 +7,7 @@
 
 import UIKit
 
-func SecondaryText(_ text: String, _ theme: Theme) -> UILabel {
+func secondaryText(_ text: String, _ theme: Theme) -> UILabel {
     let label = UILabel()
 
     label.textColor = theme.secondaryTextColor

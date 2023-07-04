@@ -9,7 +9,8 @@ import UIKit
 
 public extension UIColor {
 
-    /// Creates a color object that generates its color data dynamically using the specified colors. For early SDKs creates light color.
+    /// Creates a color object that generates its color data dynamically using the specified colors.
+    /// For early SDKs creates light color.
     /// - Parameters:
     ///   - light: The color for light mode.
     ///   - dark: The color for dark mode.
@@ -21,8 +22,7 @@ public extension UIColor {
                 }
                 return light
             }
-        }
-        else {
+        } else {
             self.init(cgColor: light.cgColor)
         }
     }

@@ -27,10 +27,10 @@ final class FavoriteWordListViewController: UIViewController {
     ) {
         self.viewModel = viewModel
         self.wordListGraph = wordListBuilder.build()
-        centerLabel = SecondaryText(labelText, theme)
+        centerLabel = secondaryText(labelText, theme)
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

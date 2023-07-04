@@ -64,7 +64,7 @@ final class TodoListServiceImp: TodoListService {
                     case .finished:
                         break
                     }
-                }, receiveValue: { dto in
+                }, receiveValue: { _ in
                     self.setNoRequestsPending()
 
                     continuation.resume(returning: Void())
@@ -87,7 +87,7 @@ final class TodoListServiceImp: TodoListService {
                     case .finished:
                         break
                     }
-                }, receiveValue: { dto in
+                }, receiveValue: { _ in
                     self.setNoRequestsPending()
 
                     continuation.resume(returning: Void())
@@ -110,7 +110,7 @@ final class TodoListServiceImp: TodoListService {
                     case .finished:
                         break
                     }
-                }, receiveValue: { dto in
+                }, receiveValue: { _ in
                     self.setNoRequestsPending()
 
                     continuation.resume(returning: Void())

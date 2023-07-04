@@ -19,7 +19,7 @@ struct AppConfigFactory {
         AppConfig(
             langData: createLangData(),
             ponsApiSecret: "",
-            everydayPNTime: AppConfig.EverydayPNTime(hh: 19, mm: 30)
+            everydayPNTime: AppConfig.EverydayPNTime(hours: 19, minutes: 30)
         )
     }
 

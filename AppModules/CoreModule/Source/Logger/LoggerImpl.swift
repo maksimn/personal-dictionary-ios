@@ -28,13 +28,13 @@ extension LogLevel {
         switch self {
         case .debug:
             return .debug
-            
+
         case .info:
             return .default
-            
+
         case .warn:
             return .error
-            
+
         case .error:
             return .fault
         }

@@ -83,7 +83,7 @@ final class MainWordListModelImplTests: XCTestCase {
             translationService: TranslationServiceMock()
         )
 
-        wordListRepositoryMock.addWordMock = { word in Single.error(ErrorMock.err) }
+        wordListRepositoryMock.addWordMock = { _ in Single.error(ErrorMock.err) }
 
         // Act
         let single = model.createEffect(word, state: wordList)

@@ -10,18 +10,18 @@ import Foundation
 /// Реализация типа для вычисления времени возникновения ежедневного пуш-уведомления.
 final class EverydayPNTimeCalculator: PNTimeCalculator {
 
-    private let hh: Int
-    private let mm: Int
+    private let hours: Int
+    private let minutes: Int
     private let calendar: Calendar
 
     /// Инициализатор.
     /// - Parameters:
-    ///  - hh: час для показа уведомления.
-    ///  - mm: минута для показа уведомления.
+    ///  - hours: час для показа уведомления.
+    ///  - minutes: минута для показа уведомления.
     ///  - calendar: системный календарь.
-    init(hh: Int, mm: Int, calendar: Calendar) {
-        self.hh = hh
-        self.mm = mm
+    init(hours: Int, minutes: Int, calendar: Calendar) {
+        self.hours = hours
+        self.minutes = minutes
         self.calendar = calendar
     }
 
@@ -42,9 +42,9 @@ final class EverydayPNTimeCalculator: PNTimeCalculator {
         return DateComponents(
             year: inputComponents.year,
             month: inputComponents.month,
-            day: inputHour <= hh && inputMinute <= mm ? inputDay : inputDay + 1,
-            hour: hh,
-            minute: mm,
+            day: inputHour <= hours && inputMinute <= minutes ? inputDay : inputDay + 1,
+            hour: hours,
+            minute: minutes,
             second: inputComponents.second
         )
     }
