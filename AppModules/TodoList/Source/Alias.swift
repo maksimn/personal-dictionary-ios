@@ -9,5 +9,3 @@ import ComposableArchitecture
 
 typealias TodoListCallback = (Result<[Todo], Error>) -> Void
 typealias VoidCallback = (Result<Void, Error>) -> Void
-
-typealias AppEffectTask = EffectTask<App.Action>

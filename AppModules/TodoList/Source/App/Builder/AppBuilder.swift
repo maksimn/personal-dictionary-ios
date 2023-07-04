@@ -7,17 +7,18 @@
 
 import ComposableArchitecture
 import CoreModule
+import Foundation
 import UIKit
 
 public final class AppBuilder: ViewControllerBuilder {
 
-    private let logger = LoggerImpl(category: "TodoList.App")
+    private func logger() -> Logger { LoggerImpl(category: "TodoList.App") }
 
-    private lazy var cache = TodoListCacheImp(logger: logger)
+    private func cache() -> TodoListCache { TodoListCacheImp(logger: logger()) }
 
-    private lazy var deadCache = DeadCacheImp(logger: logger)
+    private func deadCache() -> DeadCache { DeadCacheImp(logger: logger()) }
 
-    private let service = {
+    private func service() -> TodoListService {
         let token = ""
 
         return TodoListServiceImp(
@@ -30,65 +31,16 @@ public final class AppBuilder: ViewControllerBuilder {
                 httpClient: HttpClientImpl()
             )
         )
-    }()
-
-    private lazy var syncWithRemoteTodosEffect = SyncWithRemoteTodosEffect(
-        cache: cache,
-        deadCache: deadCache,
-        service: service
-    )
-
-    private lazy var getRemoteTodosEffect = GetRemoteTodosEffect(
-        cache: cache,
-        service: service,
-        syncEffect: syncWithRemoteTodosEffect
-    )
-
-    private lazy var insertTodoIntoCacheEffect = InsertTodoIntoCacheEffect(
-        cache: cache,
-        logger: logger
-    )
-
-    private lazy var updateTodoInCacheEffect = UpdateTodoInCacheEffect(
-        cache: cache,
-        logger: logger
-    )
-
-    private lazy var createTodoEffect = CreateTodoEffect(
-        cache: cache,
-        service: service,
-        insertTodoIntoCacheEffect: insertTodoIntoCacheEffect,
-        updateTodoInCacheEffect: updateTodoInCacheEffect,
-        syncEffect: syncWithRemoteTodosEffect,
-        logger: logger
-    )
-
-    private lazy var updateTodoEffect = UpdateTodoEffect(
-        cache: cache,
-        service: service,
-        updateTodoInCacheEffect: updateTodoInCacheEffect,
-        syncEffect: syncWithRemoteTodosEffect,
-        logger: logger
-    )
-
-    private lazy var deleteTodoEffect = DeleteTodoEffect(
-        cache: cache,
-        deadCache: deadCache,
-        service: service,
-        syncEffect: syncWithRemoteTodosEffect,
-        logger: logger
-    )
+    }
 
     public init() { }
 
     public func build() -> UIViewController {
         let app = App(
-            loadCachedTodosEffect: LoadCachedTodosEffect(cache: cache),
-            getRemoteTodosEffect: getRemoteTodosEffect,
-            replaceAllTodosInCacheEffect: ReplaceAllTodosInCacheEffect(cache: cache, logger: logger),
-            createTodoEffect: createTodoEffect,
-            updateTodoEffect: updateTodoEffect,
-            deleteTodoEffect: deleteTodoEffect
+            cache: cache(),
+            deadCache: deadCache(),
+            service: service(),
+            currentDate: { Date() }
         )._printChanges()
         let store = StoreOf<App>(
             initialState: App.State(),
