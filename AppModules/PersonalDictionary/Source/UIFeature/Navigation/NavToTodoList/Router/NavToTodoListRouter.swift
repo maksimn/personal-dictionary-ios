@@ -16,7 +16,7 @@ final class NavToTodoListRouter: Router {
     private let todoListBuilder: ViewControllerBuilder
 
     /// - Parameters:
-    ///   - rootViewController: view контроллер экрана, с которого начинается переход к приложению "Список дел" (TodoList).
+    ///   - rootViewController: view контроллер экрана, с которого начинается переход к приложению "Список дел".
     ///   - todoListBuilder: билдер приложения TodoList ("Список дел").
     init(rootViewController: UIViewController,
          todoListBuilder: ViewControllerBuilder) {

@@ -36,8 +36,8 @@ final class PushNotificationBuilderImpl: PushNotificationBuilder {
         let everydayPNTime = dependency.appConfig.everydayPNTime
 
         return EverydayPNTimeCalculator(
-            hh: everydayPNTime.hh,
-            mm: everydayPNTime.mm,
+            hours: everydayPNTime.hours,
+            minutes: everydayPNTime.minutes,
             calendar: Calendar.current
         )
     }

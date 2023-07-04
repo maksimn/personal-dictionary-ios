@@ -39,8 +39,8 @@ final class WordListView: UIView {
     private let tableView = UITableView()
     private let disposeBag = DisposeBag()
 
-    private lazy var datasource = UITableViewDiffableDataSource<Int, Word>(tableView: tableView) {
-        tableView, indexPath, word in
+    private lazy var datasource = UITableViewDiffableDataSource<Int, Word>(
+        tableView: tableView) { tableView, indexPath, word in
         guard let cell = tableView.dequeueReusableCell(withIdentifier: self.params.cellReuseIdentifier,
                                                        for: indexPath) as? WordTableViewCell else {
             return UITableViewCell()
