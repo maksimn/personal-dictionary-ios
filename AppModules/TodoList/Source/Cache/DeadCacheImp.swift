@@ -5,96 +5,45 @@
 //  Created by Maxim Ivanov on 08.07.2021.
 //
 
-import CoreModule
-import CoreData
+struct DeadCacheImp: DeadCache {
 
-final class DeadCacheImp: DeadCache {
+    private let cbDeadCache: CBDeadCache
 
-    private lazy var container = TodoListPersistentContainer(logger: logger)
-    private let logger: Logger
-
-    private var mainContext: NSManagedObjectContext {
-        container.persistentContainer.viewContext
-    }
-
-    private var persistentContainer: NSPersistentContainer {
-        container.persistentContainer
-    }
-
-    init(logger: Logger) {
-        self.logger = logger
+    init(cbDeadCache: CBDeadCache) {
+        self.cbDeadCache = cbDeadCache
     }
 
     var items: [Tombstone] {
-        let fetchRequest: NSFetchRequest<TombstoneMO> = TombstoneMO.fetchRequest()
-
-        do {
-            let tombstoneMOList = try mainContext.fetch(fetchRequest)
-
-            return tombstoneMOList.map { tombstoneMO in
-                Tombstone(todoId: tombstoneMO.todoId ?? "", deletedAt: tombstoneMO.deletedAt ?? Date())
+        get throws {
+            do {
+                return try cbDeadCache.items
+            } catch {
+                throw DeadCacheError.getItemsError(error)
             }
-        } catch {
-            logger.errorWithContext(error)
-            return []
         }
     }
 
     func insert(_ item: Tombstone) async throws {
         try await withCheckedThrowingContinuation { continuation in
-            insert(tombstone: item) { result in
-                continuation.resume(with: result)
+            cbDeadCache.insert(tombstone: item) { result in
+                switch result {
+                case .success:
+                    continuation.resume()
+                case .failure(let error):
+                    continuation.resume(throwing: DeadCacheError.insertError(error))
+                }
             }
         }
     }
 
     func clear() async throws {
         try await withCheckedThrowingContinuation { continuation in
-            clearTombstones { result in
-                continuation.resume(with: result)
-            }
-        }
-    }
-
-    private func insert(tombstone: Tombstone, _ completion: @escaping VoidCallback) {
-        let backgroundContext = persistentContainer.newBackgroundContext()
-
-        backgroundContext.perform { [weak self] in
-            let tombstoneMO = TombstoneMO(entity: TombstoneMO.entity(), insertInto: backgroundContext)
-
-            tombstoneMO.todoId = tombstone.todoId
-            tombstoneMO.deletedAt = tombstone.deletedAt
-
-            do {
-                try backgroundContext.save()
-                DispatchQueue.main.async {
-                    completion(.success(Void()))
-                }
-            } catch {
-                self?.logger.errorWithContext(error)
-                DispatchQueue.main.async {
-                    completion(.failure(error))
-                }
-            }
-        }
-    }
-
-    private func clearTombstones(_ completion: @escaping VoidCallback) {
-        let backgroundContext = persistentContainer.newBackgroundContext()
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: TombstoneMO.name)
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-
-        backgroundContext.perform { [weak self] in
-            do {
-                try backgroundContext.execute(deleteRequest)
-                try backgroundContext.save()
-                DispatchQueue.main.async {
-                    completion(.success(Void()))
-                }
-            } catch {
-                self?.logger.errorWithContext(error)
-                DispatchQueue.main.async {
-                    completion(.failure(error))
+            cbDeadCache.clear { result in
+                switch result {
+                case .success:
+                    continuation.resume()
+                case .failure(let error):
+                    continuation.resume(throwing: DeadCacheError.clearError(error))
                 }
             }
         }

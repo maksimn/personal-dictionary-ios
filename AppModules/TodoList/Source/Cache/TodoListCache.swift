@@ -7,9 +7,9 @@
 
 protocol TodoListCache {
 
-    var isDirty: Bool { get }
+    var todos: [Todo] { get throws }
 
-    var todos: [Todo] { get }
+    var dirtyTodos: [Todo] { get throws }
 
     func insert(_ todo: Todo) async throws
 
@@ -18,4 +18,13 @@ protocol TodoListCache {
     func delete(_ todo: Todo) async throws
 
     func replaceWith(_ todoList: [Todo]) async throws
+}
+
+enum TodoListCacheError: Error {
+    case getTodosError(Error)
+    case getDirtyTodosError(Error)
+    case insertError(Error)
+    case updateError(Error)
+    case deleteError(Error)
+    case replaceWithError(Error)
 }
