@@ -7,9 +7,15 @@
 
 protocol DeadCache {
 
-    var items: [Tombstone] { get }
+    var items: [Tombstone] { get throws }
 
     func insert(_ item: Tombstone) async throws
 
     func clear() async throws
+}
+
+enum DeadCacheError: Error {
+    case getItemsError(Error)
+    case insertError(Error)
+    case clearError(Error)
 }

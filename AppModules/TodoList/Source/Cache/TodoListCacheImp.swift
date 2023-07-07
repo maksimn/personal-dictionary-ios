@@ -1,190 +1,77 @@
 //
-//  TodoListStorage.swift
-//  ToDoList
+//  TodoListCacheImp.swift
+//  TodoList
 //
 //  Created by Maxim Ivanov on 06.07.2021.
 //
 
-import CoreData
-import CoreModule
-import Foundation
+struct TodoListCacheImp: TodoListCache {
 
-class TodoListCacheImp: TodoListCache {
+    private let cbTodoListCache: CBTodoListCache
 
-    private lazy var container = TodoListPersistentContainer(logger: logger)
-    private let logger: Logger
-
-    private var mainContext: NSManagedObjectContext {
-        container.persistentContainer.viewContext
-    }
-
-    private var persistentContainer: NSPersistentContainer {
-        container.persistentContainer
-    }
-
-    init(logger: Logger) {
-        self.logger = logger
-    }
-
-    var isDirty: Bool {
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: TombstoneMO.name)
-        let tombstoneCount: Int = (try? mainContext.count(for: fetchRequest)) ?? 0
-
-        return todos.filter { $0.isDirty }.count > 0 || tombstoneCount > 0
+    init(cbTodoListCache: CBTodoListCache) {
+        self.cbTodoListCache = cbTodoListCache
     }
 
     var todos: [Todo] {
-        let fetchRequest: NSFetchRequest<TodoMO> = TodoMO.fetchRequest()
-        let sortDescriptor = NSSortDescriptor.init(key: "createdAt", ascending: true)
+        get throws {
+            do {
+                return try cbTodoListCache.todos
+            } catch {
+                throw TodoListCacheError.getTodosError(error)
+            }
+        }
+    }
 
-        fetchRequest.sortDescriptors = [sortDescriptor]
-
-        do {
-            let todoMOList = try mainContext.fetch(fetchRequest)
-
-            return todoMOList.map { $0.todo }
-        } catch {
-            logger.errorWithContext(error)
-            return []
+    var dirtyTodos: [Todo] {
+        get throws {
+            do {
+                return try cbTodoListCache.dirtyTodos
+            } catch {
+                throw TodoListCacheError.getDirtyTodosError(error)
+            }
         }
     }
 
     func insert(_ todo: Todo) async throws {
         try await withCheckedThrowingContinuation { continuation in
-            insert(todo) { result in
-                continuation.resume(with: result)
+            cbTodoListCache.insert(todo) { result in
+                callback(continuation, withResult: result, withError: TodoListCacheError.insertError)
             }
         }
     }
 
     func update(_ todo: Todo) async throws {
         try await withCheckedThrowingContinuation { continuation in
-            update(todo) { result in
-                continuation.resume(with: result)
+            cbTodoListCache.update(todo) { result in
+                callback(continuation, withResult: result, withError: TodoListCacheError.updateError)
             }
         }
     }
 
     func delete(_ todo: Todo) async throws {
         try await withCheckedThrowingContinuation { continuation in
-            delete(todo) { result in
-                continuation.resume(with: result)
+            cbTodoListCache.delete(todo) { result in
+                callback(continuation, withResult: result, withError: TodoListCacheError.deleteError)
             }
         }
     }
 
     func replaceWith(_ todoList: [Todo]) async throws {
         try await withCheckedThrowingContinuation { continuation in
-            replaceWith(todoList) { result in
-                continuation.resume(with: result)
+            cbTodoListCache.replaceWith(todoList) { result in
+                callback(continuation, withResult: result, withError: TodoListCacheError.replaceWithError)
             }
         }
     }
 
-    private func insert(_ todo: Todo, _ completion: @escaping VoidCallback) {
-        let backgroundContext = persistentContainer.newBackgroundContext()
-
-        backgroundContext.perform { [weak self] in
-            let todoMO = TodoMO(entity: TodoMO.entity(), insertInto: backgroundContext)
-
-            todoMO.set(todo)
-
-            do {
-                try backgroundContext.save()
-                DispatchQueue.main.async {
-                    completion(.success(Void()))
-                }
-            } catch {
-                self?.logger.errorWithContext(error)
-                DispatchQueue.main.async {
-                    completion(.failure(error))
-                }
-            }
-        }
-    }
-
-    private func update(_ todo: Todo, _ completion: @escaping VoidCallback) {
-        let backgroundContext = persistentContainer.newBackgroundContext()
-        let predicate = NSPredicate.init(format: "id = '\(todo.id)'")
-        let fetchRequest: NSFetchRequest<TodoMO> = TodoMO.fetchRequest()
-
-        fetchRequest.predicate = predicate
-
-        backgroundContext.perform { [weak self] in
-            do {
-                let array = try backgroundContext.fetch(fetchRequest)
-
-                if array.count > 0 {
-                    let todoMO = array[0]
-
-                    todoMO.set(todo)
-                }
-                try backgroundContext.save()
-                DispatchQueue.main.async {
-                    completion(.success(Void()))
-                }
-            } catch {
-                self?.logger.errorWithContext(error)
-                DispatchQueue.main.async {
-                    completion(.failure(error))
-                }
-            }
-        }
-    }
-
-    private func delete(_ todo: Todo, _ completion: @escaping VoidCallback) {
-        let backgroundContext = persistentContainer.newBackgroundContext()
-        let predicate = NSPredicate.init(format: "id = '\(todo.id)'")
-        let fetchRequest: NSFetchRequest<TodoMO> = TodoMO.fetchRequest()
-
-        fetchRequest.predicate = predicate
-
-        backgroundContext.perform { [weak self] in
-            do {
-                let array = try backgroundContext.fetch(fetchRequest)
-
-                if array.count > 0 {
-                    let todoMO = array[0]
-
-                    backgroundContext.delete(todoMO)
-                }
-                try backgroundContext.save()
-                DispatchQueue.main.async {
-                    completion(.success(Void()))
-                }
-            } catch {
-                self?.logger.errorWithContext(error)
-                DispatchQueue.main.async {
-                    completion(.failure(error))
-                }
-            }
-        }
-    }
-
-    private func replaceWith(_ todoList: [Todo], _ completion: @escaping VoidCallback) {
-        let backgroundContext = persistentContainer.newBackgroundContext()
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: TodoMO.name)
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-
-        backgroundContext.perform { [weak self] in
-            do {
-                try backgroundContext.execute(deleteRequest)
-                todoList.forEach { todo in
-                    if let todoMO = NSEntityDescription.insertNewObject(forEntityName: TodoMO.name,
-                                                                            into: backgroundContext) as? TodoMO {
-                        todoMO.set(todo)
-                    }
-                }
-                try backgroundContext.save()
-                DispatchQueue.main.async {
-                    completion(.success(Void()))
-                }
-            } catch let error as NSError {
-                self?.logger.errorWithContext(error)
-                DispatchQueue.main.async {
-                    completion(.failure(error))
-                }
-            }
+    private func callback(_ continuation: CheckedContinuation<Void, any Error>,
+                          withResult result: Result<Void, any Error>, withError: (Error) -> Error) {
+        switch result {
+        case .success:
+            continuation.resume()
+        case .failure(let error):
+            continuation.resume(throwing: withError(error))
         }
     }
 }

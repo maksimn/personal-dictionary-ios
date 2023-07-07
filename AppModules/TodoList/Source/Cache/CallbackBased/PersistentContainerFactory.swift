@@ -8,7 +8,12 @@
 import CoreData
 import CoreModule
 
-final class TodoListPersistentContainer {
+protocol PersistentContainerFactory {
+
+    func persistentContainer() -> NSPersistentContainer
+}
+
+struct PersistentContainerFactoryImp: PersistentContainerFactory {
 
     private let logger: Logger
 
@@ -16,7 +21,7 @@ final class TodoListPersistentContainer {
         self.logger = logger
     }
 
-    lazy var persistentContainer: NSPersistentContainer = {
+    func persistentContainer() -> NSPersistentContainer {
         let bundle = Bundle.module
         let persistentContainerName = "TodoList"
 
@@ -36,5 +41,5 @@ final class TodoListPersistentContainer {
             }
         })
         return container
-    }()
+    }
 }
