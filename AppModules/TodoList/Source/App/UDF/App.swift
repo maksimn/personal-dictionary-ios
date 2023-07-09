@@ -8,6 +8,8 @@
 import ComposableArchitecture
 import Foundation
 
+private let syncParams = SyncParams(minDelay: 2, maxDelay: 120, factor: 1.5, jitter: 0.05)
+
 struct App: ReducerProtocol {
 
     let cache: TodoListCache
@@ -18,14 +20,15 @@ struct App: ReducerProtocol {
     struct State: Equatable {
         var mainList = MainList.State()
         var networkIndicator = NetworkIndicator.State()
+        var sync = Sync.State(delay: syncParams.minDelay)
     }
 
     enum Action {
-        case syncWithRemoteTodos
         case update(Todo)
         case updateTodos([Todo])
         case mainList(MainList.Action)
         case networkIndicator(NetworkIndicator.Action)
+        case sync(Sync.Action)
         case error(Error)
     }
 
@@ -39,6 +42,15 @@ struct App: ReducerProtocol {
         Scope(state: \.networkIndicator, action: /Action.networkIndicator) {
             NetworkIndicator()
         }
+        Scope(state: \.sync, action: /Action.sync) {
+            Sync(
+                params: syncParams,
+                cache: cache,
+                deadCache: deadCache,
+                service: service,
+                randomNumber: { Double.random(in: -1.0...1.0) }
+            )
+        }
     }
 
     private func reduceInto(_ state: inout State, action: Action) -> EffectTask<Action> {
@@ -48,20 +60,33 @@ struct App: ReducerProtocol {
             state.mainList.completedTodoCount = todos.filter({ $0.isCompleted }).count
             return .none
 
-        case .syncWithRemoteTodos:
-            return make(serviceOp: {
-                let deleted = Array(Set(try deadCache.items.map { $0.todoId }))
-                let dirtyTodos = try cache.dirtyTodos
-                let todos = try await service.syncWithRemote(deleted, dirtyTodos)
-                try await deadCache.clear()
-                return todos
-            })
-
         case .update(let todo):
             return update(todo)
 
         case .mainList(let action):
             return reduceInto(&state, mainListAction: action)
+
+        case .sync(let action):
+            return reduceInto(&state, syncAction: action)
+
+        default:
+            return .none
+        }
+    }
+
+    private func reduceInto(_ state: inout State, syncAction action: Sync.Action) -> EffectTask<Action> {
+        switch action {
+        case .syncWithRemoteTodos:
+            return .send(.networkIndicator(.incrementNetworkRequestCount))
+
+        case .syncWithRemoteTodosResult(.success(let todos)):
+            return .run { send in
+                await send(.networkIndicator(.decrementNetworkRequestCount))
+                await send(.updateTodos(todos))
+            }
+
+        case .syncWithRemoteTodosResult(.failure):
+            return .send(.networkIndicator(.decrementNetworkRequestCount))
 
         default:
             return .none
@@ -111,21 +136,21 @@ struct App: ReducerProtocol {
     }
 
     private func create(_ todo: Todo) -> EffectTask<Action> {
-        return make(todo, dbOp: { try await cache.insert($0) }, serviceOp: { try await service.createRemote($0) })
+        make(todo, dbOp: { try await cache.insert($0) }, serviceOp: { try await service.createRemote($0) })
     }
 
     private func update(_ todo: Todo) -> EffectTask<Action> {
-        return make(todo, dbOp: { try await cache.update($0) }, serviceOp: { try await service.updateRemote($0) })
+        make(todo, dbOp: { try await cache.update($0) }, serviceOp: { try await service.updateRemote($0) })
     }
 
     private func delete(_ todo: Todo) -> EffectTask<Action> {
-        return .run { send in
+        .run { send in
             try await cache.delete(todo)
 
             do {
                 if try isDirty() {
                     try await deadCache.insert(Tombstone(todoId: todo.id, deletedAt: currentDate()))
-                    return await send(.syncWithRemoteTodos)
+                    return await send(.sync(.syncWithRemoteTodos))
                 }
             } catch {
                 return await send(.error(error))
@@ -144,22 +169,6 @@ struct App: ReducerProtocol {
         }
     }
 
-    private func make(serviceOp: @escaping () async throws -> [Todo]) -> EffectTask<Action> {
-        return .run { send in
-            do {
-                await send(.networkIndicator(.incrementNetworkRequestCount))
-                let todos = try await serviceOp()
-
-                await send(.updateTodos(todos))
-                try await cache.replaceWith(todos)
-                await send(.networkIndicator(.decrementNetworkRequestCount))
-            } catch {
-                await send(.networkIndicator(.decrementNetworkRequestCount))
-                await send(.error(error))
-            }
-        }
-    }
-
     private func make(_ todo: Todo, dbOp: @escaping (Todo) async throws -> Void,
                       serviceOp: @escaping (Todo) async throws -> Void) -> EffectTask<Action> {
         let dirtyTodo = todo.update(isDirty: true)
@@ -169,7 +178,7 @@ struct App: ReducerProtocol {
             if try isDirty() {
                 return .run { send in
                     try await dbOp(dirtyTodo)
-                    await send(.syncWithRemoteTodos)
+                    await send(.sync(.syncWithRemoteTodos))
                 }
             }
         } catch {
@@ -203,10 +212,22 @@ struct App: ReducerProtocol {
     private func getRemoteTodos() -> EffectTask<Action> {
         do {
             if try isDirty() {
-                return .send(.syncWithRemoteTodos)
+                return .send(.sync(.syncWithRemoteTodos))
             }
 
-            return make(serviceOp: { try await service.getTodos() })
+            return .run { send in
+                do {
+                    await send(.networkIndicator(.incrementNetworkRequestCount))
+                    let todos = try await service.getTodos()
+
+                    await send(.updateTodos(todos))
+                    try await cache.replaceWith(todos)
+                    await send(.networkIndicator(.decrementNetworkRequestCount))
+                } catch {
+                    await send(.networkIndicator(.decrementNetworkRequestCount))
+                    await send(.error(error))
+                }
+            }
         } catch {
             return .send(.error(error))
         }

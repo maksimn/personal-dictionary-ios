@@ -51,7 +51,7 @@ public final class AppBuilder: ViewControllerBuilder {
                 "Authorization": token,
                 "Content-Type": "application/json"
             ],
-            httpClient: HttpClientImpl()
+            httpClient: HttpClientAdapterImpl()
         )
     }
 }

@@ -5,26 +5,25 @@
 //  Created by Maxim Ivanov on 29.06.2021.
 //
 
-import Combine
 import CoreModule
 import Foundation
 
-class TodoListNetworkingImp: TodoListNetworking {
+struct TodoListNetworkingImp: TodoListNetworking {
 
     private let urlString: String
     private let headers: [String: String]
-    private let httpClient: HttpClient
+    private let httpClient: HttpClientAdapter
 
     init(urlString: String,
          headers: [String: String],
-         httpClient: HttpClient) {
+         httpClient: HttpClientAdapter) {
         self.urlString = urlString
         self.headers = headers
         self.httpClient = httpClient
     }
 
-    func fetchTodoList() -> AnyPublisher<[TodoDTO], Error> {
-        send(
+    func fetchTodoList() async throws -> [TodoDTO] {
+        try await send(
             Http(
                 urlString: "\(urlString)/tasks/",
                 method: "GET",
@@ -33,8 +32,8 @@ class TodoListNetworkingImp: TodoListNetworking {
         )
     }
 
-    func createTodo(_ todoDTO: TodoDTO) -> AnyPublisher<TodoDTO, Error> {
-        send(
+    func createTodo(_ todoDTO: TodoDTO) async throws -> TodoDTO {
+        try await send(
             Http(
                 urlString: "\(urlString)/tasks/",
                 method: "POST",
@@ -44,8 +43,8 @@ class TodoListNetworkingImp: TodoListNetworking {
         )
     }
 
-    func updateTodo(_ todoDTO: TodoDTO) -> AnyPublisher<TodoDTO, Error> {
-        send(
+    func updateTodo(_ todoDTO: TodoDTO) async throws -> TodoDTO {
+        try await send(
             Http(
                 urlString: "\(urlString)/tasks/\(todoDTO.id)",
                 method: "PUT",
@@ -55,8 +54,8 @@ class TodoListNetworkingImp: TodoListNetworking {
         )
     }
 
-    func deleteTodo(_ id: String) -> AnyPublisher<TodoDTO, Error> {
-        send(
+    func deleteTodo(_ id: String) async throws -> TodoDTO {
+        try await send(
             Http(
                 urlString: "\(urlString)/tasks/\(id)",
                 method: "DELETE",
@@ -65,8 +64,8 @@ class TodoListNetworkingImp: TodoListNetworking {
         )
     }
 
-    func syncTodoList(_ requestData: SyncTodoListRequestData) -> AnyPublisher<[TodoDTO], Error> {
-        send(
+    func syncTodoList(_ requestData: SyncTodoListRequestData) async throws -> [TodoDTO] {
+        try await send(
             Http(
                 urlString: "\(urlString)/tasks/",
                 method: "PUT",
@@ -76,29 +75,24 @@ class TodoListNetworkingImp: TodoListNetworking {
         )
     }
 
-    private func send<OutputDTO: Decodable>(_ http: Http) -> AnyPublisher<OutputDTO, Error> {
-        httpClient.send(http)
-            .tryMap { httpResponse in
-                httpResponse.data
-            }
-            .decode(type: OutputDTO.self, decoder: JSONDecoder())
-            .eraseToAnyPublisher()
+    private func send<OutputDTO: Decodable>(_ http: Http) async throws -> OutputDTO {
+        let httpResponse = try await httpClient.send(http)
+
+        return try JSONDecoder().decode(OutputDTO.self, from: httpResponse.data)
     }
 
     private func send<InputDTO: Encodable, OutputDTO: Decodable>(_ http: Http,
-                                                                 _ dto: InputDTO) -> AnyPublisher<OutputDTO, Error> {
-        Just(dto)
-            .encode(encoder: JSONEncoder())
-            .flatMap { data in
-                self.send(
-                    Http(
-                        urlString: http.urlString,
-                        method: http.method,
-                        headers: http.headers,
-                        body: data
-                    )
-                )
-            }
-            .eraseToAnyPublisher()
+                                                                 _ dto: InputDTO) async throws -> OutputDTO {
+        let body = try JSONEncoder().encode(dto)
+        let httpResponse = try await httpClient.send(
+            Http(
+                urlString: http.urlString,
+                method: http.method,
+                headers: http.headers,
+                body: body
+            )
+        )
+
+        return try JSONDecoder().decode(OutputDTO.self, from: httpResponse.data)
     }
 }

@@ -1,21 +1,19 @@
 //
-//  NetworkingService.swift
+//  TodoListNetworking.swift
 //  ToDoList
 //
 //  Created by Maxim Ivanov on 29.06.2021.
 //
 
-import Combine
-
 protocol TodoListNetworking {
 
-    func fetchTodoList() -> AnyPublisher<[TodoDTO], Error>
+    func fetchTodoList() async throws -> [TodoDTO]
 
-    func createTodo(_ todoDTO: TodoDTO) -> AnyPublisher<TodoDTO, Error>
+    func createTodo(_ todoDTO: TodoDTO) async throws -> TodoDTO
 
-    func updateTodo(_ todoDTO: TodoDTO) -> AnyPublisher<TodoDTO, Error>
+    func updateTodo(_ todoDTO: TodoDTO) async throws -> TodoDTO
 
-    func deleteTodo(_ id: String) -> AnyPublisher<TodoDTO, Error>
+    func deleteTodo(_ id: String) async throws -> TodoDTO
 
-    func syncTodoList(_ requestData: SyncTodoListRequestData) -> AnyPublisher<[TodoDTO], Error>
+    func syncTodoList(_ requestData: SyncTodoListRequestData) async throws -> [TodoDTO]
 }
