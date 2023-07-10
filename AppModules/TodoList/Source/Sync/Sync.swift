@@ -30,6 +30,7 @@ struct Sync: ReducerProtocol {
         case syncWithRemoteTodos
         case syncWithRemoteTodosResult(TaskResult<[Todo]>)
         case nextDelay
+        case setMinDelay
     }
 
     func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
@@ -44,6 +45,7 @@ struct Sync: ReducerProtocol {
                     let todos = try await service.syncWithRemote(deleted, dirtyTodos)
                     try await deadCache.clear()
                     await send(.syncWithRemoteTodosResult(.success(todos)))
+                    await send(.setMinDelay)
                 } catch {
                     try? await Task.sleep(nanoseconds: UInt64(delay) * 1_000_000_000)
                     await send(.syncWithRemoteTodosResult(.failure(error)))
@@ -57,6 +59,10 @@ struct Sync: ReducerProtocol {
 
             state.delay = delay * (1.0 + params.jitter * randomNumber())
 
+            return .none
+
+        case .setMinDelay:
+            state.delay = params.minDelay
             return .none
 
         default:

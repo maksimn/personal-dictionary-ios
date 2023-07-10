@@ -8,10 +8,9 @@
 import ComposableArchitecture
 import Foundation
 
-private let syncParams = SyncParams(minDelay: 2, maxDelay: 120, factor: 1.5, jitter: 0.05)
-
 struct App: ReducerProtocol {
 
+    let syncConfig: SyncConfig
     let cache: TodoListCache
     let deadCache: DeadCache
     let service: TodoListService
@@ -20,7 +19,7 @@ struct App: ReducerProtocol {
     struct State: Equatable {
         var mainList = MainList.State()
         var networkIndicator = NetworkIndicator.State()
-        var sync = Sync.State(delay: syncParams.minDelay)
+        var sync: Sync.State
     }
 
     enum Action {
@@ -43,13 +42,7 @@ struct App: ReducerProtocol {
             NetworkIndicator()
         }
         Scope(state: \.sync, action: /Action.sync) {
-            Sync(
-                params: syncParams,
-                cache: cache,
-                deadCache: deadCache,
-                service: service,
-                randomNumber: { Double.random(in: -1.0...1.0) }
-            )
+            Sync(config: syncConfig)
         }
     }
 
