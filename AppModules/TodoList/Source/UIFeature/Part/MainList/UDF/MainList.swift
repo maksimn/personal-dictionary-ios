@@ -19,8 +19,6 @@ struct MainList: ReducerProtocol {
     }
 
     enum Action {
-        case loadCachedTodos
-        case getRemoteTodos
         case todoTextChanged(String)
         case createTodo(todo: Todo)
         case toggleTodoCompletion(todo: Todo)
