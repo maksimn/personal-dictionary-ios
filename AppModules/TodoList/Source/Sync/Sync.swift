@@ -33,7 +33,7 @@ struct Sync: ReducerProtocol {
         case setMinDelay
     }
 
-    enum DataState { case unknown, clean, dirty, blocking }
+    enum DataState { case unknown, synced, notSynced, blocking }
 
     func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
         switch action {
