@@ -83,9 +83,6 @@ final class MainListViewController: UIViewController {
                 }
             )
             .store(in: &self.cancellables)
-
-        viewStore.send(.loadCachedTodos)
-        viewStore.send(.getRemoteTodos)
     }
 
     override func viewDidLayoutSubviews() {

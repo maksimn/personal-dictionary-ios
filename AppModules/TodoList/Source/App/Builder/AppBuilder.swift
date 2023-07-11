@@ -32,6 +32,8 @@ public final class AppBuilder: ViewControllerBuilder {
         let mainScreenBuilder = MainScreenBuilder(store: store)
         let mainScreen = mainScreenBuilder.build()
 
+        store.send(.start)
+
         return mainScreen
     }
 }
