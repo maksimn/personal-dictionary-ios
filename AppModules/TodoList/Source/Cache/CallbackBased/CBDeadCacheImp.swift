@@ -19,6 +19,14 @@ final class CBDeadCacheImp: CBDeadCache {
         self.persistentContainer = persistentContainer
     }
 
+    var isEmpty: Bool {
+        let fetchRequest = TombstoneMO.fetchRequest()
+
+        fetchRequest.fetchLimit = 1
+
+        return ((try? mainContext.fetch(fetchRequest)) ?? []).isEmpty
+    }
+
     var items: [Tombstone] {
         get throws {
             let fetchRequest: NSFetchRequest<TombstoneMO> = TombstoneMO.fetchRequest()

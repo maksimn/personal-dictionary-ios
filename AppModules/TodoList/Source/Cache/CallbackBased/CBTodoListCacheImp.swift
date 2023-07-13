@@ -33,6 +33,15 @@ class CBTodoListCacheImp: CBTodoListCache {
         }
     }
 
+    var isDirty: Bool {
+        let fetchRequest: NSFetchRequest<TodoMO> = TodoMO.fetchRequest()
+
+        fetchRequest.predicate = NSPredicate(format: "isDirty == true")
+        fetchRequest.fetchLimit = 1
+
+        return !((try? mainContext.fetch(fetchRequest)) ?? []).isEmpty
+    }
+
     func insert(_ todo: Todo, _ completion: @escaping VoidCallback) {
         let backgroundContext = persistentContainer.newBackgroundContext()
 

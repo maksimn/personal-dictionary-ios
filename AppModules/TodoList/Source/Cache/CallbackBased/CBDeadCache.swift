@@ -7,6 +7,8 @@
 
 protocol CBDeadCache {
 
+    var isEmpty: Bool { get }
+
     var items: [Tombstone] { get throws }
 
     func insert(tombstone: Tombstone, _ completion: @escaping VoidCallback)

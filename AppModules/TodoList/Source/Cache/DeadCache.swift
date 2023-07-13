@@ -7,6 +7,8 @@
 
 protocol DeadCache {
 
+    var isEmpty: Bool { get }
+
     var items: [Tombstone] { get throws }
 
     func insert(_ item: Tombstone) async throws

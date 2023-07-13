@@ -33,6 +33,10 @@ struct TodoListCacheImp: TodoListCache {
         }
     }
 
+    var isDirty: Bool {
+        cbTodoListCache.isDirty
+    }
+
     func insert(_ todo: Todo) async throws {
         try await withCheckedThrowingContinuation { continuation in
             cbTodoListCache.insert(todo) { result in
