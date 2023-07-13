@@ -11,6 +11,8 @@ protocol CBTodoListCache {
 
     var dirtyTodos: [Todo] { get throws }
 
+    var isDirty: Bool { get }
+
     func insert(_ todo: Todo, _ completion: @escaping VoidCallback)
 
     func update(_ todo: Todo, _ completion: @escaping VoidCallback)

@@ -23,6 +23,10 @@ struct DeadCacheImp: DeadCache {
         }
     }
 
+    var isEmpty: Bool {
+        cbDeadCache.isEmpty
+    }
+
     func insert(_ item: Tombstone) async throws {
         try await withCheckedThrowingContinuation { continuation in
             cbDeadCache.insert(tombstone: item) { result in

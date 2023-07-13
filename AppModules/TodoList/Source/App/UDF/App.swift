@@ -245,6 +245,6 @@ struct App: ReducerProtocol {
     }
 
     private func isDirty() -> Bool {
-        ((try? cache.dirtyTodos.count) ?? 0) > 0 || ((try? deadCache.items.count) ?? 0) > 0
+        cache.isDirty || !deadCache.isEmpty
     }
 }

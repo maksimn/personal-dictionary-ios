@@ -11,6 +11,8 @@ protocol TodoListCache {
 
     var dirtyTodos: [Todo] { get throws }
 
+    var isDirty: Bool { get }
+
     func insert(_ todo: Todo) async throws
 
     func update(_ todo: Todo) async throws
