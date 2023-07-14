@@ -21,8 +21,9 @@ public final class AppBuilder: ViewControllerBuilder {
         let app = App(
             syncConfig: syncConfig,
             cache: TodoListCacheImp(label: featureName),
-            deadCache: DeadCacheImp(label: featureName),
-            service: TodoListServiceImp(token),
+            service: TodoListServiceImp(token: syncConfig.token),
+            tombstones: DeletedTodoCache(label: featureName),
+            dirtyStateStatus: DirtyStateStatusImp(label: featureName),
             currentDate: { Date() }
         )._printChanges()
         let store = StoreOf<App>(

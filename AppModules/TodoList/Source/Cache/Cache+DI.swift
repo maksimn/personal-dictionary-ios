@@ -5,21 +5,21 @@
 //  Created by Maksim Ivanov on 10.07.2023.
 //
 
-import CoreData
-import CoreModule
-
 extension TodoListCacheImp {
     init(label: String) {
         self.init(cbTodoListCache: CBTodoListCacheImp(persistentContainer: persistentContainer(label)))
     }
 }
 
-extension DeadCacheImp {
+extension DirtyStateStatusImp {
     init(label: String) {
-        self.init(cbDeadCache: CBDeadCacheImp(persistentContainer: persistentContainer(label)))
+        self.init(persistentContainer: persistentContainer(label))
     }
 }
 
-private func persistentContainer(_ label: String) -> NSPersistentContainer {
-    PersistentContainerFactoryImp(logger: LoggerImpl(category: label)).persistentContainer()
+extension DeletedTodoCache {
+    init(label: String) {
+        self.init(persistentContainer: persistentContainer(label))
+    }
 }
+

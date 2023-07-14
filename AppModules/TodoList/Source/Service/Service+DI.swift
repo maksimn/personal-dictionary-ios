@@ -7,23 +7,33 @@
 
 import CoreModule
 
-extension TodoListNetworkingImp {
+private let urlString = "https://d5dps3h13rv6902lp5c8.apigw.yandexcloud.net"
 
-    init(_ token: String) {
+private func headers(_ token: String) -> [String: String] {
+    [
+        "Authorization": token,
+        "Content-Type": "application/json"
+    ]
+}
+
+extension TodoListServiceImp {
+
+    init(token: String) {
         self.init(
-            urlString: "https://d5dps3h13rv6902lp5c8.apigw.yandexcloud.net",
-            headers: [
-                "Authorization": token,
-                "Content-Type": "application/json"
-            ],
+            urlString: urlString,
+            headers: headers(token),
             httpClient: HttpClientAdapterImpl()
         )
     }
 }
 
-extension TodoListServiceImp {
+extension SyncServiceImp {
 
-    init(_ token: String) {
-        self.init(networking: TodoListNetworkingImp(token))
+    init(token: String) {
+        self.init(
+            urlString: urlString,
+            headers: headers(token),
+            httpClient: HttpClientAdapterImpl()
+        )
     }
 }
