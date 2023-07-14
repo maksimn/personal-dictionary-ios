@@ -18,6 +18,10 @@ public final class LoggableHttpClient: HttpClient {
     public func send(_ http: Http) -> RxHttpResponse {
         logger.log("HTTP REQUEST START: \(http)", level: .info)
 
+        if let body = http.body {
+            logger.log("HTTP REQUEST BODY: \(body.asUTF8)", level: .info)
+        }
+
         return httpClient.send(http)
             .handleEvents(
                 receiveOutput: { httpResponse in
@@ -25,7 +29,7 @@ public final class LoggableHttpClient: HttpClient {
                         """
                         HTTP RESPONSE FETCHED
                         HTTPURLResponse: \(httpResponse.response)
-                        Data: \(String(decoding: httpResponse.data, as: UTF8.self))
+                        HTTP_Response_Data: \(httpResponse.data.asUTF8)
                         """,
                         level: .info
                     )

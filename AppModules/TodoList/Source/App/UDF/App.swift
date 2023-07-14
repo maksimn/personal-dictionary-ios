@@ -12,8 +12,9 @@ struct App: ReducerProtocol {
 
     let syncConfig: SyncConfig
     let cache: TodoListCache
-    let deadCache: DeadCache
     let service: TodoListService
+    let tombstones: TombstoneInsertable & Clearable
+    let dirtyStateStatus: DirtyStateStatus
     let currentDate: () -> Date
 
     struct State: Equatable {
@@ -87,6 +88,7 @@ struct App: ReducerProtocol {
 
                 do {
                     try await cache.replaceWith(todos)
+                    try await tombstones.clear()
                 } catch {
                     await send(.error(error))
                 }
@@ -133,55 +135,42 @@ struct App: ReducerProtocol {
     }
 
     private func create(_ todo: Todo, _ state: State) -> EffectTask<Action> {
-        make(todo, dbOp: { try await cache.insert($0) }, serviceOp: { try await service.createRemote($0) }, state)
+        make(todo,
+             localOp: { try await cache.insert($0) },
+             remoteOp: {
+                 try await service.createRemote($0)
+                 try await cache.update($0)
+             }, state)
     }
 
     private func update(_ todo: Todo, _ state: State) -> EffectTask<Action> {
-        make(todo, dbOp: { try await cache.update($0) }, serviceOp: { try await service.updateRemote($0) }, state)
+        make(todo,
+             localOp: { try await cache.update($0) },
+             remoteOp: {
+                 try await service.updateRemote($0)
+                 try await cache.update($0)
+             }, state)
     }
 
     private func delete(_ todo: Todo, _ state: State) -> EffectTask<Action> {
-        if state.networkIndicator.pendingRequestCount > 0 || isDirty() {
-            return .run { send in
-                do {
-                    try await cache.delete(todo)
-                    try await deadCache.insert(Tombstone(todoId: todo.id, deletedAt: currentDate()))
-                } catch {
-                    await send(.error(error))
-                }
-
-                if state.networkIndicator.pendingRequestCount == 0 {
-                    await send(.sync(.syncWithRemoteTodos))
-                }
-            }
-        }
-
-        return .run { send in
-            try await cache.delete(todo)
-            await send(.networkIndicator(.incrementNetworkRequestCount))
-
-            do {
-                try await service.deleteRemote(todo)
-                await send(.networkIndicator(.decrementNetworkRequestCount))
-            } catch {
-                await send(.networkIndicator(.decrementNetworkRequestCount))
-                try await deadCache.insert(Tombstone(todoId: todo.id, deletedAt: currentDate()))
-                await send(.error(error))
-            }
-        }
+        make(todo,
+             localOp: { try await cache.delete($0) },
+             remoteOp: { try await service.deleteRemote($0) },
+             remoteOpFailure: { try await tombstones.insert(Tombstone(todoId: $0.id, deletedAt: currentDate())) }, state)
     }
 
     private func make(_ todo: Todo,
-                      dbOp: @escaping (Todo) async throws -> Void,
-                      serviceOp: @escaping (Todo) async throws -> Void,
+                      localOp: @escaping (Todo) async throws -> Void,
+                      remoteOp: @escaping (Todo) async throws -> Void,
+                      remoteOpFailure: @escaping (Todo) async throws -> Void = { _ in },
                       _ state: State) -> EffectTask<Action> {
         let dirtyTodo = todo.update(isDirty: true)
         let cleanTodo = todo.update(isDirty: false)
 
-        if state.networkIndicator.pendingRequestCount > 0 || isDirty() {
+        if state.networkIndicator.pendingRequestCount > 0 || dirtyStateStatus.isDirty {
             return .run { send in
                 do {
-                    try await dbOp(dirtyTodo)
+                    try await localOp(dirtyTodo)
                 } catch {
                     await send(.error(error))
                 }
@@ -193,13 +182,17 @@ struct App: ReducerProtocol {
         }
 
         return .run { send in
-            try await dbOp(dirtyTodo)
+            try await localOp(dirtyTodo)
             await send(.networkIndicator(.incrementNetworkRequestCount))
             do {
-                try await serviceOp(cleanTodo)
-                try await cache.update(cleanTodo)
+                try await remoteOp(cleanTodo)
                 await send(.networkIndicator(.decrementNetworkRequestCount))
             } catch {
+                do {
+                    try await remoteOpFailure(dirtyTodo)
+                } catch {
+                    await send(.error(error))
+                }
                 await send(.networkIndicator(.decrementNetworkRequestCount))
                 await send(.error(error))
             }
@@ -213,7 +206,7 @@ struct App: ReducerProtocol {
 
                 await send(.updateTodos(todos))
 
-                if isDirty() {
+                if dirtyStateStatus.isDirty {
                     await send(.sync(.syncWithRemoteTodos))
                 } else {
                     await send(.getRemoteTodos)
@@ -242,9 +235,5 @@ struct App: ReducerProtocol {
                 await send(.error(error))
             }
         }
-    }
-
-    private func isDirty() -> Bool {
-        cache.isDirty || !deadCache.isEmpty
     }
 }

@@ -16,9 +16,8 @@ extension Sync {
 
         self.init(
             params: SyncParams(minDelay: config.minDelay, maxDelay: 120, factor: 1.5, jitter: 0.05),
-            cache: TodoListCacheImp(label: featureName),
-            deadCache: DeadCacheImp(label: featureName),
-            service: TodoListServiceImp(config.token),
+            dirtyStateCache: DirtyStateCacheImp(persistentContainer: persistentContainer(featureName)),
+            syncService: SyncServiceImp(token: config.token),
             randomNumber: { Double.random(in: -1.0...1.0) }
         )
     }

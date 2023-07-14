@@ -17,9 +17,8 @@ struct SyncParams {
 struct Sync: ReducerProtocol {
 
     let params: SyncParams
-    let cache: TodoListCache
-    let deadCache: DeadCache
-    let service: TodoListService
+    let dirtyStateCache: DirtyStateCache
+    let syncService: SyncService
     let randomNumber: () -> Double
 
     struct State: Equatable {
@@ -40,17 +39,14 @@ struct Sync: ReducerProtocol {
 
             return .run { send in
                 do {
-                    let deleted = try deadCache.items
-                    let dirtyTodos = try cache.dirtyTodos
-                    let todos = try await service.syncWithRemote(deleted.map { $0.todoId }, dirtyTodos)
-                    let deletedAfter = try deadCache.items
-                    let dirtyTodosAfter = try cache.dirtyTodos
+                    let dirtyData = try dirtyStateCache.dirtyData
+                    let todos = try await syncService.syncWithRemoteTodos(dirtyData)
+                    let dirtyDataAfter = try dirtyStateCache.dirtyData
 
-                    if !(deleted == deletedAfter && dirtyTodos == dirtyTodosAfter) {
+                    if dirtyDataAfter != dirtyData {
                         throw SyncError.dirtyStateChangedDuringRequest
                     }
 
-                    try await deadCache.clear()
                     await send(.syncWithRemoteTodosResult(.success(todos)))
                     await send(.setDelayToMinValue)
                 } catch {
