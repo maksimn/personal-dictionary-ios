@@ -25,7 +25,7 @@ struct Sync: ReducerProtocol {
         var delay: Double
     }
 
-    enum Action {
+    enum Action: Equatable {
         case syncWithRemoteTodos
         case syncWithRemoteTodosResult(TaskResult<[Todo]>)
         case nextDelay

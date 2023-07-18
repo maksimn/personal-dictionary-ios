@@ -156,7 +156,8 @@ struct App: ReducerProtocol {
         make(todo,
              localOp: { try await cache.delete($0) },
              remoteOp: { try await service.deleteRemote($0) },
-             remoteOpFailure: { try await tombstones.insert(Tombstone(todoId: $0.id, deletedAt: currentDate())) }, state)
+             remoteOpFailure: { try await tombstones.insert(Tombstone(todoId: $0.id, deletedAt: currentDate())) },
+             state)
     }
 
     private func make(_ todo: Todo,

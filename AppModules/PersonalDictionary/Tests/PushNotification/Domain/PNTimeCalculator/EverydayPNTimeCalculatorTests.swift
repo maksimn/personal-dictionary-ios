@@ -17,7 +17,7 @@ final class EverydayPNTimeCalculatorTests: XCTestCase {
         let components = DateComponents(year: 2022, month: 6, day: 15, hour: 18, minute: 15, second: 0)
         let current = calendar.date(from: components)!
 
-        let pnTimeCalculator = EverydayPNTimeCalculator(hh: 19, mm: 30, calendar: calendar)
+        let pnTimeCalculator = EverydayPNTimeCalculator(hours: 19, minutes: 30, calendar: calendar)
 
         // Act:
         let dateComponents = pnTimeCalculator.calculate(forDate: current)
@@ -31,7 +31,7 @@ final class EverydayPNTimeCalculatorTests: XCTestCase {
         let components = DateComponents(year: 2022, month: 6, day: 15, hour: 20, minute: 45, second: 0)
         let current = calendar.date(from: components)!
 
-        let pnTimeCalculator = EverydayPNTimeCalculator(hh: 19, mm: 30, calendar: calendar)
+        let pnTimeCalculator = EverydayPNTimeCalculator(hours: 19, minutes: 30, calendar: calendar)
 
         // Act:
         let dateComponents = pnTimeCalculator.calculate(forDate: current)
