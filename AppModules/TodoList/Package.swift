@@ -29,6 +29,11 @@ let package = Package(
             ],
             path: "Source",
             resources: []
+        ),
+        .testTarget(
+            name: "TodoListTests",
+            dependencies: ["TodoList"],
+            path: "Tests"
         )
     ]
 )
