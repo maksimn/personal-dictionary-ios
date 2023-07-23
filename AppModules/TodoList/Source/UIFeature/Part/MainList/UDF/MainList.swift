@@ -18,7 +18,8 @@ struct MainList: ReducerProtocol {
         var keyboard = KeyboardUDF.State()
     }
 
-    enum Action {
+    enum Action: Equatable {
+        case updateTodos([Todo])
         case todoTextChanged(String)
         case createTodo(todo: Todo)
         case toggleTodoCompletion(todo: Todo)
@@ -42,6 +43,10 @@ struct MainList: ReducerProtocol {
 
     private func reduceInto(_ state: inout State, action: Action) -> EffectTask<Action> {
         switch action {
+        case .updateTodos(let todos):
+            state.todos = todos
+            state.completedTodoCount = todos.filter({ $0.isCompleted }).count
+
         case .createTodo(let todo):
             state.todos.append(todo)
 

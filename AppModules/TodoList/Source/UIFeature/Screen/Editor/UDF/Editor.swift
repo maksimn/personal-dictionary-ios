@@ -38,7 +38,7 @@ struct Editor: ReducerProtocol {
         }
     }
 
-    enum Action {
+    enum Action: Equatable {
         case initWith(todo: Todo?)
         case close
         case textChanged(String)

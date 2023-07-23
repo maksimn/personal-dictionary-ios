@@ -17,7 +17,7 @@ struct NetworkIndicator: ReducerProtocol {
         }
     }
 
-    enum Action {
+    enum Action: Equatable {
         case incrementNetworkRequestCount
         case decrementNetworkRequestCount
     }

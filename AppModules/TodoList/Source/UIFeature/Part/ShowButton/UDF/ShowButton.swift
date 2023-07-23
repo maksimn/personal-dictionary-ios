@@ -12,7 +12,7 @@ enum ShowButton {
         var isEnabled: Bool
     }
 
-    enum Action { case toggle }
+    enum Action: Equatable { case toggle }
 
     enum Mode { case show, hide }
 }

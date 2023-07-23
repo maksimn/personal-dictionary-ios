@@ -18,7 +18,7 @@ struct KeyboardUDF: ReducerProtocol {
         var orientation = Orientation.portrait
     }
 
-    enum Action {
+    enum Action: Equatable {
         case show(CGSize)
         case hide
         case changeOrientation(Orientation)
