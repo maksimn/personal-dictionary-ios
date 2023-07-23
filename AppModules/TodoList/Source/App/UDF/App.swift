@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import Foundation
 
+// The root reducer. It is responsible for all side-effects of TodoList.
 struct App: ReducerProtocol {
 
     let syncConfig: SyncConfig
@@ -23,15 +24,14 @@ struct App: ReducerProtocol {
         var sync: Sync.State
     }
 
-    enum Action {
+    enum Action: Equatable {
         case start
         case getRemoteTodos
         case update(Todo)
-        case updateTodos([Todo])
         case mainList(MainList.Action)
         case networkIndicator(NetworkIndicator.Action)
         case sync(Sync.Action)
-        case error(Error)
+        case error
     }
 
     var body: some ReducerProtocol<State, Action> {
@@ -53,11 +53,6 @@ struct App: ReducerProtocol {
         switch action {
         case .start:
             return start()
-
-        case .updateTodos(let todos):
-            state.mainList.todos = todos
-            state.mainList.completedTodoCount = todos.filter({ $0.isCompleted }).count
-            return .none
 
         case .getRemoteTodos:
             return getRemoteTodos(state)
@@ -84,13 +79,13 @@ struct App: ReducerProtocol {
         case .syncWithRemoteTodosResult(.success(let todos)):
             return .run { send in
                 await send(.networkIndicator(.decrementNetworkRequestCount))
-                await send(.updateTodos(todos))
+                await send(.mainList(.updateTodos(todos)))
 
                 do {
                     try await cache.replaceWith(todos)
                     try await tombstones.clear()
                 } catch {
-                    await send(.error(error))
+                    await send(.error)
                 }
             }
 
@@ -173,7 +168,7 @@ struct App: ReducerProtocol {
                 do {
                     try await localOp(dirtyTodo)
                 } catch {
-                    await send(.error(error))
+                    await send(.error)
                 }
 
                 if state.networkIndicator.pendingRequestCount == 0 {
@@ -192,10 +187,10 @@ struct App: ReducerProtocol {
                 do {
                     try await remoteOpFailure(dirtyTodo)
                 } catch {
-                    await send(.error(error))
+                    await send(.error)
                 }
                 await send(.networkIndicator(.decrementNetworkRequestCount))
-                await send(.error(error))
+                await send(.error)
             }
         }
     }
@@ -205,7 +200,7 @@ struct App: ReducerProtocol {
             do {
                 let todos = try cache.todos
 
-                await send(.updateTodos(todos))
+                await send(.mainList(.updateTodos(todos)))
 
                 if dirtyStateStatus.isDirty {
                     await send(.sync(.syncWithRemoteTodos))
@@ -213,7 +208,7 @@ struct App: ReducerProtocol {
                     await send(.getRemoteTodos)
                 }
             } catch {
-                return await send(.error(error))
+                return await send(.error)
             }
         }
     }
@@ -228,12 +223,12 @@ struct App: ReducerProtocol {
                 await send(.networkIndicator(.incrementNetworkRequestCount))
                 let todos = try await service.getTodos()
 
-                await send(.updateTodos(todos))
+                await send(.mainList(.updateTodos(todos)))
                 try await cache.replaceWith(todos)
                 await send(.networkIndicator(.decrementNetworkRequestCount))
             } catch {
                 await send(.networkIndicator(.decrementNetworkRequestCount))
-                await send(.error(error))
+                await send(.error)
             }
         }
     }
