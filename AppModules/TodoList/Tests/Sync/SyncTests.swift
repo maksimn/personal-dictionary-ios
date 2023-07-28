@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import CoreModule
 import XCTest
 @testable import TodoList
 
@@ -91,7 +92,7 @@ class SyncTests: XCTestCase {
         await store.send(.syncWithRemoteTodos)
 
         // Assert:
-        await store.receive(.syncWithRemoteTodosResult(.failure(ErrorMock.error)))
+        await store.receive(.error(WithError(ErrorMock.error)))
     }
 
     // Sync scenario
@@ -118,7 +119,7 @@ class SyncTests: XCTestCase {
         await store.send(.syncWithRemoteTodos)
 
         // Assert:
-        await store.receive(.syncWithRemoteTodosResult(.failure(SyncError.dirtyStateChangedDuringRequest)))
+        await store.receive(.error(WithError(SyncError.dirtyStateChangedDuringRequest)))
     }
 
     private func arrange(

@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import CoreModule
 
 struct SyncParams {
     let minDelay: Double
@@ -30,6 +31,7 @@ struct Sync: ReducerProtocol {
         case syncWithRemoteTodosResult(TaskResult<[Todo]>)
         case nextDelay
         case setDelayToMinValue
+        case error(WithError)
     }
 
     func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
@@ -50,6 +52,7 @@ struct Sync: ReducerProtocol {
                     await send(.syncWithRemoteTodosResult(.success(todos)))
                     await send(.setDelayToMinValue)
                 } catch {
+                    await send(.error(WithError(error)))
                     try? await Task.sleep(nanoseconds: UInt64(delay) * 1_000_000_000)
                     await send(.syncWithRemoteTodosResult(.failure(error)))
                     await send(.nextDelay)

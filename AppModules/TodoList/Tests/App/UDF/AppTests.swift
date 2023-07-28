@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import CoreModule
 import XCTest
 @testable import TodoList
 
@@ -149,7 +150,7 @@ class AppTests: XCTestCase {
         await store.send(.getRemoteTodos)
 
         // Assert
-        await store.receive(.error)
+        await store.receive(.error(WithError(ErrorMock.error)))
     }
 
     func test_updateTodo_cachedDataIsCleanAndServerIsOK_updatesCachedTodo() async {
@@ -192,7 +193,7 @@ class AppTests: XCTestCase {
         await store.send(.update(Todo(text: "A")))
 
         // Assert
-        await store.receive(.error)
+        await store.receive(.error(WithError(ErrorMock.error)))
     }
 
     func test_updateTodo_cachedDataIsDirty_initiatesSyncRequest() async {
@@ -265,7 +266,7 @@ class AppTests: XCTestCase {
         await store.send(.mainList(.createTodo(todo: Todo(text: "C"))))
 
         // Assert
-        await store.receive(.error)
+        await store.receive(.error(WithError(ErrorMock.error)))
     }
 
     func test_mainListCreateTodo_cachedDataIsDirty_initiatesSyncRequest() async {
@@ -319,7 +320,7 @@ class AppTests: XCTestCase {
         await store.send(.mainList(.deleteTodo(todo: Todo(text: "C"))))
 
         // Assert
-        await store.receive(.error)
+        await store.receive(.error(WithError(ErrorMock.error)))
     }
 
     func test_mainListDeleteTodo_cachedDataIsDirty_initiatesSyncRequest() async {

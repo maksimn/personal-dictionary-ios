@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import CoreModule
 import Foundation
 
 // The root reducer. It is responsible for all side-effects of TodoList.
@@ -31,7 +32,7 @@ struct App: ReducerProtocol {
         case mainList(MainList.Action)
         case networkIndicator(NetworkIndicator.Action)
         case sync(Sync.Action)
-        case error
+        case error(WithError)
     }
 
     var body: some ReducerProtocol<State, Action> {
@@ -85,7 +86,7 @@ struct App: ReducerProtocol {
                     try await cache.replaceWith(todos)
                     try await tombstones.clear()
                 } catch {
-                    await send(.error)
+                    await send(.error(WithError(error)))
                 }
             }
 
@@ -168,7 +169,7 @@ struct App: ReducerProtocol {
                 do {
                     try await localOp(dirtyTodo)
                 } catch {
-                    await send(.error)
+                    await send(.error(WithError(error)))
                 }
 
                 if state.networkIndicator.pendingRequestCount == 0 {
@@ -187,10 +188,10 @@ struct App: ReducerProtocol {
                 do {
                     try await remoteOpFailure(dirtyTodo)
                 } catch {
-                    await send(.error)
+                    await send(.error(WithError(error)))
                 }
                 await send(.networkIndicator(.decrementNetworkRequestCount))
-                await send(.error)
+                await send(.error(WithError(error)))
             }
         }
     }
@@ -208,7 +209,7 @@ struct App: ReducerProtocol {
                     await send(.getRemoteTodos)
                 }
             } catch {
-                return await send(.error)
+                return await send(.error(WithError(error)))
             }
         }
     }
@@ -228,7 +229,7 @@ struct App: ReducerProtocol {
                 await send(.networkIndicator(.decrementNetworkRequestCount))
             } catch {
                 await send(.networkIndicator(.decrementNetworkRequestCount))
-                await send(.error)
+                await send(.error(WithError(error)))
             }
         }
     }
