@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import Foundation
 
-struct Editor: ReducerProtocol {
+struct Editor: Reducer {
 
     struct State: Equatable {
         var mode = EditorMode.create
@@ -50,7 +50,7 @@ struct Editor: ReducerProtocol {
         case keyboard(KeyboardUDF.Action)
     }
 
-    var body: some ReducerProtocol<State, Action> {
+    var body: some Reducer<State, Action> {
         Reduce { state, action in
             reduceInto(&state, action: action)
         }
@@ -59,7 +59,7 @@ struct Editor: ReducerProtocol {
         }
     }
 
-    private func reduceInto(_ state: inout State, action: Action) -> EffectTask<Action> {
+    private func reduceInto(_ state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case .textChanged(let text):
             state.todo = state.todo.update(text: text)

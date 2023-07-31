@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import UIKit
 
-struct KeyboardUDF: ReducerProtocol {
+struct KeyboardUDF: Reducer {
 
     struct State: Equatable {
         var isVisible: Bool {
@@ -26,7 +26,7 @@ struct KeyboardUDF: ReducerProtocol {
 
     enum Orientation { case portrait, landscape }
 
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case .show(let size):
             state.size = size

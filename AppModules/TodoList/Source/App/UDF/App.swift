@@ -10,7 +10,7 @@ import CoreModule
 import Foundation
 
 // The root reducer. It is responsible for all side-effects of TodoList.
-struct App: ReducerProtocol {
+struct App: Reducer {
 
     let syncConfig: SyncConfig
     let cache: TodoListCache
@@ -33,9 +33,10 @@ struct App: ReducerProtocol {
         case networkIndicator(NetworkIndicator.Action)
         case sync(Sync.Action)
         case error(WithError)
+        case never(Never)
     }
 
-    var body: some ReducerProtocol<State, Action> {
+    var body: some Reducer<State, Action> {
         Reduce { state, action in
             reduceInto(&state, action: action)
         }
@@ -50,7 +51,7 @@ struct App: ReducerProtocol {
         }
     }
 
-    private func reduceInto(_ state: inout State, action: Action) -> EffectTask<Action> {
+    private func reduceInto(_ state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case .start:
             return start()
@@ -72,7 +73,7 @@ struct App: ReducerProtocol {
         }
     }
 
-    private func reduceInto(_ state: inout State, syncAction action: Sync.Action) -> EffectTask<Action> {
+    private func reduceInto(_ state: inout State, syncAction action: Sync.Action) -> Effect<Action> {
         switch action {
         case .syncWithRemoteTodos:
             return .send(.networkIndicator(.incrementNetworkRequestCount))
@@ -98,7 +99,7 @@ struct App: ReducerProtocol {
         }
     }
 
-    private func reduceInto(_ state: inout State, mainListAction action: MainList.Action) -> EffectTask<Action> {
+    private func reduceInto(_ state: inout State, mainListAction action: MainList.Action) -> Effect<Action> {
         switch action {
         case .createTodo(let todo):
             return create(todo, state)
@@ -120,7 +121,7 @@ struct App: ReducerProtocol {
         }
     }
 
-    private func editor(save todo: Todo, mode: EditorMode, _ state: State) -> EffectTask<Action> {
+    private func editor(save todo: Todo, mode: EditorMode, _ state: State) -> Effect<Action> {
         switch mode {
         case .create:
             return create(todo, state)
@@ -130,7 +131,7 @@ struct App: ReducerProtocol {
         }
     }
 
-    private func create(_ todo: Todo, _ state: State) -> EffectTask<Action> {
+    private func create(_ todo: Todo, _ state: State) -> Effect<Action> {
         make(todo,
              localOp: { try await cache.insert($0) },
              remoteOp: {
@@ -139,7 +140,7 @@ struct App: ReducerProtocol {
              }, state)
     }
 
-    private func update(_ todo: Todo, _ state: State) -> EffectTask<Action> {
+    private func update(_ todo: Todo, _ state: State) -> Effect<Action> {
         make(todo,
              localOp: { try await cache.update($0) },
              remoteOp: {
@@ -148,7 +149,7 @@ struct App: ReducerProtocol {
              }, state)
     }
 
-    private func delete(_ todo: Todo, _ state: State) -> EffectTask<Action> {
+    private func delete(_ todo: Todo, _ state: State) -> Effect<Action> {
         make(todo,
              localOp: { try await cache.delete($0) },
              remoteOp: { try await service.deleteRemote($0) },
@@ -160,7 +161,7 @@ struct App: ReducerProtocol {
                       localOp: @escaping (Todo) async throws -> Void,
                       remoteOp: @escaping (Todo) async throws -> Void,
                       remoteOpFailure: @escaping (Todo) async throws -> Void = { _ in },
-                      _ state: State) -> EffectTask<Action> {
+                      _ state: State) -> Effect<Action> {
         let dirtyTodo = todo.update(isDirty: true)
         let cleanTodo = todo.update(isDirty: false)
 
@@ -196,7 +197,7 @@ struct App: ReducerProtocol {
         }
     }
 
-    private func start() -> EffectTask<Action> {
+    private func start() -> Effect<Action> {
         .run { send in
             do {
                 let todos = try cache.todos
@@ -214,7 +215,7 @@ struct App: ReducerProtocol {
         }
     }
 
-    private func getRemoteTodos(_ state: State) -> EffectTask<Action> {
+    private func getRemoteTodos(_ state: State) -> Effect<Action> {
         if state.networkIndicator.pendingRequestCount > 0 {
             return .none
         }

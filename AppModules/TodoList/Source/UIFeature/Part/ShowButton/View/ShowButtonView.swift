@@ -24,7 +24,7 @@ final class ShowButtonView: UIView {
     init(params: ShowButtonParams,
          store: ShowButtonStore) {
         self.params = params
-        self.viewStore = ViewStore(store)
+        self.viewStore = ViewStore(store, observe: { $0 })
         super.init(frame: .zero)
         initViews()
         bindToStore()

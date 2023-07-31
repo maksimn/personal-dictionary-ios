@@ -56,7 +56,7 @@ final class MainListViewController: UIViewController {
         self.theme = theme
         self.store = store
         self.networkIndicatorStore = networkIndicatorStore
-        self.viewStore = ViewStore(store)
+        self.viewStore = ViewStore(store, observe: { $0 })
         self.keyboardController = keyboardUDFBuilder.build()
         super.init(nibName: nil, bundle: nil)
         initViews()

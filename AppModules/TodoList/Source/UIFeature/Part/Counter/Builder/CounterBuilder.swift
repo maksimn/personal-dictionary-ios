@@ -11,7 +11,6 @@ import UIKit
 
 typealias CompletedTodoCount = Int
 typealias CounterStore = Store<CompletedTodoCount, Never>
-typealias CounterViewStore = ViewStore<CompletedTodoCount, Never>
 
 final class CounterBuilder: ViewBuilder {
 

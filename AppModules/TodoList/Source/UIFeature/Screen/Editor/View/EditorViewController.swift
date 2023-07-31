@@ -50,7 +50,7 @@ final class EditorViewController: UIViewController, UITextViewDelegate {
     ) {
         self.params = params
         self.theme = theme
-        self.viewStore = ViewStore(store)
+        self.viewStore = ViewStore(store, observe: { $0 })
         self.networkIndicatorView = networkIndicatorBuilder.build()
         self.keyboardController = keyboardUDFBuilder.build()
         super.init(nibName: nil, bundle: nil)

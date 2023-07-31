@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 
-struct NetworkIndicator: ReducerProtocol {
+struct NetworkIndicator: Reducer {
 
     struct State: Equatable {
         var pendingRequestCount = 0
@@ -22,7 +22,7 @@ struct NetworkIndicator: ReducerProtocol {
         case decrementNetworkRequestCount
     }
 
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case .incrementNetworkRequestCount:
             state.pendingRequestCount += 1

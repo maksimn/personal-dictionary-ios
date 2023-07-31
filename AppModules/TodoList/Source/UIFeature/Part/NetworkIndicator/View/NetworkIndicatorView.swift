@@ -17,7 +17,7 @@ final class NetworkIndicatorView: UIView {
     private let activityIndicator = UIActivityIndicatorView(style: .medium)
 
     init(store: StoreOf<NetworkIndicator>) {
-        self.viewStore = ViewStore(store)
+        self.viewStore = ViewStore(store, observe: { $0 })
         super.init(frame: .zero)
         initViews()
         bindToStore()

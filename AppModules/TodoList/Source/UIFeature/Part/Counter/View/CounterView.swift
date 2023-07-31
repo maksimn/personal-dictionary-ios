@@ -13,7 +13,7 @@ final class CounterView: UIView {
 
     private let template: String
     private let label = UILabel()
-    private let viewStore: CounterViewStore
+    private let store: CounterStore
     private let theme: Theme
     private var cancellables: Set<AnyCancellable> = []
 
@@ -21,7 +21,7 @@ final class CounterView: UIView {
          store: CounterStore,
          theme: Theme) {
         self.template = template
-        self.viewStore = ViewStore(store)
+        self.store = store
         self.theme = theme
         super.init(frame: .zero)
         initLabel()
@@ -33,7 +33,7 @@ final class CounterView: UIView {
     }
 
     private func bindToStore() {
-        viewStore.publisher
+        store.publisher
             .map { [weak self] count in
                 guard let self = self else { return "" }
 
