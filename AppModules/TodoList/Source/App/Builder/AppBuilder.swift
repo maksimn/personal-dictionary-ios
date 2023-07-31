@@ -26,10 +26,7 @@ public final class AppBuilder: ViewControllerBuilder {
             dirtyStateStatus: DirtyStateStatusImp(label: featureName),
             currentDate: { Date() }
         )._printChanges()
-        let store = StoreOf<App>(
-            initialState: App.State(sync: .init(delay: syncConfig.minDelay)),
-            reducer: app
-        )
+        let store = Store(initialState: App.State(sync: .init(delay: syncConfig.minDelay))) { app }
         let mainScreenBuilder = MainScreenBuilder(store: store)
         let mainScreen = mainScreenBuilder.build()
 

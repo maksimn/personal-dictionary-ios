@@ -22,7 +22,7 @@ final class MainScreenBuilder: ViewControllerBuilder {
         let mainTitle = bundle.moduleLocalizedString("LS_MAIN_SCREEN_TITLE")
 
         let mainListStore = store.scope(state: \.mainList, action: App.Action.mainList)
-        let counterStore = store.actionless.scope(state: \.mainList.completedTodoCount)
+        let counterStore = store.scope(state: \.mainList.completedTodoCount, action: App.Action.never)
         let networkIndicatorStore = store.scope(state: \.networkIndicator, action: App.Action.networkIndicator)
         let showButtonStore = mainListStore.scope(
             state: { state in

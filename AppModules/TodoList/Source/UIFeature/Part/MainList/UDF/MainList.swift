@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 
-struct MainList: ReducerProtocol {
+struct MainList: Reducer {
 
     struct State: Equatable {
         var todos: [Todo] = []
@@ -29,7 +29,7 @@ struct MainList: ReducerProtocol {
         case keyboard(KeyboardUDF.Action)
     }
 
-    var body: some ReducerProtocol<State, Action> {
+    var body: some Reducer<State, Action> {
         Reduce { state, action in
             reduceInto(&state, action: action)
         }
@@ -41,7 +41,7 @@ struct MainList: ReducerProtocol {
         }
     }
 
-    private func reduceInto(_ state: inout State, action: Action) -> EffectTask<Action> {
+    private func reduceInto(_ state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case .updateTodos(let todos):
             state.todos = todos

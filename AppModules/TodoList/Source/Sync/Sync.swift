@@ -15,7 +15,7 @@ struct SyncParams {
     let jitter: Double
 }
 
-struct Sync: ReducerProtocol {
+struct Sync: Reducer {
 
     let params: SyncParams
     let dirtyStateCache: DirtyStateCache
@@ -34,7 +34,7 @@ struct Sync: ReducerProtocol {
         case error(WithError)
     }
 
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case .syncWithRemoteTodos:
             let delay = state.delay

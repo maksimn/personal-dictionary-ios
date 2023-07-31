@@ -10,11 +10,11 @@ import UIKit
 
 final class KeyboardUDFController: UIViewController {
 
-    private let viewStore: ViewStoreOf<KeyboardUDF>
+    private let store: StoreOf<KeyboardUDF>
     private let notificationCenter: NotificationCenter
 
     init(store: StoreOf<KeyboardUDF>, notificationCenter: NotificationCenter) {
-        self.viewStore = ViewStore(store)
+        self.store = store
         self.notificationCenter = notificationCenter
         super.init(nibName: nil, bundle: nil)
         subscribeToKeyboardEvents()
@@ -50,12 +50,12 @@ final class KeyboardUDFController: UIViewController {
 
     @objc
     private func keyboardWillShow(notification: Notification) {
-        viewStore.send(.show(notification.keyboardSize))
+        store.send(.show(notification.keyboardSize))
     }
 
     @objc
     private func keyboardWillHide(notification: Notification) {
-        viewStore.send(.hide)
+        store.send(.hide)
     }
 
     private func sendChangeOrientationAction() {
@@ -63,6 +63,6 @@ final class KeyboardUDFController: UIViewController {
         let orientation: KeyboardUDF.Orientation = sysOrientation == .landscapeLeft ||
                                                    sysOrientation == .landscapeRight ? .landscape : .portrait
 
-        viewStore.send(.changeOrientation(orientation))
+        store.send(.changeOrientation(orientation))
     }
 }
