@@ -20,9 +20,15 @@ final class SearchWordListModelImpl: SearchWordListModel {
             return SearchResultData(searchState: .initial, foundWordList: [])
         }
 
-        let filteredWordList = mode == .bySourceWord ?
-            searchableWordList.findWords(contain: string) :
-            searchableWordList.findWords(whereTranslationContains: string)
+        var filteredWordList: [Word] = []
+
+        switch mode {
+        case .bySourceWord:
+            filteredWordList = searchableWordList.findWords(contain: string)
+
+        case .byTranslation:
+            filteredWordList = searchableWordList.findWords(whereTranslationContains: string)
+        }
 
         return SearchResultData(searchState: .fulfilled, foundWordList: filteredWordList)
     }
