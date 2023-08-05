@@ -15,9 +15,8 @@ final class MainScreen: UIViewController {
     private let showButtonView: UIView
     private let networkIndicatorView: UIView
     private let mainListViewController: UIViewController
+    private let backButtonFactory: ButtonFactory
     private let theme: Theme
-
-    private let routingButton = UIButton()
 
     init(
         mainTitle: String,
@@ -25,13 +24,15 @@ final class MainScreen: UIViewController {
         counterBuilder: ViewBuilder,
         showButtonBuilder: ViewBuilder,
         networkIndicatorBuilder: ViewBuilder,
-        mainListBuilder: ViewControllerBuilder
+        mainListBuilder: ViewControllerBuilder,
+        backButtonFactory: ButtonFactory
     ) {
         self.theme = theme
         counterView = counterBuilder.build()
         showButtonView = showButtonBuilder.build()
         networkIndicatorView = networkIndicatorBuilder.build()
         mainListViewController = mainListBuilder.build()
+        self.backButtonFactory = backButtonFactory
         super.init(nibName: nil, bundle: nil)
         navigationItem.title = mainTitle
         initViews()
@@ -47,11 +48,11 @@ final class MainScreen: UIViewController {
         initVisibilitySwitch()
         initMainList()
         initNetworkIndicator()
-        initRoutingButton()
+        initBackButton()
     }
 
     @objc
-    private func onRoutingButtonTap() {
+    private func onBackButtonTap() {
         dismiss(animated: true, completion: nil)
     }
 
@@ -91,17 +92,10 @@ final class MainScreen: UIViewController {
         }
     }
 
-    private func initRoutingButton() {
-        routingButton.setTitle("Back", for: .normal)
-        routingButton.setTitleColor(.white, for: .normal)
-        routingButton.backgroundColor = .darkGray
-        routingButton.layer.cornerRadius = 8
-        routingButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
-        routingButton.addTarget(self, action: #selector(onRoutingButtonTap), for: .touchUpInside)
-        view.addSubview(routingButton)
-        routingButton.snp.makeConstraints { (make) -> Void in
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
-            make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-8)
-        }
+    private func initBackButton() {
+        let backButton = backButtonFactory.create()
+
+        backButton.addTarget(self, action: #selector(onBackButtonTap), for: .touchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
 }
