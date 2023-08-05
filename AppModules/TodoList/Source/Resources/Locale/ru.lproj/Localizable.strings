@@ -6,6 +6,7 @@
   
 */
 
+"LS_BACK" = "Назад";
 "LS_CANCEL" = "Отменить";
 "LS_COMPLETED" = "Выполнено — %d";
 "LS_DEADLINE" = "Сделать до";

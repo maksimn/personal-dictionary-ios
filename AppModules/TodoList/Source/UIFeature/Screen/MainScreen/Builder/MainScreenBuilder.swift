@@ -40,7 +40,8 @@ final class MainScreenBuilder: ViewControllerBuilder {
             counterBuilder: CounterBuilder(store: counterStore),
             showButtonBuilder: ShowButtonBuilder(store: showButtonStore),
             networkIndicatorBuilder: NetworkIndicatorBuilder(store: networkIndicatorStore),
-            mainListBuilder: MainListBuilder(store: mainListStore, networkIndicatorStore: networkIndicatorStore)
+            mainListBuilder: MainListBuilder(store: mainListStore, networkIndicatorStore: networkIndicatorStore),
+            backButtonFactory: BackButtonFactory()
         )
         let navigationController = UINavigationController(rootViewController: mainScreen)
 

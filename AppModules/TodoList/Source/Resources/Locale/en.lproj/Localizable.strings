@@ -6,6 +6,7 @@
   
 */
 
+"LS_BACK" = "Back";
 "LS_CANCEL" = "Cancel";
 "LS_COMPLETED" = "Completed — %d";
 "LS_DEADLINE" = "Deadline";
