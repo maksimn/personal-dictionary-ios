@@ -8,8 +8,10 @@
 import RealmSwift
 import RxSwift
 
+/// Получение списка слов из хранилища личного словаря.
 protocol WordListFetcher {
 
+    /// - Returns: список слов из личного словаря.
     func wordList() throws -> [Word]
 }
 
