@@ -5,13 +5,12 @@
 //  Created by Maxim Ivanov on 06.10.2021.
 //
 
+import RealmSwift
 import RxSwift
 
-/// Получение списка слов из хранилища личного словаря.
 protocol WordListFetcher {
 
-    /// - Returns: список слов из личного словаря.
-    var wordList: [Word] { get }
+    func wordList() throws -> [Word]
 }
 
 /// Получение списка избранных слов из хранилища личного словаря.
@@ -60,8 +59,7 @@ protocol SearchableWordList {
 }
 
 /// Хранилище слов личного словаря.
-protocol WordListRepository: WordListFetcher,
-                             FavoriteWordListFetcher,
+protocol WordListRepository: FavoriteWordListFetcher,
                              WordCUDOperations,
                              SearchableWordList {
 }
