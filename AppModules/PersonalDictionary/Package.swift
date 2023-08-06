@@ -17,6 +17,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/SnapKit/SnapKit", from: "5.6.0"),
         .package(url: "https://github.com/ReactiveX/RxSwift", revision: "6.5.0"),
+        .package(url: "https://github.com/realm/realm-swift", from: "10.39.1"),
         .package(path: "../CoreModule"),
         .package(path: "../TodoList")
     ],
@@ -24,7 +25,12 @@ let package = Package(
         .target(
             name: "PersonalDictionary",
             dependencies: [
-                "CoreModule", "RxSwift", "SnapKit", "TodoList", .product(name: "RxCocoa", package: "RxSwift")
+                "CoreModule",
+                "RxSwift",
+                "SnapKit",
+                "TodoList",
+                .product(name: "RealmSwift", package: "realm-swift"),
+                .product(name: "RxCocoa", package: "RxSwift")
             ],
             path: "Source",
             resources: []
