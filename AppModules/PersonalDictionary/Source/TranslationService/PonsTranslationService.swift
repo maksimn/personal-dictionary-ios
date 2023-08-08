@@ -59,7 +59,7 @@ final class PonsTranslationService: TranslationService {
                 var word = word
                 let ponsArray = try JSONDecoder().decode([PonsResponseData].self, from: data)
 
-                word.translation = ponsArray.first?.translation
+                word.dictionaryEntry = [ponsArray.first?.translation ?? ""]
 
                 return word
             }

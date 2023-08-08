@@ -5,6 +5,7 @@
 //  Created by Maksim Ivanov on 05.03.2023.
 //
 
+import RxBlocking
 import RxSwift
 import XCTest
 @testable import PersonalDictionary
@@ -14,7 +15,7 @@ final class WordListModelImplTests: XCTestCase {
     let lang = Lang(id: .init(raw: 1), name: "A", shortName: "a")
     lazy var word = Word(text: "abc", sourceLang: lang, targetLang: lang)
     lazy var word1 = Word(text: "a", sourceLang: lang, targetLang: lang)
-    lazy var word2 = Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang)
+    lazy var word2 = Word(text: "b", dictionaryEntry: ["y"], sourceLang: lang, targetLang: lang)
     lazy var word3 = Word(text: "c", sourceLang: lang, targetLang: lang)
     lazy var wordList = [word1, word2, word3]
 
@@ -174,10 +175,10 @@ final class WordListModelImplTests: XCTestCase {
         var translatedWord1 = word1
         var translatedWord3 = word3
 
-        translatedWord1.translation = "x"
-        translatedWord3.translation = "z"
+        translatedWord1.dictionaryEntry = ["x"]
+        translatedWord3.dictionaryEntry = ["z"]
         translationServiceMock.methodMock = { word in word == self.word1 ? Single.just(translatedWord1) :
-                                                                           Single.just(translatedWord3) }
+            Single.just(translatedWord3) }
         cudOperationsMock.updateWordMock = { (word: Word) in
             dbUpdateCounter += 1
             return Single.just(word)
@@ -218,9 +219,9 @@ final class WordListModelImplTests: XCTestCase {
             translationService: TranslationServiceMock(),
             intervalMs: 0
         )
-        let translated = [Word(text: "a", translation: "x", sourceLang: lang, targetLang: lang),
-                          Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang),
-                          Word(text: "c", translation: "z", sourceLang: lang, targetLang: lang)]
+        let translated = [Word(text: "a", dictionaryEntry: ["x"], sourceLang: lang, targetLang: lang),
+                          Word(text: "b", dictionaryEntry: ["y"], sourceLang: lang, targetLang: lang),
+                          Word(text: "c", dictionaryEntry: ["z"], sourceLang: lang, targetLang: lang)]
 
         // Act
         let result = try model.fetchTranslationsFor(state: translated, start: 0, end: 3).toBlocking().first()

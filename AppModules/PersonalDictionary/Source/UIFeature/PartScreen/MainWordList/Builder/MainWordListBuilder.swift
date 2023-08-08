@@ -32,7 +32,8 @@ final class MainWordListBuilder: ViewControllerBuilder {
         )
 
         let model = MainWordListModelImpl(
-            wordListRepository: wordListRepository,
+            wordListFetcher: WordListFetcherImpl(),
+            wordCUDOperations: wordListRepository,
             translationService: translationService
         )
         let viewModel = MainWordListViewModelImpl(

@@ -46,7 +46,7 @@ class WordMO: NSManagedObject {
     func set(_ word: Word) {
         id = word.id.raw
         text = word.text
-        translation = word.translation
+        translation = word.dictionaryEntry.first
         createdAt = Date(timeIntervalSince1970: TimeInterval(word.createdAt))
         sourceLangId = word.sourceLang.id.raw
         targetLangId = word.targetLang.id.raw
@@ -71,7 +71,7 @@ class WordMO: NSManagedObject {
         return Word(
             id: Word.Id(raw: id),
             text: text,
-            translation: translation,
+            dictionaryEntry: [translation ?? ""],
             sourceLang: sourceLang,
             targetLang: targetLang,
             isFavorite: isFavorite,

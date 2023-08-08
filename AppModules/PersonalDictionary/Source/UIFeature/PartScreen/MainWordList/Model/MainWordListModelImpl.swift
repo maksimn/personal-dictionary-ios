@@ -9,18 +9,28 @@ import RxSwift
 
 final class MainWordListModelImpl: MainWordListModel {
 
-    private let wordListRepository: WordListFetcher & WordCUDOperations
+    private let wordListFetcher: WordListFetcher
+    private let wordCUDOperations: WordCUDOperations
     private let translationService: TranslationService
 
     private let newWordIndex = 0
 
-    init(wordListRepository: WordListFetcher & WordCUDOperations, translationService: TranslationService) {
-        self.wordListRepository = wordListRepository
+    init(
+        wordListFetcher: WordListFetcher,
+        wordCUDOperations: WordCUDOperations,
+        translationService: TranslationService
+    ) {
+        self.wordListFetcher = wordListFetcher
+        self.wordCUDOperations = wordCUDOperations
         self.translationService = translationService
     }
 
     func fetchMainWordList() -> WordListState {
-        wordListRepository.wordList
+        do {
+            return try wordListFetcher.wordList()
+        } catch {
+            return []
+        }
     }
 
     func create(_ word: Word, state: WordListState) -> WordListState {
@@ -32,12 +42,12 @@ final class MainWordListModelImpl: MainWordListModel {
     }
 
     func createEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
-        wordListRepository.add(word)
+        wordCUDOperations.add(word)
             .flatMap { word in
                 self.translationService.fetchTranslation(for: word)
             }
             .flatMap { translatedWord in
-                self.wordListRepository.update(translatedWord)
+                self.wordCUDOperations.update(translatedWord)
             }
             .map { translatedWord in
                 var state = state
