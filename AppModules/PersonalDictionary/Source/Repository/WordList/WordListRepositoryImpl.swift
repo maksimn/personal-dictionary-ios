@@ -1,5 +1,5 @@
 //
-//  CoreWordListRepository.swift
+//  WordListRepositoryImpl.swift
 //  PersonalDictionary
 //
 //  Created by Maxim Ivanov on 07.10.2021.
@@ -13,213 +13,99 @@ import RealmSwift
 struct WordListFetcherImpl: WordListFetcher {
 
     func wordList() throws -> [Word] {
-        try Realm().objects(WordDAO.self)
-            .sorted(byKeyPath: "createdAt", ascending: false)
-            .compactMap { Word($0) }
+        try realmFilter { $0 }
     }
 }
 
-/// Аргументы хранилища слов личного словаря на основе фреймворка Core Data.
-struct WordListRepositoryArgs {
+struct CreateWordDbWorkerImpl: CreateWordDbWorker {
 
-    /// Бандл для работы с ресурсами модуля "Personal Dictionary"
-    let bundle: Bundle
-
-    /// Название Persistent Container'a
-    let persistentContainerName: String
+    func create(word: Word) -> Single<Word> {
+        makeRealmCUD(operation: { (realm, word) in
+            realm.add(WordDAO(word))
+        }, with: word)
+    }
 }
 
-/// Реализация хранилища слов личного словаря на основе фреймворка Core Data.
-final class WordListRepositoryImpl: WordListRepository {
+struct UpdateWordDbWorkerImpl: UpdateWordDbWorker {
 
-    private var mainContext: NSManagedObjectContext {
-        persistentContainer.viewContext
+    func update(word: Word) -> Single<Word> {
+        makeRealmCUD(operation: { (realm, word) in
+            let wordDAO = try realm.findWordBy(id: word.id)
+
+            wordDAO.update(from: word)
+        }, with: word)
     }
+}
 
-    private lazy var persistentContainer: NSPersistentContainer = {
-        guard let modelURL = args.bundle.url(forResource: args.persistentContainerName, withExtension: "momd"),
-              let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL) else {
-            return NSPersistentContainer()
-        }
+struct DeleteWordDbWorkerImpl: DeleteWordDbWorker {
 
-        let container = NSPersistentContainer(name: args.persistentContainerName,
-                                              managedObjectModel: managedObjectModel)
+    func delete(word: Word) -> Single<Word> {
+        makeRealmCUD(operation: { (realm, word) in
+            let wordDAO = try realm.findWordBy(id: word.id)
 
-        container.loadPersistentStores(completionHandler: { (_, error) in
-            container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
-
-            if let error = error {
-                self.logger.errorWithContext(error)
-            }
-        })
-        return container
-    }()
-
-    private let langRepository: LangRepository
-    private let logger: CoreModule.Logger
-    private let args: WordListRepositoryArgs
-
-    /// Инициализатор.
-    /// - Parameters:
-    ///  - args: аргументы хранилища списка слов.
-    ///  - langRepository: хранилище данных о языках.
-    ///  - logger: логгер.
-    init(args: WordListRepositoryArgs,
-         langRepository: LangRepository,
-         logger: CoreModule.Logger) {
-        self.args = args
-        self.langRepository = langRepository
-        self.logger = logger
+            realm.delete(wordDAO)
+        }, with: word)
     }
+}
 
-    convenience init(langData: LangData, bundle: Bundle) {
-        self.init(
-            args: WordListRepositoryArgs(
-                bundle: bundle,
-                persistentContainerName: "StorageModel"
-            ),
-            langRepository: LangRepositoryImpl(
-                userDefaults: UserDefaults.standard,
-                data: langData
-            ),
-            logger: LoggerImpl(category: "PersonalDictionary.WordListRepository")
-        )
+struct FavoriteWordListFetcherImpl: FavoriteWordListFetcher {
+
+    func favoriteWordList() throws -> [Word] {
+       try realmFilter { $0.where { $0.isFavorite == true } }
     }
+}
 
-    /// Список слов из личного словаря.
-    var wordList: [Word] {
-        filter(withPredicate: nil)
-    }
+struct SearchableWordListImpl: SearchableWordList {
 
-    var favoriteWordList: [Word] {
-        filter(withPredicate: NSPredicate(format: "isFavorite == true"))
-    }
-
-    func add(_ word: Word) -> Single<Word> {
-        .create { [weak self] single in
-            let backgroundContext = self?.persistentContainer.newBackgroundContext()
-
-            backgroundContext?.perform {
-                let wordMO = WordMO(entity: WordMO.entity(), insertInto: backgroundContext)
-
-                wordMO.set(word)
-
-                do {
-                    try backgroundContext?.save()
-                    DispatchQueue.main.async {
-                        single(.success(word))
-                    }
-                } catch {
-                    DispatchQueue.main.async {
-                        single(.failure(error))
-                    }
-                }
-            }
-
-            return Disposables.create {}
-        }
-    }
-
-    func update(_ word: Word) -> Single<Word> {
-        .create { [weak self] single in
-            let backgroundContext = self?.persistentContainer.newBackgroundContext()
-            let predicate = NSPredicate.init(format: "id = '\(word.id.raw)'")
-            let fetchRequest: NSFetchRequest<WordMO> = WordMO.fetchRequest()
-
-            fetchRequest.predicate = predicate
-
-            backgroundContext?.perform {
-                do {
-                    let array = try backgroundContext?.fetch(fetchRequest) ?? []
-
-                    if array.count > 0 {
-                        let wordMO = array[0]
-
-                        wordMO.set(word)
-                    }
-                    try backgroundContext?.save()
-                    DispatchQueue.main.async {
-                        single(.success(word))
-                    }
-                } catch {
-                    DispatchQueue.main.async {
-                        single(.failure(error))
-                    }
-                }
-            }
-            return Disposables.create {}
-        }
-    }
-
-    func remove(_ word: Word) -> Single<Word> {
-        .create { [weak self] single in
-            let backgroundContext = self?.persistentContainer.newBackgroundContext()
-            let predicate = NSPredicate.init(format: "id = '\(word.id.raw)'")
-            let fetchRequest: NSFetchRequest<WordMO> = WordMO.fetchRequest()
-
-            fetchRequest.predicate = predicate
-
-            backgroundContext?.perform {
-                do {
-                    let array = try backgroundContext?.fetch(fetchRequest) ?? []
-
-                    if array.count > 0 {
-                        let wordMO = array[0]
-
-                        backgroundContext?.delete(wordMO)
-                    }
-                    try backgroundContext?.save()
-                    DispatchQueue.main.async {
-                        single(.success(word))
-                    }
-                } catch {
-                    DispatchQueue.main.async {
-                        single(.failure(error))
-                    }
-                }
-            }
-            return Disposables.create {}
-        }
-    }
-
-    /// Найти слова, содержащие строку.
-    /// - Parameters:
-    ///  - string: строка для поиска.
-    /// - Массив найденных слов.
     func findWords(contain string: String) -> [Word] {
-        filter(withPredicate: NSPredicate(format: "text contains[cd] \"\(string)\""))
+        (try? realmFilter { $0.filter("text contains[cd] \"\(string)\"") }) ?? []
     }
 
-    /// Найти слова, перевод которых содержит строку.
-    /// - Parameters:
-    ///  - string: строка для поиска.
-    /// - Массив найденных слов.
     func findWords(whereTranslationContains string: String) -> [Word] {
-        filter(withPredicate: NSPredicate(format: "translation contains[cd] \"\(string)\""))
+        (try? realmFilter { $0.filter("ANY dictionaryEntry contains[cd] \"\(string)\"") }) ?? []
     }
+}
 
-    /// Delete all objects of WordItem entity.
-    func removeAllWords() throws {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "WordMO")
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+private func realmFilter(_ filter: (Results<WordDAO>) -> Results<WordDAO>) throws -> [Word] {
+    let objects = try Realm().objects(WordDAO.self)
+    let filtered = filter(objects)
 
-        try persistentContainer.persistentStoreCoordinator.execute(deleteRequest, with: mainContext)
-    }
+    return filtered.sorted(byKeyPath: "createdAt", ascending: false)
+        .compactMap { Word($0) }
+}
 
-    private func filter(withPredicate predicate: NSPredicate?) -> [Word] {
-        let fetchRequest: NSFetchRequest<WordMO> = WordMO.fetchRequest()
-        let sortDescriptor = NSSortDescriptor.init(key: "createdAt", ascending: false)
-
-        fetchRequest.predicate = predicate
-        fetchRequest.sortDescriptors = [sortDescriptor]
-
+private func makeRealmCUD(operation: @escaping (Realm, Word) throws -> Void, with word: Word) -> Single<Word> {
+    .create { single in
         do {
-            let wordMOList = try mainContext.fetch(fetchRequest)
+            let realm = try Realm()
 
-            return wordMOList.compactMap { $0.convert(using: langRepository) }
+            try realm.write {
+                do {
+                    try operation(realm, word)
+                    single(.success(word))
+                } catch {
+                    single(.failure(error))
+                }
+            }
         } catch {
-            logger.errorWithContext(error)
-            return []
+            single(.failure(error))
         }
+
+        return Disposables.create {}
     }
+}
+
+extension Realm {
+
+    func findWordBy(id: Word.Id) throws -> WordDAO {
+        guard let wordDAO = object(ofType: WordDAO.self, forPrimaryKey: id.raw) else {
+            throw RealmWordError.wordNotFoundInRealm(id)
+        }
+
+        return wordDAO
+    }
+}
+
+enum RealmWordError: Error {
+    case wordNotFoundInRealm(Word.Id)
 }

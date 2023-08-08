@@ -19,7 +19,7 @@ final class FavoriteWordListViewModelImplTests: XCTestCase {
             wordStream: UpdatedWordStreamMock()
         )
 
-        fetcherMock.propertyMock = []
+        fetcherMock.favoriteWordListMock = { [] }
 
         // Act
         viewModel.fetchFavoriteWordList()
@@ -41,7 +41,7 @@ final class FavoriteWordListViewModelImplTests: XCTestCase {
             wordStream: UpdatedWordStreamMock()
         )
 
-        fetcherMock.propertyMock = favorites
+        fetcherMock.favoriteWordListMock = { favorites }
 
         // Act
         viewModel.fetchFavoriteWordList()
