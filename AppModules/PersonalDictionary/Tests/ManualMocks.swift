@@ -54,16 +54,20 @@ class LangRepositoryMock: LangRepository {
     }
 }
 
-class WordListRepositoryMock: WordListFetcher, WordCUDOperations {
+class WordListFetcherMock: WordListFetcher {
 
-    var wordListMock: [Word]?
+    var wordListMock: (() -> [Word])?
+
+    func wordList() throws -> [Word] {
+        wordListMock!()
+    }
+}
+
+class WordCUDOperationsMock: WordCUDOperations {
+
     var addWordMock: ((Word) -> Single<Word>)?
     var removeWordMock: ((Word) -> Single<Word>)?
     var updateWordMock: ((Word) -> Single<Word>)?
-
-    var wordList: [Word] {
-        wordListMock!
-    }
 
     func add(_ word: Word) -> Single<Word> {
         addWordMock!(word)
@@ -220,24 +224,6 @@ class WordListModelMock: WordListModel {
 
     func fetchTranslationsFor(state: WordListState, start: Int, end: Int) -> Single<WordListState> {
         fetchTranslationsForMock!(state, start, end)
-    }
-}
-
-class WordCUDOperationsMock: WordCUDOperations {
-    var addWordMock: ((Word) -> Single<Word>)?
-    var removeWordMock: ((Word) -> Single<Word>)?
-    var updateWordMock: ((Word) -> Single<Word>)?
-
-    func add(_ word: Word) -> Single<Word> {
-        addWordMock!(word)
-    }
-
-    func update(_ word: Word) -> Single<Word> {
-        updateWordMock!(word)
-    }
-
-    func remove(_ word: Word) -> Single<Word> {
-        removeWordMock!(word)
     }
 }
 

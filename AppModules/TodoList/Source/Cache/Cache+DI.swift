@@ -22,4 +22,3 @@ extension DeletedTodoCache {
         self.init(persistentContainer: persistentContainer(label))
     }
 }
-

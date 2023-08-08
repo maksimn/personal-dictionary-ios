@@ -72,7 +72,7 @@ final class WordListModelImpl: WordListModel {
         guard end > start, start > -1 else { return .error(WordListError.wrongIndices) }
         var notTranslated: WordListState = []
 
-        for position in start..<end where state[position].translation == nil {
+        for position in start..<end where state[position].dictionaryEntry.isEmpty {
             notTranslated.append(state[position])
         }
 

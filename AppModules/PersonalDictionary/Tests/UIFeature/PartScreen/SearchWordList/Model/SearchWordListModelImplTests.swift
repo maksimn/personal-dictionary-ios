@@ -34,7 +34,7 @@ final class SearchWordListModelImplTests: XCTestCase {
         // Arrange
         let searchableWordListMock = SearchableWordListMock()
         let model = SearchWordListModelImpl(searchableWordList: searchableWordListMock)
-        let words = [Word(text: "Aa", translation: "Bb", sourceLang: lang, targetLang: lang)]
+        let words = [Word(text: "Aa", dictionaryEntry: ["Bb"], sourceLang: lang, targetLang: lang)]
 
         searchableWordListMock.findWordsWhereTranslationContainsMock = { _ in words }
 
