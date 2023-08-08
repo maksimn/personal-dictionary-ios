@@ -18,16 +18,15 @@ final class WordListGraphImpl: WordListGraph {
     /// Инициализатор.
     /// - Parameters:
     ///  - viewParams: параметры представления фичи.
-    ///  - cudOperations: сервис для операций create, update, delete со словами в хранилище личного словаря.
     ///  - translationService: cлужба для выполнения перевода слов на целевой язык.
     ///  - wordStream: ModelStream для событий со словами в личном словаре.
     init(viewParams: WordListViewParams,
-         cudOperations: WordCUDOperations,
          translationService: TranslationService,
          wordStream: WordStream,
          logger: Logger) {
         let model = WordListModelImpl(
-            cudOperations: cudOperations,
+            updateWordDbWorker: UpdateWordDbWorkerImpl(),
+            deleteWordDbWorker: DeleteWordDbWorkerImpl(),
             wordSender: wordStream,
             translationService: translationService
         )

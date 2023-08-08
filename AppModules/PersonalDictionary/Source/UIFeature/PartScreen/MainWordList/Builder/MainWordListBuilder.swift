@@ -21,10 +21,6 @@ final class MainWordListBuilder: ViewControllerBuilder {
     /// - Returns:
     ///  - Экран "Главного (основного) списка слов".
     func build() -> UIViewController {
-        let wordListRepository = WordListRepositoryImpl(
-            langData: dependency.appConfig.langData,
-            bundle: dependency.bundle
-        )
         let translationService = PonsTranslationService(
             secret: dependency.appConfig.ponsApiSecret,
             httpClient: LoggableHttpClient(logger: logger()),
@@ -33,7 +29,8 @@ final class MainWordListBuilder: ViewControllerBuilder {
 
         let model = MainWordListModelImpl(
             wordListFetcher: WordListFetcherImpl(),
-            wordCUDOperations: wordListRepository,
+            сreateWordDbWorker: CreateWordDbWorkerImpl(),
+            updateWordDbWorker: UpdateWordDbWorkerImpl(),
             translationService: translationService
         )
         let viewModel = MainWordListViewModelImpl(

@@ -19,17 +19,20 @@ final class MainWordListModelImplTests: XCTestCase {
     lazy var wordList = [word1, word2, word3]
 
     var wordListFetcherMock: WordListFetcherMock!
-    var wordCUDOperationsMock: WordCUDOperationsMock!
     var translationServiceMock: TranslationServiceMock!
+    var createWordDbWorkerMock: CreateWordDbWorkerMock!
+    var updateWordDbWorkerMock: UpdateWordDbWorkerMock!
     var model: MainWordListModelImpl!
 
     func arrange() {
         wordListFetcherMock = WordListFetcherMock()
-        wordCUDOperationsMock = WordCUDOperationsMock()
+        createWordDbWorkerMock = CreateWordDbWorkerMock()
+        updateWordDbWorkerMock = UpdateWordDbWorkerMock()
         translationServiceMock = TranslationServiceMock()
         model = MainWordListModelImpl(
             wordListFetcher: wordListFetcherMock,
-            wordCUDOperations: wordCUDOperationsMock,
+            сreateWordDbWorker: createWordDbWorkerMock,
+            updateWordDbWorker: updateWordDbWorkerMock,
             translationService: translationServiceMock
         )
     }
@@ -64,8 +67,8 @@ final class MainWordListModelImplTests: XCTestCase {
         var dbUpdateCounter = 0
         let translatedWord = Word(text: "abc", dictionaryEntry: ["translation"], sourceLang: lang, targetLang: lang)
 
-        wordCUDOperationsMock.addWordMock = { word in Single.just(word) }
-        wordCUDOperationsMock.updateWordMock = { (word: Word) in
+        createWordDbWorkerMock.createWordMock = { word in Single.just(word) }
+        updateWordDbWorkerMock.updateWordMock = { (word: Word) in
             dbUpdateCounter += 1
             return Single.just(word)
         }
@@ -82,7 +85,7 @@ final class MainWordListModelImplTests: XCTestCase {
     func test_createEffect_failsWhenDbCreateWordFails() throws {
         // Arrange
         arrange()
-        wordCUDOperationsMock.addWordMock = { _ in Single.error(ErrorMock.err) }
+        createWordDbWorkerMock.createWordMock = { _ in Single.error(ErrorMock.err) }
 
         // Act
         let single = model.createEffect(word, state: wordList)

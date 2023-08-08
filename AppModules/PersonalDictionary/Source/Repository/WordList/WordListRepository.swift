@@ -15,33 +15,38 @@ protocol WordListFetcher {
     func wordList() throws -> [Word]
 }
 
-/// Получение списка избранных слов из хранилища личного словаря.
-protocol FavoriteWordListFetcher {
-
-    /// - Returns: список  избранных слов из личного словаря.
-    var favoriteWordList: [Word] { get }
-}
-
-/// Операции create, update, delete со словами в хранилище личного словаря.
-protocol WordCUDOperations {
+protocol CreateWordDbWorker {
 
     /// Добавить слово в хранилище личного словаря
     /// - Parameters:
     ///  - word: слово для добавления.
     /// - Returns: Rx single для обработки завершения операции добавления слова в хранилище.
-    func add(_ word: Word) -> Single<Word>
+    func create(word: Word) -> Single<Word>
+}
+
+protocol UpdateWordDbWorker {
 
     /// Обновить слово в хранилище личного словаря
     /// - Parameters:
     ///  - word: обновленное слово.
     /// - Returns: Rx single для обработки завершения операции обновления слова в хранилище.
-    func update(_ word: Word) -> Single<Word>
+    func update(word: Word) -> Single<Word>
+}
+
+protocol DeleteWordDbWorker {
 
     /// Удалить слово из хранилища личного словаря
     /// - Parameters:
-    ///  - wordId: идентификатор слова для его удаления из хранилища.
+    ///  - word: слово для его удаления из хранилища.
     /// - Returns: Rx single для обработки завершения операции удаления слова из хранилища.
-    func remove(_ word: Word) -> Single<Word>
+    func delete(word: Word) -> Single<Word>
+}
+
+/// Получение списка избранных слов из хранилища личного словаря.
+protocol FavoriteWordListFetcher {
+
+    /// - Returns: список  избранных слов из личного словаря.
+    func favoriteWordList() throws -> [Word]
 }
 
 /// Протокол для поисковых запросов к хранилищу данных.
@@ -58,10 +63,4 @@ protocol SearchableWordList {
     ///  - string: строка для поиска.
     /// - Массив найденных слов.
     func findWords(whereTranslationContains string: String) -> [Word]
-}
-
-/// Хранилище слов личного словаря.
-protocol WordListRepository: FavoriteWordListFetcher,
-                             WordCUDOperations,
-                             SearchableWordList {
 }
