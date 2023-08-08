@@ -18,7 +18,7 @@ final class SearchWordListBuilder: ViewControllerBuilder {
     }
 
     func build() -> UIViewController {
-        let model = SearchWordListModelImpl(searchableWordList: searchableWordList())
+        let model = SearchWordListModelImpl(searchableWordList: SearchableWordListImpl())
         let viewModel = SearchWordListViewModelImpl(
             initialData: initialData(),
             model: model,
@@ -51,12 +51,5 @@ final class SearchWordListBuilder: ViewControllerBuilder {
 
     private func labelText() -> String {
         dependency.bundle.moduleLocalizedString("LS_NO_WORDS_FOUND")
-    }
-
-    private func searchableWordList() -> SearchableWordList {
-        WordListRepositoryImpl(
-            langData: dependency.appConfig.langData,
-            bundle: dependency.bundle
-        )
     }
 }

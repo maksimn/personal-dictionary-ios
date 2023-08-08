@@ -10,18 +10,21 @@ import RxSwift
 final class MainWordListModelImpl: MainWordListModel {
 
     private let wordListFetcher: WordListFetcher
-    private let wordCUDOperations: WordCUDOperations
+    private let сreateWordDbWorker: CreateWordDbWorker
+    private let updateWordDbWorker: UpdateWordDbWorker
     private let translationService: TranslationService
 
     private let newWordIndex = 0
 
     init(
         wordListFetcher: WordListFetcher,
-        wordCUDOperations: WordCUDOperations,
+        сreateWordDbWorker: CreateWordDbWorker,
+        updateWordDbWorker: UpdateWordDbWorker,
         translationService: TranslationService
     ) {
         self.wordListFetcher = wordListFetcher
-        self.wordCUDOperations = wordCUDOperations
+        self.сreateWordDbWorker = сreateWordDbWorker
+        self.updateWordDbWorker = updateWordDbWorker
         self.translationService = translationService
     }
 
@@ -42,12 +45,12 @@ final class MainWordListModelImpl: MainWordListModel {
     }
 
     func createEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
-        wordCUDOperations.add(word)
+        сreateWordDbWorker.create(word: word)
             .flatMap { word in
                 self.translationService.fetchTranslation(for: word)
             }
             .flatMap { translatedWord in
-                self.wordCUDOperations.update(translatedWord)
+                self.updateWordDbWorker.update(word: translatedWord)
             }
             .map { translatedWord in
                 var state = state

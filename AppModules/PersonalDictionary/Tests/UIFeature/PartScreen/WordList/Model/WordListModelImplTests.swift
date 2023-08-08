@@ -19,13 +19,29 @@ final class WordListModelImplTests: XCTestCase {
     lazy var word3 = Word(text: "c", sourceLang: lang, targetLang: lang)
     lazy var wordList = [word1, word2, word3]
 
+    var updateWordDbWorkerMock: UpdateWordDbWorkerMock!
+    var deleteWordDbWorkerMock: DeleteWordDbWorkerMock!
+    var wordSenderMock: RUWordStreamMock!
+    var translationServiceMock: TranslationServiceMock!
+    var model: WordListModelImpl!
+
+    func arrange() {
+        updateWordDbWorkerMock = .init()
+        deleteWordDbWorkerMock = .init()
+        wordSenderMock = .init()
+        translationServiceMock = .init()
+        model = .init(
+            updateWordDbWorker: updateWordDbWorkerMock,
+            deleteWordDbWorker: deleteWordDbWorkerMock,
+            wordSender: wordSenderMock,
+            translationService: translationServiceMock,
+            intervalMs: 0
+        )
+    }
+
     func test_removeWord_returnsCorrectWordListState() throws {
         // Arrange
-        let model = WordListModelImpl(
-            cudOperations: WordCUDOperationsMock(),
-            wordSender: RUWordStreamMock(),
-            translationService: TranslationServiceMock()
-        )
+        arrange()
 
         // Act
         let newWordList = model.remove(at: 1, state: wordList)
@@ -36,22 +52,16 @@ final class WordListModelImplTests: XCTestCase {
 
     func test_removeEffect_worksCorrectlyForHappyPath() throws {
         // Arrange
+        arrange()
+
         var dbRequestCounter = 0
         var notificationCounter = 0
-        let cudOperationsMock = WordCUDOperationsMock()
-        let wordStreamMock = RUWordStreamMock()
-        let translationServiceMock = TranslationServiceMock()
-        let model = WordListModelImpl(
-            cudOperations: cudOperationsMock,
-            wordSender: wordStreamMock,
-            translationService: translationServiceMock
-        )
 
-        cudOperationsMock.removeWordMock = { word in
+        deleteWordDbWorkerMock.deleteWordMock = { word in
             dbRequestCounter += 1
             return Single.just(word)
         }
-        wordStreamMock.sendRemovedWordMock = { _ in notificationCounter += 1 }
+        wordSenderMock.sendRemovedWordMock = { _ in notificationCounter += 1 }
 
         // Act
         let nextState = try model.removeEffect(word, state: wordList).toBlocking().first()
@@ -64,14 +74,9 @@ final class WordListModelImplTests: XCTestCase {
 
     func test_removeEffect_failsWhenDbRemoveWordFails() throws {
         // Arrange
-        let cudOperationsMock = WordCUDOperationsMock()
-        let model = WordListModelImpl(
-            cudOperations: cudOperationsMock,
-            wordSender: RUWordStreamMock(),
-            translationService: TranslationServiceMock()
-        )
+        arrange()
 
-        cudOperationsMock.removeWordMock = { _ in Single.error(ErrorMock.err) }
+        deleteWordDbWorkerMock.deleteWordMock = { _ in Single.error(ErrorMock.err) }
 
         // Act
         let single = model.removeEffect(word, state: wordList)
@@ -82,11 +87,7 @@ final class WordListModelImplTests: XCTestCase {
 
     func test_updateWord_returnsCorrectWordListState() throws {
         // Arrange
-        let model = WordListModelImpl(
-            cudOperations: WordCUDOperationsMock(),
-            wordSender: RUWordStreamMock(),
-            translationService: TranslationServiceMock()
-        )
+        arrange()
 
         // Act
         let newWordList = model.update(word, at: 2, state: wordList)
@@ -97,22 +98,16 @@ final class WordListModelImplTests: XCTestCase {
 
     func test_updateEffect_worksCorrectlyForHappyPath() throws {
         // Arrange
+        arrange()
+
         var notificationCounter = 0
         var dbUpdateCounter = 0
-        let cudOperationsMock = WordCUDOperationsMock()
-        let wordStreamMock = RUWordStreamMock()
-        let translationServiceMock = TranslationServiceMock()
-        let model = WordListModelImpl(
-            cudOperations: cudOperationsMock,
-            wordSender: wordStreamMock,
-            translationService: translationServiceMock
-        )
 
-        cudOperationsMock.updateWordMock = { (word: Word) in
+        updateWordDbWorkerMock.updateWordMock = { (word: Word) in
             dbUpdateCounter += 1
             return Single.just(word)
         }
-        wordStreamMock.sendUpdatedWordMock = { _ in notificationCounter += 1 }
+        wordSenderMock.sendUpdatedWordMock = { _ in notificationCounter += 1 }
 
         // Act
         let newState = try model.updateEffect(word, state: wordList).toBlocking().first()
@@ -125,14 +120,8 @@ final class WordListModelImplTests: XCTestCase {
 
     func test_updateEffect_failsWhenDbRemoveWordFails() throws {
         // Arrange
-        let cudOperationsMock = WordCUDOperationsMock()
-        let model = WordListModelImpl(
-            cudOperations: cudOperationsMock,
-            wordSender: RUWordStreamMock(),
-            translationService: TranslationServiceMock()
-        )
-
-        cudOperationsMock.updateWordMock = { _ in Single.error(ErrorMock.err) }
+        arrange()
+        updateWordDbWorkerMock.updateWordMock = { _ in Single.error(ErrorMock.err) }
 
         // Act
         let single = model.updateEffect(word, state: [word, word2])
@@ -143,16 +132,10 @@ final class WordListModelImplTests: XCTestCase {
 
     func test_fetchTranslationsFor_emptyArrayArgument_returnsSingleOfEmptyArray() throws {
         // Arrange
-        let cudOperationsMock = WordCUDOperationsMock()
-        let translationServiceMock = TranslationServiceMock()
-        let model = WordListModelImpl(
-            cudOperations: cudOperationsMock,
-            wordSender: RUWordStreamMock(),
-            translationService: translationServiceMock,
-            intervalMs: 0
-        )
+        arrange()
+
         translationServiceMock.methodMock = { word in Single.just(word) }
-        cudOperationsMock.updateWordMock = { word in Single.just(word) }
+        updateWordDbWorkerMock.updateWordMock = { word in Single.just(word) }
 
         // Act
         let result = try model.fetchTranslationsFor(state: [], start: 0, end: 1).toBlocking().first()
@@ -163,15 +146,9 @@ final class WordListModelImplTests: XCTestCase {
 
     func test_fetchTranslationsFor_worksCorrectlyForHappyPath() throws {
         // Arrange
+        arrange()
+
         var dbUpdateCounter = 0
-        let cudOperationsMock = WordCUDOperationsMock()
-        let translationServiceMock = TranslationServiceMock()
-        let model = WordListModelImpl(
-            cudOperations: cudOperationsMock,
-            wordSender: RUWordStreamMock(),
-            translationService: translationServiceMock,
-            intervalMs: 0
-        )
         var translatedWord1 = word1
         var translatedWord3 = word3
 
@@ -179,7 +156,7 @@ final class WordListModelImplTests: XCTestCase {
         translatedWord3.dictionaryEntry = ["z"]
         translationServiceMock.methodMock = { word in word == self.word1 ? Single.just(translatedWord1) :
             Single.just(translatedWord3) }
-        cudOperationsMock.updateWordMock = { (word: Word) in
+        updateWordDbWorkerMock.updateWordMock = { (word: Word) in
             dbUpdateCounter += 1
             return Single.just(word)
         }
@@ -194,13 +171,7 @@ final class WordListModelImplTests: XCTestCase {
 
     func test_fetchTranslationsFor_failsWhenTranslationApiFails() throws {
         // Arrange
-        let translationServiceMock = TranslationServiceMock()
-        let model = WordListModelImpl(
-            cudOperations: WordCUDOperationsMock(),
-            wordSender: RUWordStreamMock(),
-            translationService: translationServiceMock,
-            intervalMs: 0
-        )
+        arrange()
 
         translationServiceMock.methodMock = { _ in Single.error(ErrorMock.err) }
 
@@ -213,12 +184,8 @@ final class WordListModelImplTests: XCTestCase {
 
     func test_fetchTranslationsFor_returnsCurrentStateWhenAllWordsAreTranslated() throws {
         // Arrange
-        let model = WordListModelImpl(
-            cudOperations: WordCUDOperationsMock(),
-            wordSender: RUWordStreamMock(),
-            translationService: TranslationServiceMock(),
-            intervalMs: 0
-        )
+        arrange()
+
         let translated = [Word(text: "a", dictionaryEntry: ["x"], sourceLang: lang, targetLang: lang),
                           Word(text: "b", dictionaryEntry: ["y"], sourceLang: lang, targetLang: lang),
                           Word(text: "c", dictionaryEntry: ["z"], sourceLang: lang, targetLang: lang)]

@@ -10,16 +10,19 @@ import RxSwift
 /// Реализация модели списка слов.
 final class WordListModelImpl: WordListModel {
 
-    private let cudOperations: WordCUDOperations
+    private let updateWordDbWorker: UpdateWordDbWorker
+    private let deleteWordDbWorker: DeleteWordDbWorker
     private let wordSender: RemovedWordSender & UpdatedWordSender
     private let translationService: TranslationService
     private let intervalMs: Int
 
-    init(cudOperations: WordCUDOperations,
+    init(updateWordDbWorker: UpdateWordDbWorker,
+         deleteWordDbWorker: DeleteWordDbWorker,
          wordSender: RemovedWordSender & UpdatedWordSender,
          translationService: TranslationService,
          intervalMs: Int = 500) {
-        self.cudOperations = cudOperations
+        self.updateWordDbWorker = updateWordDbWorker
+        self.deleteWordDbWorker = deleteWordDbWorker
         self.wordSender = wordSender
         self.translationService = translationService
         self.intervalMs = intervalMs
@@ -35,7 +38,7 @@ final class WordListModelImpl: WordListModel {
     }
 
     func removeEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
-        cudOperations.remove(word)
+        deleteWordDbWorker.delete(word: word)
             .do(onSuccess: { word in
                 self.wordSender.sendRemovedWord(word)
             })
@@ -54,7 +57,7 @@ final class WordListModelImpl: WordListModel {
     }
 
     func updateEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
-        cudOperations.update(word)
+        updateWordDbWorker.update(word: word)
             .do(onSuccess: { word in
                 self.wordSender.sendUpdatedWord(word)
             })
@@ -88,7 +91,7 @@ final class WordListModelImpl: WordListModel {
                 self.translationService.fetchTranslation(for: word)
             }
             .flatMap { translatedWord in
-                self.cudOperations.update(translatedWord)
+                self.updateWordDbWorker.update(word: translatedWord)
             }
             .map { translatedWord in
                 for i in start..<end where state[i].id == translatedWord.id {

@@ -63,31 +63,12 @@ class WordListFetcherMock: WordListFetcher {
     }
 }
 
-class WordCUDOperationsMock: WordCUDOperations {
-
-    var addWordMock: ((Word) -> Single<Word>)?
-    var removeWordMock: ((Word) -> Single<Word>)?
-    var updateWordMock: ((Word) -> Single<Word>)?
-
-    func add(_ word: Word) -> Single<Word> {
-        addWordMock!(word)
-    }
-
-    func update(_ word: Word) -> Single<Word> {
-        updateWordMock!(word)
-    }
-
-    func remove(_ word: Word) -> Single<Word> {
-        removeWordMock!(word)
-    }
-}
-
 class FavoriteWordListFetcherMock: FavoriteWordListFetcher {
 
-    var propertyMock: [Word]?
+    var favoriteWordListMock: (() -> [Word])?
 
-    var favoriteWordList: [Word] {
-        propertyMock!
+    func favoriteWordList() throws -> [Word] {
+        favoriteWordListMock!()
     }
 }
 
@@ -264,5 +245,30 @@ class MainWordListModelMock: MainWordListModel {
 
     func createEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
         createEffectMock!(word, state)
+    }
+}
+
+class CreateWordDbWorkerMock: CreateWordDbWorker {
+
+    var createWordMock: ((Word) -> Single<Word>)?
+
+    func create(word: Word) -> Single<Word> {
+        createWordMock!(word)
+    }
+}
+
+class UpdateWordDbWorkerMock: UpdateWordDbWorker {
+    var updateWordMock: ((Word) -> Single<Word>)?
+
+    func update(word: Word) -> Single<Word> {
+        updateWordMock!(word)
+    }
+}
+
+class DeleteWordDbWorkerMock: DeleteWordDbWorker {
+    var deleteWordMock: ((Word) -> Single<Word>)?
+
+    func delete(word: Word) -> Single<Word> {
+        deleteWordMock!(word)
     }
 }

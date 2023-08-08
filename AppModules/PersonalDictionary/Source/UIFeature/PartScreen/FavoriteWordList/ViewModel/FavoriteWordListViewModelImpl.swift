@@ -23,9 +23,11 @@ final class FavoriteWordListViewModelImpl: FavoriteWordListViewModel {
     }
 
     func fetchFavoriteWordList() {
-        let wordList = fetcher.favoriteWordList
+        do {
+            let wordList = try fetcher.favoriteWordList()
 
-        favoriteWordList.accept(wordList)
+            favoriteWordList.accept(wordList)
+        } catch { }
     }
 
     private func subscribeToWordStream() {

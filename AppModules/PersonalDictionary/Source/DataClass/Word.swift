@@ -84,8 +84,8 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
     private var dictionaryEntryDescription: String {
         let count = dictionaryEntry.count
 
-        return dictionaryEntry.isEmpty ?
-            "<empty>" :
+        return dictionaryEntry.count < 2 ?
+            "\(dictionaryEntry)" :
             "[\(dictionaryEntry.first ?? "")\(count > 1 ? ", ...\(count - 1) values" : "")]"
     }
 }
