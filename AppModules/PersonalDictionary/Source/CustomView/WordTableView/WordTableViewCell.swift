@@ -31,7 +31,7 @@ final class WordTableViewCell: UITableViewCell {
     ///  - word: данные о слове из словаря.
     func set(word: Word, _ theme: Theme) {
         wordlabel.text = word.text
-        translationLabel.text = word.translation
+        translationLabel.text = word.dictionaryEntry.first ?? ""
         sourceLangLabel.text = word.sourceLang.shortName
         targetLangLabel.text = word.targetLang.shortName
         favoriteWordLabel.isHidden = !word.isFavorite

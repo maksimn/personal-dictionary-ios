@@ -14,19 +14,30 @@ final class MainWordListModelImplTests: XCTestCase {
     let lang = Lang(id: .init(raw: 1), name: "A", shortName: "a")
     lazy var word = Word(text: "abc", sourceLang: lang, targetLang: lang)
     lazy var word1 = Word(text: "a", sourceLang: lang, targetLang: lang)
-    lazy var word2 = Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang)
+    lazy var word2 = Word(text: "b", dictionaryEntry: ["y"], sourceLang: lang, targetLang: lang)
     lazy var word3 = Word(text: "c", sourceLang: lang, targetLang: lang)
     lazy var wordList = [word1, word2, word3]
 
+    var wordListFetcherMock: WordListFetcherMock!
+    var wordCUDOperationsMock: WordCUDOperationsMock!
+    var translationServiceMock: TranslationServiceMock!
+    var model: MainWordListModelImpl!
+
+    func arrange() {
+        wordListFetcherMock = WordListFetcherMock()
+        wordCUDOperationsMock = WordCUDOperationsMock()
+        translationServiceMock = TranslationServiceMock()
+        model = MainWordListModelImpl(
+            wordListFetcher: wordListFetcherMock,
+            wordCUDOperations: wordCUDOperationsMock,
+            translationService: translationServiceMock
+        )
+    }
+
     func test_fetchMainWordList_worksCorrectly() throws {
         // Arrange
-        let wordListRepositoryMock = WordListRepositoryMock()
-        let model = MainWordListModelImpl(
-            wordListRepository: wordListRepositoryMock,
-            translationService: TranslationServiceMock()
-        )
-
-        wordListRepositoryMock.wordListMock = wordList
+        arrange()
+        wordListFetcherMock.wordListMock = { self.wordList }
 
         // Act
         let fetchedWordList = model.fetchMainWordList()
@@ -37,10 +48,7 @@ final class MainWordListModelImplTests: XCTestCase {
 
     func test_createWord_returnsCorrectWordListState() throws {
         // Arrange
-        let model = MainWordListModelImpl(
-            wordListRepository: WordListRepositoryMock(),
-            translationService: TranslationServiceMock()
-        )
+        arrange()
 
         // Act
         let newWordList = model.create(word, state: wordList)
@@ -51,17 +59,13 @@ final class MainWordListModelImplTests: XCTestCase {
 
     func test_createEffect_worksCorrectlyForHappyPath() throws {
         // Arrange
-        var dbUpdateCounter = 0
-        let wordListRepositoryMock = WordListRepositoryMock()
-        let translationServiceMock = TranslationServiceMock()
-        let model = MainWordListModelImpl(
-            wordListRepository: wordListRepositoryMock,
-            translationService: translationServiceMock
-        )
-        let translatedWord = Word(text: "abc", translation: "translation", sourceLang: lang, targetLang: lang)
+        arrange()
 
-        wordListRepositoryMock.addWordMock = { word in Single.just(word) }
-        wordListRepositoryMock.updateWordMock = { (word: Word) in
+        var dbUpdateCounter = 0
+        let translatedWord = Word(text: "abc", dictionaryEntry: ["translation"], sourceLang: lang, targetLang: lang)
+
+        wordCUDOperationsMock.addWordMock = { word in Single.just(word) }
+        wordCUDOperationsMock.updateWordMock = { (word: Word) in
             dbUpdateCounter += 1
             return Single.just(word)
         }
@@ -77,13 +81,8 @@ final class MainWordListModelImplTests: XCTestCase {
 
     func test_createEffect_failsWhenDbCreateWordFails() throws {
         // Arrange
-        let wordListRepositoryMock = WordListRepositoryMock()
-        let model = MainWordListModelImpl(
-            wordListRepository: wordListRepositoryMock,
-            translationService: TranslationServiceMock()
-        )
-
-        wordListRepositoryMock.addWordMock = { _ in Single.error(ErrorMock.err) }
+        arrange()
+        wordCUDOperationsMock.addWordMock = { _ in Single.error(ErrorMock.err) }
 
         // Act
         let single = model.createEffect(word, state: wordList)

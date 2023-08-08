@@ -8,6 +8,8 @@
 import CoreModule
 import Foundation
 
+typealias DictionaryEntry = [String]
+
 /// Данные о слове в словаре.
 struct Word: Equatable, Hashable, CustomStringConvertible {
 
@@ -19,8 +21,8 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
     /// Написание слова на исходном языке
     let text: String
 
-    /// Перевод слова на целевой язык
-    var translation: String?
+    /// Словарная статья для данного слова
+    var dictionaryEntry: DictionaryEntry = []
 
     /// Исходный язык
     let sourceLang: Lang
@@ -37,7 +39,7 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
     init(
         id: Id = Id(raw: UUID().uuidString),
         text: String,
-        translation: String? = nil,
+        dictionaryEntry: DictionaryEntry = [],
         sourceLang: Lang,
         targetLang: Lang,
         isFavorite: Bool = false,
@@ -45,7 +47,7 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
     ) {
         self.id = id
         self.text = text
-        self.translation = translation
+        self.dictionaryEntry = dictionaryEntry
         self.sourceLang = sourceLang
         self.targetLang = targetLang
         self.isFavorite = isFavorite
@@ -56,7 +58,7 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
     static func == (lhs: Word, rhs: Word) -> Bool {
         lhs.id == rhs.id &&
         lhs.text == rhs.text &&
-        lhs.translation == rhs.translation &&
+        lhs.dictionaryEntry == rhs.dictionaryEntry &&
         lhs.sourceLang == rhs.sourceLang &&
         lhs.targetLang == rhs.targetLang &&
         lhs.isFavorite == rhs.isFavorite &&
@@ -71,11 +73,19 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
         """
         Word(id: \(id.raw), \
         text: \(text), \
-        translation: \(translation ?? "nil"), \
+        dictionaryEntry: \(dictionaryEntryDescription), \
         sourceLang: \(sourceLang.id.raw), \
         targetLang: \(targetLang.id.raw), \
         isFavorite: \(isFavorite), \
-        createdAt: \(createdAt))\n
+        createdAt: \(createdAt))
         """
+    }
+
+    private var dictionaryEntryDescription: String {
+        let count = dictionaryEntry.count
+
+        return dictionaryEntry.isEmpty ?
+            "<empty>" :
+            "[\(dictionaryEntry.first ?? "")\(count > 1 ? ", ...\(count - 1) values" : "")]"
     }
 }

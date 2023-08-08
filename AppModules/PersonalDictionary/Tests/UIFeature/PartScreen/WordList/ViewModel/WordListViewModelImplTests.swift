@@ -118,13 +118,13 @@ final class WordListViewModelImplTests: XCTestCase {
         let viewModel = WordListViewModelImpl(model: modelMock, wordStream: UpdatedRemovedWordStreamMock(),
                                               logger: LoggerMock())
         let word1 = Word(text: "a", sourceLang: lang, targetLang: lang)
-        let word2 = Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang)
+        let word2 = Word(text: "b", dictionaryEntry: ["y"], sourceLang: lang, targetLang: lang)
         let word3 = Word(text: "c", sourceLang: lang, targetLang: lang)
         var translatedWord1 = word1
         var translatedWord3 = word3
 
-        translatedWord1.translation = "x"
-        translatedWord3.translation = "z"
+        translatedWord1.dictionaryEntry = ["x"]
+        translatedWord3.dictionaryEntry = ["z"]
 
         modelMock.fetchTranslationsForMock = { (_, _, _) in Single.just([translatedWord1, word2, translatedWord3]) }
         viewModel.wordList.accept([word1, word2, word3])
@@ -142,7 +142,7 @@ final class WordListViewModelImplTests: XCTestCase {
         let viewModel = WordListViewModelImpl(model: modelMock, wordStream: UpdatedRemovedWordStreamMock(),
                                               logger: LoggerMock())
         let word1 = Word(text: "a", sourceLang: lang, targetLang: lang)
-        let word2 = Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang)
+        let word2 = Word(text: "b", dictionaryEntry: ["y"], sourceLang: lang, targetLang: lang)
         let word3 = Word(text: "c", sourceLang: lang, targetLang: lang)
 
         modelMock.fetchTranslationsForMock = { (_, _, _) in .error(ErrorMock.err) }

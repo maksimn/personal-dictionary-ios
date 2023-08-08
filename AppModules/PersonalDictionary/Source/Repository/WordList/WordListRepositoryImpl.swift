@@ -8,6 +8,16 @@
 import CoreData
 import CoreModule
 import RxSwift
+import RealmSwift
+
+struct WordListFetcherImpl: WordListFetcher {
+
+    func wordList() throws -> [Word] {
+        try Realm().objects(WordDAO.self)
+            .sorted(byKeyPath: "createdAt", ascending: false)
+            .compactMap { Word($0) }
+    }
+}
 
 /// Аргументы хранилища слов личного словаря на основе фреймворка Core Data.
 struct WordListRepositoryArgs {
@@ -46,7 +56,7 @@ final class WordListRepositoryImpl: WordListRepository {
     }()
 
     private let langRepository: LangRepository
-    private let logger: Logger
+    private let logger: CoreModule.Logger
     private let args: WordListRepositoryArgs
 
     /// Инициализатор.
@@ -56,7 +66,7 @@ final class WordListRepositoryImpl: WordListRepository {
     ///  - logger: логгер.
     init(args: WordListRepositoryArgs,
          langRepository: LangRepository,
-         logger: Logger) {
+         logger: CoreModule.Logger) {
         self.args = args
         self.langRepository = langRepository
         self.logger = logger
