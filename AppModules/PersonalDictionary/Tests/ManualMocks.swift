@@ -18,10 +18,10 @@ class LoggerMock: Logger {
 
 class HttpClientMock: HttpClient {
 
-    var methodMock: ((Http) -> RxHttpResponse)?
+    var sendMock: ((Http) -> RxHttpResponse)?
 
     func send(_ http: Http) -> RxHttpResponse {
-        methodMock!(http)
+        sendMock!(http)
     }
 }
 
@@ -221,11 +221,11 @@ class RUWordStreamMock: UpdatedWordSender, RemovedWordSender {
     }
 }
 
-class TranslationServiceMock: TranslationService {
-    var methodMock: ((Word) -> Single<Word>)?
+class DictionaryServiceMock: DictionaryService {
+    var fetchDictionaryEntryMock: ((Word) -> Single<Word>)?
 
-    func fetchTranslation(for word: Word) -> Single<Word> {
-        methodMock!(word)
+    func fetchDictionaryEntry(for word: Word) -> Single<Word> {
+        fetchDictionaryEntryMock!(word)
     }
 }
 

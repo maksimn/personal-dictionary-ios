@@ -12,7 +12,7 @@ final class MainWordListModelImpl: MainWordListModel {
     private let wordListFetcher: WordListFetcher
     private let сreateWordDbWorker: CreateWordDbWorker
     private let updateWordDbWorker: UpdateWordDbWorker
-    private let translationService: TranslationService
+    private let dictionaryService: DictionaryService
 
     private let newWordIndex = 0
 
@@ -20,12 +20,12 @@ final class MainWordListModelImpl: MainWordListModel {
         wordListFetcher: WordListFetcher,
         сreateWordDbWorker: CreateWordDbWorker,
         updateWordDbWorker: UpdateWordDbWorker,
-        translationService: TranslationService
+        dictionaryService: DictionaryService
     ) {
         self.wordListFetcher = wordListFetcher
         self.сreateWordDbWorker = сreateWordDbWorker
         self.updateWordDbWorker = updateWordDbWorker
-        self.translationService = translationService
+        self.dictionaryService = dictionaryService
     }
 
     func fetchMainWordList() -> WordListState {
@@ -47,7 +47,7 @@ final class MainWordListModelImpl: MainWordListModel {
     func createEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
         сreateWordDbWorker.create(word: word)
             .flatMap { word in
-                self.translationService.fetchTranslation(for: word)
+                self.dictionaryService.fetchDictionaryEntry(for: word)
             }
             .flatMap { translatedWord in
                 self.updateWordDbWorker.update(word: translatedWord)

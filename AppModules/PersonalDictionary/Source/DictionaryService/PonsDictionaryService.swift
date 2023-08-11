@@ -11,11 +11,11 @@ import Foundation
 import RxSwift
 
 /// Служба для получения перевода слова из PONS Online Dictionary API,
-final class PonsTranslationService: TranslationService {
+final class PonsDictionaryService: DictionaryService {
 
-    private let httpClient: HttpClient
     private let secret: String
-    private let logger: Logger
+    private let httpClient: HttpClient
+    private let decoder: DictionaryEntryDecoder
 
     private let apiUrl = "https://api.pons.com/v1/dictionary"
 
@@ -24,14 +24,13 @@ final class PonsTranslationService: TranslationService {
     /// - Parameters:
     ///  - secret: секрет для обращения к онлайновому PONS API.
     ///  - httpClient: базовая служба для сетевых запросов по протоколу HTTP.
-    ///  - logger: логгер.
-    init(secret: String, httpClient: HttpClient, logger: Logger) {
+    init(secret: String, httpClient: HttpClient, decoder: DictionaryEntryDecoder) {
         self.secret = secret
         self.httpClient = httpClient
-        self.logger = logger
+        self.decoder = decoder
     }
 
-    func fetchTranslation(for word: Word) -> Single<Word> {
+    func fetchDictionaryEntry(for word: Word) -> Single<Word> {
         let sourceLang = word.sourceLang.shortName.lowercased()
         let targetLang = word.targetLang.shortName.lowercased()
         var query = URLComponents()
@@ -43,11 +42,8 @@ final class PonsTranslationService: TranslationService {
 
         let http = Http(
             urlString: apiUrl + (query.string ?? ""),
-            method: "GET",
             headers: ["X-Secret": secret]
         )
-
-        logger.log("PONS FETCH TRANSLATION START, word = \(word)", level: .info)
 
         return transformToRxObservable(
                 httpClient.send(http)
@@ -55,22 +51,12 @@ final class PonsTranslationService: TranslationService {
             .take(1)
             .asSingle()
             .map { httpResponse in
-                let data = httpResponse.data
                 var word = word
-                let ponsArray = try JSONDecoder().decode([PonsResponseData].self, from: data)
 
-                word.dictionaryEntry = [ponsArray.first?.translation ?? ""]
+                word.dictionaryEntry = try self.decoder.decode(httpResponse.data, word: word)
 
                 return word
             }
-            .do(
-                onSuccess: { word in
-                    self.logger.log("PONS FETCH TRANSLATION SUCCESS, word = \(word)", level: .info)
-                },
-                onError: { error in
-                    self.logger.log("PONS FETCH TRANSLATION ERROR, word = \(word)", level: .error)
-                }
-            )
     }
 
     private func transformToRxObservable(_ rxHttpResponse: RxHttpResponse) -> Observable<(response: HTTPURLResponse,
