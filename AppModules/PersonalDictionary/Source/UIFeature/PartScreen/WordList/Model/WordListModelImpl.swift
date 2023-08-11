@@ -13,18 +13,18 @@ final class WordListModelImpl: WordListModel {
     private let updateWordDbWorker: UpdateWordDbWorker
     private let deleteWordDbWorker: DeleteWordDbWorker
     private let wordSender: RemovedWordSender & UpdatedWordSender
-    private let translationService: TranslationService
+    private let dictionaryService: DictionaryService
     private let intervalMs: Int
 
     init(updateWordDbWorker: UpdateWordDbWorker,
          deleteWordDbWorker: DeleteWordDbWorker,
          wordSender: RemovedWordSender & UpdatedWordSender,
-         translationService: TranslationService,
+         dictionaryService: DictionaryService,
          intervalMs: Int = 500) {
         self.updateWordDbWorker = updateWordDbWorker
         self.deleteWordDbWorker = deleteWordDbWorker
         self.wordSender = wordSender
-        self.translationService = translationService
+        self.dictionaryService = dictionaryService
         self.intervalMs = intervalMs
     }
 
@@ -88,7 +88,7 @@ final class WordListModelImpl: WordListModel {
         return Observable.from(notTranslated)
             .throttle(.milliseconds(intervalMs), scheduler: MainScheduler.instance)
             .flatMap { word in
-                self.translationService.fetchTranslation(for: word)
+                self.dictionaryService.fetchDictionaryEntry(for: word)
             }
             .flatMap { translatedWord in
                 self.updateWordDbWorker.update(word: translatedWord)

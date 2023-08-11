@@ -10,15 +10,15 @@ import CoreModule
 import XCTest
 @testable import PersonalDictionary
 
-final class PonsTranslationServiceTests: XCTestCase {
+final class PonsDictionaryServiceTests: XCTestCase {
 
-    func test_fetchTranslation__returnsCorrectTranslation() throws {
+    func test_fetchDictionaryEntry__returnsCorrectTranslation() throws {
         // Arrange:
         let httpClientMock = HttpClientMock()
-        let ponsTranslationService = PonsTranslationService(
+        let ponsTranslationService = PonsDictionaryService(
             secret: "",
             httpClient: httpClientMock,
-            logger: LoggerMock()
+            decoder: PonsDictionaryEntryDecoder()
         )
         let lang = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
         let word = Word(text: "word", sourceLang: lang, targetLang: lang)
@@ -28,6 +28,7 @@ final class PonsTranslationServiceTests: XCTestCase {
                     PonsResponseDataHit(
                         roms: [
                             PonsResponseDataHitsRom(
+                                headword: "word",
                                 arabs: [
                                     PonsResponseDataHitsRomsArab(
                                         translations: [
@@ -43,12 +44,12 @@ final class PonsTranslationServiceTests: XCTestCase {
         ]
         let data = try! JSONEncoder().encode(ponsArray)
 
-        httpClientMock.methodMock = { _ in
+        httpClientMock.sendMock = { _ in
             RxHttpResponse(CurrentValueSubject((response: HTTPURLResponse(), data: data)))
         }
 
         // Act:
-        let single = ponsTranslationService.fetchTranslation(for: word)
+        let single = ponsTranslationService.fetchDictionaryEntry(for: word)
 
         // Assert:
         let result = try single.toBlocking().first()
@@ -56,23 +57,23 @@ final class PonsTranslationServiceTests: XCTestCase {
         XCTAssertEqual(result?.dictionaryEntry, ["translation"])
     }
 
-    func test_fetchTranslation__returnsErrorWhenHttpRequestFails() throws {
+    func test_fetchDictionaryEntry__returnsErrorWhenHttpRequestFails() throws {
         // Arrange:
         let httpClientMock = HttpClientMock()
-        let ponsTranslationService = PonsTranslationService(
+        let ponsTranslationService = PonsDictionaryService(
             secret: "",
             httpClient: httpClientMock,
-            logger: LoggerMock()
+            decoder: PonsDictionaryEntryDecoder()
         )
         let lang = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
         let word = Word(text: "word", sourceLang: lang, targetLang: lang)
 
-        httpClientMock.methodMock = { _ in
+        httpClientMock.sendMock = { _ in
             RxHttpResponse(Fail(error: URLError(.unknown) as Error))
         }
 
         // Act:
-        let single = ponsTranslationService.fetchTranslation(for: word)
+        let single = ponsTranslationService.fetchDictionaryEntry(for: word)
 
         // Assert:
         XCTAssertThrowsError(try single.toBlocking().first())

@@ -19,7 +19,7 @@ final class MainWordListModelImplTests: XCTestCase {
     lazy var wordList = [word1, word2, word3]
 
     var wordListFetcherMock: WordListFetcherMock!
-    var translationServiceMock: TranslationServiceMock!
+    var dictionaryServiceMock: DictionaryServiceMock!
     var createWordDbWorkerMock: CreateWordDbWorkerMock!
     var updateWordDbWorkerMock: UpdateWordDbWorkerMock!
     var model: MainWordListModelImpl!
@@ -28,12 +28,12 @@ final class MainWordListModelImplTests: XCTestCase {
         wordListFetcherMock = WordListFetcherMock()
         createWordDbWorkerMock = CreateWordDbWorkerMock()
         updateWordDbWorkerMock = UpdateWordDbWorkerMock()
-        translationServiceMock = TranslationServiceMock()
+        dictionaryServiceMock = DictionaryServiceMock()
         model = MainWordListModelImpl(
             wordListFetcher: wordListFetcherMock,
             сreateWordDbWorker: createWordDbWorkerMock,
             updateWordDbWorker: updateWordDbWorkerMock,
-            translationService: translationServiceMock
+            dictionaryService: dictionaryServiceMock
         )
     }
 
@@ -72,7 +72,7 @@ final class MainWordListModelImplTests: XCTestCase {
             dbUpdateCounter += 1
             return Single.just(word)
         }
-        translationServiceMock.methodMock = { _ in Single.just(translatedWord) }
+        dictionaryServiceMock.fetchDictionaryEntryMock = { _ in Single.just(translatedWord) }
 
         // Act
         let nextState = try model.createEffect(word, state: [word, word1, word2, word3]).toBlocking().first()

@@ -18,17 +18,17 @@ final class WordListGraphImpl: WordListGraph {
     /// Инициализатор.
     /// - Parameters:
     ///  - viewParams: параметры представления фичи.
-    ///  - translationService: cлужба для выполнения перевода слов на целевой язык.
+    ///  - dictionaryService: cлужба для выполнения перевода слов на целевой язык.
     ///  - wordStream: ModelStream для событий со словами в личном словаре.
     init(viewParams: WordListViewParams,
-         translationService: TranslationService,
+         dictionaryService: DictionaryService,
          wordStream: WordStream,
          logger: Logger) {
         let model = WordListModelImpl(
             updateWordDbWorker: UpdateWordDbWorkerImpl(),
             deleteWordDbWorker: DeleteWordDbWorkerImpl(),
             wordSender: wordStream,
-            translationService: translationService
+            dictionaryService: dictionaryService
         )
         viewModel = WordListViewModelImpl(
             model: model,

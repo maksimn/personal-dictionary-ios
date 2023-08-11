@@ -22,19 +22,19 @@ final class WordListModelImplTests: XCTestCase {
     var updateWordDbWorkerMock: UpdateWordDbWorkerMock!
     var deleteWordDbWorkerMock: DeleteWordDbWorkerMock!
     var wordSenderMock: RUWordStreamMock!
-    var translationServiceMock: TranslationServiceMock!
+    var dictionaryServiceMock: DictionaryServiceMock!
     var model: WordListModelImpl!
 
     func arrange() {
         updateWordDbWorkerMock = .init()
         deleteWordDbWorkerMock = .init()
         wordSenderMock = .init()
-        translationServiceMock = .init()
+        dictionaryServiceMock = .init()
         model = .init(
             updateWordDbWorker: updateWordDbWorkerMock,
             deleteWordDbWorker: deleteWordDbWorkerMock,
             wordSender: wordSenderMock,
-            translationService: translationServiceMock,
+            dictionaryService: dictionaryServiceMock,
             intervalMs: 0
         )
     }
@@ -134,7 +134,7 @@ final class WordListModelImplTests: XCTestCase {
         // Arrange
         arrange()
 
-        translationServiceMock.methodMock = { word in Single.just(word) }
+        dictionaryServiceMock.fetchDictionaryEntryMock = { word in Single.just(word) }
         updateWordDbWorkerMock.updateWordMock = { word in Single.just(word) }
 
         // Act
@@ -154,7 +154,7 @@ final class WordListModelImplTests: XCTestCase {
 
         translatedWord1.dictionaryEntry = ["x"]
         translatedWord3.dictionaryEntry = ["z"]
-        translationServiceMock.methodMock = { word in word == self.word1 ? Single.just(translatedWord1) :
+        dictionaryServiceMock.fetchDictionaryEntryMock = { word in word == self.word1 ? Single.just(translatedWord1) :
             Single.just(translatedWord3) }
         updateWordDbWorkerMock.updateWordMock = { (word: Word) in
             dbUpdateCounter += 1
@@ -173,7 +173,7 @@ final class WordListModelImplTests: XCTestCase {
         // Arrange
         arrange()
 
-        translationServiceMock.methodMock = { _ in Single.error(ErrorMock.err) }
+        dictionaryServiceMock.fetchDictionaryEntryMock = { _ in Single.error(ErrorMock.err) }
 
         // Act
         let observable = model.fetchTranslationsFor(state: wordList, start: 0, end: 3)
