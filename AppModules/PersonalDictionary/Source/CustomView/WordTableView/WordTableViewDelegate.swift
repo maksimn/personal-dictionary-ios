@@ -49,7 +49,7 @@ final class WordTableViewDelegate: NSObject, UITableViewDelegate {
     ///  - onDeleteTap: обработчик нажатия на view для удаления элемента таблицы.
     ///  - onFavoriteTap: обработчик нажатия на view для добавления/удаления элемента из Избранного.
     init(params: WordTableViewDelegateParams,
-         onScrollFinish: (() -> Void)?,
+         onScrollFinish: (() -> Void)? = nil,
          onDeleteTap: ((Int) -> Void)?,
          onFavoriteTap: ((Int) -> Void)?) {
         self.onScrollFinish = onScrollFinish

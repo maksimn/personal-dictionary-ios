@@ -14,6 +14,7 @@
 "LS_FAVORITES" = "Favourites";
 "LS_GERMAN" = "German";
 "LS_ITALIAN" = "Italian";
+"LS_LOAD_DICTIONARY_ENTRY_ERROR" = "Failed to load the dictionary entry.";
 "LS_MY_DICTIONARY" = "My dictionary";
 "LS_NO_FAVORITE_WORDS" = "No favourite words";
 "LS_NO_WORDS_FOUND" = "No words found";

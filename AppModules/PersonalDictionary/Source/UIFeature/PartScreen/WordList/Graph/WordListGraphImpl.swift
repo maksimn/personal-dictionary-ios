@@ -20,19 +20,25 @@ final class WordListGraphImpl: WordListGraph {
     ///  - viewParams: параметры представления фичи.
     ///  - dictionaryService: cлужба для выполнения перевода слов на целевой язык.
     ///  - wordStream: ModelStream для событий со словами в личном словаре.
-    init(viewParams: WordListViewParams,
-         dictionaryService: DictionaryService,
-         wordStream: WordStream,
-         logger: Logger) {
+    init(
+        appDependency: AppDependency,
+        viewParams: WordListViewParams,
+        wordStream: WordStream,
+        logger: Logger
+    ) {
         let model = WordListModelImpl(
             updateWordDbWorker: UpdateWordDbWorkerImpl(),
             deleteWordDbWorker: DeleteWordDbWorkerImpl(),
-            wordSender: wordStream,
-            dictionaryService: dictionaryService
+            wordSender: wordStream
+        )
+        let router = NavToDictionaryEntryRouter(
+            navigationController: appDependency.navigationController,
+            builder: DictionaryEntryBuilder(bundle: appDependency.bundle)
         )
         viewModel = WordListViewModelImpl(
             model: model,
             wordStream: wordStream,
+            router: router,
             logger: logger
         )
         view = WordListView(

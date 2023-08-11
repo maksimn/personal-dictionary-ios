@@ -22,20 +22,16 @@ final class WordListModelImplTests: XCTestCase {
     var updateWordDbWorkerMock: UpdateWordDbWorkerMock!
     var deleteWordDbWorkerMock: DeleteWordDbWorkerMock!
     var wordSenderMock: RUWordStreamMock!
-    var dictionaryServiceMock: DictionaryServiceMock!
     var model: WordListModelImpl!
 
     func arrange() {
         updateWordDbWorkerMock = .init()
         deleteWordDbWorkerMock = .init()
         wordSenderMock = .init()
-        dictionaryServiceMock = .init()
         model = .init(
             updateWordDbWorker: updateWordDbWorkerMock,
             deleteWordDbWorker: deleteWordDbWorkerMock,
-            wordSender: wordSenderMock,
-            dictionaryService: dictionaryServiceMock,
-            intervalMs: 0
+            wordSender: wordSenderMock
         )
     }
 
@@ -128,72 +124,5 @@ final class WordListModelImplTests: XCTestCase {
 
         // Assert
         XCTAssertThrowsError(try single.toBlocking().first())
-    }
-
-    func test_fetchTranslationsFor_emptyArrayArgument_returnsSingleOfEmptyArray() throws {
-        // Arrange
-        arrange()
-
-        dictionaryServiceMock.fetchDictionaryEntryMock = { word in Single.just(word) }
-        updateWordDbWorkerMock.updateWordMock = { word in Single.just(word) }
-
-        // Act
-        let result = try model.fetchTranslationsFor(state: [], start: 0, end: 1).toBlocking().first()
-
-        // Assert
-        XCTAssertEqual(result, [])
-    }
-
-    func test_fetchTranslationsFor_worksCorrectlyForHappyPath() throws {
-        // Arrange
-        arrange()
-
-        var dbUpdateCounter = 0
-        var translatedWord1 = word1
-        var translatedWord3 = word3
-
-        translatedWord1.dictionaryEntry = ["x"]
-        translatedWord3.dictionaryEntry = ["z"]
-        dictionaryServiceMock.fetchDictionaryEntryMock = { word in word == self.word1 ? Single.just(translatedWord1) :
-            Single.just(translatedWord3) }
-        updateWordDbWorkerMock.updateWordMock = { (word: Word) in
-            dbUpdateCounter += 1
-            return Single.just(word)
-        }
-
-        // Act
-        let result = try model.fetchTranslationsFor(state: wordList, start: 0, end: 3).toBlocking().first()!
-
-        // Assert
-        XCTAssertEqual(dbUpdateCounter, 2)
-        XCTAssertEqual(result, [translatedWord1, word2, translatedWord3])
-    }
-
-    func test_fetchTranslationsFor_failsWhenTranslationApiFails() throws {
-        // Arrange
-        arrange()
-
-        dictionaryServiceMock.fetchDictionaryEntryMock = { _ in Single.error(ErrorMock.err) }
-
-        // Act
-        let observable = model.fetchTranslationsFor(state: wordList, start: 0, end: 3)
-
-        // Assert
-        XCTAssertThrowsError(try observable.toBlocking().toArray())
-    }
-
-    func test_fetchTranslationsFor_returnsCurrentStateWhenAllWordsAreTranslated() throws {
-        // Arrange
-        arrange()
-
-        let translated = [Word(text: "a", dictionaryEntry: ["x"], sourceLang: lang, targetLang: lang),
-                          Word(text: "b", dictionaryEntry: ["y"], sourceLang: lang, targetLang: lang),
-                          Word(text: "c", dictionaryEntry: ["z"], sourceLang: lang, targetLang: lang)]
-
-        // Act
-        let result = try model.fetchTranslationsFor(state: translated, start: 0, end: 3).toBlocking().first()
-
-        // Assert
-        XCTAssertEqual(result, translated)
     }
 }

@@ -272,3 +272,12 @@ class DeleteWordDbWorkerMock: DeleteWordDbWorker {
         deleteWordMock!(word)
     }
 }
+
+class WordListRouterMock: ParametrizedRouter {
+
+    var navigateMock: ((Word.Id) -> Void)?
+
+    func navigate(_ id: Word.Id) {
+        navigateMock!(id)
+    }
+}
