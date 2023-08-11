@@ -9,20 +9,35 @@ import CoreModule
 import RxSwift
 
 /// Реализация модели представления списка слов.
-final class WordListViewModelImpl: WordListViewModel {
+final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewModel
+    where RouterType.Parameter == Word.Id {
 
     let wordList = BindableWordList(value: [])
 
     private let model: WordListModel
     private let wordStream: UpdatedWordStream & RemovedWordStream
+    private let router: RouterType
     private let logger: Logger
+
     private let disposeBag = DisposeBag()
 
-    init(model: WordListModel, wordStream: UpdatedWordStream & RemovedWordStream, logger: Logger) {
+    init(
+        model: WordListModel,
+        wordStream: UpdatedWordStream & RemovedWordStream,
+        router: RouterType,
+        logger: Logger
+    ) {
         self.model = model
         self.wordStream = wordStream
+        self.router = router
         self.logger = logger
         subscribe()
+    }
+
+    func select(at position: Int) {
+        guard let word = wordList.value[safeIndex: position] else { return }
+
+        router.navigate(word.id)
     }
 
     func remove(at position: Int) {
@@ -35,15 +50,6 @@ final class WordListViewModelImpl: WordListViewModel {
 
         word.isFavorite.toggle()
         update(word, at: position, withSideEffect: true)
-    }
-
-    func fetchTranslationsIfNeeded(start: Int, end: Int) -> Completable {
-        model.fetchTranslationsFor(state: wordList.value, start: start, end: end)
-            .executeInBackgroundAndObserveOnMainThread()
-            .do(onSuccess: { [weak self] state in
-                self?.onNewState(state, actionName: "fetchTranslationsIfNeeded")
-            })
-            .asCompletable()
     }
 
     private func onNewState(_ state: WordListState, actionName: String) {

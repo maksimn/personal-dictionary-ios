@@ -75,3 +75,7 @@ extension Lang {
         shortName = dao.shortName
     }
 }
+
+enum WordError: Error {
+    case DAO2WordMappingError(WordDAO)
+}

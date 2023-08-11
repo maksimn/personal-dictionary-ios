@@ -11,9 +11,9 @@ import UIKit
 /// Билдер Фичи "Поиск по словам в словаре".
 final class SearchBuilder: ViewControllerBuilder {
 
-    private let dependency: RootDependency
+    private let dependency: AppDependency
 
-    init(dependency: RootDependency) {
+    init(dependency: AppDependency) {
         self.dependency = dependency
     }
 

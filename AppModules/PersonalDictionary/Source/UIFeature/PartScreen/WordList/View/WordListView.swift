@@ -53,9 +53,6 @@ final class WordListView: UIView {
 
     private lazy var tableActions = WordTableViewDelegate(
         params: params.delegateParams,
-        onScrollFinish: { [weak self] in
-            self?.onTableViewScrollFinish()
-        },
         onDeleteTap: { [weak self] position in
             self?.onDeleteWordTap(position)
         },
@@ -78,6 +75,7 @@ final class WordListView: UIView {
         super.init(frame: .zero)
         initViews()
         bindToViewModel()
+        subscribeToTableEvents()
     }
 
     required init?(coder: NSCoder) {
@@ -96,6 +94,12 @@ final class WordListView: UIView {
             }).disposed(by: disposeBag)
     }
 
+    private func subscribeToTableEvents() {
+        tableView.rx.itemSelected.subscribe(onNext: { [weak self] indexPath in
+            self?.viewModel.select(at: indexPath.row)
+        }).disposed(by: disposeBag)
+    }
+
     // MARK: - User Action Handlers
 
     private func onDeleteWordTap(_ position: Int) {
@@ -108,19 +112,6 @@ final class WordListView: UIView {
         viewModel.toggleWordIsFavorite(at: position)
     }
 
-    private func onTableViewScrollFinish() {
-        guard let indexPaths = tableView.indexPathsForVisibleRows,
-              let start = indexPaths.first?.row,
-              let end = indexPaths.last?.row else { return }
-
-        logTableViewScrollFinish(start, end)
-
-        viewModel.fetchTranslationsIfNeeded(start: start, end: end + 1)
-            .subscribe(onError: { [weak self] error in
-                self?.logger.errorWithContext(error)
-            }).disposed(by: disposeBag)
-    }
-
     // MARK: - Logging
 
     private func logTapOnTableViewCellDeleteButton(_ position: Int) {
@@ -129,10 +120,6 @@ final class WordListView: UIView {
 
     private func logTapOnTableViewCellStarButton(_ position: Int) {
         logger.debug("User tap on the word table view cell star button, the cell: #\(position)")
-    }
-
-    private func logTableViewScrollFinish(_ start: Int, _ end: Int) {
-        logger.debug("The word table view scroll finished. Visible cells: [\(start), \(end))")
     }
 
     // MARK: - Layout

@@ -12,13 +12,12 @@ import UIKit
 final class WordListBuilderImpl: WordListBuilder {
 
     private let shouldAnimateWhenAppear: Bool
-    private let dependency: RootDependency
+    private let dependency: AppDependency
 
     /// Инициализатор.
     /// - Parameters:
     ///  - shouldAnimateWhenAppear: запускать ли анимацию при первом появлении данных в таблице.
-    init(shouldAnimateWhenAppear: Bool,
-         dependency: RootDependency) {
+    init(shouldAnimateWhenAppear: Bool, dependency: AppDependency) {
         self.shouldAnimateWhenAppear = shouldAnimateWhenAppear
         self.dependency = dependency
     }
@@ -47,14 +46,10 @@ final class WordListBuilderImpl: WordListBuilder {
             cellCornerRadius: 16,
             delegateParams: delegateParams
         )
-        let dictionaryService = PonsDictionaryService(
-            secret: dependency.appConfig.ponsApiSecret,
-            category: category
-        )
 
         return WordListGraphImpl(
+            appDependency: dependency,
             viewParams: viewParams,
-            dictionaryService: dictionaryService,
             wordStream: WordStreamImpl.instance,
             logger: LoggerImpl(category: category)
         )
