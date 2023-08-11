@@ -8,12 +8,12 @@
 import RxSwift
 
 /// Служба для получения перевода слова.
-protocol TranslationService {
+protocol DictionaryService {
 
     /// Извлечь перевод слова.
     /// - Parameters:
     ///  - word: слово для перевода.
     /// - Returns:
     ///  - Rx Single с переведенным словом
-    func fetchTranslation(for word: Word) -> Single<Word>
+    func fetchDictionaryEntry(for word: Word) -> Single<Word>
 }

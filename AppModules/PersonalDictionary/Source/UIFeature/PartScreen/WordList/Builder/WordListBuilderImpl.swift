@@ -27,6 +27,7 @@ final class WordListBuilderImpl: WordListBuilder {
     /// - Returns:
     ///  - граф фичи.
     func build() -> WordListGraph {
+        let category = "PersonalDictionary.WordList"
         let delegateParams = WordTableViewDelegateParams(
             shouldAnimateWhenAppear: shouldAnimateWhenAppear,
             cellSlideInDuration: 0.5,
@@ -46,21 +47,16 @@ final class WordListBuilderImpl: WordListBuilder {
             cellCornerRadius: 16,
             delegateParams: delegateParams
         )
-        let translationService = PonsTranslationService(
+        let dictionaryService = PonsDictionaryService(
             secret: dependency.appConfig.ponsApiSecret,
-            httpClient: LoggableHttpClient(logger: logger()),
-            logger: logger()
+            category: category
         )
 
         return WordListGraphImpl(
             viewParams: viewParams,
-            translationService: translationService,
+            dictionaryService: dictionaryService,
             wordStream: WordStreamImpl.instance,
-            logger: logger()
+            logger: LoggerImpl(category: category)
         )
-    }
-
-    private func logger() -> Logger {
-        LoggerImpl(category: "PersonalDictionary.WordList")
     }
 }

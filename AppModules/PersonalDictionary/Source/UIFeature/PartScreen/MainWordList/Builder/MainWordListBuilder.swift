@@ -21,22 +21,22 @@ final class MainWordListBuilder: ViewControllerBuilder {
     /// - Returns:
     ///  - Экран "Главного (основного) списка слов".
     func build() -> UIViewController {
-        let translationService = PonsTranslationService(
+        let category = "PersonalDictionary.MainWordList"
+        let dictionaryService = PonsDictionaryService(
             secret: dependency.appConfig.ponsApiSecret,
-            httpClient: LoggableHttpClient(logger: logger()),
-            logger: logger()
+            category: category
         )
 
         let model = MainWordListModelImpl(
             wordListFetcher: WordListFetcherImpl(),
             сreateWordDbWorker: CreateWordDbWorkerImpl(),
             updateWordDbWorker: UpdateWordDbWorkerImpl(),
-            translationService: translationService
+            dictionaryService: dictionaryService
         )
         let viewModel = MainWordListViewModelImpl(
             model: model,
             newWordStream: WordStreamImpl.instance,
-            logger: logger()
+            logger: LoggerImpl(category: category)
         )
         let view = MainWordListViewController(
             viewModel: viewModel,
@@ -44,9 +44,5 @@ final class MainWordListBuilder: ViewControllerBuilder {
         )
 
         return view
-    }
-
-    private func logger() -> Logger {
-        LoggerImpl(category: "PersonalDictionary.MainWordList")
     }
 }
