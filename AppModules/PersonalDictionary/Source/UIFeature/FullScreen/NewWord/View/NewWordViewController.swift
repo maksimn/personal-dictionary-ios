@@ -9,6 +9,16 @@ import CoreModule
 import RxSwift
 import UIKit
 
+/// Параметры представления фичи "Добавление нового слова"
+struct NewWordViewParams {
+
+    /// Надпись на кнопке "ОК"
+    let okText: String
+
+    /// Плейсхолдер для элемента ввода текста слова
+    let textFieldPlaceholder: String
+}
+
 /// View Controller экрана добавления нового слова в личный словарь.
 final class NewWordViewController: UIViewController, UITextFieldDelegate {
 
@@ -21,9 +31,16 @@ final class NewWordViewController: UIViewController, UITextFieldDelegate {
     private var langPickerGraph: LangPickerGraph? // Child Feature
 
     let contentView = UIView()
-    let sourceLangLabel = UILabel()
-    let targetLangLabel = UILabel()
-    let arrowLabel = UILabel()
+
+    lazy var translationDirectionView = TranslationDirectionView(
+        onSourceLangTap: { [weak self] in
+            self?.viewModel.presentLangPicker(langType: .source)
+        },
+        onTargetLangTap: { [weak self] in
+            self?.viewModel.presentLangPicker(langType: .target)
+        }
+    )
+
     let okButton = UIButton()
     let textField = UITextField()
 
@@ -79,16 +96,6 @@ final class NewWordViewController: UIViewController, UITextFieldDelegate {
     // MARK: - User Action Handlers
 
     @objc
-    func onSourceLangLabelTap() {
-        viewModel.presentLangPicker(langType: .source)
-    }
-
-    @objc
-    func onTargetLangLabelTap() {
-        viewModel.presentLangPicker(langType: .target)
-    }
-
-    @objc
     func onOkButtonTap() {
         sendNewWordEventAndDismiss()
     }
@@ -118,8 +125,7 @@ final class NewWordViewController: UIViewController, UITextFieldDelegate {
 
     private func set(state: NewWordState) {
         textField.text = state.text
-        sourceLangLabel.text = state.sourceLang.name
-        targetLangLabel.text = state.targetLang.name
+        translationDirectionView.set(sourceLang: state.sourceLang, targetLang: state.targetLang)
         langPickerGraph?.viewmodel.state.accept(state.langPickerState)
     }
 
