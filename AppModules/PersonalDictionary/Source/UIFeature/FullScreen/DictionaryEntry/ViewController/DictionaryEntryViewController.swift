@@ -16,6 +16,7 @@ final class DictionaryEntryViewController: UIViewController {
 
     private let tableView = UITableView()
     private let label: UILabel
+    private let translationDirectionView = TranslationDirectionView()
     private let disposeBag = DisposeBag()
 
     private lazy var datasource = UITableViewDiffableDataSource<Int, String>(
@@ -48,6 +49,7 @@ final class DictionaryEntryViewController: UIViewController {
 
     private func initViews() {
         view.backgroundColor = theme.backgroundColor
+        initTranslationDirectionView()
         initTableView()
         initLabel()
     }
@@ -65,6 +67,7 @@ final class DictionaryEntryViewController: UIViewController {
 
         case .with(let word):
             navigationItem.title = word.text
+            translationDirectionView.set(sourceLang: word.sourceLang, targetLang: word.targetLang)
 
             if word.dictionaryEntry.isEmpty {
                 label.isHidden = false
@@ -85,6 +88,19 @@ final class DictionaryEntryViewController: UIViewController {
         }
     }
 
+    private func initTranslationDirectionView() {
+        let parentView = UIView()
+
+        view.addSubview(parentView)
+        parentView.addSubview(translationDirectionView)
+        parentView.snp.makeConstraints { make -> Void in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(-16)
+            make.left.equalTo(view.safeAreaLayoutGuide)
+            make.right.equalTo(view.safeAreaLayoutGuide)
+        }
+        translationDirectionView.layoutTo(view: parentView)
+    }
+
     private func initTableView() {
         view.addSubview(tableView)
         tableView.backgroundColor = theme.backgroundColor
@@ -95,7 +111,7 @@ final class DictionaryEntryViewController: UIViewController {
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         tableView.snp.makeConstraints { make -> Void in
             make.edges.equalTo(self.view.safeAreaLayoutGuide)
-                .inset(UIEdgeInsets(top: 8, left: 12, bottom: 12, right: 12))
+                .inset(UIEdgeInsets(top: 38, left: 12, bottom: 12, right: 12))
         }
     }
 

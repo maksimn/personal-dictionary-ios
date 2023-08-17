@@ -15,16 +15,13 @@ extension NewWordViewController {
         view.backgroundColor = UIColor(white: 0, alpha: 0.7)
         addSubviews()
         initContentView()
-        initSourceLangLabel()
-        initTargetLangLabel()
-        initArrowLabel()
+        translationDirectionView.layoutTo(view: contentView)
         initTextField()
         initOkButton()
     }
 
     private func addSubviews() {
-        [contentView, sourceLangLabel, targetLangLabel, arrowLabel, textField, okButton]
-            .forEach { view.addSubview($0) }
+        [contentView, translationDirectionView, textField, okButton].forEach { view.addSubview($0) }
     }
 
     private func initContentView() {
@@ -35,56 +32,6 @@ extension NewWordViewController {
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-12)
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left).offset(12)
             make.height.equalTo(176)
-        }
-    }
-
-    private func initSourceLangLabel() {
-        sourceLangLabel.isUserInteractionEnabled = true
-        sourceLangLabel.textColor = theme.textColor
-        sourceLangLabel.font = theme.normalFont
-        sourceLangLabel.numberOfLines = 1
-        sourceLangLabel.textAlignment = .right
-        sourceLangLabel.snp.makeConstraints { make -> Void in
-            make.top.equalTo(contentView).offset(12)
-            make.leading.equalTo(contentView).offset(20)
-            make.trailing.equalTo(contentView.snp.centerX).offset(-20)
-            make.height.equalTo(24)
-        }
-
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self,
-                                                          action: #selector(onSourceLangLabelTap))
-        tapGestureRecognizer.numberOfTapsRequired = 1
-        sourceLangLabel.addGestureRecognizer(tapGestureRecognizer)
-    }
-
-    private func initTargetLangLabel() {
-        targetLangLabel.isUserInteractionEnabled = true
-        targetLangLabel.textColor = theme.textColor
-        targetLangLabel.font = theme.normalFont
-        targetLangLabel.numberOfLines = 1
-        targetLangLabel.snp.makeConstraints { make -> Void in
-            make.top.equalTo(contentView).offset(12)
-            make.leading.equalTo(contentView.snp.centerX).offset(20)
-            make.trailing.equalTo(contentView).offset(-20)
-            make.height.equalTo(24)
-        }
-
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self,
-                                                          action: #selector(onTargetLangLabelTap))
-        tapGestureRecognizer.numberOfTapsRequired = 1
-        targetLangLabel.addGestureRecognizer(tapGestureRecognizer)
-    }
-
-    private func initArrowLabel() {
-        arrowLabel.isUserInteractionEnabled = false
-        arrowLabel.textColor = theme.textColor
-        arrowLabel.font = theme.normalFont
-        arrowLabel.numberOfLines = 1
-        arrowLabel.textAlignment = .center
-        arrowLabel.text = params.arrowText
-        arrowLabel.snp.makeConstraints { make -> Void in
-            make.centerY.equalTo(sourceLangLabel)
-            make.centerX.equalTo(contentView)
         }
     }
 

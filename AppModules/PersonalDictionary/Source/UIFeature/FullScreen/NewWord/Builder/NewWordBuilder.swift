@@ -51,7 +51,6 @@ final class NewWordBuilder: ViewControllerBuilder {
 
     private func viewParams() -> NewWordViewParams {
         NewWordViewParams(
-            arrowText: "⇋",
             okText: bundle.moduleLocalizedString("LS_OK"),
             textFieldPlaceholder: bundle.moduleLocalizedString("LS_ENTER_NEW_WORD")
         )
