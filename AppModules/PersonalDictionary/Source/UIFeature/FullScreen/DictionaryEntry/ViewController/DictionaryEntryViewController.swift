@@ -8,18 +8,25 @@
 import RxSwift
 import UIKit
 
+struct DictionaryEntryViewParams {
+    let errorText: String
+    let retryButtonText: String
+}
+
 final class DictionaryEntryViewController: UIViewController {
 
-    private let viewModel: DictionaryEntryViewModel
-    private let errorText: String
-    private let theme: Theme
+    let viewModel: DictionaryEntryViewModel
+    let params: DictionaryEntryViewParams
+    let theme: Theme
 
-    private let tableView = UITableView()
-    private let label: UILabel
-    private let translationDirectionView = TranslationDirectionView()
-    private let disposeBag = DisposeBag()
+    let activityIndicator = UIActivityIndicatorView()
+    let tableView = UITableView()
+    let label: UILabel
+    let retryButton = UIButton()
+    let translationDirectionView = TranslationDirectionView()
+    let disposeBag = DisposeBag()
 
-    private lazy var datasource = UITableViewDiffableDataSource<Int, String>(
+    lazy var datasource = UITableViewDiffableDataSource<Int, String>(
         tableView: tableView) { tableView, indexPath, str in
         let cell = tableView.dequeueReusableCell(withIdentifier: "\(UITableViewCell.self)", for: indexPath)
 
@@ -28,11 +35,11 @@ final class DictionaryEntryViewController: UIViewController {
         return cell
     }
 
-    init(viewModel: DictionaryEntryViewModel, errorText: String, theme: Theme) {
+    init(viewModel: DictionaryEntryViewModel, params: DictionaryEntryViewParams, theme: Theme) {
         self.viewModel = viewModel
-        self.errorText = errorText
+        self.params = params
         self.theme = theme
-        label = secondaryText(errorText, theme)
+        label = secondaryText(params.errorText, theme)
         super.init(nibName: nil, bundle: nil)
         initViews()
         bindToViewModel()
@@ -47,13 +54,6 @@ final class DictionaryEntryViewController: UIViewController {
         viewModel.load()
     }
 
-    private func initViews() {
-        view.backgroundColor = theme.backgroundColor
-        initTranslationDirectionView()
-        initTableView()
-        initLabel()
-    }
-
     private func bindToViewModel() {
         viewModel.state.subscribe(onNext: { [weak self] in
             self?.set(state: $0)
@@ -61,66 +61,71 @@ final class DictionaryEntryViewController: UIViewController {
     }
 
     private func set(state: DictionaryEntryState) {
+        activityIndicatorFor(state)
+        tableViewFor(state)
+        labelFor(state)
+        retryButtonFor(state)
+        titleAndTranslationDirectionViewFor(state)
+    }
+
+    @objc
+    func onRetryButtonTap() {
+        viewModel.retryDictionaryEntryRequest()
+    }
+
+    private func activityIndicatorFor(_ state: DictionaryEntryState) {
         switch state {
-        case .initial:
-            label.isHidden = true
+        case .loading:
+            activityIndicator.startAnimating()
 
-        case .with(let word):
-            navigationItem.title = word.text
-            translationDirectionView.set(sourceLang: word.sourceLang, targetLang: word.targetLang)
+        default:
+            activityIndicator.stopAnimating()
+        }
+    }
 
-            if word.dictionaryEntry.isEmpty {
-                label.isHidden = false
-                return
-            }
-
-            label.isHidden = true
-
+    private func tableViewFor(_ state: DictionaryEntryState) {
+        switch state {
+        case .loaded(let word):
             var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
 
             snapshot.appendSections([0])
             snapshot.appendItems(word.dictionaryEntry, toSection: 0)
-
             datasource.apply(snapshot)
 
+        default:
+            break
+        }
+    }
+
+    private func labelFor(_ state: DictionaryEntryState) {
+        switch state {
         case .error:
             label.isHidden = false
+
+        default:
+            label.isHidden = true
         }
     }
 
-    private func initTranslationDirectionView() {
-        let parentView = UIView()
+    private func retryButtonFor(_ state: DictionaryEntryState) {
+        switch state {
+        case .error:
+            retryButton.isHidden = false
 
-        view.addSubview(parentView)
-        parentView.addSubview(translationDirectionView)
-        parentView.snp.makeConstraints { make -> Void in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(-16)
-            make.left.equalTo(view.safeAreaLayoutGuide)
-            make.right.equalTo(view.safeAreaLayoutGuide)
-        }
-        translationDirectionView.layoutTo(view: parentView)
-    }
-
-    private func initTableView() {
-        view.addSubview(tableView)
-        tableView.backgroundColor = theme.backgroundColor
-        tableView.layer.cornerRadius = 8
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "\(UITableViewCell.self)")
-        tableView.dataSource = datasource
-        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
-        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
-        tableView.snp.makeConstraints { make -> Void in
-            make.edges.equalTo(self.view.safeAreaLayoutGuide)
-                .inset(UIEdgeInsets(top: 38, left: 12, bottom: 12, right: 12))
+        default:
+            retryButton.isHidden = true
         }
     }
 
-    private func initLabel() {
-        view.addSubview(label)
-        label.snp.makeConstraints { make -> Void in
-            make.centerY.equalTo(view).offset(-20)
-            make.left.equalTo(view.snp.left)
-            make.right.equalTo(view.snp.right)
+    private func titleAndTranslationDirectionViewFor(_ state: DictionaryEntryState) {
+        switch state {
+        case .loaded(let word),
+             .error(DictionaryEntryError.emptyDictionaryEntry(let word)):
+            navigationItem.title = word.text
+            translationDirectionView.set(sourceLang: word.sourceLang, targetLang: word.targetLang)
+
+        default:
+            break
         }
     }
 }

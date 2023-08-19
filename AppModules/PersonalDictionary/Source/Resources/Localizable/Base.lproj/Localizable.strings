@@ -8,6 +8,7 @@
 
 "LS_ADD_NEW_WORD_SUGGESTION" = "It's time to add a new word to the dictionary.";
 "LS_ADVICE" = "Advice";
+"LS_DICTIONARY_ENTRY_RETRY_REQUEST" = "Retry request";
 "LS_ENGLISH" = "English";
 "LS_ENTER_NEW_WORD" = "Enter a new word";
 "LS_FAVORITE_WORDS" = "Favourite words";

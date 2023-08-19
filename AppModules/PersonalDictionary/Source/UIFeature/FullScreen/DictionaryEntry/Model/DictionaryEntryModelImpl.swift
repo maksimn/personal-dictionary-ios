@@ -6,14 +6,14 @@
 //
 
 import RealmSwift
+import RxSwift
 
 struct DictionaryEntryModelImpl: DictionaryEntryModel {
 
-    private let id: Word.Id
-
-    init(id: Word.Id) {
-        self.id = id
-    }
+    let id: Word.Id
+    let dictionaryService: DictionaryService
+    let updateWordDbWorker: UpdateWordDbWorker
+    let updatedWordSender: UpdatedWordSender
 
     func load() throws -> Word {
         let realm = try Realm()
@@ -24,5 +24,16 @@ struct DictionaryEntryModelImpl: DictionaryEntryModel {
         }
 
         return word
+    }
+
+    func getDictionaryEntry(for word: Word) -> Single<Word> {
+        dictionaryService.fetchDictionaryEntry(for: word)
+            .flatMap { word in
+                self.updateWordDbWorker.update(word: word)
+            }
+            .map { word in
+                self.updatedWordSender.sendUpdatedWord(word)
+                return word
+            }
     }
 }
