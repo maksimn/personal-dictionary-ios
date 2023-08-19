@@ -8,6 +8,7 @@
 
 "LS_ADD_NEW_WORD_SUGGESTION" = "Добавьте новое слово в личный словарь.";
 "LS_ADVICE" = "Совет";
+"LS_DICTIONARY_ENTRY_RETRY_REQUEST" = "Повторить запрос";
 "LS_ENGLISH" = "Английский";
 "LS_ENTER_NEW_WORD" = "Впишите новое слово";
 "LS_FAVORITE_WORDS" = "Избранные слова";

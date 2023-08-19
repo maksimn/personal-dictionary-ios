@@ -14,3 +14,11 @@ extension Single<WordListState> {
             .observe(on: MainScheduler.instance)
     }
 }
+
+extension Single<Word> {
+
+    func executeInBackgroundAndObserveOnMainThread() -> Single<Word> {
+        subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+            .observe(on: MainScheduler.instance)
+    }
+}

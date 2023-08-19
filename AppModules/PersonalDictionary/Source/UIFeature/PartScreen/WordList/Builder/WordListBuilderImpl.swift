@@ -26,7 +26,27 @@ final class WordListBuilderImpl: WordListBuilder {
     /// - Returns:
     ///  - граф фичи.
     func build() -> WordListGraph {
-        let category = "PersonalDictionary.WordList"
+        WordListGraphImpl(
+            viewParams: viewParams(),
+            wordStream: WordStreamImpl.instance,
+            router: router(),
+            logger: LoggerImpl(category: "PersonalDictionary.WordList")
+        )
+    }
+
+    private func router() -> NavToDictionaryEntryRouter<DictionaryEntryBuilder> {
+        let dictionaryEntryBuilder = DictionaryEntryBuilder(
+            bundle: dependency.bundle,
+            ponsSecret: dependency.appConfig.ponsApiSecret
+        )
+
+        return NavToDictionaryEntryRouter(
+            navigationController: dependency.navigationController,
+            builder: dictionaryEntryBuilder
+        )
+    }
+
+    private func viewParams() -> WordListViewParams {
         let delegateParams = WordTableViewDelegateParams(
             shouldAnimateWhenAppear: shouldAnimateWhenAppear,
             cellSlideInDuration: 0.5,
@@ -39,19 +59,13 @@ final class WordListBuilderImpl: WordListBuilder {
             favoriteActionImage: UIImage(systemName: "star.fill")!,
             favoriteActionBackgroundColor: UIColor(red: 1.00, green: 0.84, blue: 0.00, alpha: 1.00)
         )
-        let viewParams = WordListViewParams(
+
+        return WordListViewParams(
             itemHeight: WordTableViewCell.height,
             cellClass: WordTableViewCell.self,
             cellReuseIdentifier: "\(WordTableViewCell.self)",
             cellCornerRadius: 16,
             delegateParams: delegateParams
-        )
-
-        return WordListGraphImpl(
-            appDependency: dependency,
-            viewParams: viewParams,
-            wordStream: WordStreamImpl.instance,
-            logger: LoggerImpl(category: category)
         )
     }
 }

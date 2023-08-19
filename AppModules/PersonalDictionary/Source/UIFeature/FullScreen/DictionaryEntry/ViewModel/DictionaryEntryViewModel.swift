@@ -7,12 +7,19 @@
 
 enum DictionaryEntryState {
     case initial
-    case with(Word)
+    case loading
+    case loaded(Word)
     case error(Error)
+}
+
+enum DictionaryEntryError: Error {
+    case emptyDictionaryEntry(Word)
 }
 
 protocol DictionaryEntryViewModel {
     var state: BindableDictionaryEntryState { get }
 
     func load()
+
+    func retryDictionaryEntryRequest()
 }
