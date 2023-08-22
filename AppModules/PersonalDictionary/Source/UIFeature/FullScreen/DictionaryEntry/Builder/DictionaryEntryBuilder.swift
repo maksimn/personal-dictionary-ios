@@ -36,16 +36,13 @@ struct DictionaryEntryBuilder: ParametrizedViewControllerBuilder {
     }
 
     private func viewParams() -> DictionaryEntryViewParams {
-        .init(
+        DictionaryEntryViewParams(
             errorText: bundle.moduleLocalizedString("LS_LOAD_DICTIONARY_ENTRY_ERROR"),
             retryButtonText: bundle.moduleLocalizedString("LS_DICTIONARY_ENTRY_RETRY_REQUEST")
         )
     }
 
     private func dictionaryService() -> PonsDictionaryService {
-        .init(
-            secret: ponsSecret,
-            category: "PersonalDictionary.DictionaryEntry"
-        )
+        PonsDictionaryService(secret: ponsSecret, category: "PersonalDictionary.DictionaryEntry")
     }
 }

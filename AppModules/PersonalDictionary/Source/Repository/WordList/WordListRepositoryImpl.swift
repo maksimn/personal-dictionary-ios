@@ -109,3 +109,21 @@ extension Realm {
 enum RealmWordError: Error {
     case wordNotFoundInRealm(Word.Id)
 }
+
+func deleteAllWords() -> Completable {
+    .create { completable in
+        do {
+            let realm = try Realm()
+            let words = realm.objects(WordDAO.self)
+
+            try realm.write {
+                realm.delete(words)
+                completable(.completed)
+            }
+        } catch {
+            completable(.error(error))
+        }
+
+        return Disposables.create {}
+    }
+}

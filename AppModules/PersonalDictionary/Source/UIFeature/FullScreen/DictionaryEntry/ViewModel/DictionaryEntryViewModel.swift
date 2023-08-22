@@ -5,11 +5,13 @@
 //  Created by Maksim Ivanov on 07.05.2023.
 //
 
-enum DictionaryEntryState {
+import CoreModule
+
+enum DictionaryEntryState: Equatable {
     case initial
     case loading
     case loaded(Word)
-    case error(Error)
+    case error(WithError)
 }
 
 enum DictionaryEntryError: Error {
