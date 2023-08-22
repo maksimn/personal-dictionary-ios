@@ -208,6 +208,14 @@ class WordListModelMock: WordListModel {
     }
 }
 
+class UpdatedWordSenderMock: UpdatedWordSender {
+    var sendUpdatedWordMock: ((Word) -> Void)?
+
+    func sendUpdatedWord(_ word: Word) {
+        sendUpdatedWordMock!(word)
+    }
+}
+
 class RUWordStreamMock: UpdatedWordSender, RemovedWordSender {
     var sendUpdatedWordMock: ((Word) -> Void)?
     var sendRemovedWordMock: ((Word) -> Void)?
@@ -279,5 +287,16 @@ class WordListRouterMock: ParametrizedRouter {
 
     func navigate(_ id: Word.Id) {
         navigateMock!(id)
+    }
+}
+
+class DictionaryEntryModelMock: DictionaryEntryModel {
+    var loadMock: (() throws -> Word)?
+    var getDictionaryEntryMock: ((Word) -> Single<Word>)?
+    func load() throws -> Word {
+        try loadMock!()
+    }
+    func getDictionaryEntry(for word: Word) -> Single<Word> {
+        getDictionaryEntryMock!(word)
     }
 }

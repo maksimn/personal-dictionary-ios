@@ -23,17 +23,20 @@ final class DictionaryEntryViewModelImpl: DictionaryEntryViewModel {
             let word = try model.load()
 
             if word.dictionaryEntry.isEmpty {
-                state.accept(.error(DictionaryEntryError.emptyDictionaryEntry(word)))
+                state.accept(.error(DictionaryEntryError.emptyDictionaryEntry(word).withError()))
             } else {
                 state.accept(.loaded(word))
             }
         } catch {
-            state.accept(.error(error))
+            state.accept(.error(error.withError()))
         }
     }
 
     func retryDictionaryEntryRequest() {
-        if case .error(DictionaryEntryError.emptyDictionaryEntry(let word)) = state.value {
+        if case .error(let withError) = state.value,
+           case DictionaryEntryError.emptyDictionaryEntry(let word) = withError.base {
+            let errorState = state.value
+
             state.accept(.loading)
             model.getDictionaryEntry(for: word)
                 .executeInBackgroundAndObserveOnMainThread()
@@ -41,8 +44,8 @@ final class DictionaryEntryViewModelImpl: DictionaryEntryViewModel {
                     onSuccess: { [weak self] word in
                         self?.state.accept(.loaded(word))
                     },
-                    onFailure: {  [weak self] _ in
-                        self?.state.accept(.error(DictionaryEntryError.emptyDictionaryEntry(word)))
+                    onFailure: { [weak self] _ in
+                        self?.state.accept(errorState)
                    }
                 )
                 .disposed(by: disposeBag)

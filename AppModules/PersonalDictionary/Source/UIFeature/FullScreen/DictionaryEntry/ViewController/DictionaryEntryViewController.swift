@@ -119,13 +119,21 @@ final class DictionaryEntryViewController: UIViewController {
 
     private func titleAndTranslationDirectionViewFor(_ state: DictionaryEntryState) {
         switch state {
-        case .loaded(let word),
-             .error(DictionaryEntryError.emptyDictionaryEntry(let word)):
-            navigationItem.title = word.text
-            translationDirectionView.set(sourceLang: word.sourceLang, targetLang: word.targetLang)
+        case .loaded(let word):
+            setTitleAndTranslationDirection(word)
+
+        case .error(let withError):
+            if case DictionaryEntryError.emptyDictionaryEntry(let word) = withError.base {
+                setTitleAndTranslationDirection(word)
+            }
 
         default:
             break
         }
+    }
+
+    private func setTitleAndTranslationDirection(_ word: Word) {
+        navigationItem.title = word.text
+        translationDirectionView.set(sourceLang: word.sourceLang, targetLang: word.targetLang)
     }
 }

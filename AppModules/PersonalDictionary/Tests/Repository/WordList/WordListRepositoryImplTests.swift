@@ -28,16 +28,7 @@ class WordListRepositoryImpTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        let realm = try! Realm()
-        let words = realm.objects(WordDAO.self)
-        let exp = expectation(description: "Deleting all words")
-
-        try! realm.write {
-            realm.delete(words)
-            exp.fulfill()
-        }
-
-        waitForExpectations(timeout: 0.001)
+        _ = try deleteAllWords().toBlocking().first()
     }
 
     func test_wordListFetcher__wordList__empty() throws {
