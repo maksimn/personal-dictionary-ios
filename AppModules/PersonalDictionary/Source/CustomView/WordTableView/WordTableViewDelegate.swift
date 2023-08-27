@@ -37,22 +37,17 @@ final class WordTableViewDelegate: NSObject, UITableViewDelegate {
 
     private let params: WordTableViewDelegateParams
     private var onDeleteTap: ((Int) -> Void)?
-    private var onScrollFinish: (() -> Void)?
     private var onFavoriteTap: ((Int) -> Void)?
 
     private var hasAnimatedAllCells = false
 
-    /// Инициализатор
     /// - Parameters:
     ///  - params: параметры делегата таблицы слов из личного словаря.
-    ///  - onScrollFinish: обработчик для события завершения скролла таблицы.
     ///  - onDeleteTap: обработчик нажатия на view для удаления элемента таблицы.
     ///  - onFavoriteTap: обработчик нажатия на view для добавления/удаления элемента из Избранного.
     init(params: WordTableViewDelegateParams,
-         onScrollFinish: (() -> Void)? = nil,
          onDeleteTap: ((Int) -> Void)?,
          onFavoriteTap: ((Int) -> Void)?) {
-        self.onScrollFinish = onScrollFinish
         self.onDeleteTap = onDeleteTap
         self.onFavoriteTap = onFavoriteTap
         self.params = params
@@ -94,12 +89,6 @@ final class WordTableViewDelegate: NSObject, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         runCellSlideInAnimationIfNeeded(tableView, cell: cell, indexPath: indexPath)
-    }
-
-    // MARK: - UIScrollViewDelegate
-
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        onScrollFinish?()
     }
 
     // MARK: - Private
