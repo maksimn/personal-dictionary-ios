@@ -31,6 +31,7 @@ final class MainScreenBuilder: ViewControllerBuilder {
             title: dependency.bundle.moduleLocalizedString("LS_MY_DICTIONARY"),
             mainWordListBuilder: MainWordListBuilder(dependency: dependency),
             mainNavigatorBuilder: mainNavigatorBuilder,
+            messageBoxBuilder: MessageBoxBuilder(),
             theme: Theme.data,
             logger: LoggerImpl(category: "PersonalDictionary.MainScreen")
         )

@@ -18,6 +18,7 @@ let package = Package(
         .package(url: "https://github.com/SnapKit/SnapKit", from: "5.6.0"),
         .package(url: "https://github.com/ReactiveX/RxSwift", revision: "6.5.0"),
         .package(url: "https://github.com/realm/realm-swift", from: "10.39.1"),
+        .package(url: "https://github.com/scalessec/Toast-Swift", from: "5.0.1"),
         .package(path: "../CoreModule"),
         .package(path: "../TodoList")
     ],
@@ -30,7 +31,8 @@ let package = Package(
                 "SnapKit",
                 "TodoList",
                 .product(name: "RealmSwift", package: "realm-swift"),
-                .product(name: "RxCocoa", package: "RxSwift")
+                .product(name: "RxCocoa", package: "RxSwift"),
+                .product(name: "Toast", package: "Toast-Swift")
             ],
             path: "Source",
             resources: []

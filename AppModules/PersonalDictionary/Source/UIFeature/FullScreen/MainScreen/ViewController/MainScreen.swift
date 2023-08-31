@@ -14,6 +14,7 @@ final class MainScreen: UIViewController {
 
     private let mainWordListViewController: UIViewController
     private var mainNavigator: MainNavigator
+    private let messageBoxView: UIView
     private let theme: Theme
     private let logger: Logger
 
@@ -26,12 +27,14 @@ final class MainScreen: UIViewController {
     init(title: String,
          mainWordListBuilder: MainWordListBuilder,
          mainNavigatorBuilder: MainNavigatorBuilder,
+         messageBoxBuilder: MessageBoxBuilder,
          theme: Theme,
          logger: Logger) {
         self.mainWordListViewController = mainWordListBuilder.build()
         self.mainNavigator = mainNavigatorBuilder.build()
         self.theme = theme
         self.logger = logger
+        messageBoxView = messageBoxBuilder.build()
         super.init(nibName: nil, bundle: nil)
         navigationItem.title = title
     }
@@ -52,6 +55,7 @@ final class MainScreen: UIViewController {
         view.backgroundColor = theme.backgroundColor
         layout(childViewController: mainWordListViewController)
         mainNavigator.appendTo(rootView: view)
+        view.addSubview(messageBoxView)
     }
 
     override func viewWillLayoutSubviews() {
