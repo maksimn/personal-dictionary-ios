@@ -22,9 +22,10 @@ final class MainWordListBuilder: ViewControllerBuilder {
     ///  - Экран "Главного (основного) списка слов".
     func build() -> UIViewController {
         let category = "PersonalDictionary.MainWordList"
-        let dictionaryService = PonsDictionaryService(
+        let dictionaryService = MessagableDictionaryService(
             secret: dependency.appConfig.ponsApiSecret,
-            category: category
+            category: category,
+            bundle: dependency.bundle
         )
 
         let model = MainWordListModelImpl(

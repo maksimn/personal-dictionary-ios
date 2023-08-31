@@ -16,6 +16,7 @@
 "LS_GERMAN" = "Немецкий";
 "LS_ITALIAN" = "Итальянский";
 "LS_LOAD_DICTIONARY_ENTRY_ERROR" = "Не удалось загрузить данные.";
+"LS_LOAD_DICTIONARY_ENTRY_ERROR_TEMPLATE" = "Не удалось загрузить словарную статью о слове '%@'.";
 "LS_MY_DICTIONARY" = "Мой словарь";
 "LS_NO_FAVORITE_WORDS" = "Нет избранных слов";
 "LS_NO_WORDS_FOUND" = "Ничего не найдено";
