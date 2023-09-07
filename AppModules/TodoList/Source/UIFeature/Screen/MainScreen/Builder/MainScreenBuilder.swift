@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import CoreModule
+import SharedFeature
 import UIKit
 
 final class MainScreenBuilder: ViewControllerBuilder {
@@ -40,6 +41,7 @@ final class MainScreenBuilder: ViewControllerBuilder {
             counterBuilder: CounterBuilder(store: counterStore),
             showButtonBuilder: ShowButtonBuilder(store: showButtonStore),
             networkIndicatorBuilder: NetworkIndicatorBuilder(store: networkIndicatorStore),
+            messageBoxBuilder: MessageBoxBuilder(),
             mainListBuilder: MainListBuilder(store: mainListStore, networkIndicatorStore: networkIndicatorStore),
             backButtonFactory: BackButtonFactory()
         )

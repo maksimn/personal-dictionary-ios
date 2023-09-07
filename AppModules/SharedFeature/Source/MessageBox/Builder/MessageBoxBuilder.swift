@@ -1,6 +1,6 @@
 //
 //  MessageBoxBuilder.swift
-//  PersonalDictionary
+//  SharedFeature
 //
 //  Created by Maxim Ivanov on 31.08.2023.
 //
@@ -8,9 +8,11 @@
 import CoreModule
 import UIKit
 
-struct MessageBoxBuilder: ViewBuilder {
+public struct MessageBoxBuilder: ViewBuilder {
 
-    func build() -> UIView {
+    public init() {}
+
+    public func build() -> UIView {
         let duration = 4
 
         let viewModel = MessageBoxViewModelImpl(

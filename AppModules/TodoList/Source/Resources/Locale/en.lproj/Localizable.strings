@@ -18,5 +18,6 @@
 "LS_PRIORITY" = "Priority";
 "LS_SAVE" = "Save";
 "LS_SHOW" = "Show";
+"LS_SYNC_FAILED" = "Failed to sync data";
 "LS_TODO" = "TODO";
 "LS_TODO_2" = "To do...";

@@ -14,6 +14,7 @@ final class MainScreen: UIViewController {
     private let counterView: UIView
     private let showButtonView: UIView
     private let networkIndicatorView: UIView
+    private let messageBoxView: UIView
     private let mainListViewController: UIViewController
     private let backButtonFactory: ButtonFactory
     private let theme: Theme
@@ -24,6 +25,7 @@ final class MainScreen: UIViewController {
         counterBuilder: ViewBuilder,
         showButtonBuilder: ViewBuilder,
         networkIndicatorBuilder: ViewBuilder,
+        messageBoxBuilder: ViewBuilder,
         mainListBuilder: ViewControllerBuilder,
         backButtonFactory: ButtonFactory
     ) {
@@ -31,6 +33,7 @@ final class MainScreen: UIViewController {
         counterView = counterBuilder.build()
         showButtonView = showButtonBuilder.build()
         networkIndicatorView = networkIndicatorBuilder.build()
+        messageBoxView = messageBoxBuilder.build()
         mainListViewController = mainListBuilder.build()
         self.backButtonFactory = backButtonFactory
         super.init(nibName: nil, bundle: nil)
@@ -49,6 +52,7 @@ final class MainScreen: UIViewController {
         initMainList()
         initNetworkIndicator()
         initBackButton()
+        view.addSubview(messageBoxView)
     }
 
     @objc

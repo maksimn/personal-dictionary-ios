@@ -134,7 +134,9 @@ class SyncTests: XCTestCase {
                 params: syncParams,
                 dirtyStateCache: dirtyStateCacheMock,
                 syncService: syncServiceMock,
-                randomNumber: { randomDouble }
+                randomNumber: { randomDouble },
+                sharedMessageSender: SharedMessageSenderMock(),
+                syncErrorMessage: ""
             )
         }
     }

@@ -1,6 +1,6 @@
 //
 //  MessageBoxView.swift
-//  PersonalDictionary
+//  SharedFeature
 //
 //  Created by Maxim Ivanov on 31.08.2023.
 //
