@@ -5,6 +5,7 @@
 //  Created by Maksim Ivanov on 18.07.2023.
 //
 
+import SharedFeature
 @testable import TodoList
 
 enum ErrorMock: Error {
@@ -102,5 +103,14 @@ class DirtyStateStatusMock: DirtyStateStatus {
 
     var isDirty: Bool {
         isDirtyMock!()
+    }
+}
+
+class SharedMessageSenderMock: SharedMessageSender {
+
+    var sendSharedMessageMock: (String) -> Void = { _ in }
+
+    func send(sharedMessage: String) {
+        sendSharedMessageMock(sharedMessage)
     }
 }

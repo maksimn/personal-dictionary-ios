@@ -6,6 +6,7 @@
 //
 
 import CoreModule
+import SharedFeature
 import UIKit
 
 /// Реализация билдера фичи "Главный экран приложения" Личного словаря.

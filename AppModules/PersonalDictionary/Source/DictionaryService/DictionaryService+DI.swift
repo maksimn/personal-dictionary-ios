@@ -6,6 +6,7 @@
 //
 
 import CoreModule
+import SharedFeature
 import UIKit
 
 extension PonsDictionaryService {

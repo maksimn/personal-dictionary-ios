@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 06.09.2023.
 //
 
+import SharedFeature
 import RxSwift
 
 struct MessagableDictionaryService: DictionaryService {

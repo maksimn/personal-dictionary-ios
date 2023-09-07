@@ -27,7 +27,7 @@ final class MainScreen: UIViewController {
     init(title: String,
          mainWordListBuilder: MainWordListBuilder,
          mainNavigatorBuilder: MainNavigatorBuilder,
-         messageBoxBuilder: MessageBoxBuilder,
+         messageBoxBuilder: ViewBuilder,
          theme: Theme,
          logger: Logger) {
         self.mainWordListViewController = mainWordListBuilder.build()

@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import CoreModule
+import SharedFeature
 
 struct SyncParams {
     let minDelay: Double
@@ -21,6 +22,8 @@ struct Sync: Reducer {
     let dirtyStateCache: DirtyStateCache
     let syncService: SyncService
     let randomNumber: () -> Double
+    let sharedMessageSender: SharedMessageSender
+    let syncErrorMessage: String
 
     struct State: Equatable {
         var delay: Double
@@ -52,6 +55,10 @@ struct Sync: Reducer {
                     await send(.syncWithRemoteTodosResult(.success(todos)))
                     await send(.setDelayToMinValue)
                 } catch {
+                    if almostEqual(delay, params.maxDelay) {
+                        sharedMessageSender.send(sharedMessage: syncErrorMessage)
+                    }
+
                     await send(.error(WithError(error)))
                     try? await Task.sleep(nanoseconds: UInt64(delay) * 1_000_000_000)
                     await send(.syncWithRemoteTodosResult(.failure(error)))

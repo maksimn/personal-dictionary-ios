@@ -4,10 +4,10 @@ identifier_name:
     - _id
     - i
     - j
+    - x
+    - y
 
 type_name:
   excluded:
     - Id
 
-excluded:
-  - Pods
