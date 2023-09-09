@@ -22,7 +22,7 @@ struct DictionaryEntryBuilder: ParametrizedViewControllerBuilder {
         let model = DictionaryEntryModelImpl(
             id: id,
             dictionaryService: dictionaryService(),
-            updateWordDbWorker: UpdateWordDbWorkerImpl(),
+            decoder: PonsDictionaryEntryDecoder(),
             updatedWordSender: WordStreamImpl.instance
         )
         let viewModel = DictionaryEntryViewModelImpl(model: model)
@@ -42,7 +42,12 @@ struct DictionaryEntryBuilder: ParametrizedViewControllerBuilder {
         )
     }
 
-    private func dictionaryService() -> PonsDictionaryService {
-        PonsDictionaryService(secret: ponsSecret, category: "PersonalDictionary.DictionaryEntry")
+    private func dictionaryService() -> DictionaryService {
+        DictionaryServiceImpl(
+            secret: ponsSecret,
+            category: "PersonalDictionary.DictionaryEntry",
+            bundle: bundle,
+            isErrorSendable: false
+        )
     }
 }

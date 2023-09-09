@@ -5,6 +5,7 @@
 //  Created by Maxim Ivanov on 06.10.2021.
 //
 
+import Foundation
 import RealmSwift
 import RxSwift
 
@@ -42,6 +43,11 @@ protocol DeleteWordDbWorker {
     func delete(word: Word) -> Single<Word>
 }
 
+protocol DictionaryEntryDbWorker {
+
+    func insert(entry: Data, for word: Word) -> Single<WordData>
+}
+
 /// Получение списка избранных слов из хранилища личного словаря.
 protocol FavoriteWordListFetcher {
 
@@ -57,6 +63,9 @@ protocol SearchableWordList {
     ///  - string: строка для поиска.
     /// - Массив найденных слов.
     func findWords(contain string: String) -> [Word]
+}
+
+protocol TranslationSearchableWordList {
 
     /// Найти слова, перевод которых содержит строку.
     /// - Parameters:

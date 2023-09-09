@@ -30,3 +30,28 @@ struct Lang: Equatable, CustomStringConvertible {
         "Lang(id: \(id.raw), name: \(name))"
     }
 }
+
+/// Тип выбранного языка
+enum LangType {
+    case source /// исходный язык
+    case target /// целевой язык
+}
+
+/// Данные о языках в приложении.
+struct LangData {
+
+    /// Массив всех поддерживаемых языков
+    let allLangs: [Lang]
+
+    /// Ключ для персистентного хранения текущего "исходного языка" (source language)
+    let sourceLangKey: String
+
+    /// Ключ для персистентного хранения текущего "целевого языка" (target language)
+    let targetLangKey: String
+
+    /// Дефолтный исходный язык
+    let defaultSourceLang: Lang
+
+    /// Дефолтный целевой язык
+    let defaultTargetLang: Lang
+}

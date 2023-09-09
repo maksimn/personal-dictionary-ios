@@ -18,7 +18,10 @@ final class SearchWordListBuilder: ViewControllerBuilder {
     }
 
     func build() -> UIViewController {
-        let model = SearchWordListModelImpl(searchableWordList: SearchableWordListImpl())
+        let model = SearchWordListModelImpl(
+            searchableWordList: SearchableWordListImpl(),
+            translationSearchableWordList: TranslationSearchableWordListImpl()
+        )
         let viewModel = SearchWordListViewModelImpl(
             initialData: initialData(),
             model: model,

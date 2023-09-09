@@ -15,7 +15,7 @@ final class WordListModelImplTests: XCTestCase {
     let lang = Lang(id: .init(raw: 1), name: "A", shortName: "a")
     lazy var word = Word(text: "abc", sourceLang: lang, targetLang: lang)
     lazy var word1 = Word(text: "a", sourceLang: lang, targetLang: lang)
-    lazy var word2 = Word(text: "b", dictionaryEntry: ["y"], sourceLang: lang, targetLang: lang)
+    lazy var word2 = Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang)
     lazy var word3 = Word(text: "c", sourceLang: lang, targetLang: lang)
     lazy var wordList = [word1, word2, word3]
 

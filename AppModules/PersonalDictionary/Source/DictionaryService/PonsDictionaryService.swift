@@ -15,7 +15,6 @@ final class PonsDictionaryService: DictionaryService {
 
     private let secret: String
     private let httpClient: HttpClient
-    private let decoder: DictionaryEntryDecoder
 
     private let apiUrl = "https://api.pons.com/v1/dictionary"
 
@@ -24,13 +23,12 @@ final class PonsDictionaryService: DictionaryService {
     /// - Parameters:
     ///  - secret: секрет для обращения к онлайновому PONS API.
     ///  - httpClient: базовая служба для сетевых запросов по протоколу HTTP.
-    init(secret: String, httpClient: HttpClient, decoder: DictionaryEntryDecoder) {
+    init(secret: String, httpClient: HttpClient) {
         self.secret = secret
         self.httpClient = httpClient
-        self.decoder = decoder
     }
 
-    func fetchDictionaryEntry(for word: Word) -> Single<Word> {
+    func fetchDictionaryEntry(for word: Word) -> Single<WordData> {
         let sourceLang = word.sourceLang.shortName.lowercased()
         let targetLang = word.targetLang.shortName.lowercased()
         var query = URLComponents()
@@ -51,11 +49,7 @@ final class PonsDictionaryService: DictionaryService {
             .take(1)
             .asSingle()
             .map { httpResponse in
-                var word = word
-
-                word.dictionaryEntry = try self.decoder.decode(httpResponse.data, word: word)
-
-                return word
+                WordData(word: word, entry: httpResponse.data)
             }
     }
 

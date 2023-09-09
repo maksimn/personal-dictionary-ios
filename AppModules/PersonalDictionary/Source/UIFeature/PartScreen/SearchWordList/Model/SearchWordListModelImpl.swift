@@ -5,13 +5,10 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-final class SearchWordListModelImpl: SearchWordListModel {
+struct SearchWordListModelImpl: SearchWordListModel {
 
-    private let searchableWordList: SearchableWordList
-
-    init(searchableWordList: SearchableWordList) {
-        self.searchableWordList = searchableWordList
-    }
+    let searchableWordList: SearchableWordList
+    let translationSearchableWordList: TranslationSearchableWordList
 
     func performSearch(for searchText: String, mode: SearchMode) -> SearchResultData {
         let string = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
@@ -27,7 +24,7 @@ final class SearchWordListModelImpl: SearchWordListModel {
             filteredWordList = searchableWordList.findWords(contain: string)
 
         case .byTranslation:
-            filteredWordList = searchableWordList.findWords(whereTranslationContains: string)
+            filteredWordList = translationSearchableWordList.findWords(whereTranslationContains: string)
         }
 
         return SearchResultData(searchState: .fulfilled, foundWordList: filteredWordList)

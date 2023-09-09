@@ -15,9 +15,9 @@ class WordListRepositoryImpTests: XCTestCase {
     let langOne = Lang(id: .init(raw: 1), name: "Aa", shortName: "a")
     let langTwo = Lang(id: .init(raw: 2), name: "Bb", shortName: "b")
 
-    lazy var word1 = Word(text: "A", dictionaryEntry: ["X"], sourceLang: langOne, targetLang: langTwo)
-    lazy var word2 = Word(text: "B", dictionaryEntry: ["Y"], sourceLang: langOne, targetLang: langTwo)
-    lazy var word3 = Word(text: "C", dictionaryEntry: ["Q", "X"], sourceLang: langOne, targetLang: langTwo)
+    lazy var word1 = Word(text: "A", translation: "X", sourceLang: langOne, targetLang: langTwo, createdAt: 3)
+    lazy var word2 = Word(text: "B", translation: "Y", sourceLang: langOne, targetLang: langTwo, createdAt: 2)
+    lazy var word3 = Word(text: "C", translation: "Q", sourceLang: langOne, targetLang: langTwo, createdAt: 1)
 
     func arrangeSearch() {
         let createWordDbWorker = CreateWordDbWorkerImpl()
@@ -28,7 +28,8 @@ class WordListRepositoryImpTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        _ = try deleteAllWords().toBlocking().first()
+        _ = try deleteAll(WordDAO.self).toBlocking().first()
+        _ = try deleteAll(DictionaryEntryDAO.self).toBlocking().first()
     }
 
     func test_wordListFetcher__wordList__empty() throws {
@@ -68,7 +69,7 @@ class WordListRepositoryImpTests: XCTestCase {
         var updatedWordTwo = wordTwo
 
         updatedWordTwo.isFavorite = true
-        updatedWordTwo.dictionaryEntry = ["translation"]
+        updatedWordTwo.translation = "translation"
 
         // Act:
         _ = try createWordDbWorker.create(word: wordOne).toBlocking().first()
@@ -104,12 +105,86 @@ class WordListRepositoryImpTests: XCTestCase {
         XCTAssertEqual(words.count, 0)
     }
 
-    func test_search__findWordsWhereTranslationContains__returnsTwoWords() throws {
+    // swiftlint:disable function_body_length
+    func test_findWordsWhereTranslationContains__returnsTwoWords() throws {
         // Arrange:
         arrangeSearch()
 
+        let ponsArray1 = [
+            PonsResponseData(
+                hits: [
+                    PonsResponseDataHit(
+                        roms: [
+                            PonsResponseDataHitsRom(
+                                headword: "A",
+                                arabs: [
+                                    PonsResponseDataHitsRomsArab(
+                                        translations: [
+                                            PonsResponseDataHitsRomsArabsTranslation(target: "X")
+                                        ]
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                ]
+            )
+        ]
+        let data1 = try! JSONEncoder().encode(ponsArray1)
+
+        let ponsArray2 = [
+            PonsResponseData(
+                hits: [
+                    PonsResponseDataHit(
+                        roms: [
+                            PonsResponseDataHitsRom(
+                                headword: "B",
+                                arabs: [
+                                    PonsResponseDataHitsRomsArab(
+                                        translations: [
+                                            PonsResponseDataHitsRomsArabsTranslation(target: "Y")
+                                        ]
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                ]
+            )
+        ]
+        let data2 = try! JSONEncoder().encode(ponsArray2)
+
+        let ponsArray3 = [
+            PonsResponseData(
+                hits: [
+                    PonsResponseDataHit(
+                        roms: [
+                            PonsResponseDataHitsRom(
+                                headword: "C",
+                                arabs: [
+                                    PonsResponseDataHitsRomsArab(
+                                        translations: [
+                                            PonsResponseDataHitsRomsArabsTranslation(target: "Q"),
+                                            PonsResponseDataHitsRomsArabsTranslation(target: "X")
+                                        ]
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                ]
+            )
+        ]
+        let data3 = try! JSONEncoder().encode(ponsArray3)
+
+        let dictionaryEntryDbWorker = DictionaryEntryDbWorkerImpl()
+
+        _ = try! dictionaryEntryDbWorker.insert(entry: data1, for: word1).toBlocking().first()
+        _ = try! dictionaryEntryDbWorker.insert(entry: data2, for: word2).toBlocking().first()
+        _ = try! dictionaryEntryDbWorker.insert(entry: data3, for: word3).toBlocking().first()
+
         // Act:
-        let words = SearchableWordListImpl().findWords(whereTranslationContains: "X")
+        let words = TranslationSearchableWordListImpl().findWords(whereTranslationContains: "X")
 
         // Assert:
         XCTAssertEqual(words, [word1, word3])

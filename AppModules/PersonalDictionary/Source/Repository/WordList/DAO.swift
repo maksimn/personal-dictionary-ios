@@ -11,7 +11,7 @@ import RealmSwift
 class WordDAO: Object {
     @Persisted(primaryKey: true) var _id: String
     @Persisted var text: String
-    @Persisted var dictionaryEntry: List<String>
+    @Persisted var translation: String?
     @Persisted var sourceLang: LangDAO?
     @Persisted var targetLang: LangDAO?
     @Persisted var isFavorite: Bool
@@ -25,8 +25,7 @@ class WordDAO: Object {
 
     func update(from word: Word) {
         text = word.text
-        dictionaryEntry.removeAll()
-        dictionaryEntry.append(objectsIn: word.dictionaryEntry)
+        translation = word.translation
         sourceLang = LangDAO(word.sourceLang)
         targetLang = LangDAO(word.targetLang)
         isFavorite = word.isFavorite
@@ -47,12 +46,24 @@ class LangDAO: Object {
     }
 }
 
+class DictionaryEntryDAO: Object {
+
+    @Persisted(primaryKey: true) var _id: String
+    @Persisted var entry: Data
+
+    convenience init(_ id: Word.Id, _ entry: Data) {
+        self.init()
+        _id = id.raw
+        self.entry = entry
+    }
+}
+
 extension Word {
 
     init?(_ dao: WordDAO) {
         id = .init(raw: dao._id)
         text = dao.text
-        dictionaryEntry = Array(dao.dictionaryEntry)
+        translation = dao.translation ?? ""
 
         if let sourceLang = dao.sourceLang,
             let targetLang = dao.targetLang {

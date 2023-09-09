@@ -17,8 +17,7 @@ final class PonsDictionaryServiceTests: XCTestCase {
         let httpClientMock = HttpClientMock()
         let ponsTranslationService = PonsDictionaryService(
             secret: "",
-            httpClient: httpClientMock,
-            decoder: PonsDictionaryEntryDecoder()
+            httpClient: httpClientMock
         )
         let lang = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
         let word = Word(text: "word", sourceLang: lang, targetLang: lang)
@@ -54,7 +53,7 @@ final class PonsDictionaryServiceTests: XCTestCase {
         // Assert:
         let result = try single.toBlocking().first()
 
-        XCTAssertEqual(result?.dictionaryEntry, ["translation"])
+        XCTAssertEqual(result?.entry, data)
     }
 
     func test_fetchDictionaryEntry__returnsErrorWhenHttpRequestFails() throws {
@@ -62,8 +61,7 @@ final class PonsDictionaryServiceTests: XCTestCase {
         let httpClientMock = HttpClientMock()
         let ponsTranslationService = PonsDictionaryService(
             secret: "",
-            httpClient: httpClientMock,
-            decoder: PonsDictionaryEntryDecoder()
+            httpClient: httpClientMock
         )
         let lang = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
         let word = Word(text: "word", sourceLang: lang, targetLang: lang)
