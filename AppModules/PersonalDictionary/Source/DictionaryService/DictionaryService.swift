@@ -15,5 +15,5 @@ protocol DictionaryService {
     ///  - word: слово.
     /// - Returns:
     ///  - Rx Single со словом, содержащим словарную статью о нём.
-    func fetchDictionaryEntry(for word: Word) -> Single<Word>
+    func fetchDictionaryEntry(for word: Word) -> Single<WordData>
 }

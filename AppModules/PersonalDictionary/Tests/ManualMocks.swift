@@ -6,6 +6,7 @@
 //
 
 import CoreModule
+import Foundation
 import RxSwift
 @testable import PersonalDictionary
 
@@ -150,14 +151,14 @@ class SearchModeSenderMock: SearchModeSender {
 }
 
 class SearchableWordListMock: SearchableWordList {
-
     var findWordsMock: ((String) -> [Word])?
-    var findWordsWhereTranslationContainsMock: ((String) -> [Word])?
-
     func findWords(contain string: String) -> [Word] {
         findWordsMock!(string)
     }
+}
 
+class TranslationSearchableWordListMock: TranslationSearchableWordList {
+    var findWordsWhereTranslationContainsMock: ((String) -> [Word])?
     func findWords(whereTranslationContains string: String) -> [Word] {
         findWordsWhereTranslationContainsMock!(string)
     }
@@ -209,7 +210,7 @@ class WordListModelMock: WordListModel {
 }
 
 class UpdatedWordSenderMock: UpdatedWordSender {
-    var sendUpdatedWordMock: ((Word) -> Void)?
+    var sendUpdatedWordMock: ((Word) -> Void)? = { _ in }
 
     func sendUpdatedWord(_ word: Word) {
         sendUpdatedWordMock!(word)
@@ -230,9 +231,9 @@ class RUWordStreamMock: UpdatedWordSender, RemovedWordSender {
 }
 
 class DictionaryServiceMock: DictionaryService {
-    var fetchDictionaryEntryMock: ((Word) -> Single<Word>)?
+    var fetchDictionaryEntryMock: ((Word) -> Single<WordData>)?
 
-    func fetchDictionaryEntry(for word: Word) -> Single<Word> {
+    func fetchDictionaryEntry(for word: Word) -> Single<WordData> {
         fetchDictionaryEntryMock!(word)
     }
 }
@@ -291,12 +292,26 @@ class WordListRouterMock: ParametrizedRouter {
 }
 
 class DictionaryEntryModelMock: DictionaryEntryModel {
-    var loadMock: (() throws -> Word)?
-    var getDictionaryEntryMock: ((Word) -> Single<Word>)?
-    func load() throws -> Word {
+    var loadMock: (() throws -> DictionaryEntryVO)?
+    var getDictionaryEntryMock: ((Word) -> Single<DictionaryEntryVO>)?
+    func load() throws -> DictionaryEntryVO {
         try loadMock!()
     }
-    func getDictionaryEntry(for word: Word) -> Single<Word> {
+    func getDictionaryEntry(for word: Word) -> Single<DictionaryEntryVO> {
         getDictionaryEntryMock!(word)
+    }
+}
+
+class DictionaryEntryDbWorkerMock: DictionaryEntryDbWorker {
+    var insertMock: ((Data, Word) -> Single<WordData>)? = { Single.just(WordData(word: $1, entry: $0)) }
+    func insert(entry: Data, for word: Word) -> Single<WordData> {
+        insertMock!(entry, word)
+    }
+}
+
+class DictionaryEntryDecoderMock: DictionaryEntryDecoder {
+    var decodeMock: (Data, Word) -> DictionaryEntry = { (_, _) in [] }
+    func decode(_ data: Data, word: Word) throws -> DictionaryEntry {
+        decodeMock(data, word)
     }
 }

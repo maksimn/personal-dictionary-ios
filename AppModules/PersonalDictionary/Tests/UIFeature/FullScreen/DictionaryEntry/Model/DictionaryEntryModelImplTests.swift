@@ -13,53 +13,49 @@ class DictionaryEntryModelImplTests: XCTestCase {
 
     var model: DictionaryEntryModelImpl!
     var dictionaryServiceMock: DictionaryServiceMock!
-    var updateWordDbWorkerMock: UpdateWordDbWorkerMock!
+    var decoderMock: DictionaryEntryDecoderMock!
     var updatedWordSenderMock: UpdatedWordSenderMock!
 
     // Test data set:
     let langOne = Lang(id: .init(raw: 1), name: "Aa", shortName: "a")
     lazy var word = Word(text: "word", sourceLang: langOne, targetLang: langOne)
-    lazy var wordWithDictEntry: Word = {
-        var updated = word
-
-        updated.dictionaryEntry = ["x", "y"]
-
-        return updated
-    }()
+    lazy var wordData = WordData(word: word, entry: Data())
+    lazy var dictionaryEntryVO = DictionaryEntryVO(word: word, entry: ["x", "y"])
 
     func arrange() {
         dictionaryServiceMock = DictionaryServiceMock()
-        updateWordDbWorkerMock = UpdateWordDbWorkerMock()
+        decoderMock = DictionaryEntryDecoderMock()
         updatedWordSenderMock = UpdatedWordSenderMock()
         model = DictionaryEntryModelImpl(
             id: word.id,
             dictionaryService: dictionaryServiceMock,
-            updateWordDbWorker: updateWordDbWorkerMock,
+            decoder: decoderMock,
             updatedWordSender: updatedWordSenderMock
         )
     }
 
     func arrangeGetDictionaryEntry() {
         arrange()
-        dictionaryServiceMock.fetchDictionaryEntryMock = { _ in Single.just(self.wordWithDictEntry) }
-        updateWordDbWorkerMock.updateWordMock = { .just($0) }
-        updatedWordSenderMock.sendUpdatedWordMock = { _ in }
+        dictionaryServiceMock.fetchDictionaryEntryMock = { _ in Single.just(self.wordData) }
+        decoderMock.decodeMock = { (_, _) in self.dictionaryEntryVO.entry }
     }
 
     override func tearDownWithError() throws {
-        _ = try deleteAllWords().toBlocking().first()
+        _ = try deleteAll(WordDAO.self).toBlocking().first()
+        _ = try deleteAll(DictionaryEntryDAO.self).toBlocking().first()
     }
 
     func test_load_success_whenTheWordExistsInRealm() throws {
         arrange()
 
         _ = try! CreateWordDbWorkerImpl().create(word: word).toBlocking().first()
+        _ = try! DictionaryEntryDbWorkerImpl().insert(entry: Data(), for: word).toBlocking().first()
 
         // Act
-        let loadedWord = try model.load()
+        let loadedVO = try model.load()
 
         // Assert
-        XCTAssertEqual(loadedWord, word)
+        XCTAssertEqual(loadedVO, DictionaryEntryVO(word: word, entry: []))
     }
 
     func test_load_error_whenTheWordDoesntExistsInRealm() throws {
@@ -73,27 +69,10 @@ class DictionaryEntryModelImplTests: XCTestCase {
         arrangeGetDictionaryEntry()
 
         // Act
-        let resultWord = try! model.getDictionaryEntry(for: word).toBlocking().first()
+        let resultVO = try! model.getDictionaryEntry(for: word).toBlocking().first()
 
         // Assert
-        XCTAssertEqual(resultWord, wordWithDictEntry)
-    }
-
-    func test_getDictionaryEntry_success_updatesWordInDB() throws {
-        arrangeGetDictionaryEntry()
-
-        var counter = 0
-
-        updateWordDbWorkerMock.updateWordMock = {
-            counter += 1
-            return .just($0)
-        }
-
-        // Act
-        _ = try! model.getDictionaryEntry(for: word).toBlocking().first()
-
-        // Assert
-        XCTAssertEqual(counter, 1)
+        XCTAssertEqual(resultVO, dictionaryEntryVO)
     }
 
     func test_getDictionaryEntry_success_notifyAboutTheWordUpdate() throws {

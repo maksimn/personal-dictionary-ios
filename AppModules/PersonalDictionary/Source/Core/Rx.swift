@@ -15,9 +15,9 @@ extension Single<WordListState> {
     }
 }
 
-extension Single<Word> {
+extension Single<DictionaryEntryVO> {
 
-    func executeInBackgroundAndObserveOnMainThread() -> Single<Word> {
+    func executeInBackgroundAndObserveOnMainThread() -> Single<DictionaryEntryVO> {
         subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
             .observe(on: MainScheduler.instance)
     }

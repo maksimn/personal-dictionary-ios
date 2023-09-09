@@ -15,28 +15,28 @@ class DictionaryEntryViewModelImplTests: XCTestCase {
 
     let langOne = Lang(id: .init(raw: 1), name: "Aa", shortName: "a")
     lazy var word = Word(text: "word", sourceLang: langOne, targetLang: langOne)
-    lazy var wordWithEntry = Word(text: "word", dictionaryEntry: ["x", "y"], sourceLang: langOne, targetLang: langOne)
+    lazy var dictionaryEntryVO = DictionaryEntryVO(word: word, entry: ["x", "y"])
 
     func arrange() {
         modelMock = .init()
         viewModel = .init(model: modelMock)
-        modelMock.getDictionaryEntryMock = { .just($0) }
+        modelMock.getDictionaryEntryMock = { _ in .just(self.dictionaryEntryVO) }
     }
 
     func test_load_success_wordWithDictionaryEntryLoaded() {
         arrange()
-        modelMock.loadMock = { self.wordWithEntry }
+        modelMock.loadMock = { self.dictionaryEntryVO }
 
         // Act
         viewModel.load()
 
         // Assert
-        XCTAssertEqual(viewModel.state.value, DictionaryEntryState.loaded(wordWithEntry))
+        XCTAssertEqual(viewModel.state.value, DictionaryEntryState.loaded(dictionaryEntryVO))
     }
 
     func test_load_error_errorStateIfNoDictionaryEntryForTheWord() {
         arrange()
-        modelMock.loadMock = { self.word }
+        modelMock.loadMock = { DictionaryEntryVO(word: self.word, entry: []) }
 
         // Act
         viewModel.load()
@@ -62,7 +62,6 @@ class DictionaryEntryViewModelImplTests: XCTestCase {
     func test_retryDictionaryEntryRequest_success_dictionaryEntryFetched() {
         arrange()
         viewModel.state.accept(.error(DictionaryEntryError.emptyDictionaryEntry(word).withError()))
-        modelMock.getDictionaryEntryMock = { _ in .just(self.wordWithEntry) }
 
         // Act
         viewModel.retryDictionaryEntryRequest()
@@ -70,7 +69,7 @@ class DictionaryEntryViewModelImplTests: XCTestCase {
         // Assert
         _ = XCTWaiter.wait(for: [expectation(description: "Wait for x seconds")], timeout: 0.001)
 
-        XCTAssertEqual(viewModel.state.value, DictionaryEntryState.loaded(wordWithEntry))
+        XCTAssertEqual(viewModel.state.value, DictionaryEntryState.loaded(dictionaryEntryVO))
     }
 
     func test_retryDictionaryEntryRequest_transitionThroughLoadingState() {
@@ -88,10 +87,10 @@ class DictionaryEntryViewModelImplTests: XCTestCase {
         var counter = 0
 
         arrange()
-        viewModel.state.accept(.loaded(wordWithEntry))
-        modelMock.getDictionaryEntryMock = {
+        viewModel.state.accept(.loaded(dictionaryEntryVO))
+        modelMock.getDictionaryEntryMock = { _ in
             counter += 1
-            return .just($0)
+            return .just(self.dictionaryEntryVO)
         }
 
         // Act

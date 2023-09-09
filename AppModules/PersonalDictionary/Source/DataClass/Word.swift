@@ -21,8 +21,8 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
     /// Написание слова на исходном языке
     let text: String
 
-    /// Словарная статья для данного слова
-    var dictionaryEntry: DictionaryEntry = []
+    /// Перевод
+    var translation: String = ""
 
     /// Исходный язык
     let sourceLang: Lang
@@ -39,7 +39,7 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
     init(
         id: Id = Id(raw: UUID().uuidString),
         text: String,
-        dictionaryEntry: DictionaryEntry = [],
+        translation: String = "",
         sourceLang: Lang,
         targetLang: Lang,
         isFavorite: Bool = false,
@@ -47,7 +47,7 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
     ) {
         self.id = id
         self.text = text
-        self.dictionaryEntry = dictionaryEntry
+        self.translation = translation
         self.sourceLang = sourceLang
         self.targetLang = targetLang
         self.isFavorite = isFavorite
@@ -58,7 +58,7 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
     static func == (lhs: Word, rhs: Word) -> Bool {
         lhs.id == rhs.id &&
         lhs.text == rhs.text &&
-        lhs.dictionaryEntry == rhs.dictionaryEntry &&
+        lhs.translation == rhs.translation &&
         lhs.sourceLang == rhs.sourceLang &&
         lhs.targetLang == rhs.targetLang &&
         lhs.isFavorite == rhs.isFavorite &&
@@ -73,19 +73,16 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
         """
         Word(id: \(id.raw), \
         text: \(text), \
-        dictionaryEntry: \(dictionaryEntryDescription), \
+        translation: \(translation), \
         sourceLang: \(sourceLang.id.raw), \
         targetLang: \(targetLang.id.raw), \
         isFavorite: \(isFavorite), \
         createdAt: \(createdAt))
         """
     }
+}
 
-    private var dictionaryEntryDescription: String {
-        let count = dictionaryEntry.count
-
-        return dictionaryEntry.count < 2 ?
-            "\(dictionaryEntry)" :
-            "[\(dictionaryEntry.first ?? "")\(count > 1 ? ", ...\(count - 1) values" : "")]"
-    }
+struct WordData: Equatable {
+    let word: Word
+    let entry: Data
 }

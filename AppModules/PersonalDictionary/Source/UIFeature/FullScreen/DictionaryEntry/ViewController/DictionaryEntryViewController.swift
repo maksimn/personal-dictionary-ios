@@ -85,11 +85,11 @@ final class DictionaryEntryViewController: UIViewController {
 
     private func tableViewFor(_ state: DictionaryEntryState) {
         switch state {
-        case .loaded(let word):
+        case .loaded(let wordData):
             var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
 
             snapshot.appendSections([0])
-            snapshot.appendItems(word.dictionaryEntry, toSection: 0)
+            snapshot.appendItems(wordData.entry, toSection: 0)
             datasource.apply(snapshot)
 
         default:
@@ -119,12 +119,15 @@ final class DictionaryEntryViewController: UIViewController {
 
     private func titleAndTranslationDirectionViewFor(_ state: DictionaryEntryState) {
         switch state {
-        case .loaded(let word):
-            setTitleAndTranslationDirection(word)
+        case .loaded(let wordData):
+            setTitleAndTranslationDirection(wordData.word)
 
         case .error(let withError):
             if case DictionaryEntryError.emptyDictionaryEntry(let word) = withError.base {
+                translationDirectionView.isHidden = false
                 setTitleAndTranslationDirection(word)
+            } else {
+                translationDirectionView.isHidden = true
             }
 
         default:

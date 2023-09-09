@@ -7,10 +7,15 @@
 
 import CoreModule
 
+struct DictionaryEntryVO: Equatable {
+    let word: Word
+    let entry: DictionaryEntry
+}
+
 enum DictionaryEntryState: Equatable {
     case initial
     case loading
-    case loaded(Word)
+    case loaded(DictionaryEntryVO)
     case error(WithError)
 }
 

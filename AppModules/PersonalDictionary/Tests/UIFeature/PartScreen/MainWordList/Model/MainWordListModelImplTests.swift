@@ -14,25 +14,22 @@ final class MainWordListModelImplTests: XCTestCase {
     let lang = Lang(id: .init(raw: 1), name: "A", shortName: "a")
     lazy var word = Word(text: "abc", sourceLang: lang, targetLang: lang)
     lazy var word1 = Word(text: "a", sourceLang: lang, targetLang: lang)
-    lazy var word2 = Word(text: "b", dictionaryEntry: ["y"], sourceLang: lang, targetLang: lang)
+    lazy var word2 = Word(text: "b", sourceLang: lang, targetLang: lang)
     lazy var word3 = Word(text: "c", sourceLang: lang, targetLang: lang)
     lazy var wordList = [word1, word2, word3]
 
     var wordListFetcherMock: WordListFetcherMock!
     var dictionaryServiceMock: DictionaryServiceMock!
     var createWordDbWorkerMock: CreateWordDbWorkerMock!
-    var updateWordDbWorkerMock: UpdateWordDbWorkerMock!
     var model: MainWordListModelImpl!
 
     func arrange() {
         wordListFetcherMock = WordListFetcherMock()
         createWordDbWorkerMock = CreateWordDbWorkerMock()
-        updateWordDbWorkerMock = UpdateWordDbWorkerMock()
         dictionaryServiceMock = DictionaryServiceMock()
         model = MainWordListModelImpl(
             wordListFetcher: wordListFetcherMock,
             сreateWordDbWorker: createWordDbWorkerMock,
-            updateWordDbWorker: updateWordDbWorkerMock,
             dictionaryService: dictionaryServiceMock
         )
     }
@@ -64,21 +61,17 @@ final class MainWordListModelImplTests: XCTestCase {
         // Arrange
         arrange()
 
-        var dbUpdateCounter = 0
-        let translatedWord = Word(text: "abc", dictionaryEntry: ["translation"], sourceLang: lang, targetLang: lang)
+        let translatedWord = Word(id: word.id, text: "abc", translation: "xyz", sourceLang: lang, targetLang: lang)
 
         createWordDbWorkerMock.createWordMock = { word in Single.just(word) }
-        updateWordDbWorkerMock.updateWordMock = { (word: Word) in
-            dbUpdateCounter += 1
-            return Single.just(word)
+        dictionaryServiceMock.fetchDictionaryEntryMock = { _ in
+            Single.just(WordData(word: translatedWord, entry: Data()))
         }
-        dictionaryServiceMock.fetchDictionaryEntryMock = { _ in Single.just(translatedWord) }
 
         // Act
         let nextState = try model.createEffect(word, state: [word, word1, word2, word3]).toBlocking().first()
 
         // Assert
-        XCTAssertEqual(dbUpdateCounter, 1)
         XCTAssertEqual(nextState, [translatedWord, word1, word2, word3])
     }
 

@@ -7,26 +7,11 @@
 
 import RxSwift
 
-final class MainWordListModelImpl: MainWordListModel {
+struct MainWordListModelImpl: MainWordListModel {
 
-    private let wordListFetcher: WordListFetcher
-    private let сreateWordDbWorker: CreateWordDbWorker
-    private let updateWordDbWorker: UpdateWordDbWorker
-    private let dictionaryService: DictionaryService
-
-    private let newWordIndex = 0
-
-    init(
-        wordListFetcher: WordListFetcher,
-        сreateWordDbWorker: CreateWordDbWorker,
-        updateWordDbWorker: UpdateWordDbWorker,
-        dictionaryService: DictionaryService
-    ) {
-        self.wordListFetcher = wordListFetcher
-        self.сreateWordDbWorker = сreateWordDbWorker
-        self.updateWordDbWorker = updateWordDbWorker
-        self.dictionaryService = dictionaryService
-    }
+    let wordListFetcher: WordListFetcher
+    let сreateWordDbWorker: CreateWordDbWorker
+    let dictionaryService: DictionaryService
 
     func fetchMainWordList() -> WordListState {
         do {
@@ -39,7 +24,7 @@ final class MainWordListModelImpl: MainWordListModel {
     func create(_ word: Word, state: WordListState) -> WordListState {
         var state = state
 
-        state.insert(word, at: newWordIndex)
+        state.insert(word, at: 0)
 
         return state
     }
@@ -49,13 +34,13 @@ final class MainWordListModelImpl: MainWordListModel {
             .flatMap { word in
                 self.dictionaryService.fetchDictionaryEntry(for: word)
             }
-            .flatMap { translatedWord in
-                self.updateWordDbWorker.update(word: translatedWord)
-            }
-            .map { translatedWord in
+            .map { wordData in
                 var state = state
+                let word = wordData.word
 
-                state[self.newWordIndex] = translatedWord
+                guard let position = state.firstIndex(where: { $0.id == word.id }) else { return state }
+
+                state[position] = wordData.word
 
                 return state
             }

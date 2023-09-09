@@ -9,7 +9,7 @@ import RxSwift
 
 protocol DictionaryEntryModel {
 
-    func load() throws -> Word
+    func load() throws -> DictionaryEntryVO
 
-    func getDictionaryEntry(for word: Word) -> Single<Word>
+    func getDictionaryEntry(for word: Word) -> Single<DictionaryEntryVO>
 }
