@@ -45,12 +45,14 @@ extension WordTableViewCell {
     private func initSourceLangLabel() {
         sourceLangLabel.font = UIFont.boldSystemFont(ofSize: 12)
         sourceLangLabel.numberOfLines = 1
+        sourceLangLabel.textAlignment = .right
         contentView.addSubview(sourceLangLabel)
     }
 
     private func initTargetLangLabel() {
         targetLangLabel.font = UIFont.boldSystemFont(ofSize: 12)
         targetLangLabel.numberOfLines = 1
+        targetLangLabel.textAlignment = .right
         contentView.addSubview(targetLangLabel)
     }
 
@@ -63,7 +65,8 @@ extension WordTableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         let xMax = contentView.bounds.width - 16
-        let shortLangNameWidth: CGFloat = 30
+        let shortLangNameWidth = max(sourceLangLabel.intrinsicContentSize.width,
+                                     targetLangLabel.intrinsicContentSize.width)
         let wordLabelOriginX: CGFloat = 50
 
         wordlabel.frame = CGRect(origin: CGPoint(x: wordLabelOriginX, y: 10.5),

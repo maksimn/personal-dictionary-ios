@@ -10,8 +10,8 @@ import XCTest
 
 final class NewWordModelImplTests: XCTestCase {
 
-    let lang = Lang(id: .init(raw: 1), name: "Aa", shortName: "a")
-    let otherLang = Lang(id: .init(raw: 2), name: "Bb", shortName: "b")
+    let lang = Lang(id: .init(raw: 1), nameKey: .init(raw: "Aa"), shortNameKey: .init(raw: "a"))
+    let otherLang = Lang(id: .init(raw: 2), nameKey: .init(raw: "Bb"), shortNameKey: .init(raw: "b"))
     lazy var initLangPickerState = LangPickerState(lang: lang, langType: .source, isHidden: true)
     lazy var initState = NewWordState(text: "", sourceLang: lang, targetLang: lang,
                                       langPickerState: initLangPickerState)

@@ -16,7 +16,7 @@ final class LangPickerViewModelImplTests: XCTestCase {
         var callsNumber = 0
         let langPickerListenerMock = LangPickerListenerMock()
         let viewModel = LangPickerViewModelImpl()
-        let lang = Lang(id: .init(raw: 0), name: "", shortName: "")
+        let lang = Lang(id: .init(raw: 0), nameKey: .init(raw: ""), shortNameKey: .init(raw: ""))
         let state = LangPickerState(
             lang: lang,
             langType: .source,
@@ -39,7 +39,7 @@ final class LangPickerViewModelImplTests: XCTestCase {
         var callsNumber = 0
         let langPickerListenerMock = LangPickerListenerMock()
         let viewModel = LangPickerViewModelImpl()
-        let lang = Lang(id: .init(raw: 0), name: "", shortName: "")
+        let lang = Lang(id: .init(raw: 0), nameKey: .init(raw: ""), shortNameKey: .init(raw: ""))
 
         langPickerListenerMock.methodMock = { _ in callsNumber += 1 }
         viewModel.listener = langPickerListenerMock

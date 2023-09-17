@@ -10,7 +10,7 @@ import XCTest
 
 final class SearchWordListModelImplTests: XCTestCase {
 
-    let lang = Lang(id: .init(raw: 1), name: "A", shortName: "a")
+    let lang = Lang(id: .init(raw: 1), nameKey: .init(raw: "A"), shortNameKey: .init(raw: "a"))
 
     func test_performSearch_searchBySourceWord_returnsCorrectData() throws {
         // Arrange

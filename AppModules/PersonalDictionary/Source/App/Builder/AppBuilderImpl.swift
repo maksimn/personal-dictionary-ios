@@ -30,13 +30,14 @@ public final class AppBuilderImpl: AppBuilder {
     }
 
     private func appDependency() -> AppDependency {
-        let bundle = Bundle.module
-        let appConfigFactory = AppConfigFactory(bundle: bundle)
+        let appConfigFactory = AppConfigFactory()
         let appConfig = appConfigFactory.create()
 
         logger.debug("App Config has been created.")
 
-        return AppDependencyImpl(navigationController: UINavigationController(), appConfig: appConfig, bundle: bundle)
+        return AppDependencyImpl(
+            navigationController: UINavigationController(), appConfig: appConfig, bundle: Bundle.module
+        )
     }
 
     private func rootViewController(_ dependency: AppDependency) -> UIViewController {

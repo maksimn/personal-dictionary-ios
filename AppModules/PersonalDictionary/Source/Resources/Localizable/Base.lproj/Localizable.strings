@@ -8,12 +8,15 @@
 
 "LS_ADD_NEW_WORD_SUGGESTION" = "It's time to add a new word to the dictionary.";
 "LS_ADVICE" = "Advice";
+"LS_DE" = "DE";
 "LS_DICTIONARY_ENTRY_RETRY_REQUEST" = "Retry request";
+"LS_EN" = "EN";
 "LS_ENGLISH" = "English";
 "LS_ENTER_NEW_WORD" = "Enter a new word";
 "LS_FAVORITE_WORDS" = "Favourite words";
 "LS_FAVORITES" = "Favourites";
 "LS_GERMAN" = "German";
+"LS_IT" = "IT";
 "LS_ITALIAN" = "Italian";
 "LS_LOAD_DICTIONARY_ENTRY_ERROR" = "Failed to load the dictionary entry.";
 "LS_LOAD_DICTIONARY_ENTRY_ERROR_TEMPLATE" = "Failed to load the dictionary entry for the word '%@'.";
@@ -21,6 +24,7 @@
 "LS_NO_FAVORITE_WORDS" = "No favourite words";
 "LS_NO_WORDS_FOUND" = "No words found";
 "LS_OK" = "OK";
+"LS_RU" = "RU";
 "LS_RUSSIAN" = "Russian";
 "LS_SEARCH" = "Search";
 "LS_SEARCH_BY" = "Search by:";

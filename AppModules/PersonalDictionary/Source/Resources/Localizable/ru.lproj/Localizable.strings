@@ -8,12 +8,15 @@
 
 "LS_ADD_NEW_WORD_SUGGESTION" = "Добавьте новое слово в личный словарь.";
 "LS_ADVICE" = "Совет";
+"LS_DE" = "Нем.";
 "LS_DICTIONARY_ENTRY_RETRY_REQUEST" = "Повторить запрос";
+"LS_EN" = "Англ.";
 "LS_ENGLISH" = "Английский";
 "LS_ENTER_NEW_WORD" = "Впишите новое слово";
 "LS_FAVORITE_WORDS" = "Избранные слова";
 "LS_FAVORITES" = "Избранное";
 "LS_GERMAN" = "Немецкий";
+"LS_IT" = "Итал.";
 "LS_ITALIAN" = "Итальянский";
 "LS_LOAD_DICTIONARY_ENTRY_ERROR" = "Не удалось загрузить данные.";
 "LS_LOAD_DICTIONARY_ENTRY_ERROR_TEMPLATE" = "Не удалось загрузить словарную статью о слове '%@'.";
@@ -21,6 +24,7 @@
 "LS_NO_FAVORITE_WORDS" = "Нет избранных слов";
 "LS_NO_WORDS_FOUND" = "Ничего не найдено";
 "LS_OK" = "OK";
+"LS_RU" = "Рус.";
 "LS_RUSSIAN" = "Русский";
 "LS_SEARCH" = "Поиск";
 "LS_SEARCH_BY" = "Поиск по:";

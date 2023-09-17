@@ -30,7 +30,7 @@ final class FavoriteWordListViewModelImplTests: XCTestCase {
 
     func test_fetchFavoriteWordList_fetchedDataInViewModel() throws {
         // Arrange
-        let lang = Lang(id: .init(raw: 0), name: "", shortName: "")
+        let lang = Lang(id: .init(raw: 0), nameKey: .init(raw: ""), shortNameKey: .init(raw: ""))
         let favorites = [
             Word(text: "a", sourceLang: lang, targetLang: lang, isFavorite: true),
             Word(text: "b", sourceLang: lang, targetLang: lang, isFavorite: true)

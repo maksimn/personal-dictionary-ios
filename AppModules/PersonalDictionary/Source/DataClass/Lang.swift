@@ -6,20 +6,30 @@
 //
 
 import CoreModule
+import UIKit
 
 /// Структура с данными об отдельном языке.
 struct Lang: Equatable, CustomStringConvertible {
 
     typealias Id = Tagged<Lang, Int>
+    typealias Key = Tagged<Lang, String>
 
     /// Идентификатор языка
     let id: Id
 
+    let nameKey: Key
+
+    let shortNameKey: Key
+
     /// Название языка
-    let name: String
+    var name: String {
+        Bundle.module.moduleLocalizedString(nameKey.raw)
+    }
 
     /// Короткое название языка ("EN" для английского, "RU" для русского и т.д.)
-    let shortName: String
+    var shortName: String {
+        Bundle.module.moduleLocalizedString(shortNameKey.raw)
+    }
 
     /// Операция сравнения на равенство двух объектов языков
     static func == (lhs: Lang, rhs: Lang) -> Bool {
@@ -27,7 +37,7 @@ struct Lang: Equatable, CustomStringConvertible {
     }
 
     var description: String {
-        "Lang(id: \(id.raw), name: \(name))"
+        "Lang(\(id.raw), \(shortName))"
     }
 }
 
