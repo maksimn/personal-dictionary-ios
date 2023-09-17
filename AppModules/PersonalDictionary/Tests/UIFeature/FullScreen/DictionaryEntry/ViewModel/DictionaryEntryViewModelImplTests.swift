@@ -13,7 +13,7 @@ class DictionaryEntryViewModelImplTests: XCTestCase {
     var viewModel: DictionaryEntryViewModelImpl!
     var modelMock: DictionaryEntryModelMock!
 
-    let langOne = Lang(id: .init(raw: 1), name: "Aa", shortName: "a")
+    let langOne = Lang(id: .init(raw: 1), nameKey: .init(raw: "Aa"), shortNameKey: .init(raw: "a"))
     lazy var word = Word(text: "word", sourceLang: langOne, targetLang: langOne)
     lazy var dictionaryEntryVO = DictionaryEntryVO(word: word, entry: ["x", "y"])
 

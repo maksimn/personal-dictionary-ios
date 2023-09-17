@@ -12,7 +12,7 @@ import XCTest
 
 final class WordListModelImplTests: XCTestCase {
 
-    let lang = Lang(id: .init(raw: 1), name: "A", shortName: "a")
+    let lang = Lang(id: .init(raw: 1), nameKey: .init(raw: "Aa"), shortNameKey: .init(raw: "a"))
     lazy var word = Word(text: "abc", sourceLang: lang, targetLang: lang)
     lazy var word1 = Word(text: "a", sourceLang: lang, targetLang: lang)
     lazy var word2 = Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang)

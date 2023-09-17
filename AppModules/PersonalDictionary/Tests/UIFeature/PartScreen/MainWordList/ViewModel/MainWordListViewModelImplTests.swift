@@ -31,7 +31,7 @@ final class MainWordListViewModelImplTests: XCTestCase {
 
     func test_fetch_fetchedDataInViewModel() throws {
         // Arrange
-        let lang = Lang(id: .init(raw: 0), name: "", shortName: "")
+        let lang = Lang(id: .init(raw: 0), nameKey: .init(raw: ""), shortNameKey: .init(raw: ""))
         let wordList = [
             Word(text: "a", sourceLang: lang, targetLang: lang),
             Word(text: "b", sourceLang: lang, targetLang: lang)

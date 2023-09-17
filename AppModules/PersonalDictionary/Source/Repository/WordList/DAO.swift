@@ -41,8 +41,8 @@ class LangDAO: Object {
     convenience init(_ lang: Lang) {
         self.init()
         _id = lang.id.raw
-        name = lang.name
-        shortName = lang.shortName
+        name = lang.nameKey.raw
+        shortName = lang.shortNameKey.raw
     }
 }
 
@@ -82,8 +82,8 @@ extension Lang {
 
     init(_ dao: LangDAO) {
         id = .init(raw: dao._id)
-        name = dao.name
-        shortName = dao.shortName
+        nameKey = .init(raw: dao.name)
+        shortNameKey = .init(raw: dao.shortName)
     }
 }
 

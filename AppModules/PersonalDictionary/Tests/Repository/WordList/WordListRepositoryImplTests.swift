@@ -12,8 +12,8 @@ import XCTest
 
 class WordListRepositoryImpTests: XCTestCase {
 
-    let langOne = Lang(id: .init(raw: 1), name: "Aa", shortName: "a")
-    let langTwo = Lang(id: .init(raw: 2), name: "Bb", shortName: "b")
+    let langOne = Lang(id: .init(raw: 1), nameKey: .init(raw: "Aa"), shortNameKey: .init(raw: "a"))
+    let langTwo = Lang(id: .init(raw: 2), nameKey: .init(raw: "Bb"), shortNameKey: .init(raw: "b"))
 
     lazy var word1 = Word(text: "A", translation: "X", sourceLang: langOne, targetLang: langTwo, createdAt: 3)
     lazy var word2 = Word(text: "B", translation: "Y", sourceLang: langOne, targetLang: langTwo, createdAt: 2)

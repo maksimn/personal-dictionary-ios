@@ -10,7 +10,7 @@ import XCTest
 
 final class NewWordViewModelImplTests: XCTestCase {
 
-    let lang = Lang(id: .init(raw: 1), name: "", shortName: "")
+    let lang = Lang(id: .init(raw: 1), nameKey: .init(raw: ""), shortNameKey: .init(raw: ""))
     lazy var initState = NewWordState(
         text: "",
         sourceLang: lang,
@@ -46,7 +46,7 @@ final class NewWordViewModelImplTests: XCTestCase {
         // Arrange
         let modelMock = NewWordModelMock()
         let viewModel = NewWordViewModelImpl(model: modelMock, initState: initState, logger: LoggerMock())
-        let otherLang = Lang(id: .init(raw: 2), name: "Bb", shortName: "b")
+        let otherLang = Lang(id: .init(raw: 2), nameKey: .init(raw: "Bb"), shortNameKey: .init(raw: "b"))
         let newLangPickerState = LangPickerState(lang: otherLang, langType: .target, isHidden: true)
         let newState = NewWordState(
             text: initState.text, sourceLang: lang, targetLang: otherLang, langPickerState: newLangPickerState

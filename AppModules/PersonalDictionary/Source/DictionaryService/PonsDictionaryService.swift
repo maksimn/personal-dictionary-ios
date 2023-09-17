@@ -29,13 +29,11 @@ final class PonsDictionaryService: DictionaryService {
     }
 
     func fetchDictionaryEntry(for word: Word) -> Single<WordData> {
-        let sourceLang = word.sourceLang.shortName.lowercased()
-        let targetLang = word.targetLang.shortName.lowercased()
         var query = URLComponents()
 
         query.queryItems = [
             URLQueryItem(name: "q", value: word.text),
-            URLQueryItem(name: "l", value: sourceLang + targetLang)
+            URLQueryItem(name: "l", value: lQueryParam(for: word))
         ]
 
         let http = Http(
@@ -51,6 +49,17 @@ final class PonsDictionaryService: DictionaryService {
             .map { httpResponse in
                 WordData(word: word, entry: httpResponse.data)
             }
+    }
+
+    private func lQueryParam(for word: Word) -> String {
+        let sourceLang = word.sourceLang.shortNameKey.raw
+        let targetLang = word.targetLang.shortNameKey.raw
+        guard let sourceLangIndex = sourceLang.firstIndex(of: "_") else { return "" }
+        guard let targetLangIndex = targetLang.firstIndex(of: "_") else { return "" }
+        let sourceLangParam = sourceLang.suffix(from: sourceLang.index(sourceLangIndex, offsetBy: 1)).lowercased()
+        let targetLangParam = targetLang.suffix(from: targetLang.index(targetLangIndex, offsetBy: 1)).lowercased()
+
+        return sourceLangParam + targetLangParam
     }
 
     private func transformToRxObservable(_ rxHttpResponse: RxHttpResponse) -> Observable<(response: HTTPURLResponse,

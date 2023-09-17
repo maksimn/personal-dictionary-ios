@@ -17,7 +17,7 @@ class DictionaryEntryModelImplTests: XCTestCase {
     var updatedWordSenderMock: UpdatedWordSenderMock!
 
     // Test data set:
-    let langOne = Lang(id: .init(raw: 1), name: "Aa", shortName: "a")
+    let langOne = Lang(id: .init(raw: 1), nameKey: .init(raw: "Aa"), shortNameKey: .init(raw: "a"))
     lazy var word = Word(text: "word", sourceLang: langOne, targetLang: langOne)
     lazy var wordData = WordData(word: word, entry: Data())
     lazy var dictionaryEntryVO = DictionaryEntryVO(word: word, entry: ["x", "y"])

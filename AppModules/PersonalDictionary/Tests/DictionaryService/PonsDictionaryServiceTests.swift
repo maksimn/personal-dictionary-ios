@@ -19,7 +19,7 @@ final class PonsDictionaryServiceTests: XCTestCase {
             secret: "",
             httpClient: httpClientMock
         )
-        let lang = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
+        let lang = Lang(id: .init(raw: -1), nameKey: .init(raw: ""), shortNameKey: .init(raw: ""))
         let word = Word(text: "word", sourceLang: lang, targetLang: lang)
         let ponsArray = [
             PonsResponseData(
@@ -63,7 +63,7 @@ final class PonsDictionaryServiceTests: XCTestCase {
             secret: "",
             httpClient: httpClientMock
         )
-        let lang = Lang(id: Lang.Id(raw: -1), name: "", shortName: "")
+        let lang = Lang(id: .init(raw: -1), nameKey: .init(raw: ""), shortNameKey: .init(raw: ""))
         let word = Word(text: "word", sourceLang: lang, targetLang: lang)
 
         httpClientMock.sendMock = { _ in

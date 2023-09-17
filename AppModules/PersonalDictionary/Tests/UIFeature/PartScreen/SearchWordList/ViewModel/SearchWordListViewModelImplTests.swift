@@ -12,7 +12,7 @@ final class SearchWordListViewModelImplTests: XCTestCase {
 
     func test_onSearchInputData_updateViewModelWithDataFromSearchModel() throws {
         // Arrange
-        let lang = Lang(id: .init(raw: 1), name: "A", shortName: "a")
+        let lang = Lang(id: .init(raw: 1), nameKey: .init(raw: "Aa"), shortNameKey: .init(raw: "a"))
         let initialData = SearchResultData(searchState: .initial, foundWordList: [])
         let searchWordListModelMock = SearchWordListModelMock()
         let viewModel = SearchWordListViewModelImpl(

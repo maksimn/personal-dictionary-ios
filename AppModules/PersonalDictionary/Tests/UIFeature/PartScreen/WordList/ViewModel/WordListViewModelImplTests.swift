@@ -16,7 +16,7 @@ final class WordListViewModelImplTests: XCTestCase {
     var wordStreamMock: UpdatedRemovedWordStreamMock!
     var routerMock: WordListRouterMock!
 
-    let lang = Lang(id: .init(raw: 1), name: "A", shortName: "a")
+    let lang = Lang(id: .init(raw: 1), nameKey: .init(raw: "Aa"), shortNameKey: .init(raw: "a"))
     lazy var words = [
         Word(text: "a", sourceLang: lang, targetLang: lang),
         Word(text: "b", sourceLang: lang, targetLang: lang),
