@@ -14,6 +14,8 @@ final class WordListBuilderImpl: WordListBuilder {
     private let shouldAnimateWhenAppear: Bool
     private let dependency: AppDependency
 
+    private let featureName = "PersonalDictionary.WordList"
+
     /// Инициализатор.
     /// - Parameters:
     ///  - shouldAnimateWhenAppear: запускать ли анимацию при первом появлении данных в таблице.
@@ -29,8 +31,10 @@ final class WordListBuilderImpl: WordListBuilder {
         WordListGraphImpl(
             viewParams: viewParams(),
             wordStream: WordStreamImpl.instance,
+            updateWordDbWorker: UpdateWordDbWorkerFactory(featureName: featureName).create(),
+            deleteWordDbWorker: DeleteWordDbWorkerFactory(featureName: featureName).create(),
             router: router(),
-            logger: LoggerImpl(category: "PersonalDictionary.WordList")
+            logger: LoggerImpl(category: featureName)
         )
     }
 

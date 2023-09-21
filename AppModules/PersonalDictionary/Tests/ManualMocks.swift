@@ -302,7 +302,7 @@ class DictionaryEntryModelMock: DictionaryEntryModel {
     }
 }
 
-class DictionaryEntryDbWorkerMock: DictionaryEntryDbWorker {
+class DictionaryEntryDbInserterMock: DictionaryEntryDbInserter {
     var insertMock: ((Data, Word) -> Single<WordData>)? = { Single.just(WordData(word: $1, entry: $0)) }
     func insert(entry: Data, for word: Word) -> Single<WordData> {
         insertMock!(entry, word)

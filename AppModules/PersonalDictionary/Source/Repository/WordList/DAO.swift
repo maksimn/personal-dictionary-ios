@@ -86,7 +86,3 @@ extension Lang {
         shortNameKey = .init(raw: dao.shortName)
     }
 }
-
-enum WordError: Error {
-    case DAO2WordMappingError(WordDAO)
-}

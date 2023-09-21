@@ -9,11 +9,23 @@ import CoreModule
 import SharedFeature
 import UIKit
 
-extension DictionaryServiceImpl {
+struct DictionaryServiceFactory {
 
-    init(secret: String, category: String, bundle: Bundle, isErrorSendable: Bool = true) {
-        let ponsDictionaryService = PonsDictionaryService(secret: secret, category: category)
-        let cacheableDictionaryService = CacheableDictionaryService(dictionaryService: ponsDictionaryService)
+    let secret: String
+    let featureName: String
+    let bundle: Bundle
+    let isErrorSendable: Bool
+
+    func create() -> DictionaryService {
+        let ponsDictionaryService = PonsDictionaryService(secret: secret, featureName: featureName)
+        let dictionaryServiceLog = DictionaryServiceLog(
+            dictionaryService: ponsDictionaryService,
+            logger: LoggerImpl(category: featureName)
+        )
+        let cacheableDictionaryService = CacheableDictionaryService(
+            dictionaryService: dictionaryServiceLog,
+            featureName: featureName
+        )
 
         if isErrorSendable {
             let errorSendableDictionaryService = ErrorSendableDictionaryService(
@@ -21,31 +33,31 @@ extension DictionaryServiceImpl {
                 bundle: bundle
             )
 
-            self.init(dictionaryService: errorSendableDictionaryService)
+            return errorSendableDictionaryService
         } else {
-            self.init(dictionaryService: cacheableDictionaryService)
+            return cacheableDictionaryService
         }
     }
 }
 
 extension PonsDictionaryService {
 
-    convenience init(secret: String, category: String) {
+    convenience init(secret: String, featureName: String) {
         self.init(
             secret: secret,
-            httpClient: LoggableHttpClient(logger: LoggerImpl(category: category))
+            httpClient: LoggableHttpClient(logger: LoggerImpl(category: featureName))
         )
     }
 }
 
 extension CacheableDictionaryService {
 
-    init(dictionaryService: DictionaryService) {
+    init(dictionaryService: DictionaryService, featureName: String) {
         self.init(
             dictionaryService: dictionaryService,
-            dictionaryEntryDbWorker: DictionaryEntryDbWorkerImpl(),
-            decoder: PonsDictionaryEntryDecoder(),
-            updateWordDbWorker: UpdateWordDbWorkerImpl()
+            dictionaryEntryDbInserter: DictionaryEntryDbInserterFactory(featureName: featureName).create(),
+            decoder: DictionaryEntryDecoderFactory(featureName: featureName).create(),
+            updateWordDbWorker: UpdateWordDbWorkerFactory(featureName: featureName).create()
         )
     }
 }

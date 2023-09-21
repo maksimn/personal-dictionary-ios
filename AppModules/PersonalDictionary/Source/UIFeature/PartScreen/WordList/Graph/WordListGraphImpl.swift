@@ -18,17 +18,18 @@ final class WordListGraphImpl<RouterType: ParametrizedRouter>: WordListGraph whe
     /// Инициализатор.
     /// - Parameters:
     ///  - viewParams: параметры представления фичи.
-    ///  - dictionaryService: cлужба для выполнения перевода слов на целевой язык.
     ///  - wordStream: ModelStream для событий со словами в личном словаре.
     init(
         viewParams: WordListViewParams,
         wordStream: WordStream,
+        updateWordDbWorker: UpdateWordDbWorker,
+        deleteWordDbWorker: DeleteWordDbWorker,
         router: RouterType,
         logger: Logger
     ) {
         let model = WordListModelImpl(
-            updateWordDbWorker: UpdateWordDbWorkerImpl(),
-            deleteWordDbWorker: DeleteWordDbWorkerImpl(),
+            updateWordDbWorker: updateWordDbWorker,
+            deleteWordDbWorker: deleteWordDbWorker,
             wordSender: wordStream
         )
         viewModel = WordListViewModelImpl(

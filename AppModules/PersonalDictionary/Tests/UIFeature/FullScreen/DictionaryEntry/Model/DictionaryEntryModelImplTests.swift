@@ -48,8 +48,8 @@ class DictionaryEntryModelImplTests: XCTestCase {
     func test_load_success_whenTheWordExistsInRealm() throws {
         arrange()
 
-        _ = try! CreateWordDbWorkerImpl().create(word: word).toBlocking().first()
-        _ = try! DictionaryEntryDbWorkerImpl().insert(entry: Data(), for: word).toBlocking().first()
+        _ = try! RealmCreateWordDbWorker().create(word: word).toBlocking().first()
+        _ = try! RealmDictionaryEntryDbInserter().insert(entry: Data(), for: word).toBlocking().first()
 
         // Act
         let loadedVO = try model.load()
