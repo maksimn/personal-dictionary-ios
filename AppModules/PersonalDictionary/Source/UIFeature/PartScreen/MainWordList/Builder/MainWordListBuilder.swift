@@ -21,22 +21,23 @@ final class MainWordListBuilder: ViewControllerBuilder {
     /// - Returns:
     ///  - Экран "Главного (основного) списка слов".
     func build() -> UIViewController {
-        let category = "PersonalDictionary.MainWordList"
-        let dictionaryService = DictionaryServiceImpl(
+        let featureName = "PersonalDictionary.MainWordList"
+        let dictionaryServiceFactory = DictionaryServiceFactory(
             secret: dependency.appConfig.ponsApiSecret,
-            category: category,
-            bundle: dependency.bundle
+            featureName: featureName,
+            bundle: dependency.bundle,
+            isErrorSendable: true
         )
 
         let model = MainWordListModelImpl(
-            wordListFetcher: WordListFetcherImpl(),
-            сreateWordDbWorker: CreateWordDbWorkerImpl(),
-            dictionaryService: dictionaryService
+            wordListFetcher: WordListFetcherFactory(featureName: featureName).create(),
+            сreateWordDbWorker: CreateWordDbWorkerFactory(featureName: featureName).create(),
+            dictionaryService: dictionaryServiceFactory.create()
         )
         let viewModel = MainWordListViewModelImpl(
             model: model,
             newWordStream: WordStreamImpl.instance,
-            logger: LoggerImpl(category: category)
+            logger: LoggerImpl(category: featureName)
         )
         let view = MainWordListViewController(
             viewModel: viewModel,

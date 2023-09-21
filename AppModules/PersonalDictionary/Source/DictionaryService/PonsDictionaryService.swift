@@ -47,7 +47,11 @@ final class PonsDictionaryService: DictionaryService {
             .take(1)
             .asSingle()
             .map { httpResponse in
-                WordData(word: word, entry: httpResponse.data)
+                guard httpResponse.response.statusCode == 200 else {
+                    throw Fail.emptyDataFor(word)
+                }
+
+                return WordData(word: word, entry: httpResponse.data)
             }
     }
 
@@ -81,5 +85,9 @@ final class PonsDictionaryService: DictionaryService {
 
             return Disposables.create { }
         }
+    }
+
+    enum Fail: Error {
+        case emptyDataFor(Word)
     }
 }

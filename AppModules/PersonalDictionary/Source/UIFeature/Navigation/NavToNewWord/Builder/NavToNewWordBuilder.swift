@@ -20,10 +20,11 @@ final class NavToNewWordBuilder: ViewBuilder {
     /// Создать фичу.
     /// - Returns: представление фичи.
     func build() -> UIView {
-        let langRepository = LangRepositoryImpl(
-            userDefaults: UserDefaults.standard,
-            data: dependency.appConfig.langData
+        let langRepositoryFactory = LangRepositoryFactory(
+            langData: dependency.appConfig.langData,
+            featureName: "PersonalDictionary.NewWord"
         )
+        let langRepository = langRepositoryFactory.create()
         let newWordBuilder = NewWordBuilder(
             bundle: dependency.bundle,
             langRepository: langRepository

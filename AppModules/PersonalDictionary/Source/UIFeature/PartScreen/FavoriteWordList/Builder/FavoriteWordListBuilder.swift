@@ -17,9 +17,10 @@ final class FavoriteWordListBuilder: ViewControllerBuilder {
     }
 
     func build() -> UIViewController {
-        let fetcher = FavoriteWordListFetcherImpl()
+        let favoriteWordListFetcherFactory = FavoriteWordListFetcherFactory(
+            featureName: "PersonalDictionary.FavoriteWordList")
         let viewModel = FavoriteWordListViewModelImpl(
-            fetcher: fetcher,
+            fetcher: favoriteWordListFetcherFactory.create(),
             wordStream: WordStreamImpl.instance
         )
         let view = FavoriteWordListViewController(

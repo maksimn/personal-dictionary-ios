@@ -13,6 +13,7 @@ import UserNotifications
 final class PushNotificationBuilderImpl: PushNotificationBuilder {
 
     private let dependency: AppDependency
+    private let featureName = "PersonalDictionary.PushNotification"
 
     init(dependency: AppDependency) {
         self.dependency = dependency
@@ -28,7 +29,7 @@ final class PushNotificationBuilderImpl: PushNotificationBuilder {
             pnTimeCalculator: pnTimeCalculator(),
             pushNotificationData: pushNotificationData(),
             navToNewWordRouter: navToNewWordRouter(),
-            logger: LoggerImpl(category: "PersonalDictionary.PushNotification")
+            logger: LoggerImpl(category: featureName)
         )
     }
 
@@ -53,7 +54,8 @@ final class PushNotificationBuilderImpl: PushNotificationBuilder {
     private func navToNewWordRouter() -> NavToNewWordRouter {
         let appConfig = dependency.appConfig
         let bundle = dependency.bundle
-        let langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard, data: appConfig.langData)
+        let langRepositoryFactory = LangRepositoryFactory(langData: appConfig.langData, featureName: featureName)
+        let langRepository = langRepositoryFactory.create()
         let newWordBuilder = NewWordBuilder(bundle: bundle, langRepository: langRepository)
 
         return NavToNewWordRouter(

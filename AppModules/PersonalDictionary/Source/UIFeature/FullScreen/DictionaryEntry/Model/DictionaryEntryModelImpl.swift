@@ -20,7 +20,7 @@ struct DictionaryEntryModelImpl: DictionaryEntryModel {
         let wordDAO = try realm.findWordBy(id: id)
 
         guard let word = Word(wordDAO) else {
-            throw WordError.DAO2WordMappingError(wordDAO)
+            throw Fail.DAO2WordMappingError(wordDAO)
         }
         guard let dictionaryEntryDAO = realm.object(ofType: DictionaryEntryDAO.self, forPrimaryKey: id.raw) else {
             throw RealmWordError.dictionaryEntryNotFoundInRealm(id)
@@ -43,5 +43,9 @@ struct DictionaryEntryModelImpl: DictionaryEntryModel {
 
                 return DictionaryEntryVO(word: wordData.word, entry: dictionaryEntry)
             }
+    }
+
+    enum Fail: Error {
+        case DAO2WordMappingError(WordDAO)
     }
 }

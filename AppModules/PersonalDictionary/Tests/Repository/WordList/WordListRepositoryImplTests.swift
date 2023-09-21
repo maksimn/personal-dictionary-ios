@@ -20,7 +20,7 @@ class WordListRepositoryImpTests: XCTestCase {
     lazy var word3 = Word(text: "C", translation: "Q", sourceLang: langOne, targetLang: langTwo, createdAt: 1)
 
     func arrangeSearch() {
-        let createWordDbWorker = CreateWordDbWorkerImpl()
+        let createWordDbWorker = RealmCreateWordDbWorker()
 
         _ = try! createWordDbWorker.create(word: word1).toBlocking().first()
         _ = try! createWordDbWorker.create(word: word2).toBlocking().first()
@@ -34,7 +34,7 @@ class WordListRepositoryImpTests: XCTestCase {
 
     func test_wordListFetcher__wordList__empty() throws {
         // Arrange:
-        let wordListFetcher = WordListFetcherImpl()
+        let wordListFetcher = RealmWordListFetcher()
 
         // Act:
         let wordList = try! wordListFetcher.wordList()
@@ -45,8 +45,8 @@ class WordListRepositoryImpTests: XCTestCase {
 
     func test_createWord__createSingleWordInDB() throws {
         // Arrange:
-        let createWordDbWorker = CreateWordDbWorkerImpl()
-        let wordListFetcher = WordListFetcherImpl()
+        let createWordDbWorker = RealmCreateWordDbWorker()
+        let wordListFetcher = RealmWordListFetcher()
         let word = Word(text: "word", sourceLang: langOne, targetLang: langTwo)
 
         // Act:
@@ -59,9 +59,9 @@ class WordListRepositoryImpTests: XCTestCase {
 
     func test_updateWord__updateSecondWordInAListOfThreeWords() throws {
         // Arrange:
-        let createWordDbWorker = CreateWordDbWorkerImpl()
-        let updateWordDbWorker = UpdateWordDbWorkerImpl()
-        let wordListFetcher = WordListFetcherImpl()
+        let createWordDbWorker = RealmCreateWordDbWorker()
+        let updateWordDbWorker = RealmUpdateWordDbWorker()
+        let wordListFetcher = RealmWordListFetcher()
 
         let wordOne = Word(text: "one", sourceLang: langOne, targetLang: langTwo, createdAt: 0)
         let wordTwo = Word(text: "two", sourceLang: langOne, targetLang: langTwo, createdAt: 1)
@@ -88,7 +88,7 @@ class WordListRepositoryImpTests: XCTestCase {
         arrangeSearch()
 
         // Act:
-        let words = SearchableWordListImpl().findWords(contain: "B")
+        let words = RealmSearchableWordList().findWords(contain: "B")
 
         // Assert:
         XCTAssertEqual(words, [word2])
@@ -99,7 +99,7 @@ class WordListRepositoryImpTests: XCTestCase {
         arrangeSearch()
 
         // Act:
-        let words = SearchableWordListImpl().findWords(contain: "D")
+        let words = RealmSearchableWordList().findWords(contain: "D")
 
         // Assert:
         XCTAssertEqual(words.count, 0)
@@ -177,14 +177,14 @@ class WordListRepositoryImpTests: XCTestCase {
         ]
         let data3 = try! JSONEncoder().encode(ponsArray3)
 
-        let dictionaryEntryDbWorker = DictionaryEntryDbWorkerImpl()
+        let dictionaryEntryDbInserter = RealmDictionaryEntryDbInserter()
 
-        _ = try! dictionaryEntryDbWorker.insert(entry: data1, for: word1).toBlocking().first()
-        _ = try! dictionaryEntryDbWorker.insert(entry: data2, for: word2).toBlocking().first()
-        _ = try! dictionaryEntryDbWorker.insert(entry: data3, for: word3).toBlocking().first()
+        _ = try! dictionaryEntryDbInserter.insert(entry: data1, for: word1).toBlocking().first()
+        _ = try! dictionaryEntryDbInserter.insert(entry: data2, for: word2).toBlocking().first()
+        _ = try! dictionaryEntryDbInserter.insert(entry: data3, for: word3).toBlocking().first()
 
         // Act:
-        let words = TranslationSearchableWordListImpl().findWords(whereTranslationContains: "X")
+        let words = RealmTranslationSearchableWordList().findWords(whereTranslationContains: "X")
 
         // Assert:
         XCTAssertEqual(words, [word1, word3])

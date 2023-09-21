@@ -8,9 +8,9 @@
 @testable import PersonalDictionary
 import XCTest
 
-class LangRepositoryImplTests: XCTestCase {
+class UDLangRepositoryTests: XCTestCase {
 
-    var langRepository: LangRepositoryImpl!
+    var langRepository: UDLangRepository!
 
     let lang1 = Lang(id: Lang.Id(raw: 1), nameKey: .init(raw: "English"), shortNameKey: .init(raw: "a"))
     let lang2 = Lang(id: Lang.Id(raw: 2), nameKey: .init(raw: "Russian"), shortNameKey: .init(raw: "b"))
@@ -24,7 +24,7 @@ class LangRepositoryImplTests: XCTestCase {
                                      defaultTargetLang: lang2)
 
     override func setUpWithError() throws {
-        langRepository = LangRepositoryImpl(userDefaults: UserDefaults.standard, data: testLangData)
+        langRepository = UDLangRepository(userDefaults: UserDefaults.standard, data: testLangData)
     }
 
     override func tearDownWithError() throws {

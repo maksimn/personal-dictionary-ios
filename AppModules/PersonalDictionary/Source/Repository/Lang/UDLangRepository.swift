@@ -8,7 +8,7 @@
 import Foundation
 
 /// Реализация хранилища данных о языках в приложении,
-final class LangRepositoryImpl: LangRepository {
+final class UDLangRepository: LangRepository {
 
     private let userDefaults: UserDefaults
     private let data: LangData

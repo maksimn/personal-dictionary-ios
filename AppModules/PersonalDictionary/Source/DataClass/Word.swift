@@ -74,8 +74,8 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
         Word(id: \(id.raw), \
         text: \(text), \
         translation: \(translation), \
-        sourceLang: \(sourceLang.id.raw), \
-        targetLang: \(targetLang.id.raw), \
+        sourceLang: \(sourceLang.description), \
+        targetLang: \(targetLang.description), \
         isFavorite: \(isFavorite), \
         createdAt: \(createdAt))
         """

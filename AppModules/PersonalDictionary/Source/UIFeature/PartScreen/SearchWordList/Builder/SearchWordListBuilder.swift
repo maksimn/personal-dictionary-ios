@@ -18,9 +18,11 @@ final class SearchWordListBuilder: ViewControllerBuilder {
     }
 
     func build() -> UIViewController {
+        let featureName = "PersonalDictionary.SearchWordList"
+
         let model = SearchWordListModelImpl(
-            searchableWordList: SearchableWordListImpl(),
-            translationSearchableWordList: TranslationSearchableWordListImpl()
+            searchableWordList: SearchableWordListFactory(featureName: featureName).create(),
+            translationSearchableWordList: TranslationSearchableWordListFactory(featureName: featureName).create()
         )
         let viewModel = SearchWordListViewModelImpl(
             initialData: initialData(),
