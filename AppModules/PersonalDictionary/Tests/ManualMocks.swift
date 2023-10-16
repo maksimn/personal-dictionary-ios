@@ -310,8 +310,8 @@ class DictionaryEntryDbInserterMock: DictionaryEntryDbInserter {
 }
 
 class DictionaryEntryDecoderMock: DictionaryEntryDecoder {
-    var decodeMock: (Data, Word) -> DictionaryEntry = { (_, _) in [] }
-    func decode(_ data: Data, word: Word) throws -> DictionaryEntry {
-        decodeMock(data, word)
+    var decodeMock: (Data) -> DictionaryEntry = { (_) in [] }
+    func decode(_ data: Data) throws -> DictionaryEntry {
+        decodeMock(data)
     }
 }

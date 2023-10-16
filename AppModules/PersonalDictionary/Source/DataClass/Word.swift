@@ -8,8 +8,6 @@
 import CoreModule
 import Foundation
 
-typealias DictionaryEntry = [String]
-
 /// Данные о слове в словаре.
 struct Word: Equatable, Hashable, CustomStringConvertible {
 

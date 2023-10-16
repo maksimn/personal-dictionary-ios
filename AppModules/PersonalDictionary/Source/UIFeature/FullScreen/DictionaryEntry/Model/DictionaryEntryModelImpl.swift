@@ -26,7 +26,7 @@ struct DictionaryEntryModelImpl: DictionaryEntryModel {
             throw RealmWordError.dictionaryEntryNotFoundInRealm(id)
         }
         do {
-            let dictionaryEntry = try decoder.decode(dictionaryEntryDAO.entry, word: word)
+            let dictionaryEntry = try decoder.decode(dictionaryEntryDAO.entry)
 
             return DictionaryEntryVO(word: word, entry: dictionaryEntry)
         } catch {
@@ -39,7 +39,7 @@ struct DictionaryEntryModelImpl: DictionaryEntryModel {
             .map { wordData in
                 updatedWordSender.sendUpdatedWord(wordData.word)
 
-                let dictionaryEntry = try decoder.decode(wordData.entry, word: wordData.word)
+                let dictionaryEntry = try decoder.decode(wordData.entry)
 
                 return DictionaryEntryVO(word: wordData.word, entry: dictionaryEntry)
             }

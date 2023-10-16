@@ -23,10 +23,10 @@ struct CacheableDictionaryService: DictionaryService {
                 dictionaryEntryDbInserter.insert(entry: wordData.entry, for: wordData.word)
             }
             .flatMap { wordData in
-                let dictionaryEntry = try decoder.decode(wordData.entry, word: word)
+                let dictionaryEntry = try decoder.decode(wordData.entry)
                 var word = wordData.word
 
-                word.translation = dictionaryEntry.first ?? ""
+                word.translation = dictionaryEntry.mainTranslation
 
                 return updateWordDbWorker.update(word: word)
                     .map { _ in

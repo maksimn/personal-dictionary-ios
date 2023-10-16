@@ -13,11 +13,11 @@ struct DictionaryEntryDecoderLog: DictionaryEntryDecoder {
     let decoder: DictionaryEntryDecoder
     let logger: Logger
 
-    func decode(_ data: Data, word: Word) throws -> DictionaryEntry {
+    func decode(_ data: Data) throws -> DictionaryEntry {
         do {
-            logger.log("Decoding dictionary entry data for word...\nData = \(data)\nword = \(word)", level: .info)
+            logger.log("Decoding dictionary entry data...\nData = \(data)", level: .info)
 
-            let result = try decoder.decode(data, word: word)
+            let result = try decoder.decode(data)
 
             logger.log("Decoded dictionary entry result = \(result)", level: .info)
 

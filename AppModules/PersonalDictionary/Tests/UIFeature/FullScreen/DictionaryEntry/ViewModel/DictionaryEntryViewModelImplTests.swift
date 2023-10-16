@@ -15,7 +15,17 @@ class DictionaryEntryViewModelImplTests: XCTestCase {
 
     let langOne = Lang(id: .init(raw: 1), nameKey: .init(raw: "Aa"), shortNameKey: .init(raw: "a"))
     lazy var word = Word(text: "word", sourceLang: langOne, targetLang: langOne)
-    lazy var dictionaryEntryVO = DictionaryEntryVO(word: word, entry: ["x", "y"])
+    lazy var dictionaryEntryVO = DictionaryEntryVO(
+        word: word,
+        entry: [
+            DictionaryEntryItem(
+                title: word.text,
+                subtitle: .init("", bundle: Bundle.module),
+                subitems: [DictionaryEntrySubitem(translation: "x", example: nil),
+                           DictionaryEntrySubitem(translation: "y", example: nil)]
+            )
+        ]
+    )
 
     func arrange() {
         modelMock = .init()
