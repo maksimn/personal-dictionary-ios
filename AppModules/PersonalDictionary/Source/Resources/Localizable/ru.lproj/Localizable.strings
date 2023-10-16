@@ -7,7 +7,11 @@
 */
 
 "LS_ADD_NEW_WORD_SUGGESTION" = "Добавьте новое слово в личный словарь.";
+"LS_ADJECTIVE" = "прилагательное";
+"LS_ADVERB" = "наречие";
 "LS_ADVICE" = "Совет";
+"LS_ARTICLE" = "артикль";
+"LS_CONJUNCTION" = "союз";
 "LS_DE" = "Нем.";
 "LS_DICTIONARY_ENTRY_RETRY_REQUEST" = "Повторить запрос";
 "LS_EN" = "Англ.";
@@ -23,7 +27,13 @@
 "LS_MY_DICTIONARY" = "Мой словарь";
 "LS_NO_FAVORITE_WORDS" = "Нет избранных слов";
 "LS_NO_WORDS_FOUND" = "Ничего не найдено";
+"LS_NOUN" = "существительное";
+"LS_NUMERAL" = "числительное";
 "LS_OK" = "OK";
+"LS_PARTICIPLE" = "причастие";
+"LS_PARTICLE" = "частица";
+"LS_PREPOSITION" = "предлог";
+"LS_PRONOUN" = "местоимение";
 "LS_RU" = "Рус.";
 "LS_RUSSIAN" = "Русский";
 "LS_SEARCH" = "Поиск";
@@ -32,3 +42,4 @@
 "LS_SOURCE_WORD" = "слову";
 "LS_TO_DO_LIST" = "Мои дела";
 "LS_TRANSLATION" = "переводу";
+"LS_VERB" = "глагол";

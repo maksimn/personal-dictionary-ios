@@ -117,10 +117,15 @@ class WordListRepositoryImpTests: XCTestCase {
                         roms: [
                             PonsResponseDataHitsRom(
                                 headword: "A",
+                                wordclass: "",
                                 arabs: [
                                     PonsResponseDataHitsRomsArab(
+                                        header: "",
                                         translations: [
-                                            PonsResponseDataHitsRomsArabsTranslation(target: "X")
+                                            PonsResponseDataHitsRomsArabsTranslation(
+                                                target: "X",
+                                                source: ""
+                                            )
                                         ]
                                     )
                                 ]
@@ -139,10 +144,15 @@ class WordListRepositoryImpTests: XCTestCase {
                         roms: [
                             PonsResponseDataHitsRom(
                                 headword: "B",
+                                wordclass: "",
                                 arabs: [
                                     PonsResponseDataHitsRomsArab(
+                                        header: "",
                                         translations: [
-                                            PonsResponseDataHitsRomsArabsTranslation(target: "Y")
+                                            PonsResponseDataHitsRomsArabsTranslation(
+                                                target: "Y",
+                                                source: ""
+                                            )
                                         ]
                                     )
                                 ]
@@ -161,11 +171,19 @@ class WordListRepositoryImpTests: XCTestCase {
                         roms: [
                             PonsResponseDataHitsRom(
                                 headword: "C",
+                                wordclass: "",
                                 arabs: [
                                     PonsResponseDataHitsRomsArab(
+                                        header: "",
                                         translations: [
-                                            PonsResponseDataHitsRomsArabsTranslation(target: "Q"),
-                                            PonsResponseDataHitsRomsArabsTranslation(target: "X")
+                                            PonsResponseDataHitsRomsArabsTranslation(
+                                                target: "Q",
+                                                source: ""
+                                            ),
+                                            PonsResponseDataHitsRomsArabsTranslation(
+                                                target: "X",
+                                                source: ""
+                                            )
                                         ]
                                     )
                                 ]

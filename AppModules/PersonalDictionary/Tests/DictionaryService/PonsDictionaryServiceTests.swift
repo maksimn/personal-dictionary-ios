@@ -28,10 +28,15 @@ final class PonsDictionaryServiceTests: XCTestCase {
                         roms: [
                             PonsResponseDataHitsRom(
                                 headword: "word",
+                                wordclass: "",
                                 arabs: [
                                     PonsResponseDataHitsRomsArab(
+                                        header: "",
                                         translations: [
-                                            PonsResponseDataHitsRomsArabsTranslation(target: "translation")
+                                            PonsResponseDataHitsRomsArabsTranslation(
+                                                target: "translation",
+                                                source: ""
+                                            )
                                         ]
                                     )
                                 ]

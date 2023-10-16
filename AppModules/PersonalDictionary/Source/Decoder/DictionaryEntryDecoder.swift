@@ -9,5 +9,5 @@ import Foundation
 
 protocol DictionaryEntryDecoder {
 
-    func decode(_ data: Data, word: Word) throws -> DictionaryEntry
+    func decode(_ data: Data) throws -> DictionaryEntry
 }

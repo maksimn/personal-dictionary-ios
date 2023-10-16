@@ -89,7 +89,8 @@ final class DictionaryEntryViewController: UIViewController {
             var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
 
             snapshot.appendSections([0])
-            snapshot.appendItems(wordData.entry, toSection: 0)
+            snapshot.appendItems(
+                wordData.entry.flatMap { $0.subitems }.map { $0.translation }.removingDuplicates(), toSection: 0)
             datasource.apply(snapshot)
 
         default:

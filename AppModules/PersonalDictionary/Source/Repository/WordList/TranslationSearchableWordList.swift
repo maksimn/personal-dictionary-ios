@@ -32,10 +32,12 @@ struct RealmTranslationSearchableWordList: TranslationSearchableWordList {
                 guard let dictionaryEntryDAO = realm.object(ofType: DictionaryEntryDAO.self,
                                                             forPrimaryKey: word.id.raw) else { continue }
                 let dictionaryEntry = (
-                    try? PonsDictionaryEntryDecoder().decode(dictionaryEntryDAO.entry, word: word)
+                    try? PonsDictionaryEntryDecoder().decode(dictionaryEntryDAO.entry)
                 ) ?? []
+                let translations = dictionaryEntry.flatMap { $0.subitems }.map { $0.translation }
 
-                for entry in dictionaryEntry where (entry as NSString).localizedCaseInsensitiveContains(string) {
+                for translation in translations
+                    where (translation as NSString).localizedCaseInsensitiveContains(string) {
                     result.append(word)
                     break
                 }

@@ -7,7 +7,11 @@
 */
 
 "LS_ADD_NEW_WORD_SUGGESTION" = "It's time to add a new word to the dictionary.";
+"LS_ADJECTIVE" = "adjective";
+"LS_ADVERB" = "adverb";
 "LS_ADVICE" = "Advice";
+"LS_ARTICLE" = "article";
+"LS_CONJUNCTION" = "conjunction";
 "LS_DE" = "DE";
 "LS_DICTIONARY_ENTRY_RETRY_REQUEST" = "Retry request";
 "LS_EN" = "EN";
@@ -23,7 +27,13 @@
 "LS_MY_DICTIONARY" = "My dictionary";
 "LS_NO_FAVORITE_WORDS" = "No favourite words";
 "LS_NO_WORDS_FOUND" = "No words found";
+"LS_NOUN" = "noun";
+"LS_NUMERAL" = "numeral";
 "LS_OK" = "OK";
+"LS_PARTICIPLE" = "participle";
+"LS_PARTICLE" = "particle";
+"LS_PREPOSITION" = "preposition";
+"LS_PRONOUN" = "pronoun";
 "LS_RU" = "RU";
 "LS_RUSSIAN" = "Russian";
 "LS_SEARCH" = "Search";
@@ -32,3 +42,4 @@
 "LS_SOURCE_WORD" = "source word";
 "LS_TO_DO_LIST" = "To-do list";
 "LS_TRANSLATION" = "translation";
+"LS_VERB" = "verb";
