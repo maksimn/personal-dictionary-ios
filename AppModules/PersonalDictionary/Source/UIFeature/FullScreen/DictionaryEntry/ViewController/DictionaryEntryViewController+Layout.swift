@@ -11,11 +11,17 @@ extension DictionaryEntryViewController {
 
     func initViews() {
         view.backgroundColor = theme.backgroundColor
-        initTranslationDirectionView()
-        initTableView()
+        initDictionaryEntryView()
         initLabel()
         initRetryButton()
         initActivityIndicator()
+    }
+
+    private func initDictionaryEntryView() {
+        view.addSubview(dictionaryEntryView)
+        dictionaryEntryView.snp.makeConstraints { make -> Void in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
     }
 
     private func initActivityIndicator() {
@@ -37,33 +43,6 @@ extension DictionaryEntryViewController {
         retryButton.snp.makeConstraints { make -> Void in
             make.top.equalTo(label.snp.bottom).offset(17)
             make.centerX.equalTo(view.snp.centerX)
-        }
-    }
-
-    private func initTranslationDirectionView() {
-        let parentView = UIView()
-
-        view.addSubview(parentView)
-        parentView.addSubview(translationDirectionView)
-        parentView.snp.makeConstraints { make -> Void in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(-16)
-            make.left.equalTo(view.safeAreaLayoutGuide)
-            make.right.equalTo(view.safeAreaLayoutGuide)
-        }
-        translationDirectionView.layoutTo(view: parentView)
-    }
-
-    private func initTableView() {
-        view.addSubview(tableView)
-        tableView.backgroundColor = theme.backgroundColor
-        tableView.layer.cornerRadius = 8
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "\(UITableViewCell.self)")
-        tableView.dataSource = datasource
-        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
-        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
-        tableView.snp.makeConstraints { make -> Void in
-            make.edges.equalTo(self.view.safeAreaLayoutGuide)
-                .inset(UIEdgeInsets(top: 38, left: 12, bottom: 12, right: 12))
         }
     }
 

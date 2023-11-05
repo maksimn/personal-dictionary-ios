@@ -24,16 +24,16 @@ private let wordclassMapper = [
     "verb": "LS_VERB"
 ]
 private let redundantParts = [
-    "Aus",
-    "Am",
-    "Brit",
-    "CINE",
-    "f",
-    "fig",
-    "inf",
-    "LIT",
-    "m",
-    "nt"
+    "Aus", "Aus,",
+    "Am", "Am,",
+    "Brit", "Brit,",
+    "CINE", "CINE,",
+    "f", "f,",
+    "fig", "fig,",
+    "inf", "inf,",
+    "LIT", "LIT,",
+    "m", "m,",
+    "nt", "nt,"
 ]
 private let contexts = [
     "Am": "LS_AM_ENG",
