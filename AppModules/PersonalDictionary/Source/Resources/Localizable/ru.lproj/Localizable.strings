@@ -10,7 +10,10 @@
 "LS_ADJECTIVE" = "прилагательное";
 "LS_ADVERB" = "наречие";
 "LS_ADVICE" = "Совет";
+"LS_AM_ENG" = "амер.";
 "LS_ARTICLE" = "артикль";
+"LS_AUS_ENG" = "австрал.";
+"LS_BR_ENG" = "брит.";
 "LS_CONJUNCTION" = "союз";
 "LS_DE" = "Нем.";
 "LS_DICTIONARY_ENTRY_RETRY_REQUEST" = "Повторить запрос";

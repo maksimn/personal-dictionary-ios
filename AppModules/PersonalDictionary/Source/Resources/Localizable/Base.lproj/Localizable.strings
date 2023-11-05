@@ -10,7 +10,10 @@
 "LS_ADJECTIVE" = "adjective";
 "LS_ADVERB" = "adverb";
 "LS_ADVICE" = "Advice";
+"LS_AM_ENG" = "AmE";
 "LS_ARTICLE" = "article";
+"LS_AUS_ENG" = "AuE";
+"LS_BR_ENG" = "BrE";
 "LS_CONJUNCTION" = "conjunction";
 "LS_DE" = "DE";
 "LS_DICTIONARY_ENTRY_RETRY_REQUEST" = "Retry request";

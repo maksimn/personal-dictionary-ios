@@ -19,21 +19,12 @@ final class DictionaryEntryViewController: UIViewController {
     let params: DictionaryEntryViewParams
     let theme: Theme
 
+    lazy var dictionaryEntryView = DictionaryEntryView(theme: theme)
+
     let activityIndicator = UIActivityIndicatorView()
-    let tableView = UITableView()
     let label: UILabel
     let retryButton = UIButton()
-    let translationDirectionView = TranslationDirectionView()
     let disposeBag = DisposeBag()
-
-    lazy var datasource = UITableViewDiffableDataSource<Int, String>(
-        tableView: tableView) { tableView, indexPath, str in
-        let cell = tableView.dequeueReusableCell(withIdentifier: "\(UITableViewCell.self)", for: indexPath)
-
-        cell.textLabel?.text = str
-
-        return cell
-    }
 
     init(viewModel: DictionaryEntryViewModel, params: DictionaryEntryViewParams, theme: Theme) {
         self.viewModel = viewModel
@@ -62,10 +53,9 @@ final class DictionaryEntryViewController: UIViewController {
 
     private func set(state: DictionaryEntryState) {
         activityIndicatorFor(state)
-        tableViewFor(state)
         labelFor(state)
         retryButtonFor(state)
-        titleAndTranslationDirectionViewFor(state)
+        titleAndDictionaryEntryViewFor(state)
     }
 
     @objc
@@ -80,21 +70,6 @@ final class DictionaryEntryViewController: UIViewController {
 
         default:
             activityIndicator.stopAnimating()
-        }
-    }
-
-    private func tableViewFor(_ state: DictionaryEntryState) {
-        switch state {
-        case .loaded(let wordData):
-            var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
-
-            snapshot.appendSections([0])
-            snapshot.appendItems(
-                wordData.entry.flatMap { $0.subitems }.map { $0.translation }.removingDuplicates(), toSection: 0)
-            datasource.apply(snapshot)
-
-        default:
-            break
         }
     }
 
@@ -118,26 +93,20 @@ final class DictionaryEntryViewController: UIViewController {
         }
     }
 
-    private func titleAndTranslationDirectionViewFor(_ state: DictionaryEntryState) {
+    private func titleAndDictionaryEntryViewFor(_ state: DictionaryEntryState) {
         switch state {
         case .loaded(let wordData):
-            setTitleAndTranslationDirection(wordData.word)
+            navigationItem.title = wordData.word.text
+            dictionaryEntryView.set(data: (wordData.word, wordData.entry))
 
         case .error(let withError):
             if case DictionaryEntryError.emptyDictionaryEntry(let word) = withError.base {
-                translationDirectionView.isHidden = false
-                setTitleAndTranslationDirection(word)
-            } else {
-                translationDirectionView.isHidden = true
+                navigationItem.title = word.text
+                dictionaryEntryView.set(data: (word, []))
             }
 
         default:
             break
         }
-    }
-
-    private func setTitleAndTranslationDirection(_ word: Word) {
-        navigationItem.title = word.text
-        translationDirectionView.set(sourceLang: word.sourceLang, targetLang: word.targetLang)
     }
 }
