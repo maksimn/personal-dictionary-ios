@@ -8,11 +8,29 @@
 import UIKit
 
 /// Корневой объект приложения "Личный словарь иностранных слов".
-public struct App {
+public protocol App {
 
     /// Корневой контроллер приложения
-    public let rootViewController: UIViewController
+    var rootViewController: UIViewController { get }
 
     /// Служба для работы с пуш-уведомлениями.
-    public let pushNotificationService: PushNotificationService
+    var pushNotificationService: PushNotificationService { get }
+}
+
+struct AppImpl: App {
+
+    let rootViewController: UIViewController
+    let pushNotificationService: PushNotificationService
+
+    private let effectHolder: EffectHolder
+
+    init(
+        rootViewController: UIViewController,
+        pushNotificationService: PushNotificationService,
+        effectHolder: EffectHolder
+    ) {
+        self.rootViewController = rootViewController
+        self.pushNotificationService = pushNotificationService
+        self.effectHolder = effectHolder
+    }
 }

@@ -19,9 +19,10 @@ public final class AppBuilderImpl: AppBuilder {
     /// - Returns: объект приложения.
     public func build() -> App {
         let dependency = appDependency()
-        let app = App(
+        let app = AppImpl(
             rootViewController: rootViewController(dependency),
-            pushNotificationService: pushNotificationService(dependency)
+            pushNotificationService: pushNotificationService(dependency),
+            effectHolder: EffectBuilderImpl().build()
         )
 
         logger.log(installedFeatureName: "App")
