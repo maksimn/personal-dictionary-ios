@@ -8,6 +8,13 @@
 struct EffectBuilderImpl: EffectBuilder {
 
     func build() -> EffectHolder {
-        return EffectHolderImpl()
+        let effect = EffectImpl()
+
+        return EffectHolderImpl(
+            effect: effect,
+            newWordStream: WordStreamImpl.instance,
+            updatedWordStream: WordStreamImpl.instance,
+            removedWordStream: WordStreamImpl.instance
+        )
     }
 }
