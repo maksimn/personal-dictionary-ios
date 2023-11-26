@@ -9,6 +9,7 @@ import CoreModule
 import SharedFeature
 import RxSwift
 
+// Переделать в MainTranslationFetchableDictionaryService
 struct CacheableDictionaryService: DictionaryService {
 
     let dictionaryService: DictionaryService
