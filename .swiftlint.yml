@@ -6,8 +6,11 @@ identifier_name:
     - j
     - x
     - y
+  max_length:
+    warning: 60
 
 type_name:
   excluded:
     - Id
-
+  max_length:
+    warning: 60

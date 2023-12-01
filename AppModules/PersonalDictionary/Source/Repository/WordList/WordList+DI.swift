@@ -77,8 +77,14 @@ struct DeleteWordDbWorkerFactory {
             deleteWordDbWorker: realmDeleteWordDbWorker,
             logger: LoggerImpl(category: featureName)
         )
+        let cleanTranslationIndexDeleteWordDbWorker = CleanTranslationIndexDeleteWordDbWorker(
+            deleteWordDbWorker: deleteWordDbWorkerLog,
+            deleteWordTranslationIndexDbWorker: DeleteWordTranslationIndexDbWorkerFactory(
+                featureName: featureName
+            ).create()
+        )
 
-        return deleteWordDbWorkerLog
+        return cleanTranslationIndexDeleteWordDbWorker
     }
 }
 
@@ -124,5 +130,37 @@ struct TranslationSearchableWordListFactory {
         )
 
         return translationSearchableWordListLog
+    }
+}
+
+struct CreateWordTranslationIndexDbWorkerFactory {
+
+    let featureName: String
+
+    func create() -> CreateWordTranslationIndexDbWorker {
+        let dbWorker = RealmCreateWordTranslationIndexDbWorker(
+            decoder: DictionaryEntryDecoderFactory(featureName: featureName).create()
+        )
+        let log = CreateWordTranslationIndexDbWorkerLog(
+            dbWorker: dbWorker,
+            logger: LoggerImpl(category: featureName)
+        )
+
+        return log
+    }
+}
+
+struct DeleteWordTranslationIndexDbWorkerFactory {
+
+    let featureName: String
+
+    func create() -> DeleteWordTranslationIndexDbWorker {
+        let dbWorker = RealmDeleteWordTranslationIndexDbWorker()
+        let log = DeleteWordTranslationIndexDbWorkerLog(
+            dbWorker: dbWorker,
+            logger: LoggerImpl(category: featureName)
+        )
+
+        return log
     }
 }
