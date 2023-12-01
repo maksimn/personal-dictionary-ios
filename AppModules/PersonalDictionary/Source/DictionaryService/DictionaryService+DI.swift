@@ -26,16 +26,20 @@ struct DictionaryServiceFactory {
             dictionaryService: dictionaryServiceLog,
             featureName: featureName
         )
+        let indexedSearchByTranslationDictionaryService = IndexedSearchByTranslationDictionaryService(
+            dictionaryService: cacheableDictionaryService,
+            featureName: featureName
+        )
 
         if isErrorSendable {
             let errorSendableDictionaryService = ErrorSendableDictionaryService(
-                dictionaryService: cacheableDictionaryService,
+                dictionaryService: indexedSearchByTranslationDictionaryService,
                 bundle: bundle
             )
 
             return errorSendableDictionaryService
         } else {
-            return cacheableDictionaryService
+            return indexedSearchByTranslationDictionaryService
         }
     }
 }
@@ -69,6 +73,18 @@ extension ErrorSendableDictionaryService {
             dictionaryService: dictionaryService,
             sharedMessageSender: SharedMessageStreamImpl.instance,
             messageTemplate: bundle.moduleLocalizedString("LS_LOAD_DICTIONARY_ENTRY_ERROR_TEMPLATE")
+        )
+    }
+}
+
+extension IndexedSearchByTranslationDictionaryService {
+
+    init(dictionaryService: DictionaryService, featureName: String) {
+        self.init(
+            dictionaryService: dictionaryService,
+            createWordTranslationIndexDbWorker: CreateWordTranslationIndexDbWorkerFactory(
+                featureName: featureName
+            ).create()
         )
     }
 }

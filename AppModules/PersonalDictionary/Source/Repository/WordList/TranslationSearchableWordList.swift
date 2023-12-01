@@ -21,32 +21,18 @@ protocol TranslationSearchableWordList {
 struct RealmTranslationSearchableWordList: TranslationSearchableWordList {
 
     func findWords(whereTranslationContains string: String) -> [Word] {
-        let wordListFetcher = RealmWordListFetcher()
-        var result: [Word] = []
+        guard let realm = try? Realm() else { return [] }
 
-        do {
-            let words = try wordListFetcher.wordList()
-            let realm = try Realm()
+        return realm.objects(WordTranslationIndexDAO.self)
+            .filter("ANY translations contains[cd] \"\(string)\"")
+            .map { $0.wordId }
+            .removingDuplicates()
+            .compactMap { wordId in
+                guard let wordDAO = try? realm.findWordBy(id: .init(raw: wordId)) else { return nil }
 
-            for word in words {
-                guard let dictionaryEntryDAO = realm.object(ofType: DictionaryEntryDAO.self,
-                                                            forPrimaryKey: word.id.raw) else { continue }
-                let dictionaryEntry = (
-                    try? PonsDictionaryEntryDecoder().decode(dictionaryEntryDAO.entry)
-                ) ?? []
-                let translations = dictionaryEntry.flatMap { $0.subitems }.map { $0.translation }
-
-                for translation in translations
-                    where (translation as NSString).localizedCaseInsensitiveContains(string) {
-                    result.append(word)
-                    break
-                }
+                return Word(wordDAO)
             }
-
-            return result.sorted(by: { $0.createdAt > $1.createdAt })
-        } catch {
-            return []
-        }
+            .sorted(by: { $0.createdAt > $1.createdAt })
     }
 }
 

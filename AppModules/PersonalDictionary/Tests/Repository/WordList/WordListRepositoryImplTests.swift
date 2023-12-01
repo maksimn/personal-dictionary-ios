@@ -30,6 +30,7 @@ class WordListRepositoryImpTests: XCTestCase {
     override func tearDownWithError() throws {
         _ = try deleteAll(WordDAO.self).toBlocking().first()
         _ = try deleteAll(DictionaryEntryDAO.self).toBlocking().first()
+        _ = try deleteAll(WordTranslationIndexDAO.self).toBlocking().first()
     }
 
     func test_wordListFetcher__wordList__empty() throws {
@@ -195,11 +196,15 @@ class WordListRepositoryImpTests: XCTestCase {
         ]
         let data3 = try! JSONEncoder().encode(ponsArray3)
 
-        let dictionaryEntryDbInserter = RealmDictionaryEntryDbInserter()
+        let createWordTranslationIndexDbWorker = RealmCreateWordTranslationIndexDbWorker(
+            decoder: PonsDictionaryEntryDecoder())
 
-        _ = try! dictionaryEntryDbInserter.insert(entry: data1, for: word1).toBlocking().first()
-        _ = try! dictionaryEntryDbInserter.insert(entry: data2, for: word2).toBlocking().first()
-        _ = try! dictionaryEntryDbInserter.insert(entry: data3, for: word3).toBlocking().first()
+        _ = try! createWordTranslationIndexDbWorker.createTranslationIndexFor(
+            wordData: .init(word: word1, entry: data1)).toBlocking().first()
+        _ = try! createWordTranslationIndexDbWorker.createTranslationIndexFor(
+            wordData: .init(word: word2, entry: data2)).toBlocking().first()
+        _ = try! createWordTranslationIndexDbWorker.createTranslationIndexFor(
+            wordData: .init(word: word3, entry: data3)).toBlocking().first()
 
         // Act:
         let words = RealmTranslationSearchableWordList().findWords(whereTranslationContains: "X")

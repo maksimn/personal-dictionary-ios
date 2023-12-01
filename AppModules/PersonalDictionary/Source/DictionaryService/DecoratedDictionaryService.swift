@@ -36,6 +36,20 @@ struct CacheableDictionaryService: DictionaryService {
     }
 }
 
+struct IndexedSearchByTranslationDictionaryService: DictionaryService {
+
+    let dictionaryService: DictionaryService
+    let createWordTranslationIndexDbWorker: CreateWordTranslationIndexDbWorker
+
+    func fetchDictionaryEntry(for word: Word) -> Single<WordData> {
+        dictionaryService
+            .fetchDictionaryEntry(for: word)
+            .flatMap {
+                createWordTranslationIndexDbWorker.createTranslationIndexFor(wordData: $0)
+            }
+    }
+}
+
 struct ErrorSendableDictionaryService: DictionaryService {
 
     let dictionaryService: DictionaryService

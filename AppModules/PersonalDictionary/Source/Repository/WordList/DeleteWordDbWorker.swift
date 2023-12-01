@@ -33,6 +33,19 @@ struct RealmDeleteWordDbWorker: DeleteWordDbWorker {
     }
 }
 
+struct CleanTranslationIndexDeleteWordDbWorker: DeleteWordDbWorker {
+
+    let deleteWordDbWorker: DeleteWordDbWorker
+    let deleteWordTranslationIndexDbWorker: DeleteWordTranslationIndexDbWorker
+
+    func delete(word: Word) -> Single<Word> {
+        deleteWordDbWorker.delete(word: word)
+            .flatMap {
+                deleteWordTranslationIndexDbWorker.deleteTranslationIndexFor(word: $0)
+            }
+    }
+}
+
 struct DeleteWordDbWorkerLog: DeleteWordDbWorker {
 
     let deleteWordDbWorker: DeleteWordDbWorker
