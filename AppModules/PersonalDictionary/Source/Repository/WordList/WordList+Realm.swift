@@ -59,7 +59,6 @@ extension Realm {
 
 enum RealmWordError: Error {
     case wordNotFoundInRealm(Word.Id)
-    case dictionaryEntryNotFoundInRealm(Word.Id)
 }
 
 func deleteAll<Element: RealmFetchable>(_ type: Element.Type) -> Completable where Element: RLMObjectBase {

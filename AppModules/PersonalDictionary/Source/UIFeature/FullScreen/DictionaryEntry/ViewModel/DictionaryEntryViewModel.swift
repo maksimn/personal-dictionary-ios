@@ -19,10 +19,6 @@ enum DictionaryEntryState: Equatable {
     case error(WithError)
 }
 
-enum DictionaryEntryError: Error {
-    case emptyDictionaryEntry(Word)
-}
-
 protocol DictionaryEntryViewModel {
     var state: BindableDictionaryEntryState { get }
 

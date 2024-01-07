@@ -8,6 +8,10 @@
 import RealmSwift
 import RxSwift
 
+enum DictionaryEntryError: Error {
+    case emptyDictionaryEntry(Word)
+}
+
 struct DictionaryEntryModelImpl: DictionaryEntryModel {
 
     let id: Word.Id
@@ -23,15 +27,15 @@ struct DictionaryEntryModelImpl: DictionaryEntryModel {
             throw Fail.DAO2WordMappingError(wordDAO)
         }
         guard let dictionaryEntryDAO = realm.object(ofType: DictionaryEntryDAO.self, forPrimaryKey: id.raw) else {
-            throw RealmWordError.dictionaryEntryNotFoundInRealm(id)
+            throw DictionaryEntryError.emptyDictionaryEntry(word)
         }
-        do {
-            let dictionaryEntry = try decoder.decode(dictionaryEntryDAO.entry)
+        let dictionaryEntry = try decoder.decode(dictionaryEntryDAO.entry)
 
-            return DictionaryEntryVO(word: word, entry: dictionaryEntry)
-        } catch {
-            return DictionaryEntryVO(word: word, entry: [])
+        if dictionaryEntry.isEmpty {
+            throw DictionaryEntryError.emptyDictionaryEntry(word)
         }
+
+        return DictionaryEntryVO(word: word, entry: dictionaryEntry)
     }
 
     func getDictionaryEntry(for word: Word) -> Single<DictionaryEntryVO> {

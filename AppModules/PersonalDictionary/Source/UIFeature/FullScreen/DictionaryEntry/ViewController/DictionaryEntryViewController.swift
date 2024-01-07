@@ -98,11 +98,15 @@ final class DictionaryEntryViewController: UIViewController {
         case .loaded(let wordData):
             navigationItem.title = wordData.word.text
             dictionaryEntryView.set(data: (wordData.word, wordData.entry))
+            dictionaryEntryView.isHidden = false
 
         case .error(let withError):
             if case DictionaryEntryError.emptyDictionaryEntry(let word) = withError.base {
                 navigationItem.title = word.text
                 dictionaryEntryView.set(data: (word, []))
+                dictionaryEntryView.isHidden = false
+            } else {
+                dictionaryEntryView.isHidden = true
             }
 
         default:
