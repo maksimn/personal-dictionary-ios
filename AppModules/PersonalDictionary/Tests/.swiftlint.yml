@@ -1,2 +1,5 @@
 disabled_rules:
   - force_try
+  - function_body_length
+  - line_length
+  - type_body_length

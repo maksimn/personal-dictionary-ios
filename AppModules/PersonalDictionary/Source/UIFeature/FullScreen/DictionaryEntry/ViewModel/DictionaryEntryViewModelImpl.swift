@@ -20,13 +20,7 @@ final class DictionaryEntryViewModelImpl: DictionaryEntryViewModel {
 
     func load() {
         do {
-            let wordData = try model.load()
-
-            if wordData.entry.isEmpty {
-                state.accept(.error(DictionaryEntryError.emptyDictionaryEntry(wordData.word).withError()))
-            } else {
-                state.accept(.loaded(wordData))
-            }
+            state.accept(.loaded(try model.load()))
         } catch {
             state.accept(.error(error.withError()))
         }
