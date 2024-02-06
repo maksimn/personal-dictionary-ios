@@ -55,3 +55,13 @@ protocol RemovedWordSender {
 protocol WordStream: NewWordStream, NewWordSender,
                      UpdatedWordStream, UpdatedWordSender,
                      RemovedWordStream, RemovedWordSender { }
+
+/// A bucket with data on a word update operation.
+struct UpdatedWordData: Equatable {
+
+    // Current (updated) value of a word object.
+    let newValue: Word
+
+    // Previous (old) value of a word object.
+    let oldValue: Word
+}
