@@ -59,9 +59,9 @@ protocol WordStream: NewWordStream, NewWordSender,
 /// A bucket with data on a word update operation.
 struct UpdatedWordData: Equatable {
 
-    // Current (updated) value of a word object.
+    /// Current (updated) value of a word object.
     let newValue: Word
 
-    // Previous (old) value of a word object.
+    /// Previous (old) value of a word object.
     let oldValue: Word
 }
