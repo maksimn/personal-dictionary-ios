@@ -15,7 +15,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.0.0"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.0.0"),
         .package(url: "https://github.com/SnapKit/SnapKit", from: "5.6.0"),
         .package(path: "../CoreModule"),
         .package(path: "../SharedFeature")
