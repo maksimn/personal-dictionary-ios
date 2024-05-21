@@ -50,10 +50,10 @@ final class WordListModelImpl: WordListModel {
         return state
     }
 
-    func updateEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
-        updateWordDbWorker.update(word: word)
-            .do(onSuccess: { word in
-                self.wordSender.sendUpdatedWord(word)
+    func updateEffect(_ updatedWord: UpdatedWord, state: WordListState) -> Single<WordListState> {
+        updateWordDbWorker.update(word: updatedWord.newValue)
+            .do(onSuccess: { _ in
+                self.wordSender.sendUpdatedWord(updatedWord)
             })
             .map { _ in
                 state

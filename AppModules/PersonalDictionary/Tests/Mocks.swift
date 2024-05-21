@@ -80,7 +80,7 @@ class NewWordStreamMock: NewWordStream {
 
 class UpdatedWordStreamMock: UpdatedWordStream {
 
-    var updatedWord: Observable<Word> { .empty() }
+    var updatedWord: Observable<UpdatedWord> { .empty() }
 }
 
 class RemovedWordStreamMock: RemovedWordStream {
@@ -90,7 +90,7 @@ class RemovedWordStreamMock: RemovedWordStream {
 
 class UpdatedRemovedWordStreamMock: UpdatedWordStream, RemovedWordStream {
 
-    var updatedWord: Observable<Word> { .empty() }
+    var updatedWord: Observable<UpdatedWord> { .empty() }
 
     var removedWord: Observable<Word> { .empty() }
 }
@@ -185,7 +185,7 @@ class WordListModelMock: WordListModel {
     var removeMock: ((Int, WordListState) -> WordListState)?
     var removeEffectMock: ((Word, WordListState) -> Single<WordListState>)?
     var updateMock: ((Word, Int, WordListState) -> WordListState)?
-    var updateEffectMock: ((Word, WordListState) -> Single<WordListState>)?
+    var updateEffectMock: ((UpdatedWord, WordListState) -> Single<WordListState>)?
     var fetchTranslationsForMock: ((WordListState, Int, Int) -> Single<WordListState>)?
 
     func remove(at position: Int, state: WordListState) -> WordListState {
@@ -200,8 +200,8 @@ class WordListModelMock: WordListModel {
         updateMock!(word, position, state)
     }
 
-    func updateEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
-        updateEffectMock!(word, state)
+    func updateEffect(_ updatedWord: UpdatedWord, state: WordListState) -> Single<WordListState> {
+        updateEffectMock!(updatedWord, state)
     }
 
     func fetchTranslationsFor(state: WordListState, start: Int, end: Int) -> Single<WordListState> {
@@ -210,19 +210,19 @@ class WordListModelMock: WordListModel {
 }
 
 class UpdatedWordSenderMock: UpdatedWordSender {
-    var sendUpdatedWordMock: ((Word) -> Void)? = { _ in }
+    var sendUpdatedWordMock: ((UpdatedWord) -> Void)? = { _ in }
 
-    func sendUpdatedWord(_ word: Word) {
-        sendUpdatedWordMock!(word)
+    func sendUpdatedWord(_ updatedWord: UpdatedWord) {
+        sendUpdatedWordMock!(updatedWord)
     }
 }
 
 class RUWordStreamMock: UpdatedWordSender, RemovedWordSender {
-    var sendUpdatedWordMock: ((Word) -> Void)? = { _ in }
+    var sendUpdatedWordMock: ((UpdatedWord) -> Void)? = { _ in }
     var sendRemovedWordMock: ((Word) -> Void)? = { _ in }
 
-    func sendUpdatedWord(_ word: Word) {
-        sendUpdatedWordMock!(word)
+    func sendUpdatedWord(_ updatedWord: UpdatedWord) {
+        sendUpdatedWordMock!(updatedWord)
     }
 
     func sendRemovedWord(_ word: Word) {

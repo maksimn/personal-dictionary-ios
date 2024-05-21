@@ -86,11 +86,11 @@ struct WordData: Equatable {
 }
 
 /// A bucket with data on a word update operation.
-struct UpdatedWordData: Equatable {
+struct UpdatedWord: Equatable {
 
     /// Current (updated) value of a word object.
     let newValue: Word
 
-    /// Previous (old) value of a word object.
+    /// Previous (old) value of the word object.
     let oldValue: Word
 }

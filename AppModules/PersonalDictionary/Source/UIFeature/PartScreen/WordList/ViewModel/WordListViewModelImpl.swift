@@ -47,9 +47,10 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
     func toggleWordIsFavorite(at position: Int) {
         guard position > -1 && position < wordList.value.count else { return }
         var word = wordList.value[position]
+        let wordOldValue = word
 
         word.isFavorite.toggle()
-        update(word, at: position, withSideEffect: true)
+        update(UpdatedWord(newValue: word, oldValue: wordOldValue), at: position, withSideEffect: true)
     }
 
     private func onNewState(_ state: WordListState, actionName: String) {
@@ -58,14 +59,14 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
         wordList.accept(state)
     }
 
-    private func update(_ word: Word, at position: Int, withSideEffect: Bool) {
-        let wordList = model.update(word, at: position, state: self.wordList.value)
+    private func update(_ updatedWord: UpdatedWord, at position: Int, withSideEffect: Bool) {
+        let wordList = model.update(updatedWord.newValue, at: position, state: self.wordList.value)
 
         onNewState(wordList, actionName: "update word")
 
         guard withSideEffect else { return }
 
-        model.updateEffect(word, state: wordList)
+        model.updateEffect(updatedWord, state: wordList)
             .executeInBackgroundAndObserveOnMainThread()
             .subscribe(
                 onFailure: { [weak self] error in
@@ -98,10 +99,10 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
         remove(at: position, withSideEffect: false)
     }
 
-    private func findAndUpdate(_ word: Word) {
-        guard let position = wordList.value.firstIndex(where: { $0.id == word.id }) else { return }
+    private func findAndUpdate(_ updatedWord: UpdatedWord) {
+        guard let position = wordList.value.firstIndex(where: { $0.id == updatedWord.newValue.id }) else { return }
 
-        update(word, at: position, withSideEffect: false)
+        update(updatedWord, at: position, withSideEffect: false)
     }
 
     private func subscribe() {
@@ -113,10 +114,10 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
             })
             .disposed(by: disposeBag)
         wordStream.updatedWord
-            .subscribe(onNext: { [weak self] word in
-                self?.logger.logReceiving(word, fromModelStream: "updated word")
+            .subscribe(onNext: { [weak self] updatedWord in
+                self?.logger.logReceiving(updatedWord, fromModelStream: "updated word")
 
-                self?.findAndUpdate(word)
+                self?.findAndUpdate(updatedWord)
             })
             .disposed(by: disposeBag)
     }

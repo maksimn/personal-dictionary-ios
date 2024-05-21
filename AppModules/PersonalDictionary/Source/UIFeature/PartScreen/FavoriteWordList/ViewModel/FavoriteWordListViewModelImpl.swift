@@ -13,14 +13,9 @@ final class FavoriteWordListViewModelImpl: FavoriteWordListViewModel {
     let favoriteWordList = BindableWordList(value: [])
 
     private let fetcher: FavoriteWordListFetcher
-    private let wordStream: UpdatedWordStream
-    private let disposeBag = DisposeBag()
 
-    init(fetcher: FavoriteWordListFetcher, wordStream: UpdatedWordStream) {
-        self.fetcher = fetcher
-        self.wordStream = wordStream
-        subscribeToWordStream()
-    }
+    init(fetcher: FavoriteWordListFetcher) {
+        self.fetcher = fetcher    }
 
     func fetchFavoriteWordList() {
         do {
@@ -28,12 +23,5 @@ final class FavoriteWordListViewModelImpl: FavoriteWordListViewModel {
 
             favoriteWordList.accept(wordList)
         } catch { }
-    }
-
-    private func subscribeToWordStream() {
-        wordStream.updatedWord
-            .subscribe(onNext: { [weak self] _ in
-                self?.fetchFavoriteWordList()
-            }).disposed(by: disposeBag)
     }
 }
