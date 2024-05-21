@@ -16,5 +16,5 @@ protocol WordListModel {
 
     func update(_ word: Word, at position: Int, state: WordListState) -> WordListState
 
-    func updateEffect(_ word: Word, state: WordListState) -> Single<WordListState>
+    func updateEffect(_ updatedWord: UpdatedWord, state: WordListState) -> Single<WordListState>
 }

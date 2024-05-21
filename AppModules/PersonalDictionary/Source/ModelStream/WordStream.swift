@@ -16,7 +16,7 @@ protocol NewWordStream {
 protocol UpdatedWordStream {
 
     /// Для подписки на события обновления слов в словаре.
-    var updatedWord: Observable<Word> { get }
+    var updatedWord: Observable<UpdatedWord> { get }
 }
 
 protocol RemovedWordStream {
@@ -39,8 +39,8 @@ protocol UpdatedWordSender {
 
     /// Отправить событие обновления слова из словаря.
     /// - Parameters:
-    ///  - word: обновленное слово в словаре.
-    func sendUpdatedWord(_ word: Word)
+    ///  - updatedWord: данные об обновлённом слово в словаре.
+    func sendUpdatedWord(_ updatedWord: UpdatedWord)
 }
 
 /// Отправитель событий удаления слова из личного словаря.

@@ -13,7 +13,7 @@ final class WordStreamImpl: WordStream {
 
     private let newWordPublishRelay = PublishRelay<Word>()
     private let removedWordPublishRelay = PublishRelay<Word>()
-    private let updatedWordPublishRelay = PublishRelay<Word>()
+    private let updatedWordPublishRelay = PublishRelay<UpdatedWord>()
 
     private init() {}
 
@@ -34,7 +34,7 @@ final class WordStreamImpl: WordStream {
 
     /// Для подписки на события обновления слова из словаря
     /// - Returns: Rx observable с потоком обновленных слов из словаря.
-    var updatedWord: Observable<Word> {
+    var updatedWord: Observable<UpdatedWord> {
         updatedWordPublishRelay.asObservable()
     }
 
@@ -54,8 +54,8 @@ final class WordStreamImpl: WordStream {
 
     /// Отправить событие обновления слова из словаря.
     /// - Parameters:
-    ///  - word: обновленное слово в словаре.
-    func sendUpdatedWord(_ word: Word) {
-        updatedWordPublishRelay.accept(word)
+    ///  - updatedWord: данные об обновлённом слово в словаре.
+    func sendUpdatedWord(_ updatedWord: UpdatedWord) {
+        updatedWordPublishRelay.accept(updatedWord)
     }
 }

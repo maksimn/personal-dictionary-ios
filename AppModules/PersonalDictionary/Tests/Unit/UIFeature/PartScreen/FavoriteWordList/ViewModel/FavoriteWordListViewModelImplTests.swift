@@ -15,10 +15,7 @@ final class FavoriteWordListViewModelImplTests: XCTestCase {
 
     func arrange() {
         fetcherMock = FavoriteWordListFetcherMock()
-        viewModel = FavoriteWordListViewModelImpl(
-            fetcher: fetcherMock,
-            wordStream: UpdatedWordStreamMock()
-        )
+        viewModel = FavoriteWordListViewModelImpl(fetcher: fetcherMock)
         fetcherMock.favoriteWordListMock = { [] }
     }
 

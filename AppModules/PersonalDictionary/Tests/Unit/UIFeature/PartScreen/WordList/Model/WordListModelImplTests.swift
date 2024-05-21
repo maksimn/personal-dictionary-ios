@@ -19,9 +19,11 @@ final class WordListModelImplTests: XCTestCase {
 
     let lang = Lang.defaultValueFUT
     lazy var word = Word(text: "abc", sourceLang: lang, targetLang: lang)
+    lazy var oldWord = Word(id: word.id, text: "ab", sourceLang: lang, targetLang: lang)
     lazy var word1 = Word(text: "a", sourceLang: lang, targetLang: lang)
     lazy var word2 = Word(text: "b", translation: "y", sourceLang: lang, targetLang: lang)
     lazy var word3 = Word(text: "c", sourceLang: lang, targetLang: lang)
+    lazy var updatedWord = UpdatedWord(newValue: word, oldValue: oldWord)
     lazy var wordList = [word1, word2, word3]
 
     func arrange() {
@@ -118,7 +120,7 @@ final class WordListModelImplTests: XCTestCase {
         arrange()
 
         // Act
-        let newState = try model.updateEffect(word, state: wordList).toBlocking().first()
+        let newState = try model.updateEffect(updatedWord, state: wordList).toBlocking().first()
 
         // Assert
         XCTAssertEqual(newState, wordList)
@@ -136,7 +138,7 @@ final class WordListModelImplTests: XCTestCase {
         }
 
         // Act
-        _ = try model.updateEffect(word, state: wordList).toBlocking().first()
+        _ = try model.updateEffect(updatedWord, state: wordList).toBlocking().first()
 
         // Assert
         XCTAssertEqual(dbUpdateCounter, 1)
@@ -151,7 +153,7 @@ final class WordListModelImplTests: XCTestCase {
         wordSenderMock.sendUpdatedWordMock = { _ in notificationCounter += 1 }
 
         // Act
-        _ = try model.updateEffect(word, state: wordList).toBlocking().first()
+        _ = try model.updateEffect(updatedWord, state: wordList).toBlocking().first()
 
         // Assert
         XCTAssertEqual(notificationCounter, 1)
@@ -163,7 +165,7 @@ final class WordListModelImplTests: XCTestCase {
         updateWordDbWorkerMock.updateWordMock = { _ in Single.error(ErrorMock.err) }
 
         // Act
-        let single = model.updateEffect(word, state: [word, word2])
+        let single = model.updateEffect(updatedWord, state: [word, word2])
 
         // Assert
         XCTAssertThrowsError(try single.toBlocking().first())

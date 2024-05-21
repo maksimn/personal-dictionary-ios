@@ -41,7 +41,7 @@ struct DictionaryEntryModelImpl: DictionaryEntryModel {
     func getDictionaryEntry(for word: Word) -> Single<DictionaryEntryVO> {
         dictionaryService.fetchDictionaryEntry(for: word)
             .map { wordData in
-                updatedWordSender.sendUpdatedWord(wordData.word)
+                updatedWordSender.sendUpdatedWord(UpdatedWord(newValue: wordData.word, oldValue: word))
 
                 let dictionaryEntry = try decoder.decode(wordData.entry)
 
