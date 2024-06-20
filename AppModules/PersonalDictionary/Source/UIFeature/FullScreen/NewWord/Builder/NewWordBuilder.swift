@@ -12,40 +12,55 @@ import UIKit
 /// Реализация билдера Фичи "Добавление нового слова" в личный словарь.
 final class NewWordBuilder: ViewControllerBuilder {
 
+    private let featureName = "PersonalDictionary.NewWord"
+
     private let bundle: Bundle
-    private let langRepository: LangRepository
+    private let langData: LangData
 
     /// Инициализатор.
     /// - Parameters:
     ///  - bundle: бандл приложения.
-    ///  - langRepository: репозиторий данных о языках в приложении.
-    init(bundle: Bundle,
-         langRepository: LangRepository) {
+    init(bundle: Bundle, langData: LangData) {
         self.bundle = bundle
-        self.langRepository = langRepository
+        self.langData = langData
     }
 
     /// Создать экран фичи
     /// - Returns:
     ///  - экран фичи  "Добавление нового слова".
     func build() -> UIViewController {
-        let model = NewWordModelImpl(
+        let langRepositoryFactory = LangRepositoryFactory(
+            langData: langData,
+            featureName: featureName
+        )
+        let langRepository = langRepositoryFactory.create()
+
+        let newWord = NewWord(
             langRepository: langRepository,
             newWordSender: WordStreamImpl.instance,
             logger: logger()
         )
-        let viewModel = NewWordViewModelImpl(
-            model: model,
-            initState: initialState(),
-            logger: logger()
-        )
+
+        let store = Store(
+            state: NewWordState(),
+            reducer: newWord.reducer
+        )        
+        let logger = logger()
+        let disposable = store.onAction(with: { (state, action) in
+            logger.log("\nState: \(state)\n---\nAction: \(action)", level: .info)
+        })
+
         let view = NewWordViewController(
             params: viewParams(),
-            viewModel: viewModel,
-            langPickerBuilder: langPickerBuilder(),
+            store: store,
+            newWord: newWord,
+            langPickerBuilder: langPickerBuilder(store, allLangs: langData.allLangs),
             theme: Theme.data,
-            logger: logger()
+            logger: self.logger()
         )
+        
+        view.connect(to: store)
+        disposable.dispose(on: view.disposer)
 
         return view
     }
@@ -57,24 +72,15 @@ final class NewWordBuilder: ViewControllerBuilder {
         )
     }
 
-    private func initialState() -> NewWordState {
-        NewWordState(
-            text: "",
-            sourceLang: langRepository.sourceLang,
-            targetLang: langRepository.targetLang,
-            langPickerState: LangPickerState()
-        )
-    }
-
-    private func langPickerBuilder() -> ViewBuilder {
+    private func langPickerBuilder(_ store: Store<NewWordState>, allLangs: [Lang]) -> ViewBuilder {
         LangPickerBuilder(
             bundle: bundle,
-            allLangs: langRepository.allLangs, 
-            store: Store<LangPickerState>(state: .init(), reducer: { (_, _) in })
+            allLangs: allLangs,
+            store: store.scope(\.langPicker)
         )
     }
 
     private func logger() -> Logger {
-        LoggerImpl(category: "PersonalDictionary.NewWord")
+        LoggerImpl(category: featureName)
     }
 }

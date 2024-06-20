@@ -54,9 +54,7 @@ final class PushNotificationBuilderImpl: PushNotificationBuilder {
     private func navToNewWordRouter() -> NavToNewWordRouter {
         let appConfig = dependency.appConfig
         let bundle = dependency.bundle
-        let langRepositoryFactory = LangRepositoryFactory(langData: appConfig.langData, featureName: featureName)
-        let langRepository = langRepositoryFactory.create()
-        let newWordBuilder = NewWordBuilder(bundle: bundle, langRepository: langRepository)
+        let newWordBuilder = NewWordBuilder(bundle: bundle, langData: appConfig.langData)
 
         return NavToNewWordRouter(
             navigationController: dependency.navigationController,

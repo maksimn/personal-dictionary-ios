@@ -8,7 +8,9 @@
 import UDF
 
 enum LangPickerAction: Action {
-    case langSelected(Lang, LangType)
+    case show(LangType)
+    case hide
+    case langSelected(Lang)
 }
 
 /// Данные о выбранном языке
@@ -28,9 +30,4 @@ struct LangPickerState: Equatable {
         self.langType = langType
         self.isHidden = isHidden
     }
-}
-
-protocol LangPickerUDF {
-
-   func onSelect(_ lang: Lang)
 }
