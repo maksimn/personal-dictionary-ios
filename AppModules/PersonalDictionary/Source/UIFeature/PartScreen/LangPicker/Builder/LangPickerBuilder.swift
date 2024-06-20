@@ -27,30 +27,19 @@ final class LangPickerBuilder: ViewBuilder {
     }
 
     func build() -> UIView {
-        var setter: LangPickerStateSetter? = nil
-        
-        let udf = LangPickerUDFImpl(
-            store: store,
-            setterBlock: { setter },
-            logger: logger()
-        )
         let viewParams = LangPickerParams(
             title: bundle.moduleLocalizedString("LS_SELECT"),
             langs: allLangs
         )
         let view = LangPickerView(
             params: viewParams,
-            udf: udf,
+            store: store,
             theme: Theme.data,
-            logger: logger()
+            logger: LoggerImpl(category: "PersonalDictionary.LangPicker")
         )
         
-        setter = view
+        view.connect(to: store)
 
         return view
-    }
-    
-    private func logger() -> Logger {
-        LoggerImpl(category: "PersonalDictionary.LangPicker")
     }
 }

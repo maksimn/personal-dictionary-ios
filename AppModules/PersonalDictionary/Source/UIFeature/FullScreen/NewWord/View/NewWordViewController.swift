@@ -6,7 +6,7 @@
 //
 
 import CoreModule
-import RxSwift
+import UDF
 import UIKit
 
 /// Параметры представления фичи "Добавление нового слова"
@@ -20,29 +20,40 @@ struct NewWordViewParams {
 }
 
 /// View Controller экрана добавления нового слова в личный словарь.
-final class NewWordViewController: UIViewController, UITextFieldDelegate {
+final class NewWordViewController: UIViewController, ViewComponent, UITextFieldDelegate {
+    
+    var props = NewWordState() {
+        didSet {
+            guard isViewLoaded else { return }
+
+            setViewState(props)
+        }
+    }
+    
+    var disposer = Disposer()
 
     let params: NewWordViewParams
     let theme: Theme
+    
+    private let store: Store<NewWordState>
+    private let newWord: Any
     private let logger: Logger
-
-    private let viewModel: NewWordViewModel
 
     let contentView = UIView()
 
     lazy var translationDirectionView = TranslationDirectionView(
         onSourceLangTap: { [weak self] in
-            self?.viewModel.presentLangPicker(langType: .source)
+            self?.store.dispatch(LangPickerAction.show(.source))
         },
         onTargetLangTap: { [weak self] in
-            self?.viewModel.presentLangPicker(langType: .target)
+            self?.store.dispatch(LangPickerAction.show(.target))
         }
     )
 
     let okButton = UIButton()
     let textField = UITextField()
-
-    private let disposeBag = DisposeBag()
+    
+    private var langPickerView: UIView?
 
     /// Инициализатор.
     /// - Parameters:
@@ -50,18 +61,19 @@ final class NewWordViewController: UIViewController, UITextFieldDelegate {
     ///  - viewModel: модель представления.
     ///  - langPickerBuilder: билдер вложенной фичи "Выбор языка"
     init(params: NewWordViewParams,
-         viewModel: NewWordViewModel,
+         store: Store<NewWordState>,
+         newWord: Any,
          langPickerBuilder: ViewBuilder,
          theme: Theme,
          logger: Logger) {
         self.params = params
         self.theme = theme
-        self.viewModel = viewModel
+        self.store = store
+        self.newWord = newWord
         self.logger = logger
         super.init(nibName: nil, bundle: nil)
         initViews()
         addLangPicker(langPickerBuilder)
-        bindToViewModel()
     }
 
     required init?(coder: NSCoder) {
@@ -77,13 +89,14 @@ final class NewWordViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         logger.log(installedFeatureName: "NewWord")
+        store.dispatch(NewWordAction.load)
     }
-
+    
     // MARK: - UITextFieldDelegate
 
     @objc
     func textFieldDidChange(_ textField: UITextField) {
-        viewModel.update(text: textField.text ?? "")
+        store.dispatch(NewWordAction.textChanged(textField.text ?? ""))
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -101,29 +114,27 @@ final class NewWordViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Private
 
     private func addLangPicker(_ langPickerBuilder: ViewBuilder) {
-        let langPickerView = langPickerBuilder.build()
+        langPickerView = langPickerBuilder.build()
 
-        view.addSubview(langPickerView)
-        langPickerView.snp.makeConstraints { make -> Void in
+        if let langPickerView {
+            view.addSubview(langPickerView)
+        }
+        
+        langPickerView?.snp.makeConstraints { make -> Void in
             make.edges.equalTo(contentView)
         }
 
         logger.log(installedFeatureName: "LangPicker")
     }
 
-    private func bindToViewModel() {
-        viewModel.state.subscribe(onNext: { [weak self] state in
-            self?.set(state: state)
-        }).disposed(by: disposeBag)
+    private func sendNewWordEventAndDismiss() {
+        store.dispatch(NewWordAction.sendNewWord)
+        dismiss(animated: true, completion: nil)
     }
-
-    private func set(state: NewWordState) {
+    
+    private func setViewState(_ state: NewWordState) {
         textField.text = state.text
         translationDirectionView.set(sourceLang: state.sourceLang, targetLang: state.targetLang)
-    }
-
-    private func sendNewWordEventAndDismiss() {
-        viewModel.sendNewWord()
-        dismiss(animated: true, completion: nil)
+        langPickerView?.isHidden = state.langPicker.isHidden
     }
 }

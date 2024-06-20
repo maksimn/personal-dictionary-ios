@@ -15,10 +15,6 @@ typealias BindableWordList = BehaviorRelay<WordListState>
 
 typealias BindableSearchResult = BehaviorRelay<SearchResultData>
 
-typealias BindableNewWordState = BehaviorRelay<NewWordState>
-
 typealias WordListState = [Word]
 
 typealias BindableDictionaryEntryState = BehaviorRelay<DictionaryEntryState>
-
-typealias LangPickerStateSetter = any ViewStateSetter<LangPickerState>
