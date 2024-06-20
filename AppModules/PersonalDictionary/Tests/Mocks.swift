@@ -104,25 +104,6 @@ class NewWordSenderMock: NewWordSender {
     }
 }
 
-class NewWordModelMock: NewWordModel {
-
-    var selectLangEffectMock: ((LangPickerState, NewWordState) -> NewWordState)?
-    var sendNewWordMock: ((NewWordState) -> Void)?
-    var presentLangPickerMock: ((LangType, NewWordState) -> NewWordState)?
-
-    func selectLangEffect(_ langPickerState: LangPickerState, state: NewWordState) -> NewWordState {
-        selectLangEffectMock!(langPickerState, state)
-    }
-
-    func presentLangPicker(langType: LangType, state: NewWordState) -> NewWordState {
-        presentLangPickerMock!(langType, state)
-    }
-
-    func sendNewWord(_ state: NewWordState) {
-        sendNewWordMock!(state)
-    }
-}
-
 class SearchTextSenderMock: SearchTextSender {
 
     var methodMock: ((String) -> Void)?

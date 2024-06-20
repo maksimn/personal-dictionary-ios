@@ -9,27 +9,35 @@ import CoreModule
 import UDF
 import UIKit
 
-final class LangPickerView: UIView, ViewStateSetter {
+final class LangPickerView: UIView, ViewComponent {
+    
+    var props = LangPickerState() {
+        didSet {
+            langPicker.select(props.lang)
+        }
+    }
+    
+    var disposer = Disposer()
 
     private let params: LangPickerParams
-    private let udf: LangPickerUDF
+    private let store: Store<LangPickerState>
     private let theme: Theme
     private let logger: Logger
 
     private lazy var langPicker = LangPicker(
         params: params,
         theme: theme,
-        onSelect: { [weak self] lang in
-            self?.udf.onSelect(lang)
+        onSelect: { [weak self] in
+            self?.onSelect(lang: $0)
         }
     )
 
     /// Инициализатор.
     /// - Parameters:
     ///  - params: параметры представления выбора языка.
-    init(params: LangPickerParams, udf: LangPickerUDF, theme: Theme, logger: Logger) {
+    init(params: LangPickerParams, store: Store<LangPickerState>, theme: Theme, logger: Logger) {
         self.params = params
-        self.udf = udf
+        self.store = store
         self.theme = theme
         self.logger = logger
         super.init(frame: .zero)
@@ -43,16 +51,16 @@ final class LangPickerView: UIView, ViewStateSetter {
     deinit {
         logger.log(dismissedFeatureName: "LangPicker")
     }
-    
-    func setViewState(_ state: LangPickerState) {
-        isHidden = state.isHidden
-        langPicker.select(state.lang)
-    }
 
     private func initView() {
         addSubview(langPicker)
         langPicker.snp.makeConstraints { make -> Void in
             make.edges.equalTo(self)
         }
+    }
+    
+    private func onSelect(lang: Lang) {
+        store.dispatch(LangPickerAction.langSelected(lang))
+        store.dispatch(LangPickerAction.hide)
     }
 }
