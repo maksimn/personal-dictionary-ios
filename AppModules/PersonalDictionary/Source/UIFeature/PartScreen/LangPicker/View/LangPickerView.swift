@@ -1,42 +1,39 @@
 //
-//  LangPickerViewImpl.swift
+//  LangPickerView.swift
 //  PersonalDictionary
 //
 //  Created by Maxim Ivanov on 09.11.2021.
 //
 
 import CoreModule
-import RxSwift
+import UDF
 import UIKit
 
-final class LangPickerView: UIView {
+final class LangPickerView: UIView, ViewStateSetter {
 
     private let params: LangPickerParams
-    private let viewModel: LangPickerViewModel
+    private let udf: LangPickerUDF
     private let theme: Theme
     private let logger: Logger
-    private let disposeBag = DisposeBag()
 
     private lazy var langPicker = LangPicker(
         params: params,
         theme: theme,
         onSelect: { [weak self] lang in
-            self?.viewModel.onSelect(lang)
+            self?.udf.onSelect(lang)
         }
     )
 
     /// Инициализатор.
     /// - Parameters:
     ///  - params: параметры представления выбора языка.
-    ///  - viewModel: модель представления.
-    init(params: LangPickerParams, viewModel: LangPickerViewModel, theme: Theme, logger: Logger) {
+    init(params: LangPickerParams, udf: LangPickerUDF, theme: Theme, logger: Logger) {
         self.params = params
-        self.viewModel = viewModel
+        self.udf = udf
         self.theme = theme
         self.logger = logger
         super.init(frame: .zero)
         initView()
-        bindToViewModel()
     }
 
     required init?(coder: NSCoder) {
@@ -46,20 +43,16 @@ final class LangPickerView: UIView {
     deinit {
         logger.log(dismissedFeatureName: "LangPicker")
     }
+    
+    func setViewState(_ state: LangPickerState) {
+        isHidden = state.isHidden
+        langPicker.select(state.lang)
+    }
 
     private func initView() {
         addSubview(langPicker)
         langPicker.snp.makeConstraints { make -> Void in
             make.edges.equalTo(self)
         }
-    }
-
-    private func bindToViewModel() {
-        viewModel.state.subscribe(onNext: { [weak self] state in
-            guard let state = state else { return }
-
-            self?.isHidden = state.isHidden
-            self?.langPicker.select(state.lang)
-        }).disposed(by: disposeBag)
     }
 }
