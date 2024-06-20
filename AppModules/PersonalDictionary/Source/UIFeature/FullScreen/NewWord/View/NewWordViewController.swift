@@ -28,8 +28,6 @@ final class NewWordViewController: UIViewController, UITextFieldDelegate {
 
     private let viewModel: NewWordViewModel
 
-    private var langPickerGraph: LangPickerGraph? // Child Feature
-
     let contentView = UIView()
 
     lazy var translationDirectionView = TranslationDirectionView(
@@ -53,7 +51,7 @@ final class NewWordViewController: UIViewController, UITextFieldDelegate {
     ///  - langPickerBuilder: билдер вложенной фичи "Выбор языка"
     init(params: NewWordViewParams,
          viewModel: NewWordViewModel,
-         langPickerBuilder: LangPickerBuilder,
+         langPickerBuilder: ViewBuilder,
          theme: Theme,
          logger: Logger) {
         self.params = params
@@ -102,17 +100,13 @@ final class NewWordViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: - Private
 
-    private func addLangPicker(_ langPickerBuilder: LangPickerBuilder) {
-        langPickerGraph = langPickerBuilder.build()
-
-        guard let langPickerView = langPickerGraph?.uiview else { return }
+    private func addLangPicker(_ langPickerBuilder: ViewBuilder) {
+        let langPickerView = langPickerBuilder.build()
 
         view.addSubview(langPickerView)
         langPickerView.snp.makeConstraints { make -> Void in
             make.edges.equalTo(contentView)
         }
-
-        langPickerGraph?.viewmodel.listener = viewModel
 
         logger.log(installedFeatureName: "LangPicker")
     }
@@ -126,7 +120,6 @@ final class NewWordViewController: UIViewController, UITextFieldDelegate {
     private func set(state: NewWordState) {
         textField.text = state.text
         translationDirectionView.set(sourceLang: state.sourceLang, targetLang: state.targetLang)
-        langPickerGraph?.viewmodel.state.accept(state.langPickerState)
     }
 
     private func sendNewWordEventAndDismiss() {

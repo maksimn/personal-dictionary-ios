@@ -12,11 +12,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-    private lazy var app = {
-        let appBuilder = PersonalDictionary.AppBuilderImpl()
-
-        return appBuilder.build()
-    }()
+    private lazy var app = AppBuilderImpl().build()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
@@ -28,8 +24,6 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        let pushNotificationService = app.pushNotificationService
-
-        pushNotificationService.schedule()
+        app.pushNotificationService.schedule()
     }
 }

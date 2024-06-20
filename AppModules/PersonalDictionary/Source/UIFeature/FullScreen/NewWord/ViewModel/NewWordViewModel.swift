@@ -14,7 +14,7 @@ struct NewWordState: Equatable {
 }
 
 /// Модель представления для экрана добавления нового слова в личный словарь.
-protocol NewWordViewModel: LangPickerListener {
+protocol NewWordViewModel {
 
     /// Данные модели представления
     var state: BindableNewWordState { get }

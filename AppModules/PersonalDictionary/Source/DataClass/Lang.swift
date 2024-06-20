@@ -39,12 +39,18 @@ struct Lang: Equatable, CustomStringConvertible {
     var description: String {
         "Lang(\(id.raw), \(shortName))"
     }
+    
+    static var empty: Lang {
+        Lang(id: .init(raw: -1), nameKey: .init(raw: ""), shortNameKey: .init(raw: ""))
+    }
 }
 
 /// Тип выбранного языка
 enum LangType {
     case source /// исходный язык
     case target /// целевой язык
+    
+    static var defaultValue: LangType { .source }
 }
 
 /// Данные о языках в приложении.
