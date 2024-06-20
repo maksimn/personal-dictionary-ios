@@ -6,6 +6,7 @@
 //
 
 import CoreModule
+import UDF
 import UIKit
 
 /// Реализация билдера Фичи "Добавление нового слова" в личный словарь.
@@ -61,22 +62,15 @@ final class NewWordBuilder: ViewControllerBuilder {
             text: "",
             sourceLang: langRepository.sourceLang,
             targetLang: langRepository.targetLang,
-            langPickerState: initialLangPickerState()
+            langPickerState: LangPickerState()
         )
     }
 
-    private func langPickerBuilder() -> LangPickerBuilder {
-        LangPickerBuilderImpl(
+    private func langPickerBuilder() -> ViewBuilder {
+        LangPickerBuilder(
             bundle: bundle,
-            allLangs: langRepository.allLangs
-        )
-    }
-
-    private func initialLangPickerState() -> LangPickerState {
-        LangPickerState(
-            lang: langRepository.sourceLang,
-            langType: .source,
-            isHidden: true
+            allLangs: langRepository.allLangs, 
+            store: Store<LangPickerState>(state: .init(), reducer: { (_, _) in })
         )
     }
 

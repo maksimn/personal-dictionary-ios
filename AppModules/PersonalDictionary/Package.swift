@@ -15,6 +15,7 @@ let package = Package(
         )
     ],
     dependencies: [
+        .package(url: "https://github.com/inDriver/UDF", exact: "2.5.3"),
         .package(url: "https://github.com/SnapKit/SnapKit", from: "5.6.0"),
         .package(url: "https://github.com/ReactiveX/RxSwift", revision: "6.5.0"),
         .package(url: "https://github.com/realm/realm-swift", from: "10.39.1"),
@@ -31,6 +32,7 @@ let package = Package(
                 "SharedFeature",
                 "SnapKit",
                 "TodoList",
+                "UDF",
                 .product(name: "RealmSwift", package: "realm-swift"),
                 .product(name: "RxCocoa", package: "RxSwift")
             ],

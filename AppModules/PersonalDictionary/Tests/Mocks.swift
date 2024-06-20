@@ -95,15 +95,6 @@ class UpdatedRemovedWordStreamMock: UpdatedWordStream, RemovedWordStream {
     var removedWord: Observable<Word> { .empty() }
 }
 
-class LangPickerListenerMock: LangPickerListener {
-
-    var methodMock: ((LangPickerState) -> Void)?
-
-    func onLangPickerStateChanged(_ state: LangPickerState) {
-        methodMock!(state)
-    }
-}
-
 class NewWordSenderMock: NewWordSender {
 
     var methodMock: ((Word) -> Void)?
