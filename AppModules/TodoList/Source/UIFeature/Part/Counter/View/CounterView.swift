@@ -50,7 +50,7 @@ final class CounterView: UIView {
         label.font = UIFont.systemFont(ofSize: 16)
         label.numberOfLines = 1
         label.isUserInteractionEnabled = false
-        label.snp.makeConstraints { make -> Void in
+        label.snp.makeConstraints { make in
             make.edges.equalTo(self)
         }
     }

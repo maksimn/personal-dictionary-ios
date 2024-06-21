@@ -21,10 +21,10 @@ struct LangPickerState: Equatable {
 
     /// Тип выбранного языка
     var langType: LangType
-    
+
     /// Скрыто ли представление для выбора языка
     var isHidden: Bool
-    
+
     init(lang: Lang = Lang.empty, langType: LangType = LangType.defaultValue, isHidden: Bool = true) {
         self.lang = lang
         self.langType = langType

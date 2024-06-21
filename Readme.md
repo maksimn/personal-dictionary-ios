@@ -22,7 +22,7 @@ A screen with a dictionary entry for a word.
 
 UI: UIKit, code-based layout.
 
-Architecture: MVVM, Clean Architecture.
+Architecture: MVVM, Unidirectional Data Flow, Clean Architecture.
 
 Networking: `URLSession`.
 
@@ -70,7 +70,7 @@ __The app architecture__. It can be represented as a tree of feature nodes:
 
 Grey nodes represent viewless features, green is for a feature that implements a screen of the app, blue color is for a feature having a view that represents a part of a screen.
 
-`B` - builder, `G` - graph, `R` - router, `V` - view, `VC` - ViewController, `MVVM` - UI pattern, `D` - domain.  
+`B` - builder, `G` - graph, `R` - router, `V` - view, `VC` - ViewController, `MVVM` - UI pattern, `UDF` - Unidirectional Data Flow, `D` - domain.  
 
 The code of the app screens are placed in the `UIFeature/FullScreen` folder of the `PersonalDictionary` module. 
 
@@ -85,3 +85,7 @@ The code of the app screens are placed in the `UIFeature/FullScreen` folder of t
 The app is localized to 2 languages (_English_ and _Russian_).
 
 Dependency management: SPM.
+
+# General Guide to Architecture and App Feature Development.
+
+This project is developed using [the BFG Architecture](https://github.com/maksimn/bfg-architecture) approach.

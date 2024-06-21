@@ -44,13 +44,13 @@ extension MainListViewController {
         navigationButton.setImage(params.navImage, for: .normal)
         navigationButton.imageView?.contentMode = .scaleAspectFit
         navigationButton.addTarget(self, action: #selector(navigate), for: .touchUpInside)
-        navigationButton.snp.makeConstraints { make -> Void in
+        navigationButton.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 44, height: 44))
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-32)
             make.centerX.equalTo(view)
         }
         if let imageView = navigationButton.imageView {
-            imageView.snp.makeConstraints { make -> Void in
+            imageView.snp.makeConstraints { make in
                 make.edges.equalTo(navigationButton)
             }
         }
@@ -58,7 +58,7 @@ extension MainListViewController {
 
     private func initKeyboardController() {
         add(childViewController: keyboardController)
-        keyboardController.view.snp.makeConstraints { make -> Void in
+        keyboardController.view.snp.makeConstraints { make in
             make.height.equalTo(0.5)
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)

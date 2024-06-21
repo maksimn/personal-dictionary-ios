@@ -27,7 +27,7 @@ extension NewWordViewController {
     private func initContentView() {
         contentView.layer.cornerRadius = 16
         contentView.backgroundColor = theme.backgroundColor
-        contentView.snp.makeConstraints { (make) -> Void in
+        contentView.snp.makeConstraints { make in
             make.centerY.equalTo(view)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-12)
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left).offset(12)
@@ -39,7 +39,7 @@ extension NewWordViewController {
         textField.placeholder = params.textFieldPlaceholder
         textField.borderStyle = UITextField.BorderStyle.roundedRect
         textField.textColor = .black
-        textField.snp.makeConstraints { make -> Void in
+        textField.snp.makeConstraints { make in
             make.edges.equalTo(contentView).inset(UIEdgeInsets(top: 62, left: 12, bottom: 74, right: 12))
         }
         textField.delegate = self
@@ -54,7 +54,7 @@ extension NewWordViewController {
         okButton.titleLabel?.font = UIFont(name: "Arial-BoldMT", size: 20)
         okButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
         okButton.addTarget(self, action: #selector(onOkButtonTap), for: .touchUpInside)
-        okButton.snp.makeConstraints { make -> Void in
+        okButton.snp.makeConstraints { make in
             make.top.equalTo(textField.snp.bottom).offset(26)
             make.centerX.equalTo(contentView)
             make.height.equalTo(30)

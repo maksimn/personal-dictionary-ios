@@ -77,7 +77,7 @@ final class SearchModePickerView: UIView {
         label.textAlignment = .center
         label.text = params.searchByLabelText
         addSubview(label)
-        label.snp.makeConstraints { make -> Void in
+        label.snp.makeConstraints { make in
             make.top.equalTo(self.snp.top).offset(18)
             make.left.equalTo(self.snp.left).offset(26)
         }
@@ -87,7 +87,7 @@ final class SearchModePickerView: UIView {
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         addSubview(segmentedControl)
-        segmentedControl.snp.makeConstraints { make -> Void in
+        segmentedControl.snp.makeConstraints { make in
             make.top.equalTo(self.snp.top).offset(10.5)
             make.right.equalTo(self.snp.right).offset(-22)
         }

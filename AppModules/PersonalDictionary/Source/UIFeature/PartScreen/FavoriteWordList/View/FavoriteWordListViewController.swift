@@ -65,7 +65,7 @@ final class FavoriteWordListViewController: UIViewController {
 
     private func initCenterLabel() {
         view.addSubview(centerLabel)
-        centerLabel.snp.makeConstraints { make -> Void in
+        centerLabel.snp.makeConstraints { make in
             make.centerY.equalTo(view).offset(-20)
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)

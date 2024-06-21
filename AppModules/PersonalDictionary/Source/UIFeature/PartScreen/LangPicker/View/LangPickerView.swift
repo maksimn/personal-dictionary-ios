@@ -10,13 +10,13 @@ import UDF
 import UIKit
 
 final class LangPickerView: UIView, ViewComponent {
-    
+
     var props = LangPickerState() {
         didSet {
             langPicker.select(props.lang)
         }
     }
-    
+
     var disposer = Disposer()
 
     private let params: LangPickerParams
@@ -54,11 +54,11 @@ final class LangPickerView: UIView, ViewComponent {
 
     private func initView() {
         addSubview(langPicker)
-        langPicker.snp.makeConstraints { make -> Void in
+        langPicker.snp.makeConstraints { make in
             make.edges.equalTo(self)
         }
     }
-    
+
     private func onSelect(lang: Lang) {
         store.dispatch(LangPickerAction.langSelected(lang))
         store.dispatch(LangPickerAction.hide)

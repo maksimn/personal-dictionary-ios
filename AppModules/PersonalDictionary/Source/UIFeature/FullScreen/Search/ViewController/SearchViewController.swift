@@ -42,7 +42,7 @@ final class SearchViewController: UIViewController {
 
     private func initSearchModePicker() {
         view.addSubview(searchModePickerView)
-        searchModePickerView.snp.makeConstraints { make -> Void in
+        searchModePickerView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
