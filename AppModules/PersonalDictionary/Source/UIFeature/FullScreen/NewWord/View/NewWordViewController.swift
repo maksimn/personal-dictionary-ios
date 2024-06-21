@@ -21,7 +21,7 @@ struct NewWordViewParams {
 
 /// View Controller экрана добавления нового слова в личный словарь.
 final class NewWordViewController: UIViewController, ViewComponent, UITextFieldDelegate {
-    
+
     var props = NewWordState() {
         didSet {
             guard isViewLoaded else { return }
@@ -29,12 +29,12 @@ final class NewWordViewController: UIViewController, ViewComponent, UITextFieldD
             setViewState(props)
         }
     }
-    
+
     var disposer = Disposer()
 
     let params: NewWordViewParams
     let theme: Theme
-    
+
     private let store: Store<NewWordState>
     private let newWord: Any
     private let logger: Logger
@@ -52,7 +52,7 @@ final class NewWordViewController: UIViewController, ViewComponent, UITextFieldD
 
     let okButton = UIButton()
     let textField = UITextField()
-    
+
     private var langPickerView: UIView?
 
     /// Инициализатор.
@@ -91,7 +91,7 @@ final class NewWordViewController: UIViewController, ViewComponent, UITextFieldD
         logger.log(installedFeatureName: "NewWord")
         store.dispatch(NewWordAction.load)
     }
-    
+
     // MARK: - UITextFieldDelegate
 
     @objc
@@ -119,8 +119,8 @@ final class NewWordViewController: UIViewController, ViewComponent, UITextFieldD
         if let langPickerView {
             view.addSubview(langPickerView)
         }
-        
-        langPickerView?.snp.makeConstraints { make -> Void in
+
+        langPickerView?.snp.makeConstraints { make in
             make.edges.equalTo(contentView)
         }
 
@@ -131,7 +131,7 @@ final class NewWordViewController: UIViewController, ViewComponent, UITextFieldD
         store.dispatch(NewWordAction.sendNewWord)
         dismiss(animated: true, completion: nil)
     }
-    
+
     private func setViewState(_ state: NewWordState) {
         textField.text = state.text
         translationDirectionView.set(sourceLang: state.sourceLang, targetLang: state.targetLang)

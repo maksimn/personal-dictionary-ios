@@ -37,7 +37,7 @@ final class LangPickerBuilder: ViewBuilder {
             theme: Theme.data,
             logger: LoggerImpl(category: "PersonalDictionary.LangPicker")
         )
-        
+
         view.connect(to: store)
 
         return view

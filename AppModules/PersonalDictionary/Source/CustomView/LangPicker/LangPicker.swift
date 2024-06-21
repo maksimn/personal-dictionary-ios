@@ -76,7 +76,7 @@ final class LangPicker: UIView {
         addSubview(pickerView)
         pickerView.dataSource = langPickerController
         pickerView.delegate = langPickerController
-        pickerView.snp.makeConstraints { (make) -> Void in
+        pickerView.snp.makeConstraints { make in
             make.edges.equalTo(self).inset(UIEdgeInsets(top: 12, left: 16, bottom: 44, right: 16))
         }
     }
@@ -89,7 +89,7 @@ final class LangPicker: UIView {
         selectButton.layer.cornerRadius = 8
         selectButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
         selectButton.addTarget(self, action: #selector(onSelectButtonTap), for: .touchUpInside)
-        selectButton.snp.makeConstraints { (make) -> Void in
+        selectButton.snp.makeConstraints { make in
             make.bottom.equalTo(self).offset(-16)
             make.centerX.equalTo(self)
             make.height.equalTo(30)

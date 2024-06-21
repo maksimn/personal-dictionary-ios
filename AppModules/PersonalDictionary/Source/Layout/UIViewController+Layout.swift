@@ -12,7 +12,7 @@ extension UIViewController {
 
     func layout(childViewController: UIViewController, topOffset: CGFloat = 0) {
         add(childViewController: childViewController)
-        childViewController.view.snp.makeConstraints { make -> Void in
+        childViewController.view.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(topOffset)
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
@@ -22,7 +22,7 @@ extension UIViewController {
 
     func layout(wordListView: UIView, topOffset: CGFloat = 0) {
         view.addSubview(wordListView)
-        wordListView.snp.makeConstraints { make -> Void in
+        wordListView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(topOffset)
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
@@ -32,7 +32,7 @@ extension UIViewController {
 
     func layout(centerLabel: UILabel) {
         view.addSubview(centerLabel)
-        centerLabel.snp.makeConstraints { make -> Void in
+        centerLabel.snp.makeConstraints { make in
             make.centerY.equalTo(view).offset(-20)
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)

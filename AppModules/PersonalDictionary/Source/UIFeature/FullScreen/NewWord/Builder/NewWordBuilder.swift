@@ -44,10 +44,11 @@ final class NewWordBuilder: ViewControllerBuilder {
         let store = Store(
             state: NewWordState(),
             reducer: newWord.reducer
-        )        
-        let logger = logger()
+        )
         let disposable = store.onAction(with: { (state, action) in
-            logger.log("\nState: \(state)\n---\nAction: \(action)", level: .info)
+            if isDevelopment() {
+                debugPrint(Action.self, action, state)
+            }
         })
 
         let view = NewWordViewController(
@@ -58,7 +59,7 @@ final class NewWordBuilder: ViewControllerBuilder {
             theme: Theme.data,
             logger: self.logger()
         )
-        
+
         view.connect(to: store)
         disposable.dispose(on: view.disposer)
 

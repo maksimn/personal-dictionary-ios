@@ -42,7 +42,7 @@ final class TranslationDirectionView: UIView {
     }
 
     func layoutTo(view: UIView) {
-        self.snp.makeConstraints { make -> Void in
+        self.snp.makeConstraints { make in
             make.top.equalTo(view).offset(7.5)
             make.leading.equalTo(view)
             make.trailing.equalTo(view)
@@ -73,7 +73,7 @@ final class TranslationDirectionView: UIView {
         sourceLangLabel.font = theme.normalFont
         sourceLangLabel.numberOfLines = 1
         sourceLangLabel.textAlignment = .right
-        sourceLangLabel.snp.makeConstraints { make -> Void in
+        sourceLangLabel.snp.makeConstraints { make in
             make.top.equalTo(self).offset(12)
             make.leading.equalTo(self).offset(20)
             make.trailing.equalTo(self.snp.centerX).offset(-20)
@@ -91,7 +91,7 @@ final class TranslationDirectionView: UIView {
         targetLangLabel.textColor = theme.textColor
         targetLangLabel.font = theme.normalFont
         targetLangLabel.numberOfLines = 1
-        targetLangLabel.snp.makeConstraints { make -> Void in
+        targetLangLabel.snp.makeConstraints { make in
             make.top.equalTo(self).offset(12)
             make.leading.equalTo(self.snp.centerX).offset(20)
             make.trailing.equalTo(self).offset(-20)
@@ -111,7 +111,7 @@ final class TranslationDirectionView: UIView {
         arrowLabel.numberOfLines = 1
         arrowLabel.textAlignment = .center
         arrowLabel.text = arrowText
-        arrowLabel.snp.makeConstraints { make -> Void in
+        arrowLabel.snp.makeConstraints { make in
             make.centerY.equalTo(sourceLangLabel)
             make.centerX.equalTo(self)
         }
