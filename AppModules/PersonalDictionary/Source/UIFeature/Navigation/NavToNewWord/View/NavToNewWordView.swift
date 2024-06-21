@@ -42,11 +42,11 @@ final class NavToNewWordView: UIView {
         navToNewWordButton.setImage(navToNewWordImage, for: .normal)
         navToNewWordButton.imageView?.contentMode = .scaleAspectFit
         navToNewWordButton.addTarget(self, action: #selector(navigateToNewWord), for: .touchUpInside)
-        navToNewWordButton.snp.makeConstraints { make -> Void in
+        navToNewWordButton.snp.makeConstraints { make in
             make.edges.equalTo(self)
         }
         if let imageView = navToNewWordButton.imageView {
-            imageView.snp.makeConstraints { make -> Void in
+            imageView.snp.makeConstraints { make in
                 make.edges.equalTo(navToNewWordButton)
             }
         }

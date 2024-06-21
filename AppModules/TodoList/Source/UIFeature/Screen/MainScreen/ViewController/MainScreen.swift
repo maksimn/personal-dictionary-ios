@@ -62,7 +62,7 @@ final class MainScreen: UIViewController {
 
     private func initCounter() {
         view.addSubview(counterView)
-        counterView.snp.makeConstraints { make -> Void in
+        counterView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left).offset(32)
             make.height.equalTo(20)
@@ -71,7 +71,7 @@ final class MainScreen: UIViewController {
 
     private func initVisibilitySwitch() {
         view.addSubview(showButtonView)
-        showButtonView.snp.makeConstraints { make -> Void in
+        showButtonView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-32)
             make.height.equalTo(20)
@@ -80,7 +80,7 @@ final class MainScreen: UIViewController {
 
     private func initMainList() {
         add(childViewController: mainListViewController)
-        mainListViewController.view.snp.makeConstraints { make -> Void in
+        mainListViewController.view.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(50)
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left).offset(20)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-20)
@@ -90,7 +90,7 @@ final class MainScreen: UIViewController {
 
     private func initNetworkIndicator() {
         view.addSubview(networkIndicatorView)
-        networkIndicatorView.snp.makeConstraints { make -> Void in
+        networkIndicatorView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(14)
             make.centerX.equalTo(view.snp.centerX)
         }

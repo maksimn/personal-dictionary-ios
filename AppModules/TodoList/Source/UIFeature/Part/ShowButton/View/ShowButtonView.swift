@@ -58,7 +58,7 @@ final class ShowButtonView: UIView {
         toggle.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         toggle.setTitle(params.show, for: .normal)
         toggle.setTitleColor(.systemGray, for: .normal)
-        toggle.snp.makeConstraints { make -> Void in
+        toggle.snp.makeConstraints { make in
             make.edges.equalTo(self)
         }
     }

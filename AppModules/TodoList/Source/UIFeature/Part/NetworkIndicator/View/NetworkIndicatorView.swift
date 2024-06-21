@@ -35,7 +35,7 @@ final class NetworkIndicatorView: UIView {
 
     private func initViews() {
         addSubview(activityIndicator)
-        activityIndicator.snp.makeConstraints { make -> Void in
+        activityIndicator.snp.makeConstraints { make in
             make.edges.equalTo(self)
         }
     }

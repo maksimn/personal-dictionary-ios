@@ -108,7 +108,7 @@ final class DictionaryEntryView: UIView, UITableViewDelegate {
 
         self.addSubview(parentView)
         parentView.addSubview(translationDirectionView)
-        parentView.snp.makeConstraints { make -> Void in
+        parentView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide).offset(-16)
             make.left.equalTo(self.safeAreaLayoutGuide)
             make.right.equalTo(self.safeAreaLayoutGuide)
@@ -125,7 +125,7 @@ final class DictionaryEntryView: UIView, UITableViewDelegate {
         tableView.dataSource = datasource
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
-        tableView.snp.makeConstraints { make -> Void in
+        tableView.snp.makeConstraints { make in
             make.edges.equalTo(self.self.safeAreaLayoutGuide)
                 .inset(UIEdgeInsets(top: 38, left: 17, bottom: 16, right: 17))
         }
@@ -202,12 +202,12 @@ private final class TableViewCell: UITableViewCell {
     }
 
     private func setConstraints() {
-        translationLabel.snp.makeConstraints { make -> Void in
+        translationLabel.snp.makeConstraints { make in
             make.top.equalTo(self.contentView.snp.top).offset(12)
             make.left.equalTo(self.contentView.snp.left).offset(16)
             make.right.equalTo(self.contentView.snp.right).offset(-16)
         }
-        exampleLabel.snp.makeConstraints { make -> Void in
+        exampleLabel.snp.makeConstraints { make in
             make.top.equalTo(self.translationLabel.snp.bottom).offset(11)
             make.left.equalTo(self.contentView.snp.left).offset(21)
             make.right.equalTo(self.contentView.snp.right).offset(-16)
@@ -217,7 +217,7 @@ private final class TableViewCell: UITableViewCell {
 
     private func updateLayout(isExampleHidden: Bool) {
         exampleLabel.isHidden = isExampleHidden
-        exampleLabel.snp.updateConstraints { make -> Void in
+        exampleLabel.snp.updateConstraints { make in
             make.top.equalTo(self.translationLabel.snp.bottom).offset(isExampleHidden ? 0 : 11)
         }
     }
@@ -267,24 +267,24 @@ private final class SectionHeaderView: UITableViewHeaderFooterView {
     }
 
     private func updateConstraintsForWordclassLabelCase() {
-        wordclassLabel.snp.updateConstraints { make -> Void in
+        wordclassLabel.snp.updateConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(8)
         }
     }
 
     private func updateConstraintsForTitleAndWordclassLabelCase() {
-        wordclassLabel.snp.updateConstraints { make -> Void in
+        wordclassLabel.snp.updateConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(38)
         }
     }
 
     private func setConstraints() {
-        titleLabel.snp.makeConstraints { make -> Void in
+        titleLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(4)
             make.left.equalTo(contentView.snp.left).offset(22)
             make.right.equalTo(contentView.snp.right).offset(-22)
         }
-        wordclassLabel.snp.makeConstraints { make -> Void in
+        wordclassLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(38)
             make.left.equalTo(contentView.snp.left).offset(22)
             make.right.equalTo(contentView.snp.right).offset(-22)

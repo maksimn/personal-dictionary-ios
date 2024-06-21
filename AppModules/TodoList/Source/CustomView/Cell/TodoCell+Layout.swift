@@ -27,38 +27,38 @@ extension TodoCell {
     }
 
     func setConstraints() {
-        leadingImageView.snp.makeConstraints { make -> Void in
+        leadingImageView.snp.makeConstraints { make in
             make.centerY.equalTo(self.contentView.snp.centerY)
             make.left.equalTo(self.contentView.snp.left).offset(16)
             make.size.equalTo(CGSize(width: 24, height: 24))
         }
 
-        trailingImageView.snp.makeConstraints { make -> Void in
+        trailingImageView.snp.makeConstraints { make in
             make.centerY.equalTo(self.contentView.snp.centerY)
             make.right.equalTo(self.contentView.snp.right).offset(-16)
             make.size.equalTo(CGSize(width: 7, height: 12))
         }
 
-        priorityImageView.snp.makeConstraints { make -> Void in
+        priorityImageView.snp.makeConstraints { make in
             make.centerY.equalTo(self.contentView.snp.centerY)
             make.left.equalTo(self.leadingImageView.snp.right).offset(12)
             make.size.equalTo(CGSize(width: 10, height: 16))
         }
 
-        textlabel.snp.makeConstraints { make -> Void in
+        textlabel.snp.makeConstraints { make in
             make.top.equalTo(self.contentView.snp.top).offset(16)
             make.left.equalTo(self.priorityImageView.snp.right).offset(8)
             make.right.equalTo(self.trailingImageView.snp.left).offset(-10)
             make.bottom.equalTo(self.contentView.snp.bottom).offset(-16)
         }
 
-        calendarIconView.snp.makeConstraints { make -> Void in
+        calendarIconView.snp.makeConstraints { make in
             make.bottom.equalTo(self.contentView.snp.bottom).offset(-16)
             make.left.equalTo(self.textlabel.snp.left)
             make.size.equalTo(CGSize(width: 13, height: 12))
         }
 
-        deadlineLabel.snp.makeConstraints { make -> Void in
+        deadlineLabel.snp.makeConstraints { make in
             make.top.equalTo(self.calendarIconView.snp.top).offset(-2.5)
             make.left.equalTo(self.calendarIconView.snp.right).offset(5)
             make.height.equalTo(18.5)
@@ -70,7 +70,7 @@ extension TodoCell {
         deadlineLabel.isHidden = isDeadlineHidden
         calendarIconView.isHidden = isDeadlineHidden
 
-        textlabel.snp.updateConstraints { make -> Void in
+        textlabel.snp.updateConstraints { make in
             make.left.equalTo(self.priorityImageView.snp.right).offset(isPriorityHidden ? -8 : 8)
             make.bottom.equalTo(self.contentView.snp.bottom).offset(isDeadlineHidden ? -16 : -34.5)
         }

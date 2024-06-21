@@ -46,7 +46,7 @@ final class NavToFavoritesView: UIView {
         routingButton.layer.cornerRadius = 8
         routingButton.addTarget(self, action: #selector(onRoutingButtonTap), for: .touchUpInside)
         addSubview(routingButton)
-        routingButton.snp.makeConstraints { (make) -> Void in
+        routingButton.snp.makeConstraints { make in
             make.edges.equalTo(self)
         }
     }

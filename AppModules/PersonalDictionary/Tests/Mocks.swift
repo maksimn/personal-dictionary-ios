@@ -29,6 +29,8 @@ class HttpClientMock: HttpClient {
 class LangRepositoryMock: LangRepository {
 
     var allLangsMock: [Lang]?
+    var getSourceLangMock: (() -> Lang)?
+    var getTargetLangMock: (() -> Lang)?
     var setSourceLangMock: ((Lang) -> Void)?
     var setTargetLangMock: ((Lang) -> Void)?
 
@@ -38,7 +40,7 @@ class LangRepositoryMock: LangRepository {
 
     var sourceLang: Lang {
         get {
-            fatalError()
+            getSourceLangMock!()
         }
         set {
             setSourceLangMock?(newValue)
@@ -47,7 +49,7 @@ class LangRepositoryMock: LangRepository {
 
     var targetLang: Lang {
         get {
-            fatalError()
+            getTargetLangMock!()
         }
         set {
             setTargetLangMock?(newValue)
