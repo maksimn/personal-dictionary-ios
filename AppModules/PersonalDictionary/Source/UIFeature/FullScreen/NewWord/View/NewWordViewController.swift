@@ -135,6 +135,6 @@ final class NewWordViewController: UIViewController, ViewComponent, UITextFieldD
     private func setViewState(_ state: NewWordState) {
         textField.text = state.text
         translationDirectionView.set(sourceLang: state.sourceLang, targetLang: state.targetLang)
-        langPickerView?.isHidden = state.langPicker.isHidden
+        langPickerView?.isHidden = state.langPicker.value == nil
     }
 }

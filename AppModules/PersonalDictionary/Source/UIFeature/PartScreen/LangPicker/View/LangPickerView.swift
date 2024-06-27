@@ -13,7 +13,9 @@ final class LangPickerView: UIView, ViewComponent {
 
     var props = LangPickerState() {
         didSet {
-            langPicker.select(props.lang)
+            guard let lang = props.value?.lang else { return }
+
+            langPicker.select(lang)
         }
     }
 

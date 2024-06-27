@@ -65,16 +65,17 @@ struct NewWord {
         switch action {
         case .show(let langType):
             state.langPicker = LangPickerState(
-                lang: langType == .source ? state.sourceLang : state.targetLang,
-                langType: langType,
-                isHidden: false
+                value: .init(
+                    lang: langType == .source ? state.sourceLang : state.targetLang,
+                    langType: langType
+                )
             )
 
         case .hide:
             state.langPicker = LangPickerState()
 
         case .langSelected(let lang):
-            let langType = state.langPicker.langType
+            guard let langType = state.langPicker.value?.langType else { return }
             var langRepository = langRepository
 
             if langType == .source {

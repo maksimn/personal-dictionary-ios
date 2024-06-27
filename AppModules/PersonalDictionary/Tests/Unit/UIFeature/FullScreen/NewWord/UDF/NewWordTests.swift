@@ -62,7 +62,7 @@ class NewWordTests: XCTestCase {
         // Arrange
         arrange()
 
-        var state = NewWordState()
+        var state = NewWordState(langPicker: LangPickerState(value: .init()))
 
         // Act
         newWord.reducer(state: &state, action: LangPickerAction.langSelected(otherLang))
@@ -74,7 +74,7 @@ class NewWordTests: XCTestCase {
     func test_reducer_langSelectedAction_updatesSourceLangStorage() throws {
         // Arrange
         var storageUpdateCount = 0
-        var state = NewWordState()
+        var state = NewWordState(langPicker: LangPickerState(value: .init()))
 
         arrange()
         langRepositoryMock.setSourceLangMock = { _ in storageUpdateCount += 1 }
@@ -91,7 +91,7 @@ class NewWordTests: XCTestCase {
         arrange()
 
         var state = NewWordState()
-        let langPickerState = LangPickerState(lang: otherLang, langType: .target, isHidden: false)
+        let langPickerState = LangPickerState(value: .init(lang: otherLang, langType: .target))
 
         state.langPicker = langPickerState
 
@@ -109,7 +109,7 @@ class NewWordTests: XCTestCase {
 
         arrange()
         langRepositoryMock.setTargetLangMock = { _ in storageUpdateCount += 1 }
-        state.langPicker = LangPickerState(lang: otherLang, langType: .target, isHidden: false)
+        state.langPicker = LangPickerState(value: .init(lang: otherLang, langType: .target))
 
         // Act
         newWord.reducer(state: &state, action: LangPickerAction.langSelected(otherLang))
@@ -131,9 +131,10 @@ class NewWordTests: XCTestCase {
         XCTAssertEqual(
             state.langPicker,
             LangPickerState(
-                lang: Lang.empty,
-                langType: .source,
-                isHidden: false
+                value: .init(
+                    lang: Lang.empty,
+                    langType: .source
+                )
             )
         )
     }
@@ -151,9 +152,10 @@ class NewWordTests: XCTestCase {
         XCTAssertEqual(
             state.langPicker,
             LangPickerState(
-                lang: Lang.empty,
-                langType: .target,
-                isHidden: false
+                value: .init(
+                    lang: Lang.empty,
+                    langType: .target
+                )
             )
         )
     }
@@ -214,16 +216,16 @@ class NewWordTests: XCTestCase {
         XCTAssertEqual(state, NewWordState(text: "Abc"))
     }
 
-    func test_reducer_langPickerHideAction_setsIsHiddenToTrue() throws {
+    func test_reducer_langPickerHideAction_setsStateValueToNil() throws {
         // Arrange
         arrange()
 
-        var state = NewWordState(langPicker: LangPickerState(isHidden: false))
+        var state = NewWordState(langPicker: LangPickerState(value: .init()))
 
         // Act
         newWord.reducer(state: &state, action: LangPickerAction.hide)
 
         // Assert
-        XCTAssertEqual(state, NewWordState(langPicker: LangPickerState(isHidden: true)))
+        XCTAssertEqual(state, NewWordState(langPicker: LangPickerState(value: nil)))
     }
 }
