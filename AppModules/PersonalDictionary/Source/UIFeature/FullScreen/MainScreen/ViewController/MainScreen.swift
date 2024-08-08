@@ -58,6 +58,11 @@ final class MainScreen: UIViewController {
         view.addSubview(messageBoxView)
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        logger.log(installedFeatureName: "MainScreen")
+    }
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         mainNavigator.viewWillLayoutSubviews()

@@ -49,8 +49,6 @@ public final class AppBuilderImpl: AppBuilder {
         navigationController.navigationBar.prefersLargeTitles = true
         navigationController.setViewControllers([mainScreen], animated: false)
 
-        logger.log(installedFeatureName: "MainScreen")
-
         return navigationController
     }
 
