@@ -30,8 +30,7 @@ public final class AppBuilderImpl: AppBuilder {
     }
 
     private func appDependency() -> AppDependency {
-        let appConfigFactory = AppConfigFactory()
-        let appConfig = appConfigFactory.create()
+        let appConfig = AppConfig()
 
         logger.debug("App Config has been created.")
 
