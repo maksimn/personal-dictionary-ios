@@ -1,5 +1,5 @@
 //
-//  AppConfigFactory.swift
+//  AppConfig+DI.swift
 //  PersonalDictionary
 //
 //  Created by Maxim Ivanov on 10.10.2021.
@@ -7,17 +7,15 @@
 
 import UIKit
 
-struct AppConfigFactory {
+extension AppConfig {
 
-    func create() -> AppConfig {
-        AppConfig(
-            langData: createLangData(),
-            ponsApiSecret: "",
-            everydayPNTime: AppConfig.EverydayPNTime(hours: 19, minutes: 30)
-        )
+    init() {
+        langData = AppConfig.createLangData()
+        ponsApiSecret = ""
+        everydayPNTime = AppConfig.EverydayPNTime(hours: 19, minutes: 30)
     }
 
-    private func createLangData() -> LangData {
+    private static func createLangData() -> LangData {
         let lang1 = Lang(id: Lang.Id(raw: 1), nameKey: .init(raw: "LS_ENGLISH"), shortNameKey: .init(raw: "LS_EN"))
         let lang2 = Lang(id: Lang.Id(raw: 2), nameKey: .init(raw: "LS_RUSSIAN"), shortNameKey: .init(raw: "LS_RU"))
         let lang4 = Lang(id: Lang.Id(raw: 4), nameKey: .init(raw: "LS_ITALIAN"), shortNameKey: .init(raw: "LS_IT"))

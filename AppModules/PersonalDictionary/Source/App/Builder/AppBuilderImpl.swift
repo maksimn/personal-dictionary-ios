@@ -30,8 +30,7 @@ public final class AppBuilderImpl: AppBuilder {
     }
 
     private func appDependency() -> AppDependency {
-        let appConfigFactory = AppConfigFactory()
-        let appConfig = appConfigFactory.create()
+        let appConfig = AppConfig()
 
         logger.debug("App Config has been created.")
 
@@ -48,8 +47,6 @@ public final class AppBuilderImpl: AppBuilder {
         navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
         navigationController.navigationBar.prefersLargeTitles = true
         navigationController.setViewControllers([mainScreen], animated: false)
-
-        logger.log(installedFeatureName: "MainScreen")
 
         return navigationController
     }
