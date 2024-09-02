@@ -28,7 +28,7 @@ final class NavToTodoListRouter: Router {
     func navigate() {
         let todoListViewController = todoListBuilder.build()
 
-        todoListViewController.modalPresentationStyle = .fullScreen
+        todoListViewController.modalPresentationStyle = .popover
 
         rootViewController.present(todoListViewController, animated: true, completion: nil)
     }
