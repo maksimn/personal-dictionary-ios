@@ -13,6 +13,8 @@ final class SearchTextInputBuilder: SearchControllerBuilder {
 
     private let bundle: Bundle
 
+    private let featureName = "PersonalDictionary.SearchTextInput"
+
     /// - Parameters:
     ///  - bundle: бандл приложения.
     init(bundle: Bundle) {
@@ -21,16 +23,17 @@ final class SearchTextInputBuilder: SearchControllerBuilder {
 
     func build() -> UISearchController {
         let placeholder = bundle.moduleLocalizedString("LS_SEARCH")
-        let model = SearchTextInputModelImpl(
-            searchTextSender: SearchTextStreamImpl.instance,
+        let searchTextStreamFactory = SearchTextStreamFactory(featureName: featureName)
+        let view = SearchTextInputView(
+            sender: searchTextStreamFactory.create(),
+            placeholder: placeholder,
             logger: logger()
         )
-        let view = SearchTextInputView(model: model, placeholder: placeholder, logger: logger())
 
         return view
     }
 
     private func logger() -> Logger {
-        LoggerImpl(category: "PersonalDictionary.SearchTextInput")
+        LoggerImpl(category: featureName)
     }
 }

@@ -13,6 +13,8 @@ final class SearchModePickerBuilder: ViewBuilder {
 
     private let bundle: Bundle
 
+    private let featureName = "PersonalDictionary.SearchModePicker"
+
     /// Инициализатор.
     /// - Parameters:
     ///  - bundle: бандл приложения.
@@ -21,13 +23,10 @@ final class SearchModePickerBuilder: ViewBuilder {
     }
 
     func build() -> UIView {
-        let viewModel = SearchModePickerViewModelImpl(
-            searchModeSender: SearchModeStreamImpl.instance,
-            logger: logger()
-        )
+        let searchModeStreamFactory = SearchModeStreamFactory(featureName: featureName)
         let view = SearchModePickerView(
+            searchModeSender: searchModeStreamFactory.create(),
             params: viewParams(),
-            viewModel: viewModel,
             theme: Theme.data,
             logger: logger()
         )
@@ -36,7 +35,7 @@ final class SearchModePickerBuilder: ViewBuilder {
     }
 
     private func logger() -> Logger {
-        LoggerImpl(category: "PersonalDictionary.SearchModePicker")
+        LoggerImpl(category: featureName)
     }
 
     private func viewParams() -> SearchModePickerViewParams {

@@ -14,7 +14,8 @@ final class WordListViewModelImplTests: XCTestCase {
     var viewModel: WordListViewModelImpl<WordListRouterMock>!
 
     var modelMock: WordListModelMock!
-    var wordStreamMock: UpdatedRemovedWordStreamMock!
+    var updatedWordStreamMock: UpdatedWordStreamMock!
+    var removedWordStreamMock: RemovedWordStreamMock!
     var routerMock: WordListRouterMock!
 
     let lang = Lang.defaultValueFUT
@@ -26,11 +27,13 @@ final class WordListViewModelImplTests: XCTestCase {
 
     func arrange() {
         modelMock = WordListModelMock()
-        wordStreamMock = UpdatedRemovedWordStreamMock()
+        updatedWordStreamMock = UpdatedWordStreamMock()
+        removedWordStreamMock = RemovedWordStreamMock()
         routerMock = WordListRouterMock()
         viewModel = WordListViewModelImpl(
             model: modelMock,
-            wordStream: wordStreamMock,
+            updatedWordStream: updatedWordStreamMock,
+            removedWordStream: removedWordStreamMock,
             router: routerMock,
             logger: LoggerMock()
         )

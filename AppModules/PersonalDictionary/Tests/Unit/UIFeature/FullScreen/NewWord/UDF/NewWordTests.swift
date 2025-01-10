@@ -25,8 +25,7 @@ class NewWordTests: XCTestCase {
         langRepositoryMock.getTargetLangMock = { Lang.defaultValueFUT }
         newWord = NewWord(
             langRepository: langRepositoryMock,
-            newWordSender: newWordSenderMock,
-            logger: LoggerMock()
+            newWordSender: newWordSenderMock
         )
     }
 

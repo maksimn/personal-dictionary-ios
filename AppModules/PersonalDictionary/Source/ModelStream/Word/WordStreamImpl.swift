@@ -8,34 +8,18 @@
 import RxSwift
 import RxCocoa
 
-/// Реализация ModelStream для событий со словами в личном словаре.
-final class WordStreamImpl: WordStream {
+final class NewWordStreamImpl: NewWordSender, NewWordStream {
 
     private let newWordPublishRelay = PublishRelay<Word>()
-    private let removedWordPublishRelay = PublishRelay<Word>()
-    private let updatedWordPublishRelay = PublishRelay<UpdatedWord>()
 
     private init() {}
 
-    /// Singleton-объект для событий со словами в личном словаре.
-    static let instance = WordStreamImpl()
+    static let instance = NewWordStreamImpl()
 
     /// Подписка на события добавления новых слов в словарь.
     /// - Returns: Rx observable с потоком событий добавления новых слов в словарь.
     var newWord: Observable<Word> {
         newWordPublishRelay.asObservable()
-    }
-
-    /// Подписка на события удаления слов из словаря.
-    /// - Returns: Rx observable с потоком событий удаления слов из словаря.
-    var removedWord: Observable<Word> {
-        removedWordPublishRelay.asObservable()
-    }
-
-    /// Для подписки на события обновления слова из словаря
-    /// - Returns: Rx observable с потоком обновленных слов из словаря.
-    var updatedWord: Observable<UpdatedWord> {
-        updatedWordPublishRelay.asObservable()
     }
 
     /// Отправить событие добавления нового слова в словарь.
@@ -44,12 +28,40 @@ final class WordStreamImpl: WordStream {
     func sendNewWord(_ word: Word) {
         newWordPublishRelay.accept(word)
     }
+}
+
+final class RemovedWordStreamImpl: RemovedWordSender, RemovedWordStream {
+
+    private let removedWordPublishRelay = PublishRelay<Word>()
+
+    static let instance = RemovedWordStreamImpl()
+
+    /// Подписка на события удаления слов из словаря.
+    /// - Returns: Rx observable с потоком событий удаления слов из словаря.
+    var removedWord: Observable<Word> {
+        removedWordPublishRelay.asObservable()
+    }
 
     /// Отправить событие удаления слова из словаря.
     /// - Parameters:
     ///  - word: удалённое из словаря слово.
     func sendRemovedWord(_ word: Word) {
         removedWordPublishRelay.accept(word)
+    }
+}
+
+final class UpdatedWordStreamImpl: UpdatedWordSender, UpdatedWordStream {
+
+    private let updatedWordPublishRelay = PublishRelay<UpdatedWord>()
+
+    private init() {}
+
+    static let instance = UpdatedWordStreamImpl()
+
+    /// Для подписки на события обновления слова из словаря
+    /// - Returns: Rx observable с потоком обновленных слов из словаря.
+    var updatedWord: Observable<UpdatedWord> {
+        updatedWordPublishRelay.asObservable()
     }
 
     /// Отправить событие обновления слова из словаря.

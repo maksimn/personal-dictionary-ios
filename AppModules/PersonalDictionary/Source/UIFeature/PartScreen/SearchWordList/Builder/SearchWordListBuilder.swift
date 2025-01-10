@@ -27,8 +27,8 @@ final class SearchWordListBuilder: ViewControllerBuilder {
         let viewModel = SearchWordListViewModelImpl(
             initialData: initialData(),
             model: model,
-            searchTextStream: SearchTextStreamImpl.instance,
-            searchModeStream: SearchModeStreamImpl.instance
+            searchTextStream: SearchTextStreamFactory(featureName: featureName).create(),
+            searchModeStream: SearchModeStreamFactory(featureName: featureName).create()
         )
         let view = SearchWordListViewController(
             viewModel: viewModel,

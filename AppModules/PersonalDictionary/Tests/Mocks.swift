@@ -191,13 +191,8 @@ class UpdatedWordSenderMock: UpdatedWordSender {
     }
 }
 
-class RUWordStreamMock: UpdatedWordSender, RemovedWordSender {
-    var sendUpdatedWordMock: ((UpdatedWord) -> Void)? = { _ in }
+class RemovedWordSenderMock: RemovedWordSender {
     var sendRemovedWordMock: ((Word) -> Void)? = { _ in }
-
-    func sendUpdatedWord(_ updatedWord: UpdatedWord) {
-        sendUpdatedWordMock!(updatedWord)
-    }
 
     func sendRemovedWord(_ word: Word) {
         sendRemovedWordMock!(word)

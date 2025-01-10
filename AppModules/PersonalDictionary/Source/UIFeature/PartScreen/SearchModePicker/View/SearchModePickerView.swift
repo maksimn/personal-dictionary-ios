@@ -25,7 +25,7 @@ struct SearchModePickerViewParams {
 final class SearchModePickerView: UIView {
 
     private let params: SearchModePickerViewParams
-    private let viewModel: SearchModePickerViewModel
+    private let searchModeSender: SearchModeSender
     private let theme: Theme
     private let logger: Logger
 
@@ -35,12 +35,14 @@ final class SearchModePickerView: UIView {
     /// Инициализатор.
     /// - Parameters:
     ///  - params: параметры представления.
-    init(params: SearchModePickerViewParams,
-         viewModel: SearchModePickerViewModel,
-         theme: Theme,
-         logger: Logger) {
+    init(
+        searchModeSender: SearchModeSender,
+        params: SearchModePickerViewParams,
+        theme: Theme,
+        logger: Logger
+    ) {
+        self.searchModeSender = searchModeSender
         self.params = params
-        self.viewModel = viewModel
         self.theme = theme
         self.logger = logger
         super.init(frame: .zero)
@@ -57,9 +59,9 @@ final class SearchModePickerView: UIView {
 
         switch sender.selectedSegmentIndex {
         case 0:
-            viewModel.searchMode.accept(.bySourceWord)
+            searchModeSender.send(.bySourceWord)
         case 1:
-            viewModel.searchMode.accept(.byTranslation)
+            searchModeSender.send(.byTranslation)
         default:
             break
         }

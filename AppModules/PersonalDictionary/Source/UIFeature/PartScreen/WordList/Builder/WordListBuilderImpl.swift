@@ -30,10 +30,11 @@ final class WordListBuilderImpl: WordListBuilder {
     func build() -> WordListGraph {
         WordListGraphImpl(
             viewParams: viewParams(),
-            wordStream: WordStreamImpl.instance,
             updateWordDbWorker: UpdateWordDbWorkerFactory(featureName: featureName).create(),
             deleteWordDbWorker: DeleteWordDbWorkerFactory(featureName: featureName).create(),
             router: router(),
+            updatedWordStream: UpdatedWordStreamFactory(featureName: featureName).create(),
+            removedWordStream: RemovedWordStreamFactory(featureName: featureName).create(),
             logger: LoggerImpl(category: featureName)
         )
     }

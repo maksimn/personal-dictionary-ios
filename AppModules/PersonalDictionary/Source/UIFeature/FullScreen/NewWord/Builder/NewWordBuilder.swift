@@ -37,8 +37,7 @@ final class NewWordBuilder: ViewControllerBuilder {
 
         let newWord = NewWord(
             langRepository: langRepository,
-            newWordSender: WordStreamImpl.instance,
-            logger: logger()
+            newWordSender: NewWordStreamFactory(featureName: featureName).create()
         )
 
         let store = Store(
@@ -57,7 +56,7 @@ final class NewWordBuilder: ViewControllerBuilder {
             newWord: newWord,
             langPickerBuilder: langPickerBuilder(store, allLangs: langData.allLangs),
             theme: Theme.data,
-            logger: self.logger()
+            logger: LoggerImpl(category: featureName)
         )
 
         view.connect(to: store)
@@ -79,9 +78,5 @@ final class NewWordBuilder: ViewControllerBuilder {
             allLangs: allLangs,
             store: store.scope(\.langPicker)
         )
-    }
-
-    private func logger() -> Logger {
-        LoggerImpl(category: featureName)
     }
 }

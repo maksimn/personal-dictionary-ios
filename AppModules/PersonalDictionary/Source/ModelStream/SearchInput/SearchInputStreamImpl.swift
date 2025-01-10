@@ -1,5 +1,5 @@
 //
-//  WordItemStreamImpl.swift
+//  SearchInputStreamImpl.swift
 //  PersonalDictionary
 //
 //  Created by Maxim Ivanov on 26.12.2022.

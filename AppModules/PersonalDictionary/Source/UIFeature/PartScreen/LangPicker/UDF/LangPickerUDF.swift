@@ -14,10 +14,10 @@ enum LangPickerAction: Action {
     case langSelected(Lang)
 }
 
-typealias LangPickerState = Nullable<OptionalLangPickerState>
+typealias LangPickerState = WrappedOptional<LangPickerData>
 
 /// Данные о выбранном языке
-struct OptionalLangPickerState: Equatable {
+struct LangPickerData: Equatable {
 
     /// Выбранный язык
     var lang: Lang

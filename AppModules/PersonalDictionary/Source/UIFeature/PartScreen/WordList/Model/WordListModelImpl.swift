@@ -8,19 +8,12 @@
 import RxSwift
 
 /// Реализация модели списка слов.
-final class WordListModelImpl: WordListModel {
+struct WordListModelImpl: WordListModel {
 
-    private let updateWordDbWorker: UpdateWordDbWorker
-    private let deleteWordDbWorker: DeleteWordDbWorker
-    private let wordSender: RemovedWordSender & UpdatedWordSender
-
-    init(updateWordDbWorker: UpdateWordDbWorker,
-         deleteWordDbWorker: DeleteWordDbWorker,
-         wordSender: RemovedWordSender & UpdatedWordSender) {
-        self.updateWordDbWorker = updateWordDbWorker
-        self.deleteWordDbWorker = deleteWordDbWorker
-        self.wordSender = wordSender
-    }
+    let updateWordDbWorker: UpdateWordDbWorker
+    let deleteWordDbWorker: DeleteWordDbWorker
+    let updatedWordSender: UpdatedWordSender
+    let removedWordSender: RemovedWordSender
 
     func remove(at position: Int, state: WordListState) -> WordListState {
         guard position > -1 && position < state.count else { return state }
@@ -34,7 +27,7 @@ final class WordListModelImpl: WordListModel {
     func removeEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
         deleteWordDbWorker.delete(word: word)
             .do(onSuccess: { word in
-                self.wordSender.sendRemovedWord(word)
+                self.removedWordSender.sendRemovedWord(word)
             })
             .map { _ in
                 state
@@ -53,7 +46,7 @@ final class WordListModelImpl: WordListModel {
     func updateEffect(_ updatedWord: UpdatedWord, state: WordListState) -> Single<WordListState> {
         updateWordDbWorker.update(word: updatedWord.newValue)
             .do(onSuccess: { _ in
-                self.wordSender.sendUpdatedWord(updatedWord)
+                self.updatedWordSender.sendUpdatedWord(updatedWord)
             })
             .map { _ in
                 state

@@ -11,13 +11,13 @@ import UIKit
 
 final class SearchTextInputView: UISearchController {
 
-    private let model: SearchTextInputModel
+    private let sender: SearchTextSender
     private let logger: Logger
 
     private let disposeBag = DisposeBag()
 
-    init(model: SearchTextInputModel, placeholder: String, logger: Logger) {
-        self.model = model
+    init(sender: SearchTextSender, placeholder: String, logger: Logger) {
+        self.sender = sender
         self.logger = logger
         super.init(searchResultsController: nil)
         searchBar.placeholder = placeholder
@@ -44,6 +44,6 @@ final class SearchTextInputView: UISearchController {
         guard let searchText = searchText else { return }
 
         logger.debug("User is entering search text: \"\(searchText)\"")
-        model.process(searchText)
+        sender.send(searchText)
     }
 }
