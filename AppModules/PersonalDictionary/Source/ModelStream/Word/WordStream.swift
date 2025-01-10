@@ -1,5 +1,5 @@
 //
-//  WordItemStream.swift
+//  WordStream.swift
 //  PersonalDictionary
 //
 //  Created by Maxim Ivanov on 25.11.2021.
@@ -9,19 +9,19 @@ import RxSwift
 
 protocol NewWordStream {
 
-    /// Для подписки на события добавления новых слов в словарь.
+    /// To subscribe for events of an appearance of a new word in the dictionary
     var newWord: Observable<Word> { get }
 }
 
 protocol UpdatedWordStream {
 
-    /// Для подписки на события обновления слов в словаре.
+    /// To subscribe for events of an update of a word in the dictionary
     var updatedWord: Observable<UpdatedWord> { get }
 }
 
 protocol RemovedWordStream {
 
-    /// Для подписки на события удаления слов из словаря.
+    /// To subscribe for events of a deletion of a word in the dictionary
     var removedWord: Observable<Word> { get }
 }
 
@@ -51,7 +51,3 @@ protocol RemovedWordSender {
     ///  - word: удалённое из словаря слово.
     func sendRemovedWord(_ word: Word)
 }
-
-protocol WordStream: NewWordStream, NewWordSender,
-                     UpdatedWordStream, UpdatedWordSender,
-                     RemovedWordStream, RemovedWordSender { }

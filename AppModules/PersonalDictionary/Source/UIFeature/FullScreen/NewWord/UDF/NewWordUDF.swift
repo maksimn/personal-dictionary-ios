@@ -26,7 +26,6 @@ struct NewWord {
 
     let langRepository: LangRepository
     let newWordSender: NewWordSender
-    let logger: Logger
 
     func reducer(state: inout NewWordState, action: Action) {
         if let action = action as? NewWordAction {
@@ -56,7 +55,6 @@ struct NewWord {
 
             guard !word.text.isEmpty else { return }
 
-            logger.logSending(word, toModelStream: "NEW WORD")
             newWordSender.sendNewWord(word)
         }
     }

@@ -31,6 +31,7 @@ final class MainWordListViewModelImpl: MainWordListViewModel {
         onNewState(wordList, actionName: "FETCH MAIN WORDLIST")
     }
 
+    // Issue: Lack of testing of this private logic.
     private func onNewState(_ state: WordListState, actionName: String) {
         logger.logState(actionName: actionName, state)
 
@@ -57,8 +58,6 @@ final class MainWordListViewModelImpl: MainWordListViewModel {
     private func subscribe() {
         newWordStream.newWord
             .subscribe(onNext: { [weak self] word in
-                self?.logger.logReceiving(word, fromModelStream: "new word")
-
                 self?.create(word)
             })
             .disposed(by: disposeBag)

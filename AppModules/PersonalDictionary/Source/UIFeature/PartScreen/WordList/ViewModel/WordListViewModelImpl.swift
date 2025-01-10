@@ -8,6 +8,8 @@
 import CoreModule
 import RxSwift
 
+// Problem: too many logic in the view model. Need to refactor.
+
 /// Реализация модели представления списка слов.
 final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewModel
     where RouterType.Parameter == Word.Id {
@@ -15,7 +17,8 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
     let wordList = BindableWordList(value: [])
 
     private let model: WordListModel
-    private let wordStream: UpdatedWordStream & RemovedWordStream
+    private let updatedWordStream: UpdatedWordStream
+    private let removedWordStream: RemovedWordStream
     private let router: RouterType
     private let logger: Logger
 
@@ -23,12 +26,14 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
 
     init(
         model: WordListModel,
-        wordStream: UpdatedWordStream & RemovedWordStream,
+        updatedWordStream: UpdatedWordStream,
+        removedWordStream: RemovedWordStream,
         router: RouterType,
         logger: Logger
     ) {
         self.model = model
-        self.wordStream = wordStream
+        self.updatedWordStream = updatedWordStream
+        self.removedWordStream = removedWordStream
         self.router = router
         self.logger = logger
         subscribe()
@@ -68,11 +73,8 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
 
         model.updateEffect(updatedWord, state: wordList)
             .executeInBackgroundAndObserveOnMainThread()
-            .subscribe(
-                onFailure: { [weak self] error in
-                    self?.logger.errorWithContext(error)
-                }
-            ).disposed(by: disposeBag)
+            .subscribe()
+            .disposed(by: disposeBag)
     }
 
     private func remove(at position: Int, withSideEffect: Bool) {
@@ -86,11 +88,8 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
 
         model.removeEffect(word, state: wordList)
             .executeInBackgroundAndObserveOnMainThread()
-            .subscribe(
-                onFailure: { [weak self] error in
-                    self?.logger.errorWithContext(error)
-                }
-            ).disposed(by: disposeBag)
+            .subscribe()
+            .disposed(by: disposeBag)
     }
 
     private func findAndRemove(_ word: Word) {
@@ -106,17 +105,13 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
     }
 
     private func subscribe() {
-        wordStream.removedWord
+        removedWordStream.removedWord
             .subscribe(onNext: { [weak self] word in
-                self?.logger.logReceiving(word, fromModelStream: "removed word")
-
                 self?.findAndRemove(word)
             })
             .disposed(by: disposeBag)
-        wordStream.updatedWord
+        updatedWordStream.updatedWord
             .subscribe(onNext: { [weak self] updatedWord in
-                self?.logger.logReceiving(updatedWord, fromModelStream: "updated word")
-
                 self?.findAndUpdate(updatedWord)
             })
             .disposed(by: disposeBag)

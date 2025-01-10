@@ -1,12 +1,12 @@
 //
-//  Nullable.swift
+//  WrappedOptional.swift
 //  CoreModule
 //
 //  Created by Maxim Ivanov on 27.06.2024.
 //
 
 /// Generic wrapper for optional value.
-public struct Nullable<T: Equatable>: Equatable, CustomStringConvertible {
+public struct WrappedOptional<T: Equatable>: Equatable, CustomStringConvertible {
 
     public var value: T?
 

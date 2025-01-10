@@ -51,7 +51,7 @@ extension Logger {
         guard isDevelopment() else { return }
         let text = "Sending \(type(of: object)) = \(object) to the \(modelStreamName) model stream."
 
-        log(text, level: .info, file: file, function: function, line: line)
+        log(text, level: .info)
     }
 
     public func logReceiving<T>(_ object: T,
@@ -62,7 +62,7 @@ extension Logger {
         guard isDevelopment() else { return }
         let text = "Received \(type(of: object)) = \(object) from the \(modelStreamName) model stream."
 
-        log(text, level: .info, file: file, function: function, line: line)
+        log(text, level: .info)
     }
 
     public func log(installedFeatureName: String) {

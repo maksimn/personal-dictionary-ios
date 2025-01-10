@@ -36,7 +36,7 @@ final class MainWordListBuilder: ViewControllerBuilder {
         )
         let viewModel = MainWordListViewModelImpl(
             model: model,
-            newWordStream: WordStreamImpl.instance,
+            newWordStream: NewWordStreamFactory(featureName: featureName).create(),
             logger: LoggerImpl(category: featureName)
         )
         let view = MainWordListViewController(

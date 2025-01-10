@@ -1,5 +1,5 @@
 //
-//  WordItemStream.swift
+//  SearchInputStream.swift
 //  PersonalDictionary
 //
 //  Created by Maxim Ivanov on 26.12.2022.
@@ -25,4 +25,10 @@ protocol SearchModeStream {
 protocol SearchModeSender {
 
     func send(_ searchMode: SearchMode)
+}
+
+/// Режим поиска
+enum SearchMode {
+    case bySourceWord /* по исходному слову */
+    case byTranslation /* по переводу слова */
 }

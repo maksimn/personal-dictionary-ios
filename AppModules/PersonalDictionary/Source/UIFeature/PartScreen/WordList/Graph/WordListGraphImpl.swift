@@ -18,23 +18,25 @@ final class WordListGraphImpl<RouterType: ParametrizedRouter>: WordListGraph whe
     /// Инициализатор.
     /// - Parameters:
     ///  - viewParams: параметры представления фичи.
-    ///  - wordStream: ModelStream для событий со словами в личном словаре.
     init(
         viewParams: WordListViewParams,
-        wordStream: WordStream,
         updateWordDbWorker: UpdateWordDbWorker,
         deleteWordDbWorker: DeleteWordDbWorker,
         router: RouterType,
+        updatedWordStream: UpdatedWordStream & UpdatedWordSender,
+        removedWordStream: RemovedWordStream & RemovedWordSender,
         logger: Logger
     ) {
         let model = WordListModelImpl(
             updateWordDbWorker: updateWordDbWorker,
             deleteWordDbWorker: deleteWordDbWorker,
-            wordSender: wordStream
+            updatedWordSender: updatedWordStream,
+            removedWordSender: removedWordStream
         )
         viewModel = WordListViewModelImpl(
             model: model,
-            wordStream: wordStream,
+            updatedWordStream: updatedWordStream,
+            removedWordStream: removedWordStream,
             router: router,
             logger: logger
         )

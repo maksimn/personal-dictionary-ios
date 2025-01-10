@@ -25,7 +25,7 @@ struct DictionaryEntryBuilder: ParametrizedViewControllerBuilder {
             id: id,
             dictionaryService: dictionaryService(),
             decoder: DictionaryEntryDecoderFactory(featureName: featureName).create(),
-            updatedWordSender: WordStreamImpl.instance
+            updatedWordSender: UpdatedWordStreamFactory(featureName: featureName).create()
         )
         let viewModel = DictionaryEntryViewModelImpl(model: model)
         let view = DictionaryEntryViewController(

@@ -15,7 +15,8 @@ final class WordListModelImplTests: XCTestCase {
 
     var updateWordDbWorkerMock: UpdateWordDbWorkerMock!
     var deleteWordDbWorkerMock: DeleteWordDbWorkerMock!
-    var wordSenderMock: RUWordStreamMock!
+    var updatedWordSenderMock: UpdatedWordSenderMock!
+    var removedWordSenderMock: RemovedWordSenderMock!
 
     let lang = Lang.defaultValueFUT
     lazy var word = Word(text: "abc", sourceLang: lang, targetLang: lang)
@@ -29,11 +30,13 @@ final class WordListModelImplTests: XCTestCase {
     func arrange() {
         updateWordDbWorkerMock = .init()
         deleteWordDbWorkerMock = .init()
-        wordSenderMock = .init()
+        updatedWordSenderMock = .init()
+        removedWordSenderMock = .init()
         model = .init(
             updateWordDbWorker: updateWordDbWorkerMock,
             deleteWordDbWorker: deleteWordDbWorkerMock,
-            wordSender: wordSenderMock
+            updatedWordSender: updatedWordSenderMock,
+            removedWordSender: removedWordSenderMock
         )
     }
 
@@ -83,7 +86,7 @@ final class WordListModelImplTests: XCTestCase {
 
         var notificationCounter = 0
 
-        wordSenderMock.sendRemovedWordMock = { _ in notificationCounter += 1 }
+        removedWordSenderMock.sendRemovedWordMock = { _ in notificationCounter += 1 }
 
         // Act
         _ = try model.removeEffect(word, state: wordList).toBlocking().first()
@@ -150,7 +153,7 @@ final class WordListModelImplTests: XCTestCase {
 
         var notificationCounter = 0
 
-        wordSenderMock.sendUpdatedWordMock = { _ in notificationCounter += 1 }
+        updatedWordSenderMock.sendUpdatedWordMock = { _ in notificationCounter += 1 }
 
         // Act
         _ = try model.updateEffect(updatedWord, state: wordList).toBlocking().first()
