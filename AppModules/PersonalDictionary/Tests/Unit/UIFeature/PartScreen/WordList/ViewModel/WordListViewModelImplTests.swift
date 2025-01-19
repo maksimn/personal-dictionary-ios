@@ -103,8 +103,7 @@ final class WordListViewModelImplTests: XCTestCase {
         arrange()
 
         viewModel.wordList.accept(words)
-        modelMock.removeMock = { (_, _) in [self.words[0], self.words[2]] }
-        modelMock.removeEffectMock = { (_, state) in Single.just(state) }
+        modelMock.removeMock = { (_, _) in .just([self.words[0], self.words[2]]) }
 
         // Act
         viewModel.remove(at: 1)
@@ -121,8 +120,7 @@ final class WordListViewModelImplTests: XCTestCase {
 
         word.isFavorite.toggle()
         viewModel.wordList.accept(words)
-        modelMock.updateMock = { (_, _, _) in [self.words[0], word, self.words[2]] }
-        modelMock.updateEffectMock = { (_, state) in Single.just(state) }
+        modelMock.toggleIsFavoriteMock = { (_, _) in .just([self.words[0], word, self.words[2]]) }
 
         // Act
         viewModel.toggleWordIsFavorite(at: 1)

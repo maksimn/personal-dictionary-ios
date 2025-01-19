@@ -156,30 +156,26 @@ class SearchModeStreamMock: SearchModeStream {
 }
 
 class WordListModelMock: WordListModel {
-    var removeMock: ((Int, WordListState) -> WordListState)?
-    var removeEffectMock: ((Word, WordListState) -> Single<WordListState>)?
-    var updateMock: ((Word, Int, WordListState) -> WordListState)?
-    var updateEffectMock: ((UpdatedWord, WordListState) -> Single<WordListState>)?
-    var fetchTranslationsForMock: ((WordListState, Int, Int) -> Single<WordListState>)?
 
-    func remove(at position: Int, state: WordListState) -> WordListState {
+    var removeMock: ((Int, WordListState) -> Single<WordListState>)? = { (_, _) in .error(ErrorMock.err) }
+    var removeWordMock: ((Word, WordListState) -> Single<WordListState>)? = { (_, _) in .error(ErrorMock.err) }
+    var toggleIsFavoriteMock: ((Int, WordListState) -> Single<WordListState>)? = { (_, _) in .error(ErrorMock.err) }
+    var updateWordMock: ((UpdatedWord, WordListState) -> Single<WordListState>)? = { (_, _) in .error(ErrorMock.err) }
+
+    func remove(at position: Int, state: WordListState) -> Single<WordListState> {
         removeMock!(position, state)
     }
 
-    func removeEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
-        removeEffectMock!(word, state)
+    func remove(word: Word, state: WordListState) -> Single<WordListState> {
+        removeWordMock!(word, state)
     }
 
-    func update(_ word: Word, at position: Int, state: WordListState) -> WordListState {
-        updateMock!(word, position, state)
+    func toggleIsFavorite(at position: Int, state: WordListState) -> Single<WordListState> {
+        toggleIsFavoriteMock!(position, state)
     }
 
-    func updateEffect(_ updatedWord: UpdatedWord, state: WordListState) -> Single<WordListState> {
-        updateEffectMock!(updatedWord, state)
-    }
-
-    func fetchTranslationsFor(state: WordListState, start: Int, end: Int) -> Single<WordListState> {
-        fetchTranslationsForMock!(state, start, end)
+    func update(word: UpdatedWord, state: WordListState) -> Single<WordListState> {
+        updateWordMock!(word, state)
     }
 }
 

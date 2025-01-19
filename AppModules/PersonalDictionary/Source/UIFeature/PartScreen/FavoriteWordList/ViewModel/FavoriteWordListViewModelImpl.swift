@@ -15,7 +15,8 @@ final class FavoriteWordListViewModelImpl: FavoriteWordListViewModel {
     private let fetcher: FavoriteWordListFetcher
 
     init(fetcher: FavoriteWordListFetcher) {
-        self.fetcher = fetcher    }
+        self.fetcher = fetcher
+    }
 
     func fetchFavoriteWordList() {
         do {

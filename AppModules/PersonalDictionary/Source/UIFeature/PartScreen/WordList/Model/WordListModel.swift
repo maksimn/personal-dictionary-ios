@@ -10,11 +10,11 @@ import RxSwift
 /// Модель списка слов.
 protocol WordListModel {
 
-    func remove(at position: Int, state: WordListState) -> WordListState
+    func remove(at position: Int, state: WordListState) -> Single<WordListState>
 
-    func removeEffect(_ word: Word, state: WordListState) -> Single<WordListState>
+    func remove(word: Word, state: WordListState) -> Single<WordListState>
 
-    func update(_ word: Word, at position: Int, state: WordListState) -> WordListState
+    func toggleIsFavorite(at position: Int, state: WordListState) -> Single<WordListState>
 
-    func updateEffect(_ updatedWord: UpdatedWord, state: WordListState) -> Single<WordListState>
+    func update(word: UpdatedWord, state: WordListState) -> Single<WordListState>
 }

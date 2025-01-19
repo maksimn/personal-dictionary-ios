@@ -7,7 +7,7 @@
 
 import RxSwift
 
-/// Реализация модели списка слов.
+/// An implementation of a word list model.
 struct WordListModelImpl: WordListModel {
 
     let updateWordDbWorker: UpdateWordDbWorker
@@ -15,41 +15,54 @@ struct WordListModelImpl: WordListModel {
     let updatedWordSender: UpdatedWordSender
     let removedWordSender: RemovedWordSender
 
-    func remove(at position: Int, state: WordListState) -> WordListState {
-        guard position > -1 && position < state.count else { return state }
+    func remove(at position: Int, state: WordListState) -> Single<WordListState> {
+        return remove(at: position, state: state, withSideEffect: true)
+    }
+
+    func remove(word: Word, state: WordListState) -> Single<WordListState> {
+        guard let position = state.firstIndex(where: { $0.id == word.id }) else { return .just(state) }
+
+        return remove(at: position, state: state, withSideEffect: false)
+    }
+
+    private func remove(at position: Int, state: WordListState, withSideEffect: Bool) -> Single<WordListState> {
+        guard let word = state[safeIndex: position] else { return .just(state) }
         var state = state
 
         state.remove(at: position)
 
-        return state
-    }
+        guard withSideEffect else { return .just(state) }
 
-    func removeEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
-        deleteWordDbWorker.delete(word: word)
+        return deleteWordDbWorker.delete(word: word)
             .do(onSuccess: { word in
                 self.removedWordSender.sendRemovedWord(word)
             })
-            .map { _ in
-                state
-            }
+            .map { _ in state }
+            .executeInBackgroundAndObserveOnMainThread()
     }
 
-    func update(_ word: Word, at position: Int, state: WordListState) -> WordListState {
-        guard position > -1 && position < state.count else { return state }
+    func toggleIsFavorite(at position: Int, state: WordListState) -> Single<WordListState> {
+        guard let wordOldValue = state[safeIndex: position] else { return .just(state) }
+        var word = wordOldValue
         var state = state
 
+        word.isFavorite.toggle()
         state[position] = word
 
-        return state
+        return updateWordDbWorker.update(word: word)
+            .do(onSuccess: { _ in
+                self.updatedWordSender.sendUpdatedWord(UpdatedWord(newValue: word, oldValue: wordOldValue))
+            })
+            .map { _ in state }
+            .executeInBackgroundAndObserveOnMainThread()
     }
 
-    func updateEffect(_ updatedWord: UpdatedWord, state: WordListState) -> Single<WordListState> {
-        updateWordDbWorker.update(word: updatedWord.newValue)
-            .do(onSuccess: { _ in
-                self.updatedWordSender.sendUpdatedWord(updatedWord)
-            })
-            .map { _ in
-                state
-            }
+    func update(word: UpdatedWord, state: WordListState) -> Single<WordListState> {
+        guard let position = state.firstIndex(where: { $0.id == word.newValue.id }) else { return .just(state) }
+        var state = state
+
+        state[position] = word.newValue
+
+        return .just(state)
     }
 }
