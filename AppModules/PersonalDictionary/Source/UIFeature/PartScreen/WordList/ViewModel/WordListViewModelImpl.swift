@@ -8,9 +8,7 @@
 import CoreModule
 import RxSwift
 
-// Problem: too many logic in the view model. Need to refactor.
-
-/// Реализация модели представления списка слов.
+/// An implementation of a word list view model.
 final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewModel
     where RouterType.Parameter == Word.Id {
 
@@ -24,13 +22,8 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
 
     private let disposeBag = DisposeBag()
 
-    init(
-        model: WordListModel,
-        updatedWordStream: UpdatedWordStream,
-        removedWordStream: RemovedWordStream,
-        router: RouterType,
-        logger: Logger
-    ) {
+    init(model: WordListModel, updatedWordStream: UpdatedWordStream, removedWordStream: RemovedWordStream,
+         router: RouterType, logger: Logger) {
         self.model = model
         self.updatedWordStream = updatedWordStream
         self.removedWordStream = removedWordStream
@@ -46,16 +39,19 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
     }
 
     func remove(at position: Int) {
-        remove(at: position, withSideEffect: true)
+        model.remove(at: position, state: wordList.value)
+            .subscribe(onSuccess: { state in
+                self.onNewState(state, actionName: "REMOVE WORD AT #\(position)")
+            })
+            .disposed(by: disposeBag)
     }
 
     func toggleWordIsFavorite(at position: Int) {
-        guard position > -1 && position < wordList.value.count else { return }
-        var word = wordList.value[position]
-        let wordOldValue = word
-
-        word.isFavorite.toggle()
-        update(UpdatedWord(newValue: word, oldValue: wordOldValue), at: position, withSideEffect: true)
+        model.toggleIsFavorite(at: position, state: wordList.value)
+            .subscribe(onSuccess: { state in
+                self.onNewState(state, actionName: "TOGGLE WORD ISFAVORITE AT #\(position)")
+            })
+            .disposed(by: disposeBag)
     }
 
     private func onNewState(_ state: WordListState, actionName: String) {
@@ -64,55 +60,23 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
         wordList.accept(state)
     }
 
-    private func update(_ updatedWord: UpdatedWord, at position: Int, withSideEffect: Bool) {
-        let wordList = model.update(updatedWord.newValue, at: position, state: self.wordList.value)
-
-        onNewState(wordList, actionName: "update word")
-
-        guard withSideEffect else { return }
-
-        model.updateEffect(updatedWord, state: wordList)
-            .executeInBackgroundAndObserveOnMainThread()
-            .subscribe()
-            .disposed(by: disposeBag)
-    }
-
-    private func remove(at position: Int, withSideEffect: Bool) {
-        guard position > -1 && position < wordList.value.count else { return }
-        let word = wordList.value[position]
-        let wordList = model.remove(at: position, state: self.wordList.value)
-
-        onNewState(wordList, actionName: "remove word")
-
-        guard withSideEffect else { return }
-
-        model.removeEffect(word, state: wordList)
-            .executeInBackgroundAndObserveOnMainThread()
-            .subscribe()
-            .disposed(by: disposeBag)
-    }
-
-    private func findAndRemove(_ word: Word) {
-        guard let position = wordList.value.firstIndex(where: { $0.id == word.id }) else { return }
-
-        remove(at: position, withSideEffect: false)
-    }
-
-    private func findAndUpdate(_ updatedWord: UpdatedWord) {
-        guard let position = wordList.value.firstIndex(where: { $0.id == updatedWord.newValue.id }) else { return }
-
-        update(updatedWord, at: position, withSideEffect: false)
-    }
-
     private func subscribe() {
         removedWordStream.removedWord
-            .subscribe(onNext: { [weak self] word in
-                self?.findAndRemove(word)
+            .map {
+                self.model.remove(word: $0, state: self.wordList.value)
+            }
+            .concat()
+            .subscribe(onNext: { state in
+                self.onNewState(state, actionName: "REMOVE WORD")
             })
             .disposed(by: disposeBag)
         updatedWordStream.updatedWord
-            .subscribe(onNext: { [weak self] updatedWord in
-                self?.findAndUpdate(updatedWord)
+            .map {
+                self.model.update(word: $0, state: self.wordList.value)
+            }
+            .concat()
+            .subscribe(onNext: { state in
+                self.onNewState(state, actionName: "UPDATE WORD")
             })
             .disposed(by: disposeBag)
     }
