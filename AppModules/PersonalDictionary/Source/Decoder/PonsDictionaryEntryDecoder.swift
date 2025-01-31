@@ -56,13 +56,11 @@ struct PonsDictionaryEntryDecoder: DictionaryEntryDecoder {
                     subtitle: LocalizableStringKey(wordclassMapper[wordclass] ?? "", bundle: Bundle.module),
                     subitems: $0.arabs
                         .flatMap {
-                            let context = PonsDictionaryEntryDecoder.parseContextFrom($0.header)
+                            let context = Self.parseContextFrom($0.header)
 
                             return $0.translations.map {
-                                let example = PonsDictionaryEntryDecoder.stripOutTags(
-                                    from: $0.source, andRemove: redundantParts)
-                                let translation = PonsDictionaryEntryDecoder.stripOutTags(
-                                    from: $0.target, andRemove: redundantParts)
+                                let example = Self.stripOutTags(from: $0.source, andRemove: redundantParts)
+                                let translation = Self.stripOutTags(from: $0.target, andRemove: redundantParts)
 
                                 return DictionaryEntrySubitem(
                                     translation: translation,
@@ -74,7 +72,7 @@ struct PonsDictionaryEntryDecoder: DictionaryEntryDecoder {
                 )
             }
 
-        return PonsDictionaryEntryDecoder.itemsGroupedByTitleAndSubtitle(items.compactMap { $0 })
+        return Self.itemsGroupedByTitleAndSubtitle(items.compactMap { $0 })
     }
 
     static func itemsGroupedByTitleAndSubtitle(_ items: DictionaryEntry) -> DictionaryEntry {
