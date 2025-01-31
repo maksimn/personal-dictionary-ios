@@ -17,12 +17,12 @@ struct SearchTextStreamLog: SearchTextStream, SearchTextSender {
 
     var searchText: Observable<String> {
         modelStream.searchText.do(onNext: { searchText in
-            logger.logReceiving(searchText, fromModelStream: SearchTextStreamLog.modelStreamName)
+            logger.logReceiving(searchText, fromModelStream: Self.modelStreamName)
         })
     }
 
     func send(_ searchText: String) {
-        logger.logSending(searchText, toModelStream: SearchTextStreamLog.modelStreamName)
+        logger.logSending(searchText, toModelStream: Self.modelStreamName)
 
         modelStream.send(searchText)
     }
@@ -37,12 +37,12 @@ struct SearchModeStreamLog: SearchModeStream, SearchModeSender {
 
     var searchMode: Observable<SearchMode> {
         modelStream.searchMode.do(onNext: { searchMode in
-            logger.logReceiving(searchMode, fromModelStream: SearchModeStreamLog.modelStreamName)
+            logger.logReceiving(searchMode, fromModelStream: Self.modelStreamName)
         })
     }
 
     func send(_ searchMode: SearchMode) {
-        logger.logSending(searchMode, toModelStream: SearchModeStreamLog.modelStreamName)
+        logger.logSending(searchMode, toModelStream: Self.modelStreamName)
 
         modelStream.send(searchMode)
     }
