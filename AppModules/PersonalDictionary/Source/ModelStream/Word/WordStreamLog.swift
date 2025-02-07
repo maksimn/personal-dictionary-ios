@@ -17,12 +17,12 @@ struct NewWordStreamLog: NewWordStream, NewWordSender {
 
     var newWord: Observable<Word> {
         modelStream.newWord.do(onNext: { (word: Word) in
-            logger.logReceiving(word, fromModelStream: NewWordStreamLog.modelStreamName)
+            logger.logReceiving(word, fromModelStream: Self.modelStreamName)
         })
     }
 
     func sendNewWord(_ word: Word) {
-        logger.logSending(word, toModelStream: NewWordStreamLog.modelStreamName)
+        logger.logSending(word, toModelStream: Self.modelStreamName)
 
         modelStream.sendNewWord(word)
     }
@@ -37,12 +37,12 @@ struct UpdatedWordStreamLog: UpdatedWordStream, UpdatedWordSender {
 
     var updatedWord: Observable<UpdatedWord> {
         modelStream.updatedWord.do(onNext: { (updatedWord: UpdatedWord) in
-            logger.logReceiving(updatedWord, fromModelStream: UpdatedWordStreamLog.modelStreamName)
+            logger.logReceiving(updatedWord, fromModelStream: Self.modelStreamName)
         })
     }
 
     func sendUpdatedWord(_ updatedWord: UpdatedWord) {
-        logger.logSending(updatedWord, toModelStream: UpdatedWordStreamLog.modelStreamName)
+        logger.logSending(updatedWord, toModelStream: Self.modelStreamName)
 
         modelStream.sendUpdatedWord(updatedWord)
     }
@@ -57,12 +57,12 @@ struct RemovedWordStreamLog: RemovedWordStream, RemovedWordSender {
 
     var removedWord: Observable<Word> {
         modelStream.removedWord.do(onNext: { (word: Word) in
-            logger.logReceiving(word, fromModelStream: RemovedWordStreamLog.modelStreamName)
+            logger.logReceiving(word, fromModelStream: Self.modelStreamName)
         })
     }
 
     func sendRemovedWord(_ word: Word) {
-        logger.logSending(word, toModelStream: RemovedWordStreamLog.modelStreamName)
+        logger.logSending(word, toModelStream: Self.modelStreamName)
 
         modelStream.sendRemovedWord(word)
     }
