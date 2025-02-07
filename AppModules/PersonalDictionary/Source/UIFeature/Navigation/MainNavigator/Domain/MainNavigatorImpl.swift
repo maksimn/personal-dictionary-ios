@@ -21,7 +21,12 @@ final class MainNavigatorImpl: MainNavigator {
     private let navToNewWordView: UIView
     private let navToFavoritesView: UIView
     private let navToTodoListView: UIView
+
+    private let logger: Logger
+
     private let disposeBag = DisposeBag()
+
+    private var isSearchTextInputInstalled: Bool = false
 
     /// Инициализатор,
     /// - Parameters:
@@ -33,7 +38,8 @@ final class MainNavigatorImpl: MainNavigator {
         navToSearchBuilder: NavToSearchBuilder,
         navToNewWordBuilder: ViewBuilder,
         navToFavoritesBuilder: ViewBuilder,
-        navToTodoListBuilder: ViewBuilder
+        navToTodoListBuilder: ViewBuilder,
+        logger: Logger
     ) {
         self.navigationItemGetter = navigationItemGetter
         self.searchTextInputView = searchTextInputView
@@ -41,19 +47,34 @@ final class MainNavigatorImpl: MainNavigator {
         self.navToNewWordView = navToNewWordBuilder.build()
         self.navToFavoritesView = navToFavoritesBuilder.build()
         self.navToTodoListView = navToTodoListBuilder.build()
+        self.logger = logger
         subscribeToSearchTextInput()
     }
 
+    deinit {
+        logger.log(dismissedFeatureName: "MainNavigatorImpl")
+    }
+
     func appendTo(rootView: UIView) {
+        logger.log(installedFeatureName: "MainNavigatorImpl")
+        initNavigationItemIfNeeded()
+
         addNavToNewWord(rootView)
         navigationItem?.leftBarButtonItem = UIBarButtonItem(customView: navToFavoritesView)
         navigationItem?.rightBarButtonItem = UIBarButtonItem(customView: navToTodoListView)
+
+        logNavToFavoritesFeatureInstallation()
+        logNavToTodoListFeatureInstallation()
+        logger.log(installedFeatureName: "NavToNewWord")
     }
 
     func viewWillLayoutSubviews() {
+        initNavigationItemIfNeeded()
+
         guard navigationItem?.searchController == nil else { return }
 
         navigationItem?.searchController = searchTextInputView
+        logSearchTextInputInstallationIfNeeded()
     }
 
     private func addNavToNewWord(_ view: UIView) {
@@ -89,17 +110,59 @@ final class MainNavigatorImpl: MainNavigator {
 
     private func searchTextInputWillDismiss() {
         navToSearchRouter.dismissSearch()
+        logger.debug("User will dismiss search.")
     }
 
     private func searchTextInputDidDismiss() {
         navToNewWordView.isHidden = false
+        logger.debug("User did dismiss search.")
     }
 
     private func searchTextInputWillPresent() {
         navToNewWordView.isHidden = true
+        logger.debug("User will present search.")
     }
 
     private func searchTextInputDidPresent() {
         navToSearchRouter.presentSearch()
+        logger.debug("User did present search.")
+    }
+
+    private func initNavigationItemIfNeeded() {
+        if navigationItem == nil {
+            navigationItem = navigationItemGetter()
+        }
+    }
+
+    private func logSearchTextInputInstallationIfNeeded() {
+        if navigationItem != nil && !isSearchTextInputInstalled {
+            isSearchTextInputInstalled.toggle()
+            logger.log(installedFeatureName: "SearchTextInput")
+        } else if navigationItem == nil {
+            logWarningOnNotInstalled("SearchTextInput", warning: "Users won't be able to use Search.")
+        }
+    }
+
+    private func logNavToFavoritesFeatureInstallation() {
+        logFeatureInstallation("NavToFavorites", warning: "Users won't be able to navigate to Favorites Screen.")
+    }
+
+    private func logNavToTodoListFeatureInstallation() {
+        logFeatureInstallation("NavToTodoList", warning: "Users won't be able to navigate to To-do list.")
+    }
+
+    private func logFeatureInstallation(_ feature: String, warning: String) {
+        guard navigationItem != nil else {
+            return logWarningOnNotInstalled(feature, warning: warning)
+        }
+
+        logger.log(installedFeatureName: feature)
+    }
+
+    private func logWarningOnNotInstalled(_ feature: String, warning: String) {
+        logger.log(
+            "Reference to navigation item is NIL, so \(feature) feature cannot be installed. \(warning)",
+            level: .warn
+        )
     }
 }

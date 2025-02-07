@@ -33,15 +33,10 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
             navToTodoListBuilder: NavToTodoListBuilder(
                 rootViewController: dependency.navigationController,
                 bundle: dependency.bundle
-            )
-        )
-        let mainNavigatorLog = MainNavigatorLog(
-            mainNavigator: mainNavigator,
-            navigationItemGetter: navigationItemGetter,
-            searchTextInputView: searchTextInputView,
+            ),
             logger: logger
         )
 
-        return mainNavigatorLog
+        return mainNavigator
     }
 }
