@@ -34,7 +34,7 @@ final class MainNavigatorImpl: MainNavigator {
     ///  - navToTodoListBuilder: билдер вложенной фичи "Элемент навигации к приложению TodoList".
     init(
         navigationItemGetter: @escaping () -> UINavigationItem?,
-        searchTextInputView: UISearchController,
+        searchControllerBuilder: SearchControllerBuilder,
         navToSearchBuilder: NavToSearchBuilder,
         navToNewWordBuilder: ViewBuilder,
         navToFavoritesBuilder: ViewBuilder,
@@ -42,7 +42,7 @@ final class MainNavigatorImpl: MainNavigator {
         logger: Logger
     ) {
         self.navigationItemGetter = navigationItemGetter
-        self.searchTextInputView = searchTextInputView
+        self.searchTextInputView = searchControllerBuilder.build()
         self.navToSearchRouter = navToSearchBuilder.build()
         self.navToNewWordView = navToNewWordBuilder.build()
         self.navToFavoritesView = navToFavoritesBuilder.build()

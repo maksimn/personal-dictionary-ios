@@ -22,11 +22,9 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
     /// Создать контейнер.
     /// - Returns: объект контейнера.
     func build() -> MainNavigator {
-        let logger = LoggerImpl(category: "PersonalDictionary.MainNavigator")
-        let searchTextInputView = SearchTextInputBuilder(bundle: dependency.bundle).build()
-        let mainNavigator = MainNavigatorImpl(
+        MainNavigatorImpl(
             navigationItemGetter: navigationItemGetter,
-            searchTextInputView: searchTextInputView,
+            searchControllerBuilder: SearchTextInputBuilder(bundle: dependency.bundle),
             navToSearchBuilder: NavToSearchBuilderImpl(dependency: dependency),
             navToNewWordBuilder: NavToNewWordBuilder(dependency: dependency),
             navToFavoritesBuilder: NavToFavoritesBuilder(dependency: dependency),
@@ -34,9 +32,7 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
                 rootViewController: dependency.navigationController,
                 bundle: dependency.bundle
             ),
-            logger: logger
+            logger: LoggerImpl(category: "PersonalDictionary.MainNavigator")
         )
-
-        return mainNavigator
     }
 }
