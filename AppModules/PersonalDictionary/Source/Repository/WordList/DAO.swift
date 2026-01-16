@@ -16,6 +16,7 @@ class WordDAO: Object {
     @Persisted var targetLang: LangDAO?
     @Persisted var isFavorite: Bool
     @Persisted var createdAt: Int
+    @Persisted var updatedAt: Int
 
     convenience init(_ word: Word) {
         self.init()
@@ -30,6 +31,7 @@ class WordDAO: Object {
         targetLang = LangDAO(word.targetLang)
         isFavorite = word.isFavorite
         createdAt = word.createdAt
+        updatedAt = word.updatedAt
     }
 }
 
@@ -75,6 +77,7 @@ extension Word {
 
         isFavorite = dao.isFavorite
         createdAt = dao.createdAt
+        updatedAt = dao.updatedAt
     }
 }
 

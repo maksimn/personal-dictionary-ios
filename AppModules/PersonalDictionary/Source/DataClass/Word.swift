@@ -20,7 +20,11 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
     let text: String
 
     /// Перевод
-    var translation: String = ""
+    var translation: String = "" {
+        didSet {
+            setUpdatedAtProp()
+        }
+    }
 
     /// Исходный язык
     let sourceLang: Lang
@@ -29,10 +33,19 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
     let targetLang: Lang
 
     /// Является ли слово избранным
-    var isFavorite: Bool
+    var isFavorite: Bool {
+        didSet {
+            setUpdatedAtProp()
+        }
+    }
 
     /// Дата и время создания объекта в целочисленном виде
     let createdAt: Int
+
+    /// Дата и время обновления объекта в целочисленном виде
+    var updatedAt: Int
+
+    static var updatedAtPropSetter: () -> Int = { Date().integer }
 
     init(
         id: Id = Id(raw: UUID().uuidString),
@@ -41,7 +54,7 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
         sourceLang: Lang,
         targetLang: Lang,
         isFavorite: Bool = false,
-        createdAt: Int = Int(Date().timeIntervalSince1970)
+        createdAt: Int = Date().integer
     ) {
         self.id = id
         self.text = text
@@ -50,6 +63,7 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
         self.targetLang = targetLang
         self.isFavorite = isFavorite
         self.createdAt = createdAt
+        self.updatedAt = createdAt
     }
 
     /// Операция сравнения на равенство объектов данного типа.
@@ -59,8 +73,7 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
         lhs.translation == rhs.translation &&
         lhs.sourceLang == rhs.sourceLang &&
         lhs.targetLang == rhs.targetLang &&
-        lhs.isFavorite == rhs.isFavorite &&
-        lhs.createdAt == rhs.createdAt
+        lhs.isFavorite == rhs.isFavorite
     }
 
     func hash(into hasher: inout Hasher) {
@@ -75,8 +88,13 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
         sourceLang: \(sourceLang.description), \
         targetLang: \(targetLang.description), \
         isFavorite: \(isFavorite), \
-        createdAt: \(createdAt))
+        createdAt: \(createdAt)), \
+        updatedAt: \(updatedAt)
         """
+    }
+
+    private mutating func setUpdatedAtProp() {
+        updatedAt = Self.updatedAtPropSetter()
     }
 }
 
