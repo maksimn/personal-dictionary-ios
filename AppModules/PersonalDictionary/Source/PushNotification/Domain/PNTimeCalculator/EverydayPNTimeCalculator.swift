@@ -7,29 +7,29 @@
 
 import Foundation
 
-/// Реализация типа для вычисления времени возникновения ежедневного пуш-уведомления.
+/// Implementation of the type for calculating the time of a daily push notification occurrence.
 final class EverydayPNTimeCalculator: PNTimeCalculator {
 
     private let hours: Int
     private let minutes: Int
     private let calendar: Calendar
 
-    /// Инициализатор.
+    /// Initializer.
     /// - Parameters:
-    ///  - hours: час для показа уведомления.
-    ///  - minutes: минута для показа уведомления.
-    ///  - calendar: системный календарь.
+    ///  - hours: hour for showing the notification.
+    ///  - minutes: minute for showing the notification.
+    ///  - calendar: system calendar.
     init(hours: Int, minutes: Int, calendar: Calendar) {
         self.hours = hours
         self.minutes = minutes
         self.calendar = calendar
     }
 
-    /// Вычислить время возникновения пуш-уведомления.
+    /// Calculate the time of a push notification occurrence.
     /// - Parameters:
-    ///  - forDate: исходная дата и время для отсчёта.
+    ///  - forDate: source date and time for calculation.
     /// - Returns:
-    ///  - время возникновения пуш-уведомления.
+    ///  - time of the push notification occurrence.
     func calculate(forDate date: Date) -> DateComponents {
         let inputComponents = calendar.dateComponents(
             Set([.year, .month, .day, .hour, .minute, .second]),

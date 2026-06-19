@@ -9,7 +9,7 @@ import CoreModule
 import SharedFeature
 import UIKit
 
-/// Реализация билдера фичи "Главный экран приложения" Личного словаря.
+/// Implementation of the "Main Application Screen" feature builder for the Personal Dictionary.
 final class MainScreenBuilder: ViewControllerBuilder {
 
     private let dependency: AppDependency
@@ -18,9 +18,9 @@ final class MainScreenBuilder: ViewControllerBuilder {
         self.dependency = dependency
     }
 
-    /// Создать экран.
+    /// Create the screen.
     /// - Returns:
-    ///  - Главный экран приложения.
+    ///  - The main application screen.
     func build() -> UIViewController {
         var navigationItem: UINavigationItem?
 

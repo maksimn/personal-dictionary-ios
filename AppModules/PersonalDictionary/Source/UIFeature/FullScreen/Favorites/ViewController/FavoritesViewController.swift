@@ -8,15 +8,15 @@
 import CoreModule
 import UIKit
 
-/// View controller экрана Избранного.
+/// View controller of the Favorites screen.
 final class FavoritesViewController: UIViewController {
 
     private let favoriteWordListViewController: UIViewController
     private let theme: Theme
 
     /// - Parameters:
-    ///  - title: текст заголовка экрана.
-    ///  - favoriteWordListBuilder: билдер вложенной фичи "Список избранных слов".
+    ///  - title: screen title text.
+    ///  - favoriteWordListBuilder: builder for the nested "Favorite Word List" feature.
     init(title: String,
          favoriteWordListBuilder: ViewControllerBuilder,
          theme: Theme) {

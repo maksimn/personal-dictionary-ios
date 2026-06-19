@@ -7,13 +7,13 @@
 
 import RxSwift
 
-/// Служба для получения словарной статьи для слова.
+/// Service for fetching a dictionary entry for a word.
 protocol DictionaryService {
 
-    /// Извлечь перевод слова.
+    /// Fetch the translation of a word.
     /// - Parameters:
-    ///  - word: слово.
+    ///  - word: the word.
     /// - Returns:
-    ///  - Rx Single со словом, содержащим словарную статью о нём.
+    ///  - Rx Single with the word containing its dictionary entry.
     func fetchDictionaryEntry(for word: Word) -> Single<WordData>
 }

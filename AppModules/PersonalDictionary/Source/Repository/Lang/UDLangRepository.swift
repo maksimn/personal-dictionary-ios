@@ -7,28 +7,28 @@
 
 import Foundation
 
-/// Реализация хранилища данных о языках в приложении,
+/// Implementation of the language data storage in the application.
 final class UDLangRepository: LangRepository {
 
     private let userDefaults: UserDefaults
     private let data: LangData
 
-    /// Инициализатор.
+    /// Initializer.
     /// - Parameters:
-    ///  - userDefaults: UserDefaults для хранения данных в нём.
-    ///  - data: данные о языках в приложении.
+    ///  - userDefaults: UserDefaults for storing data.
+    ///  - data: language data in the application.
     init(userDefaults: UserDefaults,
          data: LangData) {
         self.userDefaults = userDefaults
         self.data = data
     }
 
-    /// Список всех языков в приложении
+    /// List of all languages in the application
     var allLangs: [Lang] {
         data.allLangs
     }
 
-    /// Сохранить и извлечь исходный язык
+    /// Save and retrieve the source language
     var sourceLang: Lang {
         get {
             findLang(with: data.sourceLangKey) ?? data.defaultSourceLang
@@ -38,7 +38,7 @@ final class UDLangRepository: LangRepository {
         }
     }
 
-    /// Сохранить и извлечь целевой язык
+    /// Save and retrieve the target language
     var targetLang: Lang {
         get {
             findLang(with: data.targetLangKey) ?? data.defaultTargetLang

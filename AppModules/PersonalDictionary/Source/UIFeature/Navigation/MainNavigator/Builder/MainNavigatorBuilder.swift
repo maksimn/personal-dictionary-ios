@@ -5,10 +5,10 @@
 //  Created by Maksim Ivanov on 26.02.2022.
 //
 
-/// Билдер фичи "Контейнер элементов навигации на Главном экране приложения".
+/// Builder of the "Container of Navigation Elements on the Main Screen" feature.
 protocol MainNavigatorBuilder {
 
-    /// Создать контейнер.
-    /// - Returns: объект контейнера.
+    /// Create the container.
+    /// - Returns: container object.
     func build() -> MainNavigator
 }

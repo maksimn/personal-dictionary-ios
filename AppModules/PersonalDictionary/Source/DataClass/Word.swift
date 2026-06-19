@@ -8,41 +8,41 @@
 import CoreModule
 import Foundation
 
-/// Данные о слове в словаре.
+/// Word data in the dictionary.
 struct Word: Equatable, Hashable, CustomStringConvertible {
 
     typealias Id = Tagged<Word, String>
 
-    /// Идентификатор слова
+    /// Word identifier
     let id: Id
 
-    /// Написание слова на исходном языке
+    /// Word spelling in the source language
     let text: String
 
-    /// Перевод
+    /// Translation
     var translation: String = "" {
         didSet {
             setUpdatedAtProp()
         }
     }
 
-    /// Исходный язык
+    /// Source language
     let sourceLang: Lang
 
-    /// Целевой язык
+    /// Target language
     let targetLang: Lang
 
-    /// Является ли слово избранным
+    /// Whether the word is marked as favorite
     var isFavorite: Bool {
         didSet {
             setUpdatedAtProp()
         }
     }
 
-    /// Дата и время создания объекта в целочисленном виде
+    /// Object creation date and time as an integer
     let createdAt: Int
 
-    /// Дата и время обновления объекта в целочисленном виде
+    /// Object update date and time as an integer
     var updatedAt: Int
 
     static var updatedAtPropSetter: () -> Int = { Date().integer }
@@ -66,7 +66,7 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
         self.updatedAt = createdAt
     }
 
-    /// Операция сравнения на равенство объектов данного типа.
+    /// Equality operator
     static func == (lhs: Word, rhs: Word) -> Bool {
         lhs.id == rhs.id &&
         lhs.text == rhs.text &&

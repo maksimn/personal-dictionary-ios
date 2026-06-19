@@ -15,7 +15,7 @@ protocol NavToSearchRouter {
     func dismissSearch()
 }
 
-/// Реализация роутера для навигации на экран Поиска.
+/// Implementation of the router for navigation to the Search screen.
 final class NavToSearchRouterImpl: NavToSearchRouter {
 
     private weak var navigationController: UINavigationController?
@@ -23,8 +23,8 @@ final class NavToSearchRouterImpl: NavToSearchRouter {
     private let searchBuilder: ViewControllerBuilder
 
     /// - Parameters:
-    ///  - navigationController: корневой navigation controller приложения.
-    ///  - searchBuilder: билдер вложенной фичи "Поиск" по словам в словаре.
+    ///  - navigationController: root navigation controller of the application.
+    ///  - searchBuilder: builder of the nested "Search" feature for dictionary words.
     init(navigationController: UINavigationController?,
          searchBuilder: ViewControllerBuilder) {
         self.navigationController = navigationController

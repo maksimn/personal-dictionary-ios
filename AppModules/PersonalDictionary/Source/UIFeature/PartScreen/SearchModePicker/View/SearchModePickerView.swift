@@ -8,20 +8,20 @@
 import CoreModule
 import UIKit
 
-/// Параметры представления выбора режима поиска.
+/// Parameters of the search mode selection view.
 struct SearchModePickerViewParams {
 
-    /// Текст для лейбла "Искать по"
+    /// Text for the "Search by" label
     let searchByLabelText: String
 
-    /// Текст для выбора поиска по исходному слову.
+    /// Text for selecting search by source word.
     let sourceWordText: String
 
-    /// Текст для выбора поиска по переводу..
+    /// Text for selecting search by translation.
     let translationText: String
 }
 
-/// Реализация представления для выбора режима поиска.
+/// Implementation of the search mode selection view.
 final class SearchModePickerView: UIView {
 
     private let params: SearchModePickerViewParams
@@ -32,9 +32,9 @@ final class SearchModePickerView: UIView {
     private let label = UILabel()
     private lazy var segmentedControl = UISegmentedControl(items: [params.sourceWordText, params.translationText])
 
-    /// Инициализатор.
+    /// Initializer.
     /// - Parameters:
-    ///  - params: параметры представления.
+    ///  - params: view parameters.
     init(
         searchModeSender: SearchModeSender,
         params: SearchModePickerViewParams,

@@ -9,7 +9,7 @@ import CoreModule
 import UIKit
 import UserNotifications
 
-/// Реализация билдера фичи "Пуш-уведомления в приложении".
+/// Implementation of the builder of the "Push Notifications in the Application" feature.
 final class PushNotificationBuilderImpl: PushNotificationBuilder {
 
     private let dependency: AppDependency
@@ -19,9 +19,9 @@ final class PushNotificationBuilderImpl: PushNotificationBuilder {
         self.dependency = dependency
     }
 
-    /// Метод билдера.
+    /// Builder method.
     /// - Returns:
-    ///  -  объект службы для работы с пуш-уведомлениями.
+    ///  - service object for working with push notifications.
     func build() -> PushNotificationService {
         PushNotificationServiceImpl(
             userNotificationCenter: UNUserNotificationCenter.current(),

@@ -8,7 +8,7 @@
 import CoreModule
 import UIKit
 
-/// Реализация билдера фичи "Главный (основной) список слов" Личного словаря.
+/// Implementation of the "Main Word List" feature builder of the Personal Dictionary.
 final class MainWordListBuilder: ViewControllerBuilder {
 
     private let dependency: AppDependency
@@ -17,9 +17,9 @@ final class MainWordListBuilder: ViewControllerBuilder {
         self.dependency = dependency
     }
 
-    /// Создать экран.
+    /// Create the screen.
     /// - Returns:
-    ///  - Экран "Главного (основного) списка слов".
+    ///  - "Main Word List" screen.
     func build() -> UIViewController {
         let featureName = "PersonalDictionary.MainWordList"
         let dictionaryServiceFactory = DictionaryServiceFactory(

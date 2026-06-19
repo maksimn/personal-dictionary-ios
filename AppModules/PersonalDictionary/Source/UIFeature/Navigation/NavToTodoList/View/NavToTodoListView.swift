@@ -8,7 +8,7 @@
 import CoreModule
 import UIKit
 
-/// Представление фичи "Навигация к другому продукту/приложению в супераппе".
+/// View of the "Navigation to Another Product/Application in the Superapp" feature.
 final class NavToTodoListView: UIView {
 
     private let routingButtonTitle: String
@@ -16,10 +16,10 @@ final class NavToTodoListView: UIView {
 
     private let routingButton = UIButton()
 
-    /// Инициализатор.
+    /// Initializer.
     /// - Parameters:
-    ///  - routingButtonTitle: тайтл для навигационной кнопки.
-    ///  - router: роутер для навигации на новый экран.
+    ///  - routingButtonTitle: title for the navigation button.
+    ///  - router: router for navigation to a new screen.
     init(routingButtonTitle: String,
          router: Router,
          theme: Theme) {

@@ -5,11 +5,11 @@
 //  Created by Maxim Ivanov on 10.11.2021.
 //
 
-/// Билдер фичи "Список слов".
+/// Builder of the "Word List" feature.
 protocol WordListBuilder {
 
-    /// Создать граф фичи
+    /// Create the feature graph
     /// - Returns:
-    ///  - граф фичи.
+    ///  - feature graph.
     func build() -> WordListGraph
 }

@@ -10,10 +10,10 @@ import RxSwift
 
 protocol DeleteWordDbWorker {
 
-    /// Удалить слово из хранилища личного словаря
+    /// Delete a word from the personal dictionary storage.
     /// - Parameters:
-    ///  - word: слово для его удаления из хранилища.
-    /// - Returns: Rx single для обработки завершения операции удаления слова из хранилища.
+    ///  - word: the word to delete from the storage.
+    /// - Returns: Rx single for handling the completion of the word deletion operation.
     func delete(word: Word) -> Single<Word>
 }
 

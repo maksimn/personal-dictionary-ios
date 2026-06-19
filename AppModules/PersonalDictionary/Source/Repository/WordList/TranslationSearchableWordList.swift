@@ -11,10 +11,10 @@ import RealmSwift
 
 protocol TranslationSearchableWordList {
 
-    /// Найти слова, перевод которых содержит строку.
+    /// Find words whose translation contains the string.
     /// - Parameters:
-    ///  - string: строка для поиска.
-    /// - Массив найденных слов.
+    ///  - string: the string to search for.
+    /// - Array of found words.
     func findWords(whereTranslationContains string: String) -> [Word]
 }
 

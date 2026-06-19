@@ -7,10 +7,10 @@
 
 import UIKit
 
-/// Лэйаут экрана добавления нового слова в личный словарь.
+/// Layout of the "Add New Word" screen in the personal dictionary.
 extension NewWordViewController {
 
-    /// Инициализация представлений экрана.
+    /// Initialize the screen's views.
     func initViews() {
         view.backgroundColor = UIColor(white: 0, alpha: 0.7)
         addSubviews()

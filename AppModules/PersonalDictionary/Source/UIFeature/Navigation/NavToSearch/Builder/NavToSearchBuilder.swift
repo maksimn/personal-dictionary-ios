@@ -10,7 +10,7 @@ protocol NavToSearchBuilder {
     func build() -> NavToSearchRouter
 }
 
-/// Реализация билдера фичи "Навигация на экран Поиска".
+/// Implementation of the "Navigation to Search Screen" feature builder.
 final class NavToSearchBuilderImpl: NavToSearchBuilder {
 
     private let dependency: AppDependency

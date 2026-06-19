@@ -8,16 +8,16 @@
 import CoreModule
 import UIKit
 
-/// Реализация билдера фичи "Выбор режима поиска" по словам из словаря.
+/// Implementation of the "Search Mode Selection" feature builder for dictionary words.
 final class SearchModePickerBuilder: ViewBuilder {
 
     private let bundle: Bundle
 
     private let featureName = "PersonalDictionary.SearchModePicker"
 
-    /// Инициализатор.
+    /// Initializer.
     /// - Parameters:
-    ///  - bundle: бандл приложения.
+    ///  - bundle: application bundle.
     init(bundle: Bundle) {
         self.bundle = bundle
     }

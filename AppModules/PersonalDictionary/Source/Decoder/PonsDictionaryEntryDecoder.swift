@@ -132,8 +132,8 @@ struct PonsDictionaryEntryDecoder: DictionaryEntryDecoder {
     }
 }
 
-/// Структура с данными после парсинга "сырого" JSON ответа PONS API.
-/// См. документацию к API: https://www.pons.com/p/files/uploads/pons/api/api-documentation.pdf
+/// Data structure after parsing the raw JSON response from the PONS API.
+/// See API documentation: https://www.pons.com/p/files/uploads/pons/api/api-documentation.pdf
 struct PonsResponseData: Codable {
     let hits: [PonsResponseDataHit]
 }

@@ -5,19 +5,19 @@
 //  Created by Maxim Ivanov on 15.11.2022.
 //
 
-/// Состояние поиска
+/// Search state
 enum SearchState {
-    case initial /// начальное, поиск не выполнен.
-    case fulfilled /// конечное, поиск выполнен.
+    case initial /// initial, search not performed.
+    case fulfilled /// final, search completed.
 }
 
-/// Результат поиска
+/// Search result
 struct SearchResultData: Equatable {
 
-    /// Состояние поиска
+    /// Search state
     let searchState: SearchState
 
-    /// Список найденных слов
+    /// List of found words
     let foundWordList: [Word]
 }
 

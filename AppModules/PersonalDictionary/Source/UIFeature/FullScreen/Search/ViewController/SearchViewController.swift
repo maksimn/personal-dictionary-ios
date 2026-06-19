@@ -8,7 +8,7 @@
 import CoreModule
 import UIKit
 
-/// View controller экрана поиска по словам в словаре.
+/// View controller of the search screen for words in the dictionary.
 final class SearchViewController: UIViewController {
 
     private let searchModePickerView: UIView
@@ -17,7 +17,7 @@ final class SearchViewController: UIViewController {
     private let searchModePickerViewHeight: CGFloat = 46
 
     /// - Parameters:
-    ///  - searchModePickerBuilder: билдер вложенной фичи "Выбор режима поиска".
+    ///  - searchModePickerBuilder: builder for the nested "Search Mode Picker" feature.
     init(searchModePickerBuilder: ViewBuilder,
          searchWordListBuilder: ViewControllerBuilder,
          theme: Theme) {

@@ -10,10 +10,10 @@ import RxSwift
 
 protocol CreateWordDbWorker {
 
-    /// Добавить слово в хранилище личного словаря
+    /// Add a word to the personal dictionary storage.
     /// - Parameters:
-    ///  - word: слово для добавления.
-    /// - Returns: Rx single для обработки завершения операции добавления слова в хранилище.
+    ///  - word: the word to add.
+    /// - Returns: Rx single for handling the completion of the word addition operation.
     func create(word: Word) -> Single<Word>
 }
 

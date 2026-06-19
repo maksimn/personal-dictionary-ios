@@ -5,10 +5,10 @@
 //  Created by Maxim Ivanov on 11.05.2022.
 //
 
-/// Служба для работы с пуш-уведомлениями.
+/// Service for working with push notifications.
 public protocol PushNotificationService {
 
-    /// Поставить показ уведомления в расписание.
-    /// Метод должен быть вызван в момент, когда приложение уходит с экрана (становится неактивным).
+    /// Schedule a notification for display.
+    /// The method should be called when the application goes off screen (becomes inactive).
     func schedule()
 }

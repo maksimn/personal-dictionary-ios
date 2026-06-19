@@ -7,13 +7,13 @@
 
 import Foundation
 
-/// Тип для вычисления времени возникновения пуш-уведомления.
+/// Type for calculating the time of a push notification occurrence.
 protocol PNTimeCalculator {
 
-    /// Вычислить время возникновения пуш-уведомления.
+    /// Calculate the time of a push notification occurrence.
     /// - Parameters:
-    ///  - forDate: исходная дата и время для отсчёта.
+    ///  - forDate: source date and time for calculation.
     /// - Returns:
-    ///  - время возникновения пуш-уведомления.
+    ///  - time of the push notification occurrence.
     func calculate(forDate date: Date) -> DateComponents
 }

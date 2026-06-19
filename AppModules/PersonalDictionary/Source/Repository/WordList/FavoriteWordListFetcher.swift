@@ -8,10 +8,10 @@
 import CoreModule
 import RealmSwift
 
-/// Получение списка избранных слов из хранилища личного словаря.
+/// Fetching the favorite word list from the personal dictionary storage.
 protocol FavoriteWordListFetcher {
 
-    /// - Returns: список  избранных слов из личного словаря.
+    /// - Returns: list of favorite words from the personal dictionary.
     func favoriteWordList() throws -> [Word]
 }
 

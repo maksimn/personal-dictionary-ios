@@ -9,26 +9,26 @@ import CoreModule
 import UIKit
 import RxSwift
 
-/// Параметры представления списка слов.
+/// Parameters of the word list view.
 struct WordListViewParams {
 
-    /// Высота элемента списка (таблицы)
+    /// Height of the list (table) item
     let itemHeight: CGFloat
 
-    /// Класс ячейки таблицы
+    /// Table cell class
     let cellClass: AnyClass
 
-    /// Reuse Id ячейки таблицы
+    /// Table cell reuse identifier
     let cellReuseIdentifier: String
 
-    /// Радиус скругления углов ячейки таблицы
+    /// Table cell corner radius
     let cellCornerRadius: CGFloat
 
-    /// Параметры делегата таблицы
+    /// Table delegate parameters
     let delegateParams: WordTableViewDelegateParams
 }
 
-/// Реализация представления списка слов.
+/// Implementation of the word list view.
 final class WordListView: UIView {
 
     private let viewModel: WordListViewModel

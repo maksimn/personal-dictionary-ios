@@ -25,29 +25,29 @@ protocol RemovedWordStream {
     var removedWord: Observable<Word> { get }
 }
 
-/// Отправитель событий добавления нового слова в личный словарь.
+/// Sender of events for adding a new word to the personal dictionary.
 protocol NewWordSender {
 
-    /// Отправить событие добавления нового слова в словарь.
+    /// Send an event of adding a new word to the dictionary.
     /// - Parameters:
-    ///  - word: новое слово в словаре.
+    ///  - word: new word in the dictionary.
     func sendNewWord(_ word: Word)
 }
 
-/// Отправитель событий обновления слова в личном словаре.
+/// Sender of events for updating a word in the personal dictionary.
 protocol UpdatedWordSender {
 
-    /// Отправить событие обновления слова из словаря.
+    /// Send an event of updating a word in the dictionary.
     /// - Parameters:
-    ///  - updatedWord: данные об обновлённом слово в словаре.
+    ///  - updatedWord: data about the updated word in the dictionary.
     func sendUpdatedWord(_ updatedWord: UpdatedWord)
 }
 
-/// Отправитель событий удаления слова из личного словаря.
+/// Sender of events for deleting a word from the personal dictionary.
 protocol RemovedWordSender {
 
-    /// Отправить событие удаления слова из словаря.
+    /// Send an event of deleting a word from the dictionary.
     /// - Parameters:
-    ///  - word: удалённое из словаря слово.
+    ///  - word: word removed from the dictionary.
     func sendRemovedWord(_ word: Word)
 }

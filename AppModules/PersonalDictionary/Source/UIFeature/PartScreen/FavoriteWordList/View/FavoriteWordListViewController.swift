@@ -8,7 +8,7 @@
 import RxSwift
 import UIKit
 
-/// Реализация представления списка избранных слов.
+/// Implementation of the favorite word list view.
 final class FavoriteWordListViewController: UIViewController {
 
     private let viewModel: FavoriteWordListViewModel

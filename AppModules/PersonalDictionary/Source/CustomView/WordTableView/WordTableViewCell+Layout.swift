@@ -7,13 +7,13 @@
 
 import UIKit
 
-/// Лэйаут представления слова (в личном словаре) в виде ячейки таблицы.
+/// Layout of the word representation as a table cell.
 extension WordTableViewCell {
 
-    /// Высота ячейки
+    /// Cell height
     static let height: CGFloat = 64
 
-    /// Проинициализировать представления ячейки:
+    /// Initialize the cell's views:
     func initViews() {
         clipsToBounds = true
         layer.cornerRadius = 16

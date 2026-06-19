@@ -9,17 +9,17 @@ import CoreModule
 import UDF
 import UIKit
 
-/// Параметры представления фичи "Добавление нового слова"
+/// Parameters for the "Add New Word" feature view.
 struct NewWordViewParams {
 
-    /// Надпись на кнопке "ОК"
+    /// Text on the "OK" button
     let okText: String
 
-    /// Плейсхолдер для элемента ввода текста слова
+    /// Placeholder for the word text input field
     let textFieldPlaceholder: String
 }
 
-/// View Controller экрана добавления нового слова в личный словарь.
+/// View Controller for the "Add New Word" screen in the personal dictionary.
 final class NewWordViewController: UIViewController, ViewComponent, UITextFieldDelegate {
 
     var props = NewWordState() {
@@ -55,11 +55,11 @@ final class NewWordViewController: UIViewController, ViewComponent, UITextFieldD
 
     private var langPickerView: UIView?
 
-    /// Инициализатор.
+    /// Initializer.
     /// - Parameters:
-    ///  - params: параметры представления фичи "Добавление нового слова"
-    ///  - viewModel: модель представления.
-    ///  - langPickerBuilder: билдер вложенной фичи "Выбор языка"
+    ///  - params: parameters of the "Add New Word" feature view.
+    ///  - viewModel: the view model.
+    ///  - langPickerBuilder: builder for the nested "Language Picker" feature.
     init(params: NewWordViewParams,
          store: Store<NewWordState>,
          newWord: Any,

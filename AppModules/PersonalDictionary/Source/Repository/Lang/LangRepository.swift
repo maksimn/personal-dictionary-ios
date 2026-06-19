@@ -5,15 +5,15 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
-/// Хранилище данных о языках в приложении,
+/// Storage for language data in the application.
 protocol LangRepository {
 
-    /// Список всех языков
+    /// List of all languages
     var allLangs: [Lang] { get }
 
-    /// Сохранить и извлечь исходный язык
+    /// Save and retrieve the source language
     var sourceLang: Lang { get set }
 
-    /// Сохранить и извлечь целевой язык
+    /// Save and retrieve the target language
     var targetLang: Lang { get set }
 }

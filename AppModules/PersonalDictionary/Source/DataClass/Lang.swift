@@ -8,30 +8,30 @@
 import CoreModule
 import UIKit
 
-/// Структура с данными об отдельном языке.
+/// A structure with data about a language.
 struct Lang: Equatable, CustomStringConvertible {
 
     typealias Id = Tagged<Lang, Int>
     typealias Key = Tagged<Lang, String>
 
-    /// Идентификатор языка
+    /// Language identifier
     let id: Id
 
     let nameKey: Key
 
     let shortNameKey: Key
 
-    /// Название языка
+    /// Language name
     var name: String {
         Bundle.module.moduleLocalizedString(nameKey.raw)
     }
 
-    /// Короткое название языка ("EN" для английского, "RU" для русского и т.д.)
+    /// Short language name ("EN" for English, "RU" for Russian, etc.)
     var shortName: String {
         Bundle.module.moduleLocalizedString(shortNameKey.raw)
     }
 
-    /// Операция сравнения на равенство двух объектов языков
+    /// Equality operator for two language objects
     static func == (lhs: Lang, rhs: Lang) -> Bool {
         lhs.id == rhs.id
     }
@@ -45,10 +45,10 @@ struct Lang: Equatable, CustomStringConvertible {
     }
 }
 
-/// Тип выбранного языка
+/// Type of the selected language
 enum LangType: String, CustomStringConvertible {
-    case source /// исходный язык
-    case target /// целевой язык
+    case source /// source language
+    case target /// target language
 
     static var defaultValue: LangType { .source }
 
@@ -57,21 +57,21 @@ enum LangType: String, CustomStringConvertible {
     }
 }
 
-/// Данные о языках в приложении.
+/// Language data in the application.
 struct LangData {
 
-    /// Массив всех поддерживаемых языков
+    /// Array of all supported languages
     let allLangs: [Lang]
 
-    /// Ключ для персистентного хранения текущего "исходного языка" (source language)
+    /// Key for persistent storage of the current source language
     let sourceLangKey: String
 
-    /// Ключ для персистентного хранения текущего "целевого языка" (target language)
+    /// Key for persistent storage of the current target language
     let targetLangKey: String
 
-    /// Дефолтный исходный язык
+    /// Default source language
     let defaultSourceLang: Lang
 
-    /// Дефолтный целевой язык
+    /// Default target language
     let defaultTargetLang: Lang
 }

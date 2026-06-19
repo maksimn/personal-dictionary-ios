@@ -8,7 +8,7 @@
 import CoreModule
 import UIKit
 
-/// Реализация билдера фичи "Контейнер элементов навигации на Главном экране приложения".
+/// Implementation of the "Container of Navigation Elements on the Main Screen" feature builder.
 final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
 
     private let navigationItemGetter: () -> UINavigationItem?
@@ -19,8 +19,8 @@ final class MainNavigatorBuilderImpl: MainNavigatorBuilder {
         self.dependency = dependency
     }
 
-    /// Создать контейнер.
-    /// - Returns: объект контейнера.
+    /// Create the container.
+    /// - Returns: container object.
     func build() -> MainNavigator {
         MainNavigatorImpl(
             navigationItemGetter: navigationItemGetter,

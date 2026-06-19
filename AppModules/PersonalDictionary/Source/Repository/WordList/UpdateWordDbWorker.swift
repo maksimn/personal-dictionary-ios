@@ -10,10 +10,10 @@ import RxSwift
 
 protocol UpdateWordDbWorker {
 
-    /// Обновить слово в хранилище личного словаря
+    /// Update a word in the personal dictionary storage.
     /// - Parameters:
-    ///  - word: обновленное слово.
-    /// - Returns: Rx single для обработки завершения операции обновления слова в хранилище.
+    ///  - word: the updated word.
+    /// - Returns: Rx single for handling the completion of the word update operation.
     func update(word: Word) -> Single<Word>
 }
 

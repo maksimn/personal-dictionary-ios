@@ -8,7 +8,7 @@
 import CoreModule
 import UIKit
 
-/// Реализация билдера фичи "Навигация на экран добавления нового слова".
+/// Implementation of the "Navigation to New Word Screen" feature builder.
 final class NavToNewWordBuilder: ViewBuilder {
 
     private let dependency: AppDependency
@@ -17,8 +17,8 @@ final class NavToNewWordBuilder: ViewBuilder {
         self.dependency = dependency
     }
 
-    /// Создать фичу.
-    /// - Returns: представление фичи.
+    /// Create the feature.
+    /// - Returns: feature view.
     func build() -> UIView {
         let newWordBuilder = NewWordBuilder(
             bundle: dependency.bundle,

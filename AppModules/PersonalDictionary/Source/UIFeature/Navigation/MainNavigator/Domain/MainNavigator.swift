@@ -7,10 +7,10 @@
 
 import UIKit
 
-/// Контейнер элементов навигации на Главном экране приложения.
+/// Container of navigation elements on the main screen of the application.
 protocol MainNavigator {
 
-    /// Добавить представления элементов навигации.
+    /// Add navigation element views.
     func appendTo(rootView: UIView)
 
     func viewWillLayoutSubviews()
