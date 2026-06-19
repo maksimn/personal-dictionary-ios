@@ -8,23 +8,23 @@
 import CoreModule
 import UIKit
 
-/// Реализация роутера для навигации на экран добавления нового слова в Личный словарь.
+/// Implementation of the router for navigation to the new word addition screen in the Personal Dictionary.
 final class NavToNewWordRouter: Router {
 
     private weak var navigationController: UINavigationController?
     private let newWordBuilder: ViewControllerBuilder
 
-    /// Инициализатор.
+    /// Initializer.
     /// - Parameters:
-    ///  - navigationController: корневой navigation controller приложения.
-    ///  - searchBuilder: билдер вложенной фичи "Поиск" по словам в словаре.
+    ///  - navigationController: root navigation controller of the application.
+    ///  - searchBuilder: builder of the nested "Search" feature for dictionary words.
     init(navigationController: UINavigationController?,
          newWordBuilder: ViewControllerBuilder) {
         self.navigationController = navigationController
         self.newWordBuilder = newWordBuilder
     }
 
-    /// Перейти на экран поиска по словам в личном словаре.
+    /// Navigate to the search screen for words in the personal dictionary.
     func navigate() {
         let newWordViewController = newWordBuilder.build()
 

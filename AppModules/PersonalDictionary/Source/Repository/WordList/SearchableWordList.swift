@@ -7,13 +7,13 @@
 
 import CoreModule
 
-/// Протокол для поисковых запросов к хранилищу данных.
+/// Protocol for search queries to the data storage.
 protocol SearchableWordList {
 
-    /// Найти слова, содержащие строку.
+    /// Find words containing the string.
     /// - Parameters:
-    ///  - string: строка для поиска.
-    /// - Массив найденных слов.
+    ///  - string: the string to search for.
+    /// - Array of found words.
     func findWords(contain string: String) -> [Word]
 }
 

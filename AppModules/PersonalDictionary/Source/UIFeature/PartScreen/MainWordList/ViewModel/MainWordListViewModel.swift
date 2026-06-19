@@ -7,7 +7,7 @@
 
 protocol MainWordListViewModel: AnyObject {
 
-    /// Данные модели представления.
+    /// View model data.
     var wordList: BindableWordList { get }
 
     func fetch()

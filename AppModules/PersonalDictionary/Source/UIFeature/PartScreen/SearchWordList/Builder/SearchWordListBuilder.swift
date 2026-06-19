@@ -8,7 +8,7 @@
 import CoreModule
 import UIKit
 
-/// Реализация билдера фичи "Поиск по списку слов".
+/// Implementation of the "Search Word List" feature builder.
 final class SearchWordListBuilder: ViewControllerBuilder {
 
     private let dependency: AppDependency

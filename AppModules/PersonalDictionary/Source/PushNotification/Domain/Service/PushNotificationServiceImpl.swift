@@ -14,7 +14,7 @@ struct PushNotificationData {
     let body: String
 }
 
-/// Реализация службы для работы с пуш-уведомлениями.
+/// Implementation of the service for working with push notifications.
 final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUserNotificationCenterDelegate {
 
     private let userNotificationCenter: UNUserNotificationCenter
@@ -50,8 +50,8 @@ final class PushNotificationServiceImpl: NSObject, PushNotificationService, UNUs
         requestAuthorization()
     }
 
-    /// Поставить показ уведомления в расписание.
-    /// Метод должен быть вызван в момент, когда приложение уходит с экрана (становится неактивным).
+    /// Schedule a notification for display.
+    /// The method should be called when the application goes off screen (becomes inactive).
     public func schedule() {
         let notificationRequest = UNNotificationRequest(
             identifier: "PersonalDictionaryNotificationId",

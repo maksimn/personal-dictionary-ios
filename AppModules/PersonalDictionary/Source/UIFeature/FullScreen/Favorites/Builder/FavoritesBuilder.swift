@@ -8,7 +8,7 @@
 import CoreModule
 import UIKit
 
-/// Реализация билдера фичи "Избранное".
+/// Implementation of the "Favorites" feature builder.
 final class FavoritesBuilder: ViewControllerBuilder {
 
     private let dependency: AppDependency
@@ -17,9 +17,9 @@ final class FavoritesBuilder: ViewControllerBuilder {
         self.dependency = dependency
     }
 
-    /// Создать экран.
+    /// Create the screen.
     /// - Returns:
-    ///  - View controller экрана.
+    ///  - View controller of the screen.
     func build() -> UIViewController {
         FavoritesViewController(
             title: dependency.bundle.moduleLocalizedString("LS_FAVORITE_WORDS"),

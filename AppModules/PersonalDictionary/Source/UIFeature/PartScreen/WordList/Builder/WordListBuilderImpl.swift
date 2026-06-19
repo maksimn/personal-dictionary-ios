@@ -8,7 +8,7 @@
 import CoreModule
 import UIKit
 
-/// Реализация билдера фичи "Список слов".
+/// Implementation of the "Word List" feature builder.
 final class WordListBuilderImpl: WordListBuilder {
 
     private let shouldAnimateWhenAppear: Bool
@@ -16,17 +16,17 @@ final class WordListBuilderImpl: WordListBuilder {
 
     private let featureName = "PersonalDictionary.WordList"
 
-    /// Инициализатор.
+    /// Initializer.
     /// - Parameters:
-    ///  - shouldAnimateWhenAppear: запускать ли анимацию при первом появлении данных в таблице.
+    ///  - shouldAnimateWhenAppear: whether to run animation when data first appears in the table.
     init(shouldAnimateWhenAppear: Bool, dependency: AppDependency) {
         self.shouldAnimateWhenAppear = shouldAnimateWhenAppear
         self.dependency = dependency
     }
 
-    /// Создать граф фичи
+    /// Create the feature graph
     /// - Returns:
-    ///  - граф фичи.
+    ///  - feature graph.
     func build() -> WordListGraph {
         WordListGraphImpl(
             viewParams: viewParams(),

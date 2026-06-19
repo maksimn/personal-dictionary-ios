@@ -9,7 +9,7 @@ import CoreModule
 import TodoList
 import UIKit
 
-/// Реализация билдера фичи "Навигация к другому продукту/приложению в супераппе".
+/// Implementation of the "Navigation to Another Product/Application in the Superapp" feature builder.
 final class NavToTodoListBuilder: ViewBuilder {
 
     private weak var rootViewController: UIViewController?
@@ -21,8 +21,8 @@ final class NavToTodoListBuilder: ViewBuilder {
         self.bundle = bundle
     }
 
-    /// Создать фичу.
-    /// - Returns: представление фичи.
+    /// Create the feature.
+    /// - Returns: feature view.
     func build() -> UIView {
         let router = NavToTodoListRouter(
             rootViewController: rootViewController ?? UIViewController(),

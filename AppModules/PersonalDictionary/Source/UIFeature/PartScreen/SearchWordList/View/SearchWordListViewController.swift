@@ -19,9 +19,9 @@ final class SearchWordListViewController: UIViewController {
     private let disposeBag = DisposeBag()
 
     /// - Parameters:
-    ///  - viewModel: модель представления.
-    ///  - wordListBuilder: билдер вложенной фичи "Список слов".
-    ///  - labelText: текст для результата поиска.
+    ///  - viewModel: view model.
+    ///  - wordListBuilder: builder of the nested "Word List" feature.
+    ///  - labelText: text for the search result.
     init(
         viewModel: SearchWordListViewModel,
         wordListBuilder: WordListBuilder,

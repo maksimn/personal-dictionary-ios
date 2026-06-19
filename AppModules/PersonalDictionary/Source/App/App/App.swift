@@ -7,12 +7,12 @@
 
 import UIKit
 
-/// Корневой объект приложения "Личный словарь иностранных слов".
+/// Root object of the "Personal Dictionary" application.
 public struct App {
 
-    /// Корневой контроллер приложения
+    /// Root view controller of the application
     public let rootViewController: UIViewController
 
-    /// Служба для работы с пуш-уведомлениями.
+    /// Service for working with push notifications.
     public let pushNotificationService: PushNotificationService
 }

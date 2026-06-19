@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-/// Реализация контейнера элементов навигации на Главном экране приложения.
+/// Implementation of the container of navigation elements on the main screen of the application.
 final class MainNavigatorImpl: MainNavigator {
 
     private lazy var navigationItem = navigationItemGetter()
@@ -28,10 +28,10 @@ final class MainNavigatorImpl: MainNavigator {
 
     private var isSearchTextInputInstalled: Bool = false
 
-    /// Инициализатор,
+    /// Initializer,
     /// - Parameters:
-    ///  - navToFavoritesBuilder: билдер вложенной фичи "Элемент навигации на экран списка избранных слов".
-    ///  - navToTodoListBuilder: билдер вложенной фичи "Элемент навигации к приложению TodoList".
+    ///  - navToFavoritesBuilder: builder of the nested "Navigation to Favorites List Screen" feature.
+    ///  - navToTodoListBuilder: builder of the nested "Navigation to TodoList Application" feature.
     init(
         navigationItemGetter: @escaping () -> UINavigationItem?,
         searchControllerBuilder: SearchControllerBuilder,

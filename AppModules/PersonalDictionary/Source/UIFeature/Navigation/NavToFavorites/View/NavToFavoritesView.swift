@@ -8,7 +8,7 @@
 import CoreModule
 import UIKit
 
-/// Представление элемента навигации на экран Избранного
+/// View of the navigation element to the Favorites screen
 final class NavToFavoritesView: UIView {
 
     private let routingButtonTitle: String
@@ -16,10 +16,10 @@ final class NavToFavoritesView: UIView {
 
     private let routingButton = UIButton()
 
-    /// Инициализатор.
+    /// Initializer.
     /// - Parameters:
-    ///  - routingButtonTitle: текст  навигационной кнопки на экран списка избранных слов.
-    ///  - navToFavoritesRouter: роутер для навигации на экран Избранного.
+    ///  - routingButtonTitle: text of the navigation button to the favorite words list screen.
+    ///  - navToFavoritesRouter: router for navigation to the Favorites screen.
     init(routingButtonTitle: String,
          navToFavoritesRouter: Router,
          theme: Theme) {

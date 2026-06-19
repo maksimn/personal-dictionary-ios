@@ -8,25 +8,25 @@
 import CoreModule
 import UIKit
 
-/// Конфигурация представлений в приложении ("тема")
+/// View configuration in the application ("theme")
 struct Theme {
 
-    /// Цвет фона в приложении
+    /// Background color in the application
     let backgroundColor: UIColor
 
-    /// "Золотой" цвет
+    /// "Gold" color
     let goldColor: UIColor
 
-    /// Цвет ячейки таблицы с информацией о слове
+    /// Color of the table cell with word information
     let wordCellColor: UIColor
 
-    /// Цвет текста в приложении
+    /// Text color in the application
     let textColor: UIColor
 
-    /// "Вторичный" цвет текста в приложении
+    /// "Secondary" text color in the application
     let secondaryTextColor: UIColor
 
-    /// Шрифт стандартного текста обычного размера в приложении.
+    /// Standard normal size text font in the application.
     let normalFont: UIFont
 
     private init(backgroundColor: UIColor,

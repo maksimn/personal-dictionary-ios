@@ -7,32 +7,32 @@
 
 import UIKit
 
-/// Параметры делегата таблицы слов из личного словаря.
+/// Parameters for the word list table delegate from the personal dictionary.
 struct WordTableViewDelegateParams {
 
-    /// Запускать ли анимацию при первом появлении данных в таблице.
+    /// Whether to run animation when data first appears in the table.
     let shouldAnimateWhenAppear: Bool
 
-    /// Длительность анимации слайда ячейки при её первом показе
+    /// Duration of the cell slide-in animation on its first appearance
     let cellSlideInDuration: Double
 
-    /// Фактор задержки анимации последующих ячеек
+    /// Delay factor for subsequent cell animations
     let cellSlideInDelayFactor: Double
 
-    /// Картинка для действия удаления элемента из таблицы
+    /// Image for the delete action on the table item
     let deleteActionImage: UIImage
 
-    /// Цвет фона для действия удаления элемента из таблицы
+    /// Background color for the delete action on the table item
     let deleteActionBackgroundColor: UIColor
 
-    /// Картинка для действия добавления/удаления элемента из Избранного
+    /// Image for the add/remove from Favorites action
     let favoriteActionImage: UIImage
 
-    /// Цвет фона для действия добавления/удаления элемента из Избранного
+    /// Background color for the add/remove from Favorites action
     let favoriteActionBackgroundColor: UIColor
 }
 
-/// Делегат событий для таблицы слов из словаря.
+/// Event delegate for the dictionary word table.
 final class WordTableViewDelegate: NSObject, UITableViewDelegate {
 
     private let params: WordTableViewDelegateParams
@@ -42,9 +42,9 @@ final class WordTableViewDelegate: NSObject, UITableViewDelegate {
     private var hasAnimatedAllCells = false
 
     /// - Parameters:
-    ///  - params: параметры делегата таблицы слов из личного словаря.
-    ///  - onDeleteTap: обработчик нажатия на view для удаления элемента таблицы.
-    ///  - onFavoriteTap: обработчик нажатия на view для добавления/удаления элемента из Избранного.
+    ///  - params: parameters of the word list table delegate from the personal dictionary.
+    ///  - onDeleteTap: handler for tapping the view to delete a table item.
+    ///  - onFavoriteTap: handler for tapping the view to add/remove an item from Favorites.
     init(params: WordTableViewDelegateParams,
          onDeleteTap: ((Int) -> Void)?,
          onFavoriteTap: ((Int) -> Void)?) {

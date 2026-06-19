@@ -9,7 +9,7 @@ import CoreModule
 import RxSwift
 import UIKit
 
-/// View controller Главного экрана.
+/// View controller of the Main screen.
 final class MainScreen: UIViewController {
 
     private let mainWordListViewController: UIViewController
@@ -20,10 +20,10 @@ final class MainScreen: UIViewController {
 
     private let disposeBag = DisposeBag()
 
-    /// Инициализатор.
+    /// Initializer.
     /// - Parameters:
-    ///  - mainWordListBuilder: билдер вложенной фичи "Главный список слов".
-    ///  - mainNavigatorBuilder: билдер вложенной фичи "Контейнер элементов навигации на Главном экране приложения".
+    ///  - mainWordListBuilder: builder for the nested "Main Word List" feature.
+    ///  - mainNavigatorBuilder: builder for the nested "Navigation Elements Container on the Main Screen" feature.
     init(title: String,
          mainWordListBuilder: MainWordListBuilder,
          mainNavigatorBuilder: MainNavigatorBuilder,

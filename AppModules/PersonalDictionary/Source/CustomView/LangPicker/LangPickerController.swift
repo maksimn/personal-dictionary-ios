@@ -7,20 +7,20 @@
 
 import UIKit
 
-/// Источник данных для элемента выбора языка.
+/// Data source for the language picker element.
 final class LangPickerController: NSObject, UIPickerViewDataSource, UIPickerViewDelegate {
 
-    /// Список языков
+    /// List of languages
     let langs: [Lang]
 
-    /// Инициализатор
+    /// Initializer
     /// - Parameters:
-    ///  - langs: список языков для выбора.
+    ///  - langs: list of languages to choose from.
     init(langs: [Lang]) {
         self.langs = langs
     }
 
-    /// Методы UIPickerViewDataSource:
+    /// UIPickerViewDataSource methods:
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1

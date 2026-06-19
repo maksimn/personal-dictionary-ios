@@ -8,15 +8,15 @@
 import CoreModule
 import UIKit
 
-/// Реализация билдера приложения "Личный словарь иностранных слов".
+/// Implementation of the builder of the "Personal Dictionary" application.
 public final class AppBuilderImpl: AppBuilder {
 
     private lazy var logger = LoggerImpl(category: "PersonalDictionary.App")
 
     public init() { }
 
-    /// Создать объект данного приложения.
-    /// - Returns: объект приложения.
+    /// Create an application object.
+    /// - Returns: application object.
     public func build() -> App {
         let dependency = appDependency()
         let app = App(

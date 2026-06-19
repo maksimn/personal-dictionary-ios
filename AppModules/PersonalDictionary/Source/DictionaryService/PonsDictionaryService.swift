@@ -10,7 +10,7 @@ import CoreModule
 import Foundation
 import RxSwift
 
-/// Служба для получения перевода слова из PONS Online Dictionary API,
+/// Service for fetching word translations from the PONS Online Dictionary API.
 final class PonsDictionaryService: DictionaryService {
 
     private let secret: String
@@ -21,8 +21,8 @@ final class PonsDictionaryService: DictionaryService {
     private var cancellables: Set<AnyCancellable> = []
 
     /// - Parameters:
-    ///  - secret: секрет для обращения к онлайновому PONS API.
-    ///  - httpClient: базовая служба для сетевых запросов по протоколу HTTP.
+    ///  - secret: secret for accessing the online PONS API.
+    ///  - httpClient: base service for network requests over the HTTP protocol.
     init(secret: String, httpClient: HttpClient) {
         self.secret = secret
         self.httpClient = httpClient

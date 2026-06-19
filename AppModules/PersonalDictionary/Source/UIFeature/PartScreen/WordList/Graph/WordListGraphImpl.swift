@@ -8,16 +8,16 @@
 import CoreModule
 import UIKit
 
-/// Реализация графа фичи "Список слов".
+/// Implementation of the "Word List" feature graph.
 final class WordListGraphImpl<RouterType: ParametrizedRouter>: WordListGraph where RouterType.Parameter == Word.Id {
 
     let view: UIView
 
     let viewModel: WordListViewModel
 
-    /// Инициализатор.
+    /// Initializer.
     /// - Parameters:
-    ///  - viewParams: параметры представления фичи.
+    ///  - viewParams: feature view parameters.
     init(
         viewParams: WordListViewParams,
         updateWordDbWorker: UpdateWordDbWorker,

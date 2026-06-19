@@ -16,13 +16,13 @@ enum LangPickerAction: Action {
 
 typealias LangPickerState = WrappedOptional<LangPickerData>
 
-/// Данные о выбранном языке
+/// Data about the selected language
 struct LangPickerData: Equatable {
 
-    /// Выбранный язык
+    /// Selected language
     var lang: Lang
 
-    /// Тип выбранного языка
+    /// Type of the selected language
     var langType: LangType
 
     init(lang: Lang = Lang.empty, langType: LangType = LangType.defaultValue) {

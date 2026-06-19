@@ -14,7 +14,7 @@ enum NewWordAction: Action {
     case sendNewWord
 }
 
-/// Данные модели "Добавления нового слова" в личный словарь.
+/// Data for the "Add New Word" model in the personal dictionary.
 struct NewWordState: Equatable {
     var text = ""
     var sourceLang = Lang.empty

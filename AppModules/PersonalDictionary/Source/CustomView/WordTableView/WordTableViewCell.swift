@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// Представление слова (в личном словаре) в виде ячейки таблицы.
+/// Word representation as a table cell.
 final class WordTableViewCell: UITableViewCell {
 
     let wordlabel = UILabel()
@@ -16,7 +16,7 @@ final class WordTableViewCell: UITableViewCell {
     let targetLangLabel = UILabel()
     let favoriteWordLabel = UILabel()
 
-    /// Стандартный инициализатор ячейки таблицы.
+    /// Standard table cell initializer.
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         initViews()
@@ -26,9 +26,9 @@ final class WordTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    /// Задать данные для отображения в представлении.
+    /// Set the data to display in the view.
     /// - Parameters:
-    ///  - word: данные о слове из словаря.
+    ///  - word: word data from the dictionary.
     func set(word: Word, _ theme: Theme) {
         wordlabel.text = word.text
         translationLabel.text = word.translation

@@ -9,17 +9,17 @@ import CoreModule
 import UDF
 import UIKit
 
-/// Билдер Фичи "Выбор языка".
+/// Builder of the "Language Selection" Feature.
 final class LangPickerBuilder: ViewBuilder {
 
     private let bundle: Bundle
     private let allLangs: [Lang]
     private let store: Store<LangPickerState>
 
-    /// Инициализатор.
+    /// Initializer.
     /// - Parameters:
-    ///  - bundle: бандл приложения.
-    ///  - allLangs: список всех доступных языков.
+    ///  - bundle: application bundle.
+    ///  - allLangs: list of all available languages.
     init(bundle: Bundle, allLangs: [Lang], store: Store<LangPickerState>) {
         self.bundle = bundle
         self.allLangs = allLangs

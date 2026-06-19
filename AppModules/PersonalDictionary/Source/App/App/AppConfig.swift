@@ -5,25 +5,25 @@
 //  Created by Maxim Ivanov on 10.10.2021.
 //
 
-/// Параметры конфигурации приложения "Личный словарь иностранных слов".
+/// Configuration parameters of the "Personal Dictionary" application.
 struct AppConfig {
 
-    /// Данные о языках в приложении
+    /// Language data in the application
     let langData: LangData
 
-    /// Ключ для запросов к Pons API для выполнения перевода слов
+    /// Key for requests to the Pons API for word translation
     let ponsApiSecret: String
 
-    /// Время ежедневного пуш-уведомления
+    /// Daily push notification time
     let everydayPNTime: EverydayPNTime
 
-    /// Время ежедневного пуш-уведомления
+    /// Daily push notification time
     struct EverydayPNTime {
 
-        /// Часы
+        /// Hours
         let hours: Int
 
-        /// Минуты
+        /// Minutes
         let minutes: Int
     }
 }

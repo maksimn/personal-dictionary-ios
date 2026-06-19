@@ -7,7 +7,7 @@
 
 import RxSwift
 
-/// Модель списка слов.
+/// Word list model.
 protocol WordListModel {
 
     func remove(at position: Int, state: WordListState) -> Single<WordListState>

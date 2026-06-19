@@ -9,11 +9,11 @@ import CoreModule
 import RealmSwift
 import RxSwift
 
-// Логика работы с индексом переводов слов:
-// 1) Создание объектов индекса - при успешном получении словарной статьи для слова создается набор объектов
-// WordTranslationIndexDAO c переводами слова, который сохраняется в базе (Realm).
-// 2) Удаление объектов индекса - при удалении слова из словаря удаляются все объекты WordTranslationIndexDAO для
-// данного wordId.
+// Logic for working with the word translation index:
+// 1) Creating index objects - upon successfully receiving a dictionary entry for a word, a set of
+// WordTranslationIndexDAO objects with word translations is created and saved in the database (Realm).
+// 2) Deleting index objects - when a word is removed from the dictionary, all WordTranslationIndexDAO objects for
+// that wordId are deleted.
 
 class WordTranslationIndexDAO: Object {
     @Persisted var translations: List<String>

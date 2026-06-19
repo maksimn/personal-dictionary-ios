@@ -9,7 +9,7 @@ import CoreModule
 import UDF
 import UIKit
 
-/// Реализация билдера Фичи "Добавление нового слова" в личный словарь.
+/// Implementation of the "Add New Word" feature builder for the personal dictionary.
 final class NewWordBuilder: ViewControllerBuilder {
 
     private let featureName = "PersonalDictionary.NewWord"
@@ -17,17 +17,17 @@ final class NewWordBuilder: ViewControllerBuilder {
     private let bundle: Bundle
     private let langData: LangData
 
-    /// Инициализатор.
+    /// Initializer.
     /// - Parameters:
-    ///  - bundle: бандл приложения.
+    ///  - bundle: the application bundle.
     init(bundle: Bundle, langData: LangData) {
         self.bundle = bundle
         self.langData = langData
     }
 
-    /// Создать экран фичи
+    /// Create the feature screen.
     /// - Returns:
-    ///  - экран фичи  "Добавление нового слова".
+    ///  - the "Add New Word" feature screen.
     func build() -> UIViewController {
         let langRepositoryFactory = LangRepositoryFactory(
             langData: langData,

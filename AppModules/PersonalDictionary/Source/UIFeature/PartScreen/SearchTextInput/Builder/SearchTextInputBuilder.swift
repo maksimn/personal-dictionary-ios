@@ -8,7 +8,7 @@
 import CoreModule
 import UIKit
 
-/// Реализация билдера фичи "Элемент ввода поискового текста".
+/// Implementation of the "Search Text Input" feature builder.
 final class SearchTextInputBuilder: SearchControllerBuilder {
 
     private let bundle: Bundle
@@ -16,7 +16,7 @@ final class SearchTextInputBuilder: SearchControllerBuilder {
     private let featureName = "PersonalDictionary.SearchTextInput"
 
     /// - Parameters:
-    ///  - bundle: бандл приложения.
+    ///  - bundle: application bundle.
     init(bundle: Bundle) {
         self.bundle = bundle
     }

@@ -8,7 +8,7 @@
 import CoreModule
 import UIKit
 
-/// Реализация билдера фичи ""Элемент навигации на экран Избранного".
+/// Implementation of the "Navigation to Favorites Screen" feature builder.
 final class NavToFavoritesBuilder: ViewBuilder {
 
     private let dependency: AppDependency
@@ -17,8 +17,8 @@ final class NavToFavoritesBuilder: ViewBuilder {
         self.dependency = dependency
     }
 
-    /// Создать фичу.
-    /// - Returns: представление фичи.
+    /// Create the feature.
+    /// - Returns: feature view.
     func build() -> UIView {
         let favoritesBuilder = FavoritesBuilder(dependency: dependency)
         let router = NavToFavoritesRouter(

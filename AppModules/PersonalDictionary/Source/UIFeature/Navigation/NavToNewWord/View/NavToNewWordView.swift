@@ -8,7 +8,7 @@
 import CoreModule
 import UIKit
 
-/// Представление для навигации на экран добавления нового слова в Личный словарь.
+/// View for navigation to the new word addition screen in the Personal Dictionary.
 final class NavToNewWordView: UIView {
 
     private let navToNewWordButton = UIButton()
@@ -16,10 +16,10 @@ final class NavToNewWordView: UIView {
     private let navToNewWordImage: UIImage
     private let router: Router
 
-    /// Инициализатор.
+    /// Initializer.
     /// - Parameters:
-    ///  - navToNewWordImage: картинка для представления.
-    ///  - router: роутер для навигации на экран.
+    ///  - navToNewWordImage: image for the view.
+    ///  - router: router for navigation to the screen.
     init(navToNewWordImage: UIImage,
          router: Router) {
         self.navToNewWordImage = navToNewWordImage

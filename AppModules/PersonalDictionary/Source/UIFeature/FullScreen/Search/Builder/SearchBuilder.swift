@@ -8,7 +8,7 @@
 import CoreModule
 import UIKit
 
-/// Билдер Фичи "Поиск по словам в словаре".
+/// Builder for the "Search Words in Dictionary" feature.
 final class SearchBuilder: ViewControllerBuilder {
 
     private let dependency: AppDependency
@@ -17,9 +17,9 @@ final class SearchBuilder: ViewControllerBuilder {
         self.dependency = dependency
     }
 
-    /// Создать экран Поиска.
+    /// Create the Search screen.
     /// - Returns:
-    ///  - View controller экрана поиска по словам в словаре.
+    ///  - View controller of the search screen for words in the dictionary.
     func build() -> UIViewController {
         SearchViewController(
             searchModePickerBuilder: SearchModePickerBuilder(bundle: dependency.bundle),

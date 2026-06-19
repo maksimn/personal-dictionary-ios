@@ -34,9 +34,9 @@ final class LangPickerView: UIView, ViewComponent {
         }
     )
 
-    /// Инициализатор.
+    /// Initializer.
     /// - Parameters:
-    ///  - params: параметры представления выбора языка.
+    ///  - params: parameters of the language selection view.
     init(params: LangPickerParams, store: Store<LangPickerState>, theme: Theme, logger: Logger) {
         self.params = params
         self.store = store

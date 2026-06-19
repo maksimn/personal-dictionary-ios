@@ -9,22 +9,22 @@ import CoreModule
 import TodoList
 import UIKit
 
-/// Роутер, предназначенный для перехода к приложению "Список дел" (TodoList).
+/// Router designed for navigation to the "Todo List" application.
 final class NavToTodoListRouter: Router {
 
     private let rootViewController: UIViewController
     private let todoListBuilder: ViewControllerBuilder
 
     /// - Parameters:
-    ///   - rootViewController: view контроллер экрана, с которого начинается переход к приложению "Список дел".
-    ///   - todoListBuilder: билдер приложения TodoList ("Список дел").
+    ///   - rootViewController: view controller of the screen from which navigation to the "Todo List" application begins.
+    ///   - todoListBuilder: builder of the TodoList application.
     init(rootViewController: UIViewController,
          todoListBuilder: ViewControllerBuilder) {
         self.rootViewController = rootViewController
         self.todoListBuilder = todoListBuilder
     }
 
-    /// Перейти к приложению "Список дел" (TodoList).
+    /// Navigate to the "Todo List" application.
     func navigate() {
         let todoListViewController = todoListBuilder.build()
 

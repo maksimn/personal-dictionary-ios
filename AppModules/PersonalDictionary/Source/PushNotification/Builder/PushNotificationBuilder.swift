@@ -5,11 +5,11 @@
 //  Created by Maxim Ivanov on 11.05.2022.
 //
 
-/// Билдер фичи "Пуш-уведомления в приложении".
+/// Builder of the "Push Notifications in the Application" feature.
 protocol PushNotificationBuilder {
 
-    /// Метод билдера.
+    /// Builder method.
     /// - Returns:
-    ///  -  объект службы для работы с пуш-уведомлениями.
+    ///  - service object for working with push notifications.
     func build() -> PushNotificationService
 }

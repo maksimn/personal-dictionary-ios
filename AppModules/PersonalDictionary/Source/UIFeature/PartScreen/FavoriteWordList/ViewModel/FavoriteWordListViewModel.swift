@@ -5,7 +5,7 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-/// Модель представления списка избранных слов.
+/// View model of the favorite word list.
 protocol FavoriteWordListViewModel: AnyObject {
 
     var favoriteWordList: BindableWordList { get }

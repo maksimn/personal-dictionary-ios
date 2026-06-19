@@ -8,23 +8,23 @@
 import CoreModule
 import UIKit
 
-/// Реализация роутера для навигации на экран Избранного.
+/// Implementation of the router for navigation to the Favorites screen.
 final class NavToFavoritesRouter: Router {
 
     private weak var navigationController: UINavigationController?
     private let favoritesBuilder: ViewControllerBuilder
 
-    /// Инициализатор.
+    /// Initializer.
     /// - Parameters:
-    ///  - navigationController: корневой navigation controller приложения.
-    ///  - favoritesBuilder: билдер фичи "Избранное".
+    ///  - navigationController: root navigation controller of the application.
+    ///  - favoritesBuilder: builder of the "Favorites" feature.
     init(navigationController: UINavigationController?,
          favoritesBuilder: ViewControllerBuilder) {
         self.navigationController = navigationController
         self.favoritesBuilder = favoritesBuilder
     }
 
-    /// Перейти на экран списка избранных слов личногр словаря.
+    /// Navigate to the favorite words list screen of the personal dictionary.
     func navigate() {
         let favoritesViewController = favoritesBuilder.build()
 

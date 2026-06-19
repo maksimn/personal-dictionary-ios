@@ -7,10 +7,10 @@
 
 import CoreModule
 
-/// Получение списка слов из хранилища личного словаря.
+/// Fetching the word list from the personal dictionary storage.
 protocol WordListFetcher {
 
-    /// - Returns: список слов из личного словаря.
+    /// - Returns: list of words from the personal dictionary.
     func wordList() throws -> [Word]
 }
 

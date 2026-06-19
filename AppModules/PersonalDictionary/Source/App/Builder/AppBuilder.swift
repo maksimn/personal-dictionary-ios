@@ -5,10 +5,10 @@
 //  Created by Maxim Ivanov on 05.12.2021.
 //
 
-/// Билдер приложения "Личный словарь иностранных слов".
+/// Builder of the "Personal Dictionary" application.
 public protocol AppBuilder {
 
-    /// Создание объекта данного приложения.
-    /// - Returns: объект приложения.
+    /// Create an application object.
+    /// - Returns: application object.
     func build() -> App
 }

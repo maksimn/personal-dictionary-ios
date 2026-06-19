@@ -16,15 +16,15 @@ final class NewWordStreamImpl: NewWordSender, NewWordStream {
 
     static let instance = NewWordStreamImpl()
 
-    /// Подписка на события добавления новых слов в словарь.
-    /// - Returns: Rx observable с потоком событий добавления новых слов в словарь.
+    /// Subscribe to new word addition events in the dictionary.
+    /// - Returns: Rx observable with a stream of new word addition events.
     var newWord: Observable<Word> {
         newWordPublishRelay.asObservable()
     }
 
-    /// Отправить событие добавления нового слова в словарь.
+    /// Send a new word addition event to the dictionary.
     /// - Parameters:
-    ///  - word: новое слово в словаре.
+    ///  - word: the new word in the dictionary.
     func sendNewWord(_ word: Word) {
         newWordPublishRelay.accept(word)
     }
@@ -36,15 +36,15 @@ final class RemovedWordStreamImpl: RemovedWordSender, RemovedWordStream {
 
     static let instance = RemovedWordStreamImpl()
 
-    /// Подписка на события удаления слов из словаря.
-    /// - Returns: Rx observable с потоком событий удаления слов из словаря.
+    /// Subscribe to word removal events from the dictionary.
+    /// - Returns: Rx observable with a stream of word removal events.
     var removedWord: Observable<Word> {
         removedWordPublishRelay.asObservable()
     }
 
-    /// Отправить событие удаления слова из словаря.
+    /// Send a word removal event from the dictionary.
     /// - Parameters:
-    ///  - word: удалённое из словаря слово.
+    ///  - word: the word removed from the dictionary.
     func sendRemovedWord(_ word: Word) {
         removedWordPublishRelay.accept(word)
     }
@@ -58,15 +58,15 @@ final class UpdatedWordStreamImpl: UpdatedWordSender, UpdatedWordStream {
 
     static let instance = UpdatedWordStreamImpl()
 
-    /// Для подписки на события обновления слова из словаря
-    /// - Returns: Rx observable с потоком обновленных слов из словаря.
+    /// Subscribe to word update events from the dictionary.
+    /// - Returns: Rx observable with a stream of updated words from the dictionary.
     var updatedWord: Observable<UpdatedWord> {
         updatedWordPublishRelay.asObservable()
     }
 
-    /// Отправить событие обновления слова из словаря.
+    /// Send a word update event from the dictionary.
     /// - Parameters:
-    ///  - updatedWord: данные об обновлённом слово в словаре.
+    ///  - updatedWord: data about the updated word in the dictionary.
     func sendUpdatedWord(_ updatedWord: UpdatedWord) {
         updatedWordPublishRelay.accept(updatedWord)
     }

@@ -7,11 +7,11 @@
 
 import UIKit
 
-/// Граф фичи "Список слов".
+/// Graph of the "Word List" feature.
 protocol WordListGraph {
 
     var view: UIView { get }
 
-    /// Модель списка слов
+    /// Word list model
     var viewModel: WordListViewModel { get }
 }

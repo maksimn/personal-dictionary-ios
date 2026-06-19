@@ -8,7 +8,7 @@
 import RxSwift
 import UIKit
 
-/// View controller Главного списка слов.
+/// View controller of the Main Word List.
 final class MainWordListViewController: UIViewController {
 
     private let viewModel: MainWordListViewModel
@@ -16,9 +16,9 @@ final class MainWordListViewController: UIViewController {
 
     private let disposeBag = DisposeBag()
 
-    /// Инициализатор.
+    /// Initializer.
     /// - Parameters:
-    ///  - wordListBuilder: билдер вложенной фичи "Список слов".
+    ///  - wordListBuilder: builder of the nested "Word List" feature.
     init(
         viewModel: MainWordListViewModel,
         wordListBuilder: WordListBuilder

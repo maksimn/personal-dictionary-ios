@@ -5,21 +5,21 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-/// Модель представления списка слов.
+/// View model of the word list.
 protocol WordListViewModel {
 
-    /// Данные модели представления.
+    /// View model data.
     var wordList: BindableWordList { get }
 
     func select(at position: Int)
 
-    /// Удалить слово из модели по заданному индексу из списка
+    /// Remove a word from the model at the specified index in the list
     /// - Parameters:
-    ///  - position: позиция (индекс) слова в списке.
+    ///  - position: position (index) of the word in the list.
     func remove(at position: Int)
 
-    /// Переключить значение флага "избранности" (isFavorite) для слова по заданному индексу из списка
+    /// Toggle the "isFavorite" flag value for the word at the specified index in the list
     /// - Parameters:
-    ///  - position: позиция (индекс) слова в списке.
+    ///  - position: position (index) of the word in the list.
     func toggleWordIsFavorite(at position: Int)
 }
