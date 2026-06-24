@@ -5,12 +5,10 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-import RxSwift
-
 /// Implementation of the favorite word list view model.
 final class FavoriteWordListViewModelImpl: FavoriteWordListViewModel {
 
-    let favoriteWordList = BindableWordList(value: [])
+    let favoriteWordList = BindableWordList([])
 
     private let fetcher: FavoriteWordListFetcher
 
@@ -22,7 +20,7 @@ final class FavoriteWordListViewModelImpl: FavoriteWordListViewModel {
         do {
             let wordList = try fetcher.favoriteWordList()
 
-            favoriteWordList.accept(wordList)
+            favoriteWordList.send(wordList)
         } catch { }
     }
 }

@@ -6,21 +6,20 @@
 //
 
 import CoreModule
-import RxSwift
 
 protocol UpdateWordDbWorker {
 
     /// Update a word in the personal dictionary storage.
     /// - Parameters:
     ///  - word: the updated word.
-    /// - Returns: Rx single for handling the completion of the word update operation.
-    func update(word: Word) -> Single<Word>
+    /// - Returns: the updated word.
+    func update(word: Word) async throws -> Word
 }
 
 struct RealmUpdateWordDbWorker: UpdateWordDbWorker {
 
-    func update(word: Word) -> Single<Word> {
-        makeRealmCUD(operation: { (realm, word) in
+    func update(word: Word) async throws -> Word {
+        try await makeRealmCUD(operation: { (realm, word) in
             let wordDAO = try realm.findWordBy(id: word.id)
 
             wordDAO.update(from: word)
@@ -33,20 +32,18 @@ struct UpdateWordDbWorkerLog: UpdateWordDbWorker {
     let updateWordDbWorker: UpdateWordDbWorker
     let logger: Logger
 
-    func update(word: Word) -> Single<Word> {
+    func update(word: Word) async throws -> Word {
         logger.log("UPDATE WORD IN LOCAL STORAGE START\nWORD = \(word)", level: .info)
 
-        let result = updateWordDbWorker.update(word: word)
-        let loggedResult = result.do(
-            onSuccess: { word in
-                logger.log("UPDATE WORD IN LOCAL STORAGE SUCCESS\nWORD = \(word)", level: .info)
+        do {
+            let result = try await updateWordDbWorker.update(word: word)
 
-            },
-            onError: { error in
-                logger.log("UPDATE WORD IN LOCAL STORAGE ERROR\nerror = \(error)", level: .error)
-            }
-        )
+            logger.log("UPDATE WORD IN LOCAL STORAGE SUCCESS\nWORD = \(result)", level: .info)
 
-        return loggedResult
+            return result
+        } catch {
+            logger.log("UPDATE WORD IN LOCAL STORAGE ERROR\nerror = \(error)", level: .error)
+            throw error
+        }
     }
 }

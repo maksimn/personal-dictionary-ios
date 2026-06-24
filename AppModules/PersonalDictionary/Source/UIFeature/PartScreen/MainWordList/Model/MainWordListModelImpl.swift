@@ -5,8 +5,6 @@
 //  Created by Maxim Ivanov on 30.03.2023.
 //
 
-import RxSwift
-
 struct MainWordListModelImpl: MainWordListModel {
 
     let wordListFetcher: WordListFetcher
@@ -29,20 +27,16 @@ struct MainWordListModelImpl: MainWordListModel {
         return state
     }
 
-    func createEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
-        сreateWordDbWorker.create(word: word)
-            .flatMap { word in
-                self.dictionaryService.fetchDictionaryEntry(for: word)
-            }
-            .map { wordData in
-                var state = state
-                let word = wordData.word
+    func createEffect(_ word: Word, state: WordListState) async throws -> WordListState {
+        let createdWord = try await сreateWordDbWorker.create(word: word)
+        let wordData = try await dictionaryService.fetchDictionaryEntry(for: createdWord)
+        var state = state
+        let updatedWord = wordData.word
 
-                guard let position = state.firstIndex(where: { $0.id == word.id }) else { return state }
+        guard let position = state.firstIndex(where: { $0.id == updatedWord.id }) else { return state }
 
-                state[position] = wordData.word
+        state[position] = updatedWord
 
-                return state
-            }
+        return state
     }
 }

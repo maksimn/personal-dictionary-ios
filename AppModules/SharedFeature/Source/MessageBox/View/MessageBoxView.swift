@@ -5,7 +5,7 @@
 //  Created by Maxim Ivanov on 31.08.2023.
 //
 
-import RxSwift
+import Combine
 import Toast
 import UIKit
 
@@ -13,7 +13,8 @@ final class MessageBoxView: UIView {
 
     private let viewModel: MessageBoxViewModel
     private let duration: Int
-    private let disposeBag = DisposeBag()
+
+    private var cancellables: Set<AnyCancellable> = []
 
     init(viewModel: MessageBoxViewModel, duration: Int) {
         self.viewModel = viewModel
@@ -28,11 +29,10 @@ final class MessageBoxView: UIView {
 
     private func bindToViewModel() {
         viewModel.state
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] in
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
                 self?.onNext(state: $0)
-            })
-            .disposed(by: disposeBag)
+            }.store(in: &cancellables)
     }
 
     private func onNext(state: MessageBoxState) {

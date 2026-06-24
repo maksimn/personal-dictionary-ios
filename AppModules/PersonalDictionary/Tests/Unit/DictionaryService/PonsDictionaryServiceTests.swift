@@ -5,14 +5,13 @@
 //  Created by Maksim Ivanov on 24.02.2023.
 //
 
-import Combine
 import CoreModule
 import XCTest
 @testable import PersonalDictionary
 
 final class PonsDictionaryServiceTests: XCTestCase {
 
-    func test_fetchDictionaryEntry__returnsCorrectTranslation() throws {
+    func test_fetchDictionaryEntry__returnsCorrectTranslation() async throws {
         // Arrange:
         let httpClientMock = HttpClientMock()
         let ponsTranslationService = PonsDictionaryService(secret: "", httpClient: httpClientMock)
@@ -44,31 +43,31 @@ final class PonsDictionaryServiceTests: XCTestCase {
         let data = try! JSONEncoder().encode(ponsArray)
 
         httpClientMock.sendMock = { _ in
-            RxHttpResponse(CurrentValueSubject((response: HTTPURLResponse(), data: data)))
+            HttpResponseResult(response: HTTPURLResponse(), data: data)
         }
 
         // Act:
-        let single = ponsTranslationService.fetchDictionaryEntry(for: Word.defaultValueFUT)
+        let result = try await ponsTranslationService.fetchDictionaryEntry(for: Word.defaultValueFUT)
 
         // Assert:
-        let result = try single.toBlocking().first()
-
-        XCTAssertEqual(result?.entry, data)
+        XCTAssertEqual(result.entry, data)
     }
 
-    func test_fetchDictionaryEntry__returnsErrorWhenHttpRequestFails() throws {
+    func test_fetchDictionaryEntry__returnsErrorWhenHttpRequestFails() async throws {
         // Arrange:
         let httpClientMock = HttpClientMock()
         let ponsTranslationService = PonsDictionaryService(secret: "", httpClient: httpClientMock)
 
         httpClientMock.sendMock = { _ in
-            RxHttpResponse(Fail(error: URLError(.unknown) as Error))
+            throw URLError(.unknown)
         }
 
-        // Act:
-        let single = ponsTranslationService.fetchDictionaryEntry(for: Word.defaultValueFUT)
-
-        // Assert:
-        XCTAssertThrowsError(try single.toBlocking().first())
+        // Act & Assert:
+        do {
+            _ = try await ponsTranslationService.fetchDictionaryEntry(for: Word.defaultValueFUT)
+            XCTFail("Expected error to be thrown")
+        } catch {
+            XCTAssertTrue(error is URLError)
+        }
     }
 }

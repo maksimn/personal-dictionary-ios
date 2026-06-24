@@ -5,7 +5,7 @@
 //  Created by Maksim Ivanov on 07.05.2023.
 //
 
-import RxSwift
+import Combine
 import UIKit
 
 struct DictionaryEntryViewParams {
@@ -24,7 +24,8 @@ final class DictionaryEntryViewController: UIViewController {
     let activityIndicator = UIActivityIndicatorView()
     let label: UILabel
     let retryButton = UIButton()
-    let disposeBag = DisposeBag()
+
+    private var cancellables: Set<AnyCancellable> = []
 
     init(viewModel: DictionaryEntryViewModel, params: DictionaryEntryViewParams, theme: Theme) {
         self.viewModel = viewModel
@@ -46,9 +47,9 @@ final class DictionaryEntryViewController: UIViewController {
     }
 
     private func bindToViewModel() {
-        viewModel.state.subscribe(onNext: { [weak self] in
+        viewModel.state.sink { [weak self] in
             self?.set(state: $0)
-        }).disposed(by: disposeBag)
+        }.store(in: &cancellables)
     }
 
     private func set(state: DictionaryEntryState) {

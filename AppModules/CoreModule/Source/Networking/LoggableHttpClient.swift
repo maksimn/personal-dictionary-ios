@@ -15,35 +15,29 @@ public final class LoggableHttpClient: HttpClient {
         self.logger = logger
     }
 
-    public func send(_ http: Http) -> RxHttpResponse {
+    public func send(_ http: Http) async throws -> HttpResponseResult {
         logger.log("HTTP REQUEST START: \(http)", level: .info)
 
         if let body = http.body {
             logger.log("HTTP REQUEST BODY: \(body.asUTF8)", level: .info)
         }
 
-        return httpClient.send(http)
-            .handleEvents(
-                receiveOutput: { httpResponse in
-                    self.logger.log(
-                        """
-                        HTTP RESPONSE FETCHED
-                        HTTPURLResponse: \(httpResponse.response)
-                        HTTP_Response_Data: \(httpResponse.data.asUTF8)
-                        """,
-                        level: .info
-                    )
-                },
-                receiveCompletion: { completion in
-                    switch completion {
-                    case .failure(let error):
-                        self.logger.log("HTTP REQUEST ERROR: \(error)", level: .error)
+        do {
+            let result = try await httpClient.send(http)
 
-                    default:
-                        break
-                    }
-                }
+            logger.log(
+                """
+                HTTP RESPONSE FETCHED
+                HTTPURLResponse: \(result.response)
+                HTTP_Response_Data: \(result.data.asUTF8)
+                """,
+                level: .info
             )
-            .eraseToAnyPublisher()
+
+            return result
+        } catch {
+            logger.log("HTTP REQUEST ERROR: \(error)", level: .error)
+            throw error
+        }
     }
 }

@@ -5,12 +5,19 @@
 //  Created by Maxim Ivanov on 09.10.2021.
 //
 
-import Combine
 import Foundation
 
-public typealias RxHttpResponse = AnyPublisher<(response: HTTPURLResponse, data: Data), Error>
+public struct HttpResponseResult {
+    public let response: HTTPURLResponse
+    public let data: Data
+
+    public init(response: HTTPURLResponse, data: Data) {
+        self.response = response
+        self.data = data
+    }
+}
 
 public protocol HttpClient {
 
-    func send(_ http: Http) -> RxHttpResponse
+    func send(_ http: Http) async throws -> HttpResponseResult
 }

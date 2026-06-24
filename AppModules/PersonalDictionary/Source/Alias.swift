@@ -5,12 +5,12 @@
 //  Created by Maxim Ivanov on 12.11.2022.
 //
 
-import RxCocoa
+import Combine
 
-typealias BindableWordList = BehaviorRelay<WordListState>
+typealias BindableWordList = CurrentValueSubject<WordListState, Never>
 
-typealias BindableSearchResult = BehaviorRelay<SearchResultData>
+typealias BindableSearchResult = CurrentValueSubject<SearchResultData, Never>
 
 typealias WordListState = [Word]
 
-typealias BindableDictionaryEntryState = BehaviorRelay<DictionaryEntryState>
+typealias BindableDictionaryEntryState = CurrentValueSubject<DictionaryEntryState, Never>

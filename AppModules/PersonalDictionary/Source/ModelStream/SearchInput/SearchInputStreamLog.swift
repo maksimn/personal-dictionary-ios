@@ -6,7 +6,6 @@
 //
 
 import CoreModule
-import RxSwift
 
 struct SearchTextStreamLog: SearchTextStream, SearchTextSender {
 
@@ -15,10 +14,16 @@ struct SearchTextStreamLog: SearchTextStream, SearchTextSender {
 
     private static let modelStreamName = "SEARCH TEXT"
 
-    var searchText: Observable<String> {
-        modelStream.searchText.do(onNext: { searchText in
-            logger.logReceiving(searchText, fromModelStream: Self.modelStreamName)
-        })
+    var searchText: AsyncStream<String> {
+        AsyncStream { continuation in
+            Task {
+                for await text in modelStream.searchText {
+                    logger.logReceiving(text, fromModelStream: Self.modelStreamName)
+                    continuation.yield(text)
+                }
+                continuation.finish()
+            }
+        }
     }
 
     func send(_ searchText: String) {
@@ -35,10 +40,16 @@ struct SearchModeStreamLog: SearchModeStream, SearchModeSender {
 
     private static let modelStreamName = "SEARCH MODE"
 
-    var searchMode: Observable<SearchMode> {
-        modelStream.searchMode.do(onNext: { searchMode in
-            logger.logReceiving(searchMode, fromModelStream: Self.modelStreamName)
-        })
+    var searchMode: AsyncStream<SearchMode> {
+        AsyncStream { continuation in
+            Task {
+                for await mode in modelStream.searchMode {
+                    logger.logReceiving(mode, fromModelStream: Self.modelStreamName)
+                    continuation.yield(mode)
+                }
+                continuation.finish()
+            }
+        }
     }
 
     func send(_ searchMode: SearchMode) {

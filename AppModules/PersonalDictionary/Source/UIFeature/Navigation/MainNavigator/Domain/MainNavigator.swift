@@ -14,4 +14,12 @@ protocol MainNavigator {
     func appendTo(rootView: UIView)
 
     func viewWillLayoutSubviews()
+
+    func searchTextInputWillDismiss()
+
+    func searchTextInputDidDismiss()
+
+    func searchTextInputWillPresent()
+
+    func searchTextInputDidPresent()
 }

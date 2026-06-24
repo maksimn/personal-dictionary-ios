@@ -5,24 +5,22 @@
 //  Created by Maxim Ivanov on 25.11.2021.
 //
 
-import RxSwift
-
 protocol NewWordStream {
 
     /// To subscribe for events of an appearance of a new word in the dictionary
-    var newWord: Observable<Word> { get }
+    var newWord: AsyncStream<Word> { get }
 }
 
 protocol UpdatedWordStream {
 
     /// To subscribe for events of an update of a word in the dictionary
-    var updatedWord: Observable<UpdatedWord> { get }
+    var updatedWord: AsyncStream<UpdatedWord> { get }
 }
 
 protocol RemovedWordStream {
 
     /// To subscribe for events of a deletion of a word in the dictionary
-    var removedWord: Observable<Word> { get }
+    var removedWord: AsyncStream<Word> { get }
 }
 
 /// Sender of events for adding a new word to the personal dictionary.

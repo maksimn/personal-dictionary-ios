@@ -11,15 +11,15 @@ import XCTest
 class RealmCreateWordDbWorkerTests: XCTestCase {
 
     override func tearDownWithError() throws {
-        try removeRealmData()
+        removeRealmData()
     }
 
-    func test_createWord__createSingleWordInDB() throws {
+    func test_createWord__createSingleWordInDB() async throws {
         // Arrange:
         let createWordDbWorker = RealmCreateWordDbWorker()
 
         // Act:
-        _ = try createWordDbWorker.create(word: Word.defaultValueFUT).toBlocking().first()
+        _ = try await createWordDbWorker.create(word: Word.defaultValueFUT)
 
         // Assert:
         let wordListFetcher = RealmWordListFetcher()

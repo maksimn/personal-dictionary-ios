@@ -16,21 +16,21 @@ class RealmSearchableWordListTests: XCTestCase {
     lazy var word2 = Word(text: "B", translation: "Y", sourceLang: lang, targetLang: lang, createdAt: 2)
     lazy var word3 = Word(text: "C", translation: "Q", sourceLang: lang, targetLang: lang, createdAt: 1)
 
-    func arrangeSearch() {
+    func arrangeSearch() async throws {
         let createWordDbWorker = RealmCreateWordDbWorker()
 
-        _ = try! createWordDbWorker.create(word: word1).toBlocking().first()
-        _ = try! createWordDbWorker.create(word: word2).toBlocking().first()
-        _ = try! createWordDbWorker.create(word: word3).toBlocking().first()
+        _ = try await createWordDbWorker.create(word: word1)
+        _ = try await createWordDbWorker.create(word: word2)
+        _ = try await createWordDbWorker.create(word: word3)
     }
 
     override func tearDownWithError() throws {
-        try removeRealmData()
+        removeRealmData()
     }
 
-    func test_search_searchBySourceWord_shouldFindSecondWord() throws {
+    func test_search_searchBySourceWord_shouldFindSecondWord() async throws {
         // Arrange:
-        arrangeSearch()
+        try await arrangeSearch()
 
         // Act:
         let words = RealmSearchableWordList().findWords(contain: "B")
@@ -39,9 +39,9 @@ class RealmSearchableWordListTests: XCTestCase {
         XCTAssertEqual(words, [word2])
     }
 
-    func test_search_searchNonExistingWord_returnsEmptyResult() throws {
+    func test_search_searchNonExistingWord_returnsEmptyResult() async throws {
         // Arrange:
-        arrangeSearch()
+        try await arrangeSearch()
 
         // Act:
         let words = RealmSearchableWordList().findWords(contain: "D")

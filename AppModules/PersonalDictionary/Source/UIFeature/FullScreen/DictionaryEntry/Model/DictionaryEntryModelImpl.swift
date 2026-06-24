@@ -6,7 +6,6 @@
 //
 
 import RealmSwift
-import RxSwift
 
 enum DictionaryEntryError: Error {
     case emptyDictionaryEntry(Word)
@@ -38,15 +37,14 @@ struct DictionaryEntryModelImpl: DictionaryEntryModel {
         return DictionaryEntryVO(word: word, entry: dictionaryEntry)
     }
 
-    func getDictionaryEntry(for word: Word) -> Single<DictionaryEntryVO> {
-        dictionaryService.fetchDictionaryEntry(for: word)
-            .map { wordData in
-                updatedWordSender.sendUpdatedWord(UpdatedWord(newValue: wordData.word, oldValue: word))
+    func getDictionaryEntry(for word: Word) async throws -> DictionaryEntryVO {
+        let wordData = try await dictionaryService.fetchDictionaryEntry(for: word)
 
-                let dictionaryEntry = try decoder.decode(wordData.entry)
+        updatedWordSender.sendUpdatedWord(UpdatedWord(newValue: wordData.word, oldValue: word))
 
-                return DictionaryEntryVO(word: wordData.word, entry: dictionaryEntry)
-            }
+        let dictionaryEntry = try decoder.decode(wordData.entry)
+
+        return DictionaryEntryVO(word: wordData.word, entry: dictionaryEntry)
     }
 
     enum Fail: Error {

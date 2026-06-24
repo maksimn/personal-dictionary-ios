@@ -5,14 +5,14 @@
 //  Created by Maxim Ivanov on 31.08.2023.
 //
 
-import RxCocoa
+import Combine
 
 struct MessageBoxState {
     var text: String
     var isHidden: Bool
 }
 
-typealias BindableMessageBoxState = BehaviorRelay<MessageBoxState>
+typealias BindableMessageBoxState = CurrentValueSubject<MessageBoxState, Never>
 
 protocol MessageBoxViewModel {
 

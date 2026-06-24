@@ -11,10 +11,10 @@ import XCTest
 class RealmUpdateWordDbWorkerTests: XCTestCase {
 
     override func tearDownWithError() throws {
-        try removeRealmData()
+        removeRealmData()
     }
 
-    func test_updateWord__updateSecondWordInAListOfThreeWords() throws {
+    func test_updateWord__updateSecondWordInAListOfThreeWords() async throws {
         // Arrange:
         let createWordDbWorker = RealmCreateWordDbWorker()
         let updateWordDbWorker = RealmUpdateWordDbWorker()
@@ -29,12 +29,12 @@ class RealmUpdateWordDbWorkerTests: XCTestCase {
         updatedWord2.isFavorite = true
         updatedWord2.translation = "translation"
 
-        _ = try createWordDbWorker.create(word: word1).toBlocking().first()
-        _ = try createWordDbWorker.create(word: word2).toBlocking().first()
-        _ = try createWordDbWorker.create(word: word3).toBlocking().first()
+        _ = try await createWordDbWorker.create(word: word1)
+        _ = try await createWordDbWorker.create(word: word2)
+        _ = try await createWordDbWorker.create(word: word3)
 
         // Act:
-        _ = try updateWordDbWorker.update(word: updatedWord2).toBlocking().first()
+        _ = try await updateWordDbWorker.update(word: updatedWord2)
 
         // Assert:
         let words = try! wordListFetcher.wordList()

@@ -5,7 +5,6 @@
 //  Created by Maxim Ivanov on 07.10.2021.
 //
 
-import RxSwift
 import Realm
 import RealmSwift
 
@@ -17,25 +16,16 @@ func realmWordListFilter(_ filter: (Results<WordDAO>) -> Results<WordDAO>) throw
         .compactMap { Word($0) }
 }
 
-func makeRealmCUD<T>(operation: @escaping (Realm, T) throws -> Void, with word: T) -> Single<T> {
-    .create { single in
-        do {
-            let realm = try Realm()
+func makeRealmCUD<T>(operation: @escaping (Realm, T) throws -> Void, with word: T) async throws -> T {
+    try await Task.detached(priority: .medium) {
+        let realm = try Realm()
 
-            try realm.safeWrite {
-                do {
-                    try operation(realm, word)
-                    single(.success(word))
-                } catch {
-                    single(.failure(error))
-                }
-            }
-        } catch {
-            single(.failure(error))
+        try realm.safeWrite {
+            try operation(realm, word)
         }
 
-        return Disposables.create {}
-    }
+        return word
+    }.value
 }
 
 extension Realm {
@@ -61,20 +51,13 @@ enum RealmWordError: Error {
     case wordNotFoundInRealm(Word.Id)
 }
 
-func deleteAll<Element: RealmFetchable>(_ type: Element.Type) -> Completable where Element: RLMObjectBase {
-    .create { completable in
-        do {
-            let realm = try Realm()
-            let objs = realm.objects(type)
+func deleteAll<Element: RealmFetchable>(_ type: Element.Type) async throws where Element: RLMObjectBase {
+    try await Task.detached(priority: .medium) {
+        let realm = try Realm()
+        let objs = realm.objects(type)
 
-            try realm.write {
-                realm.delete(objs)
-                completable(.completed)
-            }
-        } catch {
-            completable(.error(error))
+        try realm.write {
+            realm.delete(objs)
         }
-
-        return Disposables.create {}
-    }
+    }.value
 }

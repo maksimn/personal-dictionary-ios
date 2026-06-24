@@ -6,7 +6,6 @@
 //
 
 import CoreModule
-import RxSwift
 
 struct NewWordStreamLog: NewWordStream, NewWordSender {
 
@@ -15,10 +14,16 @@ struct NewWordStreamLog: NewWordStream, NewWordSender {
 
     private static let modelStreamName = "NEW WORD"
 
-    var newWord: Observable<Word> {
-        modelStream.newWord.do(onNext: { (word: Word) in
-            logger.logReceiving(word, fromModelStream: Self.modelStreamName)
-        })
+    var newWord: AsyncStream<Word> {
+        AsyncStream { continuation in
+            Task {
+                for await word in modelStream.newWord {
+                    logger.logReceiving(word, fromModelStream: Self.modelStreamName)
+                    continuation.yield(word)
+                }
+                continuation.finish()
+            }
+        }
     }
 
     func sendNewWord(_ word: Word) {
@@ -35,10 +40,16 @@ struct UpdatedWordStreamLog: UpdatedWordStream, UpdatedWordSender {
 
     private static let modelStreamName = "UPDATED WORD"
 
-    var updatedWord: Observable<UpdatedWord> {
-        modelStream.updatedWord.do(onNext: { (updatedWord: UpdatedWord) in
-            logger.logReceiving(updatedWord, fromModelStream: Self.modelStreamName)
-        })
+    var updatedWord: AsyncStream<UpdatedWord> {
+        AsyncStream { continuation in
+            Task {
+                for await updatedWord in modelStream.updatedWord {
+                    logger.logReceiving(updatedWord, fromModelStream: Self.modelStreamName)
+                    continuation.yield(updatedWord)
+                }
+                continuation.finish()
+            }
+        }
     }
 
     func sendUpdatedWord(_ updatedWord: UpdatedWord) {
@@ -55,10 +66,16 @@ struct RemovedWordStreamLog: RemovedWordStream, RemovedWordSender {
 
     private static let modelStreamName = "REMOVED WORD"
 
-    var removedWord: Observable<Word> {
-        modelStream.removedWord.do(onNext: { (word: Word) in
-            logger.logReceiving(word, fromModelStream: Self.modelStreamName)
-        })
+    var removedWord: AsyncStream<Word> {
+        AsyncStream { continuation in
+            Task {
+                for await word in modelStream.removedWord {
+                    logger.logReceiving(word, fromModelStream: Self.modelStreamName)
+                    continuation.yield(word)
+                }
+                continuation.finish()
+            }
+        }
     }
 
     func sendRemovedWord(_ word: Word) {

@@ -5,7 +5,7 @@
 //  Created by Maxim Ivanov on 07.11.2021.
 //
 
-import RxSwift
+import Combine
 import UIKit
 
 /// View controller of the Main Word List.
@@ -14,7 +14,7 @@ final class MainWordListViewController: UIViewController {
     private let viewModel: MainWordListViewModel
     private let wordListGraph: WordListGraph
 
-    private let disposeBag = DisposeBag()
+    private var cancellables: Set<AnyCancellable> = []
 
     /// Initializer.
     /// - Parameters:
@@ -47,10 +47,10 @@ final class MainWordListViewController: UIViewController {
     }
 
     private func bindToViewModel() {
-        viewModel.wordList.subscribe(onNext: { [weak self] wordList in
+        viewModel.wordList.sink { [weak self] wordList in
             guard let wordListViewModel = self?.wordListGraph.viewModel else { return }
 
-            wordListViewModel.wordList.accept(wordList)
-        }).disposed(by: disposeBag)
+            wordListViewModel.wordList.send(wordList)
+        }.store(in: &cancellables)
     }
 }

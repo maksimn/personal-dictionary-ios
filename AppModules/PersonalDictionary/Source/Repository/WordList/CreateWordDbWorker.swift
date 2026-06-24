@@ -6,21 +6,20 @@
 //
 
 import CoreModule
-import RxSwift
 
 protocol CreateWordDbWorker {
 
     /// Add a word to the personal dictionary storage.
     /// - Parameters:
     ///  - word: the word to add.
-    /// - Returns: Rx single for handling the completion of the word addition operation.
-    func create(word: Word) -> Single<Word>
+    /// - Returns: the word after the addition operation.
+    func create(word: Word) async throws -> Word
 }
 
 struct RealmCreateWordDbWorker: CreateWordDbWorker {
 
-    func create(word: Word) -> Single<Word> {
-        makeRealmCUD(operation: { (realm, word) in
+    func create(word: Word) async throws -> Word {
+        try await makeRealmCUD(operation: { (realm, word) in
             realm.add(WordDAO(word))
         }, with: word)
     }
@@ -31,20 +30,18 @@ struct CreateWordDbWorkerLog: CreateWordDbWorker {
     let createWordDbWorker: CreateWordDbWorker
     let logger: Logger
 
-    func create(word: Word) -> Single<Word> {
+    func create(word: Word) async throws -> Word {
         logger.log("CREATE WORD IN LOCAL STORAGE START\nWORD = \(word)", level: .info)
 
-        let result = createWordDbWorker.create(word: word)
-        let loggedResult = result.do(
-            onSuccess: { word in
-                logger.log("CREATE WORD IN LOCAL STORAGE SUCCESS\nWORD = \(word)", level: .info)
+        do {
+            let result = try await createWordDbWorker.create(word: word)
 
-            },
-            onError: { error in
-                logger.log("CREATE WORD IN LOCAL STORAGE ERROR\nerror = \(error)", level: .error)
-            }
-        )
+            logger.log("CREATE WORD IN LOCAL STORAGE SUCCESS\nWORD = \(result)", level: .info)
 
-        return loggedResult
+            return result
+        } catch {
+            logger.log("CREATE WORD IN LOCAL STORAGE ERROR\nerror = \(error)", level: .error)
+            throw error
+        }
     }
 }

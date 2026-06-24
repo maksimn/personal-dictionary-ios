@@ -5,11 +5,9 @@
 //  Created by Maxim Ivanov on 31.08.2023.
 //
 
-import RxSwift
-
 public protocol SharedMessageStream {
 
-    var sharedMessage: Observable<String> { get }
+    var sharedMessage: AsyncStream<String> { get }
 }
 
 public protocol SharedMessageSender {

@@ -88,7 +88,7 @@ struct Word: Equatable, Hashable, CustomStringConvertible {
         sourceLang: \(sourceLang.description), \
         targetLang: \(targetLang.description), \
         isFavorite: \(isFavorite), \
-        createdAt: \(createdAt)), \
+        createdAt: \(createdAt), \
         updatedAt: \(updatedAt)
         """
     }
