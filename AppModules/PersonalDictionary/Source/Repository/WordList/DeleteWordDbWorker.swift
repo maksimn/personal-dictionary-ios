@@ -6,21 +6,20 @@
 //
 
 import CoreModule
-import RxSwift
 
 protocol DeleteWordDbWorker {
 
     /// Delete a word from the personal dictionary storage.
     /// - Parameters:
     ///  - word: the word to delete from the storage.
-    /// - Returns: Rx single for handling the completion of the word deletion operation.
-    func delete(word: Word) -> Single<Word>
+    /// - Returns: the deleted word.
+    func delete(word: Word) async throws -> Word
 }
 
 struct RealmDeleteWordDbWorker: DeleteWordDbWorker {
 
-    func delete(word: Word) -> Single<Word> {
-        makeRealmCUD(operation: { (realm, word) in
+    func delete(word: Word) async throws -> Word {
+        try await makeRealmCUD(operation: { (realm, word) in
             let wordDAO = try realm.findWordBy(id: word.id)
 
             realm.delete(wordDAO)
@@ -38,11 +37,10 @@ struct CleanTranslationIndexDeleteWordDbWorker: DeleteWordDbWorker {
     let deleteWordDbWorker: DeleteWordDbWorker
     let deleteWordTranslationIndexDbWorker: DeleteWordTranslationIndexDbWorker
 
-    func delete(word: Word) -> Single<Word> {
-        deleteWordDbWorker.delete(word: word)
-            .flatMap {
-                deleteWordTranslationIndexDbWorker.deleteTranslationIndexFor(word: $0)
-            }
+    func delete(word: Word) async throws -> Word {
+        let result = try await deleteWordDbWorker.delete(word: word)
+
+        return try await deleteWordTranslationIndexDbWorker.deleteTranslationIndexFor(word: result)
     }
 }
 
@@ -51,20 +49,18 @@ struct DeleteWordDbWorkerLog: DeleteWordDbWorker {
     let deleteWordDbWorker: DeleteWordDbWorker
     let logger: Logger
 
-    func delete(word: Word) -> Single<Word> {
+    func delete(word: Word) async throws -> Word {
         logger.log("DELETE WORD AND ENTRY IN LOCAL STORAGE START\nWORD = \(word)", level: .info)
 
-        let result = deleteWordDbWorker.delete(word: word)
-        let loggedResult = result.do(
-            onSuccess: { word in
-                logger.log("DELETE WORD AND ENTRY IN LOCAL STORAGE SUCCESS\nWORD = \(word)", level: .info)
+        do {
+            let result = try await deleteWordDbWorker.delete(word: word)
 
-            },
-            onError: { error in
-                logger.log("DELETE WORD AND ENTRY IN LOCAL STORAGE ERROR\nerror = \(error)", level: .error)
-            }
-        )
+            logger.log("DELETE WORD AND ENTRY IN LOCAL STORAGE SUCCESS\nWORD = \(result)", level: .info)
 
-        return loggedResult
+            return result
+        } catch {
+            logger.log("DELETE WORD AND ENTRY IN LOCAL STORAGE ERROR\nerror = \(error)", level: .error)
+            throw error
+        }
     }
 }

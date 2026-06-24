@@ -7,7 +7,6 @@
 
 import CoreModule
 import Foundation
-import RxSwift
 @testable import PersonalDictionary
 
 enum ErrorMock: Error { case err }
@@ -19,10 +18,10 @@ class LoggerMock: Logger {
 
 class HttpClientMock: HttpClient {
 
-    var sendMock: ((Http) -> RxHttpResponse)?
+    var sendMock: ((Http) async throws -> HttpResponseResult)?
 
-    func send(_ http: Http) -> RxHttpResponse {
-        sendMock!(http)
+    func send(_ http: Http) async throws -> HttpResponseResult {
+        try await sendMock!(http)
     }
 }
 
@@ -77,24 +76,24 @@ class FavoriteWordListFetcherMock: FavoriteWordListFetcher {
 
 class NewWordStreamMock: NewWordStream {
 
-    var newWord: Observable<Word> { .empty() }
+    var newWord: AsyncStream<Word> { AsyncStream { $0.finish() } }
 }
 
 class UpdatedWordStreamMock: UpdatedWordStream {
 
-    var updatedWord: Observable<UpdatedWord> { .empty() }
+    var updatedWord: AsyncStream<UpdatedWord> { AsyncStream { $0.finish() } }
 }
 
 class RemovedWordStreamMock: RemovedWordStream {
 
-    var removedWord: Observable<Word> { .empty() }
+    var removedWord: AsyncStream<Word> { AsyncStream { $0.finish() } }
 }
 
 class UpdatedRemovedWordStreamMock: UpdatedWordStream, RemovedWordStream {
 
-    var updatedWord: Observable<UpdatedWord> { .empty() }
+    var updatedWord: AsyncStream<UpdatedWord> { AsyncStream { $0.finish() } }
 
-    var removedWord: Observable<Word> { .empty() }
+    var removedWord: AsyncStream<Word> { AsyncStream { $0.finish() } }
 }
 
 class NewWordSenderMock: NewWordSender {
@@ -148,34 +147,34 @@ class SearchWordListModelMock: SearchWordListModel {
 }
 
 class SearchTextStreamMock: SearchTextStream {
-    var searchText: Observable<String> { .empty() }
+    var searchText: AsyncStream<String> { AsyncStream { $0.finish() } }
 }
 
 class SearchModeStreamMock: SearchModeStream {
-    var searchMode: Observable<SearchMode> { .empty() }
+    var searchMode: AsyncStream<SearchMode> { AsyncStream { $0.finish() } }
 }
 
 class WordListModelMock: WordListModel {
 
-    var removeMock: ((Int, WordListState) -> Single<WordListState>)? = { (_, _) in .error(ErrorMock.err) }
-    var removeWordMock: ((Word, WordListState) -> Single<WordListState>)? = { (_, _) in .error(ErrorMock.err) }
-    var toggleIsFavoriteMock: ((Int, WordListState) -> Single<WordListState>)? = { (_, _) in .error(ErrorMock.err) }
-    var updateWordMock: ((UpdatedWord, WordListState) -> Single<WordListState>)? = { (_, _) in .error(ErrorMock.err) }
+    var removeMock: ((Int, WordListState) async throws -> WordListState)?
+    var removeWordMock: ((Word, WordListState) async throws -> WordListState)?
+    var toggleIsFavoriteMock: ((Int, WordListState) async throws -> WordListState)?
+    var updateWordMock: ((UpdatedWord, WordListState) async throws -> WordListState)?
 
-    func remove(at position: Int, state: WordListState) -> Single<WordListState> {
-        removeMock!(position, state)
+    func remove(at position: Int, state: WordListState) async throws -> WordListState {
+        try await removeMock!(position, state)
     }
 
-    func remove(word: Word, state: WordListState) -> Single<WordListState> {
-        removeWordMock!(word, state)
+    func remove(word: Word, state: WordListState) async throws -> WordListState {
+        try await removeWordMock!(word, state)
     }
 
-    func toggleIsFavorite(at position: Int, state: WordListState) -> Single<WordListState> {
-        toggleIsFavoriteMock!(position, state)
+    func toggleIsFavorite(at position: Int, state: WordListState) async throws -> WordListState {
+        try await toggleIsFavoriteMock!(position, state)
     }
 
-    func update(word: UpdatedWord, state: WordListState) -> Single<WordListState> {
-        updateWordMock!(word, state)
+    func update(word: UpdatedWord, state: WordListState) async throws -> WordListState {
+        try await updateWordMock!(word, state)
     }
 }
 
@@ -196,10 +195,10 @@ class RemovedWordSenderMock: RemovedWordSender {
 }
 
 class DictionaryServiceMock: DictionaryService {
-    var fetchDictionaryEntryMock: ((Word) -> Single<WordData>)?
+    var fetchDictionaryEntryMock: ((Word) async throws -> WordData)?
 
-    func fetchDictionaryEntry(for word: Word) -> Single<WordData> {
-        fetchDictionaryEntryMock!(word)
+    func fetchDictionaryEntry(for word: Word) async throws -> WordData {
+        try await fetchDictionaryEntryMock!(word)
     }
 }
 
@@ -207,7 +206,7 @@ class MainWordListModelMock: MainWordListModel {
 
     var fetchMainWordListMock: (() -> WordListState)?
     var createMock: ((Word, WordListState) -> WordListState)?
-    var createEffectMock: ((Word, WordListState) -> Single<WordListState>)?
+    var createEffectMock: ((Word, WordListState) async throws -> WordListState)?
 
     func fetchMainWordList() -> WordListState {
         fetchMainWordListMock!()
@@ -217,33 +216,33 @@ class MainWordListModelMock: MainWordListModel {
         createMock!(word, state)
     }
 
-    func createEffect(_ word: Word, state: WordListState) -> Single<WordListState> {
-        createEffectMock!(word, state)
+    func createEffect(_ word: Word, state: WordListState) async throws -> WordListState {
+        try await createEffectMock!(word, state)
     }
 }
 
 class CreateWordDbWorkerMock: CreateWordDbWorker {
 
-    var createWordMock: ((Word) -> Single<Word>)?
+    var createWordMock: ((Word) async throws -> Word)?
 
-    func create(word: Word) -> Single<Word> {
-        createWordMock!(word)
+    func create(word: Word) async throws -> Word {
+        try await createWordMock!(word)
     }
 }
 
 class UpdateWordDbWorkerMock: UpdateWordDbWorker {
-    var updateWordMock: ((Word) -> Single<Word>)? = { Single.just($0) }
+    var updateWordMock: ((Word) async throws -> Word)? = { $0 }
 
-    func update(word: Word) -> Single<Word> {
-        updateWordMock!(word)
+    func update(word: Word) async throws -> Word {
+        try await updateWordMock!(word)
     }
 }
 
 class DeleteWordDbWorkerMock: DeleteWordDbWorker {
-    var deleteWordMock: ((Word) -> Single<Word>)? = { Single.just($0) }
+    var deleteWordMock: ((Word) async throws -> Word)? = { $0 }
 
-    func delete(word: Word) -> Single<Word> {
-        deleteWordMock!(word)
+    func delete(word: Word) async throws -> Word {
+        try await deleteWordMock!(word)
     }
 }
 
@@ -258,19 +257,19 @@ class WordListRouterMock: ParametrizedRouter {
 
 class DictionaryEntryModelMock: DictionaryEntryModel {
     var loadMock: (() throws -> DictionaryEntryVO)?
-    var getDictionaryEntryMock: ((Word) -> Single<DictionaryEntryVO>)?
+    var getDictionaryEntryMock: ((Word) async throws -> DictionaryEntryVO)?
     func load() throws -> DictionaryEntryVO {
         try loadMock!()
     }
-    func getDictionaryEntry(for word: Word) -> Single<DictionaryEntryVO> {
-        getDictionaryEntryMock!(word)
+    func getDictionaryEntry(for word: Word) async throws -> DictionaryEntryVO {
+        try await getDictionaryEntryMock!(word)
     }
 }
 
 class DictionaryEntryDbInserterMock: DictionaryEntryDbInserter {
-    var insertMock: ((Data, Word) -> Single<WordData>)? = { Single.just(WordData(word: $1, entry: $0)) }
-    func insert(entry: Data, for word: Word) -> Single<WordData> {
-        insertMock!(entry, word)
+    var insertMock: ((Data, Word) async throws -> WordData)? = { WordData(word: $1, entry: $0) }
+    func insert(entry: Data, for word: Word) async throws -> WordData {
+        try await insertMock!(entry, word)
     }
 }
 

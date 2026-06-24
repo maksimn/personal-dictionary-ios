@@ -5,7 +5,7 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
-import RxSwift
+import Combine
 import UIKit
 
 final class SearchWordListViewController: UIViewController {
@@ -16,7 +16,7 @@ final class SearchWordListViewController: UIViewController {
 
     private let centerLabel: UILabel
 
-    private let disposeBag = DisposeBag()
+    private var cancellables: Set<AnyCancellable> = []
 
     /// - Parameters:
     ///  - viewModel: view model.
@@ -50,12 +50,12 @@ final class SearchWordListViewController: UIViewController {
     // MARK: - Private
 
     private func bindToViewModel() {
-        viewModel.searchResult.subscribe(onNext: { [weak self] data in
+        viewModel.searchResult.sink { [weak self] data in
             guard let wordListViewModel = self?.wordListGraph.viewModel else { return }
 
             self?.centerLabel.isHidden = !(data.searchState == .fulfilled && data.foundWordList.count == 0)
-            wordListViewModel.wordList.accept(data.foundWordList)
-        }).disposed(by: disposeBag)
+            wordListViewModel.wordList.send(data.foundWordList)
+        }.store(in: &cancellables)
     }
 
     // MARK: - Layout

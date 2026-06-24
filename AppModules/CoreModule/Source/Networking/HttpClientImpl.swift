@@ -5,7 +5,6 @@
 //  Created by Maxim Ivanov on 09.10.2021.
 //
 
-import Combine
 import Foundation
 
 public class HttpClientImpl: HttpClient {
@@ -21,11 +20,10 @@ public class HttpClientImpl: HttpClient {
         self.sessionConfiguration = sessionConfiguration
     }
 
-    public func send(_ http: Http) -> RxHttpResponse {
+    public func send(_ http: Http) async throws -> HttpResponseResult {
         let urlString = http.urlString
         guard let url = URL(string: urlString) else {
-            return Fail(error: URLError(.badURL))
-                .eraseToAnyPublisher()
+            throw URLError(.badURL)
         }
         var request = URLRequest(url: url)
 
@@ -36,15 +34,13 @@ public class HttpClientImpl: HttpClient {
             request.addValue(value, forHTTPHeaderField: key)
         }
 
-        return session.dataTaskPublisher(for: request)
-            .tryMap { value in
-                guard let httpURLResponse = value.response as? HTTPURLResponse else {
-                    throw HttpClientError.nonHttpRequest
-                }
+        let (data, response) = try await session.data(for: request)
 
-                return (response: httpURLResponse, data: value.data)
-            }
-            .eraseToAnyPublisher()
+        guard let httpURLResponse = response as? HTTPURLResponse else {
+            throw HttpClientError.nonHttpRequest
+        }
+
+        return HttpResponseResult(response: httpURLResponse, data: data)
     }
 
     enum HttpClientError: Error {

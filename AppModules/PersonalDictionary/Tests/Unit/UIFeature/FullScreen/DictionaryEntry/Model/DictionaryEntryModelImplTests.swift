@@ -5,7 +5,6 @@
 //  Created by Maksim Ivanov on 22.08.2023.
 //
 
-import RxSwift
 import XCTest
 @testable import PersonalDictionary
 
@@ -73,21 +72,23 @@ class DictionaryEntryModelImplTests: XCTestCase {
             updatedWordSender: updatedWordSenderMock
         )
         decoderMock.decodeMock = { _ in self.dictionaryEntryVO.entry }
-        dictionaryServiceMock.fetchDictionaryEntryMock = { _ in Single.just(self.wordData) }
+        dictionaryServiceMock.fetchDictionaryEntryMock = { _ in self.wordData }
     }
 
     func arrangeRealm(entryData: Data = Data()) {
-        _ = try! RealmCreateWordDbWorker().create(word: word).toBlocking().first()
-        _ = try! RealmDictionaryEntryDbInserter().insert(entry: entryData, for: word).toBlocking().first()
+        runAsyncTaskBlocking {
+            _ = try await RealmCreateWordDbWorker().create(word: self.word)
+            _ = try await RealmDictionaryEntryDbInserter().insert(entry: entryData, for: self.word)
+        }
     }
 
     override func tearDownWithError() throws {
-        try removeRealmData()
+        removeRealmData()
     }
 
     // - MARK: Tests
 
-    func test_load_success_whenTheWordAndItsEntryExistInRealm() throws {
+    func test_load_success_whenTheWordAndItsEntryExistInRealm() async throws {
         // Arrange
         arrange()
         arrangeRealm(entryData: Data(dataString.utf8))
@@ -106,7 +107,7 @@ class DictionaryEntryModelImplTests: XCTestCase {
         XCTAssertThrowsError(try model.load())
     }
 
-    func test_load_error_whenDictionaryEntryIsEmpty() throws {
+    func test_load_error_whenDictionaryEntryIsEmpty() async throws {
         arrange()
         arrangeRealm()
         decoderMock.decodeMock = { _ in [] }
@@ -122,17 +123,17 @@ class DictionaryEntryModelImplTests: XCTestCase {
         }
     }
 
-    func test_getDictionaryEntry_success_serviceRequestSuccess() throws {
+    func test_getDictionaryEntry_success_serviceRequestSuccess() async throws {
         arrange()
 
         // Act
-        let resultVO = try! model.getDictionaryEntry(for: word).toBlocking().first()
+        let resultVO = try await model.getDictionaryEntry(for: word)
 
         // Assert
         XCTAssertEqual(resultVO, dictionaryEntryVO)
     }
 
-    func test_getDictionaryEntry_success_notifyAboutTheWordUpdate() throws {
+    func test_getDictionaryEntry_success_notifyAboutTheWordUpdate() async throws {
         arrange()
 
         var counter = 0
@@ -140,21 +141,21 @@ class DictionaryEntryModelImplTests: XCTestCase {
         updatedWordSenderMock.sendUpdatedWordMock = { _ in counter += 1 }
 
         // Act
-        _ = try! model.getDictionaryEntry(for: word).toBlocking().first()
+        _ = try await model.getDictionaryEntry(for: word)
 
         // Assert
         XCTAssertEqual(counter, 1)
     }
 
-    func test_getDictionaryEntry_error_whenServiceRequestFailed() throws {
+    func test_getDictionaryEntry_error_whenServiceRequestFailed() async throws {
         arrange()
-        dictionaryServiceMock.fetchDictionaryEntryMock = { _ in .error(ErrorMock.err) }
+        dictionaryServiceMock.fetchDictionaryEntryMock = { _ in throw ErrorMock.err }
 
         // Act
         do {
-            _ = try model.getDictionaryEntry(for: word).toBlocking().single()
+            _ = try await model.getDictionaryEntry(for: word)
 
-            XCTAssertTrue(false)
+            XCTFail("Expected error to be thrown")
         } catch {
             XCTAssertEqual(error as? ErrorMock, ErrorMock.err)
         }

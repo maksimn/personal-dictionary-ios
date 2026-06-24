@@ -7,7 +7,6 @@
 
 import CoreModule
 import RealmSwift
-import RxSwift
 
 // Logic for working with the word translation index:
 // 1) Creating index objects - upon successfully receiving a dictionary entry for a word, a set of
@@ -29,32 +28,28 @@ class WordTranslationIndexDAO: Object {
 
 protocol CreateWordTranslationIndexDbWorker {
 
-    func createTranslationIndexFor(wordData: WordData) -> Single<WordData>
+    func createTranslationIndexFor(wordData: WordData) async throws -> WordData
 }
 
 protocol DeleteWordTranslationIndexDbWorker {
 
-    func deleteTranslationIndexFor(word: Word) -> Single<Word>
+    func deleteTranslationIndexFor(word: Word) async throws -> Word
 }
 
 struct RealmCreateWordTranslationIndexDbWorker: CreateWordTranslationIndexDbWorker {
 
     let decoder: DictionaryEntryDecoder
 
-    func createTranslationIndexFor(wordData: WordData) -> Single<WordData> {
-        do {
-            let dictionaryEntry = try decoder.decode(wordData.entry)
-            let translations = dictionaryEntry.flatMap { $0.subitems }.map { $0.translation }
+    func createTranslationIndexFor(wordData: WordData) async throws -> WordData {
+        let dictionaryEntry = try decoder.decode(wordData.entry)
+        let translations = dictionaryEntry.flatMap { $0.subitems }.map { $0.translation }
 
-            return makeRealmCUD(
-                operation: { (realm, obj) in realm.add(obj) },
-                with: WordTranslationIndexDAO(translations: translations, wordId: wordData.word.id.raw)
-            ).map { _ in
-                wordData
-            }
-        } catch {
-            return .error(error)
-        }
+        _ = try await makeRealmCUD(
+            operation: { (realm, obj) in realm.add(obj) },
+            with: WordTranslationIndexDAO(translations: translations, wordId: wordData.word.id.raw)
+        )
+
+        return wordData
     }
 }
 
@@ -63,36 +58,33 @@ struct CreateWordTranslationIndexDbWorkerLog: CreateWordTranslationIndexDbWorker
     let dbWorker: CreateWordTranslationIndexDbWorker
     let logger: CoreModule.Logger
 
-    func createTranslationIndexFor(wordData: WordData) -> Single<WordData> {
+    func createTranslationIndexFor(wordData: WordData) async throws -> WordData {
         logger.log("CREATE TRANSLATION INDEX START, Word = \(wordData.word)", level: .info)
 
-        let result = dbWorker.createTranslationIndexFor(wordData: wordData)
-        let loggedResult = result.do(
-            onSuccess: { wordData in
-                logger.log("CREATE TRANSLATION INDEX SUCCESS, Word = \(wordData.word)", level: .info)
-            },
-            onError: { error in
-                logger.log("CREATE TRANSLATION INDEX ERROR, Word = \(wordData.word)\nError = \(error)", level: .error)
-            }
-        )
+        do {
+            let result = try await dbWorker.createTranslationIndexFor(wordData: wordData)
 
-        return loggedResult
+            logger.log("CREATE TRANSLATION INDEX SUCCESS, Word = \(result.word)", level: .info)
+
+            return result
+        } catch {
+            logger.log("CREATE TRANSLATION INDEX ERROR, Word = \(wordData.word)\nError = \(error)", level: .error)
+            throw error
+        }
     }
 }
 
 struct RealmDeleteWordTranslationIndexDbWorker: DeleteWordTranslationIndexDbWorker {
 
-    func deleteTranslationIndexFor(word: Word) -> Single<Word> {
-        makeRealmCUD(
+    func deleteTranslationIndexFor(word: Word) async throws -> Word {
+        try await makeRealmCUD(
             operation: { (realm, word) in
                 let objects = realm.objects(WordTranslationIndexDAO.self).filter { $0.wordId == word.id.raw }
 
                 realm.delete(objects)
             },
             with: word
-        ).map { _ in
-            word
-        }
+        )
     }
 }
 
@@ -101,19 +93,18 @@ struct DeleteWordTranslationIndexDbWorkerLog: DeleteWordTranslationIndexDbWorker
     let dbWorker: DeleteWordTranslationIndexDbWorker
     let logger: CoreModule.Logger
 
-    func deleteTranslationIndexFor(word: Word) -> Single<Word> {
+    func deleteTranslationIndexFor(word: Word) async throws -> Word {
         logger.log("DELETE TRANSLATION INDEX START, Word = \(word)", level: .info)
 
-        let result = dbWorker.deleteTranslationIndexFor(word: word)
-        let loggedResult = result.do(
-            onSuccess: { word in
-                logger.log("DELETE TRANSLATION INDEX SUCCESS, Word = \(word)", level: .info)
-            },
-            onError: { error in
-                logger.log("DELETE TRANSLATION INDEX ERROR, Word = \(word)\nError = \(error)", level: .error)
-            }
-        )
+        do {
+            let result = try await dbWorker.deleteTranslationIndexFor(word: word)
 
-        return loggedResult
+            logger.log("DELETE TRANSLATION INDEX SUCCESS, Word = \(result)", level: .info)
+
+            return result
+        } catch {
+            logger.log("DELETE TRANSLATION INDEX ERROR, Word = \(word)\nError = \(error)", level: .error)
+            throw error
+        }
     }
 }

@@ -5,11 +5,9 @@
 //  Created by Maxim Ivanov on 26.12.2022.
 //
 
-import RxSwift
-
 protocol SearchTextStream {
 
-    var searchText: Observable<String> { get }
+    var searchText: AsyncStream<String> { get }
 }
 
 protocol SearchTextSender {
@@ -19,7 +17,7 @@ protocol SearchTextSender {
 
 protocol SearchModeStream {
 
-    var searchMode: Observable<SearchMode> { get }
+    var searchMode: AsyncStream<SearchMode> { get }
 }
 
 protocol SearchModeSender {

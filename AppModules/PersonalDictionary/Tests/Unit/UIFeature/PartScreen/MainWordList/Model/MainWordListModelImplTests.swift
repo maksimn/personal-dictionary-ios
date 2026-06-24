@@ -5,8 +5,6 @@
 //  Created by Maxim Ivanov on 30.03.2023.
 //
 
-import RxBlocking
-import RxSwift
 import XCTest
 @testable import PersonalDictionary
 
@@ -59,34 +57,36 @@ final class MainWordListModelImplTests: XCTestCase {
         XCTAssertEqual(newWordList, [word, word1, word2, word3])
     }
 
-    func test_createEffect_worksCorrectlyForHappyPath() throws {
+    func test_createEffect_worksCorrectlyForHappyPath() async throws {
         // Arrange
         arrange()
 
         let translatedWord = Word(id: word.id, text: word.text, translation: "xyz", sourceLang: word.sourceLang,
             targetLang: word.targetLang)
 
-        createWordDbWorkerMock.createWordMock = { word in Single.just(word) }
+        createWordDbWorkerMock.createWordMock = { word in word }
         dictionaryServiceMock.fetchDictionaryEntryMock = { _ in
-            Single.just(WordData(word: translatedWord, entry: Data()))
+            WordData(word: translatedWord, entry: Data())
         }
 
         // Act
-        let nextState = try model.createEffect(word, state: [word, word1, word2, word3]).toBlocking().first()
+        let nextState = try await model.createEffect(word, state: [word, word1, word2, word3])
 
         // Assert
         XCTAssertEqual(nextState, [translatedWord, word1, word2, word3])
     }
 
-    func test_createEffect_failsWhenDbCreateWordFails() throws {
+    func test_createEffect_failsWhenDbCreateWordFails() async throws {
         // Arrange
         arrange()
-        createWordDbWorkerMock.createWordMock = { _ in Single.error(ErrorMock.err) }
+        createWordDbWorkerMock.createWordMock = { _ in throw ErrorMock.err }
 
-        // Act
-        let single = model.createEffect(word, state: wordList)
-
-        // Assert
-        XCTAssertThrowsError(try single.toBlocking().first())
+        // Act & Assert
+        do {
+            _ = try await model.createEffect(word, state: wordList)
+            XCTFail("Expected error to be thrown")
+        } catch {
+            XCTAssertEqual(error as? ErrorMock, ErrorMock.err)
+        }
     }
 }

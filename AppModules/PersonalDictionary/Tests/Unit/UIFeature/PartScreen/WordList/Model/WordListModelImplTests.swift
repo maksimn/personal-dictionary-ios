@@ -5,7 +5,6 @@
 //  Created by Maksim Ivanov on 05.03.2023.
 //
 
-import RxSwift
 import XCTest
 @testable import PersonalDictionary
 
@@ -40,29 +39,29 @@ final class WordListModelImplTests: XCTestCase {
         )
     }
 
-    func test_removeAt_returnsCorrectWordListState() throws {
+    func test_removeAt_returnsCorrectWordListState() async throws {
         // Arrange
         arrange()
 
         // Act
-        let newWordList = try model.remove(at: 1, state: wordList).toBlocking().first()!
+        let newWordList = try await model.remove(at: 1, state: wordList)
 
         // Assert
         XCTAssertEqual(newWordList, [word1, word3])
     }
 
-    func test_removeWord_returnsCorrectNextState() throws {
+    func test_removeWord_returnsCorrectNextState() async throws {
         // Arrange
         arrange()
 
         // Act
-        let nextState = try model.remove(word: word, state: wordList).toBlocking().first()
+        let nextState = try await model.remove(word: word, state: wordList)
 
         // Assert
         XCTAssertEqual(nextState, wordList)
     }
 
-    func test_removeAt_removesWordFromDB() throws {
+    func test_removeAt_removesWordFromDB() async throws {
         // Arrange
         arrange()
 
@@ -70,17 +69,17 @@ final class WordListModelImplTests: XCTestCase {
 
         deleteWordDbWorkerMock.deleteWordMock = {
             dbRequestCounter += 1
-            return Single.just($0)
+            return $0
         }
 
         // Act
-        _ = try model.remove(at: 1, state: wordList).toBlocking().first()
+        _ = try await model.remove(at: 1, state: wordList)
 
         // Assert
         XCTAssertEqual(dbRequestCounter, 1)
     }
 
-    func test_removeAt_sendsNotificationAboutRemovedWord() throws {
+    func test_removeAt_sendsNotificationAboutRemovedWord() async throws {
         // Arrange
         arrange()
 
@@ -89,25 +88,27 @@ final class WordListModelImplTests: XCTestCase {
         removedWordSenderMock.sendRemovedWordMock = { _ in notificationCounter += 1 }
 
         // Act
-        _ = try model.remove(at: 1, state: wordList).toBlocking().first()
+        _ = try await model.remove(at: 1, state: wordList)
 
         // Assert
         XCTAssertEqual(notificationCounter, 1)
     }
 
-    func test_removeAt_failsWhenDbRemoveWordFails() throws {
+    func test_removeAt_failsWhenDbRemoveWordFails() async throws {
         // Arrange
         arrange()
-        deleteWordDbWorkerMock.deleteWordMock = { _ in Single.error(ErrorMock.err) }
+        deleteWordDbWorkerMock.deleteWordMock = { _ in throw ErrorMock.err }
 
-        // Act
-        let single = model.remove(at: 1, state: wordList)
-
-        // Assert
-        XCTAssertThrowsError(try single.toBlocking().first())
+        // Act & Assert
+        do {
+            _ = try await model.remove(at: 1, state: wordList)
+            XCTFail("Expected error to be thrown")
+        } catch {
+            XCTAssertEqual(error as? ErrorMock, ErrorMock.err)
+        }
     }
 
-    func test_toggleIsFavorite_returnsCorrectWordListState() throws {
+    func test_toggleIsFavorite_returnsCorrectWordListState() async throws {
         // Arrange
         arrange()
 
@@ -116,24 +117,24 @@ final class WordListModelImplTests: XCTestCase {
         updatedWord2.isFavorite.toggle()
 
         // Act
-        let newWordList = try model.toggleIsFavorite(at: 1, state: wordList).toBlocking().first()
+        let newWordList = try await model.toggleIsFavorite(at: 1, state: wordList)
 
         // Assert
         XCTAssertEqual(newWordList, [word1, updatedWord2, word3])
     }
 
-    func test_updateWord_returnsCorrectNextState() throws {
+    func test_updateWord_returnsCorrectNextState() async throws {
         // Arrange
         arrange()
 
         // Act
-        let newState = try model.update(word: updatedWord, state: [word, word2, word3]).toBlocking().first()!
+        let newState = try await model.update(word: updatedWord, state: [word, word2, word3])
 
         // Assert
         XCTAssertEqual(newState, [newWord, word2, word3])
     }
 
-    func test_toggleIsFavorite_updatesWordInDB() throws {
+    func test_toggleIsFavorite_updatesWordInDB() async throws {
         // Arrange
         arrange()
 
@@ -141,17 +142,17 @@ final class WordListModelImplTests: XCTestCase {
 
         updateWordDbWorkerMock.updateWordMock = {
             dbUpdateCounter += 1
-            return Single.just($0)
+            return $0
         }
 
         // Act
-        _ = try model.toggleIsFavorite(at: 1, state: wordList).toBlocking().first()
+        _ = try await model.toggleIsFavorite(at: 1, state: wordList)
 
         // Assert
         XCTAssertEqual(dbUpdateCounter, 1)
     }
 
-    func test_toggleIsFavorite_sendsNotificationAboutUpdatedWord() throws {
+    func test_toggleIsFavorite_sendsNotificationAboutUpdatedWord() async throws {
         // Arrange
         arrange()
 
@@ -160,21 +161,23 @@ final class WordListModelImplTests: XCTestCase {
         updatedWordSenderMock.sendUpdatedWordMock = { _ in notificationCounter += 1 }
 
         // Act
-        _ = try model.toggleIsFavorite(at: 1, state: wordList).toBlocking().first()
+        _ = try await model.toggleIsFavorite(at: 1, state: wordList)
 
         // Assert
         XCTAssertEqual(notificationCounter, 1)
     }
 
-    func test_toggleIsFavorite_failsWhenDbRemoveWordFails() throws {
+    func test_toggleIsFavorite_failsWhenDbRemoveWordFails() async throws {
         // Arrange
         arrange()
-        updateWordDbWorkerMock.updateWordMock = { _ in Single.error(ErrorMock.err) }
+        updateWordDbWorkerMock.updateWordMock = { _ in throw ErrorMock.err }
 
-        // Act
-        let single = model.toggleIsFavorite(at: 1, state: wordList)
-
-        // Assert
-        XCTAssertThrowsError(try single.toBlocking().first())
+        // Act & Assert
+        do {
+            _ = try await model.toggleIsFavorite(at: 1, state: wordList)
+            XCTFail("Expected error to be thrown")
+        } catch {
+            XCTAssertEqual(error as? ErrorMock, ErrorMock.err)
+        }
     }
 }

@@ -5,39 +5,46 @@
 //  Created by Maxim Ivanov on 26.12.2022.
 //
 
-import RxSwift
-import RxCocoa
+import Foundation
 
 final class SearchTextStreamImpl: SearchTextStream, SearchTextSender {
 
-    private let relay = BehaviorRelay(value: "")
+    private var continuation: AsyncStream<String>.Continuation?
+
+    let searchText: AsyncStream<String>
 
     static let instance = SearchTextStreamImpl()
 
-    private init() { }
-
-    var searchText: Observable<String> {
-        relay.asObservable()
+    private init() {
+        var cont: AsyncStream<String>.Continuation?
+        searchText = AsyncStream { continuation in
+            cont = continuation
+        }
+        continuation = cont
     }
 
     func send(_ searchText: String) {
-        relay.accept(searchText)
+        continuation?.yield(searchText)
     }
 }
 
 final class SearchModeStreamImpl: SearchModeStream, SearchModeSender {
 
-    private let relay = BehaviorRelay(value: SearchMode.bySourceWord)
+    private var continuation: AsyncStream<SearchMode>.Continuation?
+
+    let searchMode: AsyncStream<SearchMode>
 
     static let instance = SearchModeStreamImpl()
 
-    private init() { }
-
-    var searchMode: Observable<SearchMode> {
-        relay.asObservable()
+    private init() {
+        var cont: AsyncStream<SearchMode>.Continuation?
+        searchMode = AsyncStream { continuation in
+            cont = continuation
+        }
+        continuation = cont
     }
 
     func send(_ searchMode: SearchMode) {
-        relay.accept(searchMode)
+        continuation?.yield(searchMode)
     }
 }

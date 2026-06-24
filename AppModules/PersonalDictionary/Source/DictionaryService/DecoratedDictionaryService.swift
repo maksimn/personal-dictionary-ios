@@ -7,7 +7,6 @@
 
 import CoreModule
 import SharedFeature
-import RxSwift
 
 struct CacheableDictionaryService: DictionaryService {
 
@@ -16,23 +15,17 @@ struct CacheableDictionaryService: DictionaryService {
     let decoder: DictionaryEntryDecoder
     let updateWordDbWorker: UpdateWordDbWorker
 
-    func fetchDictionaryEntry(for word: Word) -> Single<WordData> {
-        dictionaryService
-            .fetchDictionaryEntry(for: word)
-            .flatMap { wordData in
-                dictionaryEntryDbInserter.insert(entry: wordData.entry, for: wordData.word)
-            }
-            .flatMap { wordData in
-                let dictionaryEntry = try decoder.decode(wordData.entry)
-                var word = wordData.word
+    func fetchDictionaryEntry(for word: Word) async throws -> WordData {
+        let wordData = try await dictionaryService.fetchDictionaryEntry(for: word)
+        let insertedWordData = try await dictionaryEntryDbInserter.insert(entry: wordData.entry, for: wordData.word)
+        let dictionaryEntry = try decoder.decode(insertedWordData.entry)
+        var word = insertedWordData.word
 
-                word.translation = dictionaryEntry.mainTranslation
+        word.translation = dictionaryEntry.mainTranslation
 
-                return updateWordDbWorker.update(word: word)
-                    .map { _ in
-                        WordData(word: word, entry: wordData.entry)
-                    }
-            }
+        _ = try await updateWordDbWorker.update(word: word)
+
+        return WordData(word: word, entry: insertedWordData.entry)
     }
 }
 
@@ -41,12 +34,10 @@ struct IndexedSearchByTranslationDictionaryService: DictionaryService {
     let dictionaryService: DictionaryService
     let createWordTranslationIndexDbWorker: CreateWordTranslationIndexDbWorker
 
-    func fetchDictionaryEntry(for word: Word) -> Single<WordData> {
-        dictionaryService
-            .fetchDictionaryEntry(for: word)
-            .flatMap {
-                createWordTranslationIndexDbWorker.createTranslationIndexFor(wordData: $0)
-            }
+    func fetchDictionaryEntry(for word: Word) async throws -> WordData {
+        let wordData = try await dictionaryService.fetchDictionaryEntry(for: word)
+
+        return try await createWordTranslationIndexDbWorker.createTranslationIndexFor(wordData: wordData)
     }
 }
 
@@ -56,14 +47,15 @@ struct ErrorSendableDictionaryService: DictionaryService {
     let sharedMessageSender: SharedMessageSender
     let messageTemplate: String
 
-    func fetchDictionaryEntry(for word: Word) -> Single<WordData> {
-        dictionaryService
-            .fetchDictionaryEntry(for: word)
-            .do(onError: { _ in
-                let message = String(format: messageTemplate, word.text)
+    func fetchDictionaryEntry(for word: Word) async throws -> WordData {
+        do {
+            return try await dictionaryService.fetchDictionaryEntry(for: word)
+        } catch {
+            let message = String(format: messageTemplate, word.text)
 
-                self.sharedMessageSender.send(sharedMessage: message)
-            })
+            sharedMessageSender.send(sharedMessage: message)
+            throw error
+        }
     }
 }
 
@@ -72,20 +64,18 @@ struct DictionaryServiceLog: DictionaryService {
     let dictionaryService: DictionaryService
     let logger: Logger
 
-    func fetchDictionaryEntry(for word: Word) -> Single<WordData> {
+    func fetchDictionaryEntry(for word: Word) async throws -> WordData {
         logger.log("PONS Dictionary Entry Request Start\nword = \(word)", level: .info)
 
-        let result = dictionaryService.fetchDictionaryEntry(for: word)
+        do {
+            let result = try await dictionaryService.fetchDictionaryEntry(for: word)
 
-        let loggedResult = result.do(
-            onSuccess: { word in
-                logger.log("PONS Dictionary Entry Request Success\nword = \(word)", level: .info)
-            },
-            onError: { error in
-                logger.log("PONS Dictionary Entry Request Error\nerror = \(error)", level: .warn)
-            }
-        )
+            logger.log("PONS Dictionary Entry Request Success\nword = \(result)", level: .info)
 
-        return loggedResult
+            return result
+        } catch {
+            logger.log("PONS Dictionary Entry Request Error\nerror = \(error)", level: .warn)
+            throw error
+        }
     }
 }

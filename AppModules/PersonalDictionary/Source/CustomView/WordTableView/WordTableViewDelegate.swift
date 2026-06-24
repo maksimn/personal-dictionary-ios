@@ -38,6 +38,7 @@ final class WordTableViewDelegate: NSObject, UITableViewDelegate {
     private let params: WordTableViewDelegateParams
     private var onDeleteTap: ((Int) -> Void)?
     private var onFavoriteTap: ((Int) -> Void)?
+    private var onSelectItemTap: ((Int) -> Void)?
 
     private var hasAnimatedAllCells = false
 
@@ -47,14 +48,20 @@ final class WordTableViewDelegate: NSObject, UITableViewDelegate {
     ///  - onFavoriteTap: handler for tapping the view to add/remove an item from Favorites.
     init(params: WordTableViewDelegateParams,
          onDeleteTap: ((Int) -> Void)?,
-         onFavoriteTap: ((Int) -> Void)?) {
+         onFavoriteTap: ((Int) -> Void)?,
+         onSelectItemTap: ((Int) -> Void)?) {
         self.onDeleteTap = onDeleteTap
         self.onFavoriteTap = onFavoriteTap
+        self.onSelectItemTap = onSelectItemTap
         self.params = params
         super.init()
     }
 
     // MARK: - UITableViewDelegate
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        onSelectItemTap?(indexPath.row)
+    }
 
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

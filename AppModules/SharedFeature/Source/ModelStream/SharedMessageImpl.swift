@@ -5,22 +5,23 @@
 //  Created by Maxim Ivanov on 31.08.2023.
 //
 
-import RxCocoa
-import RxSwift
+import Foundation
 
-public struct SharedMessageStreamImpl: SharedMessageStream, SharedMessageSender {
+public class SharedMessageStreamImpl: SharedMessageStream, SharedMessageSender {
 
     private init() {}
 
     public static let instance = SharedMessageStreamImpl()
 
-    private let publishRelay = PublishRelay<String>()
+    private var continuation: AsyncStream<String>.Continuation?
 
-    public var sharedMessage: Observable<String> {
-        publishRelay.asObservable()
+    public var sharedMessage: AsyncStream<String> {
+        AsyncStream { continuation in
+            self.continuation = continuation
+        }
     }
 
     public func send(sharedMessage: String) {
-        publishRelay.accept(sharedMessage)
+        continuation?.yield(sharedMessage)
     }
 }

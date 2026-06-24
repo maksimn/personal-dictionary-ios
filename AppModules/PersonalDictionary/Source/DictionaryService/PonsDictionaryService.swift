@@ -5,10 +5,8 @@
 //  Created by Maxim Ivanov on 09.10.2021.
 //
 
-import Combine
 import CoreModule
 import Foundation
-import RxSwift
 
 /// Service for fetching word translations from the PONS Online Dictionary API.
 final class PonsDictionaryService: DictionaryService {
@@ -18,8 +16,6 @@ final class PonsDictionaryService: DictionaryService {
 
     private let apiUrl = "https://api.pons.com/v1/dictionary"
 
-    private var cancellables: Set<AnyCancellable> = []
-
     /// - Parameters:
     ///  - secret: secret for accessing the online PONS API.
     ///  - httpClient: base service for network requests over the HTTP protocol.
@@ -28,7 +24,7 @@ final class PonsDictionaryService: DictionaryService {
         self.httpClient = httpClient
     }
 
-    func fetchDictionaryEntry(for word: Word) -> Single<WordData> {
+    func fetchDictionaryEntry(for word: Word) async throws -> WordData {
         var query = URLComponents()
 
         query.queryItems = [
@@ -41,18 +37,13 @@ final class PonsDictionaryService: DictionaryService {
             headers: ["X-Secret": secret]
         )
 
-        return transformToRxObservable(
-                httpClient.send(http)
-            )
-            .take(1)
-            .asSingle()
-            .map { httpResponse in
-                guard httpResponse.response.statusCode == 200 else {
-                    throw Fail.emptyDataFor(word)
-                }
+        let httpResponse = try await httpClient.send(http)
 
-                return WordData(word: word, entry: httpResponse.data)
-            }
+        guard httpResponse.response.statusCode == 200 else {
+            throw Fail.emptyDataFor(word)
+        }
+
+        return WordData(word: word, entry: httpResponse.data)
     }
 
     private func lQueryParam(for word: Word) -> String {
@@ -64,27 +55,6 @@ final class PonsDictionaryService: DictionaryService {
         let targetLangParam = targetLang.suffix(from: targetLang.index(targetLangIndex, offsetBy: 1)).lowercased()
 
         return sourceLangParam + targetLangParam
-    }
-
-    private func transformToRxObservable(_ rxHttpResponse: RxHttpResponse) -> Observable<(response: HTTPURLResponse,
-                                                                                          data: Data)> {
-        .create { observer in
-            rxHttpResponse.sink(
-                receiveCompletion: { completion in
-                    switch completion {
-                    case .failure(let error):
-                        observer.on(.error(error))
-                    case .finished:
-                        observer.on(.completed)
-                    }
-                },
-                receiveValue: { httpResponse in
-                    observer.on(.next(httpResponse))
-                }
-            ).store(in: &self.cancellables)
-
-            return Disposables.create { }
-        }
     }
 
     enum Fail: Error {

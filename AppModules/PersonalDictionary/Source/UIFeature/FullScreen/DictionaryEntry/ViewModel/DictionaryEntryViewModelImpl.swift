@@ -5,24 +5,29 @@
 //  Created by Maksim Ivanov on 07.05.2023.
 //
 
-import RxSwift
+import Combine
 
 final class DictionaryEntryViewModelImpl: DictionaryEntryViewModel {
 
-    let state = BindableDictionaryEntryState(value: .initial)
+    let state = BindableDictionaryEntryState(.initial)
 
     private let model: DictionaryEntryModel
-    private let disposeBag = DisposeBag()
+
+    private var tasks: [Task<Void, Never>] = []
 
     init(model: DictionaryEntryModel) {
         self.model = model
     }
 
+    deinit {
+        tasks.forEach { $0.cancel() }
+    }
+
     func load() {
         do {
-            state.accept(.loaded(try model.load()))
+            state.send(.loaded(try model.load()))
         } catch {
-            state.accept(.error(error.withError()))
+            state.send(.error(error.withError()))
         }
     }
 
@@ -31,18 +36,20 @@ final class DictionaryEntryViewModelImpl: DictionaryEntryViewModel {
            case DictionaryEntryError.emptyDictionaryEntry(let word) = withError.base {
             let errorState = state.value
 
-            state.accept(.loading)
-            model.getDictionaryEntry(for: word)
-                .executeInBackgroundAndObserveOnMainThread()
-                .subscribe(
-                    onSuccess: { [weak self] word in
-                        self?.state.accept(.loaded(word))
-                    },
-                    onFailure: { [weak self] _ in
-                        self?.state.accept(errorState)
-                   }
-                )
-                .disposed(by: disposeBag)
+            state.send(.loading)
+            tasks.append(
+                Task { [weak self] in
+                    guard let self else { return }
+
+                    do {
+                        let word = try await self.model.getDictionaryEntry(for: word)
+
+                        state.send(.loaded(word))
+                    } catch {
+                        state.send(errorState)
+                    }
+                }
+            )
         }
     }
 }

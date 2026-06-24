@@ -5,7 +5,6 @@
 //  Created by Maksim Ivanov on 27.02.2023.
 //
 
-import RxSwift
 import XCTest
 @testable import PersonalDictionary
 

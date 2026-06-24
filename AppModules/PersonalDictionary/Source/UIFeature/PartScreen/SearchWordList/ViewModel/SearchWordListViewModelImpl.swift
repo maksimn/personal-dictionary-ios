@@ -5,34 +5,61 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-import RxSwift
+import Combine
 
 final class SearchWordListViewModelImpl: SearchWordListViewModel {
 
     let searchResult: BindableSearchResult
 
     private let model: SearchWordListModel
-    private let disposeBag = DisposeBag()
+
+    private var tasks: [Task<Void, Never>] = []
 
     init(initialData: SearchResultData,
          model: SearchWordListModel,
          searchTextStream: SearchTextStream,
          searchModeStream: SearchModeStream) {
-        searchResult = BindableSearchResult(value: initialData)
+        searchResult = BindableSearchResult(initialData)
         self.model = model
         subscribeTo(searchText: searchTextStream.searchText, searchMode: searchModeStream.searchMode)
+    }
+
+    deinit {
+        tasks.forEach { $0.cancel() }
     }
 
     func onSearchInputData(_ searchText: String, _ searchMode: SearchMode) {
         let searchResultData = model.performSearch(for: searchText, mode: searchMode)
 
-        searchResult.accept(searchResultData)
+        searchResult.send(searchResultData)
     }
 
-    private func subscribeTo(searchText: Observable<String>, searchMode: Observable<SearchMode>) {
-        Observable.combineLatest(searchText, searchMode)
-            .subscribe(onNext: { [weak self] (searchText, searchMode) in
-                self?.onSearchInputData(searchText, searchMode)
-            }).disposed(by: disposeBag)
+    private func subscribeTo(searchText: AsyncStream<String>, searchMode: AsyncStream<SearchMode>) {
+        tasks.append(
+            Task { [weak self] in
+                guard let self else { return }
+
+                var latestText: String = ""
+                let latestMode: SearchMode = .bySourceWord
+
+                for await text in searchText {
+                    latestText = text
+                    onSearchInputData(latestText, latestMode)
+                }
+            }
+        )
+        tasks.append(
+            Task { [weak self] in
+                guard let self else { return }
+
+                let latestText: String = ""
+                var latestMode: SearchMode = .bySourceWord
+
+                for await mode in searchMode {
+                    latestMode = mode
+                    onSearchInputData(latestText, latestMode)
+                }
+            }
+        )
     }
 }

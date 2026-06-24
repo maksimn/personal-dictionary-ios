@@ -5,7 +5,7 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
-import RxSwift
+import Combine
 import UIKit
 
 /// Implementation of the favorite word list view.
@@ -17,7 +17,7 @@ final class FavoriteWordListViewController: UIViewController {
 
     private let centerLabel: UILabel
 
-    private let disposeBag = DisposeBag()
+    private var cancellables: Set<AnyCancellable> = []
 
     init(
         viewModel: FavoriteWordListViewModel,
@@ -50,10 +50,10 @@ final class FavoriteWordListViewController: UIViewController {
     }
 
     private func bindToViewModel() {
-        viewModel.favoriteWordList.subscribe(onNext: { [weak self] wordList in
-            self?.wordListGraph.viewModel.wordList.accept(wordList)
+        viewModel.favoriteWordList.sink { [weak self] wordList in
+            self?.wordListGraph.viewModel.wordList.send(wordList)
             self?.centerLabel.isHidden = !wordList.isEmpty
-        }).disposed(by: disposeBag)
+        }.store(in: &cancellables)
     }
 
     // MARK: - Layout

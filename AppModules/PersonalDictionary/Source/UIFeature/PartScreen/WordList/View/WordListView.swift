@@ -5,9 +5,9 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
+import Combine
 import CoreModule
 import UIKit
-import RxSwift
 
 /// Parameters of the word list view.
 struct WordListViewParams {
@@ -37,7 +37,8 @@ final class WordListView: UIView {
     private let logger: Logger
 
     private let tableView = UITableView()
-    private let disposeBag = DisposeBag()
+
+    private var cancellables: Set<AnyCancellable> = []
 
     private lazy var datasource = UITableViewDiffableDataSource<Int, Word>(
         tableView: tableView) { [weak self] tableView, indexPath, word in
@@ -59,6 +60,9 @@ final class WordListView: UIView {
         },
         onFavoriteTap: { [weak self] position in
             self?.onFavoriteTap(position)
+        },
+        onSelectItemTap: { [weak self] position in
+            self?.onSelectItemTap(position)
         }
     )
 
@@ -76,7 +80,6 @@ final class WordListView: UIView {
         super.init(frame: .zero)
         initViews()
         bindToViewModel()
-        subscribeToTableEvents()
     }
 
     required init?(coder: NSCoder) {
@@ -85,20 +88,14 @@ final class WordListView: UIView {
 
     private func bindToViewModel() {
         viewModel.wordList
-            .subscribe(onNext: { [weak self] wordList in
+            .sink { [weak self] wordList in
                 var snapshot = NSDiffableDataSourceSnapshot<Int, Word>()
 
                 snapshot.appendSections([0])
                 snapshot.appendItems(wordList, toSection: 0)
 
                 self?.datasource.apply(snapshot)
-            }).disposed(by: disposeBag)
-    }
-
-    private func subscribeToTableEvents() {
-        tableView.rx.itemSelected.subscribe(onNext: { [weak self] indexPath in
-            self?.viewModel.select(at: indexPath.row)
-        }).disposed(by: disposeBag)
+            }.store(in: &cancellables)
     }
 
     // MARK: - User Action Handlers
@@ -111,6 +108,10 @@ final class WordListView: UIView {
     private func onFavoriteTap(_ position: Int) {
         logTapOnTableViewCellStarButton(position)
         viewModel.toggleWordIsFavorite(at: position)
+    }
+
+    private func onSelectItemTap(_ position: Int) {
+        viewModel.select(at: position)
     }
 
     // MARK: - Logging

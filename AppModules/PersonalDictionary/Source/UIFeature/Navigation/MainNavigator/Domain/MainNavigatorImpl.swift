@@ -6,8 +6,6 @@
 //
 
 import CoreModule
-import RxCocoa
-import RxSwift
 import UIKit
 
 /// Implementation of the container of navigation elements on the main screen of the application.
@@ -21,10 +19,7 @@ final class MainNavigatorImpl: MainNavigator {
     private let navToNewWordView: UIView
     private let navToFavoritesView: UIView
     private let navToTodoListView: UIView
-
     private let logger: Logger
-
-    private let disposeBag = DisposeBag()
 
     private var isSearchTextInputInstalled: Bool = false
 
@@ -48,7 +43,6 @@ final class MainNavigatorImpl: MainNavigator {
         self.navToFavoritesView = navToFavoritesBuilder.build()
         self.navToTodoListView = navToTodoListBuilder.build()
         self.logger = logger
-        subscribeToSearchTextInput()
     }
 
     deinit {
@@ -86,44 +80,22 @@ final class MainNavigatorImpl: MainNavigator {
         }
     }
 
-    private func subscribeToSearchTextInput() {
-        searchTextInputView.rx.willDismiss
-            .subscribe(onNext: { [weak self] in
-                self?.searchTextInputWillDismiss()
-            }).disposed(by: disposeBag)
-
-        searchTextInputView.rx.didDismiss
-            .subscribe(onNext: { [weak self] in
-                self?.searchTextInputDidDismiss()
-            }).disposed(by: disposeBag)
-
-        searchTextInputView.rx.willPresent
-            .subscribe(onNext: { [weak self] in
-                self?.searchTextInputWillPresent()
-            }).disposed(by: disposeBag)
-
-        searchTextInputView.rx.didPresent
-            .subscribe(onNext: { [weak self] in
-                self?.searchTextInputDidPresent()
-            }).disposed(by: disposeBag)
-    }
-
-    private func searchTextInputWillDismiss() {
+    func searchTextInputWillDismiss() {
         navToSearchRouter.dismissSearch()
         logger.debug("User will dismiss search.")
     }
 
-    private func searchTextInputDidDismiss() {
+    func searchTextInputDidDismiss() {
         navToNewWordView.isHidden = false
         logger.debug("User did dismiss search.")
     }
 
-    private func searchTextInputWillPresent() {
+    func searchTextInputWillPresent() {
         navToNewWordView.isHidden = true
         logger.debug("User will present search.")
     }
 
-    private func searchTextInputDidPresent() {
+    func searchTextInputDidPresent() {
         navToSearchRouter.presentSearch()
         logger.debug("User did present search.")
     }

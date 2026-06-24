@@ -5,14 +5,14 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
+import Combine
 import CoreModule
-import RxSwift
 
 /// An implementation of a word list view model.
 final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewModel
     where RouterType.Parameter == Word.Id {
 
-    let wordList = BindableWordList(value: [])
+    let wordList = BindableWordList([])
 
     private let model: WordListModel
     private let updatedWordStream: UpdatedWordStream
@@ -20,7 +20,7 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
     private let router: RouterType
     private let logger: Logger
 
-    private let disposeBag = DisposeBag()
+    private var tasks: [Task<Void, Never>] = []
 
     init(model: WordListModel, updatedWordStream: UpdatedWordStream, removedWordStream: RemovedWordStream,
          router: RouterType, logger: Logger) {
@@ -32,6 +32,10 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
         subscribe()
     }
 
+    deinit {
+        tasks.forEach { $0.cancel() }
+    }
+
     func select(at position: Int) {
         guard let word = wordList.value[safeIndex: position] else { return }
 
@@ -39,45 +43,73 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
     }
 
     func remove(at position: Int) {
-        model.remove(at: position, state: wordList.value)
-            .subscribe(onSuccess: { state in
-                self.onNewState(state, actionName: "REMOVE WORD AT #\(position)")
-            })
-            .disposed(by: disposeBag)
+        tasks.append(
+            Task { [weak self] in
+                guard let self else { return }
+
+                do {
+                    let state = try await model.remove(at: position, state: wordList.value)
+
+                    onNewState(state, actionName: "REMOVE WORD AT #\(position)")
+                } catch {
+                    logger.errorWithContext(error)
+                }
+            }
+        )
     }
 
     func toggleWordIsFavorite(at position: Int) {
-        model.toggleIsFavorite(at: position, state: wordList.value)
-            .subscribe(onSuccess: { state in
-                self.onNewState(state, actionName: "TOGGLE WORD ISFAVORITE AT #\(position)")
-            })
-            .disposed(by: disposeBag)
+        tasks.append(
+            Task { [weak self] in
+                guard let self else { return }
+
+                do {
+                    let state = try await model.toggleIsFavorite(at: position, state: wordList.value)
+
+                    onNewState(state, actionName: "TOGGLE WORD ISFAVORITE AT #\(position)")
+                } catch {
+                    logger.errorWithContext(error)
+                }
+            }
+        )
     }
 
     private func onNewState(_ state: WordListState, actionName: String) {
         logger.logState(actionName: actionName, state)
 
-        wordList.accept(state)
+        wordList.send(state)
     }
 
     private func subscribe() {
-        removedWordStream.removedWord
-            .map {
-                self.model.remove(word: $0, state: self.wordList.value)
+        tasks.append(
+            Task { [weak self] in
+                guard let self else { return }
+
+                for await word in removedWordStream.removedWord {
+                    do {
+                        let state = try await model.remove(word: word, state: wordList.value)
+
+                        onNewState(state, actionName: "REMOVE WORD")
+                    } catch {
+                        logger.errorWithContext(error)
+                    }
+                }
             }
-            .concat()
-            .subscribe(onNext: { state in
-                self.onNewState(state, actionName: "REMOVE WORD")
-            })
-            .disposed(by: disposeBag)
-        updatedWordStream.updatedWord
-            .map {
-                self.model.update(word: $0, state: self.wordList.value)
+        )
+        tasks.append(
+            Task { [weak self] in
+                guard let self else { return }
+
+                for await updatedWord in updatedWordStream.updatedWord {
+                    do {
+                        let state = try await model.update(word: updatedWord, state: wordList.value)
+
+                        onNewState(state, actionName: "UPDATE WORD")
+                    } catch {
+                        logger.errorWithContext(error)
+                    }
+                }
             }
-            .concat()
-            .subscribe(onNext: { state in
-                self.onNewState(state, actionName: "UPDATE WORD")
-            })
-            .disposed(by: disposeBag)
+        )
     }
 }

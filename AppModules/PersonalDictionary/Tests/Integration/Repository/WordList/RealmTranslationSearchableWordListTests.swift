@@ -16,21 +16,21 @@ class RealmTranslationSearchableWordListTests: XCTestCase {
     lazy var word2 = Word(text: "B", translation: "Y", sourceLang: lang, targetLang: lang, createdAt: 2)
     lazy var word3 = Word(text: "C", translation: "Q", sourceLang: lang, targetLang: lang, createdAt: 1)
 
-    func arrangeSearch() {
+    func arrangeSearch() async throws {
         let createWordDbWorker = RealmCreateWordDbWorker()
 
-        _ = try! createWordDbWorker.create(word: word1).toBlocking().first()
-        _ = try! createWordDbWorker.create(word: word2).toBlocking().first()
-        _ = try! createWordDbWorker.create(word: word3).toBlocking().first()
+        _ = try await createWordDbWorker.create(word: word1)
+        _ = try await createWordDbWorker.create(word: word2)
+        _ = try await createWordDbWorker.create(word: word3)
     }
 
     override func tearDownWithError() throws {
-        try removeRealmData()
+        removeRealmData()
     }
 
-    func test_findWordsWhereTranslationContains__returnsTwoWords() throws {
+    func test_findWordsWhereTranslationContains__returnsTwoWords() async throws {
         // Arrange:
-        arrangeSearch()
+        try await arrangeSearch()
 
         let ponsArray1 = [
             PonsResponseData(
@@ -120,12 +120,12 @@ class RealmTranslationSearchableWordListTests: XCTestCase {
         let createWordTranslationIndexDbWorker = RealmCreateWordTranslationIndexDbWorker(
             decoder: PonsDictionaryEntryDecoder())
 
-        _ = try! createWordTranslationIndexDbWorker.createTranslationIndexFor(
-            wordData: .init(word: word1, entry: data1)).toBlocking().first()
-        _ = try! createWordTranslationIndexDbWorker.createTranslationIndexFor(
-            wordData: .init(word: word2, entry: data2)).toBlocking().first()
-        _ = try! createWordTranslationIndexDbWorker.createTranslationIndexFor(
-            wordData: .init(word: word3, entry: data3)).toBlocking().first()
+        _ = try await createWordTranslationIndexDbWorker.createTranslationIndexFor(
+            wordData: .init(word: word1, entry: data1))
+        _ = try await createWordTranslationIndexDbWorker.createTranslationIndexFor(
+            wordData: .init(word: word2, entry: data2))
+        _ = try await createWordTranslationIndexDbWorker.createTranslationIndexFor(
+            wordData: .init(word: word3, entry: data3))
 
         // Act:
         let words = RealmTranslationSearchableWordList().findWords(whereTranslationContains: "X")

@@ -6,19 +6,16 @@
 //
 
 import CoreModule
-import RxSwift
 import UIKit
 
 /// View controller of the Main screen.
-final class MainScreen: UIViewController {
+final class MainScreen: UIViewController, UISearchControllerDelegate {
 
     private let mainWordListViewController: UIViewController
     private var mainNavigator: MainNavigator
     private let messageBoxView: UIView
     private let theme: Theme
     private let logger: Logger
-
-    private let disposeBag = DisposeBag()
 
     /// Initializer.
     /// - Parameters:
@@ -80,14 +77,26 @@ final class MainScreen: UIViewController {
 
         logger.debug("MainScreen searchController is OK.")
 
-        searchController.rx.willPresent
-            .subscribe(onNext: { [weak self] in
-                self?.mainWordListViewController.view.isHidden = true
-            }).disposed(by: disposeBag)
+        searchController.delegate = self
+    }
 
-        searchController.rx.didDismiss
-            .subscribe(onNext: { [weak self] in
-                self?.mainWordListViewController.view.isHidden = false
-            }).disposed(by: disposeBag)
+    // MARK: - UISearchControllerDelegate
+
+    func willPresentSearchController(_ searchController: UISearchController) {
+        self.mainWordListViewController.view.isHidden = true
+        mainNavigator.searchTextInputWillPresent()
+    }
+
+    func didPresentSearchController(_ searchController: UISearchController) {
+        mainNavigator.searchTextInputDidPresent()
+    }
+
+    func willDismissSearchController(_ searchController: UISearchController) {
+        mainNavigator.searchTextInputWillDismiss()
+    }
+
+    func didDismissSearchController(_ searchController: UISearchController) {
+        self.mainWordListViewController.view.isHidden = false
+        mainNavigator.searchTextInputDidDismiss()
     }
 }
