@@ -5,7 +5,7 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-protocol SearchWordListViewModel: AnyObject {
+protocol SearchWordListViewModel {
 
-    var searchResult: BindableSearchResult { get }
+    var searchResult: SearchResultData { get }
 }

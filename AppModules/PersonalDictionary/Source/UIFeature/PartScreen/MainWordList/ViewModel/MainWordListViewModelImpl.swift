@@ -6,10 +6,12 @@
 //
 
 import CoreModule
+import Observation
 
+@Observable
 final class MainWordListViewModelImpl: MainWordListViewModel {
 
-    let wordList = BindableWordList([])
+    private(set) var wordList: WordListState = []
 
     private let model: MainWordListModel
     private let newWordStream: NewWordStream
@@ -38,7 +40,7 @@ final class MainWordListViewModelImpl: MainWordListViewModel {
     private func onNewState(_ state: WordListState, actionName: String) {
         logger.logState(actionName: actionName, state)
 
-        wordList.send(state)
+        wordList = state
     }
 
     private func create(_ word: Word) {

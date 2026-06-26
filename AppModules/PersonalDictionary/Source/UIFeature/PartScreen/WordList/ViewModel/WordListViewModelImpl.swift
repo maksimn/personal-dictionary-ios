@@ -5,14 +5,15 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-import Combine
 import CoreModule
+import Observation
 
 /// An implementation of a word list view model.
+@Observable
 final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewModel
     where RouterType.Parameter == Word.Id {
 
-    let wordList = BindableWordList([])
+    var wordList: WordListState = []
 
     private let model: WordListModel
     private let updatedWordStream: UpdatedWordStream
@@ -37,7 +38,7 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
     }
 
     func select(at position: Int) {
-        guard let word = wordList.value[safeIndex: position] else { return }
+        guard let word = wordList[safeIndex: position] else { return }
 
         router.navigate(word.id)
     }
@@ -48,7 +49,7 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
                 guard let self else { return }
 
                 do {
-                    let state = try await model.remove(at: position, state: wordList.value)
+                    let state = try await model.remove(at: position, state: wordList)
 
                     onNewState(state, actionName: "REMOVE WORD AT #\(position)")
                 } catch {
@@ -64,7 +65,7 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
                 guard let self else { return }
 
                 do {
-                    let state = try await model.toggleIsFavorite(at: position, state: wordList.value)
+                    let state = try await model.toggleIsFavorite(at: position, state: wordList)
 
                     onNewState(state, actionName: "TOGGLE WORD ISFAVORITE AT #\(position)")
                 } catch {
@@ -77,7 +78,7 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
     private func onNewState(_ state: WordListState, actionName: String) {
         logger.logState(actionName: actionName, state)
 
-        wordList.send(state)
+        wordList = state
     }
 
     private func subscribe() {
@@ -87,7 +88,7 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
 
                 for await word in removedWordStream.removedWord {
                     do {
-                        let state = try await model.remove(word: word, state: wordList.value)
+                        let state = try await model.remove(word: word, state: wordList)
 
                         onNewState(state, actionName: "REMOVE WORD")
                     } catch {
@@ -102,7 +103,7 @@ final class WordListViewModelImpl<RouterType: ParametrizedRouter>: WordListViewM
 
                 for await updatedWord in updatedWordStream.updatedWord {
                     do {
-                        let state = try await model.update(word: updatedWord, state: wordList.value)
+                        let state = try await model.update(word: updatedWord, state: wordList)
 
                         onNewState(state, actionName: "UPDATE WORD")
                     } catch {

@@ -5,12 +5,13 @@
 //  Created by Maxim Ivanov on 31.08.2023.
 //
 
-import Combine
 import Foundation
+import Observation
 
+@Observable
 final class MessageBoxViewModelImpl: MessageBoxViewModel {
 
-    let state: BindableMessageBoxState = .init(.init(text: "", isHidden: true))
+    private(set) var state: MessageBoxState = .init(text: "", isHidden: true)
 
     private let sharedMessageStream: SharedMessageStream
     private let duration: Int
@@ -44,14 +45,14 @@ final class MessageBoxViewModelImpl: MessageBoxViewModel {
     }
 
     private func onNext(sharedMessage: String) {
-        guard state.value.isHidden else { return }
+        guard state.isHidden else { return }
 
-        state.send(MessageBoxState(text: sharedMessage, isHidden: false))
+        state = MessageBoxState(text: sharedMessage, isHidden: false)
     }
 
     private func hide() {
-        guard !state.value.isHidden else { return }
+        guard !state.isHidden else { return }
 
-        state.send(MessageBoxState(text: "", isHidden: true))
+        state = MessageBoxState(text: "", isHidden: true)
     }
 }

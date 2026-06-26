@@ -25,7 +25,7 @@ final class MainWordListViewModelImplTests: XCTestCase {
         viewModel.fetch()
 
         // Assert
-        XCTAssertEqual(viewModel.wordList.value.count, 0)
+        XCTAssertEqual(viewModel.wordList.count, 0)
     }
 
     func test_fetch_fetchedDataInViewModel() throws {
@@ -48,6 +48,6 @@ final class MainWordListViewModelImplTests: XCTestCase {
         viewModel.fetch()
 
         // Assert
-        XCTAssertEqual(viewModel.wordList.value, wordList)
+        XCTAssertEqual(viewModel.wordList, wordList)
     }
 }

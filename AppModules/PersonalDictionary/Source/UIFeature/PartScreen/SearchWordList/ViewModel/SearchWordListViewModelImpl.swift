@@ -5,11 +5,12 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
-import Combine
+import Observation
 
+@Observable
 final class SearchWordListViewModelImpl: SearchWordListViewModel {
 
-    let searchResult: BindableSearchResult
+    private(set) var searchResult: SearchResultData
 
     private let model: SearchWordListModel
 
@@ -19,7 +20,7 @@ final class SearchWordListViewModelImpl: SearchWordListViewModel {
          model: SearchWordListModel,
          searchTextStream: SearchTextStream,
          searchModeStream: SearchModeStream) {
-        searchResult = BindableSearchResult(initialData)
+        searchResult = initialData
         self.model = model
         subscribeTo(searchText: searchTextStream.searchText, searchMode: searchModeStream.searchMode)
     }
@@ -31,7 +32,7 @@ final class SearchWordListViewModelImpl: SearchWordListViewModel {
     func onSearchInputData(_ searchText: String, _ searchMode: SearchMode) {
         let searchResultData = model.performSearch(for: searchText, mode: searchMode)
 
-        searchResult.send(searchResultData)
+        searchResult = searchResultData
     }
 
     private func subscribeTo(searchText: AsyncStream<String>, searchMode: AsyncStream<SearchMode>) {

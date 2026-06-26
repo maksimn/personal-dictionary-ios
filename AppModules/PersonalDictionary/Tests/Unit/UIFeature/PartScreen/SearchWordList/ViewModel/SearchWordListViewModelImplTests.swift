@@ -33,6 +33,6 @@ final class SearchWordListViewModelImplTests: XCTestCase {
         viewModel.onSearchInputData("a", .bySourceWord)
 
         // Assert
-        XCTAssertEqual(viewModel.searchResult.value, searchResultMock)
+        XCTAssertEqual(viewModel.searchResult, searchResultMock)
     }
 }

@@ -5,7 +5,6 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
-import Combine
 import CoreModule
 import UIKit
 
@@ -29,7 +28,7 @@ struct WordListViewParams {
 }
 
 /// Implementation of the word list view.
-final class WordListView: UIView {
+final class WordListView: UIView, ObservationLoopLegacy {
 
     private let viewModel: WordListViewModel
     private let params: WordListViewParams
@@ -37,8 +36,6 @@ final class WordListView: UIView {
     private let logger: Logger
 
     private let tableView = UITableView()
-
-    private var cancellables: Set<AnyCancellable> = []
 
     private lazy var datasource = UITableViewDiffableDataSource<Int, Word>(
         tableView: tableView) { [weak self] tableView, indexPath, word in
@@ -79,23 +76,20 @@ final class WordListView: UIView {
         self.logger = logger
         super.init(frame: .zero)
         initViews()
-        bindToViewModel()
+        startObservationLoop { [weak self] in
+            guard let self = self else { return }
+            let wordList = viewModel.wordList
+            var snapshot = NSDiffableDataSourceSnapshot<Int, Word>()
+
+            snapshot.appendSections([0])
+            snapshot.appendItems(wordList, toSection: 0)
+
+            self.datasource.apply(snapshot)
+        }
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    private func bindToViewModel() {
-        viewModel.wordList
-            .sink { [weak self] wordList in
-                var snapshot = NSDiffableDataSourceSnapshot<Int, Word>()
-
-                snapshot.appendSections([0])
-                snapshot.appendItems(wordList, toSection: 0)
-
-                self?.datasource.apply(snapshot)
-            }.store(in: &cancellables)
     }
 
     // MARK: - User Action Handlers

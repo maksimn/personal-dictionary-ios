@@ -5,34 +5,28 @@
 //  Created by Maxim Ivanov on 31.08.2023.
 //
 
-import Combine
+import CoreModule
 import Toast
 import UIKit
 
-final class MessageBoxView: UIView {
+final class MessageBoxView: UIView, ObservationLoopLegacy {
 
     private let viewModel: MessageBoxViewModel
     private let duration: Int
-
-    private var cancellables: Set<AnyCancellable> = []
 
     init(viewModel: MessageBoxViewModel, duration: Int) {
         self.viewModel = viewModel
         self.duration = duration
         super.init(frame: .zero)
-        bindToViewModel()
+        startObservationLoop { [weak self] in
+            guard let self = self else { return }
+
+            self.onNext(state: viewModel.state)
+        }
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    private func bindToViewModel() {
-        viewModel.state
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                self?.onNext(state: $0)
-            }.store(in: &cancellables)
     }
 
     private func onNext(state: MessageBoxState) {

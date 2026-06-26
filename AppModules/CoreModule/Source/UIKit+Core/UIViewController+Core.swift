@@ -22,3 +22,21 @@ extension UIViewController {
         removeFromParent()
     }
 }
+
+public protocol ObservationLoopLegacy: AnyObject {
+
+    func startObservationLoop(_ updater: @escaping () -> Void)
+}
+
+extension ObservationLoopLegacy {
+
+    public func startObservationLoop(_ updater: @escaping () -> Void) {
+        withObservationTracking {
+            updater()
+        } onChange: { [weak self] in
+            Task { @MainActor [weak self] in
+                self?.startObservationLoop(updater)
+            }
+        }
+    }
+}

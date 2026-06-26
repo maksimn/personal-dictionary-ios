@@ -45,7 +45,7 @@ final class WordListViewModelImplTests: XCTestCase {
         var routerCallCounter = 0
 
         arrange()
-        viewModel.wordList.send(words)
+        viewModel.wordList = words
         routerMock.navigateMock = { _ in routerCallCounter += 1 }
 
         // Act
@@ -60,7 +60,7 @@ final class WordListViewModelImplTests: XCTestCase {
         var routerCallCounter = 0
 
         arrange()
-        viewModel.wordList.send(words)
+        viewModel.wordList = words
         routerMock.navigateMock = { _ in routerCallCounter += 1 }
 
         // Act
@@ -73,13 +73,13 @@ final class WordListViewModelImplTests: XCTestCase {
     func test_removeAtPosition_noopWhenIndexOutOfBounds_negativeIndex() throws {
         // Arrange
         arrange()
-        viewModel.wordList.send(words)
+        viewModel.wordList = words
 
         // Act
         viewModel.remove(at: -2)
 
         // Assert
-        XCTAssertEqual(viewModel.wordList.value, words)
+        XCTAssertEqual(viewModel.wordList, words)
     }
 
     func test_removeAtPosition_noopWhenIndexOutOfBounds_positiveIndex() throws {
@@ -90,20 +90,20 @@ final class WordListViewModelImplTests: XCTestCase {
             Word(text: "b", sourceLang: lang, targetLang: lang)
         ]
 
-        viewModel.wordList.send(array)
+        viewModel.wordList = array
 
         // Act
         viewModel.remove(at: 3)
 
         // Assert
-        XCTAssertEqual(viewModel.wordList.value, array)
+        XCTAssertEqual(viewModel.wordList, array)
     }
 
     func test_removeAtPosition_positionInsideArrayBounds_worksCorrectly() async throws {
         // Arrange
         arrange()
 
-        viewModel.wordList.send(words)
+        viewModel.wordList = words
         modelMock.removeMock = { (_, _) in [self.words[0], self.words[2]] }
 
         // Act
@@ -112,7 +112,7 @@ final class WordListViewModelImplTests: XCTestCase {
         try await Task.sleep(nanoseconds: 10_000_000)
 
         // Assert
-        XCTAssertEqual(viewModel.wordList.value, [words[0], words[2]])
+        XCTAssertEqual(viewModel.wordList, [words[0], words[2]])
     }
 
     func test_toggleWordIsFavorite_worksCorrectly() async throws {
@@ -122,7 +122,7 @@ final class WordListViewModelImplTests: XCTestCase {
         var word = words[1]
 
         word.isFavorite.toggle()
-        viewModel.wordList.send(words)
+        viewModel.wordList = words
         modelMock.toggleIsFavoriteMock = { (_, _) in [self.words[0], word, self.words[2]] }
 
         // Act
@@ -131,18 +131,18 @@ final class WordListViewModelImplTests: XCTestCase {
         try await Task.sleep(nanoseconds: 10_000_000)
 
         // Assert
-        XCTAssertEqual(viewModel.wordList.value, [words[0], word, words[2]])
+        XCTAssertEqual(viewModel.wordList, [words[0], word, words[2]])
     }
 
     func test_toggleWordIsFavorite_noopWhenIndexOutOfBounds() throws {
         // Arrange
         arrange()
-        viewModel.wordList.send(words)
+        viewModel.wordList = words
 
         // Act
         viewModel.toggleWordIsFavorite(at: 5)
 
         // Assert
-        XCTAssertEqual(viewModel.wordList.value, words)
+        XCTAssertEqual(viewModel.wordList, words)
     }
 }

@@ -5,7 +5,7 @@
 //  Created by Maksim Ivanov on 07.05.2023.
 //
 
-import Combine
+import CoreModule
 import UIKit
 
 struct DictionaryEntryViewParams {
@@ -13,7 +13,7 @@ struct DictionaryEntryViewParams {
     let retryButtonText: String
 }
 
-final class DictionaryEntryViewController: UIViewController {
+final class DictionaryEntryViewController: UIViewController, ObservationLoopLegacy {
 
     let viewModel: DictionaryEntryViewModel
     let params: DictionaryEntryViewParams
@@ -25,8 +25,6 @@ final class DictionaryEntryViewController: UIViewController {
     let label: UILabel
     let retryButton = UIButton()
 
-    private var cancellables: Set<AnyCancellable> = []
-
     init(viewModel: DictionaryEntryViewModel, params: DictionaryEntryViewParams, theme: Theme) {
         self.viewModel = viewModel
         self.params = params
@@ -34,7 +32,6 @@ final class DictionaryEntryViewController: UIViewController {
         label = secondaryText(params.errorText, theme)
         super.init(nibName: nil, bundle: nil)
         initViews()
-        bindToViewModel()
     }
 
     required init?(coder: NSCoder) {
@@ -43,13 +40,11 @@ final class DictionaryEntryViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        startObservationLoop { [weak self] in
+            guard let self = self else { return }
+            self.set(state: viewModel.state)
+        }
         viewModel.load()
-    }
-
-    private func bindToViewModel() {
-        viewModel.state.sink { [weak self] in
-            self?.set(state: $0)
-        }.store(in: &cancellables)
     }
 
     private func set(state: DictionaryEntryState) {
