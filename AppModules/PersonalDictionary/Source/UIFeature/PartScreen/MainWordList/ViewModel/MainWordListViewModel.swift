@@ -5,10 +5,10 @@
 //  Created by Maxim Ivanov on 07.11.2021.
 //
 
-protocol MainWordListViewModel: AnyObject {
+protocol MainWordListViewModel {
 
     /// View model data.
-    var wordList: BindableWordList { get }
+    var wordList: WordListState { get }
 
     func fetch()
 }

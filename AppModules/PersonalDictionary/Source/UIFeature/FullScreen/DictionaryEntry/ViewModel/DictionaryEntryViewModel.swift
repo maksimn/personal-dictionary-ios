@@ -20,7 +20,7 @@ enum DictionaryEntryState: Equatable {
 }
 
 protocol DictionaryEntryViewModel {
-    var state: BindableDictionaryEntryState { get }
+    var state: DictionaryEntryState { get set }
 
     func load()
 

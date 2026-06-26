@@ -5,19 +5,17 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
-import Combine
+import CoreModule
 import UIKit
 
 /// Implementation of the favorite word list view.
-final class FavoriteWordListViewController: UIViewController {
+final class FavoriteWordListViewController: UIViewController, ObservationLoopLegacy {
 
     private let viewModel: FavoriteWordListViewModel
 
     private let wordListGraph: WordListGraph
 
     private let centerLabel: UILabel
-
-    private var cancellables: Set<AnyCancellable> = []
 
     init(
         viewModel: FavoriteWordListViewModel,
@@ -41,19 +39,18 @@ final class FavoriteWordListViewController: UIViewController {
         view = UIView()
 
         initViews()
-        bindToViewModel()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.fetchFavoriteWordList()
-    }
+        startObservationLoop { [weak self] in
+            guard let self = self else { return }
+            let wordList = self.viewModel.favoriteWordList
 
-    private func bindToViewModel() {
-        viewModel.favoriteWordList.sink { [weak self] wordList in
-            self?.wordListGraph.viewModel.wordList.send(wordList)
-            self?.centerLabel.isHidden = !wordList.isEmpty
-        }.store(in: &cancellables)
+            self.wordListGraph.viewModel.wordList = wordList
+            self.centerLabel.isHidden = !wordList.isEmpty
+        }
+        viewModel.fetchFavoriteWordList()
     }
 
     // MARK: - Layout

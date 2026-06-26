@@ -6,9 +6,9 @@
 //
 
 /// View model of the favorite word list.
-protocol FavoriteWordListViewModel: AnyObject {
+protocol FavoriteWordListViewModel {
 
-    var favoriteWordList: BindableWordList { get }
+    var favoriteWordList: WordListState { get }
 
     func fetchFavoriteWordList()
 }

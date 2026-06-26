@@ -5,10 +5,13 @@
 //  Created by Maxim Ivanov on 05.10.2021.
 //
 
+import Observation
+
 /// Implementation of the favorite word list view model.
+@Observable
 final class FavoriteWordListViewModelImpl: FavoriteWordListViewModel {
 
-    let favoriteWordList = BindableWordList([])
+    var favoriteWordList: WordListState = []
 
     private let fetcher: FavoriteWordListFetcher
 
@@ -20,7 +23,7 @@ final class FavoriteWordListViewModelImpl: FavoriteWordListViewModel {
         do {
             let wordList = try fetcher.favoriteWordList()
 
-            favoriteWordList.send(wordList)
+            favoriteWordList = wordList
         } catch { }
     }
 }

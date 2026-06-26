@@ -6,10 +6,10 @@
 //
 
 /// View model of the word list.
-protocol WordListViewModel {
+protocol WordListViewModel: AnyObject {
 
     /// View model data.
-    var wordList: BindableWordList { get }
+    var wordList: WordListState { get set }
 
     func select(at position: Int)
 

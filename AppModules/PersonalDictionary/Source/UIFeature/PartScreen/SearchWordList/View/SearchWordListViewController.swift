@@ -5,18 +5,16 @@
 //  Created by Maxim Ivanov on 30.09.2021.
 //
 
-import Combine
+import CoreModule
 import UIKit
 
-final class SearchWordListViewController: UIViewController {
+final class SearchWordListViewController: UIViewController, ObservationLoopLegacy {
 
     private let viewModel: SearchWordListViewModel
 
     private let wordListGraph: WordListGraph
 
     private let centerLabel: UILabel
-
-    private var cancellables: Set<AnyCancellable> = []
 
     /// - Parameters:
     ///  - viewModel: view model.
@@ -44,18 +42,18 @@ final class SearchWordListViewController: UIViewController {
         view = UIView()
 
         initViews()
-        bindToViewModel()
     }
 
-    // MARK: - Private
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        startObservationLoop { [weak self] in
+            guard let self = self else { return }
+            let data = self.viewModel.searchResult
+            let wordListViewModel = self.wordListGraph.viewModel
 
-    private func bindToViewModel() {
-        viewModel.searchResult.sink { [weak self] data in
-            guard let wordListViewModel = self?.wordListGraph.viewModel else { return }
-
-            self?.centerLabel.isHidden = !(data.searchState == .fulfilled && data.foundWordList.count == 0)
-            wordListViewModel.wordList.send(data.foundWordList)
-        }.store(in: &cancellables)
+            self.centerLabel.isHidden = !(data.searchState == .fulfilled && data.foundWordList.count == 0)
+            wordListViewModel.wordList = data.foundWordList
+        }
     }
 
     // MARK: - Layout

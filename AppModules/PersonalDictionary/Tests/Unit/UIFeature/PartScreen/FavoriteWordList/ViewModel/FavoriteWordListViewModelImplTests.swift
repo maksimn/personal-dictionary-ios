@@ -27,7 +27,7 @@ final class FavoriteWordListViewModelImplTests: XCTestCase {
         viewModel.fetchFavoriteWordList()
 
         // Assert
-        XCTAssertEqual(viewModel.favoriteWordList.value.count, 0)
+        XCTAssertEqual(viewModel.favoriteWordList.count, 0)
     }
 
     func test_fetchFavoriteWordList_fetchedDataInViewModel() throws {
@@ -46,6 +46,6 @@ final class FavoriteWordListViewModelImplTests: XCTestCase {
         viewModel.fetchFavoriteWordList()
 
         // Assert
-        XCTAssertEqual(viewModel.favoriteWordList.value, favorites)
+        XCTAssertEqual(viewModel.favoriteWordList, favorites)
     }
 }
